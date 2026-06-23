@@ -207,44 +207,34 @@ class _CreatorChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: TopicHubPage.creatorKey(creator.id),
       onTap: () => context.go(creator.route),
-      borderRadius: AppRadii.lgRadius,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(color: AppColors.borderSolid),
-            borderRadius: AppRadii.lgRadius,
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.discoveryPillPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.borderSolid,
+      padding: AppSpacing.discoveryPillPadding,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _CreatorAvatar(initials: creator.initials),
+          const SizedBox(width: AppSpacing.x3),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _CreatorAvatar(initials: creator.initials),
-              const SizedBox(width: AppSpacing.x3),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    creator.name,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  Text(
-                    'Trust ${creator.trustScore}%',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
+              Text(
+                creator.name,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              Text(
+                'Trust ${creator.trustScore}%',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

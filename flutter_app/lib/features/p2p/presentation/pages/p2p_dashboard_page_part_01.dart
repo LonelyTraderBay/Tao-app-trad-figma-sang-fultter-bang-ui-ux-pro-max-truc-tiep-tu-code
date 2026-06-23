@@ -13,18 +13,22 @@ class _FilterRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return SingleChildScrollView(
       key: P2PDashboardPage.filterKey,
-      children: [
-        for (final filter in snapshot.filters) ...[
-          _FilterChip(
-            filter: filter,
-            selected: filter.id == snapshot.selectedFilter.id,
-            onTap: () => onChanged(filter.id),
-          ),
-          const SizedBox(width: AppSpacing.x2),
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (final filter in snapshot.filters) ...[
+            _FilterChip(
+              filter: filter,
+              selected: filter.id == snapshot.selectedFilter.id,
+              onTap: () => onChanged(filter.id),
+            ),
+            const SizedBox(width: AppSpacing.x2),
+          ],
         ],
-      ],
+      ),
     );
   }
 }
@@ -42,27 +46,14 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitChoicePill(
       key: P2PDashboardPage.filterChipKey(filter.id),
-      color: selected ? AppColors.warn10 : AppColors.bg,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: VitCard(
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
-          borderColor: selected ? AppModuleAccents.p2p : AppColors.border,
-          padding: AppSpacing.p2pDashboardFilterChipPadding,
-          child: Text(
-            filter.label,
-            style: AppTextStyles.micro.copyWith(
-              color: selected ? AppModuleAccents.p2p : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+      label: filter.label,
+      selected: selected,
+      onTap: onTap,
+      padding: AppSpacing.p2pDashboardFilterChipPadding,
+      accentColor: AppModuleAccents.p2p,
+      semanticLabel: 'P2P dashboard filter ${filter.label}',
     );
   }
 }

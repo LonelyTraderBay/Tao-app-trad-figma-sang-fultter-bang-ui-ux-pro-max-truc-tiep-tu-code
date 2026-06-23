@@ -72,18 +72,31 @@ class _ArenaFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextButton.icon(
-          onPressed: onRules,
-          icon: const Icon(
-            Icons.menu_book_outlined,
-            size: AppSpacing.arenaHomeFooterIcon,
+        VitCard(
+          onTap: onRules,
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
           ),
-          label: const Text('Quy tắc cộng đồng'),
-          style: TextButton.styleFrom(
-            foregroundColor: AppColors.primary,
-            textStyle: AppTextStyles.micro.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.menu_book_outlined,
+                color: AppColors.primary,
+                size: AppSpacing.arenaHomeFooterIcon,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                'Quy tac cong dong',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: AppSpacing.x2),

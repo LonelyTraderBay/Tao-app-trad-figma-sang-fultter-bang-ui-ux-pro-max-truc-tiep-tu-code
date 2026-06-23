@@ -1,9 +1,10 @@
 part of '../pages/wallet_gas_optimizer_page.dart';
 
 class _TipsTab extends StatelessWidget {
-  const _TipsTab({required this.snapshot});
+  const _TipsTab({required this.snapshot, required this.onQuickAction});
 
   final WalletGasOptimizerSnapshot snapshot;
+  final ValueChanged<String> onQuickAction;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class _TipsTab extends StatelessWidget {
         for (var i = 0; i < snapshot.tips.length; i++) ...[
           _TipCard(tip: snapshot.tips[i]),
         ],
-        const _QuickActionsCard(),
+        _QuickActionsCard(onAction: onQuickAction),
       ],
     );
   }
@@ -143,7 +144,9 @@ class _CategoryPill extends StatelessWidget {
 }
 
 class _QuickActionsCard extends StatelessWidget {
-  const _QuickActionsCard();
+  const _QuickActionsCard({required this.onAction});
+
+  final ValueChanged<String> onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +177,7 @@ class _QuickActionsCard extends StatelessWidget {
                 density: VitDensity.compact,
                 radius: VitCardRadius.sm,
                 borderColor: _gasBorder,
-                onTap: () {},
+                onTap: () => onAction(label),
                 child: Row(
                   children: [
                     const Icon(

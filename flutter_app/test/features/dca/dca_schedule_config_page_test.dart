@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,11 +8,15 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_schedule_config_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 void main() {
-  Future<void> pumpScheduleConfig(WidgetTester tester) async {
+  Future<void> pumpScheduleConfig(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -54,6 +60,27 @@ void main() {
         DcaScreenState.offline,
       ]),
     );
+  });
+
+  test('SC-172 keeps the Home-standard page foundation contract', () {
+    final pageSource = File(
+      'lib/features/dca/presentation/pages/dca_schedule_config_page.dart',
+    ).readAsStringSync();
+    final source = [
+      pageSource,
+      File(
+        'lib/features/dca/presentation/widgets/dca_schedule_strategy_time.dart',
+      ).readAsStringSync(),
+      File(
+        'lib/features/dca/presentation/widgets/dca_schedule_limits_enable.dart',
+      ).readAsStringSync(),
+    ].join('\n');
+
+    expect(source, contains('VitInsetScrollView'));
+    expect(source, contains('VitContentPadding.compact'));
+    expect(source, contains('VitDensity.compact'));
+    expect(pageSource, isNot(contains('AppSpacing.dcaBottomInsetPadding')));
+    expect(pageSource, isNot(contains('SingleChildScrollView')));
   });
 
   testWidgets('SC-172 renders smart scheduling form with trade nav active', (
@@ -105,5 +132,23 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Configuration not found'), findsOneWidget);
+  });
+
+  testWidgets('SC-172 360px viewport follows Home rhythm', (tester) async {
+    await pumpScheduleConfig(tester, viewport: const Size(360, 800));
+
+    final navTop = tester.getTopLeft(find.byType(VitBottomNav)).dy;
+    final heroRect = tester.getRect(find.byType(VitCard).first);
+    final strategyTop = tester
+        .getTopLeft(
+          find.byKey(DCAScheduleConfig.strategyKey(DcaScheduleStrategy.hybrid)),
+        )
+        .dy;
+    final timeHeaderTop = tester.getTopLeft(find.text('Khung giờ ưu tiên')).dy;
+
+    expect(heroRect.left, lessThanOrEqualTo(24));
+    expect(heroRect.width, greaterThanOrEqualTo(312));
+    expect(strategyTop, lessThan(navTop - 56));
+    expect(timeHeaderTop, lessThan(navTop));
   });
 }

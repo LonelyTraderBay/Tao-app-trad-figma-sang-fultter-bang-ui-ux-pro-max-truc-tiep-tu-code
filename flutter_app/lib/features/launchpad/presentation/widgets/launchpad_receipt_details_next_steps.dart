@@ -115,31 +115,30 @@ class _ReceiptDetailsCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ),
-              InkWell(
+              VitCard(
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                padding: AppSpacing.launchpadInlinePillPadding,
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: subscription.txHash));
                   HapticFeedback.selectionClick();
                 },
-                borderRadius: AppRadii.smRadius,
-                child: Padding(
-                  padding: AppSpacing.launchpadInlinePillPadding,
-                  child: Row(
-                    children: [
-                      Text(
-                        subscription.txHash,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text2,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                        ),
+                child: Row(
+                  children: [
+                    Text(
+                      subscription.txHash,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
-                      const SizedBox(width: AppSpacing.x2),
-                      const Icon(
-                        Icons.copy_rounded,
-                        color: AppColors.text3,
-                        size: AppSpacing.iconSm,
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    const Icon(
+                      Icons.copy_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.iconSm,
+                    ),
+                  ],
                 ),
               ),
             ],

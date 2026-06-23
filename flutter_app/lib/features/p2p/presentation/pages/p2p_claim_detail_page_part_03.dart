@@ -186,36 +186,27 @@ class _ActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.zeroInsets,
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.cardRadius,
-          child: Padding(
-            padding: AppSpacing.p2pClaimActionPadding,
-            child: Row(
-              children: [
-                Icon(icon, color: AppColors.text2, size: AppSpacing.iconSm),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: AppTextStyles.baseMedium.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconMd,
-                ),
-              ],
+      padding: AppSpacing.p2pClaimActionPadding,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(icon, color: AppColors.text2, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              title,
+              style: AppTextStyles.baseMedium.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
           ),
-        ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconMd,
+          ),
+        ],
       ),
     );
   }

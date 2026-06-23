@@ -5,6 +5,7 @@ export 'package:vit_trade_flutter/shared/widgets/vit_announcement_banner.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_asset_avatar.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_carousel_dots.dart';
+export 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_compact_product_card.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 export 'package:vit_trade_flutter/shared/widgets/vit_discovery_action_card.dart';

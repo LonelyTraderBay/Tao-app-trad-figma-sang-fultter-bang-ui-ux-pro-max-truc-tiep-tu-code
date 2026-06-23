@@ -16,38 +16,15 @@ class _InlineActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .13),
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: _p2pWalletActionMinHeight,
-          ),
-          child: Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  color: color,
-                  size: AppSpacing.p2pWalletInlineActionIcon,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: true,
+      onTap: onTap,
+      fullWidth: true,
+      height: _p2pWalletActionMinHeight,
+      accentColor: color,
+      leading: Icon(icon),
+      semanticLabel: 'P2P wallet action $label',
     );
   }
 }
@@ -60,39 +37,13 @@ class _EscrowDetailButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCtaButton(
       key: P2PWalletPage.escrowKey(asset),
-      color: AppColors.surface2,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: _p2pWalletActionMinHeight,
-          ),
-          child: Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.description_outlined,
-                  color: AppColors.text2,
-                  size: AppSpacing.p2pWalletInlineActionIcon,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  'Xem chi tiết Escrow',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.secondary,
+      height: _p2pWalletActionMinHeight,
+      leading: const Icon(Icons.description_outlined),
+      child: const Text('Xem chi tiết Escrow'),
     );
   }
 }
@@ -118,20 +69,14 @@ class _RecentTransactions extends StatelessWidget {
                 ),
               ),
             ),
-            TextButton(
+            VitCtaButton(
               onPressed: () => context.go(snapshot.historyRoute),
-              style: TextButton.styleFrom(
-                foregroundColor: AppModuleAccents.p2p,
-                padding: AppSpacing.p2pWalletTextActionPadding,
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Xem tất cả'),
-                  SizedBox(width: AppSpacing.x1),
-                  Icon(Icons.chevron_right_rounded, size: 15),
-                ],
-              ),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: AppSpacing.p2pWalletTextActionPadding,
+              trailing: const Icon(Icons.chevron_right_rounded),
+              child: const Text('Xem tất cả'),
             ),
           ],
         ),

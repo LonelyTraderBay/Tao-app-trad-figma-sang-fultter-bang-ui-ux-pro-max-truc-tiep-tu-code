@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
@@ -53,17 +52,11 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: VitAccentPill(
-          label: marketDerivativesSortLabel(sort),
-          accentColor: active ? marketDerivativesPrimary : AppColors.text3,
-          size: VitStatusPillSize.md,
-        ),
-      ),
+    return VitChoicePill(
+      label: marketDerivativesSortLabel(sort),
+      selected: active,
+      onTap: onTap,
+      accentColor: marketDerivativesPrimary,
     );
   }
 }

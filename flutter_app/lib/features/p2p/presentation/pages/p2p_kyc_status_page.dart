@@ -20,6 +20,25 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part '../widgets/p2p_kyc_status_page_sections.dart';
 part '../widgets/p2p_kyc_status_page_common.dart';
 
+const _p2pKycVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const _p2pKycNativeNavClearance = _p2pKycVisualNavClearance - AppSpacing.x4;
+const _p2pKycVisualClearance = AppSpacing.x3;
+const _p2pKycNativeClearance = AppSpacing.x2;
+const _p2pKycCardPadding = EdgeInsets.all(AppSpacing.x2);
+const _p2pKycNoticePadding = EdgeInsets.all(AppSpacing.x2);
+const _p2pKycSectionGap = AppSpacing.x2;
+const _p2pKycTightGap = AppSpacing.x1;
+const _p2pKycTimelineRowPadding = EdgeInsets.only(bottom: AppSpacing.x2);
+const _p2pKycSupportIconGap = AppSpacing.x2;
+
+EdgeInsets _p2pKycScrollPadding(double scrollEndPadding) => EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  scrollEndPadding,
+);
+
 class P2PKycStatusPage extends ConsumerWidget {
   const P2PKycStatusPage({super.key, this.shellRenderMode});
 
@@ -36,11 +55,10 @@ class P2PKycStatusPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pKycStatusProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pKycBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pKycBottomInsetNative) +
+            ? _p2pKycVisualNavClearance + _p2pKycVisualClearance
+            : _p2pKycNativeNavClearance + _p2pKycNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -76,21 +94,21 @@ class P2PKycStatusPage extends ConsumerWidget {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: AppSpacing.p2pKycScrollPadding(bottomInset),
+                      padding: _p2pKycScrollPadding(scrollEndPadding),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _OverallStatusCard(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: _p2pKycSectionGap),
                           Text(
                             'Chi tiết các bước',
                             style: AppTextStyles.baseMedium.copyWith(
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: _p2pKycTightGap),
                           _StatusTimeline(steps: snapshot.steps),
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: _p2pKycSectionGap),
                           _SupportCard(snapshot: snapshot),
                           VitPageContent(
                             padding: VitContentPadding.compact,

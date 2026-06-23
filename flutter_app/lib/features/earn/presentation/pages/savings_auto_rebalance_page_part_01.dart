@@ -243,18 +243,13 @@ class _DriftStatusCard extends StatelessWidget {
             ),
           ),
           if (needsAction)
-            TextButton(
+            VitCtaButton(
               key: SavingsAutoRebalancePage.previewButtonKey,
               onPressed: onPreview,
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.primary,
-                padding: AppSpacing.earnCardPaddingX3X2,
-                backgroundColor: AppColors.primary08,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.smRadius,
-                  side: BorderSide(color: AppColors.primary20),
-                ),
-              ),
+              variant: VitCtaButtonVariant.secondary,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: AppSpacing.earnCardPaddingX3X2,
               child: const Text('Xem trước'),
             ),
         ],

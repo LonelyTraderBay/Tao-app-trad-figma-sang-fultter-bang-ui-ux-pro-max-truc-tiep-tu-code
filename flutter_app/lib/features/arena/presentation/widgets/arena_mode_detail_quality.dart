@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
@@ -49,23 +50,19 @@ class ArenaModeQualitySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         Align(
           alignment: Alignment.centerLeft,
-          child: TextButton.icon(
+          child: VitCtaButton(
             key: infoKey,
             onPressed: onInfo,
-            icon: const Icon(
+            variant: VitCtaButtonVariant.ghost,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            density: VitDensity.compact,
+            leading: const Icon(
               Icons.info_outline_rounded,
               size: AppSpacing.arenaModeQualityInfoIcon,
             ),
-            label: const Text('Hiểu chỉ số này'),
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.accent,
-              padding: AppSpacing.zeroInsets,
-              minimumSize: const Size(0, AppSpacing.buttonCompact),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              textStyle: AppTextStyles.micro.copyWith(
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+            padding: AppSpacing.zeroInsets,
+            child: const Text('Hieu chi so nay'),
           ),
         ),
       ],

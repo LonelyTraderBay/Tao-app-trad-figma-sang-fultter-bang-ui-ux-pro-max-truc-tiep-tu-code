@@ -122,10 +122,11 @@ class _MenuRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: ProfilePage.menuKey(item.id),
       onTap: () => context.go(item.route),
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           minHeight: VitDensity.standard.controlHeight,

@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/trade/presentation/pages/trading_bots
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
@@ -87,7 +88,7 @@ void main() {
     expect(find.text('DCA Bot #1'), findsOneWidget);
     expect(find.text('Reason for Emergency Stop'), findsOneWidget);
 
-    final button = tester.widget<FilledButton>(
+    final button = tester.widget<VitCtaButton>(
       find.byKey(BotEmergencyStopPage.submitKey),
     );
     expect(button.onPressed, isNull);
@@ -106,7 +107,7 @@ void main() {
     await tester.tap(find.byKey(BotEmergencyStopPage.confirmationKey));
     await tester.pumpAndSettle();
 
-    final button = tester.widget<FilledButton>(
+    final button = tester.widget<VitCtaButton>(
       find.byKey(BotEmergencyStopPage.submitKey),
     );
     expect(button.onPressed, isNotNull);

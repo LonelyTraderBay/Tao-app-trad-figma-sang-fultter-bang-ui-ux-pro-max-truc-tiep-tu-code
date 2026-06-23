@@ -52,9 +52,10 @@ class _AcknowledgementRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.transparent,
-      child: InkWell(
+      child: VitCard(
         onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.arenaJoinAcknowledgementMinHeight,
@@ -131,9 +132,11 @@ class _ActionStack extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         SizedBox(
           width: double.infinity,
-          child: TextButton(
+          child: VitCtaButton(
             key: ArenaJoinPage.declineKey,
             onPressed: onDecline,
+            variant: VitCtaButtonVariant.ghost,
+            density: VitDensity.compact,
             child: Text(
               'Từ chối',
               style: AppTextStyles.body.copyWith(

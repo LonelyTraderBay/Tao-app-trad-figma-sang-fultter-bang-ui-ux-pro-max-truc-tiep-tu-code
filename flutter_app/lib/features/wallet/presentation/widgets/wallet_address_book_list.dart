@@ -6,6 +6,7 @@ class _AddressCard extends StatelessWidget {
     required this.copied,
     required this.onCopy,
     required this.onFavorite,
+    required this.onEdit,
     required this.onDelete,
   });
 
@@ -13,6 +14,7 @@ class _AddressCard extends StatelessWidget {
   final bool copied;
   final VoidCallback onCopy;
   final VoidCallback onFavorite;
+  final VoidCallback onEdit;
   final VoidCallback onDelete;
 
   @override
@@ -72,7 +74,7 @@ class _AddressCard extends StatelessWidget {
                       if (address.lastUsed != null) ...[
                         const SizedBox(height: _bookTinyGap),
                         Text(
-                          'DÃ¹ng gáº§n nháº¥t: ${address.lastUsed}',
+                          'D\u00F9ng g\u1EA7n nh\u1EA5t: ${address.lastUsed}',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
                           ),
@@ -99,7 +101,7 @@ class _AddressCard extends StatelessWidget {
                   icon: address.isFavorite
                       ? Icons.star_rounded
                       : Icons.star_outline_rounded,
-                  color: address.isFavorite ? _bookAmber : AppColors.text3,
+                  tooltip: 'Y\u00EAu th\u00EDch \u0111\u1ECBa ch\u1EC9',
                   filled: address.isFavorite,
                   onTap: onFavorite,
                 ),
@@ -107,14 +109,14 @@ class _AddressCard extends StatelessWidget {
                 _RoundActionButton(
                   key: AddressBookPage.editKey(address.id),
                   icon: Icons.edit_rounded,
-                  color: AppColors.text2,
-                  onTap: () {},
+                  tooltip: 'S\u1EEDa \u0111\u1ECBa ch\u1EC9',
+                  onTap: onEdit,
                 ),
                 const SizedBox(width: _bookTinyGap),
                 _RoundActionButton(
                   key: AddressBookPage.deleteKey(address.id),
                   icon: Icons.delete_outline_rounded,
-                  color: _bookRed,
+                  tooltip: 'X\u00F3a \u0111\u1ECBa ch\u1EC9',
                   danger: true,
                   onTap: onDelete,
                 ),
@@ -193,30 +195,16 @@ class _CopyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitChoicePill(
       key: AddressBookPage.copyKey(addressId),
-      height: _bookCopyHeight,
-      variant: VitCardVariant.inner,
-      borderColor: AppColors.primary20,
-      alignment: Alignment.center,
+      label: copied ? '\u0110\u00E3 copy' : 'Sao ch\u00E9p',
+      selected: copied,
       onTap: onTap,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            copied ? Icons.check_circle_outline_rounded : Icons.copy_rounded,
-            color: _bookPrimary,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: _bookTinyGap),
-          Text(
-            copied ? 'ÄÃ£ copy' : 'Sao chÃ©p',
-            style: AppTextStyles.caption.copyWith(
-              color: _bookPrimary,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
+      height: _bookCopyHeight,
+      fullWidth: true,
+      accentColor: _bookPrimary,
+      leading: Icon(
+        copied ? Icons.check_circle_outline_rounded : Icons.copy_rounded,
       ),
     );
   }
@@ -226,32 +214,30 @@ class _RoundActionButton extends StatelessWidget {
   const _RoundActionButton({
     super.key,
     required this.icon,
-    required this.color,
+    required this.tooltip,
     required this.onTap,
     this.filled = false,
     this.danger = false,
   });
 
   final IconData icon;
-  final Color color;
+  final String tooltip;
   final VoidCallback onTap;
   final bool filled;
   final bool danger;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      width: _bookActionSize,
-      height: _bookActionSize,
-      variant: VitCardVariant.inner,
-      borderColor: danger
-          ? AppColors.sell15
+    return VitIconButton(
+      icon: icon,
+      tooltip: tooltip,
+      onPressed: onTap,
+      size: VitIconButtonSize.md,
+      variant: danger
+          ? VitIconButtonVariant.danger
           : filled
-          ? AppColors.caution.withValues(alpha: .20)
-          : AppColors.borderSolid,
-      alignment: Alignment.center,
-      onTap: onTap,
-      child: Icon(icon, color: color, size: AppSpacing.iconSm),
+          ? VitIconButtonVariant.primary
+          : VitIconButtonVariant.ghost,
     );
   }
 }
@@ -281,7 +267,7 @@ class _EmptyAddressState extends StatelessWidget {
           ),
           const SizedBox(height: _bookInlineGap),
           Text(
-            'KhÃ´ng tÃ¬m tháº¥y Ä‘á»‹a chá»‰',
+            'Kh\u00F4ng t\u00ECm th\u1EA5y \u0111\u1ECBa ch\u1EC9',
             style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: _bookGap),

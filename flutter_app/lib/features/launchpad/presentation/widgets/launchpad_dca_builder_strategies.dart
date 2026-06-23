@@ -172,19 +172,14 @@ class _MiniIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: AppSpacing.launchpadBox32,
-      child: DecoratedBox(
-        decoration: const ShapeDecoration(
-          color: AppColors.bg,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-        ),
-        child: IconButton(
-          onPressed: onTap,
-          padding: EdgeInsets.zero,
-          icon: Icon(icon, color: color, size: AppSpacing.launchpadIconXl),
-        ),
-      ),
+    return VitIconButton(
+      icon: icon,
+      tooltip: 'Thao tac chien luoc',
+      onPressed: onTap,
+      variant: color == AppColors.sell
+          ? VitIconButtonVariant.danger
+          : VitIconButtonVariant.primary,
+      size: VitIconButtonSize.sm,
     );
   }
 }

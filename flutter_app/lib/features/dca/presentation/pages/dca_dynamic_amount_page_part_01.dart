@@ -18,10 +18,15 @@ class _DynamicHero extends StatelessWidget {
     final paused =
         adjustment.action == DcaDynamicAdjustmentAction.paused ||
         adjustment.action == DcaDynamicAdjustmentAction.skipped;
+    final amountLabel = paused
+        ? adjustment.action == DcaDynamicAdjustmentAction.skipped
+              ? 'Bỏ qua lần này'
+              : 'Tạm dừng'
+        : _formatVnd(adjustment.adjustedAmountVnd);
 
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: AppSpacing.dcaPaddingX5,
+      padding: _dcaDynamicHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,8 +45,13 @@ class _DynamicHero extends StatelessWidget {
                       color: accent,
                       filled: true,
                     ),
-                    GestureDetector(
+                    VitCard(
                       onTap: onChangeStrategy,
+                      variant: VitCardVariant.ghost,
+                      radius: VitCardRadius.sm,
+                      padding: EdgeInsets.zero,
+                      borderColor: AppColors.transparent,
+                      clip: true,
                       child: const _TinyPill(
                         label: 'Đổi',
                         icon: Icons.swap_horiz_rounded,
@@ -58,104 +68,115 @@ class _DynamicHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
-          Text(
-            'Lần mua tiếp theo',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.portfolioTextMuted,
-              height: AppSpacing.dcaDynamicCaptionLineHeight,
-            ),
-          ),
           const SizedBox(height: AppSpacing.x2),
-          if (paused)
-            Row(
-              children: [
-                Icon(
-                  _actionIcon(adjustment.action),
-                  color: statusColor,
-                  size: AppSpacing.iconMd,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Lần mua tiếp theo',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.portfolioTextMuted,
+                        height: AppSpacing.dcaDynamicCaptionLineHeight,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      amountLabel,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          (paused
+                                  ? AppTextStyles.sectionTitle
+                                  : AppTextStyles.heroNumber)
+                              .copyWith(
+                                color: paused ? statusColor : AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
+                    ),
+                  ],
                 ),
+              ),
+              if (!paused) ...[
                 const SizedBox(width: AppSpacing.x3),
-                Text(
-                  adjustment.action == DcaDynamicAdjustmentAction.skipped
-                      ? 'Bỏ qua lần này'
-                      : 'Tạm dừng',
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: statusColor,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Gốc',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.portfolioTextMuted,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      _formatVnd(adjustment.originalAmountVnd),
+                      style: AppTextStyles.baseMedium.copyWith(
+                        color: adjustment.multiplier == 1
+                            ? AppColors.text2
+                            : AppColors.portfolioTextMuted,
+                        decoration: adjustment.multiplier == 1
+                            ? null
+                            : TextDecoration.lineThrough,
+                        decorationColor: AppColors.portfolioTextMuted,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            )
-          else
-            Wrap(
-              spacing: AppSpacing.x4,
-              crossAxisAlignment: WrapCrossAlignment.end,
-              children: [
-                Text(
-                  _formatVnd(adjustment.adjustedAmountVnd),
-                  style: AppTextStyles.heroNumber.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          DecoratedBox(
+            decoration: ShapeDecoration(
+              color: AppColors.surface2,
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+            ),
+            child: Padding(
+              padding: AppSpacing.dcaPaddingX3,
+              child: Row(
+                children: [
+                  Icon(
+                    _actionIcon(adjustment.action),
+                    color: statusColor,
+                    size: AppSpacing.iconSm,
                   ),
-                ),
-                if (adjustment.multiplier != 1)
-                  Text(
-                    _formatVnd(adjustment.originalAmountVnd),
-                    style: AppTextStyles.base.copyWith(
-                      color: AppColors.portfolioTextMuted,
-                      decoration: TextDecoration.lineThrough,
-                      decorationColor: AppColors.portfolioTextMuted,
+                  const SizedBox(width: AppSpacing.x2),
+                  if (adjustment.multiplier != 1 && !paused) ...[
+                    Text(
+                      'x${adjustment.multiplier.toStringAsFixed(2)}',
+                      style: AppTextStyles.caption.copyWith(
+                        color: statusColor,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Text(
+                      '·',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                  ],
+                  Expanded(
+                    child: Text(
+                      adjustment.reason,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.portfolioTextDim,
+                        height: AppSpacing.dcaDynamicBodyLineHeight,
+                      ),
                     ),
                   ),
-              ],
-            ),
-          const SizedBox(height: AppSpacing.x5),
-          VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.dcaPaddingX4,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (adjustment.multiplier != 1 && !paused) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.bolt_rounded,
-                            color: statusColor,
-                            size: AppSpacing.iconSm,
-                          ),
-                          const SizedBox(width: AppSpacing.x2),
-                          Text(
-                            'Hệ số điều chỉnh',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.portfolioTextMuted,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'x${adjustment.multiplier.toStringAsFixed(2)}',
-                        style: AppTextStyles.baseMedium.copyWith(
-                          color: statusColor,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
                 ],
-                Text(
-                  adjustment.reason,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.portfolioTextDim,
-                    height: AppSpacing.dcaDynamicBodyLineHeight,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ],
@@ -193,19 +214,26 @@ class _TinyPill extends StatelessWidget {
       ),
       child: Padding(
         padding: AppSpacing.dcaButtonChipPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: color, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: filled ? AppColors.portfolioTextDim : color,
-                fontWeight: AppTextStyles.bold,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 132),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: color, size: AppSpacing.iconSm),
+              const SizedBox(width: AppSpacing.x2),
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: filled ? AppColors.portfolioTextDim : color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -272,54 +300,15 @@ class _StrategyChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = _accentColor(option.accent);
 
-    return GestureDetector(
+    return VitChoicePill(
       key: DCADynamicAmount.strategyKey(option.strategy),
+      label: option.title,
+      selected: selected,
       onTap: onTap,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: selected ? _accentSoft(option.accent) : AppColors.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.inputRadius,
-            side: BorderSide(color: selected ? accent : AppColors.cardBorder),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.dcaPrimaryChipPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                _iconFor(option.icon),
-                color: selected ? accent : AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                option.title,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? accent : AppColors.text2,
-                  fontWeight: selected
-                      ? AppTextStyles.bold
-                      : AppTextStyles.medium,
-                ),
-              ),
-              if (selected) ...[
-                const SizedBox(width: AppSpacing.x2),
-                SizedBox(
-                  width: AppSpacing.x2,
-                  height: AppSpacing.x2,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: accent,
-                      shape: const CircleBorder(),
-                    ),
-                  ),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
+      accentColor: accent,
+      padding: AppSpacing.dcaPrimaryChipPadding,
+      leading: Icon(_iconFor(option.icon)),
+      semanticLabel: option.title,
     );
   }
 }
@@ -358,7 +347,7 @@ class _StrategyVisualization extends StatelessWidget {
           Padding(
             padding: AppSpacing.dcaChartPadding,
             child: SizedBox(
-              height: AppSpacing.buttonHero * 2 + AppSpacing.x6,
+              height: _dcaDynamicChartHeight,
               child: CustomPaint(
                 painter: _VolatilityChartPainter(points: volatilityHistory),
                 child: const SizedBox.expand(),
@@ -367,23 +356,14 @@ class _StrategyVisualization extends StatelessWidget {
           ),
           const Padding(
             padding: AppSpacing.dcaChartFooterPadding,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Wrap(
+              spacing: AppSpacing.x4,
+              runSpacing: AppSpacing.x2,
               children: [
-                Wrap(
-                  spacing: AppSpacing.x4,
-                  children: [
-                    _LegendItem(color: AppColors.accent, label: 'Volatility'),
-                    _LegendItem(color: AppColors.buy, label: 'Hệ số'),
-                  ],
-                ),
-                Wrap(
-                  spacing: AppSpacing.x3,
-                  children: [
-                    _LegendItem(color: AppColors.sell, label: 'High'),
-                    _LegendItem(color: AppColors.primary, label: 'Low'),
-                  ],
-                ),
+                _LegendItem(color: AppColors.accent, label: 'Volatility'),
+                _LegendItem(color: AppColors.buy, label: 'Hệ số'),
+                _LegendItem(color: AppColors.sell, label: 'High'),
+                _LegendItem(color: AppColors.primary, label: 'Low'),
               ],
             ),
           ),
@@ -403,7 +383,7 @@ class _GenericStrategyCard extends StatelessWidget {
     final accent = _accentColor(option.accent);
 
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: _dcaDynamicCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

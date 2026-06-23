@@ -19,7 +19,7 @@ class _EntryList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (entries.isEmpty) {
       return VitCard(
-        padding: AppSpacing.p2pBlacklistEmptyPadding,
+        padding: _p2pBlacklistCardPadding,
         child: Column(
           children: [
             const Icon(
@@ -27,7 +27,7 @@ class _EntryList extends StatelessWidget {
               color: AppColors.text3,
               size: AppSpacing.iconLg,
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: _p2pBlacklistSectionGap),
             Text(
               snapshot.emptyTitle,
               style: AppTextStyles.baseMedium.copyWith(
@@ -50,7 +50,7 @@ class _EntryList extends StatelessWidget {
             onUnblock: () => onUnblock(entries[index].id),
           ),
           if (index != entries.length - 1)
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: _p2pBlacklistEntryGap),
         ],
       ],
     );
@@ -82,10 +82,13 @@ class _EntryCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             onTap: onToggle,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.zeroInsets,
             child: Padding(
-              padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+              padding: _p2pBlacklistCardPadding,
               child: Row(
                 children: [
                   _Avatar(entry: entry, reason: reason),
@@ -124,11 +127,11 @@ class _EntryCard extends StatelessWidget {
                             ],
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: _p2pBlacklistTightGap),
                         Row(
                           children: [
                             _SmallReasonPill(reason: reason),
-                            const SizedBox(width: AppSpacing.x3),
+                            const SizedBox(width: AppSpacing.x2),
                             Text(
                               _timeAgo(entry.blockedAt),
                               style: AppTextStyles.micro.copyWith(
@@ -180,13 +183,13 @@ class _ExpandedEntry extends StatelessWidget {
           child: ColoredBox(color: AppColors.divider),
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+          padding: _p2pBlacklistCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+                padding: _p2pBlacklistTinyPadding,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -208,7 +211,7 @@ class _ExpandedEntry extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: _p2pBlacklistSectionGap),
               Row(
                 children: [
                   Expanded(
@@ -237,17 +240,17 @@ class _ExpandedEntry extends StatelessWidget {
                 ],
               ),
               if (entry.orderId != null) ...[
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: _p2pBlacklistSectionGap),
                 _OrderLink(orderId: entry.orderId!),
               ],
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: _p2pBlacklistSectionGap),
               Row(
                 children: [
                   Expanded(
                     child: VitCtaButton(
                       key: P2PBlacklistPage.unblockKey(entry.id),
                       variant: VitCtaButtonVariant.success,
-                      height: AppSpacing.ctaHeight - AppSpacing.x2,
+                      height: _p2pBlacklistActionHeight,
                       onPressed: onUnblock,
                       leading: const Icon(Icons.check_circle_outline_rounded),
                       child: const Text('Bỏ chặn'),
@@ -257,7 +260,7 @@ class _ExpandedEntry extends StatelessWidget {
                   Expanded(
                     child: VitCtaButton(
                       variant: VitCtaButtonVariant.ghost,
-                      height: AppSpacing.ctaHeight - AppSpacing.x2,
+                      height: _p2pBlacklistActionHeight,
                       onPressed: () => HapticFeedback.selectionClick(),
                       leading: const Icon(
                         Icons.report_problem_outlined,
@@ -346,7 +349,7 @@ class _OrderLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+      padding: _p2pBlacklistTinyPadding,
       child: Row(
         children: [
           const Icon(

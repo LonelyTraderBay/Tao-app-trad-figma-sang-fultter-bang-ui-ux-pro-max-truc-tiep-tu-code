@@ -20,7 +20,7 @@ class _HoursSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pSettingsCardPadding,
+          padding: _p2pSettingsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -91,7 +91,7 @@ class _AutoReplySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pSettingsCardPadding,
+          padding: _p2pSettingsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -133,12 +133,12 @@ class _AutoReplySection extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  padding: AppSpacing.p2pSettingsCompactCardPadding,
+                  padding: _p2pSettingsCompactCardPadding,
                   child: Text(
                     autoReply.buyTemplate,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.p2pSettingsAutoReplyLineHeight,
+                      height: _p2pSettingsAutoReplyLineHeight,
                     ),
                   ),
                 ),
@@ -210,31 +210,21 @@ class _SwitchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        width: AppSpacing.p2pSettingsSwitchWidth,
-        height: AppSpacing.p2pSettingsSwitchHeight,
-        child: Material(
-          color: value ? color : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.mdRadius,
-            side: BorderSide(color: value ? color : AppColors.borderSolid),
-          ),
-          child: Padding(
-            padding: AppSpacing.p2pSettingsSwitchPadding,
-            child: AnimatedAlign(
-              duration: const Duration(milliseconds: 180),
-              alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-              child: const SizedBox.square(
-                dimension: AppSpacing.p2pSettingsSwitchThumbSize,
-                child: Material(
-                  color: AppColors.onAccent,
-                  shape: CircleBorder(),
-                ),
-              ),
-            ),
-          ),
+    return Semantics(
+      button: true,
+      toggled: value,
+      child: VitCard(
+        onTap: onTap,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: AppSpacing.zeroInsets,
+        child: VitTogglePill(
+          enabled: value,
+          width: _p2pSettingsSwitchWidth,
+          height: _p2pSettingsSwitchHeight,
+          knobSize: _p2pSettingsSwitchThumbSize,
+          knobMargin: AppSpacing.p2pSettingsSwitchPadding,
+          activeColor: color,
         ),
       ),
     );
@@ -254,24 +244,13 @@ class _SegmentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pSettingsSegmentButtonPadding,
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: selected ? AppColors.primary : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      fullWidth: true,
+      padding: AppSpacing.p2pSettingsSegmentButtonPadding,
+      semanticLabel: label,
     );
   }
 }

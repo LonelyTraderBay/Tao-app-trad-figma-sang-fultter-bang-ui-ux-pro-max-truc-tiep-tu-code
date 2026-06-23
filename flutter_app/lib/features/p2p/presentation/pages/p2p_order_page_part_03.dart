@@ -8,40 +8,16 @@ class _QuickActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _quickActionColor(action.id);
-    return Material(
-      color: color.withValues(alpha: .08),
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: () => context.go(action.route),
-        borderRadius: AppRadii.inputRadius,
-        child: VitCard(
-          variant: VitCardVariant.ghost,
-          borderColor: color.withValues(alpha: .18),
-          height: AppSpacing.buttonCompact,
-          padding: AppSpacing.p2pOrderQuickButtonPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                _quickActionIcon(action.iconKey),
-                color: color,
-                size: AppSpacing.p2pOrderQuickActionIcon,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Flexible(
-                child: Text(
-                  action.label,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: action.label,
+      selected: true,
+      onTap: () => context.go(action.route),
+      fullWidth: true,
+      height: _p2pOrderQuickButtonHeight,
+      padding: AppSpacing.p2pOrderQuickButtonPadding,
+      accentColor: color,
+      leading: Icon(_quickActionIcon(action.iconKey)),
+      semanticLabel: action.label,
     );
   }
 }
@@ -97,7 +73,7 @@ class _InfoLine extends StatelessWidget {
         ),
         if (!isLast)
           const Divider(
-            height: AppSpacing.p2pOrderDividerHeight,
+            height: _p2pOrderDividerHeight,
             color: AppColors.divider,
           ),
       ],
@@ -161,38 +137,15 @@ class _SmallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .10),
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.buttonCompact,
-          child: Padding(
-            padding: AppSpacing.p2pOrderSmallButtonPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: color,
-                  size: AppSpacing.p2pOrderSmallButtonIcon,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-                Text(
-                  label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: true,
+      onTap: onPressed,
+      height: _p2pOrderSmallButtonHeight,
+      padding: AppSpacing.p2pOrderSmallButtonPadding,
+      accentColor: color,
+      leading: Icon(icon),
+      semanticLabel: label,
     );
   }
 }
@@ -213,32 +166,14 @@ class _TextActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pOrderTextActionPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconTheme(
-                data: IconThemeData(color: color, size: AppSpacing.iconSm),
-                child: icon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: false,
+      onTap: onPressed,
+      padding: AppSpacing.p2pOrderTextActionPadding,
+      accentColor: color,
+      leading: icon,
+      semanticLabel: label,
     );
   }
 }

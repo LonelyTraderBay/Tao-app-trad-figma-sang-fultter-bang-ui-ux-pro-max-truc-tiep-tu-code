@@ -103,29 +103,14 @@ class _SummaryActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active ? AppColors.buy : AppColors.text1;
-    return Material(
-      color: active ? AppColors.buy10 : AppColors.surface3,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: active ? AppColors.buy20 : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.xlRadius,
-            ),
-          ),
-          child: SizedBox(
-            width: AppSpacing.buttonCompact,
-            height: AppSpacing.buttonCompact,
-            child: Icon(icon, color: color, size: AppSpacing.iconMd),
-          ),
-        ),
-      ),
+    return VitIconButton(
+      icon: icon,
+      tooltip: active ? 'Đang bật' : 'Thao tác lịch lợi nhuận',
+      onPressed: onTap,
+      variant: active
+          ? VitIconButtonVariant.success
+          : VitIconButtonVariant.defaultAction,
+      size: VitIconButtonSize.sm,
     );
   }
 }

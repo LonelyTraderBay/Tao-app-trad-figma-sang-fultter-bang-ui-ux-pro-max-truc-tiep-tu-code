@@ -205,51 +205,44 @@ class _ToolRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: Padding(
-          padding: AppSpacing.earnCardPaddingX3,
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                color: AppColors.text1,
-                size: AppSpacing.stakingTaxToolIcon,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      subtitle,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Icon(
-                Icons.open_in_new_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.stakingTaxExternalIcon,
-              ),
-            ],
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      padding: AppSpacing.earnCardPaddingX3,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: AppColors.text1,
+            size: AppSpacing.stakingTaxToolIcon,
           ),
-        ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.open_in_new_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.stakingTaxExternalIcon,
+          ),
+        ],
       ),
     );
   }

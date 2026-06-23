@@ -23,7 +23,7 @@ class _ChecklistCard extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.checklistKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pFraudCardPadding,
+      padding: _p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -43,7 +43,7 @@ class _ChecklistCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pFraudMajorGap),
           Row(
             children: [
               for (var index = 0; index < categories.length; index++) ...[
@@ -58,15 +58,18 @@ class _ChecklistCard extends StatelessWidget {
                   ),
                 ),
                 if (index != categories.length - 1)
-                  const SizedBox(width: AppSpacing.x2),
+                  const SizedBox(width: _p2pFraudSectionGap),
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pFraudMajorGap),
           for (var index = 0; index < activeItems.length; index++) ...[
             _ChecklistItem(item: activeItems[index], onTap: onToggle),
             if (index != activeItems.length - 1)
-              const Divider(color: AppColors.divider, height: AppSpacing.x5),
+              const Divider(
+                color: AppColors.divider,
+                height: _p2pFraudMajorGap,
+              ),
           ],
         ],
       ),
@@ -91,38 +94,38 @@ class _CategoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final checked = items.where((item) => item.checked).length;
 
-    return Material(
+    return VitCard(
       key: P2PFraudPreventionPage.tabKey(category),
-      color: selected ? AppModuleAccents.p2p : AppColors.surface2,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: AppSpacing.p2pFraudCategoryTabPadding,
-          child: Column(
-            children: [
-              Text(
-                _categoryLabel(category),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: selected ? AppColors.onAccent : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x1),
-              Text(
-                '$checked/${items.length}',
-                style: AppTextStyles.micro.copyWith(
-                  color: selected
-                      ? AppColors.onAccent.withValues(alpha: .72)
-                      : AppColors.text3,
-                ),
-              ),
-            ],
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: selected ? AppModuleAccents.p2p : AppColors.cardBorder,
+      background: ColoredBox(
+        color: selected ? AppModuleAccents.p2p : AppColors.surface2,
+      ),
+      padding: _p2pFraudCategoryTabPadding,
+      onTap: onTap,
+      clip: true,
+      child: Column(
+        children: [
+          Text(
+            _categoryLabel(category),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: selected ? AppColors.onAccent : AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-        ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            '$checked/${items.length}',
+            style: AppTextStyles.micro.copyWith(
+              color: selected
+                  ? AppColors.onAccent.withValues(alpha: .72)
+                  : AppColors.text3,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -136,66 +139,58 @@ class _ChecklistItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        key: P2PFraudPreventionPage.checklistItemKey(item.id),
-        onTap: () => onTap(item.id),
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: AppSpacing.p2pFraudChecklistItemPadding,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox.square(
-                dimension: AppSpacing.p2pFraudChecklistBox,
-                child: Material(
-                  color: item.checked ? AppColors.buy : AppColors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                    side: BorderSide(
-                      color: item.checked
-                          ? AppColors.buy
-                          : AppColors.borderSolid,
-                    ),
-                  ),
-                  child: item.checked
-                      ? const Icon(
-                          Icons.check_rounded,
-                          color: AppColors.onAccent,
-                          size: AppSpacing.p2pFraudChecklistCheckIcon,
-                        )
-                      : null,
+    return VitCard(
+      key: P2PFraudPreventionPage.checklistItemKey(item.id),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: _p2pFraudChecklistItemPadding,
+      onTap: () => onTap(item.id),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox.square(
+            dimension: AppSpacing.p2pFraudChecklistBox,
+            child: Material(
+              color: item.checked ? AppColors.buy : AppColors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
+                side: BorderSide(
+                  color: item.checked ? AppColors.buy : AppColors.borderSolid,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.label,
-                      style: AppTextStyles.caption.copyWith(
-                        color: item.checked ? AppColors.buy : AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                        decoration: item.checked
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
-                        decorationColor: AppColors.buy,
-                      ),
-                    ),
-                    Text(
-                      item.description,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              child: item.checked
+                  ? const Icon(
+                      Icons.check_rounded,
+                      color: AppColors.onAccent,
+                      size: AppSpacing.p2pFraudChecklistCheckIcon,
+                    )
+                  : null,
+            ),
           ),
-        ),
+          const SizedBox(width: _p2pFraudMajorGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: item.checked ? AppColors.buy : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                    decoration: item.checked
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                    decorationColor: AppColors.buy,
+                  ),
+                ),
+                Text(
+                  item.description,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -211,7 +206,7 @@ class _EmergencyActions extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.emergencyKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pFraudCardPadding,
+      padding: _p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -231,7 +226,7 @@ class _EmergencyActions extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pFraudMajorGap),
           for (
             var index = 0;
             index < snapshot.emergencyActions.length;
@@ -239,7 +234,7 @@ class _EmergencyActions extends StatelessWidget {
           ) ...[
             _EmergencyButton(action: snapshot.emergencyActions[index]),
             if (index != snapshot.emergencyActions.length - 1)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: _p2pFraudSectionGap),
           ],
         ],
       ),
@@ -256,43 +251,41 @@ class _EmergencyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _actionColor(action.toneKey);
 
-    return Material(
+    return VitCard(
       key: P2PFraudPreventionPage.actionKey(action.id),
-      color: color.withValues(alpha: .08),
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        onTap: () {
-          HapticFeedback.selectionClick();
-          context.go(action.route);
-        },
-        borderRadius: AppRadii.lgRadius,
-        child: Padding(
-          padding: AppSpacing.p2pFraudInnerPadding,
-          child: Row(
-            children: [
-              Icon(
-                _actionIcon(action.iconKey),
-                color: color,
-                size: AppSpacing.p2pFraudActionIcon,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  action.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.chevron_right_rounded,
-                color: color,
-                size: AppSpacing.p2pFraudActionIcon,
-              ),
-            ],
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      borderColor: color.withValues(alpha: .22),
+      background: ColoredBox(color: color.withValues(alpha: .08)),
+      padding: _p2pFraudInnerPadding,
+      onTap: () {
+        HapticFeedback.selectionClick();
+        context.go(action.route);
+      },
+      clip: true,
+      child: Row(
+        children: [
+          Icon(
+            _actionIcon(action.iconKey),
+            color: color,
+            size: AppSpacing.p2pFraudActionIcon,
           ),
-        ),
+          const SizedBox(width: _p2pFraudMajorGap),
+          Expanded(
+            child: Text(
+              action.label,
+              style: AppTextStyles.caption.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: color,
+            size: AppSpacing.p2pFraudActionIcon,
+          ),
+        ],
       ),
     );
   }

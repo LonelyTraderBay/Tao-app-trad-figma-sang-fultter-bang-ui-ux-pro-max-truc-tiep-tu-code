@@ -144,13 +144,14 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
             padding: AppSpacing.marketScrollPadding(bottomScrollInset),
             child: VitPageContent(
               padding: VitContentPadding.compact,
-              gap: VitContentGap.defaultGap,
+              gap: VitContentGap.tight,
               children: [
                 MarketListHeader(onNavigate: _go),
                 VitSearchBar(
                   key: MarketListPage.searchKey,
                   controller: _searchController,
                   placeholder: 'Tìm kiếm BTC, ETH...',
+                  variant: VitSearchBarVariant.compact,
                   filterActive: _showSort || _sort != 'default',
                   filterInline: true,
                   onChanged: (_) => setState(() {}),

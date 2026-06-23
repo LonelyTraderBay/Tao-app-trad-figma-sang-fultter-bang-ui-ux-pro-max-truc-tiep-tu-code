@@ -18,9 +18,10 @@ class _AccentPillButton extends StatelessWidget {
     return Material(
       color: AppColors.transparent,
       borderRadius: AppRadii.inputRadius,
-      child: InkWell(
+      child: VitCard(
         onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: VitDensity.compact.controlHeight,
@@ -75,9 +76,10 @@ class _TextIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
       child: Padding(
         padding: AppSpacing.arenaPresetPillPadding,
         child: Row(

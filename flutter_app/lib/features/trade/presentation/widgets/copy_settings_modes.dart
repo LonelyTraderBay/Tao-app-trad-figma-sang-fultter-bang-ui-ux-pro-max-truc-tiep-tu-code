@@ -86,18 +86,14 @@ class _ModeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCtaButton(
+    return VitChoicePill(
       key: CopySettingsPage.modeKey(mode),
-      onPressed: onTap,
-      variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
+      label: _modeLabel(mode),
+      selected: active,
+      onTap: onTap,
+      fullWidth: true,
       density: VitDensity.compact,
-      child: Text(
-        _modeLabel(mode),
-        style: AppTextStyles.caption.copyWith(
-          color: active ? AppColors.onAccent : AppColors.text2,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+      semanticLabel: 'Chon copy mode ${_modeLabel(mode)}',
     );
   }
 }

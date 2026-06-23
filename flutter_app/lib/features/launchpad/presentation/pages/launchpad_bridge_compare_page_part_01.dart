@@ -401,44 +401,18 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
       key: LaunchpadBridgeComparePage.sortKey(option.value),
+      label: option.label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? AppColors.primary08 : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.inputRadius,
-            side: BorderSide(
-              color: active
-                  ? AppColors.primary.withValues(alpha: .24)
-                  : AppColors.transparent,
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.launchpadPillPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                _sortIcon(option.iconKey),
-                color: active ? AppColors.primary : AppColors.text3,
-                size: AppSpacing.launchpadIconSm,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                option.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? AppColors.primary : AppColors.text3,
-                  fontWeight: active ? AppTextStyles.bold : FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
+      accentColor: AppColors.primary,
+      padding: AppSpacing.launchpadPillPadding,
+      leading: Icon(
+        _sortIcon(option.iconKey),
+        size: AppSpacing.launchpadIconSm,
       ),
+      semanticLabel: 'Sort bridge routes by ${option.label}',
     );
   }
 }

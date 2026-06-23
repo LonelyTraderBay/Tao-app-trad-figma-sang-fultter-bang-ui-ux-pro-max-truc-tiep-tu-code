@@ -13,7 +13,6 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -22,6 +21,34 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_w
 part '../widgets/p2p_escrow_detail_status_address.dart';
 part '../widgets/p2p_escrow_detail_multisig_order.dart';
 part '../widgets/p2p_escrow_detail_timeline_actions.dart';
+
+const double _p2pEscrowVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pEscrowNativeNavClearance =
+    _p2pEscrowVisualNavClearance - AppSpacing.x4;
+const double _p2pEscrowVisualClearance = AppSpacing.x3;
+const double _p2pEscrowNativeClearance = AppSpacing.x2;
+const double _p2pEscrowSectionGap = AppSpacing.x3;
+const double _p2pEscrowTightGap = AppSpacing.x2;
+const double _p2pEscrowRingSize = AppSpacing.buttonCompact + AppSpacing.x2;
+const double _p2pEscrowTimelineConnectorHeight = AppSpacing.x4;
+const double _p2pEscrowBodyLineHeight = 1.35;
+const EdgeInsets _p2pEscrowScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pEscrowHeroPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pEscrowCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pEscrowInnerPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pEscrowExplorerPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _p2pEscrowTimelineRowPadding = EdgeInsets.only(
+  bottom: AppSpacing.x2,
+);
 
 class P2PEscrowDetailPage extends ConsumerStatefulWidget {
   const P2PEscrowDetailPage({
@@ -59,10 +86,10 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
     final snapshot = ref.watch(p2pEscrowDetailProvider(widget.orderId));
     final order = snapshot.order;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pEscrowVisualNavClearance + _p2pEscrowVisualClearance
+            : _p2pEscrowNativeNavClearance + _p2pEscrowNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -87,16 +114,14 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pEscrowDetailScrollPadding(
-                      bottomInset,
+                    padding: _p2pEscrowScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _EscrowStatusHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pEscrowSectionGap),
                         _EscrowAddressCard(
                           snapshot: snapshot,
                           showFullAddress: _showFullAddress,
@@ -123,23 +148,23 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                           },
                         ),
                         if (_feedback != null) ...[
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: _p2pEscrowTightGap),
                           _FeedbackBanner(message: _feedback!),
                         ],
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pEscrowSectionGap),
                         _MultiSigCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pEscrowSectionGap),
                         _OrderInfoCard(order: order),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pEscrowSectionGap),
                         _EscrowTimelineCard(events: snapshot.timeline),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pEscrowSectionGap),
                         _SecurityNotice(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pEscrowSectionGap),
                         _OrderLink(orderId: widget.orderId),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pEscrowTightGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pEscrowDetailInnerPadding,
+                          padding: _p2pEscrowInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Escrow detail review',

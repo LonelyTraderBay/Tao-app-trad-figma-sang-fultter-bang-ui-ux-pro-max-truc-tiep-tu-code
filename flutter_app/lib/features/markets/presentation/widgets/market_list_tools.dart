@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+
+const double _marketToolsCompactHeight = AppSpacing.buttonCompact;
+const double _marketToolCompactHeight =
+    AppSpacing.buttonCompact - AppSpacing.x1;
+const double _marketToolCompactGap = AppSpacing.x2;
+const EdgeInsets _marketToolCompactPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+);
+const double _marketToolCompactIcon = AppSpacing.iconSm;
 
 class MarketListTools extends StatelessWidget {
   const MarketListTools({super.key, required this.onNavigate});
@@ -84,13 +92,13 @@ class MarketListTools extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.marketToolsHeight,
+      height: _marketToolsCompactHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
         itemCount: tools.length,
         separatorBuilder: (_, _) =>
-            const SizedBox(width: AppSpacing.marketToolGap),
+            const SizedBox(width: _marketToolCompactGap),
         itemBuilder: (context, index) {
           final tool = tools[index];
           return _ToolChip(
@@ -125,39 +133,14 @@ class _ToolChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: tool.color.withValues(alpha: 0.08),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(color: tool.color.withValues(alpha: 0.22)),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: SizedBox(
-          height: AppSpacing.marketToolHeight,
-          child: Padding(
-            padding: AppSpacing.marketToolPadding,
-            child: Row(
-              children: [
-                Icon(
-                  tool.icon,
-                  color: tool.color,
-                  size: AppSpacing.marketToolIcon,
-                ),
-                const SizedBox(width: AppSpacing.marketToolIconGap),
-                Text(
-                  tool.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: tool.label,
+      selected: true,
+      onTap: onTap,
+      accentColor: tool.color,
+      height: _marketToolCompactHeight,
+      padding: _marketToolCompactPadding,
+      leading: Icon(tool.icon, color: tool.color, size: _marketToolCompactIcon),
     );
   }
 }

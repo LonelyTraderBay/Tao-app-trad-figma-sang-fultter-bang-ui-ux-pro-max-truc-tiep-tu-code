@@ -215,26 +215,12 @@ class _LevelChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
+      label: '${level}L',
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Material(
-        color: active
-            ? marketDepthPrimary.withValues(alpha: .16)
-            : AppColors.transparent,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-        child: Padding(
-          padding: AppSpacing.marketDepthLevelChipPadding,
-          child: Text(
-            '${level}L',
-            style: AppTextStyles.micro.copyWith(
-              color: active ? marketDepthPrimary : AppColors.text3,
-              fontWeight: AppTextStyles.medium,
-              height: AppSpacing.marketLineHeightTight,
-            ),
-          ),
-        ),
-      ),
+      accentColor: marketDepthPrimary,
+      padding: AppSpacing.marketDepthLevelChipPadding,
     );
   }
 }

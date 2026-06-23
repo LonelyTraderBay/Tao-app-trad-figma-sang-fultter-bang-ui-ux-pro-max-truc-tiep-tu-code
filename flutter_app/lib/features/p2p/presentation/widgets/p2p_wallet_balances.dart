@@ -52,9 +52,11 @@ class _BalanceCard extends StatelessWidget {
       padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             onTap: onToggle,
-            borderRadius: AppRadii.cardLargeRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            padding: AppSpacing.zeroInsets,
             child: Padding(
               padding: _p2pWalletCardPadding,
               child: Row(

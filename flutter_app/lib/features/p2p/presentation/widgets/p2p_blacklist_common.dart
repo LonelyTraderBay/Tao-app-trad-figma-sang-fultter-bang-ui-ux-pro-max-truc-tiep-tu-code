@@ -10,7 +10,7 @@ class _InfoNote extends StatelessWidget {
     return VitCard(
       key: P2PBlacklistPage.infoKey,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pBlacklistCompactCardPadding,
+      padding: _p2pBlacklistCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -157,7 +157,7 @@ class _TinyStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+      padding: _p2pBlacklistTinyPadding,
       child: Column(
         children: [
           Text(

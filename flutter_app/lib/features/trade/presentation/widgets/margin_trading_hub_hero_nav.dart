@@ -171,72 +171,63 @@ class _MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(item.colorHex);
-    return InkWell(
+    return VitCard(
       key: MarginTradingHubPage.menuKey(item.id),
-      borderRadius: AppRadii.cardRadius,
       onTap: () => context.go(item.targetPath),
-      child: VitCard(
-        density: VitDensity.compact,
-        padding: AppSpacing.cardPaddingCompact,
-        borderColor: color.withValues(alpha: .28),
-        child: Row(
-          children: [
-            VitCard(
-              variant: VitCardVariant.inner,
-              width: _hubIconTile,
-              height: _hubIconTile,
-              density: VitDensity.compact,
-              padding: EdgeInsets.zero,
-              borderColor: color.withValues(alpha: .18),
-              child: Icon(
-                _menuIcon(item.id),
-                color: color,
-                size: AppSpacing.x5,
-              ),
-            ),
-            const SizedBox(width: _hubSpace),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          item.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.body.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
+      borderColor: color.withValues(alpha: .28),
+      child: Row(
+        children: [
+          VitCard(
+            variant: VitCardVariant.inner,
+            width: _hubIconTile,
+            height: _hubIconTile,
+            density: VitDensity.compact,
+            padding: EdgeInsets.zero,
+            borderColor: color.withValues(alpha: .18),
+            child: Icon(_menuIcon(item.id), color: color, size: AppSpacing.x5),
+          ),
+          const SizedBox(width: _hubSpace),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        item.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.body.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(width: _hubTinySpace),
-                      MarginHubPhaseBadge(label: item.badge, color: color),
-                    ],
-                  ),
-                  const SizedBox(height: _hubTinySpace),
-                  Text(
-                    item.subtitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: _hubTinySpace),
+                    MarginHubPhaseBadge(label: item.badge, color: color),
+                  ],
+                ),
+                const SizedBox(height: _hubTinySpace),
+                Text(
+                  item.subtitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-            const SizedBox(width: _hubTinySpace),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.x4,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(width: _hubTinySpace),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.x4,
+          ),
+        ],
       ),
     );
   }

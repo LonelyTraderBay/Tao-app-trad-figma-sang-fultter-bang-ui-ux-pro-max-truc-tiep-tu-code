@@ -141,7 +141,7 @@ void main() {
 
     expect(find.text('Chặn CryptoKing_VN?'), findsOneWidget);
 
-    await tester.tap(find.widgetWithText(TextButton, 'Chặn'));
+    await tester.tap(find.text('Chặn'));
     await tester.pumpAndSettle();
 
     expect(find.byType(P2PBlacklistAddPage), findsOneWidget);

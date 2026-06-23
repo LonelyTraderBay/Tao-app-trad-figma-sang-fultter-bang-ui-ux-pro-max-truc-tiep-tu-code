@@ -77,8 +77,6 @@ const double _portfolioSparklineStroke = 1.4;
 const EdgeInsetsDirectional _portfolioHeroPadding = EdgeInsetsDirectional.all(
   AppSpacing.x3,
 );
-const EdgeInsetsDirectional _portfolioHeroTogglePadding =
-    EdgeInsetsDirectional.all(AppSpacing.x1);
 const EdgeInsetsDirectional _portfolioMiniStatPadding =
     EdgeInsetsDirectional.all(AppSpacing.x2);
 const EdgeInsetsDirectional _portfolioAllocationPadding =

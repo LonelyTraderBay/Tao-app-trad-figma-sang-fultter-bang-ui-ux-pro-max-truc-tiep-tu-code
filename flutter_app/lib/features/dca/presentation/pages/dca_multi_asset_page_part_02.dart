@@ -65,9 +65,16 @@ class _TokenSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: DCAMultiAssetPage.rebalanceToggleKey,
       onTap: onToggle,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      width: AppSpacing.dcaMultiToggleWidth,
+      height: AppSpacing.dcaMultiToggleHeight,
+      borderColor: AppColors.transparent,
+      clip: true,
       child: SizedBox(
         width: AppSpacing.dcaMultiToggleWidth,
         height: AppSpacing.dcaMultiToggleHeight,

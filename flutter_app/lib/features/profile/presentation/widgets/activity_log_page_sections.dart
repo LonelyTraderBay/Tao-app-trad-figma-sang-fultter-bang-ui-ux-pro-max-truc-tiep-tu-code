@@ -109,40 +109,14 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitChoicePill(
       key: ActivityLogPage.filterKey(filter.id),
+      label: filter.label,
+      selected: selected,
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: VitDensity.compact.controlHeight,
-        ),
-        child: Material(
-          color: selected
-              ? _activityPrimary.withValues(alpha: .2)
-              : AppColors.onAccent.withValues(alpha: .04),
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.inputRadius,
-            side: BorderSide(
-              color: selected
-                  ? _activityPrimary.withValues(alpha: .6)
-                  : AppColors.onAccent.withValues(alpha: .08),
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.profileActivityFilterChipPadding,
-            child: Center(
-              child: Text(
-                filter.label,
-                style: AppTextStyles.captionSm.copyWith(
-                  color: selected ? _activityPrimary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      height: VitDensity.compact.controlHeight,
+      padding: AppSpacing.profileActivityFilterChipPadding,
+      accentColor: _activityPrimary,
     );
   }
 }

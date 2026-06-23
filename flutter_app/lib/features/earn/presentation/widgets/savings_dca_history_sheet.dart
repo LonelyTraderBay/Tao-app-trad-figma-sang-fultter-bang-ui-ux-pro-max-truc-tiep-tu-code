@@ -111,9 +111,12 @@ class _CreatePlanSheet extends StatelessWidget {
               children: [
                 Text('Tạo kế hoạch DCA', style: AppTextStyles.baseMedium),
                 const SizedBox(width: AppSpacing.x2),
-                IconButton(
+                VitIconButton(
+                  icon: Icons.close_rounded,
+                  tooltip: 'Đóng',
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close_rounded),
+                  variant: VitIconButtonVariant.transparent,
+                  size: VitIconButtonSize.md,
                 ),
               ],
             ),

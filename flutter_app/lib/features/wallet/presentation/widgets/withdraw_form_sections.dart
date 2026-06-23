@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 
@@ -75,10 +76,11 @@ class WithdrawNetworkSelector extends StatelessWidget {
           button: true,
           label:
               'Withdraw network selector ${network.name}, fee ${formatWithdrawNetworkFee(network.fee)} $asset, minimum ${formatWithdrawCompact(network.minWithdraw)}',
-          child: GestureDetector(
+          child: VitCard(
             key: withdrawNetworkSelectorKey,
             onTap: onTap,
-            behavior: HitTestBehavior.opaque,
+            variant: VitCardVariant.ghost,
+            borderColor: AppColors.transparent,
             child: VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.md,

@@ -114,6 +114,7 @@ class _WalletTokenApprovalPageState
                 setState(() => _autoRevokeUnused = !_autoRevokeUnused),
             onWarnUnlimited: () =>
                 setState(() => _warnUnlimited = !_warnUnlimited),
+            onScanRisk: _showScanRiskNotice,
           ),
         ],
       );
@@ -158,6 +159,15 @@ class _WalletTokenApprovalPageState
       context: context,
       backgroundColor: walletTokenApprovalPanel,
       builder: (context) => WalletTokenRevokeSheet(preview: preview),
+    );
+  }
+
+  void _showScanRiskNotice() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Đã quét lại danh sách approval rủi ro'),
+        duration: Duration(milliseconds: 900),
+      ),
     );
   }
 }

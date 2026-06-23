@@ -13,10 +13,33 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pOwnershipVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pOwnershipNativeNavClearance =
+    _p2pOwnershipVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
+const double _p2pOwnershipVisualClearance = AppSpacing.x3;
+const double _p2pOwnershipNativeClearance = AppSpacing.x2;
+const double _p2pOwnershipMajorGap = AppSpacing.x3;
+const double _p2pOwnershipSectionGap = AppSpacing.x2;
+const double _p2pOwnershipHeroIconBox = AppSpacing.searchBarCompactHeight;
+const double _p2pOwnershipDocumentIconBox = AppSpacing.buttonCompact;
+const EdgeInsets _p2pOwnershipCardPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pOwnershipOptionPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x2,
+);
+
+EdgeInsets _p2pOwnershipScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
 
 class P2PPaymentMethodOwnershipPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodOwnershipPage({
@@ -53,12 +76,10 @@ class _P2PPaymentMethodOwnershipPageState
     );
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetNative) +
+            ? _p2pOwnershipVisualNavClearance + _p2pOwnershipVisualClearance
+            : _p2pOwnershipNativeNavClearance + _p2pOwnershipNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final canSubmit = controller.canSubmit(_uploaded) && !_submitting;
 
@@ -84,19 +105,19 @@ class _P2PPaymentMethodOwnershipPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodOwnershipPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
+                    padding: _p2pOwnershipScrollPadding(scrollEndPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const _OwnershipHero(),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pOwnershipMajorGap),
                         Text(
                           'Tài liệu cần thiết',
                           style: AppTextStyles.baseMedium.copyWith(
                             color: AppColors.text1,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pOwnershipSectionGap),
                         for (final document in snapshot.documents) ...[
                           _OwnershipDocumentCard(
                             document: document,
@@ -104,21 +125,15 @@ class _P2PPaymentMethodOwnershipPageState
                             onUpload: () => _markUploaded(document.id),
                             onRemove: () => _removeUpload(document.id),
                           ),
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: _p2pOwnershipSectionGap),
                         ],
-                        const SizedBox(height: AppSpacing.x3),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Payment ownership submission review',
-                              message:
-                                  'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
-                              contractId: 'SC-234',
-                            ),
-                          ],
+                        const SizedBox(height: _p2pOwnershipSectionGap),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Payment ownership submission review',
+                          message:
+                              'Required documents, optional evidence, upload and remove state, confirmation dialog, submitting state, and return path are reviewed before payment method ownership is approved.',
+                          contractId: 'SC-234',
                         ),
                         VitCtaButton(
                           key: P2PPaymentMethodOwnershipPage.submitButtonKey,
@@ -171,23 +186,22 @@ class _P2PPaymentMethodOwnershipPageState
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         actions: [
-          TextButton(
+          VitCtaButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(
-              'Hủy',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
+            variant: VitCtaButtonVariant.secondary,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            child: const Text('Hủy'),
           ),
-          TextButton(
+          VitCtaButton(
             key: P2PPaymentMethodOwnershipPage.confirmSubmitKey,
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(
-              'Xác nhận',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+            variant: VitCtaButtonVariant.primary,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            child: const Text('Xác nhận'),
           ),
         ],
       ),
@@ -207,7 +221,7 @@ class _OwnershipHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: _p2pOwnershipCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,8 +230,8 @@ class _OwnershipHero extends StatelessWidget {
             color: AppColors.primary,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             child: SizedBox(
-              width: AppSpacing.x7,
-              height: AppSpacing.x7,
+              width: _p2pOwnershipHeroIconBox,
+              height: _p2pOwnershipHeroIconBox,
               child: Icon(
                 Icons.credit_card_rounded,
                 color: AppColors.text1,
@@ -225,7 +239,7 @@ class _OwnershipHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: _p2pOwnershipSectionGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,11 +282,11 @@ class _OwnershipDocumentCard extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodOwnershipPage.documentKey(document.id),
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: _p2pOwnershipCardPadding,
       child: Row(
         children: [
           _DocumentIcon(uploaded: uploaded),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _p2pOwnershipSectionGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,14 +326,14 @@ class _OwnershipDocumentCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _p2pOwnershipSectionGap),
           if (uploaded)
-            IconButton(
+            VitInlineIconAction(
               key: P2PPaymentMethodOwnershipPage.removeKey(document.id),
               onPressed: onRemove,
-              icon: const Icon(Icons.close_rounded),
+              icon: Icons.close_rounded,
               color: AppColors.text3,
-              iconSize: AppSpacing.iconMd,
+              size: AppSpacing.iconMd,
               tooltip: 'Xóa tài liệu',
             )
           else
@@ -344,8 +358,8 @@ class _DocumentIcon extends StatelessWidget {
       color: uploaded ? AppColors.buy15 : AppColors.primary12,
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       child: SizedBox(
-        width: AppSpacing.x6,
-        height: AppSpacing.x6,
+        width: _p2pOwnershipDocumentIconBox,
+        height: _p2pOwnershipDocumentIconBox,
         child: Icon(
           uploaded
               ? Icons.check_circle_outline_rounded
@@ -365,26 +379,13 @@ class _UploadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.primary12,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(color: AppColors.primary20),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pPaymentOptionPadding,
-          child: Text(
-            'Upload',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.primary,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: 'Upload',
+      selected: false,
+      onTap: onTap,
+      padding: _p2pOwnershipOptionPadding,
+      accentColor: AppModuleAccents.p2p,
+      semanticLabel: 'Upload ownership document',
     );
   }
 }

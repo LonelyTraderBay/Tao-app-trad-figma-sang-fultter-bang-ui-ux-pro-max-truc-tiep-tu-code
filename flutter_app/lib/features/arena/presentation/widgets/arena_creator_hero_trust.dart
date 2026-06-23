@@ -235,10 +235,11 @@ class _TrustHeader extends StatelessWidget {
         ),
         Material(
           type: MaterialType.transparency,
-          child: InkWell(
+          child: VitCard(
             key: ArenaCreatorPage.trustDetailKey,
             onTap: onDetails,
-            borderRadius: AppRadii.smRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
             child: Padding(
               padding: AppSpacing.arenaCreatorTrustActionPadding,
               child: Row(

@@ -37,7 +37,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pMerchantCommerceStatPadding,
+      padding: _p2pMyOrdersStatPadding,
       child: Column(
         children: [
           Text(
@@ -117,15 +117,17 @@ class _SearchSortRow extends StatelessWidget {
           key: P2PMyOrdersPage.sortKey,
           color: AppColors.surface2,
           borderRadius: AppRadii.inputRadius,
-          child: InkWell(
+          child: VitCard(
             onTap: onSort,
-            borderRadius: AppRadii.inputRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.zeroInsets,
             child: VitCard(
-              height: AppSpacing.p2pMerchantCommerceSortButtonHeight,
+              height: _p2pMyOrdersSortHeight,
               variant: VitCardVariant.ghost,
               radius: VitCardRadius.sm,
               borderColor: AppColors.borderSolid,
-              padding: AppSpacing.p2pMerchantCommerceChipPadding,
+              padding: _p2pMyOrdersChipPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -166,7 +168,7 @@ class _OrderCard extends StatelessWidget {
     return VitCard(
       key: P2PMyOrdersPage.orderKey(order.id),
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: _p2pMyOrdersCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -201,7 +203,7 @@ class _OrderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pMyOrdersSectionGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -226,12 +228,12 @@ class _OrderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pMyOrdersSectionGap),
           const Divider(
             color: AppColors.divider,
-            height: AppSpacing.p2pMerchantCommerceDividerHeight,
+            height: _p2pMyOrdersDividerHeight,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pMyOrdersTightGap),
           Row(
             children: [
               CircleAvatar(
@@ -329,7 +331,7 @@ class _EmptyOrders extends StatelessWidget {
     return VitCard(
       key: P2PMyOrdersPage.emptyKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pMerchantCommerceLargePadding,
+      padding: _p2pMyOrdersLargePadding,
       child: Column(
         children: [
           const Icon(
@@ -345,7 +347,7 @@ class _EmptyOrders extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pMyOrdersSectionGap),
           VitCtaButton(
             variant: VitCtaButtonVariant.primary,
             onPressed: () => context.go(snapshot.parentRoute),

@@ -84,47 +84,45 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      key: CopySafetyCenterPage.metricKey(metric.name),
       density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
+      onTap: onTap,
       child: Column(
         children: [
-          InkWell(
-            key: CopySafetyCenterPage.metricKey(metric.name),
-            onTap: onTap,
-            child: Padding(
-              padding: AppSpacing.cardPadding,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          metric.name,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+          Padding(
+            padding: AppSpacing.cardPadding,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        metric.name,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
                         ),
-                        const SizedBox(height: AppSpacing.x1),
-                        Text(
-                          metric.description,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        metric.description,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Icon(
-                    expanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.ctaLoadingIcon,
-                  ),
-                ],
-              ),
+                ),
+                Icon(
+                  expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.ctaLoadingIcon,
+                ),
+              ],
             ),
           ),
           if (expanded)

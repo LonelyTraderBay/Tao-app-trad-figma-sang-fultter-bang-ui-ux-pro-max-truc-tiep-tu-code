@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -75,50 +76,49 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.defaultGap,
-                    children: [
-                      _EarnHero(snapshot: snapshot),
-                      if (snapshot.highRiskContractId != null)
-                        VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Yield risk states active',
-                          message:
-                              'Terms, validator setup, risk preview, confirmation, receipt, management and support are tracked as one Earn contract.',
-                          contractId: snapshot.highRiskContractId,
-                        ),
-                      _MainTabs(
-                        activeTab: _tab,
-                        positionCount: snapshot.positions.length,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
-                      if (_tab == _EarnTab.products) ...[
-                        _FilterRow(
-                          activeFilter: _filter,
-                          onChanged: (filter) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _filter = filter);
-                          },
-                        ),
-                        _ProductList(products: products),
-                      ] else
-                        _PositionsList(snapshot: snapshot),
-                    ],
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
+            child: VitInsetScrollView(
+              physics: const ClampingScrollPhysics(),
+              bottomInset: bottomInset,
+              child: VitPageContent(
+                padding: VitContentPadding.compact,
+                gap: VitContentGap.defaultGap,
+                density: VitDensity.compact,
+                children: [
+                  _EarnHero(snapshot: snapshot),
+                  if (snapshot.highRiskContractId != null)
+                    VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.riskReview,
+                      title: 'Yield risk states active',
+                      message:
+                          'Terms, validator setup, risk preview, confirmation, receipt, management and support are tracked as one Earn contract.',
+                      contractId: snapshot.highRiskContractId,
+                    ),
+                  _MainTabs(
+                    activeTab: _tab,
+                    positionCount: snapshot.positions.length,
+                    onChanged: (tab) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _tab = tab);
+                    },
                   ),
-                ),
+                  if (_tab == _EarnTab.products) ...[
+                    _FilterRow(
+                      activeFilter: _filter,
+                      onChanged: (filter) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _filter = filter);
+                      },
+                    ),
+                    _ProductList(products: products),
+                  ] else
+                    _PositionsList(snapshot: snapshot),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/dev/presentation/widgets/design_system_common.dart';
@@ -269,30 +268,12 @@ class _ChoiceChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
+      label: label,
+      selected: selected,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: selected ? AppColors.primary12 : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.smRadius,
-            side: BorderSide(
-              color: selected ? AppColors.primary20 : AppColors.borderSolid,
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.devChipPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: selected ? AppColors.primary : AppColors.text2,
-              fontWeight: AppTextStyles.medium,
-            ),
-          ),
-        ),
-      ),
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.devChipPadding,
     );
   }
 }
@@ -312,47 +293,15 @@ class _ToggleChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final background = color == AppColors.buy
-        ? AppColors.buy15
-        : AppColors.primary12;
-    final border = color == AppColors.buy
-        ? AppColors.buy20
-        : AppColors.primary20;
-
-    return InkWell(
+    return VitChoicePill(
+      label: label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? background : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.smRadius,
-            side: BorderSide(color: active ? border : AppColors.borderSolid),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.devChipPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                active
-                    ? Icons.check_box_rounded
-                    : Icons.check_box_outline_blank,
-                color: active ? color : AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? color : AppColors.text3,
-                  fontWeight: AppTextStyles.medium,
-                ),
-              ),
-            ],
-          ),
-        ),
+      accentColor: color,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.devChipPadding,
+      leading: Icon(
+        active ? Icons.check_box_rounded : Icons.check_box_outline_blank,
       ),
     );
   }

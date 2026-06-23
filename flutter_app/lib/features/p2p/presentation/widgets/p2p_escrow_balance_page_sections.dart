@@ -11,7 +11,7 @@ class _EscrowHeroCard extends StatelessWidget {
       key: P2PEscrowBalancePage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pFinancialSafetyLargePadding,
+      padding: _p2pEscrowBalanceLargePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -19,8 +19,8 @@ class _EscrowHeroCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               VitCard(
-                width: AppSpacing.p2pFinancialSafetyIconBox,
-                height: AppSpacing.p2pFinancialSafetyIconBox,
+                width: _p2pEscrowBalanceIconBox,
+                height: _p2pEscrowBalanceIconBox,
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.lg,
                 borderColor: AppColors.warningBorder,
@@ -62,11 +62,11 @@ class _EscrowHeroCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pEscrowBalanceTightGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            padding: AppSpacing.p2pFinancialSafetyInnerPadding,
+            padding: _p2pEscrowBalanceInnerPadding,
             child: Row(
               children: [
                 const Icon(
@@ -175,7 +175,7 @@ class _EscrowOrderCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pFinancialSafetyCardPadding,
+      padding: _p2pEscrowBalanceCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pOrder(order.canonicalOrderId));
@@ -245,7 +245,7 @@ class _EscrowOrderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pEscrowBalanceSectionGap),
           Row(
             children: [
               Expanded(
@@ -255,7 +255,7 @@ class _EscrowOrderCard extends StatelessWidget {
                   valueColor: AppModuleAccents.p2p,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: _p2pEscrowBalanceTightGap),
               Expanded(
                 child: _OrderMetric(
                   label: 'Giá trị',
@@ -294,7 +294,7 @@ class _EscrowOrderCard extends StatelessWidget {
               variant: VitCardVariant.inner,
               radius: VitCardRadius.sm,
               borderColor: AppColors.sell20,
-              padding: AppSpacing.p2pFinancialSafetyInnerPadding,
+              padding: _p2pEscrowBalanceInnerPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -309,7 +309,7 @@ class _EscrowOrderCard extends StatelessWidget {
                       order.warning!,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.p2pFinancialSafetyBodyLineHeight,
+                        height: _p2pEscrowBalanceBodyLineHeight,
                       ),
                     ),
                   ),
@@ -321,8 +321,8 @@ class _EscrowOrderCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: VitCard(
-              width: AppSpacing.p2pFinancialSafetyAccentLineWidth,
-              height: AppSpacing.p2pFinancialSafetyAccentLineHeight,
+              width: _p2pEscrowBalanceAccentLineWidth,
+              height: _p2pEscrowBalanceAccentLineHeight,
               variant: VitCardVariant.ghost,
               radius: VitCardRadius.sm,
               background: ColoredBox(color: typeColor),

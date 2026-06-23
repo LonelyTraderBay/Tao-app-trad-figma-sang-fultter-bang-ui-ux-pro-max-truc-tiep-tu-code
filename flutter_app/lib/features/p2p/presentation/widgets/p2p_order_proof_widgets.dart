@@ -96,7 +96,7 @@ class _UploadSection extends StatelessWidget {
           subtitle,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
             Expanded(
@@ -152,15 +152,15 @@ class _UploadSourceCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      height: AppSpacing.p2pFinancialSafetyUploadCardHeight,
+      height: AppSpacing.buttonHero + AppSpacing.x4,
       padding: AppSpacing.p2pFinancialSafetyCardPadding,
       borderColor: color.withValues(alpha: .45),
       onTap: enabled ? onPressed : null,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: color, size: AppSpacing.iconLg),
-          const SizedBox(height: AppSpacing.x3),
+          Icon(icon, color: color, size: AppSpacing.iconMd),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             label,
             textAlign: TextAlign.center,
@@ -254,17 +254,17 @@ class _ProofThumb extends StatelessWidget {
         Positioned(
           top: -AppSpacing.x2,
           right: -AppSpacing.x2,
-          child: IconButton(
-            key: P2POrderProofPage.removeKey(index),
-            onPressed: onRemove,
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.sell,
-              minimumSize: const Size(AppSpacing.x6, AppSpacing.x6),
-            ),
-            icon: const Icon(
-              Icons.delete_outline,
-              color: AppColors.onAccent,
-              size: AppSpacing.iconSm,
+          child: SizedBox.square(
+            dimension: AppSpacing.x6,
+            child: Center(
+              child: VitIconButton(
+                key: P2POrderProofPage.removeKey(index),
+                icon: Icons.delete_outline,
+                tooltip: 'Remove proof ${index + 1}',
+                onPressed: onRemove,
+                variant: VitIconButtonVariant.danger,
+                size: VitIconButtonSize.sm,
+              ),
             ),
           ),
         ),

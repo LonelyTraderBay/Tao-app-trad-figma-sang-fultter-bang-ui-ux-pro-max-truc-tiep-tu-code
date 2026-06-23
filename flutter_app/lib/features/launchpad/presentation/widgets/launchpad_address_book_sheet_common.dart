@@ -130,34 +130,12 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: AppRadii.xlRadius,
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      accentColor: color,
       onTap: onTap,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? color.withValues(alpha: .12) : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.xlRadius,
-            side: BorderSide(
-              color: active
-                  ? color.withValues(alpha: .32)
-                  : AppColors.transparent,
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.launchpadPillPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? color : AppColors.text3,
-              fontWeight: active
-                  ? AppTextStyles.extraBold
-                  : AppTextStyles.medium,
-            ),
-          ),
-        ),
-      ),
+      padding: AppSpacing.launchpadPillPadding,
     );
   }
 }

@@ -204,7 +204,14 @@ class AddressWalletInput extends StatelessWidget {
           AddressIconCircleButton(
             semanticLabel: 'Scan wallet address QR code',
             icon: Icons.qr_code_scanner_rounded,
-            onTap: () {},
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Quét QR sẽ mở khi trình quét ví được kết nối'),
+                  duration: Duration(milliseconds: 900),
+                ),
+              );
+            },
           ),
         ],
       ),

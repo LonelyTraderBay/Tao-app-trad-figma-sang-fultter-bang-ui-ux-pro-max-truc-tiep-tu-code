@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_blacklist_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_settings_page.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/pages/device_management_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 void main() {
   Future<void> pumpSettings(WidgetTester tester) async {
@@ -96,10 +96,10 @@ void main() {
 
     await tester.tap(find.byKey(P2PSettingsPage.optionKey('asset', 'BTC')));
     await tester.pumpAndSettle();
-    final btcChip = tester.widget<Material>(
+    final btcChip = tester.widget<VitChoicePill>(
       find.byKey(P2PSettingsPage.optionKey('asset', 'BTC')),
     );
-    expect(btcChip.color, AppColors.primary12);
+    expect(btcChip.selected, isTrue);
 
     await tester.ensureVisible(find.byKey(P2PSettingsPage.hoursKey));
     await tester.tap(find.text('Tùy chỉnh'));

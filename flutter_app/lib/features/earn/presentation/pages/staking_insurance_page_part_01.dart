@@ -174,39 +174,34 @@ class _TabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        key: StakingInsurancePage.tabKey(tab.name),
-        onTap: onTap,
-        child: Padding(
-          padding: AppSpacing.earnTopPaddingX4,
-          child: Column(
-            children: [
-              Text(
-                _tabLabel(tab),
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.primarySoft : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x4),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 160),
-                child: SizedBox(
-                  width: selected ? AppSpacing.buttonHero : 0,
-                  height: AppSpacing.stakingInsuranceTabIndicatorHeight,
-                  child: Material(
-                    color: selected
-                        ? AppColors.primarySoft
-                        : AppColors.transparent,
-                    borderRadius: AppRadii.xsRadius,
-                  ),
-                ),
-              ),
-            ],
+    return VitCard(
+      key: StakingInsurancePage.tabKey(tab.name),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.earnTopPaddingX4,
+      onTap: onTap,
+      child: Column(
+        children: [
+          Text(
+            _tabLabel(tab),
+            style: AppTextStyles.caption.copyWith(
+              color: selected ? AppColors.primarySoft : AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-        ),
+          const SizedBox(height: AppSpacing.x4),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 160),
+            child: SizedBox(
+              width: selected ? AppSpacing.buttonHero : 0,
+              height: AppSpacing.stakingInsuranceTabIndicatorHeight,
+              child: Material(
+                color: selected ? AppColors.primarySoft : AppColors.transparent,
+                borderRadius: AppRadii.xsRadius,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

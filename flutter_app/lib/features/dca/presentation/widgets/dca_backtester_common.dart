@@ -76,50 +76,13 @@ class DcaSelectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitChoicePill(
+      label: label,
+      selected: selected,
       onTap: onTap,
-      child: TweenAnimationBuilder<double>(
-        duration: const Duration(milliseconds: 160),
-        tween: Tween<double>(end: selected ? 1 : 0),
-        builder: (context, value, _) {
-          final background = Color.lerp(
-            AppColors.surface2,
-            AppColors.primary,
-            value,
-          )!;
-          final borderColor = Color.lerp(
-            AppColors.cardBorder,
-            AppColors.primary,
-            value,
-          )!;
-          final textColor = Color.lerp(
-            AppColors.text1,
-            AppColors.onAccent,
-            value,
-          )!;
-          return SizedBox(
-            height: AppSpacing.ctaHeight - AppSpacing.x4,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: background,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                  side: BorderSide(color: borderColor),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: textColor,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
+      fullWidth: true,
+      height: AppSpacing.ctaHeight - AppSpacing.x4,
+      accentColor: AppColors.primary,
     );
   }
 }

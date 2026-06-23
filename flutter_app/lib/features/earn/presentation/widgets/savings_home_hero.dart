@@ -65,14 +65,13 @@ class _SavingsHero extends StatelessWidget {
                   ],
                 ),
               ),
-              IconButton(
+              VitIconButton(
                 key: SavingsPage.portfolioButtonKey,
+                icon: Icons.account_balance_wallet_outlined,
+                tooltip: 'Mở danh mục tiết kiệm',
                 onPressed: () => context.go(snapshot.portfolioRoute),
-                icon: const Icon(
-                  Icons.account_balance_wallet_outlined,
-                  color: AppColors.text2,
-                  size: AppSpacing.iconMd,
-                ),
+                variant: VitIconButtonVariant.transparent,
+                size: VitIconButtonSize.md,
               ),
             ],
           ),
@@ -124,38 +123,15 @@ class _HeroAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: primary ? AppColors.primary : AppColors.surface2,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: AppSpacing.earnVerticalPaddingX3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: primary ? AppColors.navCenterIcon : AppColors.text1,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: primary ? AppColors.navCenterIcon : AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      variant: primary
+          ? VitCtaButtonVariant.primary
+          : VitCtaButtonVariant.secondary,
+      height: AppSpacing.buttonCompact,
+      fullWidth: true,
+      leading: Icon(icon),
+      onPressed: onTap,
+      child: Text(label),
     );
   }
 }
@@ -243,39 +219,37 @@ class _ToolboxButton extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(exportRoute.isNotEmpty);
     return VitCard(
+      key: SavingsPage.guideButtonKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       padding: AppSpacing.earnVerticalPaddingX3,
-      child: InkWell(
-        key: SavingsPage.guideButtonKey,
-        onTap: () {
-          HapticFeedback.selectionClick();
-          context.go(guideRoute);
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.menu_book_outlined,
+      onTap: () {
+        HapticFeedback.selectionClick();
+        context.go(guideRoute);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.menu_book_outlined,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Text(
+            'Công cụ nâng cao',
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              size: AppSpacing.iconSm,
+              fontWeight: AppTextStyles.bold,
             ),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              'Công cụ nâng cao',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconSm,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+        ],
       ),
     );
   }

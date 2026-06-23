@@ -14,7 +14,6 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -22,6 +21,35 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part '../widgets/p2p_order_book_selector_ticker.dart';
 part '../widgets/p2p_order_book_cards_lists.dart';
 part '../widgets/p2p_order_book_painter.dart';
+
+const double _p2pOrderBookVisualClearance = AppSpacing.x3;
+const double _p2pOrderBookNativeClearance = AppSpacing.x2;
+const double _p2pOrderBookSectionGap = AppSpacing.x2;
+const double _p2pOrderBookRefreshExtent = AppSpacing.buttonCompact;
+const double _p2pOrderBookAssetChipMinWidth = 96;
+const double _p2pOrderBookAssetChipMinExtent =
+    AppSpacing.searchBarCompactHeight;
+const double _p2pOrderBookDepthChartExtent = 112;
+const double _p2pOrderBookOrderRowExtent = AppSpacing.x5 - AppSpacing.x1;
+const double _p2pOrderBookLegendDot = AppSpacing.x3;
+const double _p2pOrderBookSmallIcon = AppSpacing.iconSm;
+const EdgeInsets _p2pOrderBookCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pOrderBookCompactPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pOrderBookSelectorPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _p2pOrderBookRowPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+);
+
+EdgeInsets _p2pOrderBookScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
 
 class P2POrderBookPage extends ConsumerStatefulWidget {
   const P2POrderBookPage({super.key, this.shellRenderMode});
@@ -49,12 +77,10 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pOrderBookProvider(_selectedAsset));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pMarketplaceAnalyticsBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pMarketplaceAnalyticsBottomInsetNative) +
+            ? DeviceMetrics.bottomChrome + _p2pOrderBookVisualClearance
+            : DeviceMetrics.nativeBottomChrome + _p2pOrderBookNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -79,13 +105,9 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMarketplaceAnalyticsScrollPadding(
-                      bottomInset,
-                    ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    padding: _p2pOrderBookScrollPadding(scrollEndPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _AssetSelector(
                           snapshot: snapshot,
@@ -95,23 +117,22 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                             setState(() => _selectedAsset = asset);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pOrderBookSectionGap),
                         _MarketTicker(
                           snapshot: snapshot,
                           isRefreshing: _isRefreshing,
                           onRefresh: _refresh,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pOrderBookSectionGap),
                         _DepthChartCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pOrderBookSectionGap),
                         _BestPriceCards(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pOrderBookSectionGap),
                         _OrderBookLists(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: _p2pOrderBookSectionGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding:
-                              AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+                          padding: _p2pOrderBookCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Order book liquidity review',

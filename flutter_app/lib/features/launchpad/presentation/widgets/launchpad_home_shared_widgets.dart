@@ -19,37 +19,29 @@ class _GhostButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: SizedBox(
-        height: _launchpadActionHeight,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: background,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.inputRadius,
-              side: BorderSide(color: border),
+      height: _launchpadActionHeight,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: border,
+      background: ColoredBox(color: background),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: AppSpacing.iconMd),
+          const SizedBox(width: AppSpacing.x2),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.body.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconMd),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.body.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

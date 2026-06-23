@@ -12,24 +12,10 @@ class StakingCustodyActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface3,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        borderRadius: AppRadii.lgRadius,
-        onTap: onTap,
-        child: Padding(
-          padding: AppSpacing.earnCardPaddingX4X3,
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.secondary,
+      child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 }

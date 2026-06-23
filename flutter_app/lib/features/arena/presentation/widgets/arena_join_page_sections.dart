@@ -368,14 +368,17 @@ class _SafetyPolicyLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: TextButton.icon(
+      child: VitCtaButton(
         key: ArenaJoinPage.safetyPolicyKey,
         onPressed: onTap,
-        icon: const Icon(
+        variant: VitCtaButtonVariant.ghost,
+        fullWidth: false,
+        density: VitDensity.compact,
+        leading: const Icon(
           Icons.shield_outlined,
           size: AppSpacing.arenaJoinInlineIcon,
         ),
-        label: Text(
+        child: Text(
           'Xem chính sách hủy/void',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.primary,

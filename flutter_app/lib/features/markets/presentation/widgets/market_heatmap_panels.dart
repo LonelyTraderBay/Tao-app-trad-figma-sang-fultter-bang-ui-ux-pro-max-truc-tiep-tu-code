@@ -129,32 +129,14 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
+              VitCtaButton(
                 key: MarketHeatmapKeys.detailButton,
-                onTap: onDetail,
-                borderRadius: AppRadii.mdRadius,
-                child: Material(
-                  color: marketHeatmapPrimary,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                  child: SizedBox(
-                    height: AppSpacing.marketHeatmapDetailButtonHeight,
-                    child: Padding(
-                      padding: AppSpacing.marketHeatmapDetailButtonPadding,
-                      child: Center(
-                        child: Text(
-                          'Chi tiết',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.onAccent,
-                            fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.marketLineHeightTight,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                onPressed: onDetail,
+                variant: VitCtaButtonVariant.primary,
+                fullWidth: false,
+                height: AppSpacing.marketHeatmapDetailButtonHeight,
+                padding: AppSpacing.marketHeatmapDetailButtonPadding,
+                child: const Text('Chi tiết'),
               ),
             ],
           ),

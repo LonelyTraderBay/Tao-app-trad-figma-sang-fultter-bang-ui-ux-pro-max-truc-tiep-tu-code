@@ -32,7 +32,7 @@ class _ProgressBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: _p2pSelfieSectionGap),
         ClipRRect(
           borderRadius: AppRadii.lgRadius,
           child: LinearProgressIndicator(
@@ -61,7 +61,7 @@ class _LivenessActionTile extends StatelessWidget {
       radius: VitCardRadius.md,
       variant: completed ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: completed ? AppColors.buy20 : AppColors.cardBorder,
-      padding: AppSpacing.p2pSelfieReviewPadding,
+      padding: _p2pSelfieReviewPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -70,7 +70,7 @@ class _LivenessActionTile extends StatelessWidget {
             color: completed ? AppColors.buy : AppColors.text3,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pSelfieSectionGap),
           Text(
             action.label,
             textAlign: TextAlign.center,
@@ -80,7 +80,7 @@ class _LivenessActionTile extends StatelessWidget {
             ),
           ),
           if (completed) ...[
-            const SizedBox(height: AppSpacing.x1),
+            const SizedBox(height: _p2pSelfieTightGap),
             const Icon(
               Icons.check_circle_outline_rounded,
               color: AppColors.buy,
@@ -111,9 +111,9 @@ class _ResultStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Padding(
-          padding: AppSpacing.p2pSelfieResultIconMargin,
+          padding: _p2pSelfieResultIconMargin,
           child: SizedBox.square(
-            dimension: AppSpacing.buttonHero,
+            dimension: _p2pSelfieActionIconBox,
             child: Material(
               color: AppColors.buy10,
               shape: CircleBorder(),
@@ -130,16 +130,16 @@ class _ResultStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(color: AppColors.buy),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: _p2pSelfieSectionGap),
         Text(
           'Khuôn mặt của bạn đã được xác minh',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pSelfieCardPadding,
+          padding: _p2pSelfieCardPadding,
           child: Column(
             children: [
               _ScoreRow(label: 'Face Match Score', value: snapshot.matchScore),
@@ -151,10 +151,10 @@ class _ResultStep extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
           radius: VitCardRadius.md,
-          padding: AppSpacing.p2pSelfieCardPadding,
+          padding: _p2pSelfieCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -169,27 +169,26 @@ class _ResultStep extends StatelessWidget {
                   'Dữ liệu biometric được mã hóa và xóa sau khi xác minh. Chúng tôi không lưu trữ ảnh selfie của bạn.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pSelfieBodyLineHeight,
+                    height: _p2pSelfieBodyLineHeight,
                   ),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         VitCtaButton(
           key: P2PSelfieVerificationPage.completeKey,
           onPressed: onComplete,
           trailing: const Icon(Icons.chevron_right_rounded),
           child: const Text('Hoàn tất'),
         ),
-        const SizedBox(height: AppSpacing.x3),
-        TextButton(
+        const SizedBox(height: _p2pSelfieSectionGap),
+        VitCtaButton(
           onPressed: onSupport,
-          style: TextButton.styleFrom(
-            foregroundColor: AppColors.text2,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
+          variant: VitCtaButtonVariant.secondary,
+          height: AppSpacing.buttonCompact,
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
           child: const Text('Liên hệ hỗ trợ'),
         ),
       ],
@@ -206,7 +205,7 @@ class _ScoreRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pSelfieScoreRowPadding,
+      padding: _p2pSelfieScoreRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -270,7 +269,7 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.p2pSelfieChecklistIconPadding,
+          padding: _p2pSelfieChecklistIconPadding,
           child: Icon(
             color == AppColors.warn
                 ? Icons.auto_awesome_rounded
@@ -285,7 +284,7 @@ class _ChecklistRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pSelfieBodyLineHeight,
+              height: _p2pSelfieBodyLineHeight,
             ),
           ),
         ),

@@ -16,9 +16,12 @@ class _InfoSheet extends StatelessWidget {
             Expanded(
               child: Text('Lãi kép là gì?', style: AppTextStyles.sectionTitle),
             ),
-            IconButton(
+            VitIconButton(
+              icon: Icons.close_rounded,
+              tooltip: 'Đóng',
               onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.close_rounded, color: AppColors.text3),
+              variant: VitIconButtonVariant.transparent,
+              size: VitIconButtonSize.md,
             ),
           ],
         ),
@@ -142,9 +145,12 @@ class _SuccessToast extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
+          VitIconButton(
+            icon: Icons.close_rounded,
+            tooltip: 'Đóng thông báo',
             onPressed: onDismiss,
-            icon: const Icon(Icons.close_rounded, color: AppColors.text3),
+            variant: VitIconButtonVariant.transparent,
+            size: VitIconButtonSize.md,
           ),
         ],
       ),
@@ -163,33 +169,25 @@ class _ToggleSwitch extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: on,
-      child: Material(
-        color: on ? AppColors.buy : AppColors.borderSolid,
-        borderRadius: AppRadii.mdRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.mdRadius,
-          child: SizedBox(
-            width: AppSpacing.autoCompoundSettingsSwitchWidth,
-            height: AppSpacing.buttonCompact - AppSpacing.x2,
-            child: Padding(
-              padding: AppSpacing.zeroInsets.copyWith(
-                left: AppSpacing.x1,
-                top: AppSpacing.x1,
-                right: AppSpacing.x1,
-                bottom: AppSpacing.x1,
-              ),
-              child: AnimatedAlign(
-                duration: const Duration(milliseconds: 180),
-                alignment: on ? Alignment.centerRight : Alignment.centerLeft,
-                child: const Material(
-                  color: AppColors.onAccent,
-                  shape: CircleBorder(),
-                  child: SizedBox(width: AppSpacing.x4, height: AppSpacing.x4),
-                ),
-              ),
-            ),
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.md,
+        padding: EdgeInsets.zero,
+        onTap: onTap,
+        child: VitTogglePill(
+          enabled: on,
+          width: AppSpacing.autoCompoundSettingsSwitchWidth,
+          height: AppSpacing.buttonCompact - AppSpacing.x2,
+          knobSize: AppSpacing.x4,
+          knobMargin: AppSpacing.zeroInsets.copyWith(
+            left: AppSpacing.x1,
+            top: AppSpacing.x1,
+            right: AppSpacing.x1,
+            bottom: AppSpacing.x1,
           ),
+          activeColor: AppColors.buy,
+          inactiveColor: AppColors.borderSolid,
+          inactiveKnobColor: AppColors.onAccent,
         ),
       ),
     );

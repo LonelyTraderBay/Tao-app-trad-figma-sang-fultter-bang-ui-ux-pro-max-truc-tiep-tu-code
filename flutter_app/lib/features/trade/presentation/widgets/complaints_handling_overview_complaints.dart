@@ -170,67 +170,64 @@ class _ComplaintCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = _statusPresentation(complaint.status);
-    return InkWell(
+    return VitCard(
       key: ComplaintsHandlingPage.complaintKey(complaint.id),
-      borderRadius: AppRadii.cardRadius,
       onTap: () =>
           context.go(AppRoutePaths.tradeCopyComplaintTracking(complaint.id)),
-      child: _Card(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox.square(
-              dimension: AppSpacing.walletAddressIconSize,
-              child: Icon(
-                Icons.chat_bubble_outline_rounded,
-                color: status.color,
-                size: AppSpacing.complaintCaseTrailingIcon,
-              ),
+      density: VitDensity.compact,
+      borderColor: _complaintsBorder.withValues(alpha: .76),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox.square(
+            dimension: AppSpacing.walletAddressIconSize,
+            child: Icon(
+              Icons.chat_bubble_outline_rounded,
+              color: status.color,
+              size: AppSpacing.complaintCaseTrailingIcon,
             ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Wrap(
-                    spacing: AppSpacing.x3,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      Text(
-                        complaint.id,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  spacing: AppSpacing.x3,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      complaint.id,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
                       ),
-                      VitAccentPill(
-                        label: status.label,
-                        accentColor: status.color,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    complaint.subject,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    '${complaint.category} - Submitted ${complaint.submittedDate}',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+                    VitAccentPill(
+                      label: status.label,
+                      accentColor: status.color,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  complaint.subject,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  '${complaint.category} - Submitted ${complaint.submittedDate}',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.complaintCaseSmallIcon,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.complaintCaseSmallIcon,
+          ),
+        ],
       ),
     );
   }

@@ -18,25 +18,13 @@ class _ActionsRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Material(
-            color: AppColors.surface2,
-            borderRadius: AppRadii.inputRadius,
-            child: InkWell(
-              key: RouteChecker.resetButtonKey,
-              onTap: onReset,
-              borderRadius: AppRadii.inputRadius,
-              child: Padding(
-                padding: AppSpacing.devVerticalPaddingX4,
-                child: Text(
-                  'Reset Tests',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ),
+          child: VitCtaButton(
+            key: RouteChecker.resetButtonKey,
+            onPressed: onReset,
+            variant: VitCtaButtonVariant.secondary,
+            height: AppSpacing.buttonCompact,
+            padding: AppSpacing.devVerticalPaddingX4,
+            child: const Text('Reset Tests', textAlign: TextAlign.center),
           ),
         ),
         if (complete) ...[

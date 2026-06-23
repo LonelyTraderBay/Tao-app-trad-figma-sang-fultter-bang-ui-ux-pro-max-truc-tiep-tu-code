@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -116,22 +117,18 @@ class ArenaModePredictionContext extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           Align(
             alignment: Alignment.centerLeft,
-            child: TextButton.icon(
+            child: VitCtaButton(
               onPressed: onTap,
-              icon: const Icon(
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              density: VitDensity.compact,
+              leading: const Icon(
                 Icons.open_in_new_rounded,
                 size: AppSpacing.arenaModePredictionActionIcon,
               ),
-              label: const Text('Xem thị trường dự đoán'),
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.accent,
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(0, AppSpacing.buttonCompact),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                textStyle: AppTextStyles.micro.copyWith(
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
+              padding: AppSpacing.zeroInsets,
+              child: const Text('Xem thi truong du doan'),
             ),
           ),
           Text(

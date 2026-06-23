@@ -10,7 +10,7 @@ class _SupportCard extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.supportKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pKycCardPadding,
+      padding: _p2pKycCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -19,7 +19,7 @@ class _SupportCard extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _p2pKycSupportIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +30,7 @@ class _SupportCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: _p2pKycTightGap),
                 Text(
                   snapshot.supportBody,
                   style: AppTextStyles.caption.copyWith(
@@ -38,12 +38,16 @@ class _SupportCard extends StatelessWidget {
                     height: AppSpacing.p2pKycReadableLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x3),
-                GestureDetector(
-                  onTap: () {
+                const SizedBox(height: _p2pKycSectionGap),
+                VitCtaButton(
+                  onPressed: () {
                     HapticFeedback.selectionClick();
                     context.go(snapshot.supportRoute);
                   },
+                  variant: VitCtaButtonVariant.ghost,
+                  fullWidth: false,
+                  height: AppSpacing.buttonCompact,
+                  padding: AppSpacing.p2pKycInlineActionPadding,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

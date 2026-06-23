@@ -117,8 +117,10 @@ class _RewardRow extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
 
-    return InkWell(
+    return VitCard(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
       child: SizedBox(
         height: VitDensity.compact.controlHeight + AppSpacing.x4,
         child: Stack(
@@ -127,19 +129,18 @@ class _RewardRow extends StatelessWidget {
               padding: AppSpacing.predictionRewardsTablePadding,
               child: Row(
                 children: [
-                  InkWell(
+                  VitCard(
                     key: PredictionsRewardsPage.favoriteKey(reward.id),
                     onTap: onFavoriteToggle,
-                    borderRadius: AppRadii.mdRadius,
-                    child: SizedBox(
-                      width: AppSpacing.predictionRewardsFavoriteWidth,
-                      child: Icon(
-                        favorite
-                            ? Icons.star_rounded
-                            : Icons.star_border_rounded,
-                        color: favorite ? AppColors.warn : AppColors.text3,
-                        size: AppSpacing.predictionRewardsFavoriteIcon,
-                      ),
+                    variant: VitCardVariant.ghost,
+                    radius: VitCardRadius.sm,
+                    width: AppSpacing.predictionRewardsFavoriteWidth,
+                    height: VitDensity.compact.controlHeight - AppSpacing.x3,
+                    padding: AppSpacing.zeroInsets,
+                    child: Icon(
+                      favorite ? Icons.star_rounded : Icons.star_border_rounded,
+                      color: favorite ? AppColors.warn : AppColors.text3,
+                      size: AppSpacing.predictionRewardsFavoriteIcon,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x1),
@@ -274,10 +275,11 @@ class _RiskLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: PredictionsRewardsPage.riskExplainerKey,
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
       child: Padding(
         padding: AppSpacing.predictionRewardsRiskLinkPadding,
         child: Row(

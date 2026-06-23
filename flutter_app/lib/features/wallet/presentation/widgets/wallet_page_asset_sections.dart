@@ -1,5 +1,20 @@
 part of 'wallet_page_sections.dart';
 
+const double _walletAssetSectionGap = AppSpacing.x2;
+const double _walletAssetHeaderButtonHeight =
+    AppSpacing.searchBarCompactHeight - AppSpacing.x2;
+const EdgeInsets _walletAssetRowCompactPadding = EdgeInsets.fromLTRB(
+  AppSpacing.x3,
+  AppSpacing.x3,
+  AppSpacing.x2,
+  AppSpacing.x3,
+);
+const double _walletAssetAvatarCompactSize = AppSpacing.x6 - AppSpacing.x1;
+const double _walletAssetRowGap = AppSpacing.x3;
+const double _walletAssetTextGap = AppSpacing.x1;
+const double _walletAssetChevronGap = AppSpacing.x2;
+const double _walletAssetChevronSize = AppSpacing.iconMd - AppSpacing.x1;
+
 class WalletSegmentedTabs extends StatelessWidget {
   const WalletSegmentedTabs({
     super.key,
@@ -30,10 +45,12 @@ class WalletSegmentedTabs extends StatelessWidget {
             children: [
               for (final tab in tabs)
                 Expanded(
-                  child: GestureDetector(
+                  child: VitCard(
                     key: Key('sc135_wallet_tab_${tab.key}'),
-                    behavior: HitTestBehavior.translucent,
+                    variant: VitCardVariant.ghost,
+                    borderColor: AppColors.transparent,
                     onTap: () => onChanged(tab.key),
+                    child: const SizedBox.expand(),
                   ),
                 ),
             ],
@@ -77,9 +94,9 @@ class WalletAssetSection extends StatelessWidget {
           onChanged: onChanged,
           onFilter: onFilter,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _walletAssetSectionGap),
         WalletAssetHeader(count: count, onNavigate: onNavigate),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _walletAssetSectionGap),
         WalletAssetList(assets: assets, hidden: hidden, onNavigate: onNavigate),
       ],
     );
@@ -136,7 +153,7 @@ class WalletAssetHeader extends StatelessWidget {
           ),
         ),
         VitCtaButton(
-          height: AppSpacing.searchBarCompactHeight,
+          height: _walletAssetHeaderButtonHeight,
           density: VitDensity.compact,
           variant: VitCtaButtonVariant.ghost,
           fullWidth: false,
@@ -209,25 +226,26 @@ class _AssetRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(asset.colorHex);
     final changeColor = asset.change24h >= 0 ? _walletGreen : _walletRed;
-    return GestureDetector(
+    return VitCard(
       key: Key('sc135_wallet_asset_${asset.id}'),
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       onTap: onTap,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: AppSpacing.transferCardPadding,
+            padding: _walletAssetRowCompactPadding,
             child: Row(
               children: [
                 VitAssetAvatar(
                   label: asset.symbol,
                   accentColor: color,
-                  size: AppSpacing.transferIcon,
+                  size: _walletAssetAvatarCompactSize,
                   radius: AppRadii.pillRadius,
                   border: true,
                 ),
-                const SizedBox(width: AppSpacing.rowGapRegular),
+                const SizedBox(width: _walletAssetRowGap),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -240,8 +258,9 @@ class _AssetRow extends StatelessWidget {
                           children: [
                             Text(
                               asset.symbol,
-                              style: AppTextStyles.baseMedium.copyWith(
+                              style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
                               ),
                             ),
                             const SizedBox(width: AppSpacing.x1),
@@ -254,7 +273,7 @@ class _AssetRow extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.rowGapCompact),
+                      const SizedBox(height: _walletAssetTextGap),
                       Text(
                         asset.name,
                         style: AppTextStyles.micro.copyWith(
@@ -272,12 +291,13 @@ class _AssetRow extends StatelessWidget {
                       hidden
                           ? '\u2022\u2022\u2022\u2022'
                           : _formatAssetAmount(asset.balance),
-                      style: AppTextStyles.amountSm.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.rowGapCompact),
+                    const SizedBox(height: _walletAssetTextGap),
                     Text(
                       hidden
                           ? '\u2022\u2022\u2022\u2022'
@@ -288,11 +308,11 @@ class _AssetRow extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(width: AppSpacing.x4),
+                const SizedBox(width: _walletAssetChevronGap),
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.iconMd,
+                  size: _walletAssetChevronSize,
                 ),
               ],
             ),

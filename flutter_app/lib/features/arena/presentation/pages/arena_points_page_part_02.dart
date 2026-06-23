@@ -294,10 +294,11 @@ class _FilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
-      child: InkWell(
+      child: VitCard(
         key: ArenaPointsPage.filterKey(label),
         onTap: onTap,
-        borderRadius: AppRadii.smRadius,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: DecoratedBox(
           key: active ? ArenaPointsPage.activeFilterKey(label) : null,
           decoration: ShapeDecoration(

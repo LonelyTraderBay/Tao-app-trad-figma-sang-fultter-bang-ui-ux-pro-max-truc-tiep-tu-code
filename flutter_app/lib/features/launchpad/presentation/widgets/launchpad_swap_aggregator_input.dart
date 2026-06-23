@@ -82,17 +82,13 @@ class _SwapInputCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x2),
           Center(
-            child: IconButton.filled(
+            child: VitIconButton(
               key: LaunchpadSwapAggregatorPage.flipKey,
               onPressed: onFlip,
-              style: IconButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: AppColors.onAccent,
-              ),
-              icon: const Icon(
-                Icons.swap_horiz_rounded,
-                size: AppSpacing.launchpadIcon2xl,
-              ),
+              icon: Icons.swap_horiz_rounded,
+              tooltip: 'Doi chieu swap',
+              variant: VitIconButtonVariant.primary,
+              size: VitIconButtonSize.md,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),

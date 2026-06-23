@@ -119,17 +119,17 @@ class _InlineIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCard(
       width: AppSpacing.predictionDataInlineButtonSize,
       height: AppSpacing.predictionDataInlineButtonSize,
-      child: IconButton(
-        onPressed: onTap,
-        padding: AppSpacing.zeroInsets,
-        icon: Icon(
-          icon,
-          color: color,
-          size: AppSpacing.predictionDataInlineIcon,
-        ),
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.zeroInsets,
+      child: Icon(
+        icon,
+        color: color,
+        size: AppSpacing.predictionDataInlineIcon,
       ),
     );
   }

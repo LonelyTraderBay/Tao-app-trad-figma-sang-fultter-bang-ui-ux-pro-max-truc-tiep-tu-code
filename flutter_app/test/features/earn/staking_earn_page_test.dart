@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,11 +10,15 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_earn_page.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 void main() {
-  Future<void> pumpStakingEarn(WidgetTester tester) async {
+  Future<void> pumpStakingEarn(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -79,6 +85,34 @@ void main() {
     expect(snapshot.supportedStates, contains(EarnScreenState.offline));
   });
 
+  test('SC-327 keeps the Home-standard page foundation contract', () {
+    final pageSource = File(
+      'lib/features/earn/presentation/pages/staking_earn_page.dart',
+    ).readAsStringSync();
+
+    expect(pageSource, contains('VitInsetScrollView'));
+    expect(pageSource, contains('VitContentPadding.compact'));
+    expect(pageSource, contains('VitDensity.compact'));
+    expect(pageSource, isNot(contains('AppSpacing.earnBottomInsetPadding')));
+    expect(pageSource, isNot(contains('child: Column(')));
+  });
+
+  test('SC-327 keeps positions cards compact and readable', () {
+    final positionsSource = File(
+      'lib/features/earn/presentation/widgets/staking_earn_positions_common.dart',
+    ).readAsStringSync();
+
+    expect(positionsSource, contains('_PositionStatRow'));
+    expect(positionsSource, contains('AppTextStyles.baseMedium'));
+    expect(positionsSource, contains('AppTextStyles.amountSm'));
+    expect(positionsSource, contains('AppTextStyles.body.copyWith'));
+    expect(positionsSource, isNot(contains('GridView.count')));
+    expect(
+      positionsSource,
+      isNot(contains('stakingCommunityPositionsGridAspect')),
+    );
+  });
+
   testWidgets('SC-327 renders staking earn product baseline', (tester) async {
     await pumpStakingEarn(tester);
 
@@ -92,6 +126,23 @@ void main() {
     expect(find.text('Ethereum Flexible'), findsOneWidget);
     expect(find.text('5.8%'), findsOneWidget);
     expect(find.text('Rui ro: Thap'), findsWidgets);
+  });
+
+  testWidgets('SC-327 360px viewport follows Home rhythm', (tester) async {
+    await pumpStakingEarn(tester, viewport: const Size(360, 800));
+
+    final navTop = tester.getTopLeft(find.byType(VitBottomNav)).dy;
+    final heroRect = tester.getRect(find.byType(VitCard).first);
+    final tabsRect = tester.getRect(find.byType(VitTabBar).first);
+    final firstProductRect = tester.getRect(
+      find.byKey(StakingEarnPage.productKey('btc-fixed-90')),
+    );
+
+    expect(heroRect.left, lessThanOrEqualTo(24));
+    expect(heroRect.width, greaterThanOrEqualTo(312));
+    expect(tabsRect.left, heroRect.left);
+    expect(tabsRect.width, heroRect.width);
+    expect(firstProductRect.top, lessThan(navTop - 24));
   });
 
   testWidgets('SC-327 filters products and switches positions tab', (
@@ -108,6 +159,11 @@ void main() {
     await tester.pump();
     expect(find.text('Tong thu nhap uoc tinh'), findsOneWidget);
     expect(find.text('0.05 BTC'), findsOneWidget);
+
+    await tester.tap(find.text('San pham'));
+    await tester.pump();
+    expect(find.text('Tong thu nhap uoc tinh'), findsNothing);
+    expect(find.text('ETH-USDT LP Pool'), findsOneWidget);
   });
 
   testWidgets('SC-327 navigation edges open savings and home', (tester) async {

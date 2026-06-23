@@ -118,35 +118,30 @@ class _HeroPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: AppSpacing.earnCardPaddingX3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
-                  ),
-                ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      onTap: onTap,
+      padding: AppSpacing.earnCardPaddingX3,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x2),
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                fontWeight: AppTextStyles.bold,
+                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -228,34 +223,44 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: Padding(
-          padding: AppSpacing.earnSmallPillPadding,
-          child: Row(
-            children: [
-              if (_filterIcon(filter) != null) ...[
-                Icon(
-                  _filterIcon(filter),
-                  color: selected ? AppColors.primary : AppColors.text2,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-              ],
-              Text(
-                _filterLabel(filter),
-                style: AppTextStyles.micro.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
+    final icon = _filterIcon(filter);
+
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      onTap: onTap,
+      clip: true,
+      padding: AppSpacing.earnSmallPillPadding,
+      background: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: selected ? AppColors.primary12 : AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: selected ? AppColors.primary30 : AppColors.cardBorder,
+            ),
+            borderRadius: AppRadii.xlRadius,
           ),
         ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(
+              icon,
+              color: selected ? AppColors.primary : AppColors.text2,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.x1),
+          ],
+          Text(
+            _filterLabel(filter),
+            style: AppTextStyles.micro.copyWith(
+              color: selected ? AppColors.primary : AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ],
       ),
     );
   }

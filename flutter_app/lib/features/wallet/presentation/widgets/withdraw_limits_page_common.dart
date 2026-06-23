@@ -13,94 +13,102 @@ class _KycTierCard extends StatelessWidget {
     final isCompleted = tier.level < currentLevel;
     final isLocked = tier.level > currentLevel;
 
-    return GestureDetector(
+    return VitCard(
       key: WithdrawLimitsPage.tierKey(tier.level),
-      onTap: isLocked ? () => context.go(AppRoutePaths.profileKyc) : () {},
-      behavior: HitTestBehavior.opaque,
-      child: VitCard(
-        height: _limitsTierHeight,
-        padding: _limitsTierPadding,
-        borderColor: isCurrent
-            ? tierColor.withValues(alpha: .45)
-            : _limitsBorder,
-        child: Row(
-          children: [
-            VitCard(
-              width: _limitsIconBox,
-              height: _limitsIconBox,
-              variant: VitCardVariant.ghost,
-              radius: VitCardRadius.lg,
-              borderColor: tierColor.withValues(alpha: isCurrent ? .45 : .26),
-              background: ColoredBox(
-                color: tierColor.withValues(alpha: isCurrent ? .15 : .12),
-              ),
-              clip: true,
-              alignment: Alignment.center,
-              child: Icon(
-                isLocked
-                    ? Icons.lock_outline_rounded
-                    : isCompleted
-                    ? Icons.check_circle_outline_rounded
-                    : Icons.star_border_rounded,
-                color: tierColor,
-                size: AppSpacing.transferActionIcon,
-              ),
+      onTap: isLocked
+          ? () => context.go(AppRoutePaths.profileKyc)
+          : () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    isCurrent
+                        ? 'Bạn đang ở ${tier.name}'
+                        : '${tier.name} đã được mở khóa',
+                  ),
+                  duration: const Duration(milliseconds: 900),
+                ),
+              );
+            },
+      height: _limitsTierHeight,
+      padding: _limitsTierPadding,
+      borderColor: isCurrent ? tierColor.withValues(alpha: .45) : _limitsBorder,
+      child: Row(
+        children: [
+          VitCard(
+            width: _limitsIconBox,
+            height: _limitsIconBox,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            borderColor: tierColor.withValues(alpha: isCurrent ? .45 : .26),
+            background: ColoredBox(
+              color: tierColor.withValues(alpha: isCurrent ? .15 : .12),
             ),
-            const SizedBox(width: _limitsInlineGap),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Level ${tier.level}',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
+            clip: true,
+            alignment: Alignment.center,
+            child: Icon(
+              isLocked
+                  ? Icons.lock_outline_rounded
+                  : isCompleted
+                  ? Icons.check_circle_outline_rounded
+                  : Icons.star_border_rounded,
+              color: tierColor,
+              size: AppSpacing.transferActionIcon,
+            ),
+          ),
+          const SizedBox(width: _limitsInlineGap),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Level ${tier.level}',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(width: _limitsTinyGap),
+                    Flexible(
+                      child: Text(
+                        tier.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: tierColor,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
+                    ),
+                    if (isCurrent) ...[
                       const SizedBox(width: _limitsTinyGap),
-                      Flexible(
-                        child: Text(
-                          tier.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: tierColor,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
+                      VitAccentPill(
+                        label: 'HI\u1EC6N T\u1EA0I',
+                        accentColor: tierColor,
                       ),
-                      if (isCurrent) ...[
-                        const SizedBox(width: _limitsTinyGap),
-                        VitAccentPill(
-                          label: 'HI\u1EC6N T\u1EA0I',
-                          accentColor: tierColor,
-                        ),
-                      ],
                     ],
-                  ),
-                  const SizedBox(height: _limitsTinyGap),
-                  Text(
-                    tier.dailyLimit > 0
-                        ? '${_formatUsd(tier.dailyLimit)}/ng\u00E0y'
-                        : 'Kh\u00F4ng c\u00F3 h\u1EA1n m\u1EE9c',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: _limitsMuted),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+                const SizedBox(height: _limitsTinyGap),
+                Text(
+                  tier.dailyLimit > 0
+                      ? '${_formatUsd(tier.dailyLimit)}/ng\u00E0y'
+                      : 'Kh\u00F4ng c\u00F3 h\u1EA1n m\u1EE9c',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: _limitsMuted),
+                ),
+              ],
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.sectionLabel,
-              size: 21,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.sectionLabel,
+            size: 21,
+          ),
+        ],
       ),
     );
   }

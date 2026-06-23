@@ -219,41 +219,36 @@ class _QuickActionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _quickColor(action.id);
-    return Material(
+    return VitCard(
       key: P2PDashboardPage.quickActionKey(action.id),
-      color: AppColors.surface,
-      borderRadius: AppRadii.cardRadius,
-      child: InkWell(
-        onTap: () {
-          HapticFeedback.selectionClick();
-          context.go(action.route);
-        },
-        borderRadius: AppRadii.cardRadius,
-        child: VitCard(
-          variant: VitCardVariant.ghost,
-          borderColor: AppColors.border,
-          padding: AppSpacing.p2pDashboardQuickActionPadding,
-          child: Row(
-            children: [
-              _IconBubble(icon: _quickIcon(action.iconKey), color: color),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  action.label,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.border,
+      background: const ColoredBox(color: AppColors.surface),
+      padding: AppSpacing.p2pDashboardQuickActionPadding,
+      onTap: () {
+        HapticFeedback.selectionClick();
+        context.go(action.route);
+      },
+      clip: true,
+      child: Row(
+        children: [
+          _IconBubble(icon: _quickIcon(action.iconKey), color: color),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              action.label,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                fontWeight: AppTextStyles.bold,
               ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-            ],
+            ),
           ),
-        ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+        ],
       ),
     );
   }

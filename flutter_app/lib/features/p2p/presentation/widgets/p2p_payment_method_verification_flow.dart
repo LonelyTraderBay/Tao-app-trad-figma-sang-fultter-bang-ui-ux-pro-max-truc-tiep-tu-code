@@ -31,7 +31,7 @@ class _VerificationFlow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _CenteredMethodIntro(method: method),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           padding: AppSpacing.p2pPaymentCardPadding,
           child: Column(
@@ -44,7 +44,7 @@ class _VerificationFlow extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitInput(
           controller: controller,
           fieldKey: P2PPaymentMethodVerificationPage.codeFieldKey,
@@ -55,7 +55,7 @@ class _VerificationFlow extends StatelessWidget {
           textInputAction: TextInputAction.done,
           onChanged: (_) => onChanged(),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         VitCtaButton(
           key: P2PPaymentMethodVerificationPage.submitButtonKey,
           loading: submitting,
@@ -90,7 +90,7 @@ class _CenteredMethodIntro extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         Text(
           'Xác minh qua ${method.label}',
           textAlign: TextAlign.center,

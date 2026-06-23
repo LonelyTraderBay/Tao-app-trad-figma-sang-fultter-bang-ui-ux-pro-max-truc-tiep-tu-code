@@ -468,24 +468,12 @@ class _AmountChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.transparent,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: AppSpacing.earnVerticalPaddingX2,
-          child: Text(
-            amount >= 1000 ? '\$${amount ~/ 1000}K' : '\$$amount',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.primary : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: amount >= 1000 ? '\$${amount ~/ 1000}K' : '\$$amount',
+      selected: selected,
+      onTap: onTap,
+      fullWidth: true,
+      height: AppSpacing.buttonCompact,
     );
   }
 }

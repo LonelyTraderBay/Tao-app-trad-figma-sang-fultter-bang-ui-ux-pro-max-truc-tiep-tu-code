@@ -394,11 +394,15 @@ class _PositionCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ),
-              TextButton.icon(
+              VitCtaButton(
                 key: AutoCompoundSettingsPage.settingsButtonKey(position.id),
                 onPressed: onSettings,
-                icon: const Icon(Icons.settings_outlined),
-                label: const Text('Cài đặt'),
+                variant: VitCtaButtonVariant.secondary,
+                fullWidth: false,
+                height: AppSpacing.buttonCompact,
+                padding: AppSpacing.earnCardPaddingX3X2,
+                leading: const Icon(Icons.settings_outlined),
+                child: const Text('Cài đặt'),
               ),
             ],
           ),

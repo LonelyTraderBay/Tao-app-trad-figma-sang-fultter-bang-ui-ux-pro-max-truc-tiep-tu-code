@@ -89,46 +89,43 @@ class _TargetTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        variant: VitCardVariant.inner,
-        constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
-        padding: AppSpacing.tradeBotChipPadding,
-        borderColor: selected ? _optimizationPrimary : AppColors.borderSolid,
-        child: Row(
-          children: [
-            Icon(
-              selected
-                  ? Icons.radio_button_checked_rounded
-                  : Icons.radio_button_unchecked_rounded,
-              color: selected ? _optimizationPrimary : AppColors.borderSolid,
-              size: AppSpacing.iconMd,
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    target.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: selected ? _optimizationPrimary : AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      variant: VitCardVariant.inner,
+      constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
+      padding: AppSpacing.tradeBotChipPadding,
+      borderColor: selected ? _optimizationPrimary : AppColors.borderSolid,
+      child: Row(
+        children: [
+          Icon(
+            selected
+                ? Icons.radio_button_checked_rounded
+                : Icons.radio_button_unchecked_rounded,
+            color: selected ? _optimizationPrimary : AppColors.borderSolid,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  target.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: selected ? _optimizationPrimary : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x2),
-                  Text(
-                    target.description,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  target.description,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

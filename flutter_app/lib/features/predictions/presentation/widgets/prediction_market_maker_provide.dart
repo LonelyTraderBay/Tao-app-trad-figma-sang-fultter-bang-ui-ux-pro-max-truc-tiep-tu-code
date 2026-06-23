@@ -29,50 +29,18 @@ class _MarketMakerTabBar extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       shape: const Border(bottom: BorderSide(color: AppColors.border)),
-      child: SizedBox(
-        height: VitDensity.compact.controlHeight,
-        child: Row(
-          children: [
-            for (final item in tabs)
-              Expanded(
-                child: InkWell(
-                  key: item.key,
-                  onTap: () => onChanged(item.tab),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            item.label,
-                            style: AppTextStyles.caption.copyWith(
-                              color: activeTab == item.tab
-                                  ? _predictionPrimary
-                                  : AppColors.text3,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      AnimatedSize(
-                        duration: const Duration(milliseconds: 160),
-                        child: ClipRRect(
-                          borderRadius: AppRadii.hairlineRadius,
-                          child: SizedBox(
-                            height: AppSpacing.hairlineStroke,
-                            width: activeTab == item.tab
-                                ? VitDensity.compact.controlHeight * 2
-                                : 0,
-                            child: const ColoredBox(color: _predictionPrimary),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        ),
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeTab.name,
+        onChanged: (key) => onChanged(_MarketMakerTab.values.byName(key)),
+        tabs: [
+          for (final item in tabs)
+            VitTabItem(
+              key: item.tab.name,
+              label: item.label,
+              widgetKey: item.key,
+            ),
+        ],
       ),
     );
   }
@@ -324,25 +292,14 @@ class _SpreadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitChoicePill(
+      label: '$value',
+      selected: selected,
+      onTap: onTap,
+      accentColor: _predictionPrimary,
+      fullWidth: true,
       height: VitDensity.compact.controlHeight - AppSpacing.x2,
-      child: Material(
-        color: selected ? _predictionPrimary : AppColors.bg,
-        borderRadius: AppRadii.cardRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.cardRadius,
-          child: Center(
-            child: Text(
-              '$value',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
     );
   }
 }

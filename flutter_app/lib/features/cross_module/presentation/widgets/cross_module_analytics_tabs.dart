@@ -24,9 +24,13 @@ class _AnalyticsTabs extends StatelessWidget {
               children: [
                 for (final tab in tabs)
                   Expanded(
-                    child: InkWell(
+                    child: VitCard(
                       key: CrossModuleAnalytics.tabKey(tab.tab),
                       onTap: () => onChanged(tab.tab),
+                      variant: VitCardVariant.ghost,
+                      radius: VitCardRadius.sm,
+                      padding: EdgeInsets.zero,
+                      borderColor: AppColors.transparent,
                       child: Column(
                         children: [
                           Padding(

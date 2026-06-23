@@ -274,10 +274,13 @@ class _TopTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GestureDetector(
+      child: VitCard(
         key: DCAMultiAssetPage.tabKey(tab.name),
-        behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(tab),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
+        borderColor: AppColors.transparent,
         child: Padding(
           padding: AppSpacing.dcaTopPaddingX4,
           child: Column(
@@ -382,36 +385,13 @@ class _FrequencyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onPressed,
+      fullWidth: true,
       height: AppSpacing.inputHeight,
-      child: Material(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          decoration: ShapeDecoration(
-            color: active ? AppColors.primary : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.inputRadius,
-              side: BorderSide(
-                color: active ? AppColors.primary : AppColors.borderSolid,
-              ),
-            ),
-          ),
-          child: InkWell(
-            onTap: onPressed,
-            borderRadius: AppRadii.inputRadius,
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: active ? AppColors.onAccent : AppColors.text1,
-                  height: AppSpacing.dcaMultiTightLineHeight,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      semanticLabel: label,
     );
   }
 }
@@ -499,22 +479,24 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCard(
+      onTap: onPressed,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
-      child: DecoratedBox(
-        decoration: const ShapeDecoration(
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: const DecoratedBox(
+        decoration: ShapeDecoration(
           color: AppColors.sell10,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
-        child: IconButton(
-          onPressed: onPressed,
-          padding: AppSpacing.zeroInsets,
-          icon: const Icon(
-            Icons.delete_outline_rounded,
-            size: AppSpacing.dcaMultiIcon,
-            color: AppColors.sell,
-          ),
+        child: Icon(
+          Icons.delete_outline_rounded,
+          size: AppSpacing.dcaMultiIcon,
+          color: AppColors.sell,
         ),
       ),
     );

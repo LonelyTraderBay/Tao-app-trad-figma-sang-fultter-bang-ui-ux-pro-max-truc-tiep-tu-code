@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_notifications_settings_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_settings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
@@ -117,14 +117,14 @@ void main() {
       'order_updates',
       'sms',
     );
-    final before = tester.widget<Material>(find.byKey(smsKey));
-    expect(before.color, isNot(equals(AppColors.buy10)));
+    final before = tester.widget<VitChoicePill>(find.byKey(smsKey));
+    expect(before.selected, isFalse);
 
     await tester.tap(find.byKey(smsKey));
     await tester.pumpAndSettle();
 
-    final after = tester.widget<Material>(find.byKey(smsKey));
-    expect(after.color, AppColors.buy10);
+    final after = tester.widget<VitChoicePill>(find.byKey(smsKey));
+    expect(after.selected, isTrue);
   });
 
   testWidgets('SC-278 header back returns to settings parent', (tester) async {

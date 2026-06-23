@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -20,28 +19,13 @@ class LaunchpadDcaHeaderCreateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.launchpadBox36,
-      height: AppSpacing.launchpadBox36,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: AppColors.searchBg,
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(color: AppColors.border),
-            borderRadius: AppRadii.smRadius,
-          ),
-        ),
-        child: IconButton(
-          key: buttonKey,
-          onPressed: onTap,
-          padding: AppSpacing.zeroInsets,
-          icon: const Icon(
-            Icons.add_rounded,
-            color: AppColors.text1,
-            size: AppSpacing.launchpadIcon3xl,
-          ),
-        ),
-      ),
+    return VitIconButton(
+      key: buttonKey,
+      icon: Icons.add_rounded,
+      tooltip: 'Tao chien luoc DCA',
+      onPressed: onTap,
+      variant: VitIconButtonVariant.ghost,
+      size: VitIconButtonSize.md,
     );
   }
 }

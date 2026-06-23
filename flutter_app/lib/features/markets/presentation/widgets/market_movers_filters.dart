@@ -112,44 +112,33 @@ class _CategoryDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(color: AppColors.borderSolid),
-      ),
-      child: InkWell(
-        key: MarketMoversPage.categoryDropdownKey,
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Padding(
-            padding: AppSpacing.marketCategoryDropdownPadding,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Danh mục: $category',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.body.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                ),
-                Icon(
-                  expanded
-                      ? Icons.keyboard_arrow_up_rounded
-                      : Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.text2,
-                  size: AppSpacing.iconSm,
-                ),
-              ],
+    return VitCard(
+      key: MarketMoversPage.categoryDropdownKey,
+      variant: VitCardVariant.inner,
+      height: VitDensity.compact.controlHeight,
+      padding: AppSpacing.marketCategoryDropdownPadding,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              'Danh mục: $category',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.body.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.medium,
+              ),
             ),
           ),
-        ),
+          Icon(
+            expanded
+                ? Icons.keyboard_arrow_up_rounded
+                : Icons.keyboard_arrow_down_rounded,
+            color: AppColors.text2,
+            size: AppSpacing.iconSm,
+          ),
+        ],
       ),
     );
   }
@@ -280,42 +269,13 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      selected: active,
+    return VitChoicePill(
       label: label,
-      child: Material(
-        color: active
-            ? _marketPrimary.withValues(alpha: 0.18)
-            : AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: BorderSide(
-            color: active
-                ? _marketPrimary.withValues(alpha: 0.55)
-                : AppColors.borderSolid,
-          ),
-        ),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.cardRadius,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: minHeight),
-            child: Padding(
-              padding: AppSpacing.marketFilterChipPadding,
-              child: Center(
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketPrimary : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      selected: active,
+      onTap: onTap,
+      accentColor: _marketPrimary,
+      height: minHeight,
+      padding: AppSpacing.marketFilterChipPadding,
     );
   }
 }

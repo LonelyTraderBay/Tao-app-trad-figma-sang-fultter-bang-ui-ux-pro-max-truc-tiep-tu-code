@@ -23,11 +23,10 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
     );
     final ads = _filteredAds(snapshot.ads);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pHomeBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pHomeBottomInsetNative) +
+            ? _p2pHomeVisualNavClearance + _p2pHomeVisualClearance
+            : _p2pHomeNativeNavClearance + _p2pHomeNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final showOfflineWithCache =
         snapshot.currentState == P2PScreenState.offline &&
@@ -89,7 +88,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                   child: SingleChildScrollView(
                     key: P2PHomePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pHomeScrollPadding(bottomInset),
+                    padding: AppSpacing.p2pHomeScrollPadding(scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -455,28 +454,16 @@ class _TradeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = type == P2PTradeType.buy ? AppColors.buy : AppColors.sell;
     return Expanded(
-      child: Material(
+      child: VitChoicePill(
         key: P2PHomePage.tradeTabKey(type),
-        color: active ? color : AppColors.transparent,
-        borderRadius: AppRadii.cardRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.cardRadius,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              vertical: AppSpacing.x2,
-            ),
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? AppColors.onAccent : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-                height: AppTextStyles.numericMicro.height,
-              ),
-            ),
-          ),
-        ),
+        label: label,
+        selected: active,
+        onTap: onTap,
+        accentColor: color,
+        fullWidth: true,
+        height: AppSpacing.buttonCompact,
+        padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),
+        semanticLabel: 'Chọn ${label.toLowerCase()} P2P',
       ),
     );
   }

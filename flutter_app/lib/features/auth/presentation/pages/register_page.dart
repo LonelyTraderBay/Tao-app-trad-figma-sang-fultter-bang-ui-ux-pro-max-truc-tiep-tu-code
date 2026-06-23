@@ -329,20 +329,15 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               color: AppColors.text2,
                             ),
                           ),
-                          TextButton(
+                          VitCtaButton(
                             key: RegisterPage.loginKey,
                             onPressed: _submitting
                                 ? null
                                 : () => context.go(AppRoutePaths.authLogin),
-                            style: TextButton.styleFrom(
-                              foregroundColor: _authPrimary,
-                              padding: AppSpacing.authInlineTextButtonPadding,
-                              minimumSize: const Size(
-                                AppSpacing.zero,
-                                AppSpacing.authTextButtonHeight,
-                              ),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
+                            variant: VitCtaButtonVariant.ghost,
+                            fullWidth: false,
+                            height: AppSpacing.authTextButtonHeight,
+                            padding: AppSpacing.authInlineTextButtonPadding,
                             child: Text(
                               'Đăng nhập',
                               style: AppTextStyles.caption.copyWith(

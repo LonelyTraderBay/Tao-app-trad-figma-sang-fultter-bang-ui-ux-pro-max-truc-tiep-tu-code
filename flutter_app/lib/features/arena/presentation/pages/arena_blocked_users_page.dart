@@ -375,40 +375,17 @@ class _SmallActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        minWidth: AppSpacing.arenaBlockedActionMinWidth,
+      ),
+      child: VitChoicePill(
+        label: label,
+        selected: true,
         onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minWidth: AppSpacing.arenaBlockedActionMinWidth,
-          ),
-          child: SizedBox(
-            height: _blockedActionExtent,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: accentColor.withValues(alpha: 0.12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.xlRadius,
-                  side: BorderSide(color: accentColor.withValues(alpha: 0.24)),
-                ),
-              ),
-              child: Padding(
-                padding: AppSpacing.arenaBlockedActionPadding,
-                child: Center(
-                  child: Text(
-                    label,
-                    style: AppTextStyles.micro.copyWith(
-                      color: accentColor,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        accentColor: accentColor,
+        height: _blockedActionExtent,
+        padding: AppSpacing.arenaBlockedActionPadding,
       ),
     );
   }
@@ -437,16 +414,22 @@ class _UnblockDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        TextButton(
+        VitCtaButton(
           onPressed: () => Navigator.of(context).pop(false),
+          variant: VitCtaButtonVariant.ghost,
+          fullWidth: false,
+          height: AppSpacing.buttonCompact,
           child: Text(
             'Giữ chặn',
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
           ),
         ),
-        TextButton(
+        VitCtaButton(
           key: ArenaBlockedUsersPage.confirmUnblockKey(user.id),
           onPressed: () => Navigator.of(context).pop(true),
+          variant: VitCtaButtonVariant.destructive,
+          fullWidth: false,
+          height: AppSpacing.buttonCompact,
           child: Text(
             'Bỏ chặn',
             style: AppTextStyles.body.copyWith(

@@ -105,40 +105,14 @@ class _FilterTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active
-        ? _marketPrimary.withValues(alpha: .16)
-        : AppColors.surface;
-    final borderColor = active
-        ? _marketPrimary.withValues(alpha: .48)
-        : AppColors.transparent;
-    return Material(
-      color: color,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: borderColor),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: SizedBox(
-          height: _alertsFilterHeight,
-          child: Padding(
-            padding: _alertsFilterTabPadding,
-            child: Center(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.captionSm.copyWith(
-                  color: active ? _marketPrimary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                  height: _alertsLineHeightTight,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _marketPrimary,
+      fullWidth: true,
+      height: _alertsFilterHeight,
+      padding: _alertsFilterTabPadding,
     );
   }
 }

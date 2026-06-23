@@ -74,13 +74,13 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                               ),
                             ),
                           ),
-                          IconButton(
+                          VitIconButton(
                             key: LaunchpadWebhooksPage.createCloseKey,
                             onPressed: widget.onClose,
-                            icon: const Icon(
-                              Icons.close_rounded,
-                              color: AppColors.text3,
-                            ),
+                            icon: Icons.close_rounded,
+                            tooltip: 'Dong tao webhook',
+                            variant: VitIconButtonVariant.transparent,
+                            size: VitIconButtonSize.md,
                           ),
                         ],
                       ),

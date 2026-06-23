@@ -29,10 +29,12 @@ class _AdvancedHeader extends StatelessWidget {
                   ),
                   const SizedBox(width: AppSpacing.tradeBotSmallGap),
                   Expanded(
-                    child: InkWell(
+                    child: VitCard(
                       key: AdvancedChartPage.pairSelectorKey,
                       onTap: () => context.go(AppRoutePaths.markets),
-                      borderRadius: AppRadii.mdRadius,
+                      variant: VitCardVariant.ghost,
+                      radius: VitCardRadius.sm,
+                      padding: AppSpacing.zeroInsets,
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -329,10 +331,12 @@ class _ChartToolbar extends StatelessWidget {
                     child: Semantics(
                       button: true,
                       label: 'Open chart indicators',
-                      child: GestureDetector(
+                      child: VitCard(
                         key: AdvancedChartPage.indicatorButtonKey,
-                        behavior: HitTestBehavior.opaque,
                         onTap: onIndicators,
+                        variant: VitCardVariant.ghost,
+                        radius: VitCardRadius.sm,
+                        padding: AppSpacing.zeroInsets,
                         child: VitStatusPill(
                           label: 'Chỉ báo',
                           icon: Icons.layers_outlined,

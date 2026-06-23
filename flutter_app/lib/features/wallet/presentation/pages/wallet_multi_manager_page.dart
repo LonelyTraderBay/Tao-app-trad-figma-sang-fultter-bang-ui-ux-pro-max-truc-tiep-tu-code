@@ -106,6 +106,9 @@ class _WalletMultiManagerPageState
             setState(() => _selectedWalletId = walletId),
         onRevealWallet: _toggleReveal,
         onCopyWallet: _copyWallet,
+        onAddWallet: () => _showActionNotice(
+          'Add Wallet will open after wallet creation is connected',
+        ),
       ),
     };
 
@@ -145,5 +148,14 @@ class _WalletMultiManagerPageState
     await Clipboard.setData(ClipboardData(text: wallet.address));
     if (!mounted) return;
     setState(() => _copiedWalletId = wallet.id);
+  }
+
+  void _showActionNotice(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 900),
+      ),
+    );
   }
 }

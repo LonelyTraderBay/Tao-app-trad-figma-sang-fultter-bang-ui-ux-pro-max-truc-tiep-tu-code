@@ -58,10 +58,11 @@ class _PaymentMethodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final instant = method.type != WalletPaymentMethodType.bank;
-    return GestureDetector(
+    return VitCard(
       key: Key('sc145_buy_crypto_payment_${method.id}'),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: VitCard(
         height: AppSpacing.walletBuyPaymentCardHeight,
         padding: AppSpacing.walletBuyPaymentCardPadding,

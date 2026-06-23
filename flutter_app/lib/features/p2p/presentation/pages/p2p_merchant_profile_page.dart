@@ -13,13 +13,32 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_merchant_profile_header_stats.dart';
 part '../widgets/p2p_merchant_profile_ads_reviews.dart';
+
+const double _p2pMerchantVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pMerchantNativeNavClearance =
+    _p2pMerchantVisualNavClearance - AppSpacing.x4;
+const double _p2pMerchantVisualClearance = AppSpacing.x3;
+const double _p2pMerchantNativeClearance = AppSpacing.x2;
+const double _p2pMerchantSectionGap = AppSpacing.x3;
+const double _p2pMerchantTightGap = AppSpacing.x2;
+const double _p2pMerchantButtonHeight =
+    AppSpacing.buttonCompact + AppSpacing.x1;
+const double _p2pMerchantActionHeight = AppSpacing.buttonCompact;
+const double _p2pMerchantBodyLineHeight = 1.35;
+const EdgeInsets _p2pMerchantScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pMerchantCardPadding = EdgeInsets.all(AppSpacing.x3);
 
 enum _MerchantProfileTab { ads, reviews }
 
@@ -55,10 +74,10 @@ class _P2PMerchantProfilePageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pMerchantProfileProvider(widget.merchantId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pMerchantVisualNavClearance + _p2pMerchantVisualClearance
+            : _p2pMerchantNativeNavClearance + _p2pMerchantNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -84,13 +103,11 @@ class _P2PMerchantProfilePageState
                   child: SingleChildScrollView(
                     key: P2PMerchantProfilePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantCommerceRelaxedScrollPadding(
-                      bottomInset,
+                    padding: _p2pMerchantScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _ProfileHeader(
                           snapshot: snapshot,
@@ -99,11 +116,11 @@ class _P2PMerchantProfilePageState
                           onReport: () => context.go(snapshot.reportRoute),
                           onBlock: () => _confirmBlock(context, snapshot),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pMerchantSectionGap),
                         _StatsGrid(merchant: snapshot.merchant),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pMerchantSectionGap),
                         _ReputationCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pMerchantSectionGap),
                         VitTabBar(
                           variant: VitTabBarVariant.segment,
                           activeKey: _tab.name,
@@ -122,7 +139,7 @@ class _P2PMerchantProfilePageState
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pMerchantTightGap),
                         AnimatedSwitcher(
                           duration: const Duration(milliseconds: 180),
                           child: _tab == _MerchantProfileTab.ads
@@ -174,19 +191,21 @@ class _P2PMerchantProfilePageState
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           actions: [
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(
-                'Hủy',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
+              variant: VitCtaButtonVariant.secondary,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              child: const Text('Hủy'),
             ),
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: Text(
-                'Chặn',
-                style: AppTextStyles.caption.copyWith(color: AppColors.warn),
-              ),
+              variant: VitCtaButtonVariant.warning,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              child: const Text('Chặn'),
             ),
           ],
         );

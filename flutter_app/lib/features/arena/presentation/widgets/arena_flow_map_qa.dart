@@ -153,9 +153,11 @@ class _QaRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
-      child: InkWell(
+      child: VitCard(
         key: ArenaFlowMapPage.qaKey(item.id),
         onTap: onTap,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: Padding(
           padding: _flowMapCardPadding,
           child: Row(

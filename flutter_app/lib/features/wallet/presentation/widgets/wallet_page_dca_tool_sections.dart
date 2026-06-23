@@ -1,6 +1,16 @@
 part of 'wallet_page_sections.dart';
 
 const _walletToolGridCrossAxisCount = 2;
+const double _walletToolGridAspectRatio = 2.25;
+const double _walletToolGridGap = AppSpacing.x2;
+const EdgeInsets _walletDcaCompactPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _walletDcaStatCompactPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const double _walletDcaIcon = AppSpacing.iconLg;
+const double _walletDcaStatIcon = AppSpacing.iconMd;
+const double _walletDcaGap = AppSpacing.x2;
 
 class WalletDcaCard extends StatelessWidget {
   const WalletDcaCard({super.key, required this.dca});
@@ -12,7 +22,7 @@ class WalletDcaCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.standard,
       radius: VitCardRadius.md,
-      padding: AppSpacing.walletDustPreviewPadding,
+      padding: _walletDcaCompactPadding,
       borderColor: _walletPurple.withValues(alpha: .28),
       child: Column(
         children: [
@@ -21,9 +31,9 @@ class WalletDcaCard extends StatelessWidget {
               _IconCircle(
                 icon: Icons.sync_alt_rounded,
                 color: _walletPurple,
-                size: AppSpacing.homeNextActionIconContainer,
+                size: _walletDcaIcon,
               ),
-              const SizedBox(width: AppSpacing.homeCommandRowSpacing),
+              const SizedBox(width: _walletDcaGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,8 +45,9 @@ class WalletDcaCard extends StatelessWidget {
                             dca.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.baseMedium.copyWith(
+                            style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
                             ),
                           ),
                         ),
@@ -62,12 +73,12 @@ class WalletDcaCard extends StatelessWidget {
               const _IconCircle(
                 icon: Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.iconLg,
+                size: _walletDcaIcon,
                 muted: true,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.rowGapRegular),
+          const SizedBox(height: _walletDcaGap),
           Row(
             children: [
               Expanded(
@@ -78,7 +89,7 @@ class WalletDcaCard extends StatelessWidget {
                   value: dca.activePlans.toString(),
                 ),
               ),
-              const SizedBox(width: AppSpacing.rowGapRegular),
+              const SizedBox(width: _walletDcaGap),
               Expanded(
                 child: _DcaStatCard(
                   icon: Icons.trending_up_rounded,
@@ -89,20 +100,20 @@ class WalletDcaCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _walletDcaGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
-            padding: AppSpacing.cardPaddingCompact,
+            padding: _walletDcaCompactPadding,
             borderColor: _walletAmber.withValues(alpha: .24),
             child: Row(
               children: [
                 _IconCircle(
                   icon: Icons.schedule_rounded,
                   color: _walletAmber,
-                  size: AppSpacing.iconLg,
+                  size: _walletDcaStatIcon,
                 ),
-                const SizedBox(width: AppSpacing.rowGapRegular),
+                const SizedBox(width: _walletDcaGap),
                 Expanded(
                   child: Column(
                     children: [
@@ -149,14 +160,14 @@ class _DcaStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletAddressAddNetworkChipPadding,
+      padding: _walletDcaStatCompactPadding,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
       borderColor: iconColor.withValues(alpha: .18),
       child: Row(
         children: [
-          _IconCircle(icon: icon, color: iconColor, size: AppSpacing.iconLg),
-          const SizedBox(width: AppSpacing.x3),
+          _IconCircle(icon: icon, color: iconColor, size: _walletDcaStatIcon),
+          const SizedBox(width: _walletDcaGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -242,6 +253,9 @@ class WalletToolGrid extends StatelessWidget {
     return VitActionTileGrid(
       density: VitDensity.compact,
       crossAxisCount: _walletToolGridCrossAxisCount,
+      crossAxisSpacing: _walletToolGridGap,
+      mainAxisSpacing: _walletToolGridGap,
+      childAspectRatio: _walletToolGridAspectRatio,
       itemCount: tools.length,
       itemBuilder: (context, index, density) {
         final tool = tools[index];

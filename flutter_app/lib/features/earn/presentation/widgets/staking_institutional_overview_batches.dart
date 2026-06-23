@@ -123,42 +123,39 @@ class _BatchTabs extends StatelessWidget {
         children: [
           for (final tab in _InstitutionalBatchTab.values)
             Expanded(
-              child: Material(
-                color: AppColors.transparent,
-                child: InkWell(
-                  key: StakingInstitutionalPage.tabKey(tab.name),
-                  onTap: () => onChanged(tab),
-                  child: Padding(
-                    padding: AppSpacing.earnTopPaddingX4,
-                    child: Column(
-                      children: [
-                        Text(
-                          _tabLabel(tab),
-                          style: AppTextStyles.caption.copyWith(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        SizedBox(
-                          width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: AppSpacing.stakingProductTabIndicatorHeight,
-                          child: DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color: active == tab
-                                  ? AppColors.primarySoft
-                                  : AppColors.transparent,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: AppRadii.xsRadius,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+              child: VitCard(
+                key: StakingInstitutionalPage.tabKey(tab.name),
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                padding: AppSpacing.earnTopPaddingX4,
+                onTap: () => onChanged(tab),
+                child: Column(
+                  children: [
+                    Text(
+                      _tabLabel(tab),
+                      style: AppTextStyles.caption.copyWith(
+                        color: active == tab
+                            ? AppColors.primarySoft
+                            : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: AppSpacing.x4),
+                    SizedBox(
+                      width: active == tab ? AppSpacing.buttonHero : 0,
+                      height: AppSpacing.stakingProductTabIndicatorHeight,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: active == tab
+                              ? AppColors.primarySoft
+                              : AppColors.transparent,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: AppRadii.xsRadius,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -317,27 +314,19 @@ class _InlineAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        onTap: HapticFeedback.selectionClick,
-        borderRadius: AppRadii.lgRadius,
-        child: Ink(
-          padding: AppSpacing.earnWidePillPadding,
-          decoration: ShapeDecoration(
-            color: color,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.lgRadius,
-            ),
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.onAccent,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+    return VitCtaButton(
+      onPressed: HapticFeedback.selectionClick,
+      variant: color == AppColors.buy
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.primary,
+      fullWidth: false,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.earnWidePillPadding,
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(
+          color: AppColors.onAccent,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

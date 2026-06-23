@@ -14,37 +14,13 @@ class _LaunchpadTabs extends StatelessWidget {
       runSpacing: AppSpacing.x3,
       children: [
         for (final tab in _LaunchpadTab.values)
-          InkWell(
+          VitChoicePill(
             key: LaunchpadPage.tabKey(tab.id),
+            label: tab.label,
+            selected: tab == activeTab,
             onTap: () => onChanged(tab),
-            borderRadius: AppRadii.inputRadius,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: tab == activeTab
-                    ? AppColors.primary12
-                    : AppColors.surface2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                  side: BorderSide(
-                    color: tab == activeTab
-                        ? AppColors.primary30
-                        : AppColors.cardBorder,
-                  ),
-                ),
-              ),
-              child: Padding(
-                padding: AppSpacing.launchpadPaddingX3,
-                child: Text(
-                  tab.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: tab == activeTab
-                        ? AppColors.primary
-                        : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ),
+            accentColor: AppColors.primary,
+            padding: AppSpacing.launchpadPaddingX3,
           ),
       ],
     );
@@ -67,86 +43,86 @@ class _ProjectCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          InkWell(
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: VitDensity.compact.cardPadding,
             onTap: () => context.go(AppRoutePaths.launchpadSample),
-            child: Padding(
-              padding: VitDensity.compact.cardPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _ProjectAvatar(project: project),
-                      const SizedBox(width: AppSpacing.x3),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              spacing: AppSpacing.x2,
-                              runSpacing: AppSpacing.x1,
-                              children: [
-                                Text(
-                                  project.name,
-                                  style: AppTextStyles.baseMedium.copyWith(
-                                    fontWeight: AppTextStyles.bold,
-                                    height: _launchpadLineHeightLabel,
-                                  ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _ProjectAvatar(project: project),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: AppSpacing.x2,
+                            runSpacing: AppSpacing.x1,
+                            children: [
+                              Text(
+                                project.name,
+                                style: AppTextStyles.baseMedium.copyWith(
+                                  fontWeight: AppTextStyles.bold,
+                                  height: _launchpadLineHeightLabel,
                                 ),
-                                _MiniPill(
-                                  label: typeStyle.label,
-                                  color: typeStyle.color,
-                                  background: typeStyle.background,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: AppSpacing.x1),
-                            _InlineIconLabel(
-                              icon: Icons.circle,
-                              label: statusStyle.label,
-                              color: statusStyle.color,
-                            ),
-                          ],
-                        ),
+                              ),
+                              _MiniPill(
+                                label: typeStyle.label,
+                                color: typeStyle.color,
+                                background: typeStyle.background,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.x1),
+                          _InlineIconLabel(
+                            icon: Icons.circle,
+                            label: statusStyle.label,
+                            color: statusStyle.color,
+                          ),
+                        ],
                       ),
-                      if (project.roi != null) ...[
-                        const SizedBox(width: AppSpacing.x2),
-                        _RoiBadge(value: project.roi!),
-                      ],
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  Text(
-                    project.description,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
-                      height: _launchpadLineHeightReadable,
                     ),
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  Wrap(
-                    spacing: AppSpacing.x2,
-                    runSpacing: AppSpacing.x2,
-                    children: [
-                      for (final tag in project.tags)
-                        _SoftChip(label: tag, color: AppColors.text2),
-                      _SoftChip(label: project.chain, color: project.accent),
+                    if (project.roi != null) ...[
+                      const SizedBox(width: AppSpacing.x2),
+                      _RoiBadge(value: project.roi!),
                     ],
-                  ),
-                  const SizedBox(height: AppSpacing.x3),
-                  _ProjectInfoGrid(project: project),
-                  if (project.status != LaunchpadProjectStatus.upcoming) ...[
-                    const SizedBox(height: AppSpacing.x3),
-                    _ProjectProgress(project: project),
                   ],
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                Text(
+                  project.description,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    height: _launchpadLineHeightReadable,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                Wrap(
+                  spacing: AppSpacing.x2,
+                  runSpacing: AppSpacing.x2,
+                  children: [
+                    for (final tag in project.tags)
+                      _SoftChip(label: tag, color: AppColors.text2),
+                    _SoftChip(label: project.chain, color: project.accent),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                _ProjectInfoGrid(project: project),
+                if (project.status != LaunchpadProjectStatus.upcoming) ...[
                   const SizedBox(height: AppSpacing.x3),
-                  _TimelineLine(project: project),
-                  const SizedBox(height: AppSpacing.x3),
-                  _ProjectBadges(project: project),
+                  _ProjectProgress(project: project),
                 ],
-              ),
+                const SizedBox(height: AppSpacing.x3),
+                _TimelineLine(project: project),
+                const SizedBox(height: AppSpacing.x3),
+                _ProjectBadges(project: project),
+              ],
             ),
           ),
           Padding(

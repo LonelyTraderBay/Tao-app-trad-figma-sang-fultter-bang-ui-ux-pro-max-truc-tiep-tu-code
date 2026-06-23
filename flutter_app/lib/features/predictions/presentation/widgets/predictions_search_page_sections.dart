@@ -164,37 +164,33 @@ class _FilterPanel extends StatelessWidget {
           ),
           if (hasActiveFilters) ...[
             const SizedBox(height: AppSpacing.x3),
-            Material(
+            VitCard(
               key: PredictionsSearchPage.clearFiltersKey,
-              color: AppColors.sell.withValues(alpha: .10),
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: AppColors.sell.withValues(alpha: .18)),
-                borderRadius: AppRadii.mdRadius,
-              ),
-              child: InkWell(
-                onTap: onClear,
-                borderRadius: AppRadii.mdRadius,
-                child: SizedBox(
-                  height: VitDensity.compact.controlHeight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.close_rounded,
-                        color: AppColors.sell,
-                        size: AppSpacing.iconSm,
-                      ),
-                      const SizedBox(width: AppSpacing.x1),
-                      Text(
-                        'Clear all filters',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.sell,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ],
+              onTap: onClear,
+              variant: VitCardVariant.ghost,
+              radius: VitCardRadius.sm,
+              height: VitDensity.compact.controlHeight,
+              padding: AppSpacing.zeroInsets,
+              clip: true,
+              borderColor: AppColors.sell20,
+              background: const ColoredBox(color: AppColors.sell10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.close_rounded,
+                    color: AppColors.sell,
+                    size: AppSpacing.iconSm,
                   ),
-                ),
+                  const SizedBox(width: AppSpacing.x1),
+                  Text(
+                    'Clear all filters',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.sell,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -237,50 +233,14 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _predictionPrimary.withValues(alpha: .14)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: active
-              ? _predictionPrimary.withValues(alpha: .36)
-              : AppColors.borderSolid,
-        ),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x2,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  size: AppSpacing.iconSm,
-                  color: active ? _predictionPrimary : AppColors.text3,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-                Text(
-                  label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: active ? _predictionPrimary : AppColors.text2,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.normal,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _predictionPrimary,
+      height: VitDensity.compact.controlHeight,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
+      leading: Icon(icon),
     );
   }
 }
@@ -299,34 +259,12 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _predictionPrimary.withValues(alpha: .14)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: active
-              ? _predictionPrimary.withValues(alpha: .36)
-              : AppColors.borderSolid,
-        ),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? _predictionPrimary : AppColors.text2,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _predictionPrimary,
+      height: VitDensity.compact.controlHeight,
     );
   }
 }

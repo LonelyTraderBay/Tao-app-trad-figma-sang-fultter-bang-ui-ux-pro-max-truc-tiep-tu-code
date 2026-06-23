@@ -6,14 +6,14 @@ class _InfoBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      variant: VitCardVariant.inner,
+      variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: VitDensity.compact.cardPadding,
+      padding: _dcaRebalanceHeroPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _AccentIcon(icon: Icons.verified_user_outlined),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: VitPageContent(
               padding: VitContentPadding.none,
@@ -29,6 +29,8 @@ class _InfoBanner extends StatelessWidget {
                 ),
                 Text(
                   'Duy trì tỷ lệ phân bổ tài sản theo mục tiêu. Hệ thống tự động mua/bán khi danh mục lệch khỏi ngưỡng.',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     height: _dcaRebalanceBodyLineHeight,
@@ -60,7 +62,7 @@ class _AllocationSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: VitDensity.compact.cardPadding,
+      padding: _dcaRebalanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -79,8 +81,8 @@ class _AllocationSummary extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.dcaRebalanceRingSize,
-                height: AppSpacing.dcaRebalanceRingSize,
+                width: _dcaRebalanceSummaryRingSize,
+                height: _dcaRebalanceSummaryRingSize,
                 child: CustomPaint(
                   painter: _DonutPainter(targets: targets),
                   child: Center(
@@ -97,6 +99,8 @@ class _AllocationSummary extends StatelessWidget {
                         const SizedBox(height: AppSpacing.x1),
                         Text(
                           'Tổng phân bổ',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
                           ),
@@ -194,21 +198,20 @@ class _TargetList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: targets
-          .map(
-            (target) => Padding(
-              padding: AppSpacing.dcaBottomPaddingX3,
-              child: _TargetCard(
-                target: target,
-                canRemove: targets.length > 2,
-                onPercentChanged: (value) => onPercentChanged(target.id, value),
-                onToleranceChanged: (value) =>
-                    onToleranceChanged(target.id, value),
-                onRemove: () => onRemove(target.id),
-              ),
-            ),
-          )
-          .toList(),
+      children: [
+        for (var index = 0; index < targets.length; index++) ...[
+          _TargetCard(
+            target: targets[index],
+            canRemove: targets.length > 2,
+            onPercentChanged: (value) =>
+                onPercentChanged(targets[index].id, value),
+            onToleranceChanged: (value) =>
+                onToleranceChanged(targets[index].id, value),
+            onRemove: () => onRemove(targets[index].id),
+          ),
+          if (index < targets.length - 1) const SizedBox(height: AppSpacing.x3),
+        ],
+      ],
     );
   }
 }
@@ -241,14 +244,14 @@ class _TargetCard extends StatelessWidget {
             child: ColoredBox(color: accent),
           ),
           Padding(
-            padding: VitDensity.compact.cardPadding,
+            padding: _dcaRebalanceCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
                   children: [
                     _CoinBadge(symbol: target.symbol, accent: accent),
-                    const SizedBox(width: AppSpacing.x4),
+                    const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,6 +260,8 @@ class _TargetCard extends StatelessWidget {
                             children: [
                               Text(
                                 target.symbol,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.baseMedium.copyWith(
                                   color: AppColors.text1,
                                 ),
@@ -271,6 +276,8 @@ class _TargetCard extends StatelessWidget {
                           ),
                           Text(
                             target.assetName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
                             ),
@@ -299,7 +306,7 @@ class _TargetCard extends StatelessWidget {
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Tỷ lệ mục tiêu',
                   style: AppTextStyles.caption.copyWith(
@@ -316,7 +323,7 @@ class _TargetCard extends StatelessWidget {
                   accent: accent,
                   onChanged: onPercentChanged,
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.surface2,
@@ -400,14 +407,21 @@ class _StrategySection extends StatelessWidget {
           title: 'Chiến lược',
         ),
         const SizedBox(height: AppSpacing.x3),
-        ...options.map(
-          (option) => Padding(
-            padding: AppSpacing.dcaBottomPaddingX3,
-            child: _StrategyOptionTile(
-              option: option,
-              selected: active == option.strategy,
-              onTap: () => onChanged(option.strategy),
-            ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const ClampingScrollPhysics(),
+          child: Row(
+            children: [
+              for (var index = 0; index < options.length; index++) ...[
+                _StrategyOptionTile(
+                  option: options[index],
+                  selected: active == options[index].strategy,
+                  onTap: () => onChanged(options[index].strategy),
+                ),
+                if (index < options.length - 1)
+                  const SizedBox(width: AppSpacing.x2),
+              ],
+            ],
           ),
         ),
       ],
@@ -428,98 +442,18 @@ class _StrategyOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
+    return SizedBox(
+      width: _dcaRebalanceStrategyChipWidth,
+      child: VitChoicePill(
         key: DCARebalanceConfig.strategyKey(option.strategy),
+        label: option.title,
+        selected: selected,
         onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: selected ? AppColors.accent08 : AppColors.surface,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.lgRadius,
-              side: BorderSide(
-                color: selected ? AppColors.accent30 : AppColors.cardBorder,
-                width: selected ? 2 : 1,
-              ),
-            ),
-            shadows: selected
-                ? [
-                    const BoxShadow(
-                      color: AppColors.accent10,
-                      blurRadius: 14,
-                      offset: Offset(0, 4),
-                    ),
-                  ]
-                : null,
-          ),
-          child: Padding(
-            padding: VitDensity.compact.cardPadding,
-            child: Row(
-              children: [
-                _AccentIcon(
-                  icon: _strategyIcon(option.icon),
-                  color: selected ? AppColors.accent : AppColors.text3,
-                  muted: !selected,
-                ),
-                const SizedBox(width: AppSpacing.x4),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        option.title,
-                        style: AppTextStyles.base.copyWith(
-                          color: selected ? AppColors.accent : AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        option.subtitle,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: AppSpacing.x5,
-                  height: AppSpacing.x5,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      shape: CircleBorder(
-                        side: BorderSide(
-                          color: selected
-                              ? AppColors.accent
-                              : AppColors.borderSolid,
-                          width: AppSpacing.dcaRebalanceConnectorWidth,
-                        ),
-                      ),
-                    ),
-                    child: selected
-                        ? const Center(
-                            child: SizedBox(
-                              width: AppSpacing.x3,
-                              height: AppSpacing.x3,
-                              child: DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  shape: CircleBorder(),
-                                  color: AppColors.accent,
-                                ),
-                              ),
-                            ),
-                          )
-                        : null,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        accentColor: AppColors.accent,
+        fullWidth: true,
+        leading: Icon(_strategyIcon(option.icon)),
+        showSelectedIcon: selected,
+        semanticLabel: '${option.title}: ${option.subtitle}',
       ),
     );
   }

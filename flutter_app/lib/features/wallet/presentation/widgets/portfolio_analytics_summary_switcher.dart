@@ -176,52 +176,49 @@ class _ViewSwitcher extends StatelessWidget {
         children: [
           for (final item in items)
             Expanded(
-              child: GestureDetector(
+              child: VitCard(
                 key: PortfolioAnalyticsPage.viewKey(item.id),
                 onTap: () => onChanged(item.id),
-                behavior: HitTestBehavior.opaque,
-                child: VitCard(
-                  alignment: Alignment.center,
-                  variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.md,
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: AppSpacing.x2,
-                    vertical: AppSpacing.x2,
-                  ),
-                  background: ColoredBox(
-                    color: active == item.id
-                        ? _analyticsPrimary.withValues(alpha: .18)
-                        : AppColors.transparent,
-                  ),
-                  clip: true,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        item.icon,
-                        color: active == item.id
-                            ? _analyticsPrimary
-                            : AppColors.text2,
-                        size: AppSpacing.walletAnalyticsSwitcherIcon,
-                      ),
-                      const SizedBox(
-                        width: AppSpacing.walletAnalyticsSwitcherIconGap,
-                      ),
-                      Flexible(
-                        child: Text(
-                          item.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: active == item.id
-                                ? _analyticsPrimary
-                                : AppColors.text2,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+                alignment: Alignment.center,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.md,
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x2,
+                  vertical: AppSpacing.x2,
+                ),
+                background: ColoredBox(
+                  color: active == item.id
+                      ? _analyticsPrimary.withValues(alpha: .18)
+                      : AppColors.transparent,
+                ),
+                clip: true,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      item.icon,
+                      color: active == item.id
+                          ? _analyticsPrimary
+                          : AppColors.text2,
+                      size: AppSpacing.walletAnalyticsSwitcherIcon,
+                    ),
+                    const SizedBox(
+                      width: AppSpacing.walletAnalyticsSwitcherIconGap,
+                    ),
+                    Flexible(
+                      child: Text(
+                        item.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: active == item.id
+                              ? _analyticsPrimary
+                              : AppColors.text2,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

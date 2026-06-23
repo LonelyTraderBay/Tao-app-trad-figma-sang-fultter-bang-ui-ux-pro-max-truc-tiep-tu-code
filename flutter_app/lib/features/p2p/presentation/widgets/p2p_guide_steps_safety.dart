@@ -114,35 +114,16 @@ class _ModeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitChoicePill(
       key: widgetKey,
-      color: selected ? color : AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pGuideModeButtonPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: selected ? AppColors.text1 : AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.text1 : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      fullWidth: true,
+      padding: AppSpacing.p2pGuideModeButtonPadding,
+      accentColor: color,
+      leading: Icon(icon),
+      semanticLabel: 'P2P guide mode $label',
     );
   }
 }

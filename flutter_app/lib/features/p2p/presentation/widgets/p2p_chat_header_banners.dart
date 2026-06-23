@@ -145,67 +145,65 @@ class _E2EBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.buy10,
-      child: InkWell(
-        onTap: onOpen,
-        child: Padding(
-          padding: AppSpacing.p2pChatBannerPadding,
-          child: Row(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      background: const ColoredBox(color: AppColors.buy10),
+      padding: AppSpacing.p2pChatBannerPadding,
+      onTap: onOpen,
+      clip: true,
+      child: Row(
+        children: [
+          const Icon(
+            Icons.verified_user_outlined,
+            color: AppColors.buy,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.buy,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          Row(
             children: [
               const Icon(
-                Icons.verified_user_outlined,
+                Icons.lock_outline_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.iconSm,
+                size: AppSpacing.p2pChatTinyIcon,
               ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.buy,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    Text(
-                      subtitle,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
+              const SizedBox(width: AppSpacing.x1),
+              Text(
+                'AES-256',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.buy,
+                  fontWeight: AppTextStyles.bold,
                 ),
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.lock_outline_rounded,
-                    color: AppColors.buy,
-                    size: AppSpacing.p2pChatTinyIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                  Text(
-                    'AES-256',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.buy,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-              IconButton(
-                onPressed: onClose,
-                icon: const Icon(Icons.close_rounded),
-                color: AppColors.buy,
-                iconSize: AppSpacing.p2pChatCloseIcon,
-                visualDensity: VisualDensity.compact,
               ),
             ],
           ),
-        ),
+          VitInlineIconAction(
+            icon: Icons.close_rounded,
+            tooltip: 'Close E2E encryption banner',
+            onPressed: onClose,
+            color: AppColors.buy,
+            size: AppSpacing.p2pChatCloseIcon,
+            padding: AppSpacing.x1,
+            borderRadius: AppRadii.pillRadius,
+          ),
+        ],
       ),
     );
   }

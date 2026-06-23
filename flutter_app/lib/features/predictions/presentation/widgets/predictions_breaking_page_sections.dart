@@ -135,36 +135,14 @@ class _CategoryTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _predictionPrimary.withValues(alpha: .14)
-          : AppColors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: active
-              ? _predictionPrimary.withValues(alpha: .36)
-              : AppColors.transparent,
-        ),
-        borderRadius: AppRadii.mdRadius,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? _predictionPrimary : AppColors.text3,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
-              ),
-            ),
-          ),
-        ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _predictionPrimary,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
       ),
     );
   }

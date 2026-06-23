@@ -177,9 +177,12 @@ class _SheetTitle extends StatelessWidget {
     return Row(
       children: [
         Expanded(child: Text(title, style: AppTextStyles.sectionTitle)),
-        IconButton(
+        VitIconButton(
+          icon: Icons.close_rounded,
+          tooltip: 'Close',
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.close_rounded, color: AppColors.text2),
+          variant: VitIconButtonVariant.transparent,
+          size: VitIconButtonSize.md,
         ),
       ],
     );

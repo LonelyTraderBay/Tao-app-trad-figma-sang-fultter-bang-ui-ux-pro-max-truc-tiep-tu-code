@@ -1,17 +1,47 @@
 part of '../pages/dca_portfolio_optimizer_page.dart';
 
 class _OptimizerApplyAction extends StatelessWidget {
-  const _OptimizerApplyAction({required this.onApply});
+  const _OptimizerApplyAction({required this.snapshot, required this.onApply});
 
+  final DcaPortfolioOptimizerSnapshot snapshot;
   final VoidCallback onApply;
 
   @override
   Widget build(BuildContext context) {
-    return VitCtaButton(
-      key: DCAPortfolioOptimizer.applyKey,
-      onPressed: onApply,
-      leading: const Icon(Icons.arrow_outward_rounded),
-      child: const Text('Áp dụng phân bổ'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitCard(
+          borderColor: AppColors.warn15,
+          padding: AppSpacing.dcaPaddingX2,
+          child: Column(
+            children: [
+              VitInfoRow(
+                label: 'Trước khi áp dụng',
+                value: 'Chưa đặt lệnh',
+                valueColor: AppColors.warn,
+                density: VitDensity.compact,
+                leading: const Icon(Icons.verified_user_outlined),
+              ),
+              VitInfoRow(
+                label: 'Cần kiểm tra',
+                value:
+                    'Drift ${snapshot.driftPercent.toStringAsFixed(1)}% · ngưỡng ${snapshot.driftThresholdPercent.toStringAsFixed(0)}%',
+                valueColor: AppColors.text1,
+                density: VitDensity.compact,
+                leading: const Icon(Icons.rule_rounded),
+              ),
+            ],
+          ),
+        ),
+        const Padding(padding: AppSpacing.dcaTopPaddingX3),
+        VitCtaButton(
+          key: DCAPortfolioOptimizer.applyKey,
+          onPressed: onApply,
+          leading: const Icon(Icons.arrow_outward_rounded),
+          child: const Text('Xem cấu hình tái cân bằng'),
+        ),
+      ],
     );
   }
 }
@@ -32,9 +62,13 @@ class _MiniButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .10),

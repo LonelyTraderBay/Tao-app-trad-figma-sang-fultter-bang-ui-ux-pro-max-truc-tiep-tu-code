@@ -72,6 +72,12 @@ void main() {
     expect(find.text('Select category'), findsOneWidget);
     expect(find.text('Upload Evidence (Optional)'), findsOneWidget);
     expect(find.byKey(ComplaintSubmissionPage.submitKey), findsOneWidget);
+    expect(
+      find.byKey(ComplaintSubmissionPage.submitKey).hitTestable(),
+      findsNothing,
+    );
+    await tester.ensureVisible(find.byKey(ComplaintSubmissionPage.submitKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ComplaintSubmissionPage.submitKey));
     await tester.pumpAndSettle();
     expect(find.byType(ComplaintSubmissionPage), findsOneWidget);
@@ -132,6 +138,8 @@ void main() {
     await tester.tap(find.byKey(ComplaintSubmissionPage.acceptKey));
     await tester.pumpAndSettle();
 
+    await tester.ensureVisible(find.byKey(ComplaintSubmissionPage.submitKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ComplaintSubmissionPage.submitKey));
     await tester.pumpAndSettle();
 

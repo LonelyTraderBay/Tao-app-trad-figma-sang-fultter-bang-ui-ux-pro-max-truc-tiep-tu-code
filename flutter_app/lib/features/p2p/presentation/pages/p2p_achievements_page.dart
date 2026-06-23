@@ -12,13 +12,25 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_achievements_page_sections.dart';
 part '../widgets/p2p_achievements_page_common.dart';
+
+const double _p2pAchievementsVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pAchievementsNativeNavClearance =
+    _p2pAchievementsVisualNavClearance - AppSpacing.x4;
+const double _p2pAchievementsVisualClearance = AppSpacing.x3;
+const double _p2pAchievementsNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pAchievementsScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
 
 class P2PAchievementsPage extends ConsumerWidget {
   const P2PAchievementsPage({super.key, this.shellRenderMode});
@@ -37,10 +49,12 @@ class P2PAchievementsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pAchievementsProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pAchievementsVisualNavClearance +
+                  _p2pAchievementsVisualClearance
+            : _p2pAchievementsNativeNavClearance +
+                  _p2pAchievementsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -65,22 +79,24 @@ class P2PAchievementsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pTrustProgressRelaxedScrollPadding(
-                      bottomInset,
+                    padding: _p2pAchievementsScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _SummaryCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        for (final category in snapshot.categories) ...[
+                        const SizedBox(height: AppSpacing.x3),
+                        for (
+                          var index = 0;
+                          index < snapshot.categories.length;
+                          index++
+                        ) ...[
                           _AchievementCategory(
                             snapshot: snapshot,
-                            category: category,
+                            category: snapshot.categories[index],
                           ),
-                          const SizedBox(height: AppSpacing.x5),
+                          const SizedBox(height: AppSpacing.x3),
                         ],
                         _TradingLevelLink(snapshot: snapshot),
                       ],

@@ -19,7 +19,7 @@ class _TypeSelector extends StatelessWidget {
             onTap: () => onChanged(P2PPaymentAddType.bank),
           ),
         ),
-        const SizedBox(width: AppSpacing.x3),
+        const SizedBox(width: _p2pPaymentAddSectionGap),
         Expanded(
           child: _TypeButton(
             key: P2PPaymentMethodAddPage.ewalletTypeKey,
@@ -50,50 +50,15 @@ class _TypeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
+    return VitChoicePill(
+      label: label,
       selected: active,
-      label: '$label payment type',
-      child: Material(
-        color: active ? AppColors.primary12 : AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-          side: BorderSide(
-            color: active ? AppColors.primary40 : AppColors.borderSolid,
-          ),
-        ),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.inputRadius,
-          child: SizedBox(
-            height: AppSpacing.ctaHeight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: active ? AppModuleAccents.p2p : AppColors.text3,
-                  size: AppSpacing.p2pPaymentTypeIcon,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: active ? AppColors.text1 : AppColors.text2,
-                      fontWeight: active
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      onTap: onTap,
+      fullWidth: true,
+      height: _p2pPaymentAddTypeExtent,
+      accentColor: AppModuleAccents.p2p,
+      leading: Icon(icon),
+      semanticLabel: '$label payment type',
     );
   }
 }
@@ -141,48 +106,15 @@ class _PaymentOptionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
+    return VitChoicePill(
+      label: label,
       selected: selected,
-      label: '$label payment option',
-      child: Material(
-        color: selected ? AppColors.primary12 : AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.xlRadius,
-          side: BorderSide(
-            color: selected ? AppColors.primary40 : AppColors.borderSolid,
-          ),
-        ),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.xlRadius,
-          child: Padding(
-            padding: AppSpacing.p2pPaymentOptionPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (selected) ...[
-                  const Icon(
-                    Icons.check_circle_outline_rounded,
-                    color: AppColors.primary,
-                    size: AppSpacing.iconSm,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                ],
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: selected ? AppColors.text1 : AppColors.text2,
-                    fontWeight: selected
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      onTap: onTap,
+      padding: _p2pPaymentAddOptionPadding,
+      accentColor: AppModuleAccents.p2p,
+      showSelectedIcon: true,
+      selectedIcon: Icons.check_circle_outline_rounded,
+      semanticLabel: '$label payment option',
     );
   }
 }
@@ -198,7 +130,7 @@ class _PaymentPreview extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodAddPage.previewKey,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: _p2pPaymentAddCardPadding,
       borderColor: AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +142,7 @@ class _PaymentPreview extends StatelessWidget {
                     ? Icons.account_balance_rounded
                     : Icons.phone_iphone_rounded,
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _p2pPaymentAddSectionGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,12 +168,12 @@ class _PaymentPreview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pPaymentAddSectionGap),
           const Divider(
             color: AppColors.divider,
             height: AppSpacing.dividerHairline,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pPaymentAddSectionGap),
           _PreviewRow(label: 'Tài khoản', value: preview.maskedAccount),
           const SizedBox(height: AppSpacing.x2),
           _PreviewRow(label: 'Chủ tài khoản', value: preview.ownerName),
@@ -265,7 +197,7 @@ class _SecurityNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: _p2pPaymentAddCardPadding,
       borderColor: AppColors.warningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,7 +207,7 @@ class _SecurityNote extends StatelessWidget {
             color: AppColors.warn,
             size: AppSpacing.iconMd,
           ),
-          const SizedBox(width: AppSpacing.x3),
+          const SizedBox(width: _p2pPaymentAddSectionGap),
           Expanded(
             child: Text(
               note,
@@ -302,8 +234,8 @@ class _IconBadge extends StatelessWidget {
         side: BorderSide(color: AppColors.primary20),
       ),
       child: SizedBox(
-        width: AppSpacing.x6,
-        height: AppSpacing.x6,
+        width: _p2pPaymentAddIconBox,
+        height: _p2pPaymentAddIconBox,
         child: Icon(icon, color: AppModuleAccents.p2p, size: AppSpacing.iconMd),
       ),
     );
@@ -338,7 +270,7 @@ class _PreviewRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.p2pPaymentPreviewLabelWidth,
+          width: _p2pPaymentAddPreviewLabelWidth,
           child: Text(
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

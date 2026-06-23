@@ -27,7 +27,7 @@ class _PaymentInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: _p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -57,10 +57,12 @@ class _PaymentInfoCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
-          InkWell(
+          VitCard(
             key: P2POrderPage.qrToggleKey,
             onTap: onToggleQr,
-            borderRadius: AppRadii.smRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.zeroInsets,
             child: Padding(
               padding: AppSpacing.p2pOrderQrTogglePadding,
               child: Row(
@@ -232,7 +234,7 @@ class _ProofCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: _p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -284,7 +286,7 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: _p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -335,8 +337,8 @@ class _TimelineItem extends StatelessWidget {
               color: _stepBackground(item.status),
               shape: CircleBorder(side: BorderSide(color: color)),
               child: SizedBox(
-                width: AppSpacing.x6,
-                height: AppSpacing.x6,
+                width: _p2pOrderTimelineNodeSize,
+                height: _p2pOrderTimelineNodeSize,
                 child: Center(
                   child: Icon(
                     _timelineIcon(item.iconKey),
@@ -348,8 +350,8 @@ class _TimelineItem extends StatelessWidget {
             ),
             if (!isLast)
               SizedBox(
-                width: AppSpacing.p2pOrderTimelineConnectorWidth,
-                height: AppSpacing.x6,
+                width: _p2pOrderDividerHeight,
+                height: _p2pOrderTimelineConnectorHeight,
                 child: ColoredBox(color: color.withValues(alpha: .35)),
               ),
           ],
@@ -359,7 +361,7 @@ class _TimelineItem extends StatelessWidget {
           child: Padding(
             padding: isLast
                 ? AppSpacing.zeroInsets
-                : AppSpacing.p2pOrderTimelineItemPadding,
+                : _p2pOrderTimelineItemPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -415,7 +417,7 @@ class _PaymentWarning extends StatelessWidget {
       messageColor: AppColors.sell,
       borderColor: AppColors.sell20,
       variant: VitCardVariant.standard,
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: _p2pOrderCompactCardPadding,
       messageStyle: AppTextStyles.micro.copyWith(
         color: AppColors.sell,
         height: 1.4,
@@ -475,7 +477,7 @@ class _QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: _p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

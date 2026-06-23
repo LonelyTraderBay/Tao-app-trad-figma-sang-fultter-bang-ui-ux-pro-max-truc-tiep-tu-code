@@ -116,18 +116,12 @@ class _MonthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface3,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: SizedBox(
-          width: AppSpacing.buttonCompact,
-          height: AppSpacing.buttonCompact,
-          child: Icon(icon, color: AppColors.text1, size: AppSpacing.iconMd),
-        ),
-      ),
+    return VitIconButton(
+      icon: icon,
+      tooltip: 'Đổi tháng',
+      onPressed: onTap,
+      variant: VitIconButtonVariant.defaultAction,
+      size: VitIconButtonSize.sm,
     );
   }
 }

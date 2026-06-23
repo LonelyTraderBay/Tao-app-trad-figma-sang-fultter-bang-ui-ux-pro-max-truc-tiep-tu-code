@@ -175,35 +175,11 @@ class _CreateAlertButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.primary,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: SmartAlertCenter.createButtonKey,
-        onTap: HapticFeedback.selectionClick,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.ctaHeight,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.add_rounded,
-                size: AppSpacing.iconMd,
-                color: AppColors.navCenterIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                'Create Alert',
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.navCenterIcon,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      key: SmartAlertCenter.createButtonKey,
+      onPressed: HapticFeedback.selectionClick,
+      leading: const Icon(Icons.add_rounded),
+      child: const Text('Create Alert'),
     );
   }
 }

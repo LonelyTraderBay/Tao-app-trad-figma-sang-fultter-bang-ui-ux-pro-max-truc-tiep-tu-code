@@ -41,9 +41,12 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
             padding: AppSpacing.onboardingHeaderWelcomePadding,
             child: Align(
               alignment: Alignment.centerRight,
-              child: TextButton(
+              child: VitCtaButton(
                 key: OnboardingFlow.skipButtonKey,
                 onPressed: () => _skip(snapshot),
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                height: AppSpacing.buttonCompact,
                 child: Text(
                   snapshot.welcome.skipLabel,
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -161,9 +164,12 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
               trailing: const Icon(Icons.arrow_forward_rounded),
               child: const Text('Bắt đầu sử dụng'),
             ),
-            TextButton(
+            VitCtaButton(
               key: OnboardingFlow.homeButtonKey,
               onPressed: () => _openRoute(snapshot.homeRoute),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
               child: Text(
                 'Về trang chủ',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),

@@ -41,21 +41,18 @@ class WalletTokenApprovalCard extends StatelessWidget {
                 button: true,
                 label:
                     'Revoke approval for ${approval.token} to ${approval.spenderName}',
-                child: GestureDetector(
+                child: VitCard(
                   key: walletTokenApprovalRevokeKey(approval.id),
                   onTap: () => onRevoke(approval),
-                  behavior: HitTestBehavior.opaque,
-                  child: VitCard(
-                    width: AppSpacing.walletTokenApprovalActionSize,
-                    height: AppSpacing.walletTokenApprovalActionSize,
-                    variant: VitCardVariant.inner,
-                    borderColor: walletTokenApprovalRed.withValues(alpha: .26),
-                    alignment: Alignment.center,
-                    child: const Icon(
-                      Icons.delete_outline_rounded,
-                      color: walletTokenApprovalRed,
-                      size: AppSpacing.walletTokenApprovalActionIcon,
-                    ),
+                  width: AppSpacing.walletTokenApprovalActionSize,
+                  height: AppSpacing.walletTokenApprovalActionSize,
+                  variant: VitCardVariant.inner,
+                  borderColor: walletTokenApprovalRed.withValues(alpha: .26),
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    Icons.delete_outline_rounded,
+                    color: walletTokenApprovalRed,
+                    size: AppSpacing.walletTokenApprovalActionIcon,
                   ),
                 ),
               ),

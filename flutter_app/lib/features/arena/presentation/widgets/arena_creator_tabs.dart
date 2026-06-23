@@ -105,66 +105,62 @@ class _ModeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: ArenaCreatorPage.modeKey(mode.id),
       onTap: onTap,
-      child: Padding(
-        padding: AppSpacing.arenaCreatorModeRowPadding,
-        child: Row(
-          children: [
-            const SizedBox(
-              width: AppSpacing.arenaCreatorModeIconBox,
-              height: AppSpacing.arenaCreatorModeIconBox,
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: AppColors.primary12,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.mdRadius,
-                  ),
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.calculate_rounded,
-                    color: AppColors.primary,
-                    size: AppSpacing.arenaCreatorModeGlyph,
-                  ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.arenaCreatorModeRowPadding,
+      child: Row(
+        children: [
+          const SizedBox(
+            width: AppSpacing.arenaCreatorModeIconBox,
+            height: AppSpacing.arenaCreatorModeIconBox,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.primary12,
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.calculate_rounded,
+                  color: AppColors.primary,
+                  size: AppSpacing.arenaCreatorModeGlyph,
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    mode.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.baseMedium.copyWith(
-                      color: AppColors.text1,
-                    ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  mode.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: AppColors.text1,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    '${mode.cloneCount} clone · ${mode.completionRate}% hoàn thành',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  '${mode.cloneCount} clone · ${mode.completionRate}% hoàn thành',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-            const SizedBox(width: AppSpacing.x2),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.arenaCreatorModeChevron,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.arenaCreatorModeChevron,
+          ),
+        ],
       ),
     );
   }

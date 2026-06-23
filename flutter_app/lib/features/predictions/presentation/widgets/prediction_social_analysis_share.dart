@@ -143,29 +143,22 @@ class _CopyLinkCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.predictionSocialCopyButtonGap),
-              SizedBox(
+              VitCtaButton(
                 key: PredictionSocialPage.copyLinkKey,
+                onPressed: onCopy,
+                variant: copied
+                    ? VitCtaButtonVariant.success
+                    : VitCtaButtonVariant.primary,
+                fullWidth: false,
                 height: VitDensity.compact.controlHeight,
-                child: ElevatedButton.icon(
-                  onPressed: onCopy,
-                  icon: Icon(
-                    copied ? Icons.check_rounded : Icons.copy_rounded,
-                    size: AppSpacing.predictionSocialCopyIcon,
-                  ),
-                  label: Text(copied ? 'Copied' : 'Copy'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: copied
-                        ? AppColors.buy
-                        : _predictionPrimary,
-                    foregroundColor: AppColors.onAccent,
-                    textStyle: AppTextStyles.micro.copyWith(
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                  ),
+                leading: Icon(
+                  copied ? Icons.check_rounded : Icons.copy_rounded,
+                  size: AppSpacing.predictionSocialCopyIcon,
                 ),
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x3,
+                ),
+                child: Text(copied ? 'Copied' : 'Copy'),
               ),
             ],
           ),

@@ -16,6 +16,20 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
+const double _p2pAmlVisualClearance = AppSpacing.x3;
+const double _p2pAmlNativeClearance = AppSpacing.x2;
+const double _p2pAmlIconBox = AppSpacing.buttonCompact;
+const double _p2pAmlDividerExtent = AppSpacing.dividerHairline;
+const double _p2pAmlInfoLineHeight = 1.35;
+const EdgeInsets _p2pAmlCardPadding = EdgeInsets.all(AppSpacing.x2);
+
+EdgeInsets _p2pAmlScrollPadding(double scrollEndPadding) => EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  scrollEndPadding,
+);
+
 class P2PAmlScreeningPage extends ConsumerWidget {
   const P2PAmlScreeningPage({super.key, this.shellRenderMode});
 
@@ -32,12 +46,10 @@ class P2PAmlScreeningPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pAmlScreeningProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pComplianceBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pComplianceBottomInsetNative) +
+            ? DeviceMetrics.bottomChrome + _p2pAmlVisualClearance
+            : DeviceMetrics.nativeBottomChrome + _p2pAmlNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -62,7 +74,7 @@ class P2PAmlScreeningPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
+                    padding: _p2pAmlScrollPadding(scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -106,7 +118,7 @@ class _AmlHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy),
       ),
       child: Padding(
-        padding: AppSpacing.p2pComplianceCompactCardPadding,
+        padding: _p2pAmlCardPadding,
         child: Row(
           children: [
             Material(
@@ -115,8 +127,8 @@ class _AmlHero extends StatelessWidget {
                 borderRadius: AppRadii.lgRadius,
               ),
               child: const SizedBox(
-                width: AppSpacing.buttonCompact,
-                height: AppSpacing.buttonCompact,
+                width: _p2pAmlIconBox,
+                height: _p2pAmlIconBox,
                 child: Icon(
                   Icons.shield_outlined,
                   color: AppColors.onAccent,
@@ -168,7 +180,7 @@ class _AmlSchedule extends StatelessWidget {
     return VitCard(
       key: P2PAmlScreeningPage.scheduleKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pComplianceCompactCardPadding,
+      padding: _p2pAmlCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -241,7 +253,7 @@ class _AmlCheckList extends StatelessWidget {
             _AmlCheckRow(check: checks[index]),
             if (index != checks.length - 1)
               const Divider(
-                height: AppSpacing.p2pComplianceDividerHeight,
+                height: _p2pAmlDividerExtent,
                 color: AppColors.borderSolid,
               ),
           ],
@@ -262,7 +274,7 @@ class _AmlCheckRow extends StatelessWidget {
 
     return Padding(
       key: P2PAmlScreeningPage.checkKey(check.id),
-      padding: AppSpacing.p2pComplianceCompactCardPadding,
+      padding: _p2pAmlCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -272,8 +284,8 @@ class _AmlCheckRow extends StatelessWidget {
               borderRadius: AppRadii.lgRadius,
             ),
             child: SizedBox(
-              width: AppSpacing.buttonCompact,
-              height: AppSpacing.buttonCompact,
+              width: _p2pAmlIconBox,
+              height: _p2pAmlIconBox,
               child: Icon(
                 config.icon,
                 color: config.color,
@@ -339,7 +351,7 @@ class _AmlInfoNotice extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .24)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pComplianceCompactCardPadding,
+        padding: _p2pAmlCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -365,7 +377,7 @@ class _AmlInfoNotice extends StatelessWidget {
                     snapshot.infoBody,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.p2pComplianceInfoLineHeight,
+                      height: _p2pAmlInfoLineHeight,
                     ),
                   ),
                 ],

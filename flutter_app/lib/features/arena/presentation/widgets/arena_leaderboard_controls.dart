@@ -183,46 +183,13 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? accentColor.withValues(alpha: .12) : AppColors.bg,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.smRadius,
-              side: BorderSide(
-                color: active
-                    ? accentColor.withValues(alpha: .32)
-                    : AppColors.borderSolid,
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: _leaderboardFilterPadding,
-            child: Row(
-              children: [
-                Icon(
-                  icon,
-                  color: active ? accentColor : AppColors.text2,
-                  size: _leaderboardFilterIcon,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? accentColor : AppColors.text2,
-                    fontWeight: AppTextStyles.medium,
-                    height: _leaderboardLineHeight,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: accentColor,
+      padding: _leaderboardFilterPadding,
+      leading: Icon(icon, size: _leaderboardFilterIcon),
     );
   }
 }
@@ -240,31 +207,12 @@ class _SeasonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? AppColors.primary12 : AppColors.transparent,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-          child: Padding(
-            padding: _leaderboardFilterPadding,
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? AppColors.primary : AppColors.text3,
-                fontWeight: AppTextStyles.medium,
-                height: _leaderboardLineHeight,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: AppColors.primary,
+      padding: _leaderboardFilterPadding,
     );
   }
 }

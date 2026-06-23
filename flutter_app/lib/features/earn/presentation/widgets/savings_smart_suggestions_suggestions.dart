@@ -329,18 +329,15 @@ class SavingsSmartSmallActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .12),
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: SizedBox(
-          width: AppSpacing.buttonCompact,
-          height: AppSpacing.buttonCompact,
-          child: Icon(icon, color: color, size: AppSpacing.iconSm),
-        ),
-      ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      width: AppSpacing.buttonCompact,
+      height: AppSpacing.buttonCompact,
+      clip: true,
+      background: ColoredBox(color: color.withValues(alpha: .12)),
+      onTap: onTap,
+      child: Icon(icon, color: color, size: AppSpacing.iconSm),
     );
   }
 }

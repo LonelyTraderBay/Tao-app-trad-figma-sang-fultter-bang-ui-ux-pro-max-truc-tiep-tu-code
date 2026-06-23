@@ -71,14 +71,13 @@ class _ProductChip extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
+          VitIconButton(
             key: SavingsComparisonPage.removeProductKey(product.id),
+            icon: Icons.close_rounded,
+            tooltip: 'Xóa ${product.name}',
             onPressed: onRemove,
-            icon: const Icon(
-              Icons.close_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconSm,
-            ),
+            variant: VitIconButtonVariant.transparent,
+            size: VitIconButtonSize.sm,
           ),
         ],
       ),
@@ -99,43 +98,13 @@ class _AddProductButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        key: SavingsComparisonPage.addProductButtonKey,
-        onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: DecoratedBox(
-          decoration: const ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.lgRadius,
-              side: BorderSide(color: AppColors.borderSolid),
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnVerticalPaddingX3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.add_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  'Thêm sản phẩm ($selectedCount/$maxCompare)',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      key: SavingsComparisonPage.addProductButtonKey,
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.secondary,
+      height: AppSpacing.buttonCompact,
+      leading: const Icon(Icons.add_rounded),
+      child: Text('Thêm sản phẩm ($selectedCount/$maxCompare)'),
     );
   }
 }

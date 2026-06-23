@@ -20,6 +20,13 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part '../widgets/p2p_report_merchant_summary_actions.dart';
 part '../widgets/p2p_report_merchant_reasons_details.dart';
 
+const double _p2pReportVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pReportNativeNavClearance =
+    _p2pReportVisualNavClearance - AppSpacing.x4;
+const double _p2pReportVisualClearance = AppSpacing.x3;
+const double _p2pReportNativeClearance = AppSpacing.x2;
+
 class P2PReportMerchantPage extends ConsumerStatefulWidget {
   const P2PReportMerchantPage({
     super.key,
@@ -62,10 +69,10 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
       (reason) => reason.id == _selectedReasonId,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pReportVisualNavClearance + _p2pReportVisualClearance
+            : _p2pReportNativeNavClearance + _p2pReportNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -93,9 +100,9 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: EdgeInsetsDirectional.only(
                       start: AppSpacing.contentPad,
-                      top: AppSpacing.x3,
+                      top: AppSpacing.x2,
                       end: AppSpacing.contentPad,
-                      bottom: bottomInset,
+                      bottom: scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

@@ -45,13 +45,19 @@ class _Switch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.cardLargeRadius,
-      child: VitTogglePill(
-        enabled: enabled,
-        activeColor: _securityGreen,
-        inactiveColor: _securityPanel2,
+    return Semantics(
+      button: true,
+      toggled: enabled,
+      child: VitCard(
+        key: key,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.lg,
+        onTap: onTap,
+        child: VitTogglePill(
+          enabled: enabled,
+          activeColor: _securityGreen,
+          inactiveColor: _securityPanel2,
+        ),
       ),
     );
   }

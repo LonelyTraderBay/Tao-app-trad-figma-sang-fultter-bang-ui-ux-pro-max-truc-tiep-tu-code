@@ -321,38 +321,14 @@ class _ModeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? AppColors.primary : AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: _guideActionExtent,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: AppSpacing.arenaGuideModeIcon,
-                color: active ? AppColors.onAccent : AppColors.text3,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? AppColors.onAccent : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onPressed,
+      accentColor: AppColors.primary,
+      fullWidth: true,
+      height: _guideActionExtent,
+      leading: Icon(icon, size: AppSpacing.arenaGuideModeIcon),
     );
   }
 }

@@ -110,12 +110,25 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
             hintText: 'Nhap ghi chu',
           ),
           actions: [
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(context).pop(),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              density: VitDensity.compact,
+              height: VitDensity.compact.controlHeight,
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x3,
+              ),
               child: const Text('Hủy'),
             ),
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(context).pop(controller.text),
+              fullWidth: false,
+              density: VitDensity.compact,
+              height: VitDensity.compact.controlHeight,
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x3,
+              ),
               child: const Text('Lưu'),
             ),
           ],

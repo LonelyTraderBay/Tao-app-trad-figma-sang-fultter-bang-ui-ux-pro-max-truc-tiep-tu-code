@@ -12,12 +12,12 @@ class _PositionsList extends StatelessWidget {
         for (final position in snapshot.positions) ...[
           _PositionCard(position: position),
           if (position != snapshot.positions.last)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
         ],
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: AppSpacing.earnCardPaddingX4X3,
           borderColor: AppColors.buy20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +32,7 @@ class _PositionsList extends StatelessWidget {
                   const SizedBox(width: AppSpacing.x2),
                   Text(
                     'Tong thu nhap uoc tinh',
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.body.copyWith(
                       color: AppColors.buy,
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -41,10 +41,12 @@ class _PositionsList extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.x3),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  for (final item in snapshot.estimatedIncome)
-                    _IncomeEstimate(item: item),
+                  for (final item in snapshot.estimatedIncome) ...[
+                    Expanded(child: _IncomeEstimate(item: item)),
+                    if (item != snapshot.estimatedIncome.last)
+                      const SizedBox(width: AppSpacing.x2),
+                  ],
                 ],
               ),
             ],
@@ -62,17 +64,17 @@ class _PositionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accent = _productTypeColor(position.type);
+
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: AppSpacing.earnCardPaddingX4X3,
+      borderColor: accent.withValues(alpha: 0.28),
       child: Column(
         children: [
           Row(
             children: [
-              _AssetBadge(
-                asset: position.asset,
-                color: _productTypeColor(position.type),
-              ),
+              _AssetBadge(asset: position.asset, color: accent),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
@@ -80,44 +82,73 @@ class _PositionCard extends StatelessWidget {
                   children: [
                     Text(
                       position.product,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.bold,
+                        height: 1.2,
                       ),
                     ),
-                    Text(
-                      _productTypeLabel(position.type),
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                      ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Row(
+                      children: [
+                        Icon(
+                          _productTypeIcon(position.type),
+                          color: accent,
+                          size: AppSpacing.iconSm,
+                        ),
+                        const SizedBox(width: AppSpacing.x1),
+                        Flexible(
+                          child: Text(
+                            _productTypeLabel(position.type),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.captionSm.copyWith(
+                              color: AppColors.text2,
+                              height: 1.2,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-              Text(
-                '${position.apy} APY',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.buy,
-                  fontWeight: AppTextStyles.bold,
-                ),
+              const SizedBox(width: AppSpacing.x3),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    position.apy,
+                    style: AppTextStyles.amountSm.copyWith(
+                      color: AppColors.buy,
+                    ),
+                  ),
+                  Text(
+                    'APY',
+                    style: AppTextStyles.captionSm.copyWith(
+                      color: AppColors.text3,
+                      height: 1.2,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
-          GridView.count(
-            crossAxisCount: AppSpacing.stakingCommunityGridColumns,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: AppSpacing.x2,
-            crossAxisSpacing: AppSpacing.x2,
-            childAspectRatio: AppSpacing.stakingCommunityPositionsGridAspect,
-            children: [
+          const SizedBox(height: AppSpacing.x3),
+          _PositionStatRow(
+            items: [
               _PositionMetric(label: 'Dang staking', value: position.amount),
               _PositionMetric(
                 label: 'Da nhan',
                 value: position.earned,
                 valueColor: AppColors.buy,
               ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          _PositionStatRow(
+            items: [
               _PositionMetric(label: 'Bat dau', value: position.startDate),
               _PositionMetric(
                 label: position.endDate == null ? 'Trang thai' : 'Ket thuc',
@@ -127,6 +158,24 @@ class _PositionCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PositionStatRow extends StatelessWidget {
+  const _PositionStatRow({required this.items});
+
+  final List<_PositionMetric> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        for (final item in items) ...[
+          Expanded(child: item),
+          if (item != items.last) const SizedBox(width: AppSpacing.x2),
+        ],
+      ],
     );
   }
 }
@@ -145,12 +194,15 @@ class _PositionMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const ShapeDecoration(
+      decoration: ShapeDecoration(
         color: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.smRadius,
+          side: const BorderSide(color: AppColors.cardBorder),
+        ),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: AppSpacing.earnCardPaddingX3X2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -159,15 +211,19 @@ class _PositionMetric extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              style: AppTextStyles.captionSm.copyWith(
+                color: AppColors.text3,
+                height: 1.15,
+              ),
             ),
             Text(
               value,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
+              style: AppTextStyles.body.copyWith(
                 color: valueColor,
                 fontWeight: AppTextStyles.bold,
+                height: 1.2,
               ),
             ),
           ],
@@ -184,21 +240,39 @@ class _IncomeEstimate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          item.label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
+        color: AppColors.surface2,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+      ),
+      child: Padding(
+        padding: AppSpacing.earnCardPaddingX3X2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              item.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.captionSm.copyWith(
+                color: AppColors.text3,
+                height: 1.15,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              item.value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.body.copyWith(
+                color: AppColors.buy,
+                fontWeight: AppTextStyles.bold,
+                height: 1.2,
+              ),
+            ),
+          ],
         ),
-        Text(
-          item.value,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.buy,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -225,9 +299,10 @@ class _AssetBadge extends StatelessWidget {
         child: Center(
           child: Text(
             asset.length > 4 ? asset.substring(0, 4) : asset,
-            style: AppTextStyles.micro.copyWith(
+            style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
+              height: 1,
             ),
           ),
         ),

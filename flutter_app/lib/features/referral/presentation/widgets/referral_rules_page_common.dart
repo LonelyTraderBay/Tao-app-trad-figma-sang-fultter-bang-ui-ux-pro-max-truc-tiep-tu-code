@@ -108,37 +108,35 @@ class _FaqCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             key: ReferralRulesPage.faqToggleKey(index),
             onTap: onTap,
-            child: Padding(
-              padding: AppSpacing.referralCardPadding,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.help_outline_rounded,
-                    color: AppColors.accent,
-                    size: AppSpacing.iconMd,
-                  ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Text(
-                      faq.question,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
+            variant: VitCardVariant.ghost,
+            borderColor: AppColors.transparent,
+            padding: AppSpacing.referralCardPadding,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.help_outline_rounded,
+                  color: AppColors.accent,
+                  size: AppSpacing.iconMd,
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Text(
+                    faq.question,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  Icon(
-                    open
-                        ? Icons.expand_less_rounded
-                        : Icons.expand_more_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
-              ),
+                ),
+                Icon(
+                  open ? Icons.expand_less_rounded : Icons.expand_more_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
+              ],
             ),
           ),
           AnimatedCrossFade(

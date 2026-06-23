@@ -274,32 +274,12 @@ class _ChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _marketPrimary.withValues(alpha: .15)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: active
-              ? _marketPrimary.withValues(alpha: .35)
-              : AppColors.transparent,
-        ),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: Padding(
-          padding: _portfolioChipPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? _marketPrimary : AppColors.text3,
-              fontWeight: AppTextStyles.medium,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _marketPrimary,
+      padding: _portfolioChipPadding,
     );
   }
 }

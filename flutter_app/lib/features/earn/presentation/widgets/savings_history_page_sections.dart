@@ -226,39 +226,12 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: selected ? AppColors.primary30 : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.xlRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnWidePillPadding,
-            child: Align(
-              alignment: center ? Alignment.center : Alignment.centerLeft,
-              widthFactor: center ? null : 1,
-              child: Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text3,
-                  fontWeight: selected
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      fullWidth: center,
+      padding: AppSpacing.earnWidePillPadding,
     );
   }
 }

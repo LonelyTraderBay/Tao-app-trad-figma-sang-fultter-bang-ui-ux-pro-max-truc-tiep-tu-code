@@ -76,29 +76,24 @@ class _RangeButton extends StatelessWidget {
       button: true,
       selected: active,
       label: '${option.label} range',
-      child: GestureDetector(
+      child: VitCard(
         key: AnalyticsDashboard.rangeKey(option.range),
-        behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? AppColors.surface3 : AppColors.transparent,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.mdRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.adminSegmentButtonPadding,
-            child: Text(
-              option.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? AppColors.text1 : AppColors.text3,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-              ),
-            ),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        borderColor: AppColors.transparent,
+        background: ColoredBox(
+          color: active ? AppColors.surface3 : AppColors.transparent,
+        ),
+        padding: AppSpacing.adminSegmentButtonPadding,
+        child: Text(
+          option.label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.caption.copyWith(
+            color: active ? AppColors.text1 : AppColors.text3,
+            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
           ),
         ),
       ),

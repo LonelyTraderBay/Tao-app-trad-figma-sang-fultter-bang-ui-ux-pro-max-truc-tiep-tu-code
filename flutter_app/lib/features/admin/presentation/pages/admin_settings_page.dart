@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -147,64 +146,63 @@ class _AdminSettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.adminRowPadding,
       onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: Padding(
-        padding: AppSpacing.adminRowPadding,
-        child: Row(
-          children: [
-            Icon(icon, color: AppColors.primary, size: AppSpacing.adminIconLg),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      child: Row(
+        children: [
+          Icon(icon, color: AppColors.primary, size: AppSpacing.adminIconLg),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    subtitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppSpacing.adminLineHeightCompact,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Flexible(
-              child: Text(
-                trailing,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.end,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
                 ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  subtitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: AppSpacing.adminLineHeightCompact,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Flexible(
+            child: Text(
+              trailing,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
-            if (onTap != null) ...[
-              const SizedBox(width: AppSpacing.x1),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.adminIconLg,
-              ),
-            ],
+          ),
+          if (onTap != null) ...[
+            const SizedBox(width: AppSpacing.x1),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.adminIconLg,
+            ),
           ],
-        ),
+        ],
       ),
     );
   }

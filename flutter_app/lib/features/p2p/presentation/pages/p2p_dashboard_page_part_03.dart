@@ -125,71 +125,65 @@ class _MerchantRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rankColor = rank <= 3 ? AppModuleAccents.p2p : AppColors.text3;
-    return Material(
+    return VitCard(
       key: P2PDashboardPage.merchantKey(merchant.id),
-      color: AppColors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pDashboardMerchantPadding,
-          child: Row(
-            children: [
-              SizedBox(
-                width: AppSpacing.buttonCompact,
-                child: Text(
-                  '#$rank',
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.p2pDashboardMerchantPadding,
+      onTap: onTap,
+      child: Row(
+        children: [
+          SizedBox(
+            width: AppSpacing.buttonCompact,
+            child: Text(
+              '#$rank',
+              style: AppTextStyles.caption.copyWith(
+                color: rankColor,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+          _Avatar(label: merchant.name.characters.first),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  merchant.name,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
-                    color: rankColor,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-              ),
-              _Avatar(label: merchant.name.characters.first),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      merchant.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      '${merchant.trades} đơn · ${_formatMoneyCompact(merchant.volume)}',
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  '${merchant.trades} đơn · ${_formatMoneyCompact(merchant.volume)}',
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-              ),
-              const Icon(
-                Icons.star_rounded,
-                color: AppColors.warn,
-                size: AppSpacing.p2pDashboardMerchantStar,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                merchant.rating.toStringAsFixed(1),
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          const Icon(
+            Icons.star_rounded,
+            color: AppColors.warn,
+            size: AppSpacing.p2pDashboardMerchantStar,
+          ),
+          const SizedBox(width: AppSpacing.x1),
+          Text(
+            merchant.rating.toStringAsFixed(1),
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+        ],
       ),
     );
   }
@@ -287,7 +281,7 @@ class _ActivityRow extends StatelessWidget {
         ),
         if (!last)
           const Divider(
-            height: AppSpacing.p2pMarketplaceAnalyticsDividerHeight,
+            height: _p2pDashboardDividerHeight,
             color: AppColors.divider,
           ),
       ],
@@ -303,29 +297,14 @@ class _TextLinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Padding(
-        padding: AppSpacing.p2pDashboardTextLinkPadding,
-        child: Row(
-          children: [
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppModuleAccents.p2p,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.p2pDashboardMerchantStar,
-            ),
-          ],
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.ghost,
+      fullWidth: false,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.p2pDashboardTextLinkPadding,
+      trailing: const Icon(Icons.chevron_right_rounded),
+      child: Text(label),
     );
   }
 }

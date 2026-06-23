@@ -125,45 +125,45 @@ class _FrequencyOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: selected ? AppColors.accent10 : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.inputRadius,
-              side: BorderSide(
-                color: selected ? AppColors.accent : AppColors.transparent,
-                width: AppSpacing.dcaRebalanceConnectorWidth,
-              ),
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.md,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: selected ? AppColors.accent10 : AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.inputRadius,
+            side: BorderSide(
+              color: selected ? AppColors.accent : AppColors.transparent,
+              width: AppSpacing.dcaRebalanceConnectorWidth,
             ),
           ),
-          child: Padding(
-            padding: AppSpacing.dcaFrequencyTilePadding,
-            child: Column(
-              children: [
-                Text(
-                  option.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: selected ? AppColors.accent : AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+        ),
+        child: Padding(
+          padding: AppSpacing.dcaFrequencyTilePadding,
+          child: Column(
+            children: [
+              Text(
+                option.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: selected ? AppColors.accent : AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
                 ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  option.subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                option.subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+            ],
           ),
         ),
       ),
@@ -193,43 +193,40 @@ class _AdvancedSettings extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Material(
-          color: AppColors.transparent,
-          child: InkWell(
-            key: DCARebalanceConfig.advancedToggleKey,
-            onTap: onToggleExpanded,
-            borderRadius: AppRadii.inputRadius,
-            child: Padding(
-              padding: AppSpacing.dcaVerticalPaddingX3,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.settings_suggest_outlined,
-                    color: AppColors.text3,
-                    size: AppSpacing.dcaRebalanceIconSm,
-                  ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Text(
-                      'Cài đặt nâng cao',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
-                  AnimatedRotation(
-                    turns: expanded ? .5 : 0,
-                    duration: const Duration(milliseconds: 160),
-                    child: const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.dcaRebalanceIcon,
-                    ),
-                  ),
-                ],
+        VitCard(
+          key: DCARebalanceConfig.advancedToggleKey,
+          onTap: onToggleExpanded,
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.md,
+          padding: AppSpacing.dcaVerticalPaddingX3,
+          borderColor: AppColors.transparent,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.settings_suggest_outlined,
+                color: AppColors.text3,
+                size: AppSpacing.dcaRebalanceIconSm,
               ),
-            ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Text(
+                  'Cài đặt nâng cao',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              AnimatedRotation(
+                turns: expanded ? .5 : 0,
+                duration: const Duration(milliseconds: 160),
+                child: const Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.dcaRebalanceIcon,
+                ),
+              ),
+            ],
           ),
         ),
         AnimatedCrossFade(

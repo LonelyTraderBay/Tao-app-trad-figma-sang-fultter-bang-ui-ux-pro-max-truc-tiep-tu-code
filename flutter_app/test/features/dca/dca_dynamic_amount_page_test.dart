@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,13 +9,17 @@ import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_dynamic_amount_page.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpDynamicAmount(WidgetTester tester) async {
+  Future<void> pumpDynamicAmount(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -53,6 +59,27 @@ void main() {
         DcaScreenState.offline,
       ]),
     );
+  });
+
+  test('SC-175 keeps the Home-standard page foundation contract', () {
+    final pageSource = File(
+      'lib/features/dca/presentation/pages/dca_dynamic_amount_page.dart',
+    ).readAsStringSync();
+    final source = [
+      pageSource,
+      File(
+        'lib/features/dca/presentation/pages/dca_dynamic_amount_page_part_01.dart',
+      ).readAsStringSync(),
+      File(
+        'lib/features/dca/presentation/pages/dca_dynamic_amount_page_part_02.dart',
+      ).readAsStringSync(),
+    ].join('\n');
+
+    expect(source, contains('VitInsetScrollView'));
+    expect(source, contains('VitContentPadding.compact'));
+    expect(source, contains('VitDensity.compact'));
+    expect(pageSource, isNot(contains('AppSpacing.dcaBottomInsetPadding')));
+    expect(pageSource, isNot(contains('SingleChildScrollView')));
   });
 
   testWidgets('SC-175 renders dynamic amount default volatility view', (
@@ -119,5 +146,25 @@ void main() {
       routeName: 'SC-175 DCADynamicAmount',
       actionLabel: 'active volatility strategy chip',
     );
+  });
+
+  testWidgets('SC-175 360px viewport follows Home rhythm', (tester) async {
+    await pumpDynamicAmount(tester, viewport: const Size(360, 800));
+
+    final navTop = tester.getTopLeft(find.byType(VitBottomNav)).dy;
+    final heroRect = tester.getRect(find.byType(VitCard).first);
+    final strategyTop = tester
+        .getTopLeft(
+          find.byKey(
+            DCADynamicAmount.strategyKey(DcaDynamicStrategy.volatility),
+          ),
+        )
+        .dy;
+    final chartTitleTop = tester.getTopLeft(find.text('Biến động & Hệ số')).dy;
+
+    expect(heroRect.left, lessThanOrEqualTo(24));
+    expect(heroRect.width, greaterThanOrEqualTo(312));
+    expect(strategyTop, lessThan(navTop - 56));
+    expect(chartTitleTop, lessThan(navTop));
   });
 }

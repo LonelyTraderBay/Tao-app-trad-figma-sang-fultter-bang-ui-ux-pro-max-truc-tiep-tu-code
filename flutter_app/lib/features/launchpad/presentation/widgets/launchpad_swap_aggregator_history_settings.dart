@@ -268,30 +268,14 @@ class _SlippageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
       key: LaunchpadSwapAggregatorPage.slippageKey(value),
+      label: '$value%',
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: SizedBox(
-        height: AppSpacing.buttonCompact,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? AppColors.primary : AppColors.bg,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.inputRadius,
-            ),
-          ),
-          child: Center(
-            child: Text(
-              '$value%',
-              style: AppTextStyles.caption.copyWith(
-                color: active ? AppColors.onAccent : AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: AppColors.primary,
+      fullWidth: true,
+      height: AppSpacing.buttonCompact,
     );
   }
 }

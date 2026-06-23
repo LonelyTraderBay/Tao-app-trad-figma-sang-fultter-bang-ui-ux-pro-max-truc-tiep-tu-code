@@ -64,12 +64,11 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                     text: snapshot.authHeaderExample,
                   ),
                   const SizedBox(height: AppSpacing.x3),
-                  SizedBox(
+                  VitCtaButton(
+                    variant: VitCtaButtonVariant.ghost,
                     height: AppSpacing.ctaHeight,
-                    child: OutlinedButton(
-                      onPressed: () {},
-                      child: const Text('Generate API Key in Settings ->'),
-                    ),
+                    onPressed: () {},
+                    child: const Text('Generate API Key in Settings ->'),
                   ),
                 ],
               ),
@@ -183,12 +182,10 @@ class _RateLimitCard extends StatelessWidget {
           ),
           if (tier.tier == 'Enterprise') ...[
             const SizedBox(height: AppSpacing.x3),
-            SizedBox(
+            VitCtaButton(
               height: AppSpacing.ctaHeight,
-              child: FilledButton(
-                onPressed: () {},
-                child: const Text('Contact Sales'),
-              ),
+              onPressed: () {},
+              child: const Text('Contact Sales'),
             ),
           ],
         ],

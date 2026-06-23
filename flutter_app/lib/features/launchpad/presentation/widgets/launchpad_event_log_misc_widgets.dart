@@ -18,49 +18,13 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: AppRadii.xlRadius,
+    return VitChoicePill(
+      label: count == null ? label : '$label ($count)',
+      selected: active,
       onTap: onTap,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? color.withValues(alpha: .12) : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: active
-                  ? color.withValues(alpha: .36)
-                  : AppColors.transparent,
-            ),
-            borderRadius: AppRadii.xlRadius,
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.launchpadPillPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? color : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.extraBold
-                      : AppTextStyles.medium,
-                ),
-              ),
-              if (count != null) ...[
-                const SizedBox(width: AppSpacing.x1),
-                Text(
-                  '($count)',
-                  style: AppTextStyles.micro.copyWith(
-                    color: active ? color : AppColors.text3,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
+      accentColor: color,
+      padding: AppSpacing.launchpadPillPadding,
+      semanticLabel: count == null ? label : '$label, $count events',
     );
   }
 }
@@ -86,46 +50,35 @@ class _SmallActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = active ? AppModuleAccents.launchpad : AppColors.text3;
-    return InkWell(
-      borderRadius: AppRadii.inputRadius,
+    return VitCard(
       onTap: onTap,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? AppColors.primary12 : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: active ? AppColors.primary30 : AppColors.cardBorder,
+      variant: active ? VitCardVariant.inner : VitCardVariant.standard,
+      radius: VitCardRadius.sm,
+      borderColor: active ? AppColors.primary30 : AppColors.cardBorder,
+      padding: compact
+          ? AppSpacing.launchpadInlinePillPadding
+          : AppSpacing.launchpadPillPadding,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
+            const SizedBox(width: AppSpacing.x1),
+          ],
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              fontWeight: active
+                  ? AppTextStyles.extraBold
+                  : AppTextStyles.medium,
             ),
-            borderRadius: AppRadii.inputRadius,
           ),
-        ),
-        child: Padding(
-          padding: compact
-              ? AppSpacing.launchpadInlinePillPadding
-              : AppSpacing.launchpadPillPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
-                const SizedBox(width: AppSpacing.x1),
-              ],
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: active
-                      ? AppTextStyles.extraBold
-                      : AppTextStyles.medium,
-                ),
-              ),
-              if (trailing != null) ...[
-                const SizedBox(width: AppSpacing.x1),
-                Icon(trailing, color: color, size: AppSpacing.launchpadIconMd),
-              ],
-            ],
-          ),
-        ),
+          if (trailing != null) ...[
+            const SizedBox(width: AppSpacing.x1),
+            Icon(trailing, color: color, size: AppSpacing.launchpadIconMd),
+          ],
+        ],
       ),
     );
   }
@@ -145,30 +98,23 @@ class _SelectBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: AppRadii.xsRadius,
+    return VitCard(
+      width: AppSpacing.launchpadBox18,
+      height: AppSpacing.launchpadBox18,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: selected ? color : AppColors.borderSolid,
       onTap: onTap,
-      child: SizedBox.square(
-        dimension: AppSpacing.launchpadBox18,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: selected ? color : AppColors.transparent,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: selected ? color : AppColors.borderSolid),
-              borderRadius: AppRadii.xsRadius,
-            ),
-          ),
-          child: selected
-              ? const Center(
-                  child: Icon(
-                    Icons.check_rounded,
-                    color: AppColors.onAccent,
-                    size: AppSpacing.launchpadIconSm,
-                  ),
-                )
-              : null,
-        ),
-      ),
+      background: selected ? ColoredBox(color: color) : null,
+      child: selected
+          ? const Center(
+              child: Icon(
+                Icons.check_rounded,
+                color: AppColors.onAccent,
+                size: AppSpacing.launchpadIconSm,
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 }

@@ -325,39 +325,38 @@ class _ChecklistRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Padding(
-        padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
-        child: Row(
-          children: [
-            Checkbox(
-              value: value,
-              activeColor: _arenaAccent,
-              onChanged: (_) => onTap(),
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      child: Row(
+        children: [
+          Checkbox(
+            value: value,
+            activeColor: _arenaAccent,
+            onChanged: (_) => onTap(),
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  Text(
-                    description,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+                ),
+                Text(
+                  description,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -454,23 +453,29 @@ class _FooterActions extends StatelessWidget {
           runSpacing: AppSpacing.x1,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            TextButton.icon(
+            VitCtaButton(
               key: ArenaSmartRuleBuilderPage.saveKey,
               onPressed: onSave,
-              icon: const Icon(
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              leading: const Icon(
                 Icons.save_outlined,
                 size: AppSpacing.arenaSmartRuleTinyIcon,
               ),
-              label: const Text('Lưu nháp'),
+              child: const Text('Lưu nháp'),
             ),
-            TextButton.icon(
+            VitCtaButton(
               key: ArenaSmartRuleBuilderPage.resetKey,
               onPressed: onReset,
-              icon: const Icon(
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              leading: const Icon(
                 Icons.refresh_rounded,
                 size: AppSpacing.arenaSmartRuleTinyIcon,
               ),
-              label: const Text('Làm mới'),
+              child: const Text('Làm mới'),
             ),
             VitStatusPill(
               label: 'Clarity: $clarityScore',

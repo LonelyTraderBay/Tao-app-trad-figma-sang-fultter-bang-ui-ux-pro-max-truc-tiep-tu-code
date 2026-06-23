@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class MarketDerivativesTabs extends StatelessWidget {
   const MarketDerivativesTabs({
@@ -21,75 +21,25 @@ class MarketDerivativesTabs extends StatelessWidget {
       color: AppColors.surface,
       child: SizedBox(
         height: AppSpacing.marketDerivativesTabsHeight,
-        child: Row(
-          children: [
-            _UnderlinedTab(
-              key: MarketDerivativesKeys.overviewTab,
+        child: VitTabBar(
+          activeKey: activeTab,
+          variant: VitTabBarVariant.underline,
+          onChanged: onChanged,
+          tabs: const [
+            VitTabItem(
+              key: 'overview',
               label: 'Tổng quan',
-              value: 'overview',
-              active: activeTab == 'overview',
-              onChanged: onChanged,
+              widgetKey: MarketDerivativesKeys.overviewTab,
             ),
-            _UnderlinedTab(
-              key: MarketDerivativesKeys.perpetualTab,
+            VitTabItem(
+              key: 'perpetual',
               label: 'Perpetual',
-              value: 'perpetual',
-              active: activeTab == 'perpetual',
-              onChanged: onChanged,
+              widgetKey: MarketDerivativesKeys.perpetualTab,
             ),
-            _UnderlinedTab(
-              key: MarketDerivativesKeys.liquidationTab,
+            VitTabItem(
+              key: 'liquidation',
               label: 'Thanh lý',
-              value: 'liquidation',
-              active: activeTab == 'liquidation',
-              onChanged: onChanged,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _UnderlinedTab extends StatelessWidget {
-  const _UnderlinedTab({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final String value;
-  final bool active;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: () => onChanged(value),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Center(
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? marketDerivativesPrimary : AppColors.text3,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: AppSpacing.marketDerivativesTabIndicatorHeight,
-              child: FractionallySizedBox(
-                widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: marketDerivativesPrimary),
-              ),
+              widgetKey: MarketDerivativesKeys.liquidationTab,
             ),
           ],
         ),

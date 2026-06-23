@@ -26,7 +26,9 @@ class _MoverRow extends StatelessWidget {
     final metric = _metricForTab();
     final metricColor = metric.positive ? AppColors.buy : AppColors.sell;
 
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      padding: EdgeInsets.zero,
       onTap: onTap,
       child: SizedBox(
         height: _marketMoverRowExtent,

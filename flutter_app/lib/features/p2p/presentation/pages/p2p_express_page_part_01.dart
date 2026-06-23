@@ -35,12 +35,10 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
         ? 0.0
         : _fiatAmount / bestAd.price;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pExpressBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pExpressBottomInsetNative) +
+            ? _p2pExpressVisualNavClearance + _p2pExpressVisualClearance
+            : _p2pExpressNativeNavClearance + _p2pExpressNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -62,114 +60,88 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: P2PExpressPage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pExpressScrollPadding(bottomInset),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _TradeToggle(
-                          tradeType: _tradeType,
-                          onChanged: _setTradeType,
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _AssetCard(
-                          tradeType: _tradeType,
-                          selectedAsset: selectedAsset,
-                          assets: snapshot.assets,
-                          onAssetChanged: _setAsset,
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _AmountCard(
-                          controller: _amountController,
-                          tradeType: _tradeType,
-                          amount: _fiatAmount,
-                          bestAd: bestAd,
-                          cryptoAmount: cryptoAmount,
-                          quickAmounts: snapshot.quickAmountsVnd,
-                          onChanged: () => setState(() {}),
-                          onQuickAmount: _setAmount,
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _PaymentCard(
-                          selectedPayment: _paymentMethod,
-                          paymentMethods: snapshot.paymentMethods,
-                          onChanged: _setPayment,
-                        ),
-                        if (_fiatAmount > 0 && bestAd != null) ...[
-                          const SizedBox(height: AppSpacing.x4),
-                          _BestOfferCard(
-                            tradeType: _tradeType,
-                            ad: bestAd,
-                            topOfferCount: topAds.length,
-                            marketPrice: selectedAsset.marketPriceVnd,
-                            cryptoAmount: cryptoAmount,
-                            onMerchant: () => context.go(
-                              '/p2p/merchant/${bestAd.merchantId}',
-                            ),
-                            onMarketplace: () => context.go(AppRoutePaths.p2p),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
+            child: VitInsetScrollView(
+              key: P2PExpressPage.contentKey,
+              physics: const ClampingScrollPhysics(),
+              bottomInset: scrollEndPadding,
+              child: VitPageContent(
+                padding: VitContentPadding.compact,
+                density: VitDensity.compact,
+                children: [
+                  _TradeToggle(tradeType: _tradeType, onChanged: _setTradeType),
+                  _AssetCard(
+                    tradeType: _tradeType,
+                    selectedAsset: selectedAsset,
+                    assets: snapshot.assets,
+                    onAssetChanged: _setAsset,
+                  ),
+                  _AmountCard(
+                    controller: _amountController,
+                    tradeType: _tradeType,
+                    amount: _fiatAmount,
+                    bestAd: bestAd,
+                    cryptoAmount: cryptoAmount,
+                    quickAmounts: snapshot.quickAmountsVnd,
+                    onChanged: () => setState(() {}),
+                    onQuickAmount: _setAmount,
+                  ),
+                  _PaymentCard(
+                    selectedPayment: _paymentMethod,
+                    paymentMethods: snapshot.paymentMethods,
+                    onChanged: _setPayment,
+                  ),
+                  if (_fiatAmount > 0 && bestAd != null)
+                    _BestOfferCard(
+                      tradeType: _tradeType,
+                      ad: bestAd,
+                      topOfferCount: topAds.length,
+                      marketPrice: selectedAsset.marketPriceVnd,
+                      cryptoAmount: cryptoAmount,
+                      onMerchant: () =>
+                          context.go('/p2p/merchant/${bestAd.merchantId}'),
+                      onMarketplace: () => context.go(AppRoutePaths.p2p),
+                    ),
+                  if (_fiatAmount > 0 && bestAd == null) const _NoOfferCard(),
+                  VitCtaButton(
+                    key: P2PExpressPage.ctaKey,
+                    onPressed: bestAd == null
+                        ? null
+                        : () => _openConfirm(
+                            context,
+                            selectedAsset.symbol,
+                            bestAd,
+                            cryptoAmount,
                           ),
-                        ],
-                        if (_fiatAmount > 0 && bestAd == null) ...[
-                          const SizedBox(height: AppSpacing.x4),
-                          const _NoOfferCard(),
-                        ],
-                        const SizedBox(height: AppSpacing.x4),
-                        _EscrowCard(
-                          title: snapshot.escrowTitle,
-                          note: _tradeType == P2PTradeType.buy
-                              ? snapshot.escrowBuyNote
-                              : snapshot.escrowSellNote,
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        _HowItWorksCard(steps: snapshot.steps),
-                        const SizedBox(height: AppSpacing.x5),
-                        VitCtaButton(
-                          key: P2PExpressPage.ctaKey,
-                          onPressed: bestAd == null
-                              ? null
-                              : () => _openConfirm(
-                                  context,
-                                  selectedAsset.symbol,
-                                  bestAd,
-                                  cryptoAmount,
-                                ),
-                          variant: _tradeType == P2PTradeType.buy
-                              ? VitCtaButtonVariant.success
-                              : VitCtaButtonVariant.danger,
-                          leading: const Icon(Icons.bolt_outlined),
-                          child: Text(
-                            '${_tradeType == P2PTradeType.buy ? 'Mua nhanh' : 'Bán nhanh'} ${selectedAsset.symbol}',
-                          ),
-                        ),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Express trade state review',
-                              message:
-                                  'Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.',
-                              contractId: 'SC-211',
-                            ),
-                          ],
-                        ),
-                      ],
+                    variant: _tradeType == P2PTradeType.buy
+                        ? VitCtaButtonVariant.success
+                        : VitCtaButtonVariant.danger,
+                    leading: const Icon(Icons.bolt_outlined),
+                    child: Text(
+                      '${_tradeType == P2PTradeType.buy ? 'Mua nhanh' : 'Bán nhanh'} ${selectedAsset.symbol}',
                     ),
                   ),
-                ),
+                  _EscrowCard(
+                    title: snapshot.escrowTitle,
+                    note: _tradeType == P2PTradeType.buy
+                        ? snapshot.escrowBuyNote
+                        : snapshot.escrowSellNote,
+                  ),
+                  _HowItWorksCard(steps: snapshot.steps),
+                  const VitHighRiskStatePanel(
+                    state: VitHighRiskUiState.riskReview,
+                    title: 'Express trade state review',
+                    message:
+                        'Trade side, asset, fiat amount, crypto estimate, payment method, best offer, escrow note, and disabled CTA state stay visible before confirmation.',
+                    contractId: 'SC-211',
+                    density: VitDensity.compact,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -235,28 +207,84 @@ class _TradeToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      variant: VitCardVariant.inner,
+      variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pExpressTogglePadding,
-      child: Row(
+      clip: true,
+      padding: _p2pExpressCardPadding,
+      background: const VitHeroGlow(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: _TradeToggleButton(
-              key: P2PExpressPage.buyToggleKey,
-              label: 'MUA NHANH',
-              active: tradeType == P2PTradeType.buy,
-              color: AppColors.buy,
-              onPressed: () => onChanged(P2PTradeType.buy),
-            ),
+          Row(
+            children: [
+              SizedBox.square(
+                dimension: _p2pExpressIconBox,
+                child: Material(
+                  color: AppColors.primary12,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                  ),
+                  child: Icon(
+                    tradeType == P2PTradeType.buy
+                        ? Icons.flash_on_outlined
+                        : Icons.swap_vert_rounded,
+                    color: tradeType == P2PTradeType.buy
+                        ? AppColors.buy
+                        : AppColors.sell,
+                    size: AppSpacing.iconSm,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Giao dịch P2P tức thì',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      'Chọn chiều giao dịch, nhập VND và xác nhận offer an toàn.',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: _TradeToggleButton(
-              key: P2PExpressPage.sellToggleKey,
-              label: 'BÁN NHANH',
-              active: tradeType == P2PTradeType.sell,
-              color: AppColors.sell,
-              onPressed: () => onChanged(P2PTradeType.sell),
-            ),
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              Expanded(
+                child: _TradeToggleButton(
+                  key: P2PExpressPage.buyToggleKey,
+                  label: 'MUA NHANH',
+                  active: tradeType == P2PTradeType.buy,
+                  color: AppColors.buy,
+                  onPressed: () => onChanged(P2PTradeType.buy),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: _TradeToggleButton(
+                  key: P2PExpressPage.sellToggleKey,
+                  label: 'BÁN NHANH',
+                  active: tradeType == P2PTradeType.sell,
+                  color: AppColors.sell,
+                  onPressed: () => onChanged(P2PTradeType.sell),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -280,38 +308,15 @@ class _TradeToggleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? color : AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.ctaHeight,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.bolt_outlined,
-                color: active ? AppColors.onAccent : AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: active ? AppColors.onAccent : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onPressed,
+      fullWidth: true,
+      height: _p2pExpressToggleHeight,
+      accentColor: color,
+      leading: const Icon(Icons.bolt_outlined),
+      semanticLabel: 'P2P express $label',
     );
   }
 }
@@ -335,7 +340,7 @@ class _AssetCard extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return VitCard(
-      padding: AppSpacing.p2pExpressCardPadding,
+      padding: _p2pExpressCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -392,7 +397,7 @@ class _AssetCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pExpressTightGap),
           Material(
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),

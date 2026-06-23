@@ -26,9 +26,12 @@ class _ProductPickerSheet extends StatelessWidget {
                 style: AppTextStyles.sectionTitle,
               ),
             ),
-            IconButton(
+            VitIconButton(
+              icon: Icons.close_rounded,
+              tooltip: 'Đóng',
               onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.close_rounded, color: AppColors.text3),
+              variant: VitIconButtonVariant.transparent,
+              size: VitIconButtonSize.md,
             ),
           ],
         ),

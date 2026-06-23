@@ -13,11 +13,10 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
     );
     final paidPreview = controller.paidPreview();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pOrderBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pOrderBottomInsetNative) +
+            ? _p2pOrderVisualNavClearance + _p2pOrderVisualClearance
+            : _p2pOrderNativeNavClearance + _p2pOrderNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final order = snapshot.order;
 
@@ -57,7 +56,9 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                   child: SingleChildScrollView(
                     key: P2POrderPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pOrderScrollPadding(bottomInset),
+                    padding: _p2pOrderScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       gap: VitContentGap.tight,
@@ -226,7 +227,7 @@ class _OrderStepper extends StatelessWidget {
                 ),
                 child: SizedBox(
                   width: AppSpacing.x3,
-                  height: AppSpacing.p2pOrderStepperConnectorHeight,
+                  height: _p2pOrderStepperConnectorHeight,
                   child: ColoredBox(
                     color: index < activeIndex - 1
                         ? AppModuleAccents.p2p
@@ -331,8 +332,8 @@ class _SafetyBanner extends StatelessWidget {
             color: AppColors.sell10,
             shape: const CircleBorder(),
             child: const SizedBox(
-              width: AppSpacing.x5,
-              height: AppSpacing.x5,
+              width: _p2pOrderSafetyIconBox,
+              height: _p2pOrderSafetyIconBox,
               child: Center(
                 child: Icon(
                   Icons.shield_outlined,
@@ -385,10 +386,12 @@ class _EscrowBanner extends StatelessWidget {
     return Material(
       color: AppColors.buy10,
       borderRadius: AppRadii.mdRadius,
-      child: InkWell(
+      child: VitCard(
         key: P2POrderPage.escrowKey,
         onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: AppSpacing.zeroInsets,
         child: VitCard(
           variant: VitCardVariant.ghost,
           borderColor: AppColors.buy20,
@@ -470,7 +473,7 @@ class _OrderInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: _p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

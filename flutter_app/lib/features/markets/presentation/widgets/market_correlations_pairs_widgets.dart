@@ -49,28 +49,13 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? color.withValues(alpha: .10) : AppColors.surface2,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: _corrSortChipHeight,
-          child: Padding(
-            padding: AppSpacing.marketCorrelationsSortChipPadding,
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? color : AppColors.text3,
-                  fontWeight: AppTextStyles.medium,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: color,
+      height: _corrSortChipHeight,
+      padding: AppSpacing.marketCorrelationsSortChipPadding,
     );
   }
 }

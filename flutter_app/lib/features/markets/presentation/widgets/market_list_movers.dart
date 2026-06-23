@@ -7,6 +7,10 @@ import 'package:vit_trade_flutter/features/markets/domain/entities/market_entiti
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+const double _marketMoverCompactHeight = AppSpacing.x7 + AppSpacing.x6;
+const EdgeInsets _marketMoverCompactPadding = EdgeInsets.all(AppSpacing.x3);
+const double _marketMoverCompactGap = AppSpacing.x2;
+
 class MarketListTopMovers extends StatelessWidget {
   const MarketListTopMovers({super.key, required this.pairs});
 
@@ -26,7 +30,7 @@ class MarketListTopMovers extends StatelessWidget {
             title: 'Tăng mạnh',
             icon: Icons.trending_up_rounded,
             color: AppColors.buy,
-            pairs: gainers.take(3).toList(),
+            pairs: gainers.take(2).toList(),
           ),
         ),
         const SizedBox(width: AppSpacing.marketMoverGap),
@@ -35,7 +39,7 @@ class MarketListTopMovers extends StatelessWidget {
             title: 'Giảm mạnh',
             icon: Icons.trending_down_rounded,
             color: AppColors.sell,
-            pairs: losers.take(3).toList(),
+            pairs: losers.take(2).toList(),
           ),
         ),
       ],
@@ -59,9 +63,9 @@ class _MoverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.marketMoverCardHeight,
+      height: _marketMoverCompactHeight,
       borderColor: color.withValues(alpha: 0.18),
-      padding: AppSpacing.marketMoverCardPadding,
+      padding: _marketMoverCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -82,7 +86,7 @@ class _MoverCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketMoverHeaderGap),
+          const SizedBox(height: _marketMoverCompactGap),
           for (final pair in pairs) ...[
             Row(
               children: [
@@ -108,7 +112,7 @@ class _MoverCard extends StatelessWidget {
               ],
             ),
             if (pair != pairs.last)
-              const SizedBox(height: AppSpacing.marketMoverRowGap),
+              const SizedBox(height: _marketMoverCompactGap),
           ],
         ],
       ),

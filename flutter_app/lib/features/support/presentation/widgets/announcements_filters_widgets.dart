@@ -47,37 +47,14 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
       key: AnnouncementsPage.filterKey(filter.id),
+      label: filter.label,
+      selected: selected,
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: SizedBox(
-        height: AppSpacing.supportFilterChipHeight,
-        child: Material(
-          color: selected ? AppColors.primary12 : AppColors.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.mdRadius,
-            side: BorderSide(
-              color: selected ? AppColors.primary40 : AppColors.borderSolid,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.supportFilterChipPadding,
-            child: Center(
-              child: Text(
-                filter.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.supportLineHeightFilter,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      height: AppSpacing.supportFilterChipHeight,
+      padding: AppSpacing.supportFilterChipPadding,
+      accentColor: AppColors.primary,
     );
   }
 }

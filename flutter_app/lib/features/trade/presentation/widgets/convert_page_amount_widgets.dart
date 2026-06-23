@@ -202,20 +202,17 @@ class _PercentChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.inner,
-      width: _convertControlHeight,
+    return SizedBox(
       height: _convertChipHeight,
-      density: VitDensity.compact,
-      alignment: Alignment.center,
-      borderColor: _tradePrimary.withValues(alpha: .16),
-      child: Text(
-        label,
-        style: AppTextStyles.micro.copyWith(
-          color: AppColors.text2,
-          fontWeight: AppTextStyles.bold,
-        ),
+      width: _convertControlHeight,
+      child: VitChoicePill(
+        label: label,
+        selected: false,
+        onTap: onTap,
+        fullWidth: true,
+        height: _convertChipHeight,
+        padding: EdgeInsets.zero,
+        accentColor: _tradePrimary,
       ),
     );
   }

@@ -117,10 +117,11 @@ class _CollapsibleSection extends StatelessWidget {
       children: [
         Material(
           type: MaterialType.transparency,
-          child: InkWell(
+          child: VitCard(
             key: ArenaFlowMapPage.sectionKey(id),
             onTap: onTap,
-            borderRadius: AppRadii.smRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
             child: Padding(
               padding: _flowMapSectionTogglePadding,
               child: Row(

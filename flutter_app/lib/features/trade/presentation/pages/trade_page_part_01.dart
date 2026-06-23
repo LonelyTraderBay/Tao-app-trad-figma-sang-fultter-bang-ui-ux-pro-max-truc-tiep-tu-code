@@ -194,29 +194,28 @@ class _TradeHeader extends StatelessWidget {
       body: Semantics(
         button: true,
         label: 'Ch\u1ECDn c\u1EB7p giao d\u1ECBch ${pair.symbol}',
-        child: InkWell(
+        child: VitCard(
           onTap: () => context.go(AppRoutePaths.tradePair(pair.id)),
-          borderRadius: AppRadii.mdRadius,
-          child: Padding(
-            padding: AppSpacing.tradeHeaderBodyPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    pair.symbol,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.sectionTitle,
-                  ),
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          padding: AppSpacing.tradeHeaderBodyPadding,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: Text(
+                  pair.symbol,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.sectionTitle,
                 ),
-                const SizedBox(width: AppSpacing.tradeHeaderChevronGap),
-                const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.text2,
-                  size: AppSpacing.tradeHeaderChevron,
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(width: AppSpacing.tradeHeaderChevronGap),
+              const Icon(
+                Icons.keyboard_arrow_down_rounded,
+                color: AppColors.text2,
+                size: AppSpacing.tradeHeaderChevron,
+              ),
+            ],
           ),
         ),
       ),

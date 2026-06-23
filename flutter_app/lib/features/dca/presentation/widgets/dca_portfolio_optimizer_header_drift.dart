@@ -15,13 +15,18 @@ class _DriftBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: _dcaPortfolioCardPadding,
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        AppSpacing.x3,
+        AppSpacing.x2,
+        AppSpacing.x2,
+        AppSpacing.x2,
+      ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: _dcaPortfolioHeroIconExtent,
-            height: _dcaPortfolioHeroIconExtent,
+            width: _dcaPortfolioAlertIconExtent,
+            height: _dcaPortfolioAlertIconExtent,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.sell10,
@@ -33,22 +38,22 @@ class _DriftBanner extends StatelessWidget {
               child: const Icon(
                 Icons.warning_amber_rounded,
                 color: AppColors.sell,
-                size: AppSpacing.iconMd,
+                size: AppSpacing.iconSm,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Wrap(
-                  spacing: AppSpacing.x3,
-                  runSpacing: AppSpacing.x2,
+                  spacing: AppSpacing.x2,
+                  runSpacing: AppSpacing.x1,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      'Portfolio Drift Cao',
+                      'Danh mục lệch cao',
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
@@ -60,49 +65,34 @@ class _DriftBanner extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: AppSpacing.dcaTopPaddingX2),
+                const Padding(padding: AppSpacing.dcaTopPaddingX1),
                 Text(
-                  'Danh mục đã lệch ${snapshot.driftPercent.toStringAsFixed(1)}% so với phân bổ mục tiêu (ngưỡng: ${snapshot.driftThresholdPercent.toStringAsFixed(0)}%). Xem xét tái cân bằng.',
+                  'Drift ${snapshot.driftPercent.toStringAsFixed(1)}% > ngưỡng ${snapshot.driftThresholdPercent.toStringAsFixed(0)}%; kiểm tra trước khi áp dụng.',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     height: _dcaPortfolioBodyLineHeight,
                   ),
                 ),
-                const Padding(padding: AppSpacing.dcaTopPaddingX3),
-                Wrap(
-                  spacing: AppSpacing.x3,
-                  runSpacing: AppSpacing.x2,
-                  children: [
-                    _MiniButton(
-                      key: DCAPortfolioOptimizer.driftSettingsKey,
-                      label: 'Cài đặt',
-                      icon: Icons.tune_rounded,
-                      color: AppColors.sell,
-                      onTap: onSettings,
-                    ),
-                    _MiniButton(
-                      label: 'Tạm ẩn',
-                      icon: Icons.visibility_off_outlined,
-                      color: AppColors.text2,
-                      onTap: onDismiss,
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
-          IconButton(
+          const SizedBox(width: AppSpacing.x2),
+          _MiniButton(
+            key: DCAPortfolioOptimizer.driftSettingsKey,
+            label: 'Cài đặt',
+            icon: Icons.tune_rounded,
+            color: AppColors.sell,
+            onTap: onSettings,
+          ),
+          VitInlineIconAction(
+            icon: Icons.close_rounded,
+            tooltip: 'Dismiss drift alert',
             onPressed: onDismiss,
-            padding: AppSpacing.zeroInsets,
-            constraints: const BoxConstraints(
-              minWidth: AppSpacing.x6,
-              minHeight: AppSpacing.x6,
-            ),
-            icon: const Icon(
-              Icons.close_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconMd,
-            ),
+            color: AppColors.text3,
+            size: AppSpacing.iconMd,
+            padding: AppSpacing.x1,
           ),
         ],
       ),

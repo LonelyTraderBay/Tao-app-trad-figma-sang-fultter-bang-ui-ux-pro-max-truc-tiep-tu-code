@@ -130,36 +130,33 @@ class _ReasonOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: BotEmergencyStopPage.reasonKey(reason.id),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        variant: selected ? VitCardVariant.ghost : VitCardVariant.standard,
-        constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
-        padding: AppSpacing.tradeBotCompactCardPadding,
-        borderColor: selected ? _stopRed : _stopOptionBorder,
-        child: Row(
-          children: [
-            _RadioMark(selected: selected, danger: selected),
-            const SizedBox(width: AppSpacing.tradeBotRowGap),
-            Icon(
-              _reasonIcon(reason.iconName),
-              color: _reasonColor(reason),
-              size: AppSpacing.contentPad,
-            ),
-            const SizedBox(width: AppSpacing.tradeBotRowGap),
-            Expanded(
-              child: Text(
-                reason.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? _stopRed : AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
+      variant: selected ? VitCardVariant.ghost : VitCardVariant.standard,
+      constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
+      padding: AppSpacing.tradeBotCompactCardPadding,
+      borderColor: selected ? _stopRed : _stopOptionBorder,
+      child: Row(
+        children: [
+          _RadioMark(selected: selected, danger: selected),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          Icon(
+            _reasonIcon(reason.iconName),
+            color: _reasonColor(reason),
+            size: AppSpacing.contentPad,
+          ),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          Expanded(
+            child: Text(
+              reason.label,
+              style: AppTextStyles.caption.copyWith(
+                color: selected ? _stopRed : AppColors.text1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -184,44 +181,41 @@ class _CheckActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activeColor = danger ? _stopRed : _stopPrimary;
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        padding: AppSpacing.tradeBotCompactCardPadding,
-        borderColor: danger
-            ? _stopRed.withValues(alpha: .48)
-            : AppColors.transparent,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _CheckboxMark(selected: selected, color: activeColor),
-            const SizedBox(width: AppSpacing.tradeBotRowGap),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.caption.copyWith(
-                      color: danger ? _stopRed : AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      variant: VitCardVariant.ghost,
+      padding: AppSpacing.tradeBotCompactCardPadding,
+      borderColor: danger
+          ? _stopRed.withValues(alpha: .48)
+          : AppColors.transparent,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _CheckboxMark(selected: selected, color: activeColor),
+          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: danger ? _stopRed : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    description,
-                    style: AppTextStyles.caption.copyWith(
-                      color: danger ? AppColors.text2 : AppColors.text3,
-                      height: 1.35,
-                    ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  description,
+                  style: AppTextStyles.caption.copyWith(
+                    color: danger ? AppColors.text2 : AppColors.text3,
+                    height: 1.35,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

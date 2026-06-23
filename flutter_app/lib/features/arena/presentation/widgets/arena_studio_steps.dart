@@ -334,19 +334,17 @@ class _CommunityRulesFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextButton.icon(
+        VitCtaButton(
           onPressed: onTapRules,
-          style: TextButton.styleFrom(
-            minimumSize: Size.zero,
-            padding: AppSpacing.zeroInsets,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            visualDensity: VisualDensity.compact,
-          ),
-          icon: const Icon(
+          variant: VitCtaButtonVariant.ghost,
+          fullWidth: false,
+          height: AppSpacing.buttonCompact,
+          padding: AppSpacing.zeroInsets,
+          leading: const Icon(
             Icons.menu_book_outlined,
             size: AppSpacing.arenaStudioCommunityIcon,
           ),
-          label: const Text('Quy tắc cộng đồng'),
+          child: const Text('Quy tắc cộng đồng'),
         ),
         const SizedBox(height: AppSpacing.x1),
         VitCard(

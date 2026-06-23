@@ -228,34 +228,13 @@ class _HeroAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCtaButton(
       height: AppSpacing.buttonStandard,
-      child: Material(
-        color: AppColors.portfolioBtnGhost,
-        borderRadius: AppRadii.inputRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.inputRadius,
-          child: Padding(
-            padding: AppSpacing.earnHorizontalPaddingX3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, color: AppColors.text1, size: AppSpacing.iconSm),
-                const SizedBox(width: AppSpacing.x2),
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: _captionBold.copyWith(color: AppColors.text1),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      fullWidth: true,
+      variant: VitCtaButtonVariant.secondary,
+      leading: Icon(icon),
+      onPressed: onTap,
+      child: Text(label),
     );
   }
 }

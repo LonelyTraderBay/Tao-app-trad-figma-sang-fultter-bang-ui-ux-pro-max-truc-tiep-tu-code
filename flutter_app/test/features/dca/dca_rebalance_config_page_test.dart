@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,13 +8,17 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_rebalance_config_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpRebalanceConfig(WidgetTester tester) async {
+  Future<void> pumpRebalanceConfig(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -52,6 +58,26 @@ void main() {
     );
   });
 
+  test('SC-170 keeps the Home-standard page foundation contract', () {
+    final pageSource = File(
+      'lib/features/dca/presentation/pages/dca_rebalance_config_page.dart',
+    ).readAsStringSync();
+    final source = [
+      pageSource,
+      File(
+        'lib/features/dca/presentation/pages/dca_rebalance_config_page_part_01.dart',
+      ).readAsStringSync(),
+      File(
+        'lib/features/dca/presentation/pages/dca_rebalance_config_page_part_02.dart',
+      ).readAsStringSync(),
+    ].join('\n');
+
+    expect(source, contains('VitInsetScrollView'));
+    expect(source, contains('VitContentPadding.compact'));
+    expect(source, contains('VitDensity.compact'));
+    expect(pageSource, isNot(contains('SingleChildScrollView')));
+  });
+
   testWidgets('SC-170 renders Auto-Rebalance form with trade nav active', (
     tester,
   ) async {
@@ -85,6 +111,24 @@ void main() {
       routeName: 'SC-170 DCARebalanceConfig',
       actionLabel: 'the first target allocation slider',
     );
+  });
+
+  testWidgets('SC-170 360px viewport follows Home rhythm', (tester) async {
+    await pumpRebalanceConfig(tester, viewport: const Size(360, 800));
+
+    final navTop = tester.getTopLeft(find.byType(VitBottomNav)).dy;
+    final heroRect = tester.getRect(find.byType(VitCard).first);
+    final firstSliderBottom = tester
+        .getBottomLeft(
+          find.byKey(DCARebalanceConfig.targetSliderKey('target-btc')),
+        )
+        .dy;
+    final toleranceTop = tester.getTopLeft(find.text('Dung sai').first).dy;
+
+    expect(heroRect.left, lessThanOrEqualTo(24));
+    expect(heroRect.width, greaterThanOrEqualTo(312));
+    expect(firstSliderBottom, lessThan(navTop));
+    expect(toleranceTop, lessThan(navTop - 24));
   });
 
   testWidgets('SC-170 strategy and advanced controls update local state', (

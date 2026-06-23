@@ -9,7 +9,7 @@ class _AssetMark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.p2pExpressAssetMarkSize,
+      dimension: _p2pExpressAssetMark,
       child: ColoredBox(
         color: color.withValues(alpha: .16),
         child: Center(
@@ -41,21 +41,15 @@ class _QuickAmountChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ActionChip(
+    return VitChoicePill(
       key: P2PExpressPage.quickAmountKey(amount),
-      onPressed: onPressed,
-      label: Text(_formatVnd(amount)),
-      backgroundColor: selected
-          ? color.withValues(alpha: .15)
-          : AppColors.surface2,
-      side: BorderSide(
-        color: selected ? color.withValues(alpha: .45) : AppColors.borderSolid,
-      ),
-      labelStyle: AppTextStyles.micro.copyWith(
-        color: selected ? color : AppColors.text2,
-        fontWeight: AppTextStyles.bold,
-        fontFeatures: AppTextStyles.tabularFigures,
-      ),
+      label: _formatVnd(amount),
+      selected: selected,
+      onTap: onPressed,
+      height: AppSpacing.buttonCompact,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+      accentColor: color,
+      semanticLabel: 'Quick amount ${_formatVnd(amount)} VND',
     );
   }
 }
@@ -73,21 +67,17 @@ class _PaymentChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ActionChip(
+    return VitChoicePill(
       key: P2PExpressPage.paymentKey(method.id),
-      onPressed: onPressed,
-      avatar: selected
-          ? const Icon(Icons.check_circle_outline, size: AppSpacing.iconSm)
-          : null,
-      label: Text(method.bankName),
-      backgroundColor: selected ? AppColors.primary12 : AppColors.surface2,
-      side: BorderSide(
-        color: selected ? AppColors.primary40 : AppColors.borderSolid,
-      ),
-      labelStyle: AppTextStyles.micro.copyWith(
-        color: selected ? AppColors.primary : AppColors.text2,
-        fontWeight: AppTextStyles.bold,
-      ),
+      label: method.bankName,
+      selected: selected,
+      onTap: onPressed,
+      height: AppSpacing.buttonCompact,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+      accentColor: AppColors.primary,
+      showSelectedIcon: selected,
+      selectedIcon: Icons.check_circle_outline,
+      semanticLabel: 'Payment method ${method.bankName}',
     );
   }
 }
@@ -107,7 +97,7 @@ class _MerchantOfferRow extends StatelessWidget {
           child: Row(
             children: [
               SizedBox.square(
-                dimension: AppSpacing.p2pExpressIconBoxSize,
+                dimension: _p2pExpressIconBox,
                 child: Material(
                   color: AppColors.primary,
                   shape: const CircleBorder(),
@@ -176,13 +166,12 @@ class _MerchantOfferRow extends StatelessWidget {
                   ],
                 ),
               ),
-              IconButton(
+              VitIconButton(
                 onPressed: onMerchant,
-                icon: const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconMd,
-                ),
+                icon: Icons.chevron_right_rounded,
+                tooltip: 'View merchant',
+                size: VitIconButtonSize.sm,
+                variant: VitIconButtonVariant.transparent,
               ),
             ],
           ),
@@ -213,7 +202,7 @@ class _OfferMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.p2pExpressCompactCardPadding,
+      padding: _p2pExpressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

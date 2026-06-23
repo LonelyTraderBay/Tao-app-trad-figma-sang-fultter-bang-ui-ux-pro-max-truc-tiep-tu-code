@@ -24,7 +24,7 @@ class _AmountHistoryCard extends StatelessWidget {
           Padding(
             padding: AppSpacing.dcaChartPadding,
             child: SizedBox(
-              height: AppSpacing.buttonHero * 2 + AppSpacing.x5,
+              height: _dcaDynamicChartHeight,
               child: CustomPaint(
                 painter: _AmountHistoryPainter(entries: entries),
                 child: const SizedBox.expand(),
@@ -63,7 +63,7 @@ class _RecentDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaDynamicCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -235,7 +235,7 @@ class _ConfigSection extends StatelessWidget {
             child: ColoredBox(color: accent),
           ),
           Padding(
-            padding: AppSpacing.dcaPaddingX5,
+            padding: _dcaDynamicCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -286,7 +286,7 @@ class _ConfigItemCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.dcaPaddingX3,
+      padding: _dcaDynamicCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -332,7 +332,7 @@ class _StrategyExplainer extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaDynamicCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

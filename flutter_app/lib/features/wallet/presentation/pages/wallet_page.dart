@@ -16,7 +16,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 
@@ -96,8 +95,8 @@ class _WalletPageState extends ConsumerState<WalletPage> {
             key: WalletPage.contentKey,
             bottomInset: bottomInset,
             child: VitPageContent(
-              padding: VitContentPadding.defaultPadding,
-              customGap: AppSpacing.x4,
+              padding: VitContentPadding.compact,
+              customGap: AppSpacing.x3,
               children: [
                 if (snapshot.supportedStates.contains(WalletScreenState.error))
                   WalletUnavailableBanner(message: snapshot.actionDraft),
@@ -127,25 +126,21 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                       : null,
                 ),
                 WalletSegmentedTabs(active: _tab, onChanged: _setTab),
-                VitCard(
-                  variant: VitCardVariant.standard,
-                  radius: VitCardRadius.md,
-                  padding: AppSpacing.cardPaddingCompact,
-                  child: _tab == 'assets'
-                      ? WalletAssetSection(
-                          controller: _searchController,
-                          filterActive: _hideSmallBalances,
-                          count: assets.length,
-                          assets: assets,
-                          hidden: _balanceHidden,
-                          onChanged: (value) => setState(() => _query = value),
-                          onFilter: () => setState(
-                            () => _hideSmallBalances = !_hideSmallBalances,
-                          ),
-                          onNavigate: _navigate,
-                        )
-                      : WalletAllocationCard(assets: snapshot.assets),
-                ),
+                if (_tab == 'assets')
+                  WalletAssetSection(
+                    controller: _searchController,
+                    filterActive: _hideSmallBalances,
+                    count: assets.length,
+                    assets: assets,
+                    hidden: _balanceHidden,
+                    onChanged: (value) => setState(() => _query = value),
+                    onFilter: () => setState(
+                      () => _hideSmallBalances = !_hideSmallBalances,
+                    ),
+                    onNavigate: _navigate,
+                  )
+                else
+                  WalletAllocationCard(assets: snapshot.assets),
                 const VitSectionHeader(
                   title: 'Mua định kỳ',
                   icon: Icons.sync_alt_rounded,

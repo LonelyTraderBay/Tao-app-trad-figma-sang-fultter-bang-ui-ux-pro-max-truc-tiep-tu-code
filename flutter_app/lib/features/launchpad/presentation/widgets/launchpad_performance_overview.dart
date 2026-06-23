@@ -18,45 +18,13 @@ class _PerformanceTabs extends StatelessWidget {
             children: [
               for (final tab in _PerformanceTab.values)
                 Expanded(
-                  child: InkWell(
+                  child: VitChoicePill(
                     key: LaunchpadPerformancePage.tabKey(tab.id),
+                    label: tab.label,
+                    selected: tab == activeTab,
                     onTap: () => onChanged(tab),
-                    child: Padding(
-                      padding: AppSpacing.launchpadTopPaddingX3,
-                      child: Column(
-                        children: [
-                          Text(
-                            tab.label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.caption.copyWith(
-                              color: tab == activeTab
-                                  ? AppColors.primary
-                                  : AppColors.text3,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.x3),
-                          AnimatedSize(
-                            duration: const Duration(milliseconds: 160),
-                            child: SizedBox(
-                              height: AppSpacing.launchpadGapXxs,
-                              width: tab == activeTab
-                                  ? _launchpadPerformanceIndicatorWidth
-                                  : AppSpacing.zero,
-                              child: const DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  color: AppColors.primary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: AppRadii.xsRadius,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    fullWidth: true,
+                    accentColor: AppColors.primary,
                   ),
                 ),
             ],

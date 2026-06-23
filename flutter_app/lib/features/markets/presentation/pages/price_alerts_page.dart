@@ -49,7 +49,6 @@ const double _alertsTriggeredIconGap = AppSpacing.x2;
 const double _alertsEmptyIcon = AppSpacing.iconLg;
 const double _alertsEmptyGap = AppSpacing.x3;
 const double _alertsAddIcon = AppSpacing.iconSm + AppSpacing.x2;
-const double _alertsAddGap = AppSpacing.x3;
 const double _alertsLineHeightTight = 1.0;
 const double _alertsLineHeightShort = 1.1;
 const double _alertsLineHeightCaption = 1.2;

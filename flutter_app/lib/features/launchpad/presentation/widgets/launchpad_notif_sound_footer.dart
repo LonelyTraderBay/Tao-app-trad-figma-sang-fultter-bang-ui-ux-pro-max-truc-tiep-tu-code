@@ -127,39 +127,26 @@ class _SoundSwitch extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: enabled,
-      child: InkWell(
+      child: VitCard(
         onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        width: width,
+        height: height,
+        padding: AppSpacing.zeroInsets,
+        clip: true,
+        child: VitTogglePill(
+          enabled: enabled,
           width: width,
           height: height,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: enabled ? AppModuleAccents.launchpad : AppColors.surface3,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.inputRadius,
-                side: BorderSide(
-                  color: enabled
-                      ? AppModuleAccents.launchpad
-                      : AppColors.borderSolid,
-                ),
-              ),
-            ),
-            child: AnimatedAlign(
-              duration: const Duration(milliseconds: 180),
-              curve: Curves.easeOutCubic,
-              alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-              child: SizedBox.square(
-                dimension: knob,
-                child: const DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: AppColors.onAccent,
-                    shape: CircleBorder(),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          knobSize: knob,
+          knobMargin: AppSpacing.zeroInsets,
+          activeColor: AppModuleAccents.launchpad,
+          inactiveColor: AppColors.surface3,
+          activeKnobColor: AppColors.onAccent,
+          inactiveKnobColor: AppColors.onAccent,
+          inactiveBorderColor: AppColors.borderSolid,
+          duration: const Duration(milliseconds: 180),
         ),
       ),
     );

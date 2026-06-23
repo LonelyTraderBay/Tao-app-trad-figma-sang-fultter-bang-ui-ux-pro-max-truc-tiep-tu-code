@@ -21,6 +21,19 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part '../widgets/p2p_ad_detail_merchant_info.dart';
 part '../widgets/p2p_ad_detail_amount_terms.dart';
 
+const double _p2pAdDetailVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pAdDetailNativeNavClearance =
+    _p2pAdDetailVisualNavClearance - AppSpacing.x4;
+const double _p2pAdDetailVisualClearance = AppSpacing.x3;
+const double _p2pAdDetailNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pAdDetailScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
+
 class P2PAdDetailPage extends ConsumerStatefulWidget {
   const P2PAdDetailPage({super.key, required this.adId, this.shellRenderMode});
 
@@ -43,15 +56,10 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
     final snapshot = ref.watch(p2pAdDetailProvider(widget.adId));
     final ad = snapshot.ad;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x4
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
-        MediaQuery.paddingOf(context).bottom;
-    final footerInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
+            ? _p2pAdDetailVisualNavClearance + _p2pAdDetailVisualClearance
+            : _p2pAdDetailNativeNavClearance + _p2pAdDetailNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final fiatAmount = _selectedPercent == null
         ? 0
@@ -85,7 +93,9 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                   child: SingleChildScrollView(
                     key: P2PAdDetailPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pAdDetailScrollPadding(bottomInset),
+                    padding: _p2pAdDetailScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -119,24 +129,20 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                             contractId: 'p2p-ad-detail-order-review',
                           ),
                         ),
+                        VitCtaButton(
+                          key: P2PAdDetailPage.buyButtonKey,
+                          onPressed: isValid
+                              ? () => context.go(
+                                  AppRoutePaths.p2pOrder(
+                                    snapshot.targetOrderId,
+                                  ),
+                                )
+                              : null,
+                          variant: VitCtaButtonVariant.success,
+                          child: Text('Mua ${ad.asset}'),
+                        ),
                       ],
                     ),
-                  ),
-                ),
-              ),
-              VitStickyFooter(
-                backgroundColor: AppColors.surface.withValues(alpha: .96),
-                child: Padding(
-                  padding: AppSpacing.p2pAdDetailFooterPadding(footerInset),
-                  child: VitCtaButton(
-                    key: P2PAdDetailPage.buyButtonKey,
-                    onPressed: isValid
-                        ? () => context.go(
-                            AppRoutePaths.p2pOrder(snapshot.targetOrderId),
-                          )
-                        : null,
-                    variant: VitCtaButtonVariant.success,
-                    child: Text('Mua ${ad.asset}'),
                   ),
                 ),
               ),

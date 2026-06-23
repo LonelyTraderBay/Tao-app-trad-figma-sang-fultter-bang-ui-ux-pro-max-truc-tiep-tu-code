@@ -23,9 +23,15 @@ class _ScreenerEmptyState extends StatelessWidget {
             style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x2),
-          TextButton(
+          VitCtaButton(
             onPressed: onReset,
-            style: TextButton.styleFrom(foregroundColor: _marketPrimary),
+            variant: VitCtaButtonVariant.ghost,
+            fullWidth: false,
+            density: VitDensity.compact,
+            height: VitDensity.compact.controlHeight,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x3,
+            ),
             child: const Text('Đặt lại bộ lọc'),
           ),
         ],

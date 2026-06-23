@@ -16,31 +16,14 @@ class _ChoiceChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelStyle = height < 32
-        ? AppTextStyles.badge
-        : AppTextStyles.captionSm;
-    return VitCard(
+    return VitChoicePill(
+      label: label,
+      selected: active,
       onTap: onTap,
       height: height,
-      alignment: Alignment.center,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
-      density: VitDensity.compact,
-      borderColor: active ? _tradePrimary : AppColors.surface3,
-      clip: true,
-      background: ColoredBox(
-        color: active ? _tradePrimary.withValues(alpha: .14) : _chipBackground,
-      ),
-      child: Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: labelStyle.copyWith(
-          color: active ? _tradePrimary : AppColors.textMutedLight,
-          fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          height: _settingsLineTight,
-        ),
-      ),
+      fullWidth: true,
+      accentColor: _tradePrimary,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
     );
   }
 }
@@ -105,8 +88,11 @@ class _VitToggle extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: on,
-      child: GestureDetector(
+      child: VitCard(
         onTap: onToggle,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.lg,
+        padding: AppSpacing.zeroInsets,
         child: VitTogglePill(
           enabled: on,
           width: _settingsToggleWidth,

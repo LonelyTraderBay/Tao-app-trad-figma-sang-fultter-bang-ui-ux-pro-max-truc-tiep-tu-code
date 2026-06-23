@@ -14,77 +14,62 @@ class _ReasonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tone = _toneColor(reason.tone);
-    return Material(
+    return VitCard(
       key: P2PReportMerchantPage.reasonKey(reason.id),
-      color: selected ? tone.withValues(alpha: 0.10) : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(
-          color: selected
-              ? tone.withValues(alpha: 0.36)
-              : AppColors.borderSolid,
-          width: selected
-              ? AppSpacing.p2pRiskControlsSelectedBorderWidth
-              : AppSpacing.dividerHairline,
-        ),
+      variant: VitCardVariant.ghost,
+      borderColor: selected
+          ? tone.withValues(alpha: 0.36)
+          : AppColors.borderSolid,
+      background: ColoredBox(
+        color: selected ? tone.withValues(alpha: 0.10) : AppColors.surface2,
       ),
-      child: Ink(
-        child: InkWell(
-          onTap: onTap,
-          customBorder: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-          ),
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
+      onTap: onTap,
+      clip: true,
+      child: Row(
+        children: [
+          SizedBox.square(
+            dimension: AppSpacing.x6,
+            child: Material(
+              color: tone.withValues(alpha: 0.12),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.mdRadius,
+              ),
+              child: Icon(
+                _reasonIcon(reason.iconKey),
+                color: tone,
+                size: AppSpacing.p2pRiskControlsReasonIcon,
+              ),
             ),
-            child: Row(
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox.square(
-                  dimension: AppSpacing.x6,
-                  child: Material(
-                    color: tone.withValues(alpha: 0.12),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                    child: Icon(
-                      _reasonIcon(reason.iconKey),
-                      color: tone,
-                      size: AppSpacing.p2pRiskControlsReasonIcon,
-                    ),
+                Text(
+                  reason.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: selected ? tone : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        reason.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: selected ? tone : AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        reason.description,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ],
-                  ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  reason.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

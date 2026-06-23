@@ -23,6 +23,13 @@ part 'p2p_home_page_part_01.dart';
 part 'p2p_home_page_part_02.dart';
 part 'p2p_home_page_part_03.dart';
 
+const double _p2pHomeVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pHomeNativeNavClearance =
+    _p2pHomeVisualNavClearance - AppSpacing.x4;
+const double _p2pHomeVisualClearance = AppSpacing.x3;
+const double _p2pHomeNativeClearance = AppSpacing.x2;
+
 class P2PHomePage extends ConsumerStatefulWidget {
   const P2PHomePage({super.key, this.shellRenderMode});
 

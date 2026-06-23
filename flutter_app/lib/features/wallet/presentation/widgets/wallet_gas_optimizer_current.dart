@@ -49,11 +49,13 @@ class _CurrentGasTab extends StatelessWidget {
     required this.snapshot,
     required this.selectedSpeed,
     required this.onSelectSpeed,
+    required this.onRefresh,
   });
 
   final WalletGasOptimizerSnapshot snapshot;
   final String selectedSpeed;
   final ValueChanged<String> onSelectSpeed;
+  final VoidCallback onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class _CurrentGasTab extends StatelessWidget {
           ),
         ],
         _ComparisonCard(comparisons: snapshot.comparisons),
-        const _RefreshButton(),
+        _RefreshButton(onPressed: onRefresh),
       ],
     );
   }
@@ -344,13 +346,15 @@ class _ComparisonRow extends StatelessWidget {
 }
 
 class _RefreshButton extends StatelessWidget {
-  const _RefreshButton();
+  const _RefreshButton({required this.onPressed});
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: WalletGasOptimizerPage.refreshKey,
-      onPressed: () {},
+      onPressed: onPressed,
       variant: VitCtaButtonVariant.ghost,
       height: VitDensity.compact.controlHeight,
       leading: const Icon(Icons.refresh_rounded),

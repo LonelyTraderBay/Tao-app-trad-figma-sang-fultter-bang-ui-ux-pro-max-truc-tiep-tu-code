@@ -79,35 +79,16 @@ class _RefreshButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitChoicePill(
       key: DepositPage.refreshKey,
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        borderColor: _depositPrimary.withValues(alpha: .26),
-        padding: _depositCompactPadding,
-        height: _depositRefreshHeight,
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.refresh_rounded,
-              color: AppColors.text2,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: _depositInlineGap),
-            Text(
-              'Làm mới địa chỉ nạp',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
+      label: 'Làm mới địa chỉ nạp',
+      selected: false,
+      fullWidth: true,
+      height: _depositRefreshHeight,
+      accentColor: _depositPrimary,
+      leading: const Icon(Icons.refresh_rounded),
+      padding: _depositCompactPadding,
     );
   }
 }
@@ -125,10 +106,11 @@ class _NetworkOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: DepositPage.networkKey(network.id),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: VitCard(
         variant: VitCardVariant.inner,
         padding: _depositCompactPadding,

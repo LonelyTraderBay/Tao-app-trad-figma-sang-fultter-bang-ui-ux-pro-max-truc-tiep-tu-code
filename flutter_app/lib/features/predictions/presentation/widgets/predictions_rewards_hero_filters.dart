@@ -232,48 +232,16 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? activeColor.withValues(alpha: .13) : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.smRadius,
-        side: BorderSide(
-          color: active
-              ? activeColor.withValues(alpha: .35)
-              : AppColors.transparent,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight - AppSpacing.x3,
-          child: Padding(
-            padding: AppSpacing.predictionRewardsFilterPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (icon != null) ...[
-                  Icon(
-                    icon,
-                    color: active ? activeColor : AppColors.text3,
-                    size: AppSpacing.predictionRewardsFilterIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                ],
-                Text(
-                  label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: active ? activeColor : AppColors.text3,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.normal,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: activeColor,
+      height: VitDensity.compact.controlHeight - AppSpacing.x3,
+      padding: AppSpacing.predictionRewardsFilterPadding,
+      leading: icon == null
+          ? null
+          : Icon(icon, size: AppSpacing.predictionRewardsFilterIcon),
     );
   }
 }

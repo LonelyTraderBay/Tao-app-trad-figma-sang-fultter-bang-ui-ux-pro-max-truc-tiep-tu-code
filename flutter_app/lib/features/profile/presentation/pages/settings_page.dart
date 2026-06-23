@@ -22,7 +22,6 @@ part '../widgets/settings_page_sections.dart';
 part '../widgets/settings_page_common.dart';
 
 const _settingsBackground = AppColors.bg;
-const _settingsPanel2 = AppColors.surface2;
 const _settingsSelected = AppColors.surface2;
 const _settingsBorder = AppColors.cardBorder;
 const _settingsDivider = AppColors.divider;

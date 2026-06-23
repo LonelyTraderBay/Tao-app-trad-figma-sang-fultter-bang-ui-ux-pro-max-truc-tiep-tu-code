@@ -109,21 +109,59 @@ class _SegmentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return VitChoicePill(
+      height: _p2pCreateSegmentHeight,
+      fullWidth: true,
+      label: label,
+      selected: selected,
+      accentColor: color,
+      onTap: onTap,
+    );
+  }
+}
+
+class _PublishReadinessPanel extends StatelessWidget {
+  const _PublishReadinessPanel({required this.blockers});
+
+  final List<String> blockers;
+
+  @override
+  Widget build(BuildContext context) {
+    final visibleBlockers = blockers.take(3).join(', ');
+    final extraCount = blockers.length - 3;
+    final message = extraCount > 0
+        ? '$visibleBlockers, +$extraCount'
+        : visibleBlockers;
+
     return VitCard(
-      height: AppSpacing.p2pMerchantCommerceSegmentHeight,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
-      background: ColoredBox(color: selected ? color : AppColors.transparent),
-      onTap: onTap,
-      clip: true,
-      child: Center(
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: selected ? AppColors.onAccent : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
+      borderColor: AppColors.warningBorder,
+      background: const ColoredBox(color: AppColors.warn10),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.warn,
+            size: AppSpacing.iconSm,
           ),
-        ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              'Can bo sung: $message',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.warn,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -182,23 +220,11 @@ class _ChoiceChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
-      borderColor: selected ? AppColors.primary30 : AppColors.cardBorder,
-      background: ColoredBox(
-        color: selected ? AppColors.primary12 : AppColors.surface2,
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
       padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
       onTap: onTap,
-      clip: true,
-      child: Text(
-        label,
-        style: AppTextStyles.caption.copyWith(
-          color: selected ? AppColors.primarySoft : AppColors.text2,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
     );
   }
 }

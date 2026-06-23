@@ -12,7 +12,6 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -20,6 +19,29 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_w
 
 part '../widgets/p2p_escrow_balance_page_sections.dart';
 part '../widgets/p2p_escrow_balance_page_common.dart';
+
+const double _p2pEscrowBalanceVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pEscrowBalanceNativeNavClearance =
+    _p2pEscrowBalanceVisualNavClearance - AppSpacing.x4;
+const double _p2pEscrowBalanceVisualClearance = AppSpacing.x3;
+const double _p2pEscrowBalanceNativeClearance = AppSpacing.x2;
+const double _p2pEscrowBalanceSectionGap = AppSpacing.x3;
+const double _p2pEscrowBalanceTightGap = AppSpacing.x2;
+const double _p2pEscrowBalanceIconBox = AppSpacing.x6;
+const double _p2pEscrowBalanceEmptyIconBox = AppSpacing.x7;
+const double _p2pEscrowBalanceBodyLineHeight = 1.35;
+const double _p2pEscrowBalanceAccentLineWidth = AppSpacing.x4;
+const double _p2pEscrowBalanceAccentLineHeight = AppSpacing.hairlineStroke * 2;
+const EdgeInsets _p2pEscrowBalanceScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pEscrowBalanceLargePadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pEscrowBalanceCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pEscrowBalanceInnerPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PEscrowBalancePage extends ConsumerStatefulWidget {
   const P2PEscrowBalancePage({
@@ -59,10 +81,12 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
     final selectedBalance = snapshot.assetBalance(selectedAsset);
     final orders = snapshot.ordersFor(selectedAsset);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pEscrowBalanceVisualNavClearance +
+                  _p2pEscrowBalanceVisualClearance
+            : _p2pEscrowBalanceNativeNavClearance +
+                  _p2pEscrowBalanceNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     if (_asset != selectedAsset) {
@@ -91,16 +115,16 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pFinancialSafetyScrollPadding(
-                      bottomInset,
+                    padding: _p2pEscrowBalanceScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _EscrowHeroCard(balance: selectedBalance),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pEscrowBalanceSectionGap),
                         _EscrowInfoCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pEscrowBalanceSectionGap),
                         _AssetTabs(
                           assets: snapshot.assets,
                           selectedAsset: selectedAsset,
@@ -109,27 +133,22 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
                             setState(() => _asset = asset);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pEscrowBalanceTightGap),
                         if (orders.isEmpty)
                           _EscrowEmptyState(snapshot: snapshot)
                         else
                           _OrdersList(orders: orders),
                         if (orders.isNotEmpty) ...[
-                          const SizedBox(height: AppSpacing.x5),
+                          const SizedBox(height: _p2pEscrowBalanceSectionGap),
                           _EscrowHelpCard(snapshot: snapshot),
                         ],
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Escrow balance state review',
-                              message:
-                                  'Selected asset, locked balance, open orders, empty state, and help guidance remain visible before any P2P escrow decision.',
-                              contractId: 'SC-245',
-                            ),
-                          ],
+                        const SizedBox(height: _p2pEscrowBalanceTightGap),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Escrow balance state review',
+                          message:
+                              'Selected asset, locked balance, open orders, empty state, and help guidance remain visible before any P2P escrow decision.',
+                          contractId: 'SC-245',
                         ),
                       ],
                     ),

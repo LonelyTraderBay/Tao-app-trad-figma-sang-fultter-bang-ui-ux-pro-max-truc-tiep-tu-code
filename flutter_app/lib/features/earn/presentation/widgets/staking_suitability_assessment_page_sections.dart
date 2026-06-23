@@ -136,47 +136,32 @@ class _OptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface3,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        borderRadius: AppRadii.xlRadius,
-        onTap: onTap,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: selected ? AppColors.primary : AppColors.transparent,
-                width: AppSpacing.stakingAssessmentOptionBorderWidth,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.lg,
+      borderColor: selected ? AppColors.primary : null,
+      padding: _stakingSuitabilityOptionPadding,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(
+            selected
+                ? Icons.radio_button_checked_rounded
+                : Icons.radio_button_unchecked_rounded,
+            color: selected ? AppColors.primary : AppColors.primary30,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.baseMedium.copyWith(
+                color: AppColors.text1,
+                height: _stakingSuitabilityOptionLineHeight,
               ),
-              borderRadius: AppRadii.xlRadius,
             ),
           ),
-          child: Padding(
-            padding: _stakingSuitabilityOptionPadding,
-            child: Row(
-              children: [
-                Icon(
-                  selected
-                      ? Icons.radio_button_checked_rounded
-                      : Icons.radio_button_unchecked_rounded,
-                  color: selected ? AppColors.primary : AppColors.primary30,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    label,
-                    style: AppTextStyles.baseMedium.copyWith(
-                      color: AppColors.text1,
-                      height: _stakingSuitabilityOptionLineHeight,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        ],
       ),
     );
   }
@@ -291,21 +276,17 @@ class _QuizOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.bg,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        borderRadius: AppRadii.lgRadius,
-        onTap: onTap,
-        child: Padding(
-          padding: _stakingSuitabilityOptionPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.primary : AppColors.text2,
-              fontWeight: selected ? AppTextStyles.bold : AppTextStyles.normal,
-            ),
-          ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      borderColor: selected ? AppColors.primary : null,
+      padding: _stakingSuitabilityOptionPadding,
+      onTap: onTap,
+      child: Text(
+        label,
+        style: AppTextStyles.caption.copyWith(
+          color: selected ? AppColors.primary : AppColors.text2,
+          fontWeight: selected ? AppTextStyles.bold : AppTextStyles.normal,
         ),
       ),
     );

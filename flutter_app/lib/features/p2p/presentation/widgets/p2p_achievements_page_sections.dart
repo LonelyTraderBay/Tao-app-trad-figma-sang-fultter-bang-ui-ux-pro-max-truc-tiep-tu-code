@@ -24,7 +24,7 @@ class _SummaryCard extends StatelessWidget {
                 color: AppModuleAccents.p2p,
                 large: true,
               ),
-              const SizedBox(width: AppSpacing.x4),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +50,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           _ProgressLine(
             label: 'Tiến trình tổng',
             value: '$progressPct%',
@@ -58,7 +58,7 @@ class _SummaryCard extends StatelessWidget {
             color: AppModuleAccents.p2p,
             minHeight: AppSpacing.p2pTrustProgressSummaryProgressHeight,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -242,7 +242,7 @@ class _AchievementCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
                 if (!achievement.unlocked) ...[
-                  const SizedBox(height: AppSpacing.x3),
+                  const SizedBox(height: AppSpacing.x2),
                   _ProgressLine(
                     label: achievement.currentValueLabel,
                     value: achievement.progressLabel,
@@ -251,7 +251,7 @@ class _AchievementCard extends StatelessWidget {
                     minHeight: AppSpacing.p2pTrustProgressCardProgressHeight,
                   ),
                 ],
-                const SizedBox(height: AppSpacing.x3),
+                const SizedBox(height: AppSpacing.x2),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: _RewardPill(

@@ -85,7 +85,7 @@ class _DeviceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: AppSpacing.p2pSecurityDetailsCardPadding,
+            padding: _p2pDevicesCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -123,7 +123,7 @@ class _DeviceIconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.p2pSecurityDetailsIconBox,
+      dimension: _p2pDevicesIconBox,
       child: Material(
         type: MaterialType.transparency,
         color: color.withValues(alpha: .12),
@@ -252,7 +252,7 @@ class _ExpandedDeviceDetails extends StatelessWidget {
           color: AppColors.divider,
         ),
         Padding(
-          padding: AppSpacing.p2pSecurityDetailsCardPadding,
+          padding: _p2pDevicesCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -399,31 +399,15 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .12),
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: AppSpacing.p2pSecurityDetailsDeviceActionPadding(compact),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: compact ? MainAxisSize.min : MainAxisSize.max,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: true,
+      onTap: onTap,
+      fullWidth: !compact,
+      padding: AppSpacing.p2pSecurityDetailsDeviceActionPadding(compact),
+      accentColor: color,
+      leading: Icon(icon),
+      semanticLabel: 'P2P device action $label',
     );
   }
 }

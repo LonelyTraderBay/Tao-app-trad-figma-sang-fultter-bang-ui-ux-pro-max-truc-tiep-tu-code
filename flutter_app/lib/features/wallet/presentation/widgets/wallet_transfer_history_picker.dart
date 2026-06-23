@@ -108,9 +108,10 @@ class TransferWalletPickerRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(wallet.colorHex);
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: Column(
         children: [
           Padding(
@@ -161,9 +162,10 @@ class TransferAssetPickerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: Column(
         children: [
           Padding(

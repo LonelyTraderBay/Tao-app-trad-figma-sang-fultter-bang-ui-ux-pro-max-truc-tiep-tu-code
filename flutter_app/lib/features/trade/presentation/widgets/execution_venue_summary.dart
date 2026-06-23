@@ -123,38 +123,14 @@ class _SortSelector extends StatelessWidget {
         const SizedBox(width: AppSpacing.executionVenueSortLabelGap),
         for (final option in options) ...[
           Expanded(
-            child: InkWell(
+            child: VitChoicePill(
               key: ExecutionVenueAnalysisPage.sortKey(option.$1),
+              label: option.$2.replaceAll('\n', ' '),
+              selected: activeId == option.$1,
               onTap: () => onChanged(option.$1),
-              borderRadius: AppRadii.pillRadius,
-              child: VitCard(
-                constraints: const BoxConstraints(
-                  minHeight: AppSpacing.tradeBotControlCompact,
-                ),
-                density: VitDensity.compact,
-                alignment: Alignment.center,
-                variant: activeId == option.$1
-                    ? VitCardVariant.standard
-                    : VitCardVariant.inner,
-                borderColor: activeId == option.$1
-                    ? _venuePrimary
-                    : AppColors.transparent,
-                background: ColoredBox(
-                  color: activeId == option.$1
-                      ? _venuePrimary
-                      : AppColors.transparent,
-                ),
-                child: Text(
-                  option.$2,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.caption.copyWith(
-                    color: activeId == option.$1
-                        ? AppColors.onAccent
-                        : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
+              fullWidth: true,
+              height: AppSpacing.tradeBotControlCompact,
+              accentColor: _venuePrimary,
             ),
           ),
           if (option != options.last) const SizedBox(width: AppSpacing.x3),

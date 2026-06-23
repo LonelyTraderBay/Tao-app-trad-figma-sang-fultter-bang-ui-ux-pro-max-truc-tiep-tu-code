@@ -13,13 +13,40 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_my_orders_page_sections.dart';
 part '../widgets/p2p_my_orders_page_common.dart';
+
+const double _p2pMyOrdersVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pMyOrdersNativeNavClearance =
+    _p2pMyOrdersVisualNavClearance - AppSpacing.x4;
+const double _p2pMyOrdersVisualClearance = AppSpacing.x3;
+const double _p2pMyOrdersNativeClearance = AppSpacing.x2;
+const double _p2pMyOrdersSectionGap = AppSpacing.x3;
+const double _p2pMyOrdersTightGap = AppSpacing.x2;
+const double _p2pMyOrdersSortHeight = AppSpacing.buttonCompact;
+const double _p2pMyOrdersDividerHeight = AppSpacing.dividerHairline;
+const EdgeInsets _p2pMyOrdersScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pMyOrdersStatPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _p2pMyOrdersCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pMyOrdersCompactPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pMyOrdersLargePadding = EdgeInsets.all(AppSpacing.x4);
+const EdgeInsets _p2pMyOrdersChipPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x1,
+);
 
 enum _OrdersSort { date, amount }
 
@@ -61,10 +88,10 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
     _ensureState(snapshot);
     final orders = _filteredOrders(snapshot.orders);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pMyOrdersVisualNavClearance + _p2pMyOrdersVisualClearance
+            : _p2pMyOrdersNativeNavClearance + _p2pMyOrdersNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -98,16 +125,14 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                   child: SingleChildScrollView(
                     key: P2PMyOrdersPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantCommerceScrollPadding(
-                      bottomInset,
+                    padding: _p2pMyOrdersScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _StatsRow(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pMyOrdersSectionGap),
                         _OrderTabs(
                           snapshot: snapshot,
                           active: _tab,
@@ -116,7 +141,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                             setState(() => _tab = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pMyOrdersSectionGap),
                         _SearchSortRow(
                           hint: snapshot.searchHint,
                           controller: _searchController,
@@ -132,7 +157,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                             });
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pMyOrdersSectionGap),
                         if (orders.isEmpty)
                           _EmptyOrders(snapshot: snapshot, activeTab: _tab)
                         else
@@ -141,11 +166,11 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                               order: order,
                               onTap: () => _openOrder(context, order),
                             ),
-                            const SizedBox(height: AppSpacing.x3),
+                            const SizedBox(height: _p2pMyOrdersTightGap),
                           ],
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+                          padding: _p2pMyOrdersCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P order list review',

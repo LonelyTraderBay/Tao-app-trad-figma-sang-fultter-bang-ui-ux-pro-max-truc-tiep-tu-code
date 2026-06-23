@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_payment_method_add_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
 void main() {
   Future<void> pumpP2PPaymentMethodAdd(
@@ -71,6 +72,7 @@ void main() {
     expect(find.text('Số tài khoản'), findsOneWidget);
     expect(find.text('Tên chủ tài khoản'), findsOneWidget);
     expect(find.text('Thêm phương thức'), findsOneWidget);
+    expect(find.byType(VitStickyFooter), findsNothing);
   });
 
   testWidgets('SC-232 supports e-wallet query state', (tester) async {
@@ -112,6 +114,10 @@ void main() {
     expect(find.textContaining('Ownership review'), findsOneWidget);
     expect(find.textContaining('Limits:'), findsOneWidget);
 
+    await tester.ensureVisible(
+      find.byKey(P2PPaymentMethodAddPage.saveButtonKey),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(P2PPaymentMethodAddPage.saveButtonKey));
     await tester.pumpAndSettle();
 

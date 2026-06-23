@@ -9,7 +9,7 @@ class WalletAllocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = assets.fold<double>(0, (sum, asset) => sum + asset.usdValue);
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.standard,
       child: Row(
         children: [

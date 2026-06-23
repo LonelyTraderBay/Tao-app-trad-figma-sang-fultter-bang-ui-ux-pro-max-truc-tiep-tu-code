@@ -25,7 +25,6 @@ part '../widgets/dispute_resolution_common.dart';
 const _disputePrimary = AppColors.primary;
 const _disputeField = AppColors.surface2;
 const _disputeFieldBorder = AppColors.borderSolid;
-const _disputeFooter = AppColors.surface;
 
 class DisputeResolutionPage extends ConsumerStatefulWidget {
   const DisputeResolutionPage({super.key, this.shellRenderMode});
@@ -87,94 +86,74 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
         .getDisputeResolution();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final safeBottom = MediaQuery.paddingOf(context).bottom;
-    final nativeFooterClearance =
-        DeviceMetrics.nativeBottomChrome + safeBottom + AppSpacing.x5;
-    final visualFooterOffset = mode.usesVisualQaFrame
-        ? DeviceMetrics.height > 956
-              ? DeviceMetrics.height - 956
-              : DeviceMetrics.nativeBottomChrome + AppSpacing.x4
-        : nativeFooterClearance;
-    final footerOffset = visualFooterOffset;
-    final scrollClearance = footerOffset + AppSpacing.x7;
+    final navInset = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollClearance = navInset + safeBottom + AppSpacing.x4;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-082 DisputeResolutionPage',
       child: Material(
         type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Dispute Resolution',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (_activeTabId != 'file')
-                    _DisputeTabs(
-                      tabs: snapshot.tabs,
-                      activeId: _activeTabId,
-                      onChanged: (id) => setState(() => _activeTabId = id),
-                    ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      key: DisputeResolutionPage.contentKey,
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                        AppSpacing.contentPad,
-                        _activeTabId == 'file' ? AppSpacing.x3 : AppSpacing.x4,
-                        AppSpacing.contentPad,
-                        scrollClearance,
-                      ),
-                      child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        density: VitDensity.compact,
-                        fullBleed: true,
-                        children: [
-                          if (_activeTabId == 'file')
-                            _FileComplaintTab(
-                              snapshot: snapshot,
-                              selectedType: _selectedType,
-                              selectedProviderId: _selectedProviderId,
-                              subjectController: _subjectController,
-                              descriptionController: _descriptionController,
-                              evidenceAttached: _evidenceAttached,
-                              onTypeChanged: (value) =>
-                                  setState(() => _selectedType = value),
-                              onProviderChanged: (value) =>
-                                  setState(() => _selectedProviderId = value),
-                              onUpload: () =>
-                                  setState(() => _evidenceAttached = true),
-                            )
-                          else
-                            _CasesTab(
-                              activeTabId: _activeTabId,
-                              snapshot: snapshot,
-                              lastResult: _lastResult,
-                            ),
-                        ],
-                      ),
-                    ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Dispute Resolution',
+            showBack: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (_activeTabId != 'file')
+                _DisputeTabs(
+                  tabs: snapshot.tabs,
+                  activeId: _activeTabId,
+                  onChanged: (id) => setState(() => _activeTabId = id),
+                ),
+              Expanded(
+                child: SingleChildScrollView(
+                  key: DisputeResolutionPage.contentKey,
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    AppSpacing.contentPad,
+                    _activeTabId == 'file' ? AppSpacing.x3 : AppSpacing.x4,
+                    AppSpacing.contentPad,
+                    scrollClearance,
                   ),
-                ],
-              ),
-            ),
-            if (_activeTabId == 'file')
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: footerOffset,
-                child: VitStickyFooter(
-                  backgroundColor: _disputeFooter,
-                  child: _SubmitButton(
-                    enabled: _canSubmit,
-                    onPressed: _handleSubmit,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    density: VitDensity.compact,
+                    fullBleed: true,
+                    children: [
+                      if (_activeTabId == 'file')
+                        _FileComplaintTab(
+                          snapshot: snapshot,
+                          selectedType: _selectedType,
+                          selectedProviderId: _selectedProviderId,
+                          subjectController: _subjectController,
+                          descriptionController: _descriptionController,
+                          evidenceAttached: _evidenceAttached,
+                          canSubmit: _canSubmit,
+                          onTypeChanged: (value) =>
+                              setState(() => _selectedType = value),
+                          onProviderChanged: (value) =>
+                              setState(() => _selectedProviderId = value),
+                          onUpload: () =>
+                              setState(() => _evidenceAttached = true),
+                          onSubmit: _handleSubmit,
+                        )
+                      else
+                        _CasesTab(
+                          activeTabId: _activeTabId,
+                          snapshot: snapshot,
+                          lastResult: _lastResult,
+                        ),
+                    ],
                   ),
                 ),
               ),
-          ],
+            ],
+          ),
         ),
       ),
     );

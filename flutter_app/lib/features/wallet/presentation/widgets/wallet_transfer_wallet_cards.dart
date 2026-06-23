@@ -16,9 +16,10 @@ class TransferWalletCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: SizedBox(
         height: _transferWalletCardHeight,
         child: Padding(
@@ -100,25 +101,13 @@ class TransferSwapButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GestureDetector(
+      child: VitIconButton(
         key: const Key('sc146_transfer_swap'),
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: SizedBox(
-          width: _transferSwapButtonSize,
-          height: _transferSwapButtonSize,
-          child: Material(
-            color: _transferPrimary,
-            elevation: 2,
-            shadowColor: _transferPrimary.withValues(alpha: .38),
-            shape: const CircleBorder(),
-            child: const Icon(
-              Icons.swap_vert_rounded,
-              color: AppColors.onAccent,
-              size: _transferActionIcon,
-            ),
-          ),
-        ),
+        icon: Icons.swap_vert_rounded,
+        tooltip: 'Swap transfer wallets',
+        onPressed: onTap,
+        variant: VitIconButtonVariant.primary,
+        size: VitIconButtonSize.md,
       ),
     );
   }

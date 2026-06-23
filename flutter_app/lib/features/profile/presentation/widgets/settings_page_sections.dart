@@ -91,11 +91,13 @@ class _CurrencyChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      key: SettingsPage.currencyKey(currency),
+    return VitCard(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: EdgeInsets.zero,
       child: ConstrainedBox(
+        key: SettingsPage.currencyKey(currency),
         constraints: const BoxConstraints(
           minWidth: AppSpacing.settingsCurrencyChipMinWidth,
         ),
@@ -104,7 +106,7 @@ class _CurrencyChip extends StatelessWidget {
             minHeight: VitDensity.compact.controlHeight,
           ),
           child: Material(
-            color: selected ? _settingsPrimary : _settingsPanel2,
+            color: selected ? _settingsPrimary : AppColors.surface2,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             child: Padding(
               padding: AppSpacing.settingsCurrencyChipPadding,
@@ -175,10 +177,12 @@ class _LanguageRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: SettingsPage.languageKey(language.id),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: EdgeInsets.zero,
       child: Material(
         color: selected ? _settingsSelected : AppColors.transparent,
         child: ConstrainedBox(
@@ -346,9 +350,11 @@ class _SettingsSwitch extends StatelessWidget {
     return Semantics(
       label: label,
       toggled: value,
-      child: GestureDetector(
+      child: VitCard(
         onTap: () => onChanged(!value),
-        behavior: HitTestBehavior.opaque,
+        variant: VitCardVariant.ghost,
+        borderColor: AppColors.transparent,
+        padding: EdgeInsets.zero,
         child: VitTogglePill(
           enabled: value,
           width: AppSpacing.settingsSwitchWidth,

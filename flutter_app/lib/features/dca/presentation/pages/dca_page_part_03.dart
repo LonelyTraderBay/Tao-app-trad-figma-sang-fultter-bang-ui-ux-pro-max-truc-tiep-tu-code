@@ -220,8 +220,9 @@ class _HistoryStat extends StatelessWidget {
 }
 
 class _CreatePlanSheet extends StatelessWidget {
-  const _CreatePlanSheet({required this.onClose});
+  const _CreatePlanSheet({required this.bottomInset, required this.onClose});
 
+  final double bottomInset;
   final VoidCallback onClose;
 
   @override
@@ -232,69 +233,74 @@ class _CreatePlanSheet extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
+              child: VitCard(
                 onTap: onClose,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                padding: AppSpacing.zeroInsets,
+                borderColor: AppColors.transparent,
                 child: const SizedBox.expand(),
               ),
             ),
-            VitCard(
-              key: DCAPage.createSheetKey,
-              radius: VitCardRadius.lg,
-              density: VitDensity.compact,
-              margin: AppSpacing.dcaSheetMargin,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox.square(
-                        dimension:
-                            AppSpacing.buttonCompact +
-                            AppSpacing.hairlineStroke,
-                        child: const DecoratedBox(
-                          decoration: ShapeDecoration(
-                            color: AppColors.primary12,
-                            shape: CircleBorder(),
-                          ),
-                          child: Icon(
-                            Icons.add_chart_rounded,
-                            color: AppColors.primary,
-                            size: AppSpacing.dcaMainToolIcon,
+            Padding(
+              padding: AppSpacing.dcaBottomSheetPadding(bottomInset),
+              child: VitCard(
+                key: DCAPage.createSheetKey,
+                radius: VitCardRadius.lg,
+                density: VitDensity.compact,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox.square(
+                          dimension:
+                              AppSpacing.buttonCompact +
+                              AppSpacing.hairlineStroke,
+                          child: const DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: AppColors.primary12,
+                              shape: CircleBorder(),
+                            ),
+                            child: Icon(
+                              Icons.add_chart_rounded,
+                              color: AppColors.primary,
+                              size: AppSpacing.dcaMainToolIcon,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.x2),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Tạo kế hoạch DCA',
-                              style: AppTextStyles.base.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
+                        const SizedBox(width: AppSpacing.x2),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Tạo kế hoạch DCA',
+                                style: AppTextStyles.base.copyWith(
+                                  color: AppColors.text1,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'Chọn coin, số tiền và lịch mua trong bước sau.',
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text2,
+                              Text(
+                                'Chọn coin, số tiền và lịch mua trong bước sau.',
+                                style: AppTextStyles.caption.copyWith(
+                                  color: AppColors.text2,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.x2),
-                  VitCtaButton(
-                    onPressed: onClose,
-                    leading: const Icon(Icons.check_rounded),
-                    child: const Text('Đã hiểu'),
-                  ),
-                ],
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    VitCtaButton(
+                      onPressed: onClose,
+                      leading: const Icon(Icons.check_rounded),
+                      child: const Text('Đã hiểu'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

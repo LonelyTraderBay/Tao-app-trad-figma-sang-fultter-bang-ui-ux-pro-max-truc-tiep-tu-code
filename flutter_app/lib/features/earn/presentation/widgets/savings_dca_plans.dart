@@ -231,21 +231,16 @@ class _PlanIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = paused ? AppColors.buy : AppColors.warn;
     final icon = paused ? Icons.play_arrow_rounded : Icons.pause_rounded;
 
-    return Material(
-      color: color.withValues(alpha: .12),
-      borderRadius: AppRadii.smRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: SizedBox(
-          width: AppSpacing.buttonCompact,
-          height: AppSpacing.buttonCompact,
-          child: Icon(icon, color: color, size: AppSpacing.iconSm),
-        ),
-      ),
+    return VitIconButton(
+      icon: icon,
+      tooltip: paused ? 'Tiếp tục kế hoạch' : 'Tạm dừng kế hoạch',
+      onPressed: onTap,
+      variant: paused
+          ? VitIconButtonVariant.success
+          : VitIconButtonVariant.primary,
+      size: VitIconButtonSize.sm,
     );
   }
 }

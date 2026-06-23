@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class WalletManagerTabs extends StatelessWidget {
   const WalletManagerTabs({
@@ -40,10 +41,11 @@ class WalletManagerTabs extends StatelessWidget {
                   walletManagerTabActivity,
                 ])
                   Expanded(
-                    child: GestureDetector(
+                    child: VitCard(
                       key: Key('sc148_multi_manager_tab_$tab'),
                       onTap: () => onChanged(tab),
-                      behavior: HitTestBehavior.opaque,
+                      variant: VitCardVariant.ghost,
+                      borderColor: AppColors.transparent,
                       child: Stack(
                         children: [
                           Center(

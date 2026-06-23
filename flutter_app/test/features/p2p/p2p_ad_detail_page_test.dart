@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_ad_detail_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_order_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
@@ -90,37 +91,48 @@ void main() {
     expect(find.textContaining('Escrow VitTrade'), findsOneWidget);
   });
 
-  testWidgets('SC-224 first viewport reaches amount controls and buy action', (
+  testWidgets(
+    'SC-224 first viewport reaches amount controls without sticky buy action',
+    (tester) async {
+      await pumpP2PAdDetail(tester);
+
+      expectRouteSemanticInFirstViewport(
+        tester,
+        routeName: 'SC-224 P2PAdDetailPage',
+        semanticLabel: 'SC-224 P2PAdDetailPage',
+      );
+      expectActionableInFirstViewport(
+        tester,
+        find.text('CryptoKing_VN'),
+        routeName: 'SC-224 P2PAdDetailPage',
+        actionLabel: 'the merchant summary',
+        minVisibleHeight: 16,
+      );
+      expectActionableInFirstViewport(
+        tester,
+        find.byKey(P2PAdDetailPage.percentKey(25)),
+        routeName: 'SC-224 P2PAdDetailPage',
+        actionLabel: 'the 25 percent amount shortcut',
+        minVisibleHeight: 32,
+      );
+      expect(find.byType(VitStickyFooter), findsNothing);
+    },
+  );
+
+  testWidgets('SC-224 buy action is inline after review content', (
     tester,
   ) async {
     await pumpP2PAdDetail(tester);
 
-    expectRouteSemanticInFirstViewport(
-      tester,
-      routeName: 'SC-224 P2PAdDetailPage',
-      semanticLabel: 'SC-224 P2PAdDetailPage',
-    );
-    expectActionableInFirstViewport(
-      tester,
-      find.text('CryptoKing_VN'),
-      routeName: 'SC-224 P2PAdDetailPage',
-      actionLabel: 'the merchant summary',
-      minVisibleHeight: 16,
-    );
-    expectActionableInFirstViewport(
-      tester,
-      find.byKey(P2PAdDetailPage.percentKey(25)),
-      routeName: 'SC-224 P2PAdDetailPage',
-      actionLabel: 'the 25 percent amount shortcut',
-      minVisibleHeight: 32,
-    );
-    expectActionableInFirstViewport(
-      tester,
-      find.byKey(P2PAdDetailPage.buyButtonKey),
-      routeName: 'SC-224 P2PAdDetailPage',
-      actionLabel: 'the sticky buy action',
-      minVisibleHeight: 40,
-    );
+    expect(find.byType(VitStickyFooter), findsNothing);
+
+    final buyAction = find.byKey(P2PAdDetailPage.buyButtonKey);
+    await tester.ensureVisible(buyAction);
+    await tester.pumpAndSettle();
+
+    final buyRect = tester.getRect(buyAction);
+    final navRect = tester.getRect(find.byType(VitBottomNav));
+    expect(buyRect.bottom, lessThanOrEqualTo(navRect.top));
   });
 
   testWidgets('SC-224 percent selection enables order creation route', (
@@ -134,6 +146,8 @@ void main() {
     expect(find.text('12.500.000'), findsOneWidget);
     expect(find.text('493.096647'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(P2PAdDetailPage.buyButtonKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(P2PAdDetailPage.buyButtonKey));
     await tester.pumpAndSettle();
 

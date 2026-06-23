@@ -22,6 +22,37 @@ part '../widgets/p2p_selfie_verification_page_common.dart';
 
 enum _SelfieStep { guide, capture, liveness, result }
 
+const double _p2pSelfieVisualClearance = AppSpacing.x3;
+const double _p2pSelfieNativeClearance = AppSpacing.x2;
+const double _p2pSelfieMajorGap = AppSpacing.x3;
+const double _p2pSelfieSectionGap = AppSpacing.x2;
+const double _p2pSelfieTightGap = AppSpacing.x1;
+const double _p2pSelfieHeroIconBox = AppSpacing.searchBarCompactHeight;
+const double _p2pSelfieActionIconBox = AppSpacing.x7;
+const double _p2pSelfieSampleIconSize = AppSpacing.x7;
+const double _p2pSelfieLivenessIconSize = AppSpacing.x7;
+const double _p2pSelfieBodyLineHeight = 1.35;
+const EdgeInsets _p2pSelfieReviewPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pSelfieCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pSelfieLargeCardPadding = EdgeInsets.all(AppSpacing.x4);
+const EdgeInsets _p2pSelfieResultIconMargin = EdgeInsets.symmetric(
+  vertical: AppSpacing.x3,
+);
+const EdgeInsets _p2pSelfieScoreRowPadding = EdgeInsets.symmetric(
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _p2pSelfieChecklistIconPadding = EdgeInsets.only(
+  top: AppSpacing.x1,
+);
+
+EdgeInsets _p2pSelfieScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
+
 class P2PSelfieVerificationPage extends ConsumerStatefulWidget {
   const P2PSelfieVerificationPage({super.key, this.shellRenderMode});
 
@@ -87,10 +118,10 @@ class _P2PSelfieVerificationPageState
     P2PSelfieVerificationSnapshot snapshot,
   ) {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + _p2pSelfieVisualClearance
+            : DeviceMetrics.nativeBottomChrome + _p2pSelfieNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final stepBody = switch (_step) {
       _SelfieStep.guide => _GuideStep(
@@ -140,16 +171,16 @@ class _P2PSelfieVerificationPageState
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
-        padding: AppSpacing.p2pSelfieScrollPadding(bottomInset),
+        padding: _p2pSelfieScrollPadding(scrollEndPadding),
         child: VitPageContent(
           padding: VitContentPadding.none,
           fullBleed: true,
-          customGap: AppSpacing.x3,
+          gap: VitContentGap.tight,
           children: [
             stepBody,
             const VitCard(
               variant: VitCardVariant.inner,
-              padding: AppSpacing.p2pSelfieReviewPadding,
+              padding: _p2pSelfieReviewPadding,
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
                 title: 'Selfie verification review',

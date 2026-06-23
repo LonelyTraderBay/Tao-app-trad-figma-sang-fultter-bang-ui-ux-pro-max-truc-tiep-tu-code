@@ -65,27 +65,24 @@ class _VariantButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        height: _copyVariantButtonHeight,
-        constraints: const BoxConstraints(
-          minWidth: AppSpacing.copyTradingV2VariantButtonMinWidth,
-        ),
-        alignment: Alignment.center,
-        padding: AppSpacing.zeroInsets.copyWith(
-          left: AppSpacing.walletAssetHeroTopGap,
-          right: AppSpacing.walletAssetHeroTopGap,
-        ),
-        variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
-        borderColor: active ? _copyPrimary : AppColors.cardBorder,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
+      height: _copyVariantButtonHeight,
+      constraints: const BoxConstraints(
+        minWidth: AppSpacing.copyTradingV2VariantButtonMinWidth,
+      ),
+      alignment: Alignment.center,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.walletAssetHeroTopGap,
+        right: AppSpacing.walletAssetHeroTopGap,
+      ),
+      variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
+      borderColor: active ? _copyPrimary : AppColors.cardBorder,
+      child: Text(
+        label,
+        style: AppTextStyles.micro.copyWith(
+          color: active ? AppColors.onAccent : AppColors.text2,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

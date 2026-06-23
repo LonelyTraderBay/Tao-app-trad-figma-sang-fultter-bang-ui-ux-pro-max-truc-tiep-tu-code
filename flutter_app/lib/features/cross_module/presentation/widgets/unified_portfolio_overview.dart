@@ -225,100 +225,96 @@ class _ModuleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = unifiedModuleAccent(module.id);
-    return VitCard(
-      key: cardKey,
-      radius: VitCardRadius.lg,
-      padding: EdgeInsets.zero,
-      clip: true,
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: () => onOpenRoute(module.route),
-          child: Padding(
-            padding: AppSpacing.crossModuleCardPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Semantics(
+      button: true,
+      label: 'Open ${module.name} module',
+      child: VitCard(
+        key: cardKey,
+        radius: VitCardRadius.lg,
+        padding: AppSpacing.crossModuleCardPadding,
+        clip: true,
+        onTap: () => onOpenRoute(module.route),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    UnifiedPortfolioModuleIcon(id: module.id),
-                    const SizedBox(width: AppSpacing.x3),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            module.name,
-                            style: AppTextStyles.body.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.x1),
-                          Text(
-                            '${module.activePositions} active positions',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Icon(
-                      Icons.arrow_forward_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.iconMd,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.x4),
-                if (module.pointsOnly)
-                  const UnifiedArenaBoundaryPill()
-                else ...[
-                  Row(
+                UnifiedPortfolioModuleIcon(id: module.id),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: UnifiedPortfolioSummaryMetric(
-                          label: 'Value',
-                          value: unifiedFormatUsd(module.value),
+                      Text(
+                        module.name,
+                        style: AppTextStyles.body.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      Expanded(
-                        child: UnifiedPortfolioSummaryMetric(
-                          label: '24h Change',
-                          value:
-                              '${module.change24h >= 0 ? '+' : ''}${module.change24h.toStringAsFixed(1)}%',
-                          valueColor: module.change24h >= 0
-                              ? AppColors.buy
-                              : AppColors.sell,
-                        ),
-                      ),
-                      Expanded(
-                        child: UnifiedPortfolioSummaryMetric(
-                          label: 'P&L',
-                          value: unifiedFormatSignedUsd(module.pnl),
-                          valueColor: module.pnl >= 0
-                              ? AppColors.buy
-                              : AppColors.sell,
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        '${module.activePositions} active positions',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text3,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.x3),
-                  ClipRRect(
-                    borderRadius: AppRadii.xlRadius,
-                    child: LinearProgressIndicator(
-                      value: totalValue == 0 ? 0 : module.value / totalValue,
-                      minHeight: AppSpacing.x2,
-                      backgroundColor: AppColors.surface3,
-                      color: accent,
+                ),
+                const Icon(
+                  Icons.arrow_forward_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.x4),
+            if (module.pointsOnly)
+              const UnifiedArenaBoundaryPill()
+            else ...[
+              Row(
+                children: [
+                  Expanded(
+                    child: UnifiedPortfolioSummaryMetric(
+                      label: 'Value',
+                      value: unifiedFormatUsd(module.value),
+                    ),
+                  ),
+                  Expanded(
+                    child: UnifiedPortfolioSummaryMetric(
+                      label: '24h Change',
+                      value:
+                          '${module.change24h >= 0 ? '+' : ''}${module.change24h.toStringAsFixed(1)}%',
+                      valueColor: module.change24h >= 0
+                          ? AppColors.buy
+                          : AppColors.sell,
+                    ),
+                  ),
+                  Expanded(
+                    child: UnifiedPortfolioSummaryMetric(
+                      label: 'P&L',
+                      value: unifiedFormatSignedUsd(module.pnl),
+                      valueColor: module.pnl >= 0
+                          ? AppColors.buy
+                          : AppColors.sell,
                     ),
                   ),
                 ],
-              ],
-            ),
-          ),
+              ),
+              const SizedBox(height: AppSpacing.x3),
+              ClipRRect(
+                borderRadius: AppRadii.xlRadius,
+                child: LinearProgressIndicator(
+                  value: totalValue == 0 ? 0 : module.value / totalValue,
+                  minHeight: AppSpacing.x2,
+                  backgroundColor: AppColors.surface3,
+                  color: accent,
+                ),
+              ),
+            ],
+          ],
         ),
       ),
     );

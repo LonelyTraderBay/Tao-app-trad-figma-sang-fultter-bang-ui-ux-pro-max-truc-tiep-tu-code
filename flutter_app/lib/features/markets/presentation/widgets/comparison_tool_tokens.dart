@@ -36,45 +36,16 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
             const SizedBox(width: AppSpacing.comparisonToolStripGap),
         itemBuilder: (context, index) {
           if (index == selectedPairs.length) {
-            return InkWell(
-              key: ComparisonToolKeys.addToken,
-              onTap: onAdd,
-              borderRadius: AppRadii.cardRadius,
-              child: Material(
-                color: AppColors.transparent,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: comparisonToolPrimary.withValues(alpha: .38),
-                  ),
-                  borderRadius: AppRadii.cardRadius,
-                ),
-                child: SizedBox(
-                  width: AppSpacing.comparisonToolAddWidth,
-                  height: AppSpacing.comparisonToolStripHeight,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.add_rounded,
-                        color: AppColors.text3,
-                        size: AppSpacing.comparisonToolAddIcon,
-                      ),
-                      const SizedBox(width: AppSpacing.comparisonToolAddGap),
-                      Flexible(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            'Th\u00C3\u00AAm',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text3,
-                              height: AppSpacing.marketLineHeightTight,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+            return SizedBox(
+              width: AppSpacing.comparisonToolAddWidth,
+              child: VitCtaButton(
+                key: ComparisonToolKeys.addToken,
+                onPressed: onAdd,
+                variant: VitCtaButtonVariant.ghost,
+                height: AppSpacing.comparisonToolStripHeight,
+                padding: AppSpacing.comparisonToolTokenPadding,
+                leading: const Icon(Icons.add_rounded),
+                child: const Text('Thêm'),
               ),
             );
           }
@@ -129,14 +100,14 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
                     ),
                     if (canRemove) ...[
                       const SizedBox(width: AppSpacing.comparisonToolRemoveGap),
-                      InkWell(
+                      VitInlineIconAction(
                         key: ComparisonToolKeys.removeToken(pair.id),
-                        onTap: () => onRemove(pair.id),
-                        child: const Icon(
-                          Icons.close_rounded,
-                          color: AppColors.text3,
-                          size: AppSpacing.comparisonToolRemoveIcon,
-                        ),
+                        icon: Icons.close_rounded,
+                        tooltip: 'Remove ${pair.baseAsset}',
+                        onPressed: () => onRemove(pair.id),
+                        color: AppColors.text3,
+                        size: AppSpacing.comparisonToolRemoveIcon,
+                        padding: AppSpacing.zero,
                       ),
                     ],
                   ],
@@ -195,14 +166,13 @@ class ComparisonTokenPickerCard extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: onClose,
-                borderRadius: AppRadii.smRadius,
-                child: const Icon(
-                  Icons.close_rounded,
-                  color: AppColors.text3,
-                  size: 18,
-                ),
+              VitInlineIconAction(
+                icon: Icons.close_rounded,
+                tooltip: 'Close token picker',
+                onPressed: onClose,
+                color: AppColors.text3,
+                size: 18,
+                padding: AppSpacing.zero,
               ),
             ],
           ),
@@ -302,30 +272,14 @@ class _PickerQuickChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
       key: ComparisonToolKeys.pickerQuickToken(pair.id),
+      label: pair.baseAsset,
+      selected: true,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Material(
-        color: pair.logoColor.withValues(alpha: .12),
-        borderRadius: AppRadii.smRadius,
-        child: SizedBox(
-          height: AppSpacing.comparisonToolPickerQuickHeight,
-          child: Padding(
-            padding: AppSpacing.comparisonToolPickerQuickPadding,
-            child: Center(
-              child: Text(
-                pair.baseAsset,
-                style: AppTextStyles.caption.copyWith(
-                  color: pair.logoColor,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.marketLineHeightTight,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: pair.logoColor,
+      height: AppSpacing.comparisonToolPickerQuickHeight,
+      padding: AppSpacing.comparisonToolPickerQuickPadding,
     );
   }
 }
@@ -338,45 +292,42 @@ class _PickerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: ComparisonToolKeys.pickerToken(pair.id),
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      height: AppSpacing.comparisonToolPickerRowHeight,
+      padding: AppSpacing.comparisonToolPickerRowPadding,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: SizedBox(
-        height: AppSpacing.comparisonToolPickerRowHeight,
-        child: Padding(
-          padding: AppSpacing.comparisonToolPickerRowPadding,
-          child: Row(
-            children: [
-              ComparisonAvatar(
-                pair: pair,
-                size: AppSpacing.comparisonToolPickerRowAvatar,
-              ),
-              const SizedBox(width: AppSpacing.comparisonToolPickerRowGap),
-              Expanded(
-                child: Text(
-                  pair.baseAsset,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Text(
-                  '\$${comparisonFormatPrice(pair.price)}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.end,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
-              ),
-            ],
+      child: Row(
+        children: [
+          ComparisonAvatar(
+            pair: pair,
+            size: AppSpacing.comparisonToolPickerRowAvatar,
           ),
-        ),
+          const SizedBox(width: AppSpacing.comparisonToolPickerRowGap),
+          Expanded(
+            child: Text(
+              pair.baseAsset,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.medium,
+              ),
+            ),
+          ),
+          Flexible(
+            child: Text(
+              '\$${comparisonFormatPrice(pair.price)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text3,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

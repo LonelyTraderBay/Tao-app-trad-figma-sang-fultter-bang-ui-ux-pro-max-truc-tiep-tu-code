@@ -6,17 +6,28 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pDisputeEvidenceVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pDisputeEvidenceNativeNavClearance =
+    _p2pDisputeEvidenceVisualNavClearance - AppSpacing.x4;
+const double _p2pDisputeEvidenceVisualClearance = AppSpacing.x3;
+const double _p2pDisputeEvidenceNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pDisputeEvidenceScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
 
 class P2PDisputeEvidencePage extends ConsumerStatefulWidget {
   const P2PDisputeEvidencePage({
@@ -49,12 +60,12 @@ class _P2PDisputeEvidencePageState
     );
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pDisputeBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pDisputeBottomInsetNative) +
+            ? _p2pDisputeEvidenceVisualNavClearance +
+                  _p2pDisputeEvidenceVisualClearance
+            : _p2pDisputeEvidenceNativeNavClearance +
+                  _p2pDisputeEvidenceNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final documents = controller.documents(_uploaded);
 
@@ -82,11 +93,11 @@ class _P2PDisputeEvidencePageState
                   child: SingleChildScrollView(
                     key: P2PDisputeEvidencePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    padding: _p2pDisputeEvidenceScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _HeroCard(
                           title: snapshot.title,
@@ -97,15 +108,21 @@ class _P2PDisputeEvidencePageState
                           text:
                               'Mock/fail-closed: upload chỉ cập nhật trạng thái cục bộ trong dev smoke; chưa gửi file lên backend.',
                         ),
-                        const SizedBox(height: AppSpacing.x4),
-                        for (final document in documents) ...[
+                        const SizedBox(height: AppSpacing.x3),
+                        for (
+                          var index = 0;
+                          index < documents.length;
+                          index++
+                        ) ...[
                           _EvidenceRow(
-                            document: document,
-                            onUpload: () => _markUploaded(document.source.id),
+                            document: documents[index],
+                            onUpload: () =>
+                                _markUploaded(documents[index].source.id),
                           ),
-                          const SizedBox(height: AppSpacing.x3),
+                          if (index != documents.length - 1)
+                            const SizedBox(height: AppSpacing.x2),
                         ],
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: AppSpacing.x3),
                         VitCtaButton(
                           key: P2PDisputeEvidencePage.submitKey,
                           onPressed: controller.canSubmit(_uploaded)
@@ -279,28 +296,14 @@ class _UploadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppModuleAccents.p2p.withValues(alpha: .10),
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.buttonCompact,
-          child: Padding(
-            padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
-            child: Center(
-              child: Text(
-                'Upload',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppModuleAccents.p2p,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: 'Upload',
+      selected: false,
+      onTap: onPressed,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
+      accentColor: AppModuleAccents.p2p,
+      semanticLabel: 'Upload dispute evidence',
     );
   }
 }

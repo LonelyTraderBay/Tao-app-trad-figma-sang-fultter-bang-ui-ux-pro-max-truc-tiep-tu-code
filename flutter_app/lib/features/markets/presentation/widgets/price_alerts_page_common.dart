@@ -7,37 +7,17 @@ class _AddAlertButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCtaButton(
       key: PriceAlertsPage.addAlertKey,
-      onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Material(
-        color: _marketPrimary.withValues(alpha: .13),
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: _marketPrimary.withValues(alpha: .30)),
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: SizedBox(
-          height: _alertsFilterHeight,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.add_rounded,
-                color: _marketPrimary,
-                size: _alertsAddIcon,
-              ),
-              const SizedBox(width: _alertsAddGap),
-              Text(
-                'T\u1EA1o c\u1EA3nh b\u00E1o m\u1EDBi',
-                style: AppTextStyles.body.copyWith(
-                  color: _marketPrimary,
-                  fontWeight: AppTextStyles.bold,
-                  height: _alertsLineHeightTight,
-                ),
-              ),
-            ],
-          ),
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.secondary,
+      height: _alertsFilterHeight,
+      leading: const Icon(Icons.add_rounded, size: _alertsAddIcon),
+      child: Text(
+        'T\u1EA1o c\u1EA3nh b\u00E1o m\u1EDBi',
+        style: AppTextStyles.body.copyWith(
+          fontWeight: AppTextStyles.bold,
+          height: _alertsLineHeightTight,
         ),
       ),
     );

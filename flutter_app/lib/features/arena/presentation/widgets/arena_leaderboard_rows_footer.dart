@@ -13,11 +13,13 @@ class _LeaderboardRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: rising
           ? ArenaLeaderboardPage.risingCreatorKey
           : ArenaLeaderboardPage.creatorRowKey,
       onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
       child: Padding(
         padding: _leaderboardRowPadding,
         child: Row(
@@ -181,10 +183,11 @@ class _ArenaFooter extends StatelessWidget {
       children: [
         Material(
           type: MaterialType.transparency,
-          child: InkWell(
+          child: VitCard(
             key: ArenaLeaderboardPage.rulesKey,
             onTap: onRules,
-            borderRadius: AppRadii.smRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
             child: Padding(
               padding: _leaderboardFooterActionPadding,
               child: Row(

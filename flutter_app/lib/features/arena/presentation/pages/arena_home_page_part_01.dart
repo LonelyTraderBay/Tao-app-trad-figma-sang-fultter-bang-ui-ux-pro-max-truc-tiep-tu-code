@@ -269,48 +269,34 @@ class _QuickChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: AppSpacing.arenaHomeQuickChipGapPadding,
-      child: Material(
-        color: AppColors.transparent,
-        borderRadius: AppRadii.inputRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.inputRadius,
-          child: SizedBox(
-            height: VitDensity.compact.controlHeight,
-            child: Material(
-              color: AppColors.surface2,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.inputRadius,
-                side: const BorderSide(color: AppColors.cardBorder),
-              ),
-              child: Padding(
-                padding: AppSpacing.arenaPresetChipPadding,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      icon,
-                      color: AppColors.text2,
-                      size: AppSpacing.arenaHomeQuickChipIcon,
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    Text(
-                      label,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                        height: _arenaHomeCountBadgeLineHeight,
-                      ),
-                    ),
-                    if (count > 0) ...[
-                      const SizedBox(width: AppSpacing.x2),
-                      _MiniCountBadge(count: count),
-                    ],
-                  ],
-                ),
+      child: VitCard(
+        onTap: onTap,
+        variant: VitCardVariant.inner,
+        radius: VitCardRadius.sm,
+        height: VitDensity.compact.controlHeight,
+        padding: AppSpacing.arenaPresetChipPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: AppColors.text2,
+              size: AppSpacing.arenaHomeQuickChipIcon,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                fontWeight: AppTextStyles.bold,
+                height: _arenaHomeCountBadgeLineHeight,
               ),
             ),
-          ),
+            if (count > 0) ...[
+              const SizedBox(width: AppSpacing.x2),
+              _MiniCountBadge(count: count),
+            ],
+          ],
         ),
       ),
     );

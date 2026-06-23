@@ -132,53 +132,50 @@ class _CostBasisPicker extends StatelessWidget {
       children: [
         for (var i = 0; i < methods.length; i++) ...[
           Expanded(
-            child: GestureDetector(
+            child: VitCard(
               key: BotTaxReportingPage.methodKey(methods[i].$1),
-              behavior: HitTestBehavior.opaque,
               onTap: () => onChanged(methods[i].$1),
-              child: VitCard(
-                density: VitDensity.compact,
-                borderColor: selectedMethod == methods[i].$1
-                    ? _taxPrimary
-                    : _taxOptionBorder,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        _RadioDot(selected: selectedMethod == methods[i].$1),
-                        const SizedBox(width: AppSpacing.tradeBotSmallGap),
-                        Text(
-                          methods[i].$1,
-                          style: AppTextStyles.caption.copyWith(
-                            color: selectedMethod == methods[i].$1
-                                ? _taxPrimary
-                                : AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
+              density: VitDensity.compact,
+              borderColor: selectedMethod == methods[i].$1
+                  ? _taxPrimary
+                  : _taxOptionBorder,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      _RadioDot(selected: selectedMethod == methods[i].$1),
+                      const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                      Text(
+                        methods[i].$1,
+                        style: AppTextStyles.caption.copyWith(
+                          color: selectedMethod == methods[i].$1
+                              ? _taxPrimary
+                              : AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: AppSpacing.tradeBotMethodTextIndent,
+                      ),
+                      Expanded(
+                        child: Text(
+                          methods[i].$2,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: AppSpacing.tradeBotMethodTextIndent,
-                        ),
-                        Expanded(
-                          child: Text(
-                            methods[i].$2,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class PredictionPortfolioSummaryCard extends StatelessWidget {
   const PredictionPortfolioSummaryCard({
@@ -58,20 +59,20 @@ class PredictionPortfolioSummaryCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                SizedBox(
+                VitCard(
                   key: predictionPortfolioVisibilityToggleKey,
+                  onTap: onToggleHidden,
+                  variant: VitCardVariant.ghost,
+                  radius: VitCardRadius.sm,
                   width: AppSpacing.predictionPortfolioVisibilityButton,
                   height: AppSpacing.predictionPortfolioVisibilityButton,
-                  child: IconButton(
-                    onPressed: onToggleHidden,
-                    padding: EdgeInsets.zero,
-                    icon: Icon(
-                      isHidden
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      color: AppColors.portfolioTextDim,
-                      size: AppSpacing.predictionPortfolioVisibilityIcon,
-                    ),
+                  padding: AppSpacing.zeroInsets,
+                  child: Icon(
+                    isHidden
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: AppColors.portfolioTextDim,
+                    size: AppSpacing.predictionPortfolioVisibilityIcon,
                   ),
                 ),
               ],

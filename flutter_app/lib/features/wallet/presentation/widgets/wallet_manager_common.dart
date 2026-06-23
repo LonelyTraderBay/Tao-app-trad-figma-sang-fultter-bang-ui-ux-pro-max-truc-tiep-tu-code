@@ -65,15 +65,15 @@ class WalletManagerTinyIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: buttonKey,
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: SizedBox(
-        width: AppSpacing.walletManagerTinyButton,
-        height: AppSpacing.walletManagerTinyButton,
-        child: Icon(icon, color: color, size: AppSpacing.walletManagerTinyIcon),
-      ),
+      width: AppSpacing.walletManagerTinyButton,
+      height: AppSpacing.walletManagerTinyButton,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      alignment: Alignment.center,
+      child: Icon(icon, color: color, size: AppSpacing.walletManagerTinyIcon),
     );
   }
 }
@@ -182,13 +182,15 @@ class _WalletManagerCompactPill extends StatelessWidget {
 }
 
 class WalletManagerAddWalletButton extends StatelessWidget {
-  const WalletManagerAddWalletButton({super.key});
+  const WalletManagerAddWalletButton({super.key, required this.onPressed});
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: const Key('sc148_multi_manager_add_wallet'),
-      onPressed: () {},
+      onPressed: onPressed,
       height: AppSpacing.inputHeight,
       leading: const Icon(Icons.add_rounded),
       child: const Text('Add Wallet'),

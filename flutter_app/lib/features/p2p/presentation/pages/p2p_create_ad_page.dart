@@ -12,13 +12,30 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_create_ad_sections.dart';
 
 part '../widgets/p2p_create_ad_page_sections.dart';
+
+const double _p2pCreateVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pCreateNativeNavClearance =
+    _p2pCreateVisualNavClearance - AppSpacing.x4;
+const double _p2pCreateVisualClearance = AppSpacing.x3;
+const double _p2pCreateNativeClearance = AppSpacing.x2;
+const double _p2pCreateGroupGap = AppSpacing.x3;
+const double _p2pCreateFieldGap = AppSpacing.x2;
+const double _p2pCreateColumnGap = AppSpacing.x2;
+const double _p2pCreateSegmentHeight = AppSpacing.buttonCompact;
+const EdgeInsets _p2pCreateScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pCreateCompactPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PCreateAdPage extends ConsumerStatefulWidget {
   const P2PCreateAdPage({super.key, this.shellRenderMode});
@@ -91,17 +108,18 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
     final formController = P2PCreateAdController(
       state: P2PCreateAdViewState(snapshot: snapshot),
     );
-    final preview = formController.preview(_draft());
+    final draft = _draft();
+    final preview = formController.preview(draft);
+    final publishBlockers = [
+      ...formController.publishBlockers(draft),
+      if (_submitting) 'Dang dang quang cao',
+    ];
+    final canPublish = preview.canPublish && !_submitting;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
-    final footerInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
+            ? _p2pCreateVisualNavClearance + _p2pCreateVisualClearance
+            : _p2pCreateNativeNavClearance + _p2pCreateNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -127,20 +145,18 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                   child: SingleChildScrollView(
                     key: P2PCreateAdPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantCommerceScrollPadding(
-                      bottomInset,
+                    padding: _p2pCreateScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _SectionLabel('Loại quảng cáo'),
                         _TradeTypePicker(
                           value: _adType,
                           onChanged: (type) => setState(() => _adType = type),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -156,7 +172,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                                 },
                               ),
                             ),
-                            const SizedBox(width: AppSpacing.x4),
+                            const SizedBox(width: _p2pCreateColumnGap),
                             Expanded(
                               child: _ChipGroup(
                                 label: 'Tiền tệ',
@@ -171,7 +187,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         _SectionLabel('Loại giá'),
                         _PriceTypePicker(
                           value: _priceType,
@@ -180,7 +196,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             setState(() => _priceType = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         if (_priceType == 'fixed')
                           _InputBlock(
                             label: 'Giá ($_currency/$_asset) *',
@@ -207,7 +223,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             onChanged: () => setState(() {}),
                           ),
                         if (preview.effectivePrice > 0) ...[
-                          const SizedBox(height: AppSpacing.x2),
+                          const SizedBox(height: _p2pCreateFieldGap),
                           Text(
                             preview.priceDiffLabel,
                             style: AppTextStyles.micro.copyWith(
@@ -218,7 +234,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             ),
                           ),
                         ],
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         _InputBlock(
                           label: 'Tổng $_asset giao dịch *',
                           child: VitInput(
@@ -235,7 +251,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             onChanged: (_) => setState(() {}),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         Row(
                           children: [
                             Expanded(
@@ -250,7 +266,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: AppSpacing.x3),
+                            const SizedBox(width: _p2pCreateColumnGap),
                             Expanded(
                               child: _InputBlock(
                                 label: 'Tối đa ($_currency) *',
@@ -265,13 +281,13 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         P2PCreateAdPaymentsBlock(
                           options: snapshot.paymentOptions,
                           selected: _selectedPayments,
                           onToggle: _togglePayment,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         P2PCreateAdPaymentWindowBlock(
                           values: snapshot.paymentWindows,
                           selected: _paymentWindow,
@@ -280,7 +296,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             setState(() => _paymentWindow = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         _ChipGroup(
                           label: 'Giờ giao dịch',
                           values: snapshot.tradingHours,
@@ -291,7 +307,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             setState(() => _tradingHours = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         P2PCreateAdRequirementCard(
                           requireKyc: _requireKyc,
                           requiredKycLevel: _requiredKycLevel,
@@ -306,14 +322,14 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             setState(() => _requiredKycLevel = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         P2PCreateAdMultilineBlock(
                           label: 'Điều kiện giao dịch (tuỳ chọn)',
                           controller: _termsController,
                           hintText:
                               'VD: Chỉ giao dịch với tài khoản đã xác minh KYC...',
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         P2PCreateAdMultilineBlock(
                           label: 'Tin nhắn tự động (tuỳ chọn)',
                           controller: _autoReplyController,
@@ -321,9 +337,9 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                               'VD: Cảm ơn bạn! Vui lòng chuyển khoản theo thông tin bên dưới.',
                           hint: 'Gửi tự động khi đối tác tạo đơn.',
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         P2PCreateAdWarningCard(text: snapshot.warningNote),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pCreateGroupGap),
                         P2PCreateAdLivePreviewCard(
                           expanded: _previewExpanded,
                           onTap: () => setState(
@@ -331,10 +347,10 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                           ),
                           preview: preview,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pCreateFieldGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+                          padding: _p2pCreateCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P ad publish review',
@@ -343,28 +359,14 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                             contractId: 'p2p-create-ad-review',
                           ),
                         ),
+                        const SizedBox(height: _p2pCreateGroupGap),
+                        _buildPublishActionSection(
+                          context: context,
+                          preview: preview,
+                          blockers: publishBlockers,
+                          canPublish: canPublish,
+                        ),
                       ],
-                    ),
-                  ),
-                ),
-              ),
-              VitStickyFooter(
-                backgroundColor: AppColors.surface.withValues(alpha: .96),
-                child: Padding(
-                  padding: AppSpacing.p2pMerchantCommerceFooterPadding(
-                    footerInset,
-                  ),
-                  child: VitCtaButton(
-                    key: P2PCreateAdPage.publishButtonKey,
-                    onPressed: preview.canPublish && !_submitting
-                        ? () => _confirmPublish(context, preview)
-                        : null,
-                    variant: _adType == P2PTradeType.buy
-                        ? VitCtaButtonVariant.success
-                        : VitCtaButtonVariant.danger,
-                    loading: _submitting,
-                    child: Text(
-                      _submitting ? 'Đang đăng...' : preview.publishLabel,
                     ),
                   ),
                 ),
@@ -372,6 +374,38 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildPublishActionSection({
+    required BuildContext context,
+    required P2PCreateAdPreview preview,
+    required List<String> blockers,
+    required bool canPublish,
+  }) {
+    return Semantics(
+      container: true,
+      label: 'P2P create ad publish actions',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (blockers.isNotEmpty) ...[
+            _PublishReadinessPanel(blockers: blockers),
+            const SizedBox(height: AppSpacing.x2),
+          ],
+          VitCtaButton(
+            key: P2PCreateAdPage.publishButtonKey,
+            onPressed: canPublish
+                ? () => _confirmPublish(context, preview)
+                : null,
+            variant: _adType == P2PTradeType.buy
+                ? VitCtaButtonVariant.success
+                : VitCtaButtonVariant.danger,
+            loading: _submitting,
+            child: Text(_submitting ? 'Đang đăng...' : preview.publishLabel),
+          ),
+        ],
       ),
     );
   }
@@ -459,24 +493,24 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
             ],
           ),
           actions: [
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(
-                'Hủy',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
+              variant: VitCtaButtonVariant.secondary,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              child: const Text('Hủy'),
             ),
-            TextButton(
+            VitCtaButton(
               key: P2PCreateAdPage.confirmPublishKey,
               onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: Text(
-                'Đăng',
-                style: AppTextStyles.caption.copyWith(
-                  color: _adType == P2PTradeType.buy
-                      ? AppColors.buy
-                      : AppColors.sell,
-                ),
-              ),
+              variant: _adType == P2PTradeType.buy
+                  ? VitCtaButtonVariant.success
+                  : VitCtaButtonVariant.danger,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              child: const Text('Đăng'),
             ),
           ],
         );

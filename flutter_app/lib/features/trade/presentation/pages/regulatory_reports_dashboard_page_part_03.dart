@@ -153,14 +153,13 @@ class _NoticePanel extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ),
-              IconButton(
-                visualDensity: VisualDensity.compact,
+              VitInlineIconAction(
+                icon: Icons.close_rounded,
+                tooltip: 'Dismiss notice',
                 onPressed: onClose,
-                icon: const Icon(
-                  Icons.close_rounded,
-                  size: AppSpacing.tradeBotActionIcon,
-                ),
                 color: AppColors.text3,
+                size: AppSpacing.tradeBotActionIcon,
+                padding: AppSpacing.x1,
               ),
             ],
           ),

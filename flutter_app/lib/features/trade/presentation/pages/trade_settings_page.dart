@@ -22,7 +22,6 @@ part '../widgets/trade_settings_page_sections.dart';
 part '../widgets/trade_settings_page_common.dart';
 
 const _tradePrimary = AppColors.primary;
-const _chipBackground = AppColors.surface2;
 const _settingsSpace = AppSpacing.x2;
 const _settingsTinySpace = AppSpacing.x1;
 const _settingsVisualScrollClearance = 112.0;

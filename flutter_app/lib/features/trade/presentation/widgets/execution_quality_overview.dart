@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class ExecutionQualityIntroCard extends StatelessWidget {
   const ExecutionQualityIntroCard({super.key});
@@ -63,49 +63,47 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(feature.colorHex);
-    return InkWell(
+    return VitCard(
       key: executionQualityFeatureKey(feature.id),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: ExecutionQualityPanel(
-        padding: AppSpacing.tradeToolRiskIntroPadding,
-        child: Row(
-          children: [
-            ExecutionQualityIconTile(
-              icon: _iconFor(feature.id),
-              color: color,
-              size: AppSpacing.tradeToolIconTileMd,
-            ),
-            const SizedBox(width: AppSpacing.tradeToolCardGap),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    feature.title,
-                    style: AppTextStyles.caption.copyWith(
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      padding: AppSpacing.tradeToolRiskIntroPadding,
+      variant: VitCardVariant.inner,
+      child: Row(
+        children: [
+          ExecutionQualityIconTile(
+            icon: _iconFor(feature.id),
+            color: color,
+            size: AppSpacing.tradeToolIconTileMd,
+          ),
+          const SizedBox(width: AppSpacing.tradeToolCardGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  feature.title,
+                  style: AppTextStyles.caption.copyWith(
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    feature.description,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                      height: 1.5,
-                    ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  feature.description,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    height: 1.5,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(width: AppSpacing.tradeToolInlineGap),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 20,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.tradeToolInlineGap),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: 20,
+          ),
+        ],
       ),
     );
   }

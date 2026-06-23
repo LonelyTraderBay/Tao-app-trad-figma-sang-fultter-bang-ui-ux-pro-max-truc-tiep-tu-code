@@ -50,75 +50,72 @@ class _RiskCategoryCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          Material(
-            color: AppColors.transparent,
-            child: InkWell(
-              onTap: onTap,
-              child: Padding(
-                padding: _stakingRiskCardPadding,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox.square(
-                      dimension: _stakingRiskCategoryIconBox,
-                      child: Material(
-                        color: _riskTint(category.level),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: AppRadii.lgRadius,
-                          side: BorderSide(
-                            color: color.withValues(alpha: .28),
-                            width: _stakingRiskBorderWidth,
-                          ),
-                        ),
-                        child: Icon(
-                          _categoryIcon(category.id),
-                          color: color,
-                          size: _stakingRiskCategoryIcon,
-                        ),
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            padding: _stakingRiskCardPadding,
+            onTap: onTap,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox.square(
+                  dimension: _stakingRiskCategoryIconBox,
+                  child: Material(
+                    color: _riskTint(category.level),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.lgRadius,
+                      side: BorderSide(
+                        color: color.withValues(alpha: .28),
+                        width: _stakingRiskBorderWidth,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.x3),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Icon(
+                      _categoryIcon(category.id),
+                      color: color,
+                      size: _stakingRiskCategoryIcon,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        spacing: AppSpacing.x2,
+                        runSpacing: AppSpacing.x2,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          Wrap(
-                            spacing: AppSpacing.x2,
-                            runSpacing: AppSpacing.x2,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              Text(
-                                category.title,
-                                style: AppTextStyles.baseMedium.copyWith(
-                                  color: AppColors.text1,
-                                  fontWeight: AppTextStyles.bold,
-                                ),
-                              ),
-                              _RiskLevelBadge(level: category.level),
-                            ],
-                          ),
-                          const Padding(padding: AppSpacing.earnTopPaddingX2),
                           Text(
-                            category.description,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text2,
-                              height: _stakingRiskBodyLineHeight,
+                            category.title,
+                            style: AppTextStyles.baseMedium.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
                             ),
                           ),
+                          _RiskLevelBadge(level: category.level),
                         ],
                       ),
-                    ),
-                    AnimatedRotation(
-                      turns: expanded ? .25 : 0,
-                      duration: const Duration(milliseconds: 180),
-                      child: const Icon(
-                        Icons.chevron_right_rounded,
-                        color: AppColors.text3,
+                      const Padding(padding: AppSpacing.earnTopPaddingX2),
+                      Text(
+                        category.description,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text2,
+                          height: _stakingRiskBodyLineHeight,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                AnimatedRotation(
+                  turns: expanded ? .25 : 0,
+                  duration: const Duration(milliseconds: 180),
+                  child: const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.text3,
+                  ),
+                ),
+              ],
             ),
           ),
           AnimatedCrossFade(

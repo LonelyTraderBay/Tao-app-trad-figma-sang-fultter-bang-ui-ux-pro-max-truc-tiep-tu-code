@@ -69,60 +69,50 @@ class _ReportActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: background,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(color: borderColor),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      borderColor: borderColor,
+      background: ColoredBox(color: background),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
       ),
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-        ),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          child: Row(
-            children: [
-              Icon(icon, color: foreground, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        color: foreground,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
+      onTap: onTap,
+      clip: true,
+      child: Row(
+        children: [
+          Icon(icon, color: foreground, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: foreground,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-            ],
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
           ),
-        ),
+          const SizedBox(width: AppSpacing.x2),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+        ],
       ),
     );
   }

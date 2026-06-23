@@ -1,9 +1,10 @@
 part of '../pages/network_status_page.dart';
 
 class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({required this.snapshot});
+  const _SummaryCard({required this.snapshot, required this.onRefresh});
 
   final WalletNetworkStatusSnapshot snapshot;
+  final VoidCallback onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class _SummaryCard extends StatelessWidget {
                 key: NetworkStatusPage.refreshKey,
                 icon: Icons.refresh_rounded,
                 tooltip: 'Refresh network status',
-                onPressed: () {},
+                onPressed: onRefresh,
                 size: VitIconButtonSize.sm,
               ),
             ],

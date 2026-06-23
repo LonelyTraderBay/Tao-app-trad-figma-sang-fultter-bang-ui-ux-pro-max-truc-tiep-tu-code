@@ -375,15 +375,15 @@ class _MetaRow extends StatelessWidget {
             ),
             if (onCopy != null) ...[
               const SizedBox(width: AppSpacing.x1),
-              InkWell(
+              VitIconButton(
                 key: LaunchpadAbiDiffPage.copyKey(row.label),
-                borderRadius: AppRadii.xsRadius,
-                onTap: onCopy,
-                child: Icon(
-                  copied ? Icons.check_rounded : Icons.copy_rounded,
-                  color: copied ? AppColors.buy : AppColors.text3,
-                  size: AppSpacing.launchpadIconMd,
-                ),
+                onPressed: onCopy,
+                icon: copied ? Icons.check_rounded : Icons.copy_rounded,
+                tooltip: 'Copy ${row.label}',
+                variant: copied
+                    ? VitIconButtonVariant.success
+                    : VitIconButtonVariant.transparent,
+                size: VitIconButtonSize.sm,
               ),
             ],
           ],
@@ -408,46 +408,18 @@ class _FilterRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(
+        VitChoicePill(
           key: LaunchpadAbiDiffPage.functionsOnlyKey,
-          borderRadius: AppRadii.inputRadius,
+          label: 'Functions only',
+          selected: active,
           onTap: onChanged,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: active ? AppColors.primary12 : AppColors.surface2,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.inputRadius,
-                side: BorderSide(
-                  color: active ? AppColors.primary30 : AppColors.cardBorder,
-                ),
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.launchpadPillPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.code_rounded,
-                    color: active
-                        ? AppModuleAccents.launchpad
-                        : AppColors.text3,
-                    size: AppSpacing.launchpadIconMd,
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                  Text(
-                    'Functions only',
-                    style: AppTextStyles.caption.copyWith(
-                      color: active
-                          ? AppModuleAccents.launchpad
-                          : AppColors.text3,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          accentColor: AppModuleAccents.launchpad,
+          padding: AppSpacing.launchpadPillPadding,
+          leading: const Icon(
+            Icons.code_rounded,
+            size: AppSpacing.launchpadIconMd,
           ),
+          semanticLabel: 'Filter ABI diff to functions only',
         ),
         const SizedBox(width: AppSpacing.x3),
         Text(

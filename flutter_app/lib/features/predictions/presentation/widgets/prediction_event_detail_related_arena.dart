@@ -179,61 +179,55 @@ class _ArenaBridgeSection extends StatelessWidget {
             if (index != snapshot.arenaRooms.length - 1)
               const SizedBox(height: AppSpacing.x2),
           ],
-          Material(
-            color: AppColors.warn08,
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.mdRadius,
-              side: const BorderSide(color: AppColors.warningBorder),
-            ),
-            child: InkWell(
-              key: PredictionEventDetailPage.arenaCreateKey,
-              onTap: onCreate,
-              borderRadius: AppRadii.mdRadius,
-              child: Padding(
-                padding: AppSpacing.predictionDetailArenaCreatePadding,
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.auto_awesome_rounded,
-                      color: AppColors.warn,
-                      size: AppSpacing.predictionDetailArenaCreateIcon,
-                    ),
-                    const SizedBox(
-                      width: AppSpacing.predictionDetailArenaCreateGap,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Tạo Arena từ event này',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.warn,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                          Text(
-                            'Event chỉ là bối cảnh, không liên kết ví hay P/L.',
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const _ArenaBadge('Arena Points only'),
-                    const SizedBox(
-                      width: AppSpacing.predictionDetailArenaCreateBadgeGap,
-                    ),
-                    const Icon(
-                      Icons.chevron_right_rounded,
-                      color: AppColors.warn,
-                      size: AppSpacing.predictionDetailArenaCreateChevron,
-                    ),
-                  ],
+          VitCard(
+            key: PredictionEventDetailPage.arenaCreateKey,
+            onTap: onCreate,
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
+            borderColor: AppColors.warningBorder,
+            background: const ColoredBox(color: AppColors.warn08),
+            clip: true,
+            padding: AppSpacing.predictionDetailArenaCreatePadding,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.auto_awesome_rounded,
+                  color: AppColors.warn,
+                  size: AppSpacing.predictionDetailArenaCreateIcon,
                 ),
-              ),
+                const SizedBox(
+                  width: AppSpacing.predictionDetailArenaCreateGap,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tạo Arena từ event này',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.warn,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      Text(
+                        'Event chỉ là bối cảnh, không liên kết ví hay P/L.',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const _ArenaBadge('Arena Points only'),
+                const SizedBox(
+                  width: AppSpacing.predictionDetailArenaCreateBadgeGap,
+                ),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.warn,
+                  size: AppSpacing.predictionDetailArenaCreateChevron,
+                ),
+              ],
             ),
           ),
         ],

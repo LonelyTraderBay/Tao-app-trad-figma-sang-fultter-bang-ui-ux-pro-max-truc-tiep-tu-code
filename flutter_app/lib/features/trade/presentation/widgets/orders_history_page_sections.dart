@@ -139,26 +139,21 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return ConstrainedBox(
       constraints: BoxConstraints(
         minWidth: id == 'all'
             ? AppSpacing.buttonCompact
             : AppSpacing.buttonStandard,
-        minHeight: VitDensity.compact.controlHeight - AppSpacing.x2,
       ),
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x1,
-      ),
-      alignment: Alignment.center,
-      borderColor: active ? color : AppColors.border,
-      onTap: onTap,
-      child: Text(
-        label,
-        style: AppTextStyles.caption.copyWith(
-          color: active ? color : AppColors.text2,
-          fontWeight: AppTextStyles.bold,
+      child: VitChoicePill(
+        label: label,
+        selected: active,
+        onTap: onTap,
+        height: VitDensity.compact.controlHeight - AppSpacing.x2,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x3,
         ),
+        accentColor: color,
       ),
     );
   }
@@ -301,29 +296,12 @@ class _OrderHistoryTile extends StatelessWidget {
           ],
           if (actionable) ...[
             const SizedBox(height: AppSpacing.x2),
-            SizedBox(
+            VitCtaButton(
+              key: actionKey,
+              onPressed: onCancel,
+              variant: VitCtaButtonVariant.danger,
               height: VitDensity.compact.controlHeight,
-              child: OutlinedButton(
-                key: actionKey,
-                onPressed: onCancel,
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.sell,
-                  side: BorderSide(
-                    color: AppColors.sell.withValues(alpha: .55),
-                  ),
-                  backgroundColor: AppColors.sell.withValues(alpha: .10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.cardRadius,
-                  ),
-                ),
-                child: Text(
-                  'Hủy lệnh',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.sell,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
+              child: const Text('Hủy lệnh'),
             ),
           ],
         ],

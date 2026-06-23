@@ -88,10 +88,14 @@ class _FilterPanel extends StatelessWidget {
           ),
           if (merchantFilter != 'all' || paymentFilter.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.x3),
-            TextButton.icon(
+            VitCtaButton(
               onPressed: onClear,
-              icon: const Icon(Icons.close_rounded, size: AppSpacing.iconSm),
-              label: const Text('Xóa bộ lọc'),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+              leading: const Icon(Icons.close_rounded),
+              child: const Text('Xóa bộ lọc'),
             ),
           ],
         ],
@@ -357,32 +361,16 @@ class _ChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? AppColors.primary12 : AppColors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(
-          color: active ? AppColors.primary30 : AppColors.transparent,
-        ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
       ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.primary : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-              height: AppTextStyles.numericMicro.height,
-            ),
-          ),
-        ),
-      ),
+      accentColor: AppModuleAccents.p2p,
+      semanticLabel: 'P2P filter $label',
     );
   }
 }
@@ -400,27 +388,15 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.onAccent,
-              fontWeight: AppTextStyles.bold,
-              height: AppTextStyles.numericMicro.height,
-            ),
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: color == AppColors.buy
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.danger,
+      fullWidth: false,
+      height: AppSpacing.buttonCompact,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
+      child: Text(label),
     );
   }
 }

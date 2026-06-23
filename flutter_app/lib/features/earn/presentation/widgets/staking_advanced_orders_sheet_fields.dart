@@ -55,9 +55,12 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
               Expanded(
                 child: Text('Create Order', style: AppTextStyles.sectionTitle),
               ),
-              IconButton(
+              VitIconButton(
+                icon: Icons.close_rounded,
+                tooltip: 'Close',
                 onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.close_rounded, color: AppColors.text2),
+                variant: VitIconButtonVariant.transparent,
+                size: VitIconButtonSize.md,
               ),
             ],
           ),
@@ -169,36 +172,13 @@ class _TypeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: StakingAdvancedOrdersPage.typeKey(type),
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Ink(
-          height: AppSpacing.inputHeight,
-          decoration: ShapeDecoration(
-            color: selected ? AppColors.primary : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.inputRadius,
-              side: BorderSide(
-                color: selected ? AppColors.primarySoft : AppColors.borderSolid,
-              ),
-            ),
-          ),
-          child: Center(
-            child: Text(
-              _orderTypeLabel(type),
-              textAlign: TextAlign.center,
-              style: AppTextStyles.micro.copyWith(
-                color: selected ? AppColors.onAccent : AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: StakingAdvancedOrdersPage.typeKey(type),
+      label: _orderTypeLabel(type),
+      selected: selected,
+      onTap: onTap,
+      fullWidth: true,
+      height: AppSpacing.inputHeight,
     );
   }
 }

@@ -9,46 +9,39 @@ class _ComparisonHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: _dcaPortfolioHeroPadding,
+      padding: _dcaPortfolioCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Portfolio Comparison',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.portfolioTextMuted,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const Padding(padding: AppSpacing.dcaTopPaddingX2),
-                    Text(
-                      'Hiện tại vs Tối ưu',
-                      style: AppTextStyles.sectionTitle.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.heavy,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  'Hiện tại vs Tối ưu',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.heavy,
+                  ),
                 ),
               ),
               _ScoreBadge(score: snapshot.score),
             ],
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX4),
+          const Padding(padding: AppSpacing.dcaTopPaddingX1),
+          Text(
+            'So sánh danh mục · drift ${snapshot.driftPercent.toStringAsFixed(1)}%',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.portfolioTextMuted,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const Padding(padding: AppSpacing.dcaTopPaddingX3),
           _MetricStrip(snapshot: snapshot),
-          const Padding(padding: AppSpacing.dcaTopPaddingX4),
-          for (final allocation in snapshot.currentAllocations) ...[
-            _AllocationRow(allocation: allocation),
-            if (allocation != snapshot.currentAllocations.last)
-              const Padding(padding: AppSpacing.dcaTopPaddingX3),
-          ],
         ],
       ),
     );
@@ -138,7 +131,10 @@ class _MetricStrip extends StatelessWidget {
           for (final metric in metrics) ...[
             Expanded(
               child: Padding(
-                padding: AppSpacing.dcaMetricCellPadding,
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x2,
+                  vertical: AppSpacing.x2,
+                ),
                 child: Column(
                   children: [
                     Text(
@@ -170,6 +166,35 @@ class _MetricStrip extends StatelessWidget {
                 height: AppSpacing.x7,
                 child: ColoredBox(color: AppColors.border),
               ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _AllocationDeltaCard extends StatelessWidget {
+  const _AllocationDeltaCard({required this.snapshot});
+
+  final DcaPortfolioOptimizerSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: _dcaPortfolioCardPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _SectionTitle(
+            icon: Icons.swap_horiz_rounded,
+            title: 'Thay đổi phân bổ',
+            color: AppColors.accent,
+          ),
+          const Padding(padding: AppSpacing.dcaTopPaddingX3),
+          for (final allocation in snapshot.currentAllocations) ...[
+            _AllocationRow(allocation: allocation),
+            if (allocation != snapshot.currentAllocations.last)
+              const Padding(padding: AppSpacing.dcaTopPaddingX3),
           ],
         ],
       ),

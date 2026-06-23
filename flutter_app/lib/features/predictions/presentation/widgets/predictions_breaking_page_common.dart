@@ -115,31 +115,15 @@ class _EmailCta extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: _breakingSpace),
-              Material(
-                color: _emailPurple,
-                borderRadius: AppRadii.mdRadius,
+              VitCtaButton(
                 key: PredictionsBreakingPage.subscribeKey,
-                child: InkWell(
-                  onTap: onSubscribe,
-                  borderRadius: AppRadii.mdRadius,
-                  child: SizedBox(
-                    height: _breakingCtaHeight,
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.symmetric(
-                        horizontal: AppSpacing.x3,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Subscribe',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.onAccent,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                onPressed: onSubscribe,
+                fullWidth: false,
+                height: _breakingCtaHeight,
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x3,
                 ),
+                child: const Text('Subscribe'),
               ),
             ],
           ),

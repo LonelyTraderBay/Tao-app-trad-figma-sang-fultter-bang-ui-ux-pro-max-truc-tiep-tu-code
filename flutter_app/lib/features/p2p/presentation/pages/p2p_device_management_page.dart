@@ -12,7 +12,6 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -20,6 +19,26 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part '../widgets/p2p_device_management_overview.dart';
 part '../widgets/p2p_device_management_cards.dart';
 part '../widgets/p2p_device_management_tips.dart';
+
+const double _p2pDevicesVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pDevicesNativeNavClearance =
+    _p2pDevicesVisualNavClearance - AppSpacing.x4;
+const double _p2pDevicesVisualClearance = AppSpacing.x3;
+const double _p2pDevicesNativeClearance = AppSpacing.x2;
+const double _p2pDevicesSectionGap = AppSpacing.x3;
+const double _p2pDevicesTightGap = AppSpacing.x2;
+const double _p2pDevicesIconBox = AppSpacing.x6;
+const double _p2pDevicesBodyLineHeight = 1.35;
+const double _p2pDevicesNoticeLineHeight = 1.35;
+const EdgeInsets _p2pDevicesScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pDevicesCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pDevicesInnerPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PDeviceManagementPage extends ConsumerStatefulWidget {
   const P2PDeviceManagementPage({super.key, this.shellRenderMode});
@@ -58,10 +77,10 @@ class _P2PDeviceManagementPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pDeviceManagementProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pDevicesVisualNavClearance + _p2pDevicesVisualClearance
+            : _p2pDevicesNativeNavClearance + _p2pDevicesNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final trustedDevices = _devices
         .where((device) => device.isTrusted)
@@ -103,22 +122,20 @@ class _P2PDeviceManagementPageState
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: AppSpacing.p2pSecurityDetailsScrollPadding(
-                        bottomInset,
+                      padding: _p2pDevicesScrollPadding.copyWith(
+                        bottom: scrollEndPadding,
                       ),
-                      child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        fullBleed: true,
-                        customGap: 0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _DeviceStatsCard(
                             total: _devices.length,
                             trusted: trustedDevices.length,
                             untrusted: otherDevices.length,
                           ),
-                          const SizedBox(height: AppSpacing.x4),
+                          const SizedBox(height: _p2pDevicesSectionGap),
                           _TrustedDeviceNotice(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.x6),
+                          const SizedBox(height: _p2pDevicesSectionGap),
                           _DeviceSection(
                             key: P2PDeviceManagementPage.trustedSectionKey,
                             title:
@@ -130,7 +147,7 @@ class _P2PDeviceManagementPageState
                             onRevoke: _revokeTrust,
                             onRemove: _removeDevice,
                           ),
-                          const SizedBox(height: AppSpacing.x6),
+                          const SizedBox(height: _p2pDevicesSectionGap),
                           _DeviceSection(
                             key: P2PDeviceManagementPage.otherSectionKey,
                             title: 'Thiết bị khác (${otherDevices.length})',
@@ -141,12 +158,12 @@ class _P2PDeviceManagementPageState
                             onRevoke: _revokeTrust,
                             onRemove: _removeDevice,
                           ),
-                          const SizedBox(height: AppSpacing.x6),
+                          const SizedBox(height: _p2pDevicesSectionGap),
                           _SecurityTips(tips: snapshot.securityTips),
-                          const SizedBox(height: AppSpacing.x3),
+                          const SizedBox(height: _p2pDevicesTightGap),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: AppSpacing.p2pSecurityDetailsInnerPadding,
+                            padding: _p2pDevicesInnerPadding,
                             child: VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Trusted device review',

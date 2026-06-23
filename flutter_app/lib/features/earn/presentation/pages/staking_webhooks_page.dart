@@ -207,21 +207,13 @@ class _WebhookCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
-              Material(
-                color: AppColors.transparent,
-                child: InkWell(
-                  key: StakingWebhooksPage.webhookDeleteKey(webhook.id),
-                  borderRadius: AppRadii.smRadius,
-                  onTap: () {},
-                  child: const Padding(
-                    padding: AppSpacing.earnSmallPillPadding,
-                    child: Icon(
-                      Icons.delete_outline_rounded,
-                      color: AppColors.sell,
-                      size: AppSpacing.iconSm,
-                    ),
-                  ),
-                ),
+              VitIconButton(
+                key: StakingWebhooksPage.webhookDeleteKey(webhook.id),
+                icon: Icons.delete_outline_rounded,
+                tooltip: 'Delete webhook',
+                variant: VitIconButtonVariant.danger,
+                size: VitIconButtonSize.sm,
+                onPressed: () {},
               ),
             ],
           ),
@@ -290,24 +282,12 @@ class _EventChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = selected ? AppColors.primary15 : AppColors.surface2;
-    final fg = selected ? AppColors.primarySoft : AppColors.text3;
-    return Material(
-      color: bg,
-      borderRadius: AppRadii.smRadius,
-      child: InkWell(
-        borderRadius: AppRadii.smRadius,
-        onTap: onTap,
-        child: Padding(
-          padding: AppSpacing.earnSmallPillPadding,
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(color: fg),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      padding: AppSpacing.earnSmallPillPadding,
+      semanticLabel: 'Webhook event $label',
     );
   }
 }

@@ -37,23 +37,13 @@ class _WatchlistToolbar extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
-                    Material(
-                      color: _marketPrimary,
-                      shape: const CircleBorder(),
-                      child: InkWell(
-                        key: WatchlistPage.addPairKey,
-                        onTap: onAddPair,
-                        customBorder: const CircleBorder(),
-                        child: SizedBox(
-                          width: VitDensity.compact.controlHeight,
-                          height: VitDensity.compact.controlHeight,
-                          child: const Icon(
-                            Icons.add_rounded,
-                            color: AppColors.onAccent,
-                            size: AppSpacing.iconMd,
-                          ),
-                        ),
-                      ),
+                    VitIconButton(
+                      key: WatchlistPage.addPairKey,
+                      icon: Icons.add_rounded,
+                      tooltip: 'ThÃªm cáº·p theo dÃµi',
+                      onPressed: onAddPair,
+                      variant: VitIconButtonVariant.primary,
+                      size: VitIconButtonSize.md,
                     ),
                   ],
                 ),

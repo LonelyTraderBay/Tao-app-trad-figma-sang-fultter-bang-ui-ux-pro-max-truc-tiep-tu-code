@@ -244,25 +244,25 @@ class _AlertCard extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
+          VitIconButton(
             key: LaunchpadGasTrackerPage.alertToggleKey(alert.id),
             onPressed: onToggle,
-            icon: Icon(
-              alert.enabled
-                  ? Icons.notifications_active_outlined
-                  : Icons.notifications_off_outlined,
-              color: alert.enabled ? AppColors.buy : AppColors.text3,
-              size: AppSpacing.launchpadIcon2xl,
-            ),
+            icon: alert.enabled
+                ? Icons.notifications_active_outlined
+                : Icons.notifications_off_outlined,
+            tooltip: alert.enabled ? 'Tat canh bao gas' : 'Bat canh bao gas',
+            variant: alert.enabled
+                ? VitIconButtonVariant.success
+                : VitIconButtonVariant.transparent,
+            size: VitIconButtonSize.sm,
           ),
-          IconButton(
+          VitIconButton(
             key: LaunchpadGasTrackerPage.alertDeleteKey(alert.id),
             onPressed: onDelete,
-            icon: const Icon(
-              Icons.delete_outline_rounded,
-              color: AppColors.sell,
-              size: AppSpacing.launchpadIconXl + AppSpacing.hairlineStroke,
-            ),
+            icon: Icons.delete_outline_rounded,
+            tooltip: 'Xoa canh bao gas',
+            variant: VitIconButtonVariant.danger,
+            size: VitIconButtonSize.sm,
           ),
         ],
       ),
@@ -359,13 +359,13 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                             ),
                           ),
                         ),
-                        IconButton(
+                        VitIconButton(
                           key: LaunchpadGasTrackerPage.addCloseKey,
                           onPressed: widget.onClose,
-                          icon: const Icon(
-                            Icons.close_rounded,
-                            color: AppColors.text3,
-                          ),
+                          icon: Icons.close_rounded,
+                          tooltip: 'Dong them canh bao gas',
+                          variant: VitIconButtonVariant.transparent,
+                          size: VitIconButtonSize.md,
                         ),
                       ],
                     ),

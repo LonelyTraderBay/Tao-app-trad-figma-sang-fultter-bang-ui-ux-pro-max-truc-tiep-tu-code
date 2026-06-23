@@ -89,42 +89,30 @@ class _TrendingChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: UnifiedSearchPage.trendingQueryKey(query.label),
       onTap: onTap,
-      borderRadius: AppRadii.lgRadius,
-      child: SizedBox(
-        height: AppSpacing.buttonCompact,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(color: AppColors.borderSolid),
-              borderRadius: AppRadii.lgRadius,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.borderSolid,
+      padding: AppSpacing.discoveryChipHorizontalPadding,
+      height: AppSpacing.buttonCompact,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            _iconForKey(query.iconKey),
+            color: _accentForKey(query.iconKey),
+            size: 13,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Text(
+            query.label,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.medium,
             ),
           ),
-          child: Padding(
-            padding: AppSpacing.discoveryChipHorizontalPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  _iconForKey(query.iconKey),
-                  color: _accentForKey(query.iconKey),
-                  size: 13,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  query.label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        ],
       ),
     );
   }

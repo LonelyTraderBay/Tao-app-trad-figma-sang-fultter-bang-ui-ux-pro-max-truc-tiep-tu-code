@@ -26,145 +26,142 @@ class _ExportSheet extends StatelessWidget {
       color: AppColors.dynamicIslandBg.withValues(alpha: .72),
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: GestureDetector(
-          onTap: () {},
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: AppSpacing.launchpadSheetMaxWidth,
-            ),
-            child: SizedBox(
-              width: double.infinity,
-              child: DecoratedBox(
-                decoration: const ShapeDecoration(
-                  color: AppColors.surface,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.cardLargeRadius,
-                  ),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: AppSpacing.launchpadSheetMaxWidth,
+          ),
+          child: SizedBox(
+            width: double.infinity,
+            child: DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.surface,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.cardLargeRadius,
                 ),
-                child: Padding(
-                  padding: AppSpacing.launchpadConfirmSheetPadding,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Center(
-                        child: SizedBox(
-                          width: AppSpacing.launchpadBox44,
-                          height: AppSpacing.x1,
-                          child: DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color: AppColors.borderSolid,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: AppRadii.xlRadius,
-                              ),
+              ),
+              child: Padding(
+                padding: AppSpacing.launchpadConfirmSheetPadding,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Center(
+                      child: SizedBox(
+                        width: AppSpacing.launchpadBox44,
+                        height: AppSpacing.x1,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
+                            color: AppColors.borderSolid,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadii.xlRadius,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x4),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Export Event Log',
-                              style: AppTextStyles.base.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.extraBold,
-                              ),
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Export Event Log',
+                            style: AppTextStyles.base.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.extraBold,
                             ),
                           ),
-                          IconButton(
-                            onPressed: onClose,
-                            icon: const Icon(
-                              Icons.close_rounded,
+                        ),
+                        VitIconButton(
+                          onPressed: onClose,
+                          icon: Icons.close_rounded,
+                          tooltip: 'Dong export event log',
+                          variant: VitIconButtonVariant.transparent,
+                          size: VitIconButtonSize.md,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
+                    Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            '$count',
+                            style: AppTextStyles.pageTitle.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.heavy,
+                              fontFeatures: const [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            'events se duoc export',
+                            style: AppTextStyles.caption.copyWith(
                               color: AppColors.text3,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.x3),
-                      Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              '$count',
-                              style: AppTextStyles.pageTitle.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.heavy,
-                                fontFeatures: const [
-                                  FontFeature.tabularFigures(),
-                                ],
-                              ),
-                            ),
-                            Text(
-                              'events se duoc export',
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text3,
-                              ),
-                            ),
-                          ],
-                        ),
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    Text(
+                      'Dinh dang',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
                       ),
-                      const SizedBox(height: AppSpacing.x4),
-                      Text(
-                        'Dinh dang',
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    Row(
+                      children: [
+                        for (final format in formats) ...[
+                          Expanded(
+                            child: _ExportFormatTile(
+                              key: LaunchpadEventLogPage.formatKey(
+                                format.value,
+                              ),
+                              format: format,
+                              active: activeFormat == format.value,
+                              onTap: () => onFormatChanged(format.value),
+                            ),
+                          ),
+                          if (format != formats.last)
+                            const SizedBox(width: AppSpacing.x2),
+                        ],
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    VitCard(
+                      variant: VitCardVariant.inner,
+                      padding: AppSpacing.launchpadPaddingX3,
+                      child: Text(
+                        _previewFor(activeFormat, count),
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
+                          height: AppSpacing.launchpadLineHeightShort,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
-                      Row(
-                        children: [
-                          for (final format in formats) ...[
-                            Expanded(
-                              child: _ExportFormatTile(
-                                key: LaunchpadEventLogPage.formatKey(
-                                  format.value,
-                                ),
-                                format: format,
-                                active: activeFormat == format.value,
-                                onTap: () => onFormatChanged(format.value),
-                              ),
-                            ),
-                            if (format != formats.last)
-                              const SizedBox(width: AppSpacing.x2),
-                          ],
-                        ],
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    VitCtaButton(
+                      key: LaunchpadEventLogPage.copyButtonKey,
+                      onPressed: onCopy,
+                      variant: copied
+                          ? VitCtaButtonVariant.success
+                          : VitCtaButtonVariant.primary,
+                      leading: Icon(
+                        copied ? Icons.check_rounded : Icons.copy_rounded,
+                        color: AppColors.onAccent,
+                        size: AppSpacing.launchpadIcon2xl,
                       ),
-                      const SizedBox(height: AppSpacing.x4),
-                      VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.launchpadPaddingX3,
-                        child: Text(
-                          _previewFor(activeFormat, count),
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                            height: AppSpacing.launchpadLineHeightShort,
-                          ),
-                        ),
+                      child: Text(
+                        copied
+                            ? 'Da copy vao clipboard'
+                            : 'Copy $count events (${activeFormat.toUpperCase()})',
                       ),
-                      const SizedBox(height: AppSpacing.x4),
-                      VitCtaButton(
-                        key: LaunchpadEventLogPage.copyButtonKey,
-                        onPressed: onCopy,
-                        variant: copied
-                            ? VitCtaButtonVariant.success
-                            : VitCtaButtonVariant.primary,
-                        leading: Icon(
-                          copied ? Icons.check_rounded : Icons.copy_rounded,
-                          color: AppColors.onAccent,
-                          size: AppSpacing.launchpadIcon2xl,
-                        ),
-                        child: Text(
-                          copied
-                              ? 'Da copy vao clipboard'
-                              : 'Copy $count events (${activeFormat.toUpperCase()})',
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -199,41 +196,30 @@ class _ExportFormatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = active ? AppModuleAccents.launchpad : AppColors.text3;
-    return InkWell(
-      borderRadius: AppRadii.inputRadius,
+    return VitCard(
       onTap: onTap,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? AppColors.primary12 : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: active ? AppColors.primary30 : AppColors.cardBorder,
+      variant: active ? VitCardVariant.inner : VitCardVariant.standard,
+      radius: VitCardRadius.sm,
+      borderColor: active ? AppColors.primary30 : AppColors.cardBorder,
+      padding: AppSpacing.launchpadMetricCardPadding,
+      child: Column(
+        children: [
+          Icon(
+            _formatIcon(format.iconKey),
+            color: color,
+            size: AppSpacing.launchpadIcon3xl,
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            format.label,
+            style: AppTextStyles.caption.copyWith(
+              color: color,
+              fontWeight: active
+                  ? AppTextStyles.extraBold
+                  : AppTextStyles.medium,
             ),
-            borderRadius: AppRadii.inputRadius,
           ),
-        ),
-        child: Padding(
-          padding: AppSpacing.launchpadMetricCardPadding,
-          child: Column(
-            children: [
-              Icon(
-                _formatIcon(format.iconKey),
-                color: color,
-                size: AppSpacing.launchpadIcon3xl,
-              ),
-              const SizedBox(height: AppSpacing.x2),
-              Text(
-                format.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: active
-                      ? AppTextStyles.extraBold
-                      : AppTextStyles.medium,
-                ),
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

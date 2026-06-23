@@ -38,52 +38,42 @@ class _FunnelSelector extends StatelessWidget {
               button: true,
               selected: selected,
               label: '${funnel.name} funnel selector',
-              child: GestureDetector(
+              child: VitCard(
                 key: FunnelDashboard.selectorKey(funnel.id),
-                behavior: HitTestBehavior.opaque,
                 onTap: () => onChanged(funnel.id),
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: selected ? AppColors.surface : AppColors.surface2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.inputRadius,
-                      side: BorderSide(
-                        color: selected
-                            ? AppColors.accent
-                            : AppColors.transparent,
-                        width: selected ? 2 : 1,
+                padding: AppSpacing.adminCardPadding,
+                borderColor: selected
+                    ? AppColors.accent
+                    : AppColors.transparent,
+                background: ColoredBox(
+                  color: selected ? AppColors.surface : AppColors.surface2,
+                ),
+                clip: true,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      funnel.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                        height: AppSpacing.adminLineHeightShort,
                       ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: AppSpacing.adminCardPadding,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          funnel.name,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.adminLineHeightShort,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x1),
-                        Text(
-                          funnel.stepCountLabel,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                            height: AppSpacing.adminLineHeightShort,
-                          ),
-                        ),
-                      ],
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      funnel.stepCountLabel,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        height: AppSpacing.adminLineHeightShort,
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             );

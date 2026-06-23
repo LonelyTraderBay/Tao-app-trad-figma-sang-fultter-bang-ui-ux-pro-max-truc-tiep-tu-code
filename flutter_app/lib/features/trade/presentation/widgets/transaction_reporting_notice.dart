@@ -95,11 +95,13 @@ class TransactionReportingNoticePanel extends StatelessWidget {
                   ),
                 ),
               ),
-              IconButton(
-                visualDensity: VisualDensity.compact,
+              VitInlineIconAction(
+                icon: Icons.close_rounded,
+                tooltip: 'Dismiss notice',
                 onPressed: onClose,
-                icon: const Icon(Icons.close_rounded, size: 18),
                 color: AppColors.text3,
+                size: 18,
+                padding: AppSpacing.x1,
               ),
             ],
           ),

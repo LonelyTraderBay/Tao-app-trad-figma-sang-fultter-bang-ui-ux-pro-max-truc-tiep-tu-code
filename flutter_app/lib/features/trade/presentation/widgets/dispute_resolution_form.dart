@@ -8,9 +8,11 @@ class _FileComplaintTab extends StatelessWidget {
     required this.subjectController,
     required this.descriptionController,
     required this.evidenceAttached,
+    required this.canSubmit,
     required this.onTypeChanged,
     required this.onProviderChanged,
     required this.onUpload,
+    required this.onSubmit,
   });
 
   final TradeDisputeResolutionSnapshot snapshot;
@@ -19,9 +21,11 @@ class _FileComplaintTab extends StatelessWidget {
   final TextEditingController subjectController;
   final TextEditingController descriptionController;
   final bool evidenceAttached;
+  final bool canSubmit;
   final ValueChanged<String> onTypeChanged;
   final ValueChanged<String?> onProviderChanged;
   final VoidCallback onUpload;
+  final VoidCallback onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +96,8 @@ class _FileComplaintTab extends StatelessWidget {
             onPressed: onUpload,
           ),
         ),
+        const SizedBox(height: AppSpacing.x2),
+        _SubmitButton(enabled: canSubmit, onPressed: onSubmit),
       ],
     );
   }

@@ -21,6 +21,19 @@ part '../widgets/p2p_login_history_summary_filters.dart';
 part '../widgets/p2p_login_history_events.dart';
 part '../widgets/p2p_login_history_common.dart';
 
+const double _p2pLoginHistoryVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pLoginHistoryNativeNavClearance =
+    _p2pLoginHistoryVisualNavClearance - AppSpacing.x4;
+const double _p2pLoginHistoryVisualClearance = AppSpacing.x3;
+const double _p2pLoginHistoryNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pLoginHistoryScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
+
 class P2PLoginHistoryPage extends ConsumerStatefulWidget {
   const P2PLoginHistoryPage({super.key, this.shellRenderMode});
 
@@ -51,10 +64,12 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pLoginHistoryProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x4
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+            ? _p2pLoginHistoryVisualNavClearance +
+                  _p2pLoginHistoryVisualClearance
+            : _p2pLoginHistoryNativeNavClearance +
+                  _p2pLoginHistoryNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final filteredEvents = snapshot.events
         .where((event) {
@@ -104,8 +119,8 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: AppSpacing.p2pLoginHistoryScrollPadding(
-                        bottomInset,
+                      padding: _p2pLoginHistoryScrollPadding.copyWith(
+                        bottom: scrollEndPadding,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

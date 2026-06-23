@@ -16,7 +16,7 @@ class _LimitsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaScheduleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -27,7 +27,7 @@ class _LimitsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _SliderField(
             key: DCAScheduleConfig.maxDelayKey,
             label: 'Trễ tối đa',
@@ -40,7 +40,7 @@ class _LimitsCard extends StatelessWidget {
             divisions: 23,
             onChanged: onDelayChanged,
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x4),
           _SliderField(
             key: DCAScheduleConfig.maxAdvanceKey,
             label: 'Sớm tối đa',
@@ -90,7 +90,7 @@ class _ThresholdCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaScheduleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -111,7 +111,7 @@ class _ThresholdCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _SliderField(
             label: label,
             valueLabel: valueLabel,
@@ -194,6 +194,8 @@ class _SliderField extends StatelessWidget {
         ),
         Text(
           helper,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
@@ -210,7 +212,7 @@ class _EnableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaScheduleCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -254,7 +256,7 @@ class _FixedWarningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaScheduleCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class MarketSectorControls extends StatelessWidget {
   const MarketSectorControls({
@@ -86,39 +86,24 @@ class _ChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shape = RoundedRectangleBorder(
-      borderRadius: AppRadii.pillRadius,
-      side: BorderSide(
-        color: active
-            ? marketSectorPrimary.withValues(alpha: 0.38)
-            : AppColors.borderSolid,
-      ),
-    );
-
-    return Material(
-      color: active
-          ? marketSectorPrimary.withValues(alpha: 0.16)
-          : AppColors.surface2,
-      shape: shape,
-      child: InkWell(
-        onTap: onTap,
-        customBorder: shape,
-        child: SizedBox(
-          height: AppSpacing.marketSectorControlHeight,
-          child: Padding(
-            padding: AppSpacing.marketSectorControlChipPadding,
-            child: Center(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? marketSectorPrimary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.marketSectorLineHeightTight,
-                ),
-              ),
-            ),
+    return VitCard(
+      variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: active
+          ? marketSectorPrimary.withValues(alpha: 0.38)
+          : AppColors.borderSolid,
+      height: AppSpacing.marketSectorControlHeight,
+      padding: AppSpacing.marketSectorControlChipPadding,
+      onTap: onTap,
+      child: Center(
+        child: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(
+            color: active ? marketSectorPrimary : AppColors.text2,
+            fontWeight: AppTextStyles.bold,
+            height: AppSpacing.marketSectorLineHeightTight,
           ),
         ),
       ),

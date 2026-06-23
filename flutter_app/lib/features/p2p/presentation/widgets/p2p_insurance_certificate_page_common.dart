@@ -11,7 +11,7 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pDocumentCardPadding,
+      padding: _p2pInsuranceCardPadding,
       child: Row(
         children: [
           const Icon(
@@ -45,7 +45,7 @@ class _DisclosureCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pDocumentCardPadding,
+      padding: _p2pInsuranceCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,7 +60,7 @@ class _DisclosureCard extends StatelessWidget {
               snapshot.disclosure,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.p2pDocumentBodyLineHeight,
+                height: _p2pInsuranceBodyLineHeight,
               ),
             ),
           ),
@@ -76,7 +76,7 @@ class _CertificateInfoRow extends StatelessWidget {
     required this.label,
     required this.value,
     this.valueColor = AppColors.text1,
-    this.bottomGap = AppSpacing.x4,
+    this.bottomGap = _p2pInsuranceSectionGap,
   });
 
   final IconData icon;
@@ -88,7 +88,7 @@ class _CertificateInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pDocumentInfoRowPadding(bottomGap),
+      padding: EdgeInsets.only(bottom: bottomGap),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -130,7 +130,7 @@ class _CoverageLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pDocumentBulletTopPadding,
+      padding: _p2pInsuranceBulletTopPadding,
       child: Row(
         children: [
           Expanded(

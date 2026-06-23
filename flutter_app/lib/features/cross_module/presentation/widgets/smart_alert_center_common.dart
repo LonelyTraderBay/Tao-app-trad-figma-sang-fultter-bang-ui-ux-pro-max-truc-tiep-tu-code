@@ -68,21 +68,21 @@ class _SmallIconAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: SizedBox(
-        width: AppSpacing.x6,
-        height: AppSpacing.x6,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: background,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-          child: Icon(icon, color: color, size: AppSpacing.iconSm),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      width: AppSpacing.x6,
+      height: AppSpacing.x6,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: background,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
+        child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),
     );
   }

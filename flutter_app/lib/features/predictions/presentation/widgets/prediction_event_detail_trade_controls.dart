@@ -67,30 +67,14 @@ class _SegmentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? color.withValues(alpha: .12) : AppColors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
-        side: BorderSide(
-          color: active ? color.withValues(alpha: .28) : AppColors.transparent,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? color : AppColors.text3,
-                fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: color,
+      fullWidth: true,
+      height: VitDensity.compact.controlHeight,
+      padding: AppSpacing.zeroInsets,
     );
   }
 }
@@ -110,28 +94,12 @@ class _SmallToggleChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? color.withValues(alpha: .12) : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.smRadius,
-        side: BorderSide(
-          color: active ? color.withValues(alpha: .32) : AppColors.transparent,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: Padding(
-          padding: AppSpacing.predictionDetailToggleChipPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: active ? color : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: color,
+      padding: AppSpacing.predictionDetailToggleChipPadding,
     );
   }
 }
@@ -149,34 +117,14 @@ class _AmountChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _predictionPrimary.withValues(alpha: .14)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.smRadius,
-        side: BorderSide(
-          color: active
-              ? _predictionPrimary.withValues(alpha: .32)
-              : AppColors.transparent,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Center(
-            child: Text(
-              '\$$amount',
-              style: AppTextStyles.micro.copyWith(
-                color: active ? _predictionPrimary : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: '\$$amount',
+      selected: active,
+      onTap: onTap,
+      accentColor: _predictionPrimary,
+      fullWidth: true,
+      height: VitDensity.compact.controlHeight,
+      padding: AppSpacing.zeroInsets,
     );
   }
 }
@@ -188,10 +136,11 @@ class _RiskLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: PredictionEventDetailPage.riskLinkKey,
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
       child: SizedBox(
         height: VitDensity.compact.controlHeight,
         child: Center(

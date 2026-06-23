@@ -49,30 +49,14 @@ class _PeriodSelector extends StatelessWidget {
       children: [
         for (final period in periods)
           Expanded(
-            child: Material(
+            child: VitChoicePill(
               key: PortfolioAnalyticsPage.periodKey(period),
-              color: active == period
-                  ? _analyticsPrimary.withValues(alpha: .20)
-                  : AppColors.transparent,
-              borderRadius: AppRadii.inputRadius,
-              child: InkWell(
-                onTap: () => onChanged(period),
-                borderRadius: AppRadii.inputRadius,
-                child: SizedBox(
-                  height: VitDensity.compact.controlHeight,
-                  child: Center(
-                    child: Text(
-                      period,
-                      style: AppTextStyles.caption.copyWith(
-                        color: active == period
-                            ? _analyticsPrimary
-                            : AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              label: period,
+              selected: active == period,
+              onTap: () => onChanged(period),
+              fullWidth: true,
+              height: VitDensity.compact.controlHeight,
+              accentColor: _analyticsPrimary,
             ),
           ),
       ],

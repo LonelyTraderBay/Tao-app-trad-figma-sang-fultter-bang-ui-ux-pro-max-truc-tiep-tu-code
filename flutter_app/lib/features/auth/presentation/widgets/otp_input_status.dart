@@ -165,17 +165,14 @@ class _ResendControl extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.x3),
         if (canResend)
-          TextButton(
+          VitCard(
             key: OTPPage.resendKey,
-            onPressed: onResend,
-            style: TextButton.styleFrom(
-              foregroundColor: _authPrimary,
-              padding: AppSpacing.zeroInsets,
-              minimumSize: const Size(
-                AppSpacing.zero,
-                AppSpacing.authTextButtonHeight,
-              ),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            onTap: onResend,
+            variant: VitCardVariant.ghost,
+            borderColor: AppColors.transparent,
+            padding: AppSpacing.zeroInsets,
+            constraints: const BoxConstraints(
+              minHeight: AppSpacing.authTextButtonHeight,
             ),
             child: Text(
               'Gửi lại mã OTP',

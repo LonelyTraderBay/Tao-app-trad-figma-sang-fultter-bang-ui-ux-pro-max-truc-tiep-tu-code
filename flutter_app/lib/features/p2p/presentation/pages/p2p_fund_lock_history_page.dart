@@ -10,10 +10,22 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pFundLockVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pFundLockNativeNavClearance =
+    _p2pFundLockVisualNavClearance - AppSpacing.x4;
+const double _p2pFundLockVisualClearance = AppSpacing.x3;
+const double _p2pFundLockNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pFundLockScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
 
 class P2PFundLockHistoryPage extends ConsumerWidget {
   const P2PFundLockHistoryPage({
@@ -34,10 +46,10 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pFundLockHistoryProvider(walletHistoryAlias));
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pFundLockVisualNavClearance + _p2pFundLockVisualClearance
+            : _p2pFundLockNativeNavClearance + _p2pFundLockNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -64,16 +76,14 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pFinancialSafetyScrollPadding(
-                      bottomInset,
+                    padding: _p2pFundLockScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _FundLockHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _FundLockList(records: snapshot.records),
                         const SizedBox(height: AppSpacing.x3),
                         const VitCard(
@@ -132,7 +142,7 @@ class _FundLockHero extends StatelessWidget {
               size: AppSpacing.iconMd,
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

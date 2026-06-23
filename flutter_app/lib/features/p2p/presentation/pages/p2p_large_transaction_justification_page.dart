@@ -5,17 +5,28 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pLargeTxVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pLargeTxNativeNavClearance =
+    _p2pLargeTxVisualNavClearance - AppSpacing.x4;
+const double _p2pLargeTxVisualClearance = AppSpacing.x3;
+const double _p2pLargeTxNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pLargeTxScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
 
 class P2PLargeTransactionJustificationPage extends ConsumerStatefulWidget {
   const P2PLargeTransactionJustificationPage({
@@ -63,10 +74,10 @@ class _P2PLargeTransactionJustificationPageState
       p2pLargeTransactionJustificationProvider(widget.amount),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pLargeTxVisualNavClearance + _p2pLargeTxVisualClearance
+            : _p2pLargeTxNativeNavClearance + _p2pLargeTxNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final needsCustomPurpose = _purpose == _otherPurposeLabel;
     final hasPurpose =
@@ -97,16 +108,14 @@ class _P2PLargeTransactionJustificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pFinancialSafetyScrollPadding(
-                      bottomInset,
+                    padding: _p2pLargeTxScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _LargeTransactionHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         Text(
                           snapshot.purposeTitle,
                           style: AppTextStyles.baseMedium.copyWith(
@@ -123,7 +132,7 @@ class _P2PLargeTransactionJustificationPageState
                           },
                         ),
                         if (needsCustomPurpose) ...[
-                          const SizedBox(height: AppSpacing.x5),
+                          const SizedBox(height: AppSpacing.x3),
                           VitInput(
                             controller: _customPurposeController,
                             fieldKey: P2PLargeTransactionJustificationPage
@@ -134,7 +143,7 @@ class _P2PLargeTransactionJustificationPageState
                             onChanged: (_) => setState(() {}),
                           ),
                         ],
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         VitInput(
                           controller: _detailsController,
                           fieldKey: P2PLargeTransactionJustificationPage
@@ -144,7 +153,7 @@ class _P2PLargeTransactionJustificationPageState
                           textInputAction: TextInputAction.done,
                           onChanged: (_) => setState(() {}),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         VitCtaButton(
                           key: P2PLargeTransactionJustificationPage.ctaKey,
                           onPressed: canSubmit
@@ -275,31 +284,28 @@ class _PurposeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCard(
       key: P2PLargeTransactionJustificationPage.purposeKey(purpose),
-      color: selected
-          ? AppModuleAccents.p2p.withValues(alpha: .10)
-          : AppColors.bg,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: VitCard(
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
-          borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
-          constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-          alignment: Alignment.centerLeft,
-          padding: AppSpacing.p2pFinancialSafetyTilePadding,
-          child: Text(
-            purpose,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppModuleAccents.p2p : AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
+      background: ColoredBox(
+        color: selected
+            ? AppModuleAccents.p2p.withValues(alpha: .10)
+            : AppColors.bg,
+      ),
+      clip: true,
+      constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
+      alignment: Alignment.centerLeft,
+      padding: AppSpacing.p2pFinancialSafetyTilePadding,
+      child: Text(
+        purpose,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.caption.copyWith(
+          color: selected ? AppModuleAccents.p2p : AppColors.text1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

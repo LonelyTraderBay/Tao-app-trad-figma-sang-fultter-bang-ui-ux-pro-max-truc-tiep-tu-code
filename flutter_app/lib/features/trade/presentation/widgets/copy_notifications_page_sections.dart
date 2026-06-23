@@ -33,15 +33,19 @@ class _UnreadSummary extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
+          VitCtaButton(
             key: CopyNotificationsPage.markAllReadKey,
-            onTap: onMarkAllRead,
+            onPressed: onMarkAllRead,
+            variant: VitCtaButtonVariant.ghost,
+            height: AppSpacing.buttonCompact,
+            fullWidth: false,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x2,
+            ),
             child: Text(
               'Đánh dấu tất cả đã đọc',
               style: AppTextStyles.caption.copyWith(
                 color: _notificationPrimary,
-                decoration: TextDecoration.underline,
-                decorationColor: _notificationPrimary,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

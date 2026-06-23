@@ -8,7 +8,7 @@ class _EmptyMyAds extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMerchantCommerceLargePadding,
+      padding: _p2pMyAdsLargePadding,
       child: Column(
         children: [
           const Icon(
@@ -16,12 +16,12 @@ class _EmptyMyAds extends StatelessWidget {
             color: AppColors.text3,
             size: AppSpacing.iconLg,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pMyAdsSectionGap),
           Text(
             snapshot.emptyTitle,
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pMyAdsMajorGap),
           VitCtaButton(
             onPressed: () => context.go(AppRoutePaths.p2pCreate),
             variant: VitCtaButtonVariant.primary,
@@ -41,7 +41,7 @@ class _QuickLinksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: _p2pMyAdsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,11 +53,14 @@ class _QuickLinksCard extends StatelessWidget {
               letterSpacing: .5,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pMyAdsSectionGap),
           for (var i = 0; i < links.length; i++) ...[
             _QuickLinkTile(link: links[i]),
             if (i < links.length - 1)
-              const Divider(color: AppColors.divider, height: AppSpacing.x4),
+              const Divider(
+                color: AppColors.divider,
+                height: _p2pMyAdsMajorGap,
+              ),
           ],
         ],
       ),
@@ -84,57 +87,51 @@ class _QuickLinkTile extends StatelessWidget {
       _ => AppColors.text2,
     };
 
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        key: P2PMyAdsPage.quickLinkKey(link.id),
-        onTap: () => context.go(link.route),
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pMerchantCommerceQuickLinkPadding,
-          child: Row(
-            children: [
-              VitCard(
-                width: AppSpacing.p2pMerchantCommerceQuickLinkIconBox,
-                height: AppSpacing.p2pMerchantCommerceQuickLinkIconBox,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
-                background: ColoredBox(color: color.withValues(alpha: .10)),
-                clip: true,
-                child: Icon(icon, color: color, size: AppSpacing.iconSm),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      link.title,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      link.subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-            ],
+    return VitCard(
+      key: P2PMyAdsPage.quickLinkKey(link.id),
+      onTap: () => context.go(link.route),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: _p2pMyAdsQuickLinkPadding,
+      child: Row(
+        children: [
+          VitCard(
+            width: _p2pMyAdsQuickIconBox,
+            height: _p2pMyAdsQuickIconBox,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            background: ColoredBox(color: color.withValues(alpha: .10)),
+            clip: true,
+            child: Icon(icon, color: color, size: AppSpacing.iconSm),
           ),
-        ),
+          const SizedBox(width: _p2pMyAdsMajorGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  link.title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  link.subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+        ],
       ),
     );
   }

@@ -150,23 +150,12 @@ class _PhaseChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary : AppColors.surface2,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: Padding(
-          padding: AppSpacing.devWideChipPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.navCenterIcon : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      accentColor: AppColors.primary,
+      padding: AppSpacing.devWideChipPadding,
     );
   }
 }

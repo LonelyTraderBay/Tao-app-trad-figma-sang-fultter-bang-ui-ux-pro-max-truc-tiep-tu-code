@@ -112,18 +112,17 @@ class _OwnersSection extends StatelessWidget {
                       ],
                     ),
                   ),
-                  IconButton(
+                  VitIconButton(
                     key: LaunchpadMultisigPage.copyKey('owner', owner.label),
                     onPressed: () => onCopy(owner.address, owner.label),
-                    icon: Icon(
-                      copiedField == owner.label
-                          ? Icons.check_rounded
-                          : Icons.copy_rounded,
-                      color: copiedField == owner.label
-                          ? AppColors.buy
-                          : AppColors.text3,
-                      size: AppSpacing.launchpadIconXl,
-                    ),
+                    icon: copiedField == owner.label
+                        ? Icons.check_rounded
+                        : Icons.copy_rounded,
+                    tooltip: 'Copy dia chi ${owner.label}',
+                    variant: copiedField == owner.label
+                        ? VitIconButtonVariant.success
+                        : VitIconButtonVariant.transparent,
+                    size: VitIconButtonSize.sm,
                   ),
                 ],
               ),
@@ -170,76 +169,75 @@ class _TxCard extends StatelessWidget {
                   child: ColoredBox(color: status.color),
                 ),
                 Expanded(
-                  child: InkWell(
+                  child: VitCard(
                     key: LaunchpadMultisigPage.txToggleKey(tx.id),
+                    variant: VitCardVariant.ghost,
+                    radius: VitCardRadius.sm,
+                    padding: AppSpacing.launchpadPaddingX3,
                     onTap: onToggle,
-                    child: Padding(
-                      padding: AppSpacing.launchpadPaddingX3,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _IconBubble(
-                            icon: status.icon,
-                            color: status.color,
-                            size: AppSpacing.launchpadIcon7xl,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _IconBubble(
+                          icon: status.icon,
+                          color: status.color,
+                          size: AppSpacing.launchpadIcon7xl,
+                        ),
+                        const SizedBox(width: AppSpacing.x3),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                spacing: AppSpacing.x2,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  Text(
+                                    tx.label,
+                                    style: AppTextStyles.caption.copyWith(
+                                      color: AppColors.text1,
+                                      fontWeight: AppTextStyles.bold,
+                                    ),
+                                  ),
+                                  _MiniPill(
+                                    label: status.label,
+                                    color: status.color,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: AppSpacing.x1),
+                              Row(
+                                children: [
+                                  Text(
+                                    '${tx.signedCount}/${tx.threshold} signed',
+                                    style: AppTextStyles.numericMicro.copyWith(
+                                      color: AppColors.text3,
+                                    ),
+                                  ),
+                                  const SizedBox(width: AppSpacing.x2),
+                                  _MiniPill(label: tx.chain, color: tx.accent),
+                                  const SizedBox(width: AppSpacing.x2),
+                                  Text(
+                                    '#${tx.nonce}',
+                                    style: AppTextStyles.numericMicro.copyWith(
+                                      color: AppColors.text3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: AppSpacing.x2),
+                              _SignatureProgress(tx: tx),
+                            ],
                           ),
-                          const SizedBox(width: AppSpacing.x3),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Wrap(
-                                  spacing: AppSpacing.x2,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    Text(
-                                      tx.label,
-                                      style: AppTextStyles.caption.copyWith(
-                                        color: AppColors.text1,
-                                        fontWeight: AppTextStyles.bold,
-                                      ),
-                                    ),
-                                    _MiniPill(
-                                      label: status.label,
-                                      color: status.color,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: AppSpacing.x1),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '${tx.signedCount}/${tx.threshold} signed',
-                                      style: AppTextStyles.numericMicro
-                                          .copyWith(color: AppColors.text3),
-                                    ),
-                                    const SizedBox(width: AppSpacing.x2),
-                                    _MiniPill(
-                                      label: tx.chain,
-                                      color: tx.accent,
-                                    ),
-                                    const SizedBox(width: AppSpacing.x2),
-                                    Text(
-                                      '#${tx.nonce}',
-                                      style: AppTextStyles.numericMicro
-                                          .copyWith(color: AppColors.text3),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: AppSpacing.x2),
-                                _SignatureProgress(tx: tx),
-                              ],
-                            ),
-                          ),
-                          Icon(
-                            expanded
-                                ? Icons.keyboard_arrow_up_rounded
-                                : Icons.keyboard_arrow_down_rounded,
-                            color: AppColors.text3,
-                            size: AppSpacing.launchpadIcon2xl,
-                          ),
-                        ],
-                      ),
+                        ),
+                        Icon(
+                          expanded
+                              ? Icons.keyboard_arrow_up_rounded
+                              : Icons.keyboard_arrow_down_rounded,
+                          color: AppColors.text3,
+                          size: AppSpacing.launchpadIcon2xl,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -409,13 +407,14 @@ class _DetailRow extends StatelessWidget {
                 ),
               ),
               if (onCopy != null)
-                IconButton(
+                VitIconButton(
                   onPressed: onCopy,
-                  icon: Icon(
-                    copied ? Icons.check_rounded : Icons.copy_rounded,
-                    color: copied ? AppColors.buy : AppColors.text3,
-                    size: AppSpacing.launchpadIconMd,
-                  ),
+                  icon: copied ? Icons.check_rounded : Icons.copy_rounded,
+                  tooltip: 'Copy $label',
+                  variant: copied
+                      ? VitIconButtonVariant.success
+                      : VitIconButtonVariant.transparent,
+                  size: VitIconButtonSize.sm,
                 ),
             ],
           ),

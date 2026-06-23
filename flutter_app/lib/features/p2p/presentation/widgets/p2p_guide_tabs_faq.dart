@@ -127,39 +127,37 @@ class _FaqCard extends StatelessWidget {
       key: P2PGuidePage.faqKey(faq.id),
       radius: VitCardRadius.lg,
       clip: true,
+      onTap: onTap,
       child: Column(
         children: [
-          InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: AppSpacing.p2pGuideFaqCardPadding,
-              child: Row(
-                children: [
-                  _RoundIcon(
-                    icon: Icons.help_outline_rounded,
-                    color: expanded ? AppModuleAccents.p2p : AppColors.text3,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Text(
-                      faq.question,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
+          Padding(
+            padding: AppSpacing.p2pGuideFaqCardPadding,
+            child: Row(
+              children: [
+                _RoundIcon(
+                  icon: Icons.help_outline_rounded,
+                  color: expanded ? AppModuleAccents.p2p : AppColors.text3,
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    faq.question,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  Icon(
-                    expanded
-                        ? Icons.expand_less_rounded
-                        : Icons.expand_more_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
-              ),
+                ),
+                Icon(
+                  expanded
+                      ? Icons.expand_less_rounded
+                      : Icons.expand_more_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
+              ],
             ),
           ),
           if (expanded)

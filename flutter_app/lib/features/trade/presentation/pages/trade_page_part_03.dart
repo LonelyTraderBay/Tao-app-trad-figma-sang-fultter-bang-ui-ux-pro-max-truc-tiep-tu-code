@@ -76,14 +76,15 @@ class _PctButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    final label = '$pct%';
+    return VitChoicePill(
+      label: label,
+      selected: false,
       onTap: onTap,
-      density: VitDensity.compact,
-      padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),
-      alignment: Alignment.center,
-      radius: VitCardRadius.sm,
-      borderColor: AppColors.borderSolid,
-      child: Text('$pct%', style: AppTextStyles.caption),
+      fullWidth: true,
+      height: AppSpacing.buttonCompact,
+      accentColor: _tradePrimary,
+      semanticLabel: 'Use $label of available balance',
     );
   }
 }
@@ -250,22 +251,14 @@ class _SegmentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    final accent = activeColor ?? AppColors.primary;
+    return VitChoicePill(
+      label: label,
+      selected: active,
       onTap: onTap,
-      variant: active ? VitCardVariant.ghost : VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      alignment: Alignment.center,
-      borderColor: active
-          ? (activeColor ?? AppColors.primary)
-          : AppColors.cardBorder,
-      child: Text(
-        label,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.caption.copyWith(
-          color: active ? AppColors.text1 : AppColors.text3,
-          fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-        ),
-      ),
+      fullWidth: true,
+      height: AppSpacing.buttonCompact,
+      accentColor: accent,
     );
   }
 }

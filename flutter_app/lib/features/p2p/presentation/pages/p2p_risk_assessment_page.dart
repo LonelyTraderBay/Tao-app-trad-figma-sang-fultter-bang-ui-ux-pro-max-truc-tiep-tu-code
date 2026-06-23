@@ -11,10 +11,30 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pRiskVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pRiskNativeNavClearance =
+    _p2pRiskVisualNavClearance - AppSpacing.x4;
+const double _p2pRiskVisualClearance = AppSpacing.x3;
+const double _p2pRiskNativeClearance = AppSpacing.x2;
+const double _p2pRiskSectionGap = AppSpacing.x2;
+const double _p2pRiskMajorGap = AppSpacing.x3;
+const double _p2pRiskScoreBox = AppSpacing.x7 + AppSpacing.x2;
+const double _p2pRiskInfoLineHeight = 1.34;
+const double _p2pRiskFactorIconBox = AppSpacing.buttonCompact;
+const EdgeInsets _p2pRiskScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pRiskHeroPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pRiskCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pRiskInnerPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PRiskAssessmentPage extends ConsumerWidget {
   const P2PRiskAssessmentPage({super.key, this.shellRenderMode});
@@ -34,10 +54,10 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
       state: P2PRiskAssessmentViewState(snapshot: snapshot),
     );
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pRiskVisualNavClearance + _p2pRiskVisualClearance
+            : _p2pRiskNativeNavClearance + _p2pRiskNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -62,30 +82,28 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pRiskControlsScrollPadding(
-                      bottomInset,
+                    padding: _p2pRiskScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _RiskScoreHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pRiskMajorGap),
                         _RiskInfo(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x6),
+                        const SizedBox(height: _p2pRiskMajorGap),
                         Text(
                           snapshot.factorTitle,
                           style: AppTextStyles.baseMedium.copyWith(
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pRiskSectionGap),
                         _RiskFactorList(factors: controller.materialFactors),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pRiskSectionGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pRiskControlsInnerPadding,
+                          padding: _p2pRiskInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P risk score review',
@@ -122,11 +140,11 @@ class _RiskScoreHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy),
       ),
       child: Padding(
-        padding: AppSpacing.p2pRiskControlsHeroPadding,
+        padding: _p2pRiskHeroPadding,
         child: Column(
           children: [
             SizedBox.square(
-              dimension: AppSpacing.p2pRiskControlsScoreBox,
+              dimension: _p2pRiskScoreBox,
               child: Material(
                 color: AppColors.onAccent.withValues(alpha: .20),
                 shape: const CircleBorder(),
@@ -142,7 +160,7 @@ class _RiskScoreHero extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: _p2pRiskSectionGap),
             Text(
               snapshot.scoreLabel,
               style: AppTextStyles.pageTitle.copyWith(
@@ -180,7 +198,7 @@ class _RiskInfo extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .24)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pRiskControlsInnerPadding,
+        padding: _p2pRiskInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -195,7 +213,7 @@ class _RiskInfo extends StatelessWidget {
                 snapshot.infoText,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.p2pRiskControlsInfoLineHeight,
+                  height: _p2pRiskInfoLineHeight,
                 ),
               ),
             ),
@@ -243,11 +261,11 @@ class _RiskFactorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2PRiskAssessmentPage.factorKey(factor.id),
-      padding: AppSpacing.p2pRiskControlsCardPadding,
+      padding: _p2pRiskCardPadding,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.inputHeight,
+            dimension: _p2pRiskFactorIconBox,
             child: const Material(
               color: AppColors.buy15,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),

@@ -29,17 +29,24 @@ class _WatchlistCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              InkWell(
+              VitCard(
                 key: WatchlistPage.pairLinkKey(pair.id),
                 onTap: onPairTap,
-                borderRadius: AppRadii.lgRadius,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.md,
+                padding: EdgeInsets.zero,
+                borderColor: AppColors.transparent,
+                clip: true,
                 child: _AssetAvatar(pair: pair),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: InkWell(
+                child: VitCard(
                   onTap: onPairTap,
-                  borderRadius: AppRadii.smRadius,
+                  variant: VitCardVariant.ghost,
+                  radius: VitCardRadius.sm,
+                  padding: EdgeInsets.zero,
+                  borderColor: AppColors.transparent,
                   child: Padding(
                     padding: const EdgeInsetsDirectional.symmetric(
                       vertical: AppSpacing.x1,
@@ -151,23 +158,27 @@ class _WatchlistCard extends StatelessWidget {
                 onTap: onNoteTap,
               ),
               const SizedBox(width: AppSpacing.x2),
-              Material(
-                color: AppColors.sell10,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
-                ),
-                child: InkWell(
-                  key: WatchlistPage.removeKey(entry.id),
-                  onTap: onRemoveTap,
-                  borderRadius: AppRadii.mdRadius,
-                  child: const SizedBox(
-                    width: AppSpacing.watchlistRemoveButton,
-                    height: AppSpacing.watchlistRemoveButton,
-                    child: Icon(
-                      Icons.delete_outline_rounded,
-                      color: AppColors.sell,
-                      size: AppSpacing.iconSm,
+              VitCard(
+                key: WatchlistPage.removeKey(entry.id),
+                onTap: onRemoveTap,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                padding: EdgeInsets.zero,
+                width: AppSpacing.watchlistRemoveButton,
+                height: AppSpacing.watchlistRemoveButton,
+                borderColor: AppColors.transparent,
+                clip: true,
+                child: const DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.sell10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.mdRadius,
                     ),
+                  ),
+                  child: Icon(
+                    Icons.delete_outline_rounded,
+                    color: AppColors.sell,
+                    size: AppSpacing.iconSm,
                   ),
                 ),
               ),
@@ -288,12 +299,18 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: background,
-      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: background,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minWidth: AppSpacing.watchlistActionMinWidth,

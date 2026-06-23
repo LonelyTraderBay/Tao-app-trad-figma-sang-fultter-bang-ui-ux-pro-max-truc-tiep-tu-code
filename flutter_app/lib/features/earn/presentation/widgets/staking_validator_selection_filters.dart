@@ -65,22 +65,15 @@ class StakingValidatorSelectionSearchAndFilter extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
-        Material(
-          color: filterActive ? AppColors.primary : AppColors.surface3,
-          borderRadius: AppRadii.xlRadius,
-          child: InkWell(
-            key: StakingValidatorSelectionKeys.filterButton,
-            onTap: onFilter,
-            borderRadius: AppRadii.xlRadius,
-            child: SizedBox(
-              width: AppSpacing.buttonStandard,
-              height: AppSpacing.buttonStandard,
-              child: Icon(
-                Icons.filter_alt_outlined,
-                color: filterActive ? AppColors.onAccent : AppColors.text1,
-              ),
-            ),
-          ),
+        VitIconButton(
+          key: StakingValidatorSelectionKeys.filterButton,
+          icon: Icons.filter_alt_outlined,
+          tooltip: 'Bo loc validator',
+          onPressed: onFilter,
+          variant: filterActive
+              ? VitIconButtonVariant.primary
+              : VitIconButtonVariant.ghost,
+          size: VitIconButtonSize.lg,
         ),
       ],
     );
@@ -118,7 +111,13 @@ class StakingValidatorSelectionFilterPanel extends StatelessWidget {
                   style: AppTextStyles.baseMedium,
                 ),
               ),
-              TextButton(onPressed: onClear, child: const Text('Xóa')),
+              VitCtaButton(
+                onPressed: onClear,
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                height: AppSpacing.buttonCompact,
+                child: const Text('Xóa'),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -181,33 +180,12 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      borderRadius: AppRadii.smRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: selected ? AppColors.primary30 : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnWidePillPadding,
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: selected ? AppColors.primarySoft : AppColors.text2,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      accentColor: AppColors.primarySoft,
+      padding: AppSpacing.earnWidePillPadding,
     );
   }
 }
@@ -242,7 +220,13 @@ class StakingValidatorSelectionResultsHeader extends StatelessWidget {
           ),
         ),
         if (filtered)
-          TextButton(onPressed: onClear, child: const Text('Xóa'))
+          VitCtaButton(
+            onPressed: onClear,
+            variant: VitCtaButtonVariant.ghost,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            child: const Text('Xóa'),
+          )
         else
           Text(
             'Sắp xếp: ${stakingValidatorSortShortLabel(sort)}',

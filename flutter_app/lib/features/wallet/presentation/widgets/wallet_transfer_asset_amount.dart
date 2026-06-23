@@ -104,14 +104,14 @@ class TransferAmountCard extends StatelessWidget {
                   style: AppTextStyles.badge.copyWith(color: AppColors.text3),
                 ),
               ),
-              GestureDetector(
+              VitChoicePill(
                 key: const Key('sc146_transfer_max'),
+                label: 'T\u1edbi \u0111a',
+                selected: false,
                 onTap: onMax,
-                behavior: HitTestBehavior.opaque,
-                child: Text(
-                  'T\u1edbi \u0111a',
-                  style: AppTextStyles.badge.copyWith(color: _transferPrimary),
-                ),
+                height: AppSpacing.buttonCompact,
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+                accentColor: _transferPrimary,
               ),
             ],
           ),

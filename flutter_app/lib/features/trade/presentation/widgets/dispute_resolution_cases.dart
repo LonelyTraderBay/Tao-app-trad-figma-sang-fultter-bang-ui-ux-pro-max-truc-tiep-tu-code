@@ -21,9 +21,11 @@ class _DisputeTabs extends StatelessWidget {
         children: [
           for (final tab in tabs)
             Expanded(
-              child: InkWell(
+              child: VitCard(
                 key: DisputeResolutionPage.tabKey(tab.id),
                 onTap: () => onChanged(tab.id),
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

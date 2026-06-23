@@ -179,22 +179,18 @@ class _BackControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCard(
       key: OnboardingFlow.backButtonKey,
       width: AppSpacing.ctaHeight,
       height: AppSpacing.ctaHeight,
-      child: Material(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.inputRadius,
-        child: InkWell(
-          onTap: onPressed,
-          borderRadius: AppRadii.inputRadius,
-          child: const Icon(
-            Icons.chevron_left_rounded,
-            color: AppColors.text2,
-            size: AppSpacing.iconLg,
-          ),
-        ),
+      onTap: onPressed,
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.borderSolid,
+      alignment: Alignment.center,
+      child: const Icon(
+        Icons.chevron_left_rounded,
+        color: AppColors.text2,
+        size: AppSpacing.iconLg,
       ),
     );
   }

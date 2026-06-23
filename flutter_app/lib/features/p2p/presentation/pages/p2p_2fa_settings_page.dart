@@ -12,13 +12,33 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_2fa_settings_page_sections.dart';
 part '../widgets/p2p_2fa_settings_page_common.dart';
+
+const double _p2pTwoFactorVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pTwoFactorNativeNavClearance =
+    _p2pTwoFactorVisualNavClearance - AppSpacing.x4;
+const double _p2pTwoFactorVisualClearance = AppSpacing.x3;
+const double _p2pTwoFactorNativeClearance = AppSpacing.x2;
+const double _p2pTwoFactorSectionGap = AppSpacing.x3;
+const double _p2pTwoFactorTightGap = AppSpacing.x2;
+const double _p2pTwoFactorHeroIconBox = AppSpacing.x6;
+const double _p2pTwoFactorMethodIconBox = AppSpacing.x6;
+const double _p2pTwoFactorCaptionLineHeight = 1.34;
+const double _p2pTwoFactorNoticeLineHeight = 1.35;
+const EdgeInsets _p2pTwoFactorScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pTwoFactorCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pTwoFactorInnerPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2P2FASettingsPage extends ConsumerStatefulWidget {
   const P2P2FASettingsPage({super.key, this.shellRenderMode});
@@ -57,10 +77,10 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pTwoFactorSettingsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pTwoFactorVisualNavClearance + _p2pTwoFactorVisualClearance
+            : _p2pTwoFactorNativeNavClearance + _p2pTwoFactorNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     final enabledMethods = _methods.where((method) => method.enabled).length;
@@ -91,35 +111,33 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pSecurityDetailsScrollPadding(
-                      bottomInset,
+                    padding: _p2pTwoFactorScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _TwoFactorStatusCard(
                           enabledMethods: enabledMethods,
                           primaryMethod: primaryMethod.label,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pTwoFactorSectionGap),
                         _MethodSection(
                           methods: _methods,
                           onToggle: _toggleMethod,
                           onSetPrimary: _setPrimaryMethod,
                         ),
-                        const SizedBox(height: AppSpacing.x6),
+                        const SizedBox(height: _p2pTwoFactorSectionGap),
                         _ThresholdSection(
                           thresholds: _thresholds,
                           onToggle: _toggleThreshold,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pTwoFactorSectionGap),
                         _SecurityRecommendation(text: snapshot.recommendation),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pTwoFactorTightGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pSecurityDetailsInnerPadding,
+                          padding: _p2pTwoFactorInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P 2FA change review',

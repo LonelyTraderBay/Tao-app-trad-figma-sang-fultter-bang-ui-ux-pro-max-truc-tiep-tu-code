@@ -21,46 +21,43 @@ class _BridgeEventLog extends StatelessWidget {
       padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            padding: AppSpacing.launchpadPaddingX4,
             onTap: onToggle,
-            borderRadius: AppRadii.lgRadius,
-            child: Padding(
-              padding: AppSpacing.launchpadPaddingX4,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.terminal_rounded,
-                    color: AppColors.accent,
-                    size: AppSpacing.iconSm,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.terminal_rounded,
+                  color: AppColors.accent,
+                  size: AppSpacing.iconSm,
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Text(
+                  'Event Log',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    'Event Log',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                _ConnectionBadge(state: order.connectionState),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: Text(
+                    '${events.length} events',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  _ConnectionBadge(state: order.connectionState),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Text(
-                      '${events.length} events',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    expanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
-              ),
+                ),
+                Icon(
+                  expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
+              ],
             ),
           ),
           if (expanded) ...[

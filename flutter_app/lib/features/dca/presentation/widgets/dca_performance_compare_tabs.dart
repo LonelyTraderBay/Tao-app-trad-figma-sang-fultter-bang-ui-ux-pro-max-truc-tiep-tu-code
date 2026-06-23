@@ -62,10 +62,13 @@ class _TopTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GestureDetector(
+      child: VitCard(
         key: DCAPerformanceComparePage.tabKey(tab.name),
-        behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(tab),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
+        borderColor: AppColors.transparent,
         child: Padding(
           padding: AppSpacing.dcaTopPaddingX4,
           child: Column(

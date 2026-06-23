@@ -273,20 +273,15 @@ class _LoginForm extends StatelessWidget {
           const Padding(padding: AppSpacing.authTopGapX3),
           Align(
             alignment: Alignment.centerRight,
-            child: TextButton(
+            child: VitCtaButton(
               key: LoginPage.forgotPasswordKey,
               onPressed: submitting
                   ? null
                   : () => context.go(AppRoutePaths.authForgotPassword),
-              style: TextButton.styleFrom(
-                foregroundColor: _authPrimary,
-                padding: AppSpacing.zeroInsets,
-                minimumSize: const Size(
-                  AppSpacing.zero,
-                  AppSpacing.authTextButtonHeight,
-                ),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.authTextButtonHeight,
+              padding: AppSpacing.authInlineTextButtonPadding,
               child: Text(
                 'Quên mật khẩu?',
                 style: AppTextStyles.caption.copyWith(color: _authPrimary),
@@ -319,20 +314,15 @@ class _LoginForm extends StatelessWidget {
                 'Chưa có tài khoản?',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              TextButton(
+              VitCtaButton(
                 key: LoginPage.registerKey,
                 onPressed: submitting
                     ? null
                     : () => context.go(AppRoutePaths.authRegister),
-                style: TextButton.styleFrom(
-                  foregroundColor: _authPrimary,
-                  padding: AppSpacing.authInlineTextButtonPadding,
-                  minimumSize: const Size(
-                    AppSpacing.zero,
-                    AppSpacing.authTextButtonHeight,
-                  ),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                height: AppSpacing.authTextButtonHeight,
+                padding: AppSpacing.authInlineTextButtonPadding,
                 child: Text(
                   'Đăng ký ngay',
                   style: AppTextStyles.caption.copyWith(

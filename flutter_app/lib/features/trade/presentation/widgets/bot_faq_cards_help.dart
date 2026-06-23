@@ -20,42 +20,39 @@ class _FaqCard extends StatelessWidget {
     return VitCard(
       key: BotFaqPage.questionKey(categoryId, index),
       borderColor: AppColors.cardBorder,
+      onTap: onTap,
       child: Column(
         children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: onTap,
-            child: Padding(
-              padding: AppSpacing.tradeBotCardPadding,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.help_outline_rounded,
-                    color: _faqPrimary,
-                    size: AppSpacing.tradeBotQuestionIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Text(
-                      item.question,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                      ),
+          Padding(
+            padding: AppSpacing.tradeBotCardPadding,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.help_outline_rounded,
+                  color: _faqPrimary,
+                  size: AppSpacing.tradeBotQuestionIcon,
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Text(
+                    item.question,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Icon(
-                    expanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Icon(
+                  expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
+              ],
             ),
           ),
           if (expanded)

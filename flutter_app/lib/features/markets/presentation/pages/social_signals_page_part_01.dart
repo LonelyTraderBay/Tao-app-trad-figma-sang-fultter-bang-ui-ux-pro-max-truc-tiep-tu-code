@@ -218,8 +218,12 @@ class _UnderlinedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
+      child: VitCard(
         onTap: () => onChanged(value),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
+        borderColor: AppColors.transparent,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -350,36 +354,39 @@ class _CategoryFilterChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _CategoryChip(
-          key: SocialSignalsPage.categoryAllKey,
-          label: 'Tất cả',
-          active: categoryFilter == null,
-          onTap: () => onSelected(null),
-        ),
-        const SizedBox(width: AppSpacing.marketSocialGap),
-        _CategoryChip(
-          key: SocialSignalsPage.categoryScalpKey,
-          label: 'Scalp',
-          active: categoryFilter == TradingSignalCategory.scalp,
-          onTap: () => onSelected(TradingSignalCategory.scalp),
-        ),
-        const SizedBox(width: AppSpacing.marketSocialGap),
-        _CategoryChip(
-          key: SocialSignalsPage.categorySwingKey,
-          label: 'Swing',
-          active: categoryFilter == TradingSignalCategory.swing,
-          onTap: () => onSelected(TradingSignalCategory.swing),
-        ),
-        const SizedBox(width: AppSpacing.marketSocialGap),
-        _CategoryChip(
-          key: SocialSignalsPage.categoryPositionKey,
-          label: 'Position',
-          active: categoryFilter == TradingSignalCategory.position,
-          onTap: () => onSelected(TradingSignalCategory.position),
-        ),
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          _CategoryChip(
+            key: SocialSignalsPage.categoryAllKey,
+            label: 'Tất cả',
+            active: categoryFilter == null,
+            onTap: () => onSelected(null),
+          ),
+          const SizedBox(width: AppSpacing.marketSocialGap),
+          _CategoryChip(
+            key: SocialSignalsPage.categoryScalpKey,
+            label: 'Scalp',
+            active: categoryFilter == TradingSignalCategory.scalp,
+            onTap: () => onSelected(TradingSignalCategory.scalp),
+          ),
+          const SizedBox(width: AppSpacing.marketSocialGap),
+          _CategoryChip(
+            key: SocialSignalsPage.categorySwingKey,
+            label: 'Swing',
+            active: categoryFilter == TradingSignalCategory.swing,
+            onTap: () => onSelected(TradingSignalCategory.swing),
+          ),
+          const SizedBox(width: AppSpacing.marketSocialGap),
+          _CategoryChip(
+            key: SocialSignalsPage.categoryPositionKey,
+            label: 'Position',
+            active: categoryFilter == TradingSignalCategory.position,
+            onTap: () => onSelected(TradingSignalCategory.position),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -400,17 +407,23 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Material(
-        color: active ? color.withValues(alpha: .12) : AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.mdRadius,
-          side: BorderSide(
-            color: active
-                ? color.withValues(alpha: .30)
-                : AppColors.transparent,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: active ? color.withValues(alpha: .12) : AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.mdRadius,
+            side: BorderSide(
+              color: active
+                  ? color.withValues(alpha: .30)
+                  : AppColors.transparent,
+            ),
           ),
         ),
         child: Padding(
@@ -447,14 +460,20 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Material(
-        color: active
-            ? _marketPrimary.withValues(alpha: .12)
-            : AppColors.transparent,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: active
+              ? _marketPrimary.withValues(alpha: .12)
+              : AppColors.transparent,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+        ),
         child: Padding(
           padding: AppSpacing.marketSocialFilterPadding.add(
             const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),

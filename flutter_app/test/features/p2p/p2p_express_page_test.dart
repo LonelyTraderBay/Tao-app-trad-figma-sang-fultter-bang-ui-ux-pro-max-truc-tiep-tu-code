@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -7,11 +9,15 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_express_confirm_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_express_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 void main() {
-  Future<void> pumpP2PExpress(WidgetTester tester) async {
+  Future<void> pumpP2PExpress(
+    WidgetTester tester, {
+    Size viewport = const Size(440, 956),
+  }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -26,6 +32,17 @@ void main() {
     );
     await tester.pumpAndSettle();
   }
+
+  test('SC-211 keeps the Home-standard page foundation contract', () {
+    final pageSource = File(
+      'lib/features/p2p/presentation/pages/p2p_express_page_part_01.dart',
+    ).readAsStringSync();
+
+    expect(pageSource, contains('VitInsetScrollView'));
+    expect(pageSource, contains('VitContentPadding.compact'));
+    expect(pageSource, contains('VitDensity.compact'));
+    expect(pageSource, isNot(contains('SingleChildScrollView')));
+  });
 
   test('SC-211 mock repository exposes P2P Express BE draft', () {
     final snapshot = const MockP2PRepository().getExpress();
@@ -74,6 +91,18 @@ void main() {
     expect(find.text('Express hoạt động thế nào?'), findsOneWidget);
     expect(find.text('Mua nhanh USDT'), findsOneWidget);
     expect(find.text('Offer tốt nhất được tìm thấy'), findsNothing);
+  });
+
+  testWidgets('SC-211 360px viewport follows Home rhythm', (tester) async {
+    await pumpP2PExpress(tester, viewport: const Size(360, 800));
+
+    final navTop = tester.getTopLeft(find.byType(VitBottomNav)).dy;
+    final firstCard = tester.getRect(find.byType(VitCard).first);
+    final ctaTop = tester.getTopLeft(find.byKey(P2PExpressPage.ctaKey)).dy;
+
+    expect(firstCard.left, lessThanOrEqualTo(24));
+    expect(firstCard.width, greaterThanOrEqualTo(312));
+    expect(ctaTop, lessThan(navTop - 24));
   });
 
   testWidgets('SC-211 quick amount auto-matches and opens confirm', (

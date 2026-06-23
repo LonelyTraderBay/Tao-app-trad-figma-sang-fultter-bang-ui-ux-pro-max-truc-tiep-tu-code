@@ -52,9 +52,11 @@ class _VerifyStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final code = controller.text;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
+    return VitCard(
       onTap: focusNode.requestFocus,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: EdgeInsets.zero,
       child: Column(
         children: [
           const _ShieldHero(),

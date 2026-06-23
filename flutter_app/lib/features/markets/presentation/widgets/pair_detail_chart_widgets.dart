@@ -68,52 +68,16 @@ class _ViewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected
-          ? _marketPrimary.withValues(alpha: .2)
-          : AppColors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(
-          color: selected
-              ? _marketPrimary.withValues(alpha: .45)
-              : AppColors.transparent,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x2,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: selected ? _marketPrimary : AppColors.text3,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: selected ? _marketPrimary : AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      accentColor: _marketPrimary,
+      fullWidth: true,
+      height: VitDensity.compact.controlHeight,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
+      leading: Icon(icon),
+      semanticLabel: label,
     );
   }
 }
@@ -133,31 +97,15 @@ class _TimeframeRow extends StatelessWidget {
         children: [
           for (final item in items)
             Expanded(
-              child: InkWell(
+              child: VitChoicePill(
+                label: item,
+                selected: active == item,
                 onTap: () => onChanged(item),
-                borderRadius: AppRadii.cardRadius,
-                child: Center(
-                  child: Material(
-                    color: active == item
-                        ? _marketPrimary.withValues(alpha: .2)
-                        : AppColors.transparent,
-                    shape: const CircleBorder(),
-                    child: SizedBox.square(
-                      dimension: AppSpacing.pairTimeframeHeight,
-                      child: Center(
-                        child: Text(
-                          item,
-                          style: AppTextStyles.badge.copyWith(
-                            color: active == item
-                                ? _marketPrimary
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                accentColor: _marketPrimary,
+                fullWidth: true,
+                height: AppSpacing.pairTimeframeHeight,
+                padding: EdgeInsets.zero,
+                semanticLabel: item,
               ),
             ),
         ],
@@ -214,39 +162,14 @@ class _IndicatorChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected
-          ? _marketPrimary.withValues(alpha: .2)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(
-          color: selected
-              ? _marketPrimary.withValues(alpha: .5)
-              : AppColors.borderSolid,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-            ),
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.badge.copyWith(
-                  color: selected ? _marketPrimary : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      accentColor: _marketPrimary,
+      height: VitDensity.compact.controlHeight,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
+      semanticLabel: label,
     );
   }
 }
@@ -258,33 +181,14 @@ class _AdvancedChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.warn.withValues(alpha: .12),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(color: AppColors.warn.withValues(alpha: .32)),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-            ),
-            child: Center(
-              child: Text(
-                'Nang cao',
-                style: AppTextStyles.badge.copyWith(
-                  color: AppColors.warn,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: 'Nâng cao',
+      selected: true,
+      onTap: onTap,
+      tone: VitChoicePillTone.warning,
+      height: VitDensity.compact.controlHeight,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
+      semanticLabel: 'Nâng cao',
     );
   }
 }
@@ -478,14 +382,26 @@ class _TradeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color,
-      borderRadius: AppRadii.cardRadius,
-      elevation: 0,
-      shadowColor: shadowColor.withValues(alpha: .3),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.md,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color,
+          shape: const RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+          ),
+          shadows: [
+            BoxShadow(
+              color: shadowColor.withValues(alpha: .18),
+              blurRadius: AppSpacing.x2,
+            ),
+          ],
+        ),
         child: SizedBox(
           height: VitDensity.compact.controlHeight,
           child: Center(

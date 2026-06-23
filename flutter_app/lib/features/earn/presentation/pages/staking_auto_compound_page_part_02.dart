@@ -13,51 +13,37 @@ class _FrequencyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: StakingAutoCompoundPage.frequencyKey(frequency.id),
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Material(
-          color: selected ? AppColors.buy10 : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.inputRadius,
-            side: BorderSide(
-              color: selected ? AppColors.buy : AppColors.borderSolid,
-              width: AppSpacing.stakingAutoCompoundPlanBorderWidth,
+    return VitCard(
+      key: StakingAutoCompoundPage.frequencyKey(frequency.id),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      borderColor: selected ? AppColors.buy : AppColors.borderSolid,
+      padding: AppSpacing.earnPaddingX4,
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              frequency.label,
+              style: AppTextStyles.caption.copyWith(
+                color: selected ? AppColors.buy : AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
           ),
-          child: Padding(
-            padding: AppSpacing.earnPaddingX4,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    frequency.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: selected ? AppColors.buy : AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    frequency.description,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ),
-              ],
+          const SizedBox(height: AppSpacing.x1),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              frequency.description,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -71,38 +57,29 @@ class _GasOptimizationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: StakingAutoCompoundPage.gasOptimizationKey,
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: VitCard(
-          variant: VitCardVariant.inner,
-          radius: VitCardRadius.md,
-          padding: AppSpacing.earnPaddingX4,
-          child: Row(
-            children: [
-              _CheckBoxIndicator(checked: enabled),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Tối ưu Gas Fee', style: AppTextStyles.baseMedium),
-                    Text(
-                      'Chỉ compound khi gas fee thấp (tiết kiệm ~30-50%)',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
+    return VitCard(
+      key: StakingAutoCompoundPage.gasOptimizationKey,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.md,
+      padding: AppSpacing.earnPaddingX4,
+      onTap: onTap,
+      child: Row(
+        children: [
+          _CheckBoxIndicator(checked: enabled),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Tối ưu Gas Fee', style: AppTextStyles.baseMedium),
+                Text(
+                  'Chỉ compound khi gas fee thấp (tiết kiệm ~30-50%)',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

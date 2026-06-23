@@ -461,44 +461,43 @@ class _SwitchRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         onTap();
       },
-      borderRadius: AppRadii.mdRadius,
-      child: Padding(
-        padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  Text(
-                    description,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+                ),
+                Text(
+                  description,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-            Switch(
-              value: value,
-              activeThumbColor: _arenaAccent,
-              activeTrackColor: AppColors.warn15,
-              inactiveThumbColor: AppColors.text1,
-              inactiveTrackColor: AppColors.surface3,
-              onChanged: (_) => onTap(),
-            ),
-          ],
-        ),
+          ),
+          Switch(
+            value: value,
+            activeThumbColor: _arenaAccent,
+            activeTrackColor: AppColors.warn15,
+            inactiveThumbColor: AppColors.text1,
+            inactiveTrackColor: AppColors.surface3,
+            onChanged: (_) => onTap(),
+          ),
+        ],
       ),
     );
   }

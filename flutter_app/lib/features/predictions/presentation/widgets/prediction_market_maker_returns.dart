@@ -42,38 +42,12 @@ class _AddLiquidityButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: VitDensity.compact.controlHeight,
-      width: double.infinity,
-      child: Material(
-        color: _predictionPrimary.withValues(alpha: enabled ? 1 : .66),
-        borderRadius: AppRadii.inputRadius,
-        child: InkWell(
-          key: PredictionMarketMakerPage.addLiquidityKey,
-          onTap: enabled ? () {} : null,
-          borderRadius: AppRadii.inputRadius,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.add_rounded,
-                color: AppColors.onAccent.withValues(alpha: enabled ? 1 : .5),
-                size: AppSpacing.predictionMarketMakerAddIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                'Them thanh khoan',
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.onAccent.withValues(
-                    alpha: enabled ? 1 : .55,
-                  ),
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      key: PredictionMarketMakerPage.addLiquidityKey,
+      onPressed: enabled ? () {} : null,
+      density: VitDensity.compact,
+      leading: const Icon(Icons.add_rounded),
+      child: const Text('Them thanh khoan'),
     );
   }
 }

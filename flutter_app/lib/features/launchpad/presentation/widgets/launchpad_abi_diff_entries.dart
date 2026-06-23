@@ -33,68 +33,68 @@ class _AbiEntryCard extends StatelessWidget {
           ),
           Column(
             children: [
-              InkWell(
+              VitCard(
                 key: LaunchpadAbiDiffPage.expandKey(entry.name),
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.md,
+                padding: AppSpacing.launchpadPaddingX3,
                 onTap: onToggle,
-                child: Padding(
-                  padding: AppSpacing.launchpadPaddingX3,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _ChangeIcon(change: change),
-                      const SizedBox(width: AppSpacing.x3),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    entry.name,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppTextStyles.base.copyWith(
-                                      color: AppColors.text1,
-                                      fontWeight: AppTextStyles.heavy,
-                                    ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _ChangeIcon(change: change),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  entry.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.base.copyWith(
+                                    color: AppColors.text1,
+                                    fontWeight: AppTextStyles.heavy,
                                   ),
                                 ),
-                                const SizedBox(width: AppSpacing.x2),
+                              ),
+                              const SizedBox(width: AppSpacing.x2),
+                              _SmallBadge(
+                                label: entry.type,
+                                color: AppColors.text3,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.x2),
+                          Wrap(
+                            spacing: AppSpacing.x1,
+                            runSpacing: AppSpacing.x1,
+                            children: [
+                              _SmallBadge(
+                                label: change.label.toUpperCase(),
+                                color: change.color,
+                              ),
+                              if (risk != LaunchpadAbiRiskLevel.none)
                                 _SmallBadge(
-                                  label: entry.type,
-                                  color: AppColors.text3,
+                                  label: risk.label,
+                                  color: risk.color,
+                                  icon: risk.icon,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: AppSpacing.x2),
-                            Wrap(
-                              spacing: AppSpacing.x1,
-                              runSpacing: AppSpacing.x1,
-                              children: [
-                                _SmallBadge(
-                                  label: change.label.toUpperCase(),
-                                  color: change.color,
-                                ),
-                                if (risk != LaunchpadAbiRiskLevel.none)
-                                  _SmallBadge(
-                                    label: risk.label,
-                                    color: risk.color,
-                                    icon: risk.icon,
-                                  ),
-                              ],
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Icon(
-                        expanded
-                            ? Icons.keyboard_arrow_up_rounded
-                            : Icons.keyboard_arrow_down_rounded,
-                        color: AppColors.text3,
-                        size: AppSpacing.launchpadIcon2xl,
-                      ),
-                    ],
-                  ),
+                    ),
+                    Icon(
+                      expanded
+                          ? Icons.keyboard_arrow_up_rounded
+                          : Icons.keyboard_arrow_down_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.launchpadIcon2xl,
+                    ),
+                  ],
                 ),
               ),
               if (expanded) _AbiEntryDetails(entry: entry),

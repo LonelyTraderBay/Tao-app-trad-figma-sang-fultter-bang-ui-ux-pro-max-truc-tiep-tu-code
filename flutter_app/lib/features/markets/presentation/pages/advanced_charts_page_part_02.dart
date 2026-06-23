@@ -25,71 +25,71 @@ class _IndicatorCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: _advancedIndicatorHeaderPadding,
             onTap: onToggleExpanded,
-            child: Padding(
-              padding: _advancedIndicatorHeaderPadding,
-              child: Row(
-                children: [
-                  Material(
-                    color: indicator.color.withValues(alpha: .08),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: AppRadii.smRadius,
-                    ),
-                    child: SizedBox.square(
-                      dimension: _advancedIndicatorAvatar,
-                      child: Center(
-                        child: Text(
-                          indicator.shortName.length <= 3
-                              ? indicator.shortName
-                              : indicator.shortName.substring(0, 3),
-                          style: AppTextStyles.micro.copyWith(
-                            color: indicator.color,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+            child: Row(
+              children: [
+                Material(
+                  color: indicator.color.withValues(alpha: .08),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                  ),
+                  child: SizedBox.square(
+                    dimension: _advancedIndicatorAvatar,
+                    child: Center(
+                      child: Text(
+                        indicator.shortName.length <= 3
+                            ? indicator.shortName
+                            : indicator.shortName.substring(0, 3),
+                        style: AppTextStyles.micro.copyWith(
+                          color: indicator.color,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: _advancedGap),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              indicator.shortName,
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
+                ),
+                const SizedBox(width: _advancedGap),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            indicator.shortName,
+                            style: AppTextStyles.body.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
                             ),
-                            const SizedBox(width: _advancedCompactGap),
-                            _CategoryBadge(category: category),
-                          ],
-                        ),
-                        const SizedBox(height: AppSpacing.dividerHairline),
-                        Text(
-                          indicator.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
                           ),
+                          const SizedBox(width: _advancedCompactGap),
+                          _CategoryBadge(category: category),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.dividerHairline),
+                      Text(
+                        indicator.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: _advancedGap),
-                  _IndicatorToggle(
-                    key: AdvancedChartsPage.indicatorToggleKey(indicator.id),
-                    active: active,
-                    color: indicator.color,
-                    onTap: onToggleActive,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(width: _advancedGap),
+                _IndicatorToggle(
+                  key: AdvancedChartsPage.indicatorToggleKey(indicator.id),
+                  active: active,
+                  color: indicator.color,
+                  onTap: onToggleActive,
+                ),
+              ],
             ),
           ),
           if (expanded) _IndicatorDetails(indicator: indicator),
@@ -177,29 +177,32 @@ class _IndicatorToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? color.withValues(alpha: .08) : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.smRadius,
-        side: BorderSide(color: active ? color : AppColors.borderSolid),
-      ),
-      child: InkWell(
+    return Semantics(
+      button: true,
+      selected: active,
+      label: active ? 'Táº¯t chá»‰ bÃ¡o' : 'Báº­t chá»‰ bÃ¡o',
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        width: _advancedToggleSize,
+        height: _advancedToggleSize,
+        borderColor: active ? color : AppColors.borderSolid,
+        background: ColoredBox(
+          color: active ? color.withValues(alpha: .08) : AppColors.surface2,
+        ),
+        clip: true,
         onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: SizedBox.square(
-          dimension: _advancedToggleSize,
-          child: Center(
-            child: active
-                ? Icon(
-                    Icons.check_rounded,
-                    size: _advancedToggleIcon,
-                    color: color,
-                  )
-                : Text(
-                    '+',
-                    style: AppTextStyles.body.copyWith(color: AppColors.text3),
-                  ),
-          ),
+        child: Center(
+          child: active
+              ? Icon(
+                  Icons.check_rounded,
+                  size: _advancedToggleIcon,
+                  color: color,
+                )
+              : Text(
+                  '+',
+                  style: AppTextStyles.body.copyWith(color: AppColors.text3),
+                ),
         ),
       ),
     );

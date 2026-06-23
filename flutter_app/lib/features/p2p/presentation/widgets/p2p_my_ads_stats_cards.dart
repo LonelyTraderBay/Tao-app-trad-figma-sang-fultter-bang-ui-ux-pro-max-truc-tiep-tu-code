@@ -22,7 +22,7 @@ class _StatsRow extends StatelessWidget {
             color: AppColors.buy,
           ),
         ),
-        const SizedBox(width: AppSpacing.x3),
+        const SizedBox(width: _p2pMyAdsSectionGap),
         Expanded(
           child: _StatCard(
             value: pausedCount.toString(),
@@ -30,7 +30,7 @@ class _StatsRow extends StatelessWidget {
             color: AppColors.warn,
           ),
         ),
-        const SizedBox(width: AppSpacing.x3),
+        const SizedBox(width: _p2pMyAdsSectionGap),
         Expanded(
           child: _StatCard(
             value: '\$${_formatCompactUsd(totalVolume)}',
@@ -59,8 +59,8 @@ class _StatCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
-      height: AppSpacing.p2pMerchantCommerceStatCardHeight,
-      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+      height: _p2pMyAdsStatExtent,
+      padding: _p2pMyAdsCompactPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -71,7 +71,7 @@ class _StatCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pMyAdsTightGap),
           Text(
             label,
             maxLines: 1,
@@ -110,7 +110,7 @@ class _MyAdCard extends StatelessWidget {
     return Opacity(
       opacity: active ? 1 : .72,
       child: VitCard(
-        padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+        padding: _p2pMyAdsCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -135,7 +135,7 @@ class _MyAdCard extends StatelessWidget {
                   ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: _p2pMyAdsSectionGap),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -156,7 +156,7 @@ class _MyAdCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 if (ad.priceMargin != null) ...[
-                  const SizedBox(width: AppSpacing.x3),
+                  const SizedBox(width: _p2pMyAdsSectionGap),
                   Text(
                     '${ad.priceMargin! >= 0 ? '+' : ''}${ad.priceMargin!.toStringAsFixed(1)}%',
                     style: AppTextStyles.micro.copyWith(
@@ -169,7 +169,7 @@ class _MyAdCard extends StatelessWidget {
                 ],
               ],
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: _p2pMyAdsSectionGap),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -195,7 +195,7 @@ class _MyAdCard extends StatelessWidget {
               ],
             ),
             if (ad.tradingHours != null) ...[
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: _p2pMyAdsSectionGap),
               Row(
                 children: [
                   const Icon(
@@ -211,12 +211,9 @@ class _MyAdCard extends StatelessWidget {
                 ],
               ),
             ],
-            const SizedBox(height: AppSpacing.x3),
-            const Divider(
-              color: AppColors.divider,
-              height: AppSpacing.p2pMerchantCommerceDividerHeight,
-            ),
-            const SizedBox(height: AppSpacing.x2),
+            const SizedBox(height: _p2pMyAdsSectionGap),
+            const Divider(color: AppColors.divider, height: _p2pMyAdsMajorGap),
+            const SizedBox(height: _p2pMyAdsSectionGap),
             Row(
               children: [
                 Expanded(
@@ -273,7 +270,7 @@ class _DetailColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pMerchantCommerceDetailRightPadding,
+      padding: _p2pMyAdsDetailRightPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -315,7 +312,7 @@ class _ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.p2pMerchantCommerceActionButtonHeight,
+      height: _p2pMyAdsActionExtent,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
       borderColor: color.withValues(alpha: .18),
@@ -326,7 +323,7 @@ class _ActionButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x2),
+          const SizedBox(width: _p2pMyAdsSectionGap),
           Flexible(
             child: Text(
               label,
@@ -352,7 +349,7 @@ class _DeleteButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.p2pMerchantCommerceActionButtonHeight,
+      width: _p2pMyAdsActionExtent,
       child: _ActionButton(
         icon: Icons.delete_outline_rounded,
         label: '',

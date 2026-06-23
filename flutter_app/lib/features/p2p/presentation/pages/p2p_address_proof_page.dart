@@ -20,6 +20,36 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part '../widgets/p2p_address_proof_page_sections.dart';
 part '../widgets/p2p_address_proof_page_common.dart';
 
+const _p2pAddressProofVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const _p2pAddressProofNativeNavClearance =
+    _p2pAddressProofVisualNavClearance - AppSpacing.x4;
+const _p2pAddressProofVisualClearance = AppSpacing.x3;
+const _p2pAddressProofNativeClearance = AppSpacing.x2;
+const _p2pAddressProofSectionGap = AppSpacing.x2;
+const _p2pAddressProofTightGap = AppSpacing.x1;
+const _p2pAddressProofCardPadding = EdgeInsets.all(AppSpacing.x2);
+const _p2pAddressProofHeroIconPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x2,
+);
+const _p2pAddressProofUploadVerticalPadding = EdgeInsetsDirectional.symmetric(
+  vertical: AppSpacing.x3,
+);
+const _p2pAddressProofDocumentExamplePadding = EdgeInsets.only(
+  left: AppSpacing.buttonCompact + AppSpacing.x2,
+);
+const _p2pAddressProofChecklistIconPadding = EdgeInsets.only(
+  top: AppSpacing.dividerHairline,
+);
+
+EdgeInsets _p2pAddressProofScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x2,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
+
 class P2PAddressProofPage extends ConsumerStatefulWidget {
   const P2PAddressProofPage({super.key, this.shellRenderMode});
 
@@ -49,12 +79,12 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pAddressProofProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pAddressProofBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pAddressProofBottomInsetNative) +
+            ? _p2pAddressProofVisualNavClearance +
+                  _p2pAddressProofVisualClearance
+            : _p2pAddressProofNativeNavClearance +
+                  _p2pAddressProofNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final selectedDocument = _selectedTypeId == null
         ? null
@@ -85,9 +115,7 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pAddressProofScrollPadding(
-                      bottomInset,
-                    ),
+                    padding: _p2pAddressProofScrollPadding(scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,

@@ -162,46 +162,12 @@ class _ChoicePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: selected ? AppColors.primary12 : AppColors.transparent,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: selected ? AppColors.primary30 : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.inputRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnPillPaddingLarge,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (icon != null) ...[
-                  Icon(
-                    icon,
-                    size: AppSpacing.iconSm,
-                    color: selected ? AppColors.primary : AppColors.text3,
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                ],
-                Text(
-                  label,
-                  style: _captionBold.copyWith(
-                    color: selected ? AppColors.primary : AppColors.text2,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      padding: AppSpacing.earnPillPaddingLarge,
+      leading: icon == null ? null : Icon(icon),
     );
   }
 }

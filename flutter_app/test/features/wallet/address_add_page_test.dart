@@ -90,6 +90,7 @@ void main() {
     );
     expect(find.text('Thêm vào Whitelist'), findsOneWidget);
     expect(find.text('Lưu địa chỉ'), findsOneWidget);
+    expect(find.byKey(AddressAddPage.saveKey).hitTestable(), findsNothing);
   });
 
   testWidgets('SC-143 form controls enable safe preview confirmation', (
@@ -119,6 +120,8 @@ void main() {
     expect(find.byKey(AddressAddPage.assetKey('USDT')), findsOneWidget);
     expect(find.text('Xem trước'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(AddressAddPage.saveKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(AddressAddPage.saveKey));
     await tester.pumpAndSettle();
 

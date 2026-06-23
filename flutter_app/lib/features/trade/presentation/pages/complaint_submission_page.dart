@@ -43,8 +43,6 @@ const _submissionMultilineHeight = 104.0;
 const _submissionEvidenceHeight = 124.0;
 const _submissionEvidenceIconSize = 40.0;
 const _submissionCheckboxSize = 24.0;
-const _submissionVisualFooterClearance = 90.0;
-const _submissionNativeFooterClearance = 72.0;
 const _submissionVisualScrollClearance = 150.0;
 const _submissionNativeScrollClearance = 126.0;
 
@@ -86,11 +84,6 @@ class _ComplaintSubmissionPageState
         .getComplaintSubmission();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final safeArea = MediaQuery.paddingOf(context).bottom;
-    final footerClearance =
-        safeArea +
-        (mode.usesVisualQaFrame
-            ? _submissionVisualFooterClearance
-            : _submissionNativeFooterClearance);
     final scrollEndClearance =
         safeArea +
         (mode.usesVisualQaFrame
@@ -170,24 +163,16 @@ class _ComplaintSubmissionPageState
                         primary:
                             'Process notice remains above the regulated complaint form.',
                         secondary:
-                            'Evidence and terms stay visible before the sticky submit action.',
+                            'Evidence and terms stay visible before the submit action.',
                         tertiary:
                             'Submission copy remains regulatory and non-promotional.',
                       ),
+                      _SubmissionFooter(
+                        enabled: canSubmit,
+                        onSubmit: () => _submit(context, snapshot, canSubmit),
+                      ),
                     ],
                   ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                  AppSpacing.contentPad,
-                  _submissionSmallSpace,
-                  AppSpacing.contentPad,
-                  footerClearance,
-                ),
-                child: _SubmissionFooter(
-                  enabled: canSubmit,
-                  onSubmit: () => _submit(context, snapshot, canSubmit),
                 ),
               ),
             ],

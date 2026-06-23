@@ -73,6 +73,8 @@ class _SectionHeader extends StatelessWidget {
         Expanded(
           child: Text(
             title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
           ),
         ),
@@ -127,40 +129,40 @@ class _PillButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: enabled ? onTap : null,
-        borderRadius: AppRadii.inputRadius,
-        child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 150),
-          opacity: enabled ? 1 : .45,
-          child: DecoratedBox(
-            decoration: const ShapeDecoration(
-              color: AppColors.accent10,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-            ),
-            child: Padding(
-              padding: AppSpacing.dcaPrimaryChipPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    icon,
+    return VitCard(
+      onTap: enabled ? onTap : null,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.md,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 150),
+        opacity: enabled ? 1 : .45,
+        child: DecoratedBox(
+          decoration: const ShapeDecoration(
+            color: AppColors.accent10,
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
+          ),
+          child: Padding(
+            padding: AppSpacing.dcaPrimaryChipPadding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  color: AppColors.accent,
+                  size: AppSpacing.dcaRebalanceIconSm,
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Text(
+                  label,
+                  style: AppTextStyles.caption.copyWith(
                     color: AppColors.accent,
-                    size: AppSpacing.dcaRebalanceIconSm,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.accent,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -263,23 +265,21 @@ class _IconBadgeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      shape: const CircleBorder(),
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const CircleBorder(),
-        child: SizedBox(
-          width: AppSpacing.iconLg,
-          height: AppSpacing.iconLg,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: neutral ? AppColors.surface : color.withValues(alpha: .12),
-              shape: const CircleBorder(),
-            ),
-            child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
-          ),
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      width: AppSpacing.iconLg,
+      height: AppSpacing.iconLg,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: neutral ? AppColors.surface : color.withValues(alpha: .12),
+          shape: const CircleBorder(),
         ),
+        child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
       ),
     );
   }
@@ -296,31 +296,34 @@ class _TogglePill extends StatelessWidget {
     return Semantics(
       button: true,
       checked: value,
-      child: GestureDetector(
+      child: VitCard(
         onTap: () => onChanged(!value),
-        child: SizedBox(
-          width: AppSpacing.dcaRebalanceToggleWidth,
-          height: _dcaRebalanceToggleHeight,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: value ? AppColors.buy : AppColors.borderSolid,
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.xlRadius,
-              ),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
+        width: AppSpacing.dcaRebalanceToggleWidth,
+        height: _dcaRebalanceToggleHeight,
+        borderColor: AppColors.transparent,
+        clip: true,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: value ? AppColors.buy : AppColors.borderSolid,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.xlRadius,
             ),
-            child: Padding(
-              padding: AppSpacing.dcaPaddingX1,
-              child: AnimatedAlign(
-                duration: const Duration(milliseconds: 160),
-                alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-                child: const SizedBox(
-                  width: AppSpacing.dcaRebalanceToggleThumb,
-                  height: _dcaRebalanceToggleThumb,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: AppColors.text1,
-                      shape: CircleBorder(),
-                    ),
+          ),
+          child: Padding(
+            padding: AppSpacing.dcaPaddingX1,
+            child: AnimatedAlign(
+              duration: const Duration(milliseconds: 160),
+              alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+              child: const SizedBox(
+                width: AppSpacing.dcaRebalanceToggleThumb,
+                height: _dcaRebalanceToggleThumb,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.text1,
+                    shape: CircleBorder(),
                   ),
                 ),
               ),

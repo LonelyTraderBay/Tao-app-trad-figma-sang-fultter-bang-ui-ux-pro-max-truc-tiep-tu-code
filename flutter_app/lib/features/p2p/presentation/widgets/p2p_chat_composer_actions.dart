@@ -161,25 +161,17 @@ class _RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.hoverBg,
-      shape: const CircleBorder(),
-      child: InkWell(
-        onTap: onPressed,
-        customBorder: const CircleBorder(),
-        child: SizedBox.square(
-          dimension: AppSpacing.p2pChatRoundIconButtonSize,
-          child: Center(
-            child: VitInlineIconAction(
-              icon: icon,
-              tooltip: tooltip,
-              onPressed: onPressed,
-              color: color,
-              size: AppSpacing.iconMd,
-              padding: AppSpacing.x2,
-              borderRadius: AppRadii.pillRadius,
-            ),
-          ),
+    return SizedBox.square(
+      dimension: AppSpacing.p2pChatRoundIconButtonSize,
+      child: Center(
+        child: VitInlineIconAction(
+          icon: icon,
+          tooltip: tooltip,
+          onPressed: onPressed,
+          color: color,
+          size: AppSpacing.iconMd,
+          padding: AppSpacing.x2,
+          borderRadius: AppRadii.pillRadius,
         ),
       ),
     );

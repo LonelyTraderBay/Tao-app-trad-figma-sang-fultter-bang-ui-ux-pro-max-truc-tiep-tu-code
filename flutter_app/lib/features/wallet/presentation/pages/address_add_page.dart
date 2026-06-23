@@ -100,109 +100,83 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
       semanticLabel: 'SC-143 AddressAddPage',
       child: Material(
         color: _addressBackground,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final footerTop = _footerTop(context, constraints, mode);
-            return Stack(
-              children: [
-                VitAutoHideHeaderScaffold(
-                  header: VitHeader(
-                    title: 'Thêm địa chỉ mới',
-                    subtitle: 'Sổ địa chỉ · Wallet',
-                    showBack: true,
-                    onBack: () => goBackOrFallback(
-                      context,
-                      fallbackPath: AppRoutePaths.walletAddressBook,
-                    ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Thêm địa chỉ mới',
+            subtitle: 'Sổ địa chỉ · Wallet',
+            showBack: true,
+            onBack: () => goBackOrFallback(
+              context,
+              fallbackPath: AppRoutePaths.walletAddressBook,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  key: AddressAddPage.contentKey,
+                  padding: AppSpacing.walletAddressAddScrollPadding(
+                    _scrollBottomInset(context, mode),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: VitPageContent(
+                    padding: VitContentPadding.none,
+                    customGap: 0,
+                    fullBleed: true,
                     children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          key: AddressAddPage.contentKey,
-                          padding: AppSpacing.walletAddressAddScrollPadding(
-                            _scrollBottomInset(context, mode),
-                          ),
-                          child: VitPageContent(
-                            padding: VitContentPadding.none,
-                            customGap: 0,
-                            fullBleed: true,
-                            children: [
-                              VitHighRiskStatePanel(
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'Review withdrawal address safety',
-                                message:
-                                    'Confirm the wallet address, network, asset, whitelist setting, and masked preview before saving.',
-                                contractId: 'Network: ${selectedNetwork.label}',
-                              ),
-                              const SizedBox(
-                                height: AppSpacing.walletAddressAddPreviewGap,
-                              ),
-                              VitCard(
-                                variant: VitCardVariant.standard,
-                                radius: VitCardRadius.md,
-                                padding: AppSpacing.walletAddressCardPadding,
-                                child: AddressAddForm(
-                                  snapshot: snapshot,
-                                  selectedNetworkId: _networkId,
-                                  selectedAsset: _asset,
-                                  labelController: _labelController,
-                                  addressController: _addressController,
-                                  memoController: _memoController,
-                                  whitelist: _whitelist,
-                                  agreed: _agreed,
-                                  onNetworkChanged: (id) =>
-                                      setState(() => _networkId = id),
-                                  onAssetChanged: (asset) =>
-                                      setState(() => _asset = asset),
-                                  onWhitelistChanged: () =>
-                                      setState(() => _whitelist = !_whitelist),
-                                  onAgreementChanged: () =>
-                                      setState(() => _agreed = !_agreed),
-                                  onInputChanged: () => setState(() {}),
-                                ),
-                              ),
-                            ],
-                          ),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review withdrawal address safety',
+                        message:
+                            'Confirm the wallet address, network, asset, whitelist setting, and masked preview before saving.',
+                        contractId: 'Network: ${selectedNetwork.label}',
+                      ),
+                      const SizedBox(
+                        height: AppSpacing.walletAddressAddPreviewGap,
+                      ),
+                      VitCard(
+                        variant: VitCardVariant.standard,
+                        radius: VitCardRadius.md,
+                        padding: AppSpacing.walletAddressCardPadding,
+                        child: AddressAddForm(
+                          snapshot: snapshot,
+                          selectedNetworkId: _networkId,
+                          selectedAsset: _asset,
+                          labelController: _labelController,
+                          addressController: _addressController,
+                          memoController: _memoController,
+                          whitelist: _whitelist,
+                          agreed: _agreed,
+                          onNetworkChanged: (id) =>
+                              setState(() => _networkId = id),
+                          onAssetChanged: (asset) =>
+                              setState(() => _asset = asset),
+                          onWhitelistChanged: () =>
+                              setState(() => _whitelist = !_whitelist),
+                          onAgreementChanged: () =>
+                              setState(() => _agreed = !_agreed),
+                          onInputChanged: () => setState(() {}),
                         ),
+                      ),
+                      const SizedBox(
+                        height: AppSpacing.walletAddressAddPreviewGap,
+                      ),
+                      AddressPrimaryActionButton(
+                        key: AddressAddPage.saveKey,
+                        enabled: _canSave(controller),
+                        semanticLabel: 'Save wallet address',
+                        label: 'Lưu địa chỉ',
+                        onTap: () => _showConfirmPreview(controller),
                       ),
                     ],
                   ),
                 ),
-                Positioned(
-                  top: footerTop,
-                  left: 0,
-                  right: 0,
-                  child: AddressSaveFooter(
-                    enabled: _canSave(controller),
-                    onTap: () => _showConfirmPreview(controller),
-                  ),
-                ),
-              ],
-            );
-          },
+              ),
+            ],
+          ),
         ),
       ),
     );
-  }
-
-  double _footerTop(
-    BuildContext context,
-    BoxConstraints constraints,
-    ShellRenderMode mode,
-  ) {
-    const footerHeight = AppSpacing.walletAddressAddFooterHeight;
-    if (mode.usesVisualQaFrame) {
-      return DeviceMetrics.height -
-          DeviceMetrics.safeTop -
-          DeviceMetrics.bottomChrome -
-          footerHeight;
-    }
-
-    final navReserve =
-        DeviceMetrics.nativeBottomChrome + MediaQuery.paddingOf(context).bottom;
-    return constraints.maxHeight - navReserve - footerHeight;
   }
 
   double _scrollBottomInset(BuildContext context, ShellRenderMode mode) {
@@ -210,7 +184,7 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome +
               MediaQuery.paddingOf(context).bottom;
-    return navReserve + AppSpacing.walletAddressAddScrollBottomExtra;
+    return navReserve + AppSpacing.x4;
   }
 
   void _showConfirmPreview(AddressAddController controller) {

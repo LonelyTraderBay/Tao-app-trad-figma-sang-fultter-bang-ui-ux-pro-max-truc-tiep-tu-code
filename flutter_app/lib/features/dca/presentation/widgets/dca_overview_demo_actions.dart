@@ -58,10 +58,14 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: DCAOverviewDemo.actionKey(scenarioId, spec.id),
       onTap: HapticFeedback.selectionClick,
-      borderRadius: AppRadii.cardRadius,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.md,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
       child: DecoratedBox(
         decoration: const ShapeDecoration(
           color: AppColors.portfolioBtnGhost,

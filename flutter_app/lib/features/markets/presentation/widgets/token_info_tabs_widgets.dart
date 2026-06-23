@@ -61,40 +61,40 @@ class _TabButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.symmetric(
-                  vertical: _tokenInfoTabVerticalPadding,
-                ),
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketPrimary : AppColors.text3,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
-                  ),
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
+        onTap: onTap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                vertical: _tokenInfoTabVerticalPadding,
+              ),
+              child: Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: active ? _marketPrimary : AppColors.text3,
+                  fontWeight: active
+                      ? AppTextStyles.bold
+                      : AppTextStyles.medium,
                 ),
               ),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 180),
-                child: SizedBox(
-                  height: _tokenInfoTabIndicatorHeight,
-                  width: active ? _tokenInfoTabIndicatorWidth : 0,
-                  child: Material(
-                    color: active ? _marketPrimary : AppColors.transparent,
-                    borderRadius: AppRadii.xsRadius,
-                  ),
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 180),
+              child: SizedBox(
+                height: _tokenInfoTabIndicatorHeight,
+                width: active ? _tokenInfoTabIndicatorWidth : 0,
+                child: Material(
+                  color: active ? _marketPrimary : AppColors.transparent,
+                  borderRadius: AppRadii.xsRadius,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

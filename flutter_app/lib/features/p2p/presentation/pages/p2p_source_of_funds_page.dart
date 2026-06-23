@@ -5,17 +5,28 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pSourceFundsVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pSourceFundsNativeNavClearance =
+    _p2pSourceFundsVisualNavClearance - AppSpacing.x4;
+const double _p2pSourceFundsVisualClearance = AppSpacing.x3;
+const double _p2pSourceFundsNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pSourceFundsScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
 
 class P2PSourceOfFundsPage extends ConsumerStatefulWidget {
   const P2PSourceOfFundsPage({super.key, this.shellRenderMode});
@@ -48,10 +59,11 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pSourceOfFundsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pSourceFundsVisualNavClearance + _p2pSourceFundsVisualClearance
+            : _p2pSourceFundsNativeNavClearance +
+                  _p2pSourceFundsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final canSubmit =
         _selectedSource != null && _detailsController.text.trim().isNotEmpty;
@@ -78,16 +90,14 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pFinancialSafetyScrollPadding(
-                      bottomInset,
+                    padding: _p2pSourceFundsScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _SourceHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         Text(
                           snapshot.sourceTitle,
                           style: AppTextStyles.baseMedium.copyWith(
@@ -103,7 +113,7 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
                             setState(() => _selectedSource = source.id);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         VitInput(
                           controller: _detailsController,
                           fieldKey: P2PSourceOfFundsPage.inputKey,
@@ -112,7 +122,7 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
                           textInputAction: TextInputAction.done,
                           onChanged: (_) => setState(() {}),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         VitCtaButton(
                           key: P2PSourceOfFundsPage.ctaKey,
                           onPressed: canSubmit
@@ -222,7 +232,7 @@ class _FundSourceList extends StatelessWidget {
             onTap: () => onSelected(sources[index]),
           ),
           if (index != sources.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: AppSpacing.x2),
         ],
       ],
     );
@@ -244,63 +254,60 @@ class _FundSourceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = selected ? AppModuleAccents.p2p : AppColors.text3;
 
-    return Material(
+    return VitCard(
       key: P2PSourceOfFundsPage.sourceKey(source.id),
-      color: selected
-          ? AppModuleAccents.p2p.withValues(alpha: .10)
-          : AppColors.bg,
-      borderRadius: AppRadii.cardLargeRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardLargeRadius,
-        child: VitCard(
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.lg,
-          borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
-          constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-          padding: AppSpacing.p2pFinancialSafetyCardPadding,
-          child: Row(
-            children: [
-              VitCard(
-                width: AppSpacing.p2pFinancialSafetyCompactIconBox,
-                height: AppSpacing.p2pFinancialSafetyCompactIconBox,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.lg,
-                background: ColoredBox(
-                  color: selected
-                      ? AppModuleAccents.p2p.withValues(alpha: .16)
-                      : AppColors.surface2,
-                ),
-                clip: true,
-                child: Icon(
-                  _fundIcon(source.iconKey),
-                  color: color,
-                  size: AppSpacing.iconMd,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  source.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: selected ? AppModuleAccents.p2p : AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              if (selected) ...[
-                const SizedBox(width: AppSpacing.x3),
-                const Icon(
-                  Icons.check_circle_outline_rounded,
-                  color: AppModuleAccents.p2p,
-                  size: AppSpacing.iconMd,
-                ),
-              ],
-            ],
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
+      background: ColoredBox(
+        color: selected
+            ? AppModuleAccents.p2p.withValues(alpha: .10)
+            : AppColors.bg,
+      ),
+      clip: true,
+      constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
+      padding: AppSpacing.p2pFinancialSafetyCardPadding,
+      child: Row(
+        children: [
+          VitCard(
+            width: AppSpacing.p2pFinancialSafetyCompactIconBox,
+            height: AppSpacing.p2pFinancialSafetyCompactIconBox,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            background: ColoredBox(
+              color: selected
+                  ? AppModuleAccents.p2p.withValues(alpha: .16)
+                  : AppColors.surface2,
+            ),
+            clip: true,
+            child: Icon(
+              _fundIcon(source.iconKey),
+              color: color,
+              size: AppSpacing.iconMd,
+            ),
           ),
-        ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              source.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.baseMedium.copyWith(
+                color: selected ? AppModuleAccents.p2p : AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
+          ),
+          if (selected) ...[
+            const SizedBox(width: AppSpacing.x3),
+            const Icon(
+              Icons.check_circle_outline_rounded,
+              color: AppModuleAccents.p2p,
+              size: AppSpacing.iconMd,
+            ),
+          ],
+        ],
       ),
     );
   }

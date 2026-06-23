@@ -11,13 +11,39 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_settings_trade_security.dart';
 part '../widgets/p2p_settings_hours_common.dart';
+
+const double _p2pSettingsVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pSettingsNativeNavClearance =
+    _p2pSettingsVisualNavClearance - AppSpacing.x4;
+const double _p2pSettingsVisualClearance = AppSpacing.x3;
+const double _p2pSettingsNativeClearance = AppSpacing.x2;
+const double _p2pSettingsSectionGap = AppSpacing.x2;
+const double _p2pSettingsMajorGap = AppSpacing.x3;
+const double _p2pSettingsAutoReplyLineHeight = 1.34;
+const double _p2pSettingsSwitchWidth = 40;
+const double _p2pSettingsSwitchHeight = 22;
+const double _p2pSettingsSwitchThumbSize = 16;
+const EdgeInsets _p2pSettingsScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pSettingsCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pSettingsCompactCardPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pSettingsHorizontalCardPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+);
+const EdgeInsets _p2pSettingsRowPadding = EdgeInsets.symmetric(
+  vertical: AppSpacing.x2,
+);
 
 class P2PSettingsPage extends ConsumerStatefulWidget {
   const P2PSettingsPage({super.key, this.shellRenderMode});
@@ -57,10 +83,10 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
     final snapshot = ref.watch(p2pSettingsProvider);
     _ensureState(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pSettingsVisualNavClearance + _p2pSettingsVisualClearance
+            : _p2pSettingsNativeNavClearance + _p2pSettingsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -85,7 +111,9 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pSettingsScrollPadding(bottomInset),
+                    padding: _p2pSettingsScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -94,7 +122,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                           label: 'Tùy chọn giao dịch',
                           color: AppColors.primary,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pSettingsSectionGap),
                         _TradeOptionsCard(
                           snapshot: snapshot,
                           asset: _asset,
@@ -108,7 +136,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                               setState(() => _paymentWindow = value),
                           onToggleAutoConfirm: () => _toggle('auto_confirm'),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pSettingsMajorGap),
                         _ToggleSection(
                           key: P2PSettingsPage.notificationsKey,
                           icon: Icons.notifications_none_rounded,
@@ -118,7 +146,7 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                           values: _toggles,
                           onToggle: _toggle,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pSettingsMajorGap),
                         _ToggleSection(
                           key: P2PSettingsPage.privacyKey,
                           icon: Icons.visibility_outlined,
@@ -128,13 +156,13 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                           values: _toggles,
                           onToggle: _toggle,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pSettingsMajorGap),
                         _SecuritySection(
                           snapshot: snapshot,
                           values: _toggles,
                           onToggle: _toggle,
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pSettingsMajorGap),
                         _HoursSection(
                           mode: _hoursMode,
                           onChanged: (value) {
@@ -142,13 +170,13 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                             setState(() => _hoursMode = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pSettingsMajorGap),
                         _AutoReplySection(
                           autoReply: snapshot.autoReply,
                           enabled: _toggles['auto_reply'] ?? true,
                           onToggle: () => _toggle('auto_reply'),
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pSettingsMajorGap),
                         VitCtaButton(
                           key: P2PSettingsPage.saveKey,
                           variant: _saved
@@ -162,18 +190,13 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                             _saved ? 'Đã lưu thành công!' : 'Lưu cài đặt',
                           ),
                         ),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'P2P settings state review',
-                              message:
-                                  'Trade defaults, notification toggles, privacy controls, security toggles, active hours, auto reply, and saved state remain visible before applying settings.',
-                              contractId: 'SC-279',
-                            ),
-                          ],
+                        const SizedBox(height: _p2pSettingsSectionGap),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'P2P settings state review',
+                          message:
+                              'Trade defaults, notification toggles, privacy controls, security toggles, active hours, auto reply, and saved state remain visible before applying settings.',
+                          contractId: 'SC-279',
                         ),
                       ],
                     ),

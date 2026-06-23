@@ -167,35 +167,13 @@ class _TabButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            children: [
-              Padding(
-                padding: AppSpacing.launchpadVerticalPaddingX4,
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? AppColors.primary : AppColors.text3,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
-                  ),
-                ),
-              ),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 180),
-                child: SizedBox(
-                  height: AppSpacing.launchpadGapXxs,
-                  width: active ? 116 : 0,
-                  child: const ColoredBox(color: AppColors.primary),
-                ),
-              ),
-            ],
-          ),
-        ),
+      child: VitChoicePill(
+        label: label,
+        selected: active,
+        onTap: onTap,
+        fullWidth: true,
+        accentColor: AppColors.primary,
+        semanticLabel: 'Gas tracker tab $label',
       ),
     );
   }

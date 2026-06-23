@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_common.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 
 class AddressNetworkGrid extends StatelessWidget {
   const AddressNetworkGrid({
@@ -26,19 +24,11 @@ class AddressNetworkGrid extends StatelessWidget {
       runSpacing: AppSpacing.walletAddressAddNetworkRunSpacing,
       children: [
         for (final network in networks)
-          Semantics(
-            button: true,
+          _NetworkChip(
+            key: Key('sc143_address_network_${network.id}'),
+            network: network,
             selected: network.id == selectedId,
-            label: '${network.label} address network',
-            child: GestureDetector(
-              key: Key('sc143_address_network_${network.id}'),
-              onTap: () => onChanged(network.id),
-              behavior: HitTestBehavior.opaque,
-              child: _NetworkChip(
-                network: network,
-                selected: network.id == selectedId,
-              ),
-            ),
+            onTap: () => onChanged(network.id),
           ),
       ],
     );
@@ -46,39 +36,40 @@ class AddressNetworkGrid extends StatelessWidget {
 }
 
 class _NetworkChip extends StatelessWidget {
-  const _NetworkChip({required this.network, required this.selected});
+  const _NetworkChip({
+    super.key,
+    required this.network,
+    required this.selected,
+    required this.onTap,
+  });
 
   final WalletAddressNetwork network;
   final bool selected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return SizedBox(
       width: AppSpacing.walletAddressAddNetworkChipWidth,
-      height: AppSpacing.walletAddressAddNetworkChipHeight,
-      padding: AppSpacing.walletAddressAddNetworkChipPadding,
-      variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
-      borderColor: selected ? AppColors.primary60 : AppColors.borderSolid,
-      child: Row(
-        children: [
-          SizedBox(
-            width: AppSpacing.walletAddressAddNetworkDot,
-            height: AppSpacing.walletAddressAddNetworkDot,
-            child: ClipOval(child: ColoredBox(color: Color(network.colorHex))),
-          ),
-          const SizedBox(width: AppSpacing.rowGap),
-          Expanded(
-            child: Text(
-              network.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: selected ? addressAddPrimary : AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
+      child: VitChoicePill(
+        label: network.label,
+        selected: selected,
+        onTap: onTap,
+        fullWidth: true,
+        height: AppSpacing.walletAddressAddNetworkChipHeight,
+        padding: AppSpacing.walletAddressAddNetworkChipPadding,
+        accentColor: addressAddPrimary,
+        semanticLabel: '${network.label} address network',
+        leading: SizedBox(
+          width: AppSpacing.walletAddressAddNetworkDot,
+          height: AppSpacing.walletAddressAddNetworkDot,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Color(network.colorHex),
+              shape: BoxShape.circle,
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -103,36 +94,19 @@ class AddressAssetSelector extends StatelessWidget {
       runSpacing: AppSpacing.walletAddressAddAssetRunSpacing,
       children: [
         for (final asset in assets)
-          Semantics(
-            button: true,
-            selected: asset == selectedAsset,
-            label: '$asset address asset',
-            child: GestureDetector(
+          SizedBox(
+            width: asset == 'MATIC'
+                ? AppSpacing.walletAddressAddAssetChipWideWidth
+                : AppSpacing.walletAddressAddAssetChipWidth,
+            child: VitChoicePill(
               key: Key('sc143_address_asset_$asset'),
+              label: asset,
+              selected: asset == selectedAsset,
               onTap: () => onChanged(asset),
-              behavior: HitTestBehavior.opaque,
-              child: VitCard(
-                width: asset == 'MATIC'
-                    ? AppSpacing.walletAddressAddAssetChipWideWidth
-                    : AppSpacing.walletAddressAddAssetChipWidth,
-                height: AppSpacing.walletAddressAddAssetChipHeight,
-                alignment: Alignment.center,
-                variant: asset == selectedAsset
-                    ? VitCardVariant.standard
-                    : VitCardVariant.ghost,
-                borderColor: asset == selectedAsset
-                    ? AppColors.primary60
-                    : AppColors.transparent,
-                child: Text(
-                  asset,
-                  style: AppTextStyles.caption.copyWith(
-                    color: asset == selectedAsset
-                        ? addressAddPrimary
-                        : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
+              fullWidth: true,
+              height: AppSpacing.walletAddressAddAssetChipHeight,
+              accentColor: addressAddPrimary,
+              semanticLabel: '$asset address asset',
             ),
           ),
       ],

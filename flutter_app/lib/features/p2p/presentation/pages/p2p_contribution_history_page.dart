@@ -16,6 +16,19 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
+const double _p2pContributionVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pContributionNativeNavClearance =
+    _p2pContributionVisualNavClearance - AppSpacing.x4;
+const double _p2pContributionVisualClearance = AppSpacing.x3;
+const double _p2pContributionNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pContributionScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
+
 class P2PContributionHistoryPage extends ConsumerStatefulWidget {
   const P2PContributionHistoryPage({super.key, this.shellRenderMode});
 
@@ -39,10 +52,12 @@ class _P2PContributionHistoryPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pContributionHistoryProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pContributionVisualNavClearance +
+                  _p2pContributionVisualClearance
+            : _p2pContributionNativeNavClearance +
+                  _p2pContributionNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -67,14 +82,14 @@ class _P2PContributionHistoryPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pTrustProgressScrollPadding(
-                      bottomInset,
+                    padding: _p2pContributionScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _ContributionSummaryCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         VitCtaButton(
                           key: P2PContributionHistoryPage.exportKey,
                           variant: VitCtaButtonVariant.secondary,
@@ -89,16 +104,15 @@ class _P2PContributionHistoryPageState
                           child: const Text('Xuất CSV'),
                         ),
                         if (_feedback != null) ...[
-                          const SizedBox(height: AppSpacing.x4),
+                          const SizedBox(height: AppSpacing.x3),
                           _FeedbackBanner(message: _feedback!),
                         ],
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: AppSpacing.x3),
                         _MonthlyContributionGroups(
                           groups: snapshot.monthlyGroups,
                         ),
                         VitPageContent(
                           padding: VitContentPadding.compact,
-                          customGap: 0,
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
@@ -152,7 +166,7 @@ class _ContributionSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -172,12 +186,12 @@ class _ContributionSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           const Divider(
             height: AppSpacing.p2pMerchantCommerceDividerHeight,
             color: AppColors.divider,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _SummaryLine(
             label: 'Trung bình/giao dịch',
             value: '${_formatVnd(snapshot.averagePerTrade)} đ',
@@ -308,7 +322,7 @@ class _MonthlyContributionGroups extends StatelessWidget {
       children: [
         for (var i = 0; i < groups.length; i++) ...[
           _MonthGroup(group: groups[i]),
-          if (i != groups.length - 1) const SizedBox(height: AppSpacing.x6),
+          if (i != groups.length - 1) const SizedBox(height: AppSpacing.x4),
         ],
       ],
     );
@@ -361,7 +375,7 @@ class _MonthGroup extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         for (final contribution in group.contributions) ...[
           _ContributionCard(contribution: contribution),
           if (contribution != group.contributions.last)

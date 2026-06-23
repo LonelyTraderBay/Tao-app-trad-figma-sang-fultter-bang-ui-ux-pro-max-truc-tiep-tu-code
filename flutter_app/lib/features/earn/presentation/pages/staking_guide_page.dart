@@ -151,12 +151,12 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                                 style: AppTextStyles.baseMedium,
                               ),
                             ),
-                            IconButton(
+                            VitIconButton(
+                              icon: Icons.close_rounded,
+                              tooltip: 'Close tutorial',
+                              variant: VitIconButtonVariant.transparent,
+                              size: VitIconButtonSize.md,
                               onPressed: () => Navigator.of(context).pop(),
-                              icon: const Icon(
-                                Icons.close_rounded,
-                                color: AppColors.text3,
-                              ),
                             ),
                           ],
                         ),

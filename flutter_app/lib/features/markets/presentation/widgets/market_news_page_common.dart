@@ -32,8 +32,12 @@ class _NewsCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             onTap: onToggleExpanded,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: EdgeInsets.zero,
+            borderColor: AppColors.transparent,
             child: Padding(
               padding: AppSpacing.cardPaddingCompact,
               child: Row(
@@ -67,10 +71,13 @@ class _NewsCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: _marketTinySpace),
-                  InkWell(
+                  VitCard(
                     key: MarketNewsPage.saveKey(news.id),
                     onTap: onToggleSaved,
-                    borderRadius: AppRadii.cardRadius,
+                    variant: VitCardVariant.ghost,
+                    radius: VitCardRadius.sm,
+                    padding: EdgeInsets.zero,
+                    borderColor: AppColors.transparent,
                     child: Padding(
                       padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
                       child: Icon(
@@ -289,16 +296,22 @@ class _ExpandedNewsDetails extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                   for (final token in news.relatedTokens)
-                    Material(
-                      color: AppColors.surface2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: AppRadii.mdRadius,
-                        side: const BorderSide(color: AppColors.borderSolid),
-                      ),
-                      child: InkWell(
-                        key: MarketNewsPage.tokenKey(token),
-                        onTap: () => onTokenTap(token),
-                        borderRadius: AppRadii.mdRadius,
+                    VitCard(
+                      key: MarketNewsPage.tokenKey(token),
+                      onTap: () => onTokenTap(token),
+                      variant: VitCardVariant.ghost,
+                      radius: VitCardRadius.sm,
+                      padding: EdgeInsets.zero,
+                      borderColor: AppColors.transparent,
+                      clip: true,
+                      child: DecoratedBox(
+                        decoration: const ShapeDecoration(
+                          color: AppColors.surface2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: AppRadii.mdRadius,
+                            side: BorderSide(color: AppColors.borderSolid),
+                          ),
+                        ),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                             AppSpacing.x2,
@@ -359,12 +372,20 @@ class _NewsEmptyState extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: _marketSpace),
-          Material(
-            color: _marketPrimary.withValues(alpha: .12),
-            borderRadius: AppRadii.cardRadius,
-            child: InkWell(
-              onTap: onReset,
-              borderRadius: AppRadii.cardRadius,
+          VitCard(
+            onTap: onReset,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.md,
+            padding: EdgeInsets.zero,
+            borderColor: AppColors.transparent,
+            clip: true,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: _marketPrimary.withValues(alpha: .12),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.cardRadius,
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(
                   AppSpacing.x3,

@@ -302,40 +302,32 @@ class _ActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.inputRadius,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color.withValues(alpha: .10),
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.inputRadius,
-            side: BorderSide(color: color.withValues(alpha: .20)),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.launchpadPaddingX4,
-          child: Row(
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconMd),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.chevron_right_rounded,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .20),
+      background: ColoredBox(color: color.withValues(alpha: .10)),
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: AppSpacing.iconMd),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
                 color: color,
-                size: AppSpacing.iconMd,
+                fontWeight: AppTextStyles.bold,
               ),
-            ],
+            ),
           ),
-        ),
+          Icon(
+            Icons.chevron_right_rounded,
+            color: color,
+            size: AppSpacing.iconMd,
+          ),
+        ],
       ),
     );
   }

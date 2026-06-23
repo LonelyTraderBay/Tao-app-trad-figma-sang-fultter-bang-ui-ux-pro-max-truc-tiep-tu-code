@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/p2p/domain/entities/p2p_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -40,33 +38,15 @@ class P2PDisputeSmallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .10),
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.buttonCompact,
-          child: Padding(
-            padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, color: color, size: AppSpacing.iconSm),
-                const SizedBox(width: AppSpacing.x1),
-                Text(
-                  label,
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: true,
+      onTap: onPressed,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
+      accentColor: color,
+      leading: Icon(icon),
+      semanticLabel: 'P2P dispute action $label',
     );
   }
 }

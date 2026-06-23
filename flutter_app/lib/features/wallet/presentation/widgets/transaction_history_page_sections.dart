@@ -79,13 +79,12 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitStatusPill(
+    return VitChoicePill(
       key: TransactionHistoryPage.filterKey(filter.id),
       label: filter.label,
-      status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
-      size: VitStatusPillSize.md,
-      outline: !active,
+      selected: active,
       onTap: onTap,
+      accentColor: AppColors.primary,
     );
   }
 }
@@ -111,18 +110,15 @@ class _TransactionGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(
-          height: _historySectionHeaderHeight,
+        Padding(
+          padding: _historySectionHeaderPadding,
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: AppSpacing.zeroInsets.copyWith(left: _historyTinyGap),
-              child: Text(
-                _formatDate(group.date),
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
+            child: Text(
+              _formatDate(group.date),
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
           ),
@@ -149,34 +145,32 @@ class _TransactionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final meta = _TransactionMeta.from(tx);
 
-    return GestureDetector(
+    return VitCard(
       key: TransactionHistoryPage.transactionKey(tx.id),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: _historyRowMinHeight),
-            child: Padding(
-              padding: _historyRowPadding,
-              child: Row(
-                children: [
-                  _TransactionIcon(meta: meta),
-                  const SizedBox(width: _historyInlineGap),
-                  Expanded(
-                    child: _TransactionInfo(tx: tx, meta: meta),
-                  ),
-                  const SizedBox(width: _historyTinyGap),
-                  _AmountStatus(tx: tx, meta: meta),
-                  const SizedBox(width: _historyTinyGap),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
-              ),
+          Padding(
+            padding: _historyRowPadding,
+            child: Row(
+              children: [
+                _TransactionIcon(meta: meta),
+                const SizedBox(width: _historyInlineGap),
+                Expanded(
+                  child: _TransactionInfo(tx: tx, meta: meta),
+                ),
+                const SizedBox(width: _historyTinyGap),
+                _AmountStatus(tx: tx, meta: meta),
+                const SizedBox(width: _historyTinyGap),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconMd,
+                ),
+              ],
             ),
           ),
           const Divider(

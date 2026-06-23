@@ -52,33 +52,24 @@ class _TogglePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return _Panel(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: _Panel(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _PanelHeader(icon: icon, title: title),
-            const SizedBox(height: AppSpacing.x3),
-            Text(description, style: _panelDescriptionStyle),
-            const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
-            SizedBox(
-              height: AppSpacing.buttonCompact,
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: onTap,
-                style: FilledButton.styleFrom(
-                  backgroundColor: active ? _providerGreen : _providerPrimary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                ),
-                child: Text(active ? activeLabel : inactiveLabel),
-              ),
-            ),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _PanelHeader(icon: icon, title: title),
+          const SizedBox(height: AppSpacing.x3),
+          Text(description, style: _panelDescriptionStyle),
+          const SizedBox(height: AppSpacing.x4 - AppSpacing.x1),
+          VitCtaButton(
+            height: AppSpacing.buttonCompact,
+            variant: active
+                ? VitCtaButtonVariant.success
+                : VitCtaButtonVariant.primary,
+            onPressed: onTap,
+            child: Text(active ? activeLabel : inactiveLabel),
+          ),
+        ],
       ),
     );
   }
@@ -143,36 +134,33 @@ class _ConsentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: tileKey,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        variant: checked ? VitCardVariant.inner : VitCardVariant.standard,
-        padding: AppSpacing.providerApplicationConsentPadding,
-        borderColor: checked ? _providerPrimary : AppColors.cardBorder,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              checked
-                  ? Icons.check_circle_rounded
-                  : Icons.radio_button_unchecked_rounded,
-              color: checked ? _providerPrimary : AppColors.text3,
-              size: 22,
-            ),
-            const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  height: AppSpacing.providerApplicationConsentLineHeight,
-                ),
+      variant: checked ? VitCardVariant.inner : VitCardVariant.standard,
+      padding: AppSpacing.providerApplicationConsentPadding,
+      borderColor: checked ? _providerPrimary : AppColors.cardBorder,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            checked
+                ? Icons.check_circle_rounded
+                : Icons.radio_button_unchecked_rounded,
+            color: checked ? _providerPrimary : AppColors.text3,
+            size: 22,
+          ),
+          const SizedBox(width: AppSpacing.x4 - AppSpacing.x1),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                height: AppSpacing.providerApplicationConsentLineHeight,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -205,14 +193,16 @@ class _InfoPanel extends StatelessWidget {
 }
 
 class _Panel extends StatelessWidget {
-  const _Panel({required this.child});
+  const _Panel({required this.child, this.onTap});
 
   final Widget child;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.providerApplicationPanelPadding,
+      onTap: onTap,
       child: child,
     );
   }

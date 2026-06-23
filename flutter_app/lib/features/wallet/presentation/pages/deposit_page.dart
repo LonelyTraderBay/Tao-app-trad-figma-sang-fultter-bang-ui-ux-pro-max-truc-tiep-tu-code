@@ -147,7 +147,7 @@ class _DepositPageState extends ConsumerState<DepositPage> {
                         network: selected,
                       ),
                       const SizedBox(height: _depositGap),
-                      _RefreshButton(onTap: () {}),
+                      _RefreshButton(onTap: _refreshDepositIntent),
                     ],
                   ),
                 ),
@@ -173,6 +173,16 @@ class _DepositPageState extends ConsumerState<DepositPage> {
     await Clipboard.setData(ClipboardData(text: address));
     if (!mounted) return;
     setState(() => _copied = true);
+  }
+
+  void _refreshDepositIntent() {
+    setState(() => _copied = false);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Đã làm mới thông tin nạp tiền'),
+        duration: Duration(milliseconds: 900),
+      ),
+    );
   }
 
   void _openNetworkPicker(List<WalletDepositNetwork> networks) {

@@ -223,10 +223,11 @@ class _PauseButton extends StatelessWidget {
           color: AppColors.surface3,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
-        child: GestureDetector(
+        child: VitCard(
           key: AdminHome.pauseKey,
           onTap: onPressed,
-          behavior: HitTestBehavior.opaque,
+          variant: VitCardVariant.ghost,
+          borderColor: AppColors.transparent,
           child: Padding(
             padding: AppSpacing.adminSegmentButtonPadding,
             child: Text(

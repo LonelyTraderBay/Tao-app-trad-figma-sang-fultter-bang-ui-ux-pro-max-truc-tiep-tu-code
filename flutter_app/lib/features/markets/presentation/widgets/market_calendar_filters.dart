@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
@@ -64,7 +63,10 @@ class _UnderlineViewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        borderColor: AppColors.transparent,
+        padding: EdgeInsets.zero,
         onTap: () => onChanged(value),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -248,37 +250,13 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shape = RoundedRectangleBorder(
-      borderRadius: AppRadii.cardRadius,
-      side: BorderSide(
-        color: active
-            ? activeColor.withValues(alpha: .55)
-            : AppColors.transparent,
-      ),
-    );
-
-    return Material(
-      color: active ? activeColor.withValues(alpha: .18) : AppColors.surface2,
-      shape: shape,
-      child: InkWell(
-        onTap: onTap,
-        customBorder: shape,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.marketCalendarFilterChipHeight,
-          ),
-          child: Padding(
-            padding: AppSpacing.marketCalendarFilterChipPadding,
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: active ? activeColor : AppColors.text3,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: activeColor,
+      height: AppSpacing.marketCalendarFilterChipHeight,
+      padding: AppSpacing.marketCalendarFilterChipPadding,
     );
   }
 }
@@ -298,45 +276,14 @@ class _ImpactChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cfg = marketCalendarImpactConfig(impact);
-    final shape = RoundedRectangleBorder(
-      borderRadius: AppRadii.smRadius,
-      side: BorderSide(
-        color: active
-            ? cfg.color.withValues(alpha: .38)
-            : AppColors.borderSolid,
-      ),
-    );
-
-    return Material(
-      color: active ? cfg.color.withValues(alpha: .14) : AppColors.transparent,
-      shape: shape,
-      child: InkWell(
-        onTap: onTap,
-        customBorder: shape,
-        child: Padding(
-          padding: AppSpacing.marketCalendarImpactChipPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Material(
-                color: cfg.color,
-                shape: const CircleBorder(),
-                child: const SizedBox.square(
-                  dimension: AppSpacing.marketCalendarImpactDot,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.marketCalendarBadgeSpacing),
-              Text(
-                cfg.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? cfg.color : AppColors.text3,
-                  fontWeight: AppTextStyles.medium,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: cfg.label,
+      selected: active,
+      onTap: onTap,
+      accentColor: cfg.color,
+      height: AppSpacing.marketCalendarFilterChipHeight,
+      padding: AppSpacing.marketCalendarImpactChipPadding,
+      leading: Icon(Icons.circle, size: AppSpacing.marketCalendarImpactDot),
     );
   }
 }

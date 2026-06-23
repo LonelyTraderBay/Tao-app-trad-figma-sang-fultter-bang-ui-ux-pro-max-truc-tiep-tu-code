@@ -12,7 +12,7 @@ class _EscrowStatusHero extends StatelessWidget {
       key: P2PEscrowDetailPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pEscrowDetailHeroPadding,
+      padding: _p2pEscrowHeroPadding,
       child: Column(
         children: [
           SizedBox.square(
@@ -27,7 +27,7 @@ class _EscrowStatusHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pEscrowTightGap),
           Text(
             snapshot.statusLabel,
             textAlign: TextAlign.center,
@@ -36,7 +36,7 @@ class _EscrowStatusHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pEscrowTightGap),
           Text(
             '${_formatAmount4(order.escrowAmount)} ${order.asset} (${_formatVnd(order.totalVnd)} ${order.currency})',
             textAlign: TextAlign.center,
@@ -68,7 +68,7 @@ class _EscrowAddressCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.addressKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pEscrowDetailCardPadding,
+      padding: _p2pEscrowCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -100,12 +100,12 @@ class _EscrowAddressCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pEscrowTightGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.lg,
             borderColor: AppColors.primary20,
-            padding: AppSpacing.p2pEscrowDetailInnerPadding,
+            padding: _p2pEscrowInnerPadding,
             child: Row(
               children: [
                 Expanded(
@@ -133,13 +133,13 @@ class _EscrowAddressCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pEscrowTightGap),
           VitCard(
             key: P2PEscrowDetailPage.explorerKey,
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
             borderColor: AppColors.primary20,
-            padding: AppSpacing.p2pEscrowDetailExplorerPadding,
+            padding: _p2pEscrowExplorerPadding,
             onTap: onExplorer,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

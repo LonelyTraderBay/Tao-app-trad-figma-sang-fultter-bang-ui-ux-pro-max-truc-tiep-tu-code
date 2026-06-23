@@ -50,39 +50,35 @@ class _PolicyLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          key: ArenaCreatorPage.policyKey,
-          onTap: onTap,
-          borderRadius: AppRadii.smRadius,
-          child: Padding(
-            padding: AppSpacing.arenaCreatorPolicyPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.info_outline_rounded,
-                  color: AppColors.accent,
-                  size: AppSpacing.arenaCreatorInlineIcon,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.accent,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x1),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.accent,
-                  size: AppSpacing.arenaCreatorInlineIcon,
-                ),
-              ],
+      child: VitCard(
+        key: ArenaCreatorPage.policyKey,
+        onTap: onTap,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: AppSpacing.arenaCreatorPolicyPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: AppColors.accent,
+              size: AppSpacing.arenaCreatorInlineIcon,
             ),
-          ),
+            const SizedBox(width: AppSpacing.x2),
+            Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.accent,
+                fontWeight: AppTextStyles.medium,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x1),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.accent,
+              size: AppSpacing.arenaCreatorInlineIcon,
+            ),
+          ],
         ),
       ),
     );

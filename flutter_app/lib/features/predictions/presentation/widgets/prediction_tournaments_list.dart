@@ -28,65 +28,18 @@ class _TournamentTabBar extends StatelessWidget {
 
     return Material(
       color: AppColors.surface,
-      child: SizedBox(
-        height: VitDensity.compact.controlHeight,
-        child: Stack(
-          children: [
-            Row(
-              children: [
-                for (final item in tabs)
-                  Expanded(
-                    child: InkWell(
-                      key: item.key,
-                      onTap: () => onChanged(item.tab),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Center(
-                              child: Text(
-                                item.label,
-                                style: AppTextStyles.caption.copyWith(
-                                  color: activeTab == item.tab
-                                      ? _predictionPrimary
-                                      : AppColors.text3,
-                                  fontWeight: AppTextStyles.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          AnimatedSize(
-                            duration: const Duration(milliseconds: 160),
-                            child: Material(
-                              color: _predictionPrimary,
-                              borderRadius: AppRadii.hairlineRadius,
-                              child: SizedBox(
-                                height: AppSpacing
-                                    .predictionTournamentTabIndicatorHeight,
-                                width: activeTab == item.tab
-                                    ? AppSpacing
-                                          .predictionTournamentTabIndicatorWidth
-                                    : 0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-              ],
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeTab.name,
+        onChanged: (key) => onChanged(_TournamentTab.values.byName(key)),
+        tabs: [
+          for (final item in tabs)
+            VitTabItem(
+              key: item.tab.name,
+              label: item.label,
+              widgetKey: item.key,
             ),
-            const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: SizedBox(
-                height: AppSpacing.dividerHairline,
-                child: ColoredBox(color: AppColors.border),
-              ),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

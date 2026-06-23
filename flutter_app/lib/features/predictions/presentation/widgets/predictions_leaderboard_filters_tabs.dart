@@ -55,23 +55,15 @@ class _TimeFilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? AppColors.surface : AppColors.transparent,
-      borderRadius: AppRadii.cardRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: Center(
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.text1 : AppColors.text3,
-              fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
-            ),
-          ),
-        ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _predictionPrimary,
+      fullWidth: true,
+      height: _boardControlExtent - (_boardTinySpace * 2),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: _boardTinySpace,
       ),
     );
   }
@@ -98,18 +90,13 @@ class _MetricTabs extends StatelessWidget {
           icon: Icons.trending_up_rounded,
           active: active == PredictionLeaderboardMetric.pnl,
           onTap: () => onSelected(PredictionLeaderboardMetric.pnl),
-          trailing: InkWell(
+          trailing: VitIconButton(
             key: PredictionsLeaderboardPage.infoKey,
-            onTap: onInfoTap,
-            borderRadius: AppRadii.smRadius,
-            child: const Padding(
-              padding: EdgeInsetsDirectional.only(start: _boardTinySpace),
-              child: Icon(
-                Icons.help_outline_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.x3,
-              ),
-            ),
+            icon: Icons.help_outline_rounded,
+            tooltip: 'Leaderboard metric info',
+            onPressed: onInfoTap,
+            variant: VitIconButtonVariant.transparent,
+            size: VitIconButtonSize.sm,
           ),
         ),
         const SizedBox(width: _boardSpace),
@@ -143,50 +130,38 @@ class _MetricTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _predictionPrimary.withValues(alpha: .14)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
-        side: BorderSide(
-          color: active
-              ? _predictionPrimary.withValues(alpha: .38)
-              : AppColors.transparent,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: _boardControlExtent,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  color: active ? _predictionPrimary : AppColors.text3,
-                  size: AppSpacing.x3,
-                ),
-                const SizedBox(width: _boardTinySpace),
-                Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? _predictionPrimary : AppColors.text3,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.normal,
-                  ),
-                ),
-                ?trailing,
-              ],
+    final foreground = active ? _predictionPrimary : AppColors.text3;
+
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      height: _boardControlExtent,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
+      borderColor: active
+          ? _predictionPrimary.withValues(alpha: .38)
+          : AppColors.transparent,
+      background: active
+          ? ColoredBox(color: _predictionPrimary.withValues(alpha: .14))
+          : null,
+      clip: active,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: foreground, size: AppSpacing.x3),
+          const SizedBox(width: _boardTinySpace),
+          Text(
+            label,
+            style: AppTextStyles.caption.copyWith(
+              color: foreground,
+              fontWeight: active ? AppTextStyles.bold : AppTextStyles.normal,
             ),
           ),
-        ),
+          if (trailing != null) ...[
+            const SizedBox(width: _boardTinySpace),
+            trailing!,
+          ],
+        ],
       ),
     );
   }

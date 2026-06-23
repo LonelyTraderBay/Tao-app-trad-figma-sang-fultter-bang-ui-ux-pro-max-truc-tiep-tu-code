@@ -26,13 +26,25 @@ class _SelectionHeader extends StatelessWidget {
             ),
           ),
         ),
-        TextButton(onPressed: onSelectAll, child: const Text('Chọn tất cả')),
+        VitCtaButton(
+          onPressed: onSelectAll,
+          variant: VitCtaButtonVariant.ghost,
+          fullWidth: false,
+          height: AppSpacing.buttonCompact,
+          child: const Text('Chọn tất cả'),
+        ),
         const SizedBox(
           width: AppSpacing.launchpadDividerWidth,
           height: AppSpacing.launchpadBox18,
           child: ColoredBox(color: AppColors.divider),
         ),
-        TextButton(onPressed: onClear, child: const Text('Bỏ chọn')),
+        VitCtaButton(
+          onPressed: onClear,
+          variant: VitCtaButtonVariant.ghost,
+          fullWidth: false,
+          height: AppSpacing.buttonCompact,
+          child: const Text('Bỏ chọn'),
+        ),
       ],
     );
   }
@@ -163,16 +175,15 @@ class _BatchPositionCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             _CountBadge(count: position.vestingEntries.length),
-                            TextButton(
+                            VitCtaButton(
                               key: LaunchpadBatchClaimPage.detailKey(
                                 position.positionId,
                               ),
-                              style: TextButton.styleFrom(
-                                minimumSize: const Size(0, 30),
-                                padding: AppSpacing.launchpadInlinePillPadding,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
                               onPressed: onDetail,
+                              variant: VitCtaButtonVariant.secondary,
+                              fullWidth: false,
+                              height: AppSpacing.buttonCompact,
+                              padding: AppSpacing.launchpadInlinePillPadding,
                               child: const Text('Chi tiết'),
                             ),
                           ],

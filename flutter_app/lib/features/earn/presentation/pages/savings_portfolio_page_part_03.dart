@@ -344,42 +344,18 @@ class _SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.portfolioBtnGhost,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: SizedBox(
-          height: _savingsPortfolioSecondaryButtonExtent,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.xlRadius,
-                side: BorderSide(color: color.withValues(alpha: 0.18)),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, color: color, size: AppSpacing.iconSm),
-                const SizedBox(width: AppSpacing.x2),
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: color,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    final variant = color == AppColors.sell
+        ? VitCtaButtonVariant.danger
+        : color == AppColors.warn
+        ? VitCtaButtonVariant.warning
+        : VitCtaButtonVariant.secondary;
+
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: variant,
+      height: _savingsPortfolioSecondaryButtonExtent,
+      leading: Icon(icon),
+      child: Text(label),
     );
   }
 }

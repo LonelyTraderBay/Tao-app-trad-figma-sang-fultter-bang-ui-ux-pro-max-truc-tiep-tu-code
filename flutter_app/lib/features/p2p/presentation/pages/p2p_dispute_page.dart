@@ -273,33 +273,30 @@ class _ReasonTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.sell10 : AppColors.transparent,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: VitCard(
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
-          borderColor: selected ? AppColors.sell : AppColors.borderSolid,
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.buttonCompact + AppSpacing.x2,
-          ),
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            reason,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.sell : AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: selected ? AppColors.sell : AppColors.borderSolid,
+      background: ColoredBox(
+        color: selected ? AppColors.sell10 : AppColors.transparent,
+      ),
+      clip: true,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.buttonCompact + AppSpacing.x2,
+      ),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        reason,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.caption.copyWith(
+          color: selected ? AppColors.sell : AppColors.text1,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );
@@ -327,48 +324,45 @@ class _EvidenceUploadBox extends StatelessWidget {
         color: uploaded ? AppColors.buy20 : AppColors.accent30,
         radius: AppRadii.cardRadius.topLeft,
       ),
-      child: Material(
-        color: AppColors.surface.withValues(alpha: .56),
-        borderRadius: AppRadii.cardRadius,
-        child: InkWell(
-          key: P2PDisputePage.uploadKey,
-          onTap: onTap,
-          borderRadius: AppRadii.cardRadius,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
+      child: VitCard(
+        key: P2PDisputePage.uploadKey,
+        onTap: onTap,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.md,
+        background: ColoredBox(color: AppColors.surface.withValues(alpha: .56)),
+        clip: true,
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: AppSpacing.x3,
+          vertical: AppSpacing.x2,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              uploaded
+                  ? Icons.check_circle_outline_rounded
+                  : Icons.upload_outlined,
+              color: color,
+              size: AppSpacing.iconSm,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  uploaded
-                      ? Icons.check_circle_outline_rounded
-                      : Icons.upload_outlined,
-                  color: color,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  uploaded ? 'evidence_p2p001.png' : title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  uploaded ? 'Đã thêm bằng chứng' : subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              uploaded ? 'evidence_p2p001.png' : title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
-          ),
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              uploaded ? 'Đã thêm bằng chứng' : subtitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
         ),
       ),
     );

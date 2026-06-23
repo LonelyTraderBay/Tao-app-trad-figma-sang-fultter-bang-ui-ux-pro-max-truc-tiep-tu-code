@@ -276,10 +276,11 @@ class _ShareReceiptButton extends StatelessWidget {
             width: AppSpacing.predictionReceiptShareBorderWidth,
           ),
         ),
-        child: InkWell(
+        child: VitCard(
           key: PredictionOrderReceiptPage.shareKey,
           onTap: () {},
-          borderRadius: AppRadii.inputRadius,
+          variant: VitCardVariant.ghost,
+          padding: AppSpacing.zeroInsets,
           child: SizedBox(
             height: VitDensity.compact.controlHeight,
             child: Row(

@@ -137,9 +137,15 @@ class _ExpandedCopyDetails extends StatelessWidget {
                         ),
                       ),
                     ),
-                    InkWell(
+                    VitCtaButton(
                       key: ActiveCopiesPage.detailsKey(copy.id),
-                      onTap: onViewDetails,
+                      onPressed: onViewDetails,
+                      variant: VitCtaButtonVariant.ghost,
+                      height: AppSpacing.buttonCompact,
+                      fullWidth: false,
+                      padding: const EdgeInsetsDirectional.symmetric(
+                        horizontal: AppSpacing.x2,
+                      ),
                       child: Text(
                         'Xem tất cả',
                         style: AppTextStyles.micro.copyWith(

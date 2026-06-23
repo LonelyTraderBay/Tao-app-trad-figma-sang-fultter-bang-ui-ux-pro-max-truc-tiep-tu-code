@@ -12,7 +12,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: P2PBlacklistPage.summaryKey,
       radius: VitCardRadius.lg,
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+      padding: _p2pBlacklistCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -45,7 +45,7 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pBlacklistSectionGap),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
@@ -106,7 +106,7 @@ class _FilterRail extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       physics: const ClampingScrollPhysics(),
-      padding: AppSpacing.p2pBlacklistFilterRailPadding,
+      padding: _p2pBlacklistFilterRailPadding,
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -115,7 +115,7 @@ class _FilterRail extends StatelessWidget {
               selected: filter.id == activeId,
               onTap: () => onChanged(filter.id),
             ),
-            const SizedBox(width: AppSpacing.x2),
+            const SizedBox(width: AppSpacing.x1),
           ],
         ],
       ),
@@ -137,33 +137,14 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = filter.id == 'all' ? AppColors.primary : _reasonColor(filter);
-    return Material(
+    return VitChoicePill(
       key: P2PBlacklistPage.filterKey(filter.id),
-      color: selected ? color.withValues(alpha: .14) : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(
-          color: selected
-              ? color.withValues(alpha: .42)
-              : AppColors.borderSolid,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pBlacklistChipPadding,
-          child: Text(
-            filter.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: selected ? color : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+      label: filter.label,
+      selected: selected,
+      onTap: onTap,
+      padding: _p2pBlacklistFilterChipPadding,
+      accentColor: color,
+      semanticLabel: 'Blacklist filter ${filter.label}',
     );
   }
 }

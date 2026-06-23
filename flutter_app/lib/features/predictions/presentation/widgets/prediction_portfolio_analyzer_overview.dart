@@ -29,50 +29,18 @@ class _AnalyzerTabBar extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       shape: const Border(bottom: BorderSide(color: AppColors.border)),
-      child: SizedBox(
-        height: VitDensity.compact.controlHeight,
-        child: Row(
-          children: [
-            for (final item in tabs)
-              Expanded(
-                child: InkWell(
-                  key: item.key,
-                  onTap: () => onChanged(item.tab),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Text(
-                            item.label,
-                            style: AppTextStyles.caption.copyWith(
-                              color: activeTab == item.tab
-                                  ? _predictionPrimary
-                                  : AppColors.text3,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      AnimatedSize(
-                        duration: const Duration(milliseconds: 160),
-                        child: ClipRRect(
-                          borderRadius: AppRadii.hairlineRadius,
-                          child: SizedBox(
-                            height: AppSpacing.dividerHairline,
-                            width: activeTab == item.tab
-                                ? AppSpacing.predictionAnalyzerTabIndicatorWidth
-                                : 0,
-                            child: const ColoredBox(color: _predictionPrimary),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        ),
+      child: VitTabBar(
+        variant: VitTabBarVariant.underline,
+        activeKey: activeTab.name,
+        onChanged: (key) => onChanged(_AnalyzerTab.values.byName(key)),
+        tabs: [
+          for (final item in tabs)
+            VitTabItem(
+              key: item.tab.name,
+              label: item.label,
+              widgetKey: item.key,
+            ),
+        ],
       ),
     );
   }

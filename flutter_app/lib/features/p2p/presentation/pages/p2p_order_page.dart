@@ -24,6 +24,30 @@ part 'p2p_order_page_part_01.dart';
 part 'p2p_order_page_part_02.dart';
 part 'p2p_order_page_part_03.dart';
 
+const double _p2pOrderVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pOrderNativeNavClearance =
+    _p2pOrderVisualNavClearance - AppSpacing.x4;
+const double _p2pOrderVisualClearance = AppSpacing.x3;
+const double _p2pOrderNativeClearance = AppSpacing.x2;
+const double _p2pOrderDividerHeight = AppSpacing.dividerHairline;
+const double _p2pOrderStepperConnectorHeight = AppSpacing.hairlineStroke;
+const double _p2pOrderSmallButtonHeight = AppSpacing.buttonCompact;
+const double _p2pOrderQuickButtonHeight = AppSpacing.buttonCompact;
+const double _p2pOrderTimelineNodeSize = AppSpacing.x6;
+const double _p2pOrderTimelineConnectorHeight = AppSpacing.x5;
+const double _p2pOrderSafetyIconBox = AppSpacing.x5;
+const EdgeInsets _p2pOrderScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pOrderCompactCardPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pOrderTimelineItemPadding = EdgeInsets.only(
+  bottom: AppSpacing.x2,
+);
+
 enum _P2POrderUiStep { payment, confirm }
 
 class P2POrderPage extends ConsumerStatefulWidget {

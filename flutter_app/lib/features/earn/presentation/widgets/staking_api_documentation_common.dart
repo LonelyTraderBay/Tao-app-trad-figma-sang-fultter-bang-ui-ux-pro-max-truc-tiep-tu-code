@@ -101,37 +101,19 @@ class StakingApiDocumentationCopyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: copied
-          ? AppColors.buy.withValues(alpha: 0.12)
-          : AppColors.surface2,
-      borderRadius: AppRadii.smRadius,
-      child: InkWell(
-        borderRadius: AppRadii.smRadius,
-        onTap: onTap,
-        child: Padding(
-          padding: AppSpacing.earnSmallPillPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                copied
-                    ? Icons.check_circle_outline_rounded
-                    : Icons.content_copy_rounded,
-                color: copied ? AppColors.buy : AppColors.text3,
-                size: AppSpacing.stakingApiCopyIcon,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                copied ? 'Copied' : 'Copy',
-                style: AppTextStyles.micro.copyWith(
-                  color: copied ? AppColors.buy : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return VitChoicePill(
+      label: copied ? 'Copied' : 'Copy',
+      selected: copied,
+      onTap: onTap,
+      tone: VitChoicePillTone.success,
+      accentColor: AppColors.buy,
+      padding: AppSpacing.earnSmallPillPadding,
+      semanticLabel: copied ? 'Copied API snippet' : 'Copy API snippet',
+      leading: Icon(
+        copied
+            ? Icons.check_circle_outline_rounded
+            : Icons.content_copy_rounded,
+        size: AppSpacing.stakingApiCopyIcon,
       ),
     );
   }

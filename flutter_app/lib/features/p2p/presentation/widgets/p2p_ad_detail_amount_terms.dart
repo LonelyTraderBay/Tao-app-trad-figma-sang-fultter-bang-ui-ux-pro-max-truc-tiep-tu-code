@@ -240,28 +240,15 @@ class _PercentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitChoicePill(
       key: P2PAdDetailPage.percentKey(percent),
+      label: '$percent%',
+      selected: selected,
       onTap: onTap,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: AppSpacing.buttonCompact),
-        child: Material(
-          color: selected ? AppColors.primary12 : AppColors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-          child: Padding(
-            padding: AppSpacing.p2pAdDetailPercentPadding,
-            child: Center(
-              child: Text(
-                '$percent%',
-                style: AppTextStyles.micro.copyWith(
-                  color: selected ? AppModuleAccents.p2p : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: AppModuleAccents.p2p,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.p2pAdDetailPercentPadding,
+      semanticLabel: 'Chọn $percent% số lượng quảng cáo P2P',
     );
   }
 }

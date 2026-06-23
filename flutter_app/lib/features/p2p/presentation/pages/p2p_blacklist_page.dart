@@ -20,6 +20,40 @@ part '../widgets/p2p_blacklist_summary_filters.dart';
 part '../widgets/p2p_blacklist_entries.dart';
 part '../widgets/p2p_blacklist_common.dart';
 
+const _p2pBlacklistVisualClearance = AppSpacing.x3;
+const _p2pBlacklistNativeClearance = AppSpacing.x2;
+const _p2pBlacklistCardPadding = EdgeInsetsDirectional.all(AppSpacing.x2);
+const _p2pBlacklistTinyPadding = EdgeInsetsDirectional.all(AppSpacing.x2);
+const _p2pBlacklistSummaryPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  0,
+  AppSpacing.contentPad,
+  AppSpacing.x1,
+);
+const _p2pBlacklistHorizontalPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.contentPad,
+);
+const _p2pBlacklistResultPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x1,
+  AppSpacing.contentPad,
+  0,
+);
+const _p2pBlacklistFilterRailPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.contentPad,
+);
+const _p2pBlacklistFilterChipPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x1,
+);
+const _p2pBlacklistEntryGap = AppSpacing.x1;
+const _p2pBlacklistSectionGap = AppSpacing.x2;
+const _p2pBlacklistTightGap = AppSpacing.x1;
+const _p2pBlacklistActionHeight = AppSpacing.searchBarCompactHeight;
+
+EdgeInsets _p2pBlacklistScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.only(bottom: scrollEndPadding);
+
 class P2PBlacklistPage extends ConsumerStatefulWidget {
   const P2PBlacklistPage({super.key, this.shellRenderMode});
 
@@ -56,12 +90,10 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pBlacklistProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pBlacklistBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pBlacklistBottomInsetNative) +
+            ? DeviceMetrics.bottomChrome + _p2pBlacklistVisualClearance
+            : DeviceMetrics.nativeBottomChrome + _p2pBlacklistNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final entries = snapshot.entries
         .where((item) => !_removedIds.contains(item.id))
@@ -100,21 +132,21 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pBlacklistScrollPadding(bottomInset),
+                    padding: _p2pBlacklistScrollPadding(scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
                       children: [
                         Padding(
-                          padding: AppSpacing.p2pBlacklistSummaryPadding,
+                          padding: _p2pBlacklistSummaryPadding,
                           child: _SummaryCard(
                             snapshot: snapshot,
                             entries: entries,
                           ),
                         ),
                         Padding(
-                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                          padding: _p2pBlacklistHorizontalPadding,
                           child: VitSearchBar(
                             key: P2PBlacklistPage.searchKey,
                             controller: _searchController,
@@ -133,7 +165,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                           },
                         ),
                         Padding(
-                          padding: AppSpacing.p2pBlacklistResultPadding,
+                          padding: _p2pBlacklistResultPadding,
                           child: Text(
                             '${filtered.length} kết quả',
                             style: AppTextStyles.micro.copyWith(
@@ -143,7 +175,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                           ),
                         ),
                         Padding(
-                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                          padding: _p2pBlacklistHorizontalPadding,
                           child: _EntryList(
                             snapshot: snapshot,
                             entries: filtered,
@@ -164,7 +196,7 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                           ),
                         ),
                         Padding(
-                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                          padding: _p2pBlacklistHorizontalPadding,
                           child: _InfoNote(snapshot: snapshot),
                         ),
                       ],

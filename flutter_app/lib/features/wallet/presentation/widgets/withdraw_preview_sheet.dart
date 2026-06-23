@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 
 class WithdrawPreviewSheet extends StatelessWidget {
   const WithdrawPreviewSheet({required this.preview, super.key});
@@ -87,28 +88,21 @@ class WithdrawConfirmActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foreground = primary ? AppColors.text1 : AppColors.text2;
     return Semantics(
       button: true,
       enabled: true,
       label: primary ? 'Confirm withdrawal' : 'Cancel withdrawal preview',
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: VitCard(
-          height: AppSpacing.ctaHeight,
-          variant: VitCardVariant.standard,
-          borderColor: primary ? withdrawPrimary : AppColors.borderSolid,
-          alignment: Alignment.center,
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: foreground,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
+      child: VitCtaButton(
+        height: AppSpacing.ctaHeight,
+        variant: primary
+            ? VitCtaButtonVariant.warning
+            : VitCtaButtonVariant.secondary,
+        onPressed: onTap,
+        child: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
       ),
     );

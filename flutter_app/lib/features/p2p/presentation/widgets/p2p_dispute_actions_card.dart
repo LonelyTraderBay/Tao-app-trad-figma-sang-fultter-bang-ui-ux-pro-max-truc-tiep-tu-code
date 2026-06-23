@@ -88,66 +88,53 @@ class _ActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .08),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(color: color.withValues(alpha: .18)),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.buttonStandard,
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: color.withValues(alpha: .18),
+      background: ColoredBox(color: color.withValues(alpha: .08)),
+      clip: true,
+      constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
+      padding: AppSpacing.p2pDisputeActionTilePadding,
+      child: Row(
+        children: [
+          Material(
+            color: color.withValues(alpha: .14),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.smRadius,
+            ),
+            child: SizedBox(
+              width: AppSpacing.p2pDisputeActionIconBox,
+              height: AppSpacing.p2pDisputeActionIconBox,
+              child: Icon(icon, color: color, size: AppSpacing.iconSm),
+            ),
           ),
-          child: Padding(
-            padding: AppSpacing.p2pDisputeActionTilePadding,
-            child: Row(
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Material(
-                  color: color.withValues(alpha: .14),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: SizedBox(
-                    width: AppSpacing.p2pDisputeActionIconBox,
-                    height: AppSpacing.p2pDisputeActionIconBox,
-                    child: Icon(icon, color: color, size: AppSpacing.iconSm),
+                Text(
+                  title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      Text(
-                        subtitle,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconSm,
+                Text(
+                  subtitle,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-        ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconSm,
+          ),
+        ],
       ),
     );
   }

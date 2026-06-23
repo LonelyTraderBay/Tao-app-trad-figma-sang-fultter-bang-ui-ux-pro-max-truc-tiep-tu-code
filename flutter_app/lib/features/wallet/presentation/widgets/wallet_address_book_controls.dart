@@ -54,27 +54,14 @@ class _NetworkFilterBar extends StatelessWidget {
         itemBuilder: (context, index) {
           final filter = filters[index];
           final selected = filter == active;
-          return GestureDetector(
+          return VitChoicePill(
             key: AddressBookPage.filterKey(filter),
+            label: filter,
+            selected: selected,
             onTap: () => onChanged(filter),
-            behavior: HitTestBehavior.opaque,
-            child: VitCard(
-              variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
-              radius: VitCardRadius.sm,
-              height: _bookFilterHeight,
-              alignment: Alignment.center,
-              padding: _bookFilterPadding,
-              borderColor: selected
-                  ? AppColors.primary60
-                  : AppColors.transparent,
-              child: Text(
-                filter,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? _bookPrimary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
+            height: _bookFilterHeight,
+            padding: _bookFilterPadding,
+            accentColor: _bookPrimary,
           );
         },
         separatorBuilder: (_, _) => const SizedBox(width: _bookInlineGap),

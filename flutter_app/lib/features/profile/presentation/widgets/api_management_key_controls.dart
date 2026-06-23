@@ -23,9 +23,10 @@ class _ToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: VitTogglePill(
         enabled: active,
         width: AppSpacing.profileApiToggleWidth,
@@ -117,9 +118,11 @@ class _IconTap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
       child: Icon(icon, color: color, size: AppSpacing.profileApiIconAction),
     );
   }

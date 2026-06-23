@@ -210,8 +210,12 @@ class _UnderlinedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
+      child: VitCard(
         onTap: () => onChanged(value),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
+        borderColor: AppColors.transparent,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -264,14 +268,16 @@ class _ActiveIndicatorSummary extends StatelessWidget {
           ),
         ),
         if (onClearAll != null)
-          TextButton(
+          VitCard(
             key: AdvancedChartsPage.clearAllKey,
-            onPressed: onClearAll,
-            style: TextButton.styleFrom(
-              minimumSize: const Size(0, _advancedActionMinHeight),
-              padding: _advancedClearButtonPadding,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            onTap: onClearAll,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: _advancedClearButtonPadding,
+            constraints: const BoxConstraints(
+              minHeight: _advancedActionMinHeight,
             ),
+            borderColor: AppColors.transparent,
             child: Text(
               'Xóa tất cả',
               style: AppTextStyles.micro.copyWith(color: AppColors.sell),
@@ -317,8 +323,14 @@ class _ActiveIndicatorChips extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: _advancedSmallGap),
-                  GestureDetector(
+                  VitCard(
                     onTap: () => onRemove(indicator.id),
+                    variant: VitCardVariant.ghost,
+                    radius: VitCardRadius.sm,
+                    padding: EdgeInsets.zero,
+                    width: _advancedChipRemoveIcon,
+                    height: _advancedChipRemoveIcon,
+                    borderColor: AppColors.transparent,
                     child: Icon(
                       Icons.close_rounded,
                       size: _advancedChipRemoveIcon,
@@ -439,28 +451,13 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? color.withValues(alpha: .10) : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
-        side: BorderSide(
-          color: active ? color.withValues(alpha: .28) : AppColors.transparent,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: _advancedFilterChipPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? color : AppColors.text3,
-              fontWeight: AppTextStyles.medium,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: color,
+      padding: _advancedFilterChipPadding,
+      semanticLabel: label,
     );
   }
 }

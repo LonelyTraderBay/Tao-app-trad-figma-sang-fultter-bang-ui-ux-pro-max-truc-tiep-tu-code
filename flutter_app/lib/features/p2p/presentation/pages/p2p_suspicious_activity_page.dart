@@ -12,10 +12,23 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pSuspiciousVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pSuspiciousNativeNavClearance =
+    _p2pSuspiciousVisualNavClearance - AppSpacing.x4;
+const double _p2pSuspiciousVisualClearance = AppSpacing.x3;
+const double _p2pSuspiciousNativeClearance = AppSpacing.x2;
+const double _p2pSuspiciousIconBox = AppSpacing.buttonCompact + AppSpacing.x1;
+const EdgeInsets _p2pSuspiciousScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
 
 class P2PSuspiciousActivityPage extends ConsumerStatefulWidget {
   const P2PSuspiciousActivityPage({super.key, this.shellRenderMode});
@@ -49,12 +62,11 @@ class _P2PSuspiciousActivityPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pSuspiciousActivityProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pComplianceBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pComplianceBottomInsetNative) +
+            ? _p2pSuspiciousVisualNavClearance + _p2pSuspiciousVisualClearance
+            : _p2pSuspiciousNativeNavClearance +
+                  _p2pSuspiciousNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final unreviewedCount = _alerts.where((alert) => !alert.reviewed).length;
 
@@ -70,10 +82,8 @@ class _P2PSuspiciousActivityPageState
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),
           ),
-          child: VitPageContent(
-            padding: VitContentPadding.none,
-            fullBleed: true,
-            customGap: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: RefreshIndicator(
@@ -93,8 +103,8 @@ class _P2PSuspiciousActivityPageState
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: AppSpacing.p2pComplianceScrollPadding(
-                        bottomInset,
+                      padding: _p2pSuspiciousScrollPadding.copyWith(
+                        bottom: scrollEndPadding,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -103,7 +113,7 @@ class _P2PSuspiciousActivityPageState
                             unreviewedCount: unreviewedCount,
                             subtitle: snapshot.summarySubtitle,
                           ),
-                          const SizedBox(height: AppSpacing.x4),
+                          const SizedBox(height: AppSpacing.x3),
                           if (_alerts.isEmpty)
                             _EmptyState(snapshot: snapshot)
                           else
@@ -169,16 +179,16 @@ class _SummaryCard extends StatelessWidget {
               borderRadius: AppRadii.lgRadius,
             ),
             child: const SizedBox(
-              width: AppSpacing.p2pComplianceIconBox,
-              height: AppSpacing.p2pComplianceIconBox,
+              width: _p2pSuspiciousIconBox,
+              height: _p2pSuspiciousIconBox,
               child: Icon(
                 Icons.warning_amber_rounded,
                 color: AppColors.warn,
-                size: AppSpacing.iconMd,
+                size: AppSpacing.p2pComplianceUnavailableIcon,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,8 +258,8 @@ class _AlertCard extends StatelessWidget {
               borderRadius: AppRadii.lgRadius,
             ),
             child: SizedBox(
-              width: AppSpacing.p2pComplianceIconBox,
-              height: AppSpacing.p2pComplianceIconBox,
+              width: _p2pSuspiciousIconBox,
+              height: _p2pSuspiciousIconBox,
               child: Icon(
                 Icons.warning_amber_rounded,
                 color: color,
@@ -311,15 +321,14 @@ class _DismissButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.square(
       dimension: AppSpacing.p2pComplianceDismissButton,
-      child: IconButton(
+      child: VitInlineIconAction(
         key: P2PSuspiciousActivityPage.dismissKey(alertId),
+        icon: Icons.close_rounded,
+        tooltip: 'ÄÃ³ng cáº£nh bÃ¡o',
         onPressed: () => onDismiss(alertId),
-        padding: EdgeInsets.zero,
-        icon: const Icon(
-          Icons.close_rounded,
-          color: AppColors.text3,
-          size: AppSpacing.iconSm,
-        ),
+        color: AppColors.text3,
+        size: AppSpacing.iconSm,
+        padding: 0,
       ),
     );
   }

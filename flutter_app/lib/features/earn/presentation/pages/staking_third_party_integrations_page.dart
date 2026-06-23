@@ -300,34 +300,14 @@ class _ApiAccess extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),
-                Material(
-                  color: AppColors.transparent,
-                  child: InkWell(
-                    key: StakingThirdPartyIntegrationsPage.apiDocsKey,
-                    borderRadius: AppRadii.smRadius,
-                    onTap: () => context.go(snapshot.apiDocsRoute),
-                    child: Padding(
-                      padding: AppSpacing.earnVerticalPaddingX1,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            snapshot.apiActionLabel,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.primarySoft,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                          const SizedBox(width: AppSpacing.x1),
-                          const Icon(
-                            Icons.open_in_new_rounded,
-                            color: AppColors.primarySoft,
-                            size: AppSpacing.iconSm,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                VitIconButton(
+                  key: StakingThirdPartyIntegrationsPage.apiDocsKey,
+                  icon: Icons.open_in_new_rounded,
+                  tooltip: snapshot.apiActionLabel,
+                  label: snapshot.apiActionLabel,
+                  variant: VitIconButtonVariant.primary,
+                  size: VitIconButtonSize.md,
+                  onPressed: () => context.go(snapshot.apiDocsRoute),
                 ),
               ],
             ),

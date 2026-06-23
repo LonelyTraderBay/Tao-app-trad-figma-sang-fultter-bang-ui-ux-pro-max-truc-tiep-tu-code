@@ -33,16 +33,16 @@ class _ConfirmTransferView extends StatelessWidget {
                 color: AppModuleAccents.p2p.withValues(alpha: .14),
                 shape: const CircleBorder(),
                 child: const SizedBox(
-                  width: AppSpacing.p2pWalletTransferConfirmIconBox,
-                  height: AppSpacing.p2pWalletTransferConfirmIconBox,
+                  width: _p2pTransferConfirmIconBox,
+                  height: _p2pTransferConfirmIconBox,
                   child: Icon(
                     Icons.swap_horiz_rounded,
                     color: AppModuleAccents.p2p,
-                    size: AppSpacing.p2pWalletTransferConfirmIcon,
+                    size: _p2pTransferConfirmIcon,
                   ),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: _p2pTransferMajorGap),
               Text('Kiểm tra thông tin', style: AppTextStyles.sectionTitle),
               const SizedBox(height: AppSpacing.x1),
               Text(
@@ -53,7 +53,7 @@ class _ConfirmTransferView extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pTransferMajorGap),
         VitCard(
           radius: VitCardRadius.lg,
           padding: AppSpacing.zeroInsets,
@@ -87,9 +87,9 @@ class _ConfirmTransferView extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pTransferMajorGap),
         _EscrowNotice(text: snapshot.confirmationNote),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pTransferMajorGap),
         Row(
           children: [
             Expanded(
@@ -131,7 +131,7 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pWalletCardPadding,
+      padding: _p2pTransferConfirmRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -182,7 +182,7 @@ class _ConfirmButton extends StatelessWidget {
     return VitCtaButton(
       key: buttonKey,
       onPressed: onTap,
-      height: AppSpacing.inputHeight,
+      height: _p2pTransferConfirmButtonHeight,
       variant: variant,
       child: Text(label),
     );

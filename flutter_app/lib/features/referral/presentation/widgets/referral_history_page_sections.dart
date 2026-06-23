@@ -120,38 +120,14 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
       key: ReferralHistoryPage.filterKey(item.filter),
+      label: '${item.label} (${item.count})',
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: SizedBox(
-        height: AppSpacing.referralHistoryFilterHeight,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? AppColors.primary12 : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: active ? AppColors.primary40 : AppColors.borderSolid,
-              ),
-              borderRadius: AppRadii.mdRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.referralFilterChipPadding,
-            child: Center(
-              child: Text(
-                '${item.label} (${item.count})',
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? AppColors.primary : AppColors.text2,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: AppColors.primary,
+      height: AppSpacing.referralHistoryFilterHeight,
+      padding: AppSpacing.referralFilterChipPadding,
     );
   }
 }
@@ -212,35 +188,14 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
       key: ReferralHistoryPage.sortOptionKey(option.sort),
+      label: option.label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: SizedBox(
-        height: AppSpacing.referralStepBox,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? AppColors.primary12 : AppColors.transparent,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.referralSortChipPadding,
-            child: Center(
-              child: Text(
-                option.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? AppColors.primary : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: AppColors.primary,
+      height: AppSpacing.referralStepBox,
+      padding: AppSpacing.referralSortChipPadding,
     );
   }
 }

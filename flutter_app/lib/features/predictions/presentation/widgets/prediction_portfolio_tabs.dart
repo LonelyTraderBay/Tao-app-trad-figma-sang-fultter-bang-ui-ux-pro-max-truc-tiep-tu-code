@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class PredictionPortfolioTabs extends StatelessWidget {
   const PredictionPortfolioTabs({
@@ -86,9 +87,10 @@ class PredictionPortfolioTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
+      variant: VitCardVariant.ghost,
+      padding: AppSpacing.zeroInsets,
       child: TweenAnimationBuilder<Color?>(
         duration: const Duration(milliseconds: 160),
         tween: ColorTween(

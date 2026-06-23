@@ -309,10 +309,15 @@ class _TitleField extends StatelessWidget {
             runSpacing: AppSpacing.x3,
             children: [
               for (final suggestion in suggestions)
-                GestureDetector(
+                VitCard(
+                  variant: VitCardVariant.ghost,
+                  radius: VitCardRadius.sm,
+                  padding: AppSpacing.zeroInsets,
                   onTap: () => onSuggestion(suggestion),
                   child: Text(
                     '"$suggestion"',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ),
@@ -416,46 +421,45 @@ class _ChallengeTypeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.arenaSmartRuleTilePadding,
       onTap: () {
         HapticFeedback.selectionClick();
         onTap();
       },
-      borderRadius: AppRadii.mdRadius,
-      child: Padding(
-        padding: AppSpacing.arenaSmartRuleTilePadding,
-        child: Row(
-          children: [
-            Icon(
-              _challengeTypeIcon(type.id),
-              color: selected ? AppColors.buy : _challengeTypeColor(type.id),
-              size: AppSpacing.arenaSmartRuleTinyIcon,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    type.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: selected ? AppColors.buy : AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      child: Row(
+        children: [
+          Icon(
+            _challengeTypeIcon(type.id),
+            color: selected ? AppColors.buy : _challengeTypeColor(type.id),
+            size: AppSpacing.arenaSmartRuleTinyIcon,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  type.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: selected ? AppColors.buy : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  Text(
-                    type.description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+                ),
+                Text(
+                  type.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

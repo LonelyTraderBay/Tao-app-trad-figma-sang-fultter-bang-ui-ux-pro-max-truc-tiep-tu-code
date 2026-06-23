@@ -13,7 +13,6 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -22,6 +21,30 @@ part '../widgets/p2p_payment_method_add_page_sections.dart';
 part '../widgets/p2p_payment_method_add_page_common.dart';
 
 enum P2PPaymentAddType { bank, ewallet }
+
+const double _p2pPaymentAddVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pPaymentAddNativeNavClearance =
+    _p2pPaymentAddVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
+const double _p2pPaymentAddScrollEnd = AppSpacing.x3;
+const double _p2pPaymentAddMajorGap = AppSpacing.x3;
+const double _p2pPaymentAddSectionGap = AppSpacing.x2;
+const double _p2pPaymentAddTypeExtent = AppSpacing.searchBarCompactHeight;
+const double _p2pPaymentAddIconBox = AppSpacing.buttonCompact;
+const double _p2pPaymentAddPreviewLabelWidth = 96;
+const EdgeInsets _p2pPaymentAddCardPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pPaymentAddOptionPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x2,
+);
+
+EdgeInsets _p2pPaymentAddScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
 
 class P2PPaymentMethodAddPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodAddPage({
@@ -81,11 +104,10 @@ class _P2PPaymentMethodAddPageState
       bankType: _type == P2PPaymentAddType.bank,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    const bottomInset = AppSpacing.p2pPaymentAddBottomInset;
     final footerInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
+            ? _p2pPaymentAddVisualNavClearance
+            : _p2pPaymentAddNativeNavClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -113,18 +135,20 @@ class _P2PPaymentMethodAddPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodAddPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentAddScrollPadding(bottomInset),
+                    padding: _p2pPaymentAddScrollPadding(
+                      _p2pPaymentAddScrollEnd,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _TypeSelector(value: _type, onChanged: _changeType),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pPaymentAddMajorGap),
                         _SectionLabel(
                           _type == P2PPaymentAddType.bank
                               ? 'Chọn ngân hàng'
                               : 'Chọn ví điện tử',
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pPaymentAddSectionGap),
                         _PaymentOptionWrap(
                           options: options,
                           selected: _selectedMethod,
@@ -133,7 +157,7 @@ class _P2PPaymentMethodAddPageState
                             setState(() => _selectedMethod = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pPaymentAddMajorGap),
                         VitInput(
                           controller: _accountController,
                           fieldKey: P2PPaymentMethodAddPage.accountFieldKey,
@@ -151,7 +175,7 @@ class _P2PPaymentMethodAddPageState
                           textInputAction: TextInputAction.next,
                           onChanged: (_) => setState(() {}),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pPaymentAddMajorGap),
                         VitInput(
                           controller: _ownerController,
                           fieldKey: P2PPaymentMethodAddPage.ownerFieldKey,
@@ -164,10 +188,10 @@ class _P2PPaymentMethodAddPageState
                           textInputAction: TextInputAction.done,
                           onChanged: (_) => setState(() {}),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pPaymentAddMajorGap),
                         _SecurityNote(note: snapshot.securityNote),
                         if (_isValidFor(controller)) ...[
-                          const SizedBox(height: AppSpacing.x4),
+                          const SizedBox(height: _p2pPaymentAddMajorGap),
                           _PaymentPreview(
                             preview: controller.preview(
                               selectedMethod: _selectedMethod!,
@@ -177,41 +201,32 @@ class _P2PPaymentMethodAddPageState
                             type: _type,
                           ),
                         ],
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Payment method add state review',
-                              message:
-                                  'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
-                              contractId: 'SC-232',
-                            ),
-                          ],
+                        const SizedBox(height: _p2pPaymentAddSectionGap),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Payment method add state review',
+                          message:
+                              'Payment type, selected method, masked account preview, ownership risk, limit message, confirmation dialog, and submitting state remain visible before saving.',
+                          contractId: 'SC-232',
                         ),
+                        const SizedBox(height: _p2pPaymentAddMajorGap),
+                        Semantics(
+                          label: 'Preview and add P2P payment method',
+                          button: true,
+                          enabled: _isValidFor(controller) && !_submitting,
+                          child: VitCtaButton(
+                            key: P2PPaymentMethodAddPage.saveButtonKey,
+                            loading: _submitting,
+                            onPressed: _isValidFor(controller) && !_submitting
+                                ? () => _confirmSave(context, controller)
+                                : null,
+                            child: Text(
+                              _submitting ? 'Đang lưu...' : 'Thêm phương thức',
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: footerInset),
                       ],
-                    ),
-                  ),
-                ),
-              ),
-              VitStickyFooter(
-                backgroundColor: AppColors.surface.withValues(alpha: 0.96),
-                child: Padding(
-                  padding: AppSpacing.p2pPaymentFooterPadding(footerInset),
-                  child: Semantics(
-                    label: 'Preview and add P2P payment method',
-                    button: true,
-                    enabled: _isValidFor(controller) && !_submitting,
-                    child: VitCtaButton(
-                      key: P2PPaymentMethodAddPage.saveButtonKey,
-                      loading: _submitting,
-                      onPressed: _isValidFor(controller) && !_submitting
-                          ? () => _confirmSave(context, controller)
-                          : null,
-                      child: Text(
-                        _submitting ? 'Đang lưu...' : 'Thêm phương thức',
-                      ),
                     ),
                   ),
                 ),
@@ -279,23 +294,22 @@ class _P2PPaymentMethodAddPageState
           ],
         ),
         actions: [
-          TextButton(
+          VitCtaButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(
-              'Hủy',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
+            variant: VitCtaButtonVariant.secondary,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            child: const Text('Hủy'),
           ),
-          TextButton(
+          VitCtaButton(
             key: P2PPaymentMethodAddPage.confirmSaveKey,
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(
-              'Xác nhận',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+            variant: VitCtaButtonVariant.primary,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            child: const Text('Xác nhận'),
           ),
         ],
       ),

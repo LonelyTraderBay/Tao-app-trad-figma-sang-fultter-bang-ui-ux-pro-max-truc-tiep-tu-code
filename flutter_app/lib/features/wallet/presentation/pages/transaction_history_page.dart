@@ -30,8 +30,6 @@ const _historyTinyGap = 4.0;
 const _historyInlineGap = 8.0;
 const _historyIconBox = 36.0;
 const _historyAmountColumnWidth = 108.0;
-const _historyRowMinHeight = 66.0;
-const _historySectionHeaderHeight = 28.0;
 const _historyExportPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 12,
   vertical: 8,
@@ -40,6 +38,7 @@ const _historyRowPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 12,
   vertical: 8,
 );
+const _historySectionHeaderPadding = EdgeInsetsDirectional.fromSTEB(4, 6, 0, 6);
 const _historyEndPadding = EdgeInsetsDirectional.only(top: 10, bottom: 14);
 
 double _historyScrollBottomInset(BuildContext context, ShellRenderMode mode) {

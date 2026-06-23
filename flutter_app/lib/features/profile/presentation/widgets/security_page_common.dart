@@ -75,61 +75,58 @@ class _SecuritySupportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: SecurityPage.supportKey,
       onTap: () => context.go(supportRoute),
-      behavior: HitTestBehavior.opaque,
-      child: VitCard(
-        density: VitDensity.compact,
-        borderColor: _securityBorder,
-        child: Row(
-          children: [
-            SizedBox(
-              width: AppSpacing.securitySupportIconBox,
-              height: AppSpacing.securitySupportIconBox,
-              child: Material(
-                color: _securityPrimary.withValues(alpha: .13),
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
-                child: const Icon(
-                  Icons.support_agent_rounded,
-                  color: _securityPrimary,
-                  size: AppSpacing.securitySupportIcon,
+      density: VitDensity.compact,
+      borderColor: _securityBorder,
+      child: Row(
+        children: [
+          SizedBox(
+            width: AppSpacing.securitySupportIconBox,
+            height: AppSpacing.securitySupportIconBox,
+            child: Material(
+              color: _securityPrimary.withValues(alpha: .13),
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+              child: const Icon(
+                Icons.support_agent_rounded,
+                color: _securityPrimary,
+                size: AppSpacing.securitySupportIcon,
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.securitySupportGap),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hỗ trợ bảo mật',
+                  style: AppTextStyles.control.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.securitySupportGap),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Hỗ trợ bảo mật',
-                    style: AppTextStyles.control.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  'Mở hồ sơ hỗ trợ kèm ngữ cảnh tài khoản',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.numericMicro.copyWith(
+                    color: _securityMuted,
+                    fontWeight: AppTextStyles.medium,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    'Mở hồ sơ hỗ trợ kèm ngữ cảnh tài khoản',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.numericMicro.copyWith(
-                      color: _securityMuted,
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.securityChevron,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.securityChevron,
+          ),
+        ],
       ),
     );
   }

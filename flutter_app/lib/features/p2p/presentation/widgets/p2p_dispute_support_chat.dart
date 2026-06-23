@@ -119,16 +119,17 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
                             ? AppColors.surface2
                             : AppModuleAccents.p2p,
                         shape: const CircleBorder(),
-                        child: InkWell(
+                        child: SizedBox.square(
                           key: sendKey,
-                          onTap: onSend,
-                          customBorder: const CircleBorder(),
-                          child: const SizedBox(
-                            width: AppSpacing.p2pDisputeSendButtonSize,
-                            height: AppSpacing.p2pDisputeSendButtonSize,
-                            child: Icon(
-                              Icons.send_rounded,
+                          dimension: AppSpacing.p2pDisputeSendButtonSize,
+                          child: Center(
+                            child: VitInlineIconAction(
+                              icon: Icons.send_rounded,
+                              tooltip: 'Gửi tin nhắn hỗ trợ',
+                              onPressed: onSend,
                               color: AppColors.text1,
+                              borderRadius: AppRadii.pillRadius,
+                              padding: AppSpacing.x2,
                               size: AppSpacing.iconSm,
                             ),
                           ),

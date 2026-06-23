@@ -153,21 +153,12 @@ class _SettingsChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitIconButton(
       key: ConvertPage.toolKey('settings'),
-      onTap: () {},
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
-      width: _convertControlHeight,
-      height: _convertControlHeight,
-      density: VitDensity.compact,
-      alignment: Alignment.center,
-      borderColor: _tradePrimary.withValues(alpha: .14),
-      child: const Icon(
-        Icons.settings_outlined,
-        color: AppColors.text3,
-        size: AppSpacing.iconSm,
-      ),
+      icon: Icons.settings_outlined,
+      tooltip: 'Convert settings',
+      onPressed: () {},
+      size: VitIconButtonSize.lg,
     );
   }
 }

@@ -87,41 +87,14 @@ class _JurisdictionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        key: StakingTaxGuideKeys.jurisdiction(jurisdiction.id),
-        onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: selected ? AppColors.primary20 : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.lgRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnCardPaddingX3X2,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                StakingTaxCodeBadge(code: jurisdiction.code, small: true),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  jurisdiction.name.split('(').first.trim(),
-                  style: AppTextStyles.micro.copyWith(
-                    color: selected ? AppColors.primary : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: StakingTaxGuideKeys.jurisdiction(jurisdiction.id),
+      label: jurisdiction.name.split('(').first.trim(),
+      selected: selected,
+      onTap: onTap,
+      accentColor: AppColors.primary,
+      padding: AppSpacing.earnCardPaddingX3X2,
+      leading: StakingTaxCodeBadge(code: jurisdiction.code, small: true),
     );
   }
 }

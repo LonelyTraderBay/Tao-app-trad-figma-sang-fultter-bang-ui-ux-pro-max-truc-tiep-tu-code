@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -21,6 +22,16 @@ part 'dca_dynamic_amount_page_part_01.dart';
 part 'dca_dynamic_amount_page_part_02.dart';
 part 'dca_dynamic_amount_page_part_03.dart';
 part 'dca_dynamic_amount_page_part_04.dart';
+
+const double _dcaDynamicVisualNavClearance = 112;
+const double _dcaDynamicNativeNavClearance = 88;
+const double _dcaDynamicChartHeight = 144;
+const EdgeInsetsDirectional _dcaDynamicHeroPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x4,
+);
+const EdgeInsetsDirectional _dcaDynamicCardPadding = EdgeInsetsDirectional.all(
+  AppSpacing.x3,
+);
 
 class DCADynamicAmount extends ConsumerStatefulWidget {
   const DCADynamicAmount({super.key, this.shellRenderMode});
@@ -46,11 +57,11 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaDynamicAmountProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x7 + AppSpacing.x6
-            : AppSpacing.x7) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _dcaDynamicVisualNavClearance
+        : _dcaDynamicNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
     final activeOption = _strategyOption(snapshot.strategies, _activeStrategy);
     final adjustment = _adjustmentFor(_activeStrategy, snapshot.adjustment);
 
@@ -70,57 +81,49 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: DCADynamicAmount.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.dcaBottomInsetPadding(scrollEndClearance),
-                  child: VitPageContent(
-                    gap: VitContentGap.tight,
-                    children: [
-                      _DynamicHero(
-                        option: activeOption,
-                        adjustment: adjustment,
-                        onChangeStrategy: _showStrategyNotice,
-                      ),
-                      _StrategyStrip(
-                        strategies: snapshot.strategies,
-                        activeStrategy: _activeStrategy,
-                        onChanged: (strategy) {
-                          setState(() => _activeStrategy = strategy);
-                        },
-                      ),
-                      _StrategyVisualization(
-                        strategy: _activeStrategy,
-                        option: activeOption,
-                        volatilityHistory: snapshot.volatilityHistory,
-                      ),
-                      _AmountHistoryCard(entries: snapshot.amountHistory),
-                      _RecentDetailsCard(entries: snapshot.amountHistory),
-                      _ConfigSection(
-                        option: activeOption,
-                        items: _activeStrategy == DcaDynamicStrategy.volatility
-                            ? snapshot.configItems
-                            : _configItemsFor(_activeStrategy),
-                      ),
-                      _StrategyExplainer(option: activeOption),
-                      const _DynamicDisclaimer(),
-                      _ApplyStrategyAction(
-                        onApply: () => context.go(AppRoutePaths.dca),
-                      ),
-                    ],
-                  ),
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          child: VitInsetScrollView(
+            key: DCADynamicAmount.contentKey,
+            physics: const ClampingScrollPhysics(),
+            bottomInset: scrollEndPadding,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
+              children: [
+                _DynamicHero(
+                  option: activeOption,
+                  adjustment: adjustment,
+                  onChangeStrategy: _showStrategyNotice,
                 ),
-              ),
+                _StrategyStrip(
+                  strategies: snapshot.strategies,
+                  activeStrategy: _activeStrategy,
+                  onChanged: (strategy) {
+                    setState(() => _activeStrategy = strategy);
+                  },
+                ),
+                _StrategyVisualization(
+                  strategy: _activeStrategy,
+                  option: activeOption,
+                  volatilityHistory: snapshot.volatilityHistory,
+                ),
+                _AmountHistoryCard(entries: snapshot.amountHistory),
+                _RecentDetailsCard(entries: snapshot.amountHistory),
+                _ConfigSection(
+                  option: activeOption,
+                  items: _activeStrategy == DcaDynamicStrategy.volatility
+                      ? snapshot.configItems
+                      : _configItemsFor(_activeStrategy),
+                ),
+                _StrategyExplainer(option: activeOption),
+                const _DynamicDisclaimer(),
+                _ApplyStrategyAction(
+                  onApply: () => context.go(AppRoutePaths.dca),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

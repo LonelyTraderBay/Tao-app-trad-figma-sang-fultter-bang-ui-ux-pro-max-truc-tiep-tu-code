@@ -191,15 +191,23 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
           ),
           actions: [
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(context).pop(false),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
               child: const Text('Hu\u1EF7'),
             ),
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(context).pop(true),
+              variant: VitCtaButtonVariant.destructive,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
               child: Text(
                 'Xo\u00E1',
-                style: AppTextStyles.caption.copyWith(color: _apiRed),
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.onAccent,
+                ),
               ),
             ),
           ],

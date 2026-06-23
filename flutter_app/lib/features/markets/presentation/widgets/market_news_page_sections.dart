@@ -147,36 +147,16 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
+      label: category.label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Material(
-        color: active
-            ? category.color.withValues(alpha: .14)
-            : AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: BorderSide(
-            color: active
-                ? category.color.withValues(alpha: .32)
-                : AppColors.transparent,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
-            AppSpacing.x2,
-            AppSpacing.x1,
-            AppSpacing.x2,
-            AppSpacing.x1,
-          ),
-          child: Text(
-            category.label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? category.color : AppColors.text3,
-              fontWeight: AppTextStyles.medium,
-            ),
-          ),
-        ),
+      accentColor: category.color,
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        AppSpacing.x2,
+        AppSpacing.x1,
+        AppSpacing.x2,
+        AppSpacing.x1,
       ),
     );
   }
@@ -237,47 +217,17 @@ class _SentimentChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
+      label: badge.label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: Material(
-        color: active
-            ? badge.color.withValues(alpha: .12)
-            : AppColors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.mdRadius,
-          side: BorderSide(
-            color: active
-                ? badge.color.withValues(alpha: .32)
-                : AppColors.borderSolid,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
-            AppSpacing.x2,
-            AppSpacing.x1,
-            AppSpacing.x2,
-            AppSpacing.x1,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                _sentimentIcon(sentiment),
-                size: AppSpacing.x3,
-                color: badge.color,
-              ),
-              const SizedBox(width: _marketTinySpace),
-              Text(
-                badge.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? badge.color : AppColors.text3,
-                  fontWeight: AppTextStyles.medium,
-                ),
-              ),
-            ],
-          ),
-        ),
+      accentColor: badge.color,
+      leading: Icon(_sentimentIcon(sentiment), size: AppSpacing.x3),
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        AppSpacing.x2,
+        AppSpacing.x1,
+        AppSpacing.x2,
+        AppSpacing.x1,
       ),
     );
   }

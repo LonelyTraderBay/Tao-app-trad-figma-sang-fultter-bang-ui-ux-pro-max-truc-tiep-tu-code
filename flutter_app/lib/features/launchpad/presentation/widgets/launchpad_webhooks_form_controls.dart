@@ -107,37 +107,12 @@ class _SelectablePill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? color.withValues(alpha: .14) : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.smRadius,
-              side: BorderSide(
-                color: active
-                    ? color.withValues(alpha: .34)
-                    : AppColors.cardBorder,
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.launchpadPillPadding,
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: active ? color : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: color,
+      padding: AppSpacing.launchpadPillPadding,
     );
   }
 }

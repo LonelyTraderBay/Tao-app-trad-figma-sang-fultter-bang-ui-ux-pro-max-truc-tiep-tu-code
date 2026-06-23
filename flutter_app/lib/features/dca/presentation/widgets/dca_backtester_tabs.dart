@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_common.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class DcaBacktesterTopTabs extends StatelessWidget {
   const DcaBacktesterTopTabs({
@@ -78,8 +79,10 @@ class _TopTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GestureDetector(
+      child: VitCard(
         key: tabKey(tab.name),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         onTap: () => onChanged(tab),
         child: Column(
           mainAxisSize: MainAxisSize.min,

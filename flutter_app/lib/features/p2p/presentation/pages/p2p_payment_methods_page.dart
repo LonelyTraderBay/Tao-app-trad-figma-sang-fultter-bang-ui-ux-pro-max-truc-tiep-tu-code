@@ -13,13 +13,43 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_payment_methods_page_sections.dart';
 part '../widgets/p2p_payment_methods_page_common.dart';
+
+const double _p2pMethodsVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pMethodsNativeNavClearance =
+    _p2pMethodsVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
+const double _p2pMethodsVisualClearance = AppSpacing.x3;
+const double _p2pMethodsNativeClearance = AppSpacing.x2;
+const double _p2pMethodsSectionGap = AppSpacing.x1;
+const double _p2pMethodsMajorGap = AppSpacing.x3;
+const double _p2pMethodsCardMinExtent = 80;
+const EdgeInsets _p2pMethodsCardPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pMethodsButtonPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _p2pMethodsDefaultPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x1,
+);
+const EdgeInsets _p2pMethodsEmptyPadding = EdgeInsets.symmetric(
+  vertical: AppSpacing.x4,
+);
+const EdgeInsets _p2pMethodsDialogPadding = EdgeInsets.all(AppSpacing.x4);
+
+EdgeInsets _p2pMethodsScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
 
 class P2PPaymentMethodsPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodsPage({super.key, this.shellRenderMode});
@@ -64,12 +94,10 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
         .where((item) => item.type == P2PPaymentListMethodType.ewallet)
         .toList(growable: false);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetNative) +
+            ? _p2pMethodsVisualNavClearance + _p2pMethodsVisualClearance
+            : _p2pMethodsNativeNavClearance + _p2pMethodsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final pendingMethod = _pendingDeleteId == null
         ? null
@@ -89,10 +117,8 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                 showBack: true,
                 onBack: () => context.go(AppRoutePaths.p2p),
               ),
-              child: VitPageContent(
-                padding: VitContentPadding.none,
-                fullBleed: true,
-                customGap: 0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
                     child: ScrollConfiguration(
@@ -102,14 +128,10 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                       child: SingleChildScrollView(
                         key: P2PPaymentMethodsPage.contentKey,
                         physics: const ClampingScrollPhysics(),
-                        padding: AppSpacing.p2pPaymentScrollPadding(
-                          bottomInset,
-                        ),
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          fullBleed: true,
-                          gap: VitContentGap.tight,
-                          children: [
+                        padding: _p2pMethodsScrollPadding(scrollEndPadding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: _withP2PMethodsGaps([
                             _AddMethodRow(snapshot: snapshot),
                             if (bankMethods.isNotEmpty) ...[
                               _SectionHeader(
@@ -141,7 +163,7 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                             if (_methods.isEmpty)
                               _EmptyPaymentMethods(snapshot: snapshot),
                             _SecurityNotice(text: snapshot.securityNote),
-                          ],
+                          ]),
                         ),
                       ),
                     ),
@@ -204,4 +226,13 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
     }
     return null;
   }
+}
+
+List<Widget> _withP2PMethodsGaps(List<Widget> children) {
+  return [
+    for (var index = 0; index < children.length; index++) ...[
+      if (index > 0) const SizedBox(height: _p2pMethodsSectionGap),
+      children[index],
+    ],
+  ];
 }

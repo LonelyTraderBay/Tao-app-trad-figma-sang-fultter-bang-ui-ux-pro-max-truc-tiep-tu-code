@@ -11,7 +11,7 @@ class _AddressHero extends StatelessWidget {
       key: P2PAddressProofPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pAddressProofCardPadding,
+      padding: _p2pAddressProofCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,7 +22,7 @@ class _AddressHero extends StatelessWidget {
               side: const BorderSide(color: AppColors.primary20),
             ),
             child: const Padding(
-              padding: EdgeInsetsDirectional.all(AppSpacing.x2),
+              padding: _p2pAddressProofHeroIconPadding,
               child: Icon(
                 Icons.location_on_outlined,
                 color: AppModuleAccents.p2p,
@@ -41,7 +41,7 @@ class _AddressHero extends StatelessWidget {
                     color: AppModuleAccents.p2p,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: _p2pAddressProofTightGap),
                 Text(
                   snapshot.heroBody,
                   maxLines: 2,
@@ -70,7 +70,7 @@ class _RequirementsCard extends StatelessWidget {
     return VitCard(
       key: P2PAddressProofPage.requirementsKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pAddressProofCardPadding,
+      padding: _p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -79,11 +79,11 @@ class _RequirementsCard extends StatelessWidget {
             title: 'Yêu cầu tài liệu',
             color: AppModuleAccents.p2p,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pAddressProofSectionGap),
           for (final requirement in snapshot.requirements) ...[
             _ChecklistRow(text: requirement, color: AppColors.buy),
             if (requirement != snapshot.requirements.last)
-              const SizedBox(height: AppSpacing.x1),
+              const SizedBox(height: _p2pAddressProofTightGap),
           ],
         ],
       ),
@@ -112,12 +112,12 @@ class _DocumentTypePicker extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: _p2pAddressProofSectionGap),
         for (final document in documents) ...[
           VitCard(
             key: P2PAddressProofPage.documentTypeKey(document.id),
             radius: VitCardRadius.lg,
-            padding: AppSpacing.p2pAddressProofCardPadding,
+            padding: _p2pAddressProofCardPadding,
             onTap: () => onSelected(document),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -148,7 +148,7 @@ class _DocumentTypePicker extends StatelessWidget {
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.x1),
+                          const SizedBox(height: _p2pAddressProofTightGap),
                           Text(
                             document.description,
                             style: AppTextStyles.caption.copyWith(
@@ -165,9 +165,9 @@ class _DocumentTypePicker extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: _p2pAddressProofSectionGap),
                 Padding(
-                  padding: AppSpacing.p2pAddressProofDocumentExamplePadding,
+                  padding: _p2pAddressProofDocumentExamplePadding,
                   child: Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
@@ -192,7 +192,8 @@ class _DocumentTypePicker extends StatelessWidget {
               ],
             ),
           ),
-          if (document != documents.last) const SizedBox(height: AppSpacing.x2),
+          if (document != documents.last)
+            const SizedBox(height: _p2pAddressProofSectionGap),
         ],
       ],
     );
@@ -229,23 +230,23 @@ class _UploadSection extends StatelessWidget {
                 ),
               ),
             ),
-            TextButton(
+            VitCtaButton(
               onPressed: onChangeType,
-              style: TextButton.styleFrom(
-                foregroundColor: AppModuleAccents.p2p,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
               child: const Text('Đổi loại tài liệu'),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pAddressProofSectionGap),
         VitCard(
           key: P2PAddressProofPage.uploadKey,
           radius: VitCardRadius.lg,
           variant: uploaded ? VitCardVariant.inner : VitCardVariant.ghost,
           borderColor: uploaded ? AppColors.buy20 : AppColors.borderSolid,
-          padding: AppSpacing.p2pAddressProofCardPadding,
+          padding: _p2pAddressProofCardPadding,
           onTap: uploaded ? null : onUpload,
           child: uploaded
               ? Row(
@@ -262,7 +263,7 @@ class _UploadSection extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.x4),
+                    const SizedBox(width: AppSpacing.x3),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -291,9 +292,7 @@ class _UploadSection extends StatelessWidget {
                   ],
                 )
               : Padding(
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    vertical: AppSpacing.x4,
-                  ),
+                  padding: _p2pAddressProofUploadVerticalPadding,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -309,7 +308,7 @@ class _UploadSection extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x3),
+                      const SizedBox(height: _p2pAddressProofSectionGap),
                       Text(
                         'Chụp hoặc tải tài liệu',
                         textAlign: TextAlign.center,
@@ -346,7 +345,7 @@ class _ExtractedDataCard extends StatelessWidget {
       radius: VitCardRadius.md,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pAddressProofCardPadding,
+      padding: _p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -355,9 +354,9 @@ class _ExtractedDataCard extends StatelessWidget {
             title: 'Đã trích xuất thông tin',
             color: AppColors.buy,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pAddressProofSectionGap),
           _MetadataRow(label: 'Tên', value: snapshot.extractedName),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pAddressProofTightGap),
           _MetadataRow(label: 'Ngày phát hành', value: snapshot.extractedDate),
         ],
       ),

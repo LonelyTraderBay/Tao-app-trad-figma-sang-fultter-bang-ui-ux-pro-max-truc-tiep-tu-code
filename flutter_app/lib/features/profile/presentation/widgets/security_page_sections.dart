@@ -136,10 +136,12 @@ class _SecurityRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = item.danger ? _securityRed : _securityPrimary;
 
-    return GestureDetector(
+    return VitCard(
       key: SecurityPage.itemKey(item.id),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: EdgeInsets.zero,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,

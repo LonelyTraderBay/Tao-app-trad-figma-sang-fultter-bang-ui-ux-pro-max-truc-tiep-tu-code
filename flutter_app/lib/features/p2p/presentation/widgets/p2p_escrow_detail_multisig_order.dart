@@ -10,7 +10,7 @@ class _MultiSigCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.multisigKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pEscrowDetailCardPadding,
+      padding: _p2pEscrowCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -41,11 +41,11 @@ class _MultiSigCard extends StatelessWidget {
             'Escrow yêu cầu tối thiểu 2/3 chữ ký để giải phóng coin. Platform luôn ký khi tạo escrow (1/3).',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pEscrowSectionGap),
           for (final signer in snapshot.signers) ...[
             _SignerRow(signer: signer),
             if (signer != snapshot.signers.last)
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: _p2pEscrowTightGap),
           ],
         ],
       ),
@@ -63,8 +63,8 @@ class _SignatureRing extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = total == 0 ? 0.0 : signed / total;
     return SizedBox(
-      width: AppSpacing.inputHeight,
-      height: AppSpacing.inputHeight,
+      width: _p2pEscrowRingSize,
+      height: _p2pEscrowRingSize,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -101,7 +101,7 @@ class _SignerRow extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.lg,
       borderColor: signer.hasSigned ? AppColors.buy20 : AppColors.borderSolid,
-      padding: AppSpacing.p2pEscrowDetailInnerPadding,
+      padding: _p2pEscrowInnerPadding,
       child: Row(
         children: [
           SizedBox.square(
@@ -190,7 +190,7 @@ class _OrderInfoCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.orderInfoKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pEscrowDetailCardPadding,
+      padding: _p2pEscrowCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -200,7 +200,7 @@ class _OrderInfoCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pEscrowTightGap),
           for (final row in rows) ...[
             _InfoRow(label: row.$1, value: row.$2, emphasis: row.$3),
             if (row != rows.last)

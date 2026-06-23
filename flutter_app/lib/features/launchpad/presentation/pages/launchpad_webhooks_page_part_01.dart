@@ -301,29 +301,26 @@ class _SubscriptionCard extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Material(
-                    type: MaterialType.transparency,
-                    child: InkWell(
-                      key: LaunchpadWebhooksPage.expandKey(subscription.id),
-                      onTap: onExpand,
-                      child: Padding(
-                        padding: AppSpacing.launchpadPaddingX3,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _ChainIcon(subscription: subscription),
-                            const SizedBox(width: AppSpacing.x3),
-                            Expanded(child: _SubscriptionSummary(subscription)),
-                            Icon(
-                              expanded
-                                  ? Icons.expand_less_rounded
-                                  : Icons.expand_more_rounded,
-                              color: AppColors.text3,
-                              size: _launchpadWebhooksIcon2xl,
-                            ),
-                          ],
+                  VitCard(
+                    key: LaunchpadWebhooksPage.expandKey(subscription.id),
+                    onTap: onExpand,
+                    variant: VitCardVariant.ghost,
+                    radius: VitCardRadius.sm,
+                    padding: AppSpacing.launchpadPaddingX3,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _ChainIcon(subscription: subscription),
+                        const SizedBox(width: AppSpacing.x3),
+                        Expanded(child: _SubscriptionSummary(subscription)),
+                        Icon(
+                          expanded
+                              ? Icons.expand_less_rounded
+                              : Icons.expand_more_rounded,
+                          color: AppColors.text3,
+                          size: _launchpadWebhooksIcon2xl,
                         ),
-                      ),
+                      ],
                     ),
                   ),
                   if (expanded)

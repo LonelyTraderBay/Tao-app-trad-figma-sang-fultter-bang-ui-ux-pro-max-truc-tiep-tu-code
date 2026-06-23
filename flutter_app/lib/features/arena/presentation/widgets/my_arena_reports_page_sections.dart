@@ -126,9 +126,10 @@ class _FilterChip extends StatelessWidget {
     final accentColor = _filterColor(filter);
     return Material(
       color: AppColors.transparent,
-      child: InkWell(
+      child: VitCard(
         onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: SizedBox(
           height: _reportsFilterExtent,
           child: DecoratedBox(
@@ -278,11 +279,13 @@ class _ReportRow extends StatelessWidget {
       color: AppColors.transparent,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             onTap: () {
               HapticFeedback.selectionClick();
               context.go(AppRoutePaths.arenaReportCase(report.id));
             },
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
             child: Padding(
               padding: AppSpacing.myArenaReportsCardPadding,
               child: Row(

@@ -29,52 +29,54 @@ class _PresetScroller extends StatelessWidget {
             'bargains' => 104.0,
             _ => 106.0,
           };
-          return Material(
-            color: active
-                ? _marketPrimary.withValues(alpha: .15)
-                : AppColors.surface3,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.lgRadius,
-              side: BorderSide(
+          return VitCard(
+            key: MarketScreenerPage.presetKey(preset.id),
+            onTap: () => onPresetSelected(preset),
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            padding: EdgeInsets.zero,
+            width: chipWidth,
+            height: _presetHeight,
+            borderColor: AppColors.transparent,
+            clip: true,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
                 color: active
-                    ? _marketPrimary.withValues(alpha: .38)
-                    : AppColors.transparent,
-              ),
-            ),
-            child: InkWell(
-              key: MarketScreenerPage.presetKey(preset.id),
-              onTap: () => onPresetSelected(preset),
-              borderRadius: AppRadii.lgRadius,
-              child: ConstrainedBox(
-                constraints: BoxConstraints.tightFor(
-                  width: chipWidth,
-                  height: _presetHeight,
-                ),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: AppSpacing.x2,
+                    ? _marketPrimary.withValues(alpha: .15)
+                    : AppColors.surface3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.lgRadius,
+                  side: BorderSide(
+                    color: active
+                        ? _marketPrimary.withValues(alpha: .38)
+                        : AppColors.transparent,
                   ),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          preset.icon,
-                          size: _presetIconSize,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x2,
+                ),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        preset.icon,
+                        size: _presetIconSize,
+                        color: active ? _marketPrimary : AppColors.text2,
+                      ),
+                      const SizedBox(width: AppSpacing.x1),
+                      Text(
+                        preset.name,
+                        style: AppTextStyles.caption.copyWith(
                           color: active ? _marketPrimary : AppColors.text2,
+                          fontWeight: AppTextStyles.medium,
+                          height: AppTextStyles.caption.height,
                         ),
-                        const SizedBox(width: AppSpacing.x1),
-                        Text(
-                          preset.name,
-                          style: AppTextStyles.caption.copyWith(
-                            color: active ? _marketPrimary : AppColors.text2,
-                            fontWeight: AppTextStyles.medium,
-                            height: AppTextStyles.caption.height,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -131,19 +133,20 @@ class _AdvancedFiltersCard extends StatelessWidget {
                   ),
                 ),
               ),
-              TextButton.icon(
+              VitCtaButton(
                 key: MarketScreenerPage.resetFiltersKey,
                 onPressed: onReset,
-                icon: const Icon(Icons.refresh_rounded, size: _resetIconSize),
-                label: const Text('Đặt lại'),
-                style: TextButton.styleFrom(
-                  foregroundColor: _marketPrimary,
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: AppSpacing.x2,
-                  ),
-                  minimumSize: const Size(0, _resetMinHeight),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                height: _resetMinHeight,
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x2,
                 ),
+                leading: const Icon(
+                  Icons.refresh_rounded,
+                  size: _resetIconSize,
+                ),
+                child: const Text('Đặt lại'),
               ),
             ],
           ),
@@ -239,40 +242,14 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
+      label: label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: Material(
-        color: active
-            ? _marketPrimary.withValues(alpha: .14)
-            : AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.smRadius,
-          side: BorderSide(
-            color: active
-                ? _marketPrimary.withValues(alpha: .36)
-                : AppColors.transparent,
-          ),
-        ),
-        child: SizedBox(
-          height: _categoryChipHeight,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x2,
-            ),
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? _marketPrimary : AppColors.text3,
-                  fontWeight: AppTextStyles.medium,
-                  height: AppTextStyles.caption.height,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: _marketPrimary,
+      height: _categoryChipHeight,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
+      semanticLabel: label,
     );
   }
 }
@@ -410,10 +387,14 @@ class _SortChip extends StatelessWidget {
         ? Icons.keyboard_arrow_down_rounded
         : Icons.keyboard_arrow_up_rounded;
 
-    return InkWell(
+    return VitCard(
       key: MarketScreenerPage.sortKey(sort),
       onTap: onTap,
-      borderRadius: AppRadii.lgRadius,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
       child: Material(
         color: active
             ? _marketPrimary.withValues(alpha: .10)

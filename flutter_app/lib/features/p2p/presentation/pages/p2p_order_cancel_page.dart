@@ -335,70 +335,18 @@ class _ReasonButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.sell10 : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(
-          color: selected ? AppColors.sell20 : AppColors.borderSolid,
-        ),
-      ),
-      child: InkWell(
-        key: P2POrderCancelPage.reasonKey(reason),
-        onTap: onPressed,
-        customBorder: const RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.buttonCompact,
-          ),
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-            ),
-            child: Row(
-              children: [
-                SizedBox.square(
-                  dimension: AppSpacing.x4,
-                  child: Material(
-                    color: selected ? AppColors.sell : AppColors.transparent,
-                    shape: CircleBorder(
-                      side: BorderSide(
-                        color: selected
-                            ? AppColors.sell
-                            : AppColors.borderSolid,
-                        width: AppSpacing.p2pRiskControlsChoiceBorderWidth,
-                      ),
-                    ),
-                    child: selected
-                        ? const Icon(
-                            Icons.check_rounded,
-                            color: AppColors.onAccent,
-                            size: AppSpacing.iconSm,
-                          )
-                        : null,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    reason,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: selected ? AppColors.sell : AppColors.text2,
-                      fontWeight: selected
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: P2POrderCancelPage.reasonKey(reason),
+      label: reason,
+      selected: selected,
+      onTap: onPressed,
+      fullWidth: true,
+      height: AppSpacing.buttonCompact,
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
+      tone: VitChoicePillTone.danger,
+      showSelectedIcon: true,
+      selectedIcon: Icons.check_rounded,
+      semanticLabel: 'Cancel reason: $reason',
     );
   }
 }

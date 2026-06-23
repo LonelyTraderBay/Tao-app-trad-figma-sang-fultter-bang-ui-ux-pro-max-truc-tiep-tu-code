@@ -271,17 +271,13 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       variant: VitCtaButtonVariant.auth,
       child: Text(_submitting ? 'Đang cập nhật...' : 'Cập nhật mật khẩu'),
     ),
-    TextButton(
+    VitCtaButton(
       key: ResetPasswordPage.loginKey,
       onPressed: _submitting ? null : () => context.go(AppRoutePaths.authLogin),
-      style: TextButton.styleFrom(
-        foregroundColor: _authPrimary,
-        minimumSize: const Size(
-          AppSpacing.zero,
-          AppSpacing.authTextButtonHeightLg,
-        ),
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      ),
+      variant: VitCtaButtonVariant.ghost,
+      fullWidth: false,
+      height: AppSpacing.authTextButtonHeightLg,
+      padding: AppSpacing.authInlineTextButtonPadding,
       child: Text(
         'Quay lại đăng nhập',
         style: AppTextStyles.caption.copyWith(
@@ -300,17 +296,13 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       variant: VitCtaButtonVariant.auth,
       child: const Text('Xác minh lại'),
     ),
-    TextButton(
+    VitCtaButton(
       key: ResetPasswordPage.loginKey,
       onPressed: () => context.go(AppRoutePaths.authLogin),
-      style: TextButton.styleFrom(
-        foregroundColor: _authPrimary,
-        minimumSize: const Size(
-          AppSpacing.zero,
-          AppSpacing.authTextButtonHeightLg,
-        ),
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      ),
+      variant: VitCtaButtonVariant.ghost,
+      fullWidth: false,
+      height: AppSpacing.authTextButtonHeightLg,
+      padding: AppSpacing.authInlineTextButtonPadding,
       child: Text(
         'Quay lại đăng nhập',
         style: AppTextStyles.caption.copyWith(

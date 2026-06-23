@@ -10,7 +10,7 @@ class _EscrowTimelineCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.timelineKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pEscrowDetailCardPadding,
+      padding: _p2pEscrowCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -30,7 +30,7 @@ class _EscrowTimelineCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pEscrowTightGap),
           for (var i = 0; i < events.length; i++)
             _TimelineRow(event: events[i], isLast: i == events.length - 1),
         ],
@@ -70,7 +70,7 @@ class _TimelineRow extends StatelessWidget {
               if (!isLast)
                 SizedBox(
                   width: AppSpacing.dividerHairline,
-                  height: AppSpacing.x5,
+                  height: _p2pEscrowTimelineConnectorHeight,
                   child: ColoredBox(color: color),
                 ),
             ],
@@ -81,7 +81,7 @@ class _TimelineRow extends StatelessWidget {
           child: Padding(
             padding: isLast
                 ? AppSpacing.zeroInsets
-                : AppSpacing.p2pEscrowDetailTimelineRowPadding,
+                : _p2pEscrowTimelineRowPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -141,7 +141,7 @@ class _SecurityNotice extends StatelessWidget {
       borderColor: AppColors.buy20,
       messageStyle: AppTextStyles.caption.copyWith(
         color: AppColors.text2,
-        height: AppSpacing.p2pEscrowDetailBodyLineHeight,
+        height: _p2pEscrowBodyLineHeight,
       ),
     );
   }
@@ -157,7 +157,7 @@ class _OrderLink extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.orderLinkKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pEscrowDetailCardPadding,
+      padding: _p2pEscrowCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pOrder(orderId));
@@ -201,7 +201,7 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pEscrowDetailInnerPadding,
+      padding: _p2pEscrowInnerPadding,
       child: Row(
         children: [
           const Icon(

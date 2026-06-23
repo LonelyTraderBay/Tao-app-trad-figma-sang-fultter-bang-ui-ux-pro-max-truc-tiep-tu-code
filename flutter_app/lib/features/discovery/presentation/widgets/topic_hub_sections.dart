@@ -144,11 +144,14 @@ class _SectionShell extends StatelessWidget {
               ),
             ),
             if (actionLabel != null && onAction != null)
-              InkWell(
+              VitCard(
                 onTap: onAction,
-                borderRadius: AppRadii.smRadius,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                borderColor: AppColors.transparent,
+                padding: AppSpacing.discoveryInlineActionPadding,
                 child: Padding(
-                  padding: AppSpacing.discoveryInlineActionPadding,
+                  padding: EdgeInsets.zero,
                   child: _InlineCta(label: actionLabel!, color: color),
                 ),
               ),

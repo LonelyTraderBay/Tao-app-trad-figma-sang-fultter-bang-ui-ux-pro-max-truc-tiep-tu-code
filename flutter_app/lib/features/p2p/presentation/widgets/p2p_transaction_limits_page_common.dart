@@ -10,7 +10,7 @@ class _LimitDetailRow extends StatelessWidget {
     final color = _toneColor(item.toneKey);
     return Padding(
       key: P2PTransactionLimitsPage.detailItemKey(item.id),
-      padding: AppSpacing.p2pTransactionLimitsCardPadding,
+      padding: _p2pLimitsCardPadding,
       child: Row(
         children: [
           SizedBox.square(
@@ -75,10 +75,10 @@ class _UpgradeCard extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pLimitsSectionGap),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pTransactionLimitsCardPadding,
+          padding: _p2pLimitsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -123,7 +123,7 @@ class _UpgradeCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: _p2pLimitsMajorGap),
               Text(
                 'Yêu cầu:',
                 style: AppTextStyles.caption.copyWith(
@@ -154,17 +154,19 @@ class _UpgradeCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x2),
               ],
-              const SizedBox(height: AppSpacing.x3),
+              const SizedBox(height: _p2pLimitsSectionGap),
               Material(
                 key: P2PTransactionLimitsPage.upgradeCtaKey,
                 color: AppModuleAccents.p2p,
                 borderRadius: AppRadii.inputRadius,
-                child: InkWell(
+                child: VitCard(
                   onTap: () {
                     HapticFeedback.selectionClick();
                     context.go(snapshot.kycRequirementsRoute);
                   },
-                  borderRadius: AppRadii.inputRadius,
+                  variant: VitCardVariant.ghost,
+                  radius: VitCardRadius.sm,
+                  padding: AppSpacing.zeroInsets,
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       minHeight: AppSpacing.ctaHeight,
@@ -223,7 +225,7 @@ class _LimitInfoNotice extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .28)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pTransactionLimitsInnerPadding,
+        padding: _p2pLimitsInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -244,13 +246,13 @@ class _LimitInfoNotice extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.x2),
+                  const SizedBox(height: _p2pLimitsSectionGap),
                   for (final item in items) ...[
                     Text(
                       '• $item',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.p2pTransactionLimitsInfoLineHeight,
+                        height: _p2pLimitsInfoLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),

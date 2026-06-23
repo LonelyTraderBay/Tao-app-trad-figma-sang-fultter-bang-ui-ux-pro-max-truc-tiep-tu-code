@@ -127,18 +127,15 @@ class _PresetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitChoicePill(
+      label: label,
+      selected: false,
+      onTap: onPressed,
+      fullWidth: true,
       height: _configurationPresetHeight,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.text2,
-          side: const BorderSide(color: AppColors.borderSolid),
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-          padding: AppSpacing.zeroInsets,
-        ),
-        child: Text(label, style: AppTextStyles.caption),
-      ),
+      padding: AppSpacing.zeroInsets,
+      tone: VitChoicePillTone.neutral,
+      semanticLabel: 'Dat von copy $label',
     );
   }
 }

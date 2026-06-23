@@ -12,10 +12,36 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pLimitVisualClearance = AppSpacing.x3;
+const double _p2pLimitNativeClearance = AppSpacing.x2;
+const double _p2pLimitVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pLimitNativeNavClearance =
+    _p2pLimitVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
+const double _p2pLimitMajorGap = AppSpacing.x3;
+const double _p2pLimitSectionGap = AppSpacing.x2;
+const EdgeInsets _p2pLimitCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pLimitCompactPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pLimitMetricPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _p2pLimitPeriodTabPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x2,
+);
+
+EdgeInsets _p2pLimitScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
 
 class P2PLimitTrackerPage extends ConsumerStatefulWidget {
   const P2PLimitTrackerPage({super.key, this.shellRenderMode});
@@ -44,12 +70,10 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
     final snapshot = ref.watch(p2pLimitTrackerProvider);
     final usage = snapshot.usageFor(_period);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pComplianceBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pComplianceBottomInsetNative) +
+            ? _p2pLimitVisualNavClearance + _p2pLimitVisualClearance
+            : _p2pLimitNativeNavClearance + _p2pLimitNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -74,11 +98,9 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    padding: _p2pLimitScrollPadding(scrollEndPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _PeriodTabs(
                           usages: snapshot.usages,
@@ -88,14 +110,14 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                             setState(() => _period = period);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pLimitSectionGap),
                         _UsageHero(usage: usage),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pLimitMajorGap),
                         _LimitBreakdownList(items: snapshot.breakdown),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pLimitSectionGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pComplianceCompactCardPadding,
+                          padding: _p2pLimitCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P limit review',
@@ -141,7 +163,8 @@ class _PeriodTabs extends StatelessWidget {
               onTap: () => onChanged(usages[index].period),
             ),
           ),
-          if (index != usages.length - 1) const SizedBox(width: AppSpacing.x3),
+          if (index != usages.length - 1)
+            const SizedBox(width: _p2pLimitSectionGap),
         ],
       ],
     );
@@ -161,33 +184,15 @@ class _PeriodTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitChoicePill(
       key: P2PLimitTrackerPage.periodKey(usage.period),
-      color: selected ? AppModuleAccents.p2p : AppColors.surface2,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.buttonCompact,
-          ),
-          child: Padding(
-            padding: AppSpacing.p2pCompliancePeriodTabPadding,
-            child: Center(
-              child: Text(
-                usage.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.onAccent : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      label: usage.label,
+      selected: selected,
+      onTap: onTap,
+      accentColor: AppModuleAccents.p2p,
+      fullWidth: true,
+      height: AppSpacing.buttonCompact,
+      padding: _p2pLimitPeriodTabPadding,
     );
   }
 }
@@ -207,7 +212,7 @@ class _UsageHero extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
-        padding: AppSpacing.p2pComplianceCardPadding,
+        padding: _p2pLimitCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -223,12 +228,12 @@ class _UsageHero extends StatelessWidget {
               '${_formatComma(usage.used, 0)} VND',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.heroNumber.copyWith(
+              style: AppTextStyles.numericDisplaySm.copyWith(
                 color: AppColors.onAccent,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
-            const SizedBox(height: AppSpacing.x4),
+            const SizedBox(height: _p2pLimitMajorGap),
             ClipRRect(
               borderRadius: AppRadii.xsRadius,
               child: ColoredBox(
@@ -276,10 +281,11 @@ class _LimitBreakdownList extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pLimitSectionGap),
         for (var index = 0; index < items.length; index++) ...[
           _DayBreakdownCard(item: items[index]),
-          if (index != items.length - 1) const SizedBox(height: AppSpacing.x3),
+          if (index != items.length - 1)
+            const SizedBox(height: _p2pLimitSectionGap),
         ],
       ],
     );
@@ -296,7 +302,7 @@ class _DayBreakdownCard extends StatelessWidget {
     return VitCard(
       key: P2PLimitTrackerPage.dayKey(item.date),
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pComplianceCompactCardPadding,
+      padding: _p2pLimitCompactPadding,
       child: Column(
         children: [
           Row(
@@ -322,7 +328,7 @@ class _DayBreakdownCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pLimitSectionGap),
           Row(
             children: [
               Expanded(
@@ -332,7 +338,7 @@ class _DayBreakdownCard extends StatelessWidget {
                   color: AppColors.buy,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _p2pLimitSectionGap),
               Expanded(
                 child: _TradeSideBox(
                   label: 'BÁN',
@@ -365,7 +371,7 @@ class _TradeSideBox extends StatelessWidget {
       color: color.withValues(alpha: .12),
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: Padding(
-        padding: AppSpacing.p2pComplianceMetricPadding,
+        padding: _p2pLimitMetricPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

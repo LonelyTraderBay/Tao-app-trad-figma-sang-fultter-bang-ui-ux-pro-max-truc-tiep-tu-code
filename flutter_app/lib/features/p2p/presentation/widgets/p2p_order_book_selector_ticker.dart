@@ -47,44 +47,41 @@ class _AssetChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tone = market.changePct >= 0 ? AppColors.buy : AppColors.sell;
-    return Material(
+    return VitCard(
       key: P2POrderBookPage.assetKey(market.asset),
-      color: selected ? AppColors.warn10 : AppColors.surface2,
-      borderRadius: AppRadii.cardRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: VitCard(
-          variant: VitCardVariant.ghost,
-          borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
-          constraints: const BoxConstraints(
-            minWidth: AppSpacing.p2pMarketplaceAnalyticsAssetChipMinWidth,
-            minHeight: AppSpacing.p2pMarketplaceAnalyticsAssetChipMinHeight,
+      variant: VitCardVariant.ghost,
+      borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
+      background: ColoredBox(
+        color: selected ? AppColors.warn10 : AppColors.surface2,
+      ),
+      constraints: const BoxConstraints(
+        minWidth: _p2pOrderBookAssetChipMinWidth,
+        minHeight: _p2pOrderBookAssetChipMinExtent,
+      ),
+      padding: _p2pOrderBookSelectorPadding,
+      onTap: onTap,
+      clip: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '${market.asset}/VND',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-          padding: AppSpacing.p2pMarketplaceAnalyticsSelectorPadding,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '${market.asset}/VND',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x1),
-              Text(
-                _formatChange(market.changePct),
-                style: AppTextStyles.micro.copyWith(
-                  color: tone,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ],
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            _formatChange(market.changePct),
+            style: AppTextStyles.micro.copyWith(
+              color: tone,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -108,7 +105,7 @@ class _MarketTicker extends StatelessWidget {
     return VitCard(
       key: P2POrderBookPage.tickerKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: _p2pOrderBookCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -123,25 +120,20 @@ class _MarketTicker extends StatelessWidget {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Material(
+                  child: VitCard(
                     key: P2POrderBookPage.refreshKey,
-                    color: AppColors.surface2,
-                    borderRadius: AppRadii.inputRadius,
-                    child: InkWell(
-                      onTap: onRefresh,
-                      borderRadius: AppRadii.inputRadius,
-                      child: SizedBox(
-                        width: AppSpacing.buttonCompact,
-                        height: AppSpacing.buttonCompact,
-                        child: AnimatedRotation(
-                          turns: isRefreshing ? 1 : 0,
-                          duration: const Duration(milliseconds: 600),
-                          child: const Icon(
-                            Icons.refresh_rounded,
-                            color: AppColors.text2,
-                            size: AppSpacing.iconSm,
-                          ),
-                        ),
+                    variant: VitCardVariant.inner,
+                    radius: VitCardRadius.sm,
+                    width: _p2pOrderBookRefreshExtent,
+                    height: _p2pOrderBookRefreshExtent,
+                    onTap: onRefresh,
+                    child: AnimatedRotation(
+                      turns: isRefreshing ? 1 : 0,
+                      duration: const Duration(milliseconds: 600),
+                      child: const Icon(
+                        Icons.refresh_rounded,
+                        color: AppColors.text2,
+                        size: AppSpacing.iconSm,
                       ),
                     ),
                   ),
@@ -149,7 +141,7 @@ class _MarketTicker extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pOrderBookSectionGap),
           Row(
             children: [
               Expanded(
@@ -175,7 +167,7 @@ class _MarketTicker extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pOrderBookSectionGap),
           Row(
             children: [
               Expanded(

@@ -13,61 +13,58 @@ class _ReportTypeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       key: BotTaxReportingPage.reportKey(report.id),
-      behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: VitCard(
-        density: VitDensity.compact,
-        borderColor: selected ? _taxPrimary : _taxOptionBorder,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _CheckBox(selected: selected),
-            const SizedBox(width: AppSpacing.x4),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          report.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: selected ? _taxPrimary : AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+      density: VitDensity.compact,
+      borderColor: selected ? _taxPrimary : _taxOptionBorder,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _CheckBox(selected: selected),
+          const SizedBox(width: AppSpacing.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        report.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption.copyWith(
+                          color: selected ? _taxPrimary : AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
+                    ),
+                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                    _Pill(
+                      text: report.format,
+                      color: AppColors.text3,
+                      background: _taxPanel2,
+                    ),
+                    if (report.recommended) ...[
                       const SizedBox(width: AppSpacing.tradeBotSmallGap),
-                      _Pill(
-                        text: report.format,
-                        color: AppColors.text3,
-                        background: _taxPanel2,
+                      const _Pill(
+                        text: 'Recommended',
+                        color: _taxGreen,
+                        background: AppColors.buy12,
                       ),
-                      if (report.recommended) ...[
-                        const SizedBox(width: AppSpacing.tradeBotSmallGap),
-                        const _Pill(
-                          text: 'Recommended',
-                          color: _taxGreen,
-                          background: AppColors.buy12,
-                        ),
-                      ],
                     ],
-                  ),
-                  const SizedBox(height: AppSpacing.x2),
-                  Text(
-                    report.description,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  report.description,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

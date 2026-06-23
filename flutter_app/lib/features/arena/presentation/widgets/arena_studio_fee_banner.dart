@@ -81,40 +81,39 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          InkWell(
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.arenaStudioFeeTogglePadding,
             onTap: () {
               HapticFeedback.selectionClick();
               setState(() => _expanded = !_expanded);
             },
-            borderRadius: AppRadii.smRadius,
-            child: Padding(
-              padding: AppSpacing.arenaStudioFeeTogglePadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.info_outline_rounded,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.info_outline_rounded,
+                  color: _arenaAccent,
+                  size: AppSpacing.arenaStudioFeeInfoIcon,
+                ),
+                const SizedBox(width: AppSpacing.x1),
+                Text(
+                  _expanded ? 'Ẩn chi tiết phí' : 'Phí bao gồm những gì?',
+                  style: AppTextStyles.micro.copyWith(
                     color: _arenaAccent,
-                    size: AppSpacing.arenaStudioFeeInfoIcon,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(width: AppSpacing.x1),
-                  Text(
-                    _expanded ? 'Ẩn chi tiết phí' : 'Phí bao gồm những gì?',
-                    style: AppTextStyles.micro.copyWith(
-                      color: _arenaAccent,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                  Icon(
-                    _expanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
-                    color: _arenaAccent,
-                    size: AppSpacing.arenaStudioFeeChevron,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(width: AppSpacing.x1),
+                Icon(
+                  _expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: _arenaAccent,
+                  size: AppSpacing.arenaStudioFeeChevron,
+                ),
+              ],
             ),
           ),
           if (_expanded) ...[

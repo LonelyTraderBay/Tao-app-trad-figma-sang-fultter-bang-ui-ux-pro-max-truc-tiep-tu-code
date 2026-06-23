@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -218,42 +217,39 @@ class _FAQCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.lg,
       padding: AppSpacing.zeroInsets,
+      clip: true,
+      onTap: onTap,
       child: Column(
         children: [
-          InkWell(
-            onTap: onTap,
-            borderRadius: AppRadii.cardLargeRadius,
-            child: Padding(
-              padding: AppSpacing.earnCardPaddingX4,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.help_outline_rounded,
-                    color: color,
+          Padding(
+            padding: AppSpacing.earnCardPaddingX4,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.help_outline_rounded,
+                  color: color,
+                  size: AppSpacing.iconMd,
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Text(
+                    item.question,
+                    style: AppTextStyles.baseMedium.copyWith(
+                      height: AppSpacing.stakingCommunityFaqQuestionLineHeight,
+                    ),
+                  ),
+                ),
+                AnimatedRotation(
+                  turns: expanded ? 0.5 : 0,
+                  duration: const Duration(milliseconds: 180),
+                  child: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.text3,
                     size: AppSpacing.iconMd,
                   ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Text(
-                      item.question,
-                      style: AppTextStyles.baseMedium.copyWith(
-                        height:
-                            AppSpacing.stakingCommunityFaqQuestionLineHeight,
-                      ),
-                    ),
-                  ),
-                  AnimatedRotation(
-                    turns: expanded ? 0.5 : 0,
-                    duration: const Duration(milliseconds: 180),
-                    child: const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.iconMd,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           AnimatedCrossFade(

@@ -7,43 +7,13 @@ class _ClearAllButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.sell10,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        key: SavingsNotificationsPage.clearAllButtonKey,
-        onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: DecoratedBox(
-          decoration: const ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: AppColors.sell20),
-              borderRadius: AppRadii.lgRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnVerticalPaddingX3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.delete_outline_rounded,
-                  color: AppColors.sell,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  'Xóa tất cả thông báo',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.sell,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      key: SavingsNotificationsPage.clearAllButtonKey,
+      onPressed: onTap,
+      variant: VitCtaButtonVariant.destructive,
+      height: AppSpacing.buttonCompact,
+      leading: const Icon(Icons.delete_outline_rounded),
+      child: const Text('Xóa tất cả thông báo'),
     );
   }
 }

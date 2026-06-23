@@ -250,27 +250,18 @@ class _SecretKeyCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
-              TextButton.icon(
+              VitCtaButton(
                 key: TwoFASetupPage.copyKey,
                 onPressed: onCopy,
-                style: TextButton.styleFrom(
-                  foregroundColor: _authPrimary,
-                  backgroundColor: _authPrimary10,
-                  minimumSize: const Size(
-                    AppSpacing.zero,
-                    AppSpacing.authTextButtonHeightLg,
-                  ),
-                  padding: AppSpacing.authTwoFaCopyButtonPadding,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.cardRadius,
-                  ),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                icon: Icon(
+                variant: VitCtaButtonVariant.secondary,
+                fullWidth: false,
+                height: AppSpacing.authTextButtonHeightLg,
+                padding: AppSpacing.authTwoFaCopyButtonPadding,
+                leading: Icon(
                   copied ? Icons.check_rounded : Icons.content_copy_rounded,
                   size: AppSpacing.authTwoFaCopyIcon,
                 ),
-                label: Text(
+                child: Text(
                   copied ? 'Đã sao chép' : 'Sao chép',
                   style: AppTextStyles.caption.copyWith(
                     color: _authPrimary,

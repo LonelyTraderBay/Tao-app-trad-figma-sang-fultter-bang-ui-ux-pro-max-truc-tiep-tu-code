@@ -20,6 +20,24 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part '../widgets/p2p_transaction_limits_page_sections.dart';
 part '../widgets/p2p_transaction_limits_page_common.dart';
 
+const double _p2pLimitsVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pLimitsNativeNavClearance =
+    _p2pLimitsVisualNavClearance - AppSpacing.x4;
+const double _p2pLimitsVisualClearance = AppSpacing.x3;
+const double _p2pLimitsNativeClearance = AppSpacing.x2;
+const double _p2pLimitsSectionGap = AppSpacing.x2;
+const double _p2pLimitsMajorGap = AppSpacing.x3;
+const double _p2pLimitsInfoLineHeight = 1.34;
+const EdgeInsets _p2pLimitsScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pLimitsCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pLimitsInnerPadding = EdgeInsets.all(AppSpacing.x2);
+
 class P2PTransactionLimitsPage extends ConsumerWidget {
   const P2PTransactionLimitsPage({super.key, this.shellRenderMode});
 
@@ -41,10 +59,10 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pTransactionLimitsProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pLimitsVisualNavClearance + _p2pLimitsVisualClearance
+            : _p2pLimitsNativeNavClearance + _p2pLimitsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -75,13 +93,13 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pTransactionLimitsScrollPadding(
-                      bottomInset,
+                    padding: _p2pLimitsScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      customGap: AppSpacing.x5,
+                      gap: VitContentGap.tight,
                       children: [
                         _TierHero(tier: snapshot.currentTier),
                         _CurrentUsage(snapshot: snapshot),

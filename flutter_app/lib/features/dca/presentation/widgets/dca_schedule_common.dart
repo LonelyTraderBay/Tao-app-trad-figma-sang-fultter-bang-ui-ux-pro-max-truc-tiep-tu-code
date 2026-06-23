@@ -16,7 +16,17 @@ class _SectionTitle extends StatelessWidget {
           size: AppSpacing.dcaScheduleSectionIcon,
         ),
         const SizedBox(width: AppSpacing.x3),
-        Text(title, style: AppTextStyles.sectionTitleXs),
+        Expanded(
+          child: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -39,35 +49,6 @@ class _AccentIcon extends StatelessWidget {
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: Icon(icon, color: accent, size: AppSpacing.iconMd),
-      ),
-    );
-  }
-}
-
-class _SelectedDot extends StatelessWidget {
-  const _SelectedDot({required this.accent});
-
-  final Color accent;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.dcaScheduleSelectedDot,
-      height: AppSpacing.dcaScheduleSelectedDot,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(color: accent, shape: const CircleBorder()),
-        child: Center(
-          child: SizedBox(
-            width: AppSpacing.dcaScheduleSelectedDotInner,
-            height: AppSpacing.dcaScheduleSelectedDotInner,
-            child: DecoratedBox(
-              decoration: const ShapeDecoration(
-                color: AppColors.navCenterIcon,
-                shape: CircleBorder(),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

@@ -15,11 +15,11 @@ class _TaxHero extends StatelessWidget {
         side: BorderSide(color: AppColors.accent),
       ),
       child: Padding(
-        padding: AppSpacing.p2pDocumentCardPadding,
+        padding: _p2pTaxCardPadding,
         child: Row(
           children: [
             SizedBox.square(
-              dimension: AppSpacing.p2pDocumentIconBox,
+              dimension: _p2pTaxIconBox,
               child: Material(
                 color: AppColors.onAccent.withValues(alpha: .20),
                 shape: const RoundedRectangleBorder(
@@ -32,7 +32,7 @@ class _TaxHero extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.x3),
+            const SizedBox(width: _p2pTaxSectionGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,7 @@ class _YearSelector extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pTaxSectionGap),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -122,39 +122,19 @@ class _YearChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      key: P2PTaxReportingPage.yearKey(year),
-      color: selected ? AppColors.accent : AppColors.bg,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(
-          color: selected ? AppColors.accent : AppColors.borderSolid,
-        ),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        minWidth: AppSpacing.p2pDocumentChipMinWidth,
       ),
-      child: InkWell(
+      child: VitChoicePill(
+        key: P2PTaxReportingPage.yearKey(year),
+        label: '$year',
+        selected: selected,
         onTap: onTap,
-        customBorder: const RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.buttonCompact,
-            minWidth: AppSpacing.p2pDocumentChipMinWidth,
-          ),
-          child: Padding(
-            padding: AppSpacing.p2pDocumentChipPadding,
-            child: Center(
-              child: Text(
-                '$year',
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.onAccent : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ),
-          ),
-        ),
+        height: AppSpacing.buttonCompact,
+        padding: AppSpacing.p2pDocumentChipPadding,
+        accentColor: AppColors.accent,
+        semanticLabel: 'Tax year $year',
       ),
     );
   }
@@ -183,7 +163,7 @@ class _JurisdictionSelector extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pTaxSectionGap),
         for (var index = 0; index < jurisdictions.length; index++) ...[
           _JurisdictionTile(
             jurisdiction: jurisdictions[index],
@@ -211,66 +191,54 @@ class _JurisdictionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCard(
       key: P2PTaxReportingPage.jurisdictionKey(jurisdiction.code),
-      color: selected ? AppColors.accent12 : AppColors.bg,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(
-          color: selected ? AppColors.accent : AppColors.borderSolid,
-        ),
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: selected ? AppColors.accent : AppColors.borderSolid,
+      background: ColoredBox(
+        color: selected ? AppColors.accent12 : AppColors.bg,
       ),
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-          child: Padding(
-            padding: AppSpacing.p2pDocumentCardPadding,
-            child: Row(
+      constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
+      padding: _p2pTaxCardPadding,
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        jurisdiction.name,
-                        style: AppTextStyles.caption.copyWith(
-                          color: selected ? AppColors.accent : AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        jurisdiction.form,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ],
+                Text(
+                  jurisdiction.name,
+                  style: AppTextStyles.caption.copyWith(
+                    color: selected ? AppColors.accent : AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                if (selected)
-                  const SizedBox.square(
-                    dimension: AppSpacing.iconMd,
-                    child: Material(
-                      color: AppColors.accent,
-                      shape: CircleBorder(),
-                      child: Center(
-                        child: Icon(
-                          Icons.circle,
-                          color: AppColors.onAccent,
-                          size: AppSpacing.x2,
-                        ),
-                      ),
-                    ),
-                  ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  jurisdiction.form,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
               ],
             ),
           ),
-        ),
+          if (selected)
+            const SizedBox.square(
+              dimension: AppSpacing.iconMd,
+              child: Material(
+                color: AppColors.accent,
+                shape: CircleBorder(),
+                child: Center(
+                  child: Icon(
+                    Icons.circle,
+                    color: AppColors.onAccent,
+                    size: AppSpacing.x2,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -295,7 +263,7 @@ class _TaxSummary extends StatelessWidget {
                 value: '${snapshot.summary.totalTransactions}',
               ),
             ),
-            const SizedBox(width: AppSpacing.x3),
+            const SizedBox(width: _p2pTaxSectionGap),
             Expanded(
               child: _MetricCard(
                 icon: Icons.attach_money_rounded,
@@ -305,7 +273,7 @@ class _TaxSummary extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pTaxSectionGap),
         Row(
           children: [
             Expanded(
@@ -317,7 +285,7 @@ class _TaxSummary extends StatelessWidget {
                 toneBg: AppColors.buy10,
               ),
             ),
-            const SizedBox(width: AppSpacing.x3),
+            const SizedBox(width: _p2pTaxSectionGap),
             Expanded(
               child: _MetricCard(
                 icon: Icons.trending_down_rounded,
@@ -329,12 +297,12 @@ class _TaxSummary extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pTaxSectionGap),
         VitCard(
           radius: VitCardRadius.lg,
           variant: VitCardVariant.inner,
           borderColor: AppColors.accent20,
-          padding: AppSpacing.p2pDocumentCardPadding,
+          padding: _p2pTaxCardPadding,
           child: Row(
             children: [
               Expanded(

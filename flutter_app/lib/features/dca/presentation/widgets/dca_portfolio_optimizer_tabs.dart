@@ -43,34 +43,43 @@ class _OptimizerTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
+      clip: true,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: active ? AppColors.surface : AppColors.transparent,
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: Padding(
-          padding: AppSpacing.dcaVerticalPaddingX3,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x1,
+            vertical: AppSpacing.x2,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 _tabIcon(tab),
                 color: active ? AppColors.accent : AppColors.text3,
                 size: AppSpacing.iconSm,
               ),
-              const Padding(padding: AppSpacing.dcaTopPaddingX1),
-              Text(
-                _tabLabel(tab),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? AppColors.text1 : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.medium,
+              const SizedBox(width: AppSpacing.x1),
+              Flexible(
+                child: Text(
+                  _tabLabel(tab),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: active ? AppColors.text1 : AppColors.text3,
+                    fontWeight: active
+                        ? AppTextStyles.bold
+                        : AppTextStyles.medium,
+                  ),
                 ),
               ),
             ],
@@ -86,13 +95,17 @@ class _TabContent extends StatelessWidget {
     required this.activeTab,
     required this.snapshot,
     required this.showSuggestions,
+    required this.showCompareHint,
     required this.onToggleSuggestions,
+    required this.onCompare,
   });
 
   final _OptimizerTab activeTab;
   final DcaPortfolioOptimizerSnapshot snapshot;
   final bool showSuggestions;
+  final bool showCompareHint;
   final VoidCallback onToggleSuggestions;
+  final VoidCallback onCompare;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +113,9 @@ class _TabContent extends StatelessWidget {
       _OptimizerTab.frontier => _FrontierContent(
         snapshot: snapshot,
         showSuggestions: showSuggestions,
+        showCompareHint: showCompareHint,
         onToggleSuggestions: onToggleSuggestions,
+        onCompare: onCompare,
       ),
       _OptimizerTab.correlation => const _CorrelationContent(),
       _OptimizerTab.backtest => const _BacktestContent(),

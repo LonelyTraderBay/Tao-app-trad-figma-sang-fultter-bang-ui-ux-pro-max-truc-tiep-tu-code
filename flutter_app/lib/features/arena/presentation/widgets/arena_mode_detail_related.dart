@@ -73,9 +73,11 @@ class _RoomRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
-      child: InkWell(
+      child: VitCard(
         key: rowKey,
         onTap: onTap,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: Padding(
           padding: AppSpacing.arenaPaddingX4,
           child: Row(

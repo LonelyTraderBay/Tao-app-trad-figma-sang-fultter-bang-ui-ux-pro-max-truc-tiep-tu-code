@@ -185,7 +185,12 @@ class _FilterPanel extends StatelessWidget {
                   ),
                 ),
               ),
-              TextButton(onPressed: onClear, child: const Text('Xóa')),
+              VitCtaButton(
+                onPressed: onClear,
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                child: const Text('Xóa'),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -265,33 +270,12 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      borderRadius: AppRadii.smRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: selected ? AppColors.primary30 : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnPillPaddingLarge,
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: selected ? AppColors.primary : AppColors.text2,
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      tone: VitChoicePillTone.primary,
+      padding: AppSpacing.earnPillPaddingLarge,
     );
   }
 }
@@ -323,7 +307,12 @@ class _ResultsHeader extends StatelessWidget {
           ),
         ),
         if (filtered)
-          TextButton(onPressed: onClear, child: const Text('Xóa bộ lọc')),
+          VitCtaButton(
+            onPressed: onClear,
+            variant: VitCtaButtonVariant.ghost,
+            fullWidth: false,
+            child: const Text('Xóa bộ lọc'),
+          ),
       ],
     );
   }

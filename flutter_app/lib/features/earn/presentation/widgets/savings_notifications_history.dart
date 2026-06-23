@@ -114,35 +114,15 @@ class _HistoryActionBar extends StatelessWidget {
           ),
         ),
         if (unreadCount > 0)
-          Material(
-            color: AppColors.primary12,
-            borderRadius: AppRadii.mdRadius,
-            child: InkWell(
-              key: SavingsNotificationsPage.markAllReadButtonKey,
-              onTap: onMarkAllRead,
-              borderRadius: AppRadii.mdRadius,
-              child: Padding(
-                padding: AppSpacing.earnPillPadding,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.check_circle_outline_rounded,
-                      color: AppColors.primary,
-                      size: AppSpacing.iconSm,
-                    ),
-                    const SizedBox(width: AppSpacing.x1),
-                    Text(
-                      'Đọc tất cả',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          VitCtaButton(
+            key: SavingsNotificationsPage.markAllReadButtonKey,
+            onPressed: onMarkAllRead,
+            variant: VitCtaButtonVariant.secondary,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            padding: AppSpacing.earnPillPadding,
+            leading: const Icon(Icons.check_circle_outline_rounded),
+            child: const Text('Đọc tất cả'),
           ),
       ],
     );
@@ -165,87 +145,77 @@ class _NotificationCard extends StatelessWidget {
     final fill = notification.read
         ? AppColors.surface2
         : _notificationFill(notification.type);
-    return Material(
-      color: AppColors.transparent,
-      borderRadius: AppRadii.cardLargeRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardLargeRadius,
-        child: Ink(
-          decoration: ShapeDecoration(
-            color: fill,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: notification.read
-                    ? AppColors.cardBorder
-                    : color.withValues(alpha: 0.28),
-              ),
-              borderRadius: AppRadii.cardLargeRadius,
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      onTap: onTap,
+      clip: true,
+      padding: AppSpacing.earnCardPaddingX4,
+      background: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: fill,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: notification.read
+                  ? AppColors.cardBorder
+                  : color.withValues(alpha: 0.28),
             ),
+            borderRadius: AppRadii.cardLargeRadius,
           ),
-          child: Padding(
-            padding: AppSpacing.earnCardPaddingX4,
-            child: Row(
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _RoundIcon(icon: _notificationIcon(notification.type), color: color),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _RoundIcon(
-                  icon: _notificationIcon(notification.type),
-                  color: color,
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              notification.title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: notification.read
-                                    ? AppTextStyles.medium
-                                    : AppTextStyles.bold,
-                                height: AppSpacing
-                                    .savingsNotificationHistoryTitleLineHeight,
-                              ),
-                            ),
-                          ),
-                          if (!notification.read) ...[
-                            const SizedBox(width: AppSpacing.x2),
-                            const _UnreadDot(),
-                          ],
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        notification.message,
-                        maxLines: 3,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        notification.title,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
+                          color: AppColors.text1,
+                          fontWeight: notification.read
+                              ? AppTextStyles.medium
+                              : AppTextStyles.bold,
                           height: AppSpacing
-                              .savingsNotificationHistoryBodyLineHeight,
+                              .savingsNotificationHistoryTitleLineHeight,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.x2),
-                      Text(
-                        notification.time,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
+                    ),
+                    if (!notification.read) ...[
+                      const SizedBox(width: AppSpacing.x2),
+                      const _UnreadDot(),
                     ],
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  notification.message,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    height: AppSpacing.savingsNotificationHistoryBodyLineHeight,
                   ),
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  notification.time,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

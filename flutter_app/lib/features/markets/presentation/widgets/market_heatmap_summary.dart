@@ -162,7 +162,6 @@ class MarketHeatmapControls extends StatelessWidget {
                   label: category,
                   active: category == activeCategory,
                   onTap: () => onCategorySelected(category),
-                  outlined: true,
                 );
               },
             ),
@@ -179,52 +178,21 @@ class _FilterChip extends StatelessWidget {
     required this.label,
     required this.active,
     required this.onTap,
-    this.outlined = false,
   });
 
   final String label;
   final bool active;
   final VoidCallback onTap;
-  final bool outlined;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
+      label: label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: Material(
-        color: active
-            ? marketHeatmapPrimary.withValues(alpha: 0.18)
-            : AppColors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: outlined
-              ? BorderSide(
-                  color: active
-                      ? marketHeatmapPrimary.withValues(alpha: 0.48)
-                      : AppColors.transparent,
-                )
-              : BorderSide.none,
-        ),
-        child: SizedBox(
-          height: AppSpacing.marketHeatmapFilterHeight,
-          child: Padding(
-            padding: AppSpacing.marketHeatmapFilterPadding,
-            child: Center(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? marketHeatmapPrimary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.marketLineHeightTight,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: marketHeatmapPrimary,
+      height: AppSpacing.marketHeatmapFilterHeight,
+      padding: AppSpacing.marketHeatmapFilterPadding,
     );
   }
 }

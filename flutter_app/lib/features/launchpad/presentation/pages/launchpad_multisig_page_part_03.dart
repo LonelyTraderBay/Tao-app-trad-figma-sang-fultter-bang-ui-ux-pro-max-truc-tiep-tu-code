@@ -174,13 +174,13 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                             ),
                           ),
                         ),
-                        IconButton(
+                        VitIconButton(
                           key: LaunchpadMultisigPage.cancelCreateKey,
                           onPressed: widget.onClose,
-                          icon: const Icon(
-                            Icons.close_rounded,
-                            color: AppColors.text3,
-                          ),
+                          icon: Icons.close_rounded,
+                          tooltip: 'Dong tao giao dich Multi-sig',
+                          variant: VitIconButtonVariant.transparent,
+                          size: VitIconButtonSize.md,
                         ),
                       ],
                     ),

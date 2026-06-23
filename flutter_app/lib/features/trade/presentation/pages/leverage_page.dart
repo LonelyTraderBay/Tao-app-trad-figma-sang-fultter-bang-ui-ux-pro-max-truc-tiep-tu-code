@@ -31,7 +31,6 @@ const _leverageHeroHeight = 138.0;
 const _leverageHeroValueLineHeight = .95;
 const _leverageMeterSegmentHeight = 8.0;
 const _leverageControlHeight = 40.0;
-const _leverageControlLineHeight = 1.0;
 const _leverageImpactRowLineHeight = 1.12;
 const _leverageConfirmHeight = 44.0;
 

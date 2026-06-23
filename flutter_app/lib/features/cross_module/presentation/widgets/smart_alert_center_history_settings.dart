@@ -226,30 +226,31 @@ class _ToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitCard(
       onTap: onTap,
-      child: SizedBox(
-        width: AppSpacing.inputHeight,
-        height: AppSpacing.x6,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: enabled ? AppColors.primary : AppColors.toggleTrackOff,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.xlRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.crossModuleTogglePadding,
-            child: AnimatedAlign(
-              duration: const Duration(milliseconds: 160),
-              alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-              child: const SizedBox.square(
-                dimension: AppSpacing.x5,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: AppColors.navCenterIcon,
-                    shape: CircleBorder(),
-                  ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      width: AppSpacing.inputHeight,
+      height: AppSpacing.x6,
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: enabled ? AppColors.primary : AppColors.toggleTrackOff,
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
+        ),
+        child: Padding(
+          padding: AppSpacing.crossModuleTogglePadding,
+          child: AnimatedAlign(
+            duration: const Duration(milliseconds: 160),
+            alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
+            child: const SizedBox.square(
+              dimension: AppSpacing.x5,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: AppColors.navCenterIcon,
+                  shape: CircleBorder(),
                 ),
               ),
             ),
@@ -328,25 +329,12 @@ class _TemplateCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              TextButton(
+              VitCtaButton(
                 onPressed: HapticFeedback.selectionClick,
-                style: TextButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.navCenterIcon,
-                  padding: AppSpacing.crossModuleTextButtonPadding,
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                ),
-                child: Text(
-                  'Use',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.navCenterIcon,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+                fullWidth: false,
+                height: AppSpacing.buttonCompact,
+                padding: AppSpacing.crossModuleTextButtonPadding,
+                child: const Text('Use'),
               ),
             ],
           ),

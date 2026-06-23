@@ -38,7 +38,7 @@ class _MerchantAdCard extends StatelessWidget {
     return VitCard(
       key: P2PMerchantProfilePage.adKey(ad.id),
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: _p2pMerchantCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -107,7 +107,7 @@ class _MerchantAdCard extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pMerchantTightGap),
           _OutlineActionButton(
             label: isSellAd ? 'Mua ngay' : 'Bán ngay',
             color: actionColor,
@@ -133,7 +133,7 @@ class _OutlineActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.buttonCompact,
+      height: _p2pMerchantActionHeight,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
       borderColor: color.withValues(alpha: .25),
@@ -197,7 +197,7 @@ class _ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: _p2pMerchantCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -245,7 +245,7 @@ class _ReviewCard extends StatelessWidget {
             review.comment,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pMerchantCommerceBodyLineHeight,
+              height: _p2pMerchantBodyLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.x3),

@@ -34,9 +34,12 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
                   style: AppTextStyles.baseMedium,
                 ),
               ),
-              IconButton(
+              VitIconButton(
+                icon: Icons.close_rounded,
+                tooltip: 'Dong',
                 onPressed: onClose,
-                icon: const Icon(Icons.close_rounded, color: AppColors.text2),
+                variant: VitIconButtonVariant.transparent,
+                size: VitIconButtonSize.sm,
               ),
             ],
           ),

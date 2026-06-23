@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/dca/data/dca_repository.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/pages/dca_page.dart';
@@ -98,6 +99,19 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(DCAPage.createSheetKey), findsOneWidget);
     expect(find.text('Tạo kế hoạch DCA'), findsOneWidget);
+  });
+
+  testWidgets('SC-169 create plan sheet clears bottom navigation', (
+    tester,
+  ) async {
+    await pumpDca(tester);
+
+    await tester.tap(find.byKey(DCAPage.createPlanKey));
+    await tester.pumpAndSettle();
+
+    final sheetRect = tester.getRect(find.byKey(DCAPage.createSheetKey));
+    final navRect = tester.getRect(find.byType(VitBottomNav));
+    expect(sheetRect.bottom, lessThanOrEqualTo(navRect.top - AppSpacing.x2));
   });
 
   testWidgets('SC-169 advanced tools open canonical placeholders', (

@@ -52,48 +52,45 @@ class _FeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(feature.colorHex);
-    return InkWell(
+    return _Panel(
       key: AdvancedToolsDemoPage.featureKey(feature.id),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: _Panel(
-        child: Row(
-          children: [
-            _IconTile(
-              icon: _iconFor(feature.id),
-              color: color,
-              size: AppSpacing.tradeToolIconTileMd,
-            ),
-            const SizedBox(width: _toolsCardSpace),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    feature.title,
-                    style: AppTextStyles.caption.copyWith(
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      child: Row(
+        children: [
+          _IconTile(
+            icon: _iconFor(feature.id),
+            color: color,
+            size: AppSpacing.tradeToolIconTileMd,
+          ),
+          const SizedBox(width: _toolsCardSpace),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  feature.title,
+                  style: AppTextStyles.caption.copyWith(
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    feature.description,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                      height: _toolsBodyLineHeight,
-                    ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  feature.description,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    height: _toolsBodyLineHeight,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            const SizedBox(width: _toolsSpace),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: 20,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(width: _toolsSpace),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: 20,
+          ),
+        ],
       ),
     );
   }

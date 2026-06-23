@@ -90,10 +90,11 @@ class _PermissionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = Color(permission.colorHex);
 
-    return GestureDetector(
+    return VitCard(
       key: ApiKeyCreatePage.permissionKey(permission.id),
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
       child: VitCard(
         density: VitDensity.compact,
         variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
@@ -261,8 +262,10 @@ class _IpWhitelistSection extends StatelessWidget {
               runSpacing: AppSpacing.profileApiCreateIpChipGap,
               children: [
                 for (final ip in ips)
-                  GestureDetector(
+                  VitCard(
                     onTap: () => onRemove(ip),
+                    variant: VitCardVariant.ghost,
+                    borderColor: AppColors.transparent,
                     child: Material(
                       color: _apiGreen.withValues(alpha: .1),
                       shape: RoundedRectangleBorder(
@@ -320,10 +323,11 @@ class _ExpirySection extends StatelessWidget {
         itemBuilder: (context, index) {
           final option = options[index];
           final isSelected = option.id == selected;
-          return GestureDetector(
+          return VitCard(
             key: ApiKeyCreatePage.expiryKey(option.id),
             onTap: () => onSelect(option.id),
-            behavior: HitTestBehavior.opaque,
+            variant: VitCardVariant.ghost,
+            borderColor: AppColors.transparent,
             child: Material(
               color: isSelected
                   ? _apiPrimary.withValues(alpha: .12)

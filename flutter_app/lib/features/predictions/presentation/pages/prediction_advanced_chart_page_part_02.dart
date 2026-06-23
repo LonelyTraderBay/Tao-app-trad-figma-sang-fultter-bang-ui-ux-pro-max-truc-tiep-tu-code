@@ -16,39 +16,34 @@ class _LayerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? color.withValues(alpha: .08) : AppColors.bg,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: active ? color : AppColors.border),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: Padding(
-          padding: AppSpacing.predictionAdvancedLayerPadding,
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? color : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: active ? color : AppColors.border,
+      background: active
+          ? ColoredBox(color: color.withValues(alpha: .08))
+          : null,
+      clip: active,
+      padding: AppSpacing.predictionAdvancedLayerPadding,
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: active ? color : AppColors.text2,
+                fontWeight: AppTextStyles.bold,
               ),
-              Icon(
-                active
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined,
-                size: AppSpacing.predictionAdvancedLayerIcon,
-                color: active ? color : AppColors.text3,
-              ),
-            ],
+            ),
           ),
-        ),
+          Icon(
+            active ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+            size: AppSpacing.predictionAdvancedLayerIcon,
+            color: active ? color : AppColors.text3,
+          ),
+        ],
       ),
     );
   }

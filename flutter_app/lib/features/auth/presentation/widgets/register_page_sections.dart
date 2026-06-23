@@ -56,11 +56,13 @@ class _RegisterSegmentButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: SizedBox.expand(
-        child: Material(
-          color: selected ? _authSegmentActive : AppColors.transparent,
-          borderRadius: AppRadii.cardRadius,
-          child: InkWell(
-            onTap: onPressed,
+        child: VitCard(
+          onTap: onPressed,
+          variant: VitCardVariant.ghost,
+          borderColor: AppColors.transparent,
+          padding: EdgeInsets.zero,
+          child: Material(
+            color: selected ? _authSegmentActive : AppColors.transparent,
             borderRadius: AppRadii.cardRadius,
             child: Center(
               child: Text(
@@ -96,10 +98,12 @@ class _AgreementRow extends StatelessWidget {
           button: true,
           checked: agreed,
           label: 'Đồng ý điều khoản dịch vụ',
-          child: InkWell(
+          child: VitCard(
             key: RegisterPage.agreementKey,
             onTap: onTap,
-            borderRadius: AppRadii.mdRadius,
+            variant: VitCardVariant.ghost,
+            borderColor: AppColors.transparent,
+            padding: EdgeInsets.zero,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

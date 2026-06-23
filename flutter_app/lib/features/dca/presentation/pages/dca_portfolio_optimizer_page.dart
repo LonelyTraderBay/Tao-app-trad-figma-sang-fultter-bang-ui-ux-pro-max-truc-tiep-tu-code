@@ -47,6 +47,7 @@ const double _dcaPortfolioBacktestChartHeight = 180;
 const double _dcaPortfolioDividerWidth = AppSpacing.hairlineStroke;
 const int _dcaPortfolioRiskGridColumns = 2;
 const double _dcaPortfolioRiskGridAspect = 1.35;
+const double _dcaPortfolioAlertIconExtent = AppSpacing.buttonCompact;
 const double _dcaPortfolioHeroIconExtent = AppSpacing.inputHeight;
 const double _dcaPortfolioIconBubbleExtent = AppSpacing.x6;
 const EdgeInsetsDirectional _dcaPortfolioCardPadding =
@@ -73,6 +74,7 @@ class DCAPortfolioOptimizer extends ConsumerStatefulWidget {
 class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
   _OptimizerTab _activeTab = _OptimizerTab.frontier;
   bool _showSuggestions = true;
+  bool _showCompareHint = false;
   bool _showDriftBanner = true;
 
   @override
@@ -100,60 +102,50 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  key: DCAPortfolioOptimizer.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    scrollEndPadding,
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          child: VitInsetScrollView(
+            key: DCAPortfolioOptimizer.contentKey,
+            physics: const ClampingScrollPhysics(),
+            bottomInset: scrollEndPadding,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
+              children: [
+                if (_showDriftBanner)
+                  _DriftBanner(
+                    snapshot: snapshot,
+                    onDismiss: () {
+                      setState(() => _showDriftBanner = false);
+                    },
+                    onSettings: _showDriftSettings,
                   ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      if (_showDriftBanner)
-                        _DriftBanner(
-                          snapshot: snapshot,
-                          onDismiss: () {
-                            setState(() => _showDriftBanner = false);
-                          },
-                          onSettings: _showDriftSettings,
-                        ),
-                      _OptimizerTabs(
-                        activeTab: _activeTab,
-                        onChanged: (tab) {
-                          setState(() => _activeTab = tab);
-                        },
-                      ),
-                      _ComparisonHero(snapshot: snapshot),
-                      _TabContent(
-                        activeTab: _activeTab,
-                        snapshot: snapshot,
-                        showSuggestions: _showSuggestions,
-                        onToggleSuggestions: () {
-                          setState(() => _showSuggestions = !_showSuggestions);
-                        },
-                      ),
-                      _OptimizerApplyAction(
-                        onApply: () =>
-                            context.go(AppRoutePaths.dcaRebalanceConfig),
-                      ),
-                    ],
-                  ),
+                _ComparisonHero(snapshot: snapshot),
+                _OptimizerTabs(
+                  activeTab: _activeTab,
+                  onChanged: (tab) {
+                    setState(() => _activeTab = tab);
+                  },
                 ),
-              ),
+                _TabContent(
+                  activeTab: _activeTab,
+                  snapshot: snapshot,
+                  showSuggestions: _showSuggestions,
+                  showCompareHint: _showCompareHint,
+                  onToggleSuggestions: () {
+                    setState(() => _showSuggestions = !_showSuggestions);
+                  },
+                  onCompare: () {
+                    setState(() => _showCompareHint = true);
+                  },
+                ),
+                _OptimizerApplyAction(
+                  snapshot: snapshot,
+                  onApply: () => context.go(AppRoutePaths.dcaRebalanceConfig),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

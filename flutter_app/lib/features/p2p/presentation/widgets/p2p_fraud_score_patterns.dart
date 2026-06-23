@@ -18,7 +18,7 @@ class _SafetyScoreCard extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.scoreKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pFraudCardPadding,
+      padding: _p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -47,7 +47,7 @@ class _SafetyScoreCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: _p2pFraudMajorGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
@@ -57,18 +57,18 @@ class _SafetyScoreCard extends StatelessWidget {
               backgroundColor: AppColors.surface3,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pFraudSectionGap),
           Text(
             '$checkedCount/$totalCount biện pháp bảo vệ đã áp dụng',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           if (score < 100) ...[
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: _p2pFraudSectionGap),
             Material(
               color: AppColors.warn10,
               borderRadius: AppRadii.lgRadius,
               child: Padding(
-                padding: AppSpacing.p2pFraudInnerPadding,
+                padding: _p2pFraudInnerPadding,
                 child: Row(
                   children: [
                     const Icon(
@@ -132,7 +132,7 @@ class _PatternSection extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _p2pFraudMajorGap),
         for (var index = 0; index < patterns.length; index++) ...[
           _PatternCard(
             pattern: patterns[index],
@@ -140,7 +140,7 @@ class _PatternSection extends StatelessWidget {
             onTap: () => onToggle(patterns[index].id),
           ),
           if (index != patterns.length - 1)
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: _p2pFraudSectionGap),
         ],
       ],
     );
@@ -171,19 +171,19 @@ class _PatternCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: AppSpacing.p2pFraudPatternPadding,
+            padding: _p2pFraudPatternPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox.square(
-                  dimension: AppSpacing.inputHeight,
+                  dimension: _p2pFraudPatternIconBox,
                   child: Material(
                     color: color.withValues(alpha: .12),
                     borderRadius: AppRadii.lgRadius,
                     child: Icon(_patternIcon(pattern.iconKey), color: color),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.x3),
+                const SizedBox(width: _p2pFraudMajorGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,7 +212,7 @@ class _PatternCard extends StatelessWidget {
                         overflow: expanded ? null : TextOverflow.ellipsis,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.p2pFraudBodyLineHeight,
+                          height: _p2pFraudBodyLineHeight,
                         ),
                       ),
                     ],
@@ -252,7 +252,7 @@ class _ExpandedPattern extends StatelessWidget {
           child: ColoredBox(color: AppColors.divider),
         ),
         Padding(
-          padding: AppSpacing.p2pFraudPatternPadding,
+          padding: _p2pFraudPatternPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -262,14 +262,14 @@ class _ExpandedPattern extends StatelessWidget {
                 color: AppColors.text2,
                 numbered: true,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: _p2pFraudMajorGap),
               _DetailList(
                 title: 'DẤU HIỆU NHẬN BIẾT',
                 items: pattern.redFlags,
                 color: AppColors.sell,
                 icon: Icons.error_outline_rounded,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: _p2pFraudMajorGap),
               _DetailList(
                 title: 'CÁCH PHÒNG TRÁNH',
                 items: pattern.prevention,
@@ -311,7 +311,7 @@ class _DetailList extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: _p2pFraudSectionGap),
         for (var index = 0; index < items.length; index++) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -341,13 +341,14 @@ class _DetailList extends StatelessWidget {
                   items[index],
                   style: AppTextStyles.caption.copyWith(
                     color: color == AppColors.text2 ? AppColors.text2 : color,
-                    height: AppSpacing.p2pFraudBodyLineHeight,
+                    height: _p2pFraudBodyLineHeight,
                   ),
                 ),
               ),
             ],
           ),
-          if (index != items.length - 1) const SizedBox(height: AppSpacing.x2),
+          if (index != items.length - 1)
+            const SizedBox(height: _p2pFraudSectionGap),
         ],
       ],
     );

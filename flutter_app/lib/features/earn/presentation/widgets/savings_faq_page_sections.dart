@@ -112,47 +112,42 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      borderRadius: AppRadii.lgRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.lgRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: selected ? AppColors.primary30 : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.lgRadius,
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      onTap: onTap,
+      clip: true,
+      padding: AppSpacing.earnPillPaddingLarge,
+      background: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: selected ? AppColors.primary12 : AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: selected ? AppColors.primary30 : AppColors.cardBorder,
             ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnPillPaddingLarge,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  category.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: selected ? AppColors.primary : AppColors.text3,
-                    fontWeight: selected
-                        ? AppTextStyles.bold
-                        : AppTextStyles.normal,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x1),
-                Text(
-                  '$count',
-                  style: AppTextStyles.micro.copyWith(
-                    color: selected ? AppColors.primary : AppColors.text3,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
-              ],
-            ),
+            borderRadius: AppRadii.lgRadius,
           ),
         ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            category.label,
+            style: AppTextStyles.caption.copyWith(
+              color: selected ? AppColors.primary : AppColors.text3,
+              fontWeight: selected ? AppTextStyles.bold : AppTextStyles.normal,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x1),
+          Text(
+            '$count',
+            style: AppTextStyles.micro.copyWith(
+              color: selected ? AppColors.primary : AppColors.text3,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -208,37 +203,36 @@ class _FAQCard extends StatelessWidget {
       padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
             onTap: onTap,
-            borderRadius: AppRadii.cardLargeRadius,
-            child: Padding(
-              padding: AppSpacing.earnPillPadding,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _QuestionIcon(color: color),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Text(
-                      item.question,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
-                      ),
+            padding: AppSpacing.earnPillPadding,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _QuestionIcon(color: color),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Text(
+                    item.question,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
                     ),
                   ),
-                  AnimatedRotation(
-                    turns: expanded ? 0.5 : 0,
-                    duration: const Duration(milliseconds: 180),
-                    child: const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.iconMd,
-                    ),
+                ),
+                AnimatedRotation(
+                  turns: expanded ? 0.5 : 0,
+                  duration: const Duration(milliseconds: 180),
+                  child: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.text3,
+                    size: AppSpacing.iconMd,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           AnimatedCrossFade(

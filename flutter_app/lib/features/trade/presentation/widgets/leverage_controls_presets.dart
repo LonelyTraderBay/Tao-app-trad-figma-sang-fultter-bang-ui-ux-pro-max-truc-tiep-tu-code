@@ -91,20 +91,15 @@ class _StopButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCtaButton(
+    return VitChoicePill(
       key: LeveragePage.stopKey(leverage),
-      onPressed: onTap,
+      label: '${leverage}x',
+      selected: active,
+      onTap: onTap,
+      fullWidth: true,
       height: _leverageControlHeight,
-      variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
       padding: AppSpacing.zeroInsets,
-      child: Text(
-        '${leverage}x',
-        style: AppTextStyles.numericCode.copyWith(
-          color: active ? AppColors.onAccent : AppColors.text2,
-          fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          height: _leverageControlLineHeight,
-        ),
-      ),
+      semanticLabel: 'Chon muc don bay ${leverage}x',
     );
   }
 }
@@ -179,20 +174,15 @@ class _PresetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCtaButton(
+    return VitChoicePill(
       key: LeveragePage.presetKey(leverage),
-      onPressed: onTap,
+      label: '${leverage}x',
+      selected: active,
+      onTap: onTap,
+      fullWidth: true,
       height: _leverageControlHeight,
-      variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
       padding: AppSpacing.zeroInsets,
-      child: Text(
-        '${leverage}x',
-        style: AppTextStyles.numericCode.copyWith(
-          color: active ? AppColors.onAccent : AppColors.text2,
-          fontWeight: AppTextStyles.bold,
-          height: _leverageControlLineHeight,
-        ),
-      ),
+      semanticLabel: 'Chon nhanh don bay ${leverage}x',
     );
   }
 }

@@ -16,6 +16,19 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
+const double _p2pBlacklistAddVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pBlacklistAddNativeNavClearance =
+    _p2pBlacklistAddVisualNavClearance - AppSpacing.x4;
+const double _p2pBlacklistAddVisualClearance = AppSpacing.x3;
+const double _p2pBlacklistAddNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pBlacklistAddScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
+
 class P2PBlacklistAddPage extends ConsumerStatefulWidget {
   const P2PBlacklistAddPage({super.key, this.shellRenderMode});
 
@@ -60,12 +73,12 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pBlacklistAddProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pBlacklistBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pBlacklistBottomInsetNative) +
+            ? _p2pBlacklistAddVisualNavClearance +
+                  _p2pBlacklistAddVisualClearance
+            : _p2pBlacklistAddNativeNavClearance +
+                  _p2pBlacklistAddNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final canSubmit =
         _usernameController.text.trim().isNotEmpty && !_isSubmitting;
@@ -92,8 +105,8 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pBlacklistFormScrollPadding(
-                      bottomInset,
+                    padding: _p2pBlacklistAddScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
@@ -264,62 +277,54 @@ class _ReasonTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _reasonColor(reason.toneKey);
-    return Material(
+    return VitCard(
       key: P2PBlacklistAddPage.reasonKey(reason.id),
-      color: selected ? color.withValues(alpha: .08) : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(
-          color: selected
-              ? color.withValues(alpha: .46)
-              : AppColors.borderSolid,
-          width: AppSpacing.borderWidth,
-        ),
+      onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: selected
+          ? color.withValues(alpha: .46)
+          : AppColors.borderSolid,
+      background: ColoredBox(
+        color: selected ? color.withValues(alpha: .08) : AppColors.surface2,
       ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: AppSpacing.buttonCompact + AppSpacing.x2,
-          ),
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
-            ),
-            child: Row(
-              children: [
-                Material(
-                  color: color.withValues(alpha: .12),
-                  borderRadius: AppRadii.cardRadius,
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
-                    child: Icon(
-                      _reasonIcon(reason.iconKey),
-                      color: color,
-                      size: AppSpacing.iconSm,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Text(
-                    reason.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: selected ? color : AppColors.text2,
-                      fontWeight: selected
-                          ? AppTextStyles.bold
-                          : AppTextStyles.medium,
-                    ),
-                  ),
-                ),
-              ],
+      clip: true,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.buttonCompact + AppSpacing.x2,
+      ),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
+      child: Row(
+        children: [
+          Material(
+            color: color.withValues(alpha: .12),
+            borderRadius: AppRadii.cardRadius,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+              child: Icon(
+                _reasonIcon(reason.iconKey),
+                color: color,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
-        ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              reason.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: selected ? color : AppColors.text2,
+                fontWeight: selected
+                    ? AppTextStyles.bold
+                    : AppTextStyles.medium,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -347,7 +352,7 @@ class _NoteField extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         SizedBox(
-          height: AppSpacing.ctaHeight + AppSpacing.x5,
+          height: AppSpacing.ctaHeight + AppSpacing.x4,
           child: Material(
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(

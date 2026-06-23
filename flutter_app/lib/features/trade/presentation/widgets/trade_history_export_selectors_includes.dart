@@ -125,24 +125,13 @@ class _PeriodChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitChoicePill(
+      label: period.label,
+      selected: active,
       onTap: onTap,
-      variant: VitCardVariant.inner,
       height: VitDensity.compact.controlHeight,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
-      borderColor: active
-          ? _tradePrimary.withValues(alpha: .8)
-          : AppColors.cardBorder,
-      child: Center(
-        widthFactor: 1,
-        child: Text(
-          period.label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? _tradePrimary : AppColors.text2,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          ),
-        ),
-      ),
+      accentColor: _tradePrimary,
     );
   }
 }
@@ -185,26 +174,26 @@ class _IncludeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      child: SizedBox(
-        height: VitDensity.compact.controlHeight,
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                include.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.medium,
-                ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      height: VitDensity.compact.controlHeight,
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              include.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.medium,
               ),
             ),
-            _CheckBox(checked: include.checked),
-          ],
-        ),
+          ),
+          _CheckBox(checked: include.checked),
+        ],
       ),
     );
   }

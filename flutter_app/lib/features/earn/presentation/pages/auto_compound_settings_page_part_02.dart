@@ -202,9 +202,12 @@ class _SettingsSheet extends StatelessWidget {
                 style: AppTextStyles.sectionTitle,
               ),
             ),
-            IconButton(
+            VitIconButton(
+              icon: Icons.close_rounded,
+              tooltip: 'Đóng',
               onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.close_rounded, color: AppColors.text3),
+              variant: VitIconButtonVariant.transparent,
+              size: VitIconButtonSize.md,
             ),
           ],
         ),
@@ -410,29 +413,14 @@ class _ThresholdChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.buy10 : AppColors.surface2,
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        key: AutoCompoundSettingsPage.thresholdKey(value),
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: AppSpacing.zeroInsets.copyWith(
-            top: AppSpacing.x2,
-            bottom: AppSpacing.x2,
-          ),
-          child: Text(
-            _formatAmount(value),
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(
-              color: selected ? AppColors.buy : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: AutoCompoundSettingsPage.thresholdKey(value),
+      label: _formatAmount(value),
+      selected: selected,
+      onTap: onTap,
+      tone: VitChoicePillTone.success,
+      fullWidth: true,
+      height: AppSpacing.buttonCompact,
     );
   }
 }

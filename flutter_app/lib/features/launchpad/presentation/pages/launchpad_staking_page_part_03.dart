@@ -267,18 +267,12 @@ class _RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface3,
-      borderRadius: AppRadii.smRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: SizedBox(
-          width: AppSpacing.buttonCompact,
-          height: AppSpacing.buttonCompact,
-          child: Icon(icon, color: AppColors.text1, size: AppSpacing.iconSm),
-        ),
-      ),
+    return VitIconButton(
+      onPressed: onTap,
+      icon: icon,
+      tooltip: icon == Icons.add_rounded ? 'Tang gia tri' : 'Giam gia tri',
+      variant: VitIconButtonVariant.transparent,
+      size: VitIconButtonSize.sm,
     );
   }
 }

@@ -14,34 +14,14 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _predictionPrimary.withValues(alpha: .12)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: active
-              ? _predictionPrimary.withValues(alpha: .30)
-              : AppColors.borderSolid,
-        ),
-        borderRadius: AppRadii.smRadius,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x1,
-          ),
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: active ? _predictionPrimary : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _predictionPrimary,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x2,
+        vertical: AppSpacing.x1,
       ),
     );
   }

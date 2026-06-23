@@ -12,27 +12,27 @@ class _GuideStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SelfieHero(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         Text(
           'Ví dụ mẫu',
           style: AppTextStyles.baseMedium.copyWith(
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _p2pSelfieSectionGap),
         _SampleCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         Text(
           'Hướng dẫn chụp ảnh',
           style: AppTextStyles.baseMedium.copyWith(
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _p2pSelfieSectionGap),
         _GuidelinesCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         _TipsCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         VitCtaButton(
           key: P2PSelfieVerificationPage.startKey,
           onPressed: onStart,
@@ -55,12 +55,12 @@ class _SelfieHero extends StatelessWidget {
       key: P2PSelfieVerificationPage.heroKey,
       radius: VitCardRadius.lg,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pSelfieCardPadding,
+      padding: _p2pSelfieCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox.square(
-            dimension: AppSpacing.inputHeight,
+            dimension: _p2pSelfieHeroIconBox,
             child: Material(
               color: AppColors.primary15,
               shape: const RoundedRectangleBorder(
@@ -74,7 +74,7 @@ class _SelfieHero extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: _p2pSelfieMajorGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +90,7 @@ class _SelfieHero extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pSelfieBodyLineHeight,
+                    height: _p2pSelfieBodyLineHeight,
                   ),
                 ),
               ],
@@ -127,9 +127,9 @@ class _SampleCard extends StatelessWidget {
               const Icon(
                 Icons.person_outline_rounded,
                 color: AppColors.text1,
-                size: AppSpacing.p2pSelfieSampleIconSize,
+                size: _p2pSelfieSampleIconSize,
               ),
-              const SizedBox(height: AppSpacing.x5),
+              const SizedBox(height: _p2pSelfieMajorGap),
               Text(
                 snapshot.sampleTitle,
                 style: AppTextStyles.baseMedium.copyWith(
@@ -159,7 +159,7 @@ class _GuidelinesCard extends StatelessWidget {
     return VitCard(
       key: P2PSelfieVerificationPage.guidelinesKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pSelfieCardPadding,
+      padding: _p2pSelfieCardPadding,
       child: Column(
         children: [
           for (final guide in snapshot.guidelines) ...[
@@ -183,7 +183,7 @@ class _TipsCard extends StatelessWidget {
     return VitCard(
       key: P2PSelfieVerificationPage.tipsKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pSelfieCardPadding,
+      padding: _p2pSelfieCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -192,7 +192,7 @@ class _TipsCard extends StatelessWidget {
             title: 'Mẹo để thành công',
             color: AppModuleAccents.p2p,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pSelfieSectionGap),
           for (final tip in snapshot.tips) ...[
             _ChecklistRow(text: tip, color: AppColors.warn),
             if (tip != snapshot.tips.last)
@@ -216,7 +216,7 @@ class _CaptureStep extends StatelessWidget {
       radius: VitCardRadius.lg,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pSelfieLargeCardPadding,
+      padding: _p2pSelfieLargeCardPadding,
       onTap: onCapture,
       child: AspectRatio(
         aspectRatio: AppSpacing.p2pSelfieCaptureAspectRatio,
@@ -224,7 +224,7 @@ class _CaptureStep extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox.square(
-              dimension: AppSpacing.buttonHero,
+              dimension: _p2pSelfieActionIconBox,
               child: Material(
                 color: AppColors.primary15,
                 shape: CircleBorder(),
@@ -235,7 +235,7 @@ class _CaptureStep extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: _p2pSelfieMajorGap),
             Text(
               'Nhấn để chụp ảnh',
               textAlign: TextAlign.center,
@@ -243,7 +243,7 @@ class _CaptureStep extends StatelessWidget {
                 color: AppModuleAccents.p2p,
               ),
             ),
-            const SizedBox(height: AppSpacing.x3),
+            const SizedBox(height: _p2pSelfieSectionGap),
             Text(
               'Đảm bảo khuôn mặt và ID card rõ nét trong khung hình',
               textAlign: TextAlign.center,
@@ -281,18 +281,18 @@ class _LivenessStep extends StatelessWidget {
           completed: completedActions.length,
           total: snapshot.livenessActions.length,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pSelfieLargeCardPadding,
+          padding: _p2pSelfieLargeCardPadding,
           child: Column(
             children: [
               Icon(
                 _livenessIcon(currentAction.iconKey),
                 color: AppModuleAccents.p2p,
-                size: AppSpacing.p2pSelfieLivenessIconSize,
+                size: _p2pSelfieLivenessIconSize,
               ),
-              const SizedBox(height: AppSpacing.x4),
+              const SizedBox(height: _p2pSelfieSectionGap),
               Text(
                 currentAction.label,
                 textAlign: TextAlign.center,
@@ -307,13 +307,13 @@ class _LivenessStep extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         GridView.count(
           crossAxisCount: AppSpacing.p2pSelfieLivenessGridColumns,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          crossAxisSpacing: AppSpacing.x3,
-          mainAxisSpacing: AppSpacing.x3,
+          crossAxisSpacing: _p2pSelfieSectionGap,
+          mainAxisSpacing: _p2pSelfieSectionGap,
           childAspectRatio: AppSpacing.p2pSelfieLivenessGridAspectRatio,
           children: [
             for (final action in snapshot.livenessActions)
@@ -323,7 +323,7 @@ class _LivenessStep extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pSelfieMajorGap),
         VitCtaButton(
           key: P2PSelfieVerificationPage.livenessActionKey,
           onPressed: onConfirmAction,

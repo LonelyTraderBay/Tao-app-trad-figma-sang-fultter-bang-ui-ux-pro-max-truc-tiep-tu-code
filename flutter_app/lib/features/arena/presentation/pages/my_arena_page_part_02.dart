@@ -114,8 +114,10 @@ class _ChallengeRow extends StatelessWidget {
     return Material(
       key: MyArenaPage.challengeKey(challenge.id),
       type: MaterialType.transparency,
-      child: InkWell(
+      child: VitCard(
         onTap: onTap,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: Column(
           children: [
             Padding(
@@ -222,8 +224,10 @@ class _SavedModesList extends StatelessWidget {
             Material(
               key: MyArenaPage.modeKey(modes[i].id),
               type: MaterialType.transparency,
-              child: InkWell(
+              child: VitCard(
                 onTap: () => onMode(modes[i].id),
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
                 child: Column(
                   children: [
                     Padding(
@@ -308,8 +312,10 @@ class _DraftList extends StatelessWidget {
           for (var i = 0; i < drafts.length; i++)
             Material(
               type: MaterialType.transparency,
-              child: InkWell(
+              child: VitCard(
                 onTap: onStudio,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
                 child: Column(
                   children: [
                     Padding(

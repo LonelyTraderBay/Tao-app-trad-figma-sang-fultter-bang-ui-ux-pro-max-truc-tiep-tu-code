@@ -26,8 +26,6 @@ const double _launchpadPerformanceLineHeightCompact = 1.1;
 const double _launchpadPerformanceLineHeightLabel = 1.05;
 const double _launchpadPerformanceLineHeightBody = 1.25;
 const double _launchpadPerformanceLineHeightReadable = 1.35;
-const double _launchpadPerformanceIndicatorWidth =
-    AppSpacing.buttonStandard + AppSpacing.x4;
 const double _launchpadPerformanceChartHeight = 176;
 const double _launchpadPerformanceSparklineHeight = 164;
 const double _launchpadPerformanceAxisLabelWidth = AppSpacing.inputHeight;

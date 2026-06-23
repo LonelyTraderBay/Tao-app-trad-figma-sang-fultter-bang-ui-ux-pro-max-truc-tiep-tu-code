@@ -167,9 +167,11 @@ class _TopCoinRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: EdgeInsets.zero,
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
       child: SizedBox(
         height: AppSpacing.marketSectorTopCoinRowHeight,
         child: Row(

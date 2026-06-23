@@ -24,73 +24,34 @@ class _StickyActions extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: SizedBox(
+            child: VitCtaButton(
+              key: BotEmergencyStopPage.cancelKey,
               height: AppSpacing.tradeBotFooterButtonHeight,
-              child: FilledButton(
-                key: BotEmergencyStopPage.cancelKey,
-                onPressed: onCancel,
-                style: FilledButton.styleFrom(
-                  backgroundColor: _stopPanel2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                ),
-                child: Text(
-                  'Cancel',
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+              variant: VitCtaButtonVariant.secondary,
+              onPressed: onCancel,
+              child: Text(
+                'Cancel',
+                style: AppTextStyles.body.copyWith(
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
           ),
           const SizedBox(width: AppSpacing.tradeBotCardGap),
           Expanded(
-            child: SizedBox(
+            child: VitCtaButton(
+              key: BotEmergencyStopPage.submitKey,
               height: AppSpacing.tradeBotFooterButtonHeight,
-              child: FilledButton.icon(
-                key: BotEmergencyStopPage.submitKey,
-                onPressed: canSubmit ? onSubmit : null,
-                style: FilledButton.styleFrom(
-                  backgroundColor: canSubmit ? _stopRed : _stopPanel,
-                  disabledBackgroundColor: _stopPanel,
-                  foregroundColor: AppColors.onAccent,
-                  disabledForegroundColor: AppColors.text3.withValues(
-                    alpha: .4,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.inputRadius,
-                  ),
-                ),
-                icon: stopping
-                    ? const SizedBox(
-                        width: AppSpacing.iconSm,
-                        height: AppSpacing.iconSm,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.onAccent,
-                          ),
-                        ),
-                      )
-                    : Icon(
-                        Icons.pause_rounded,
-                        size: AppSpacing.iconSm,
-                        color: canSubmit
-                            ? AppColors.onAccent
-                            : AppColors.text3.withValues(alpha: .32),
-                      ),
-                label: Text(
-                  stopping ? 'Stopping...' : 'Stop All Bots Now',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.body.copyWith(
-                    color: canSubmit
-                        ? AppColors.onAccent
-                        : AppColors.text3.withValues(alpha: .32),
-                    fontWeight: AppTextStyles.bold,
-                  ),
+              variant: VitCtaButtonVariant.destructive,
+              loading: stopping,
+              onPressed: canSubmit ? onSubmit : null,
+              leading: const Icon(Icons.pause_rounded),
+              child: Text(
+                stopping ? 'Stopping...' : 'Stop All Bots Now',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.body.copyWith(
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),

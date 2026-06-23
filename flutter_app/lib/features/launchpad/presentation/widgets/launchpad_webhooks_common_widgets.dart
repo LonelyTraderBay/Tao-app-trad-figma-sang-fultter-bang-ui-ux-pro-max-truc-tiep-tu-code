@@ -42,16 +42,16 @@ class _CopyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      visualDensity: VisualDensity.compact,
-      constraints: BoxConstraints.tightFor(width: size, height: size),
-      padding: AppSpacing.zeroInsets,
+    return VitIconButton(
       onPressed: onTap,
-      icon: Icon(
-        active ? Icons.check_rounded : Icons.copy_rounded,
-        color: active ? AppColors.buy : AppColors.text3,
-        size: size * .55,
-      ),
+      icon: active ? Icons.check_rounded : Icons.copy_rounded,
+      tooltip: active ? 'Da copy' : 'Copy',
+      variant: active
+          ? VitIconButtonVariant.success
+          : VitIconButtonVariant.transparent,
+      size: size <= _launchpadWebhooksIcon2xl
+          ? VitIconButtonSize.sm
+          : VitIconButtonSize.md,
     );
   }
 }

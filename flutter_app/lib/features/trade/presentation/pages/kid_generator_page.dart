@@ -21,6 +21,43 @@ const _kidBackground = AppColors.bg;
 const _kidBorder = AppColors.borderSolid;
 const _kidPrimary = AppColors.primary;
 const _kidGreen = AppColors.buy;
+const _kidScrollTopGap = AppSpacing.x3;
+const _kidNoticeToPreviewGap = AppSpacing.x3;
+const _kidPreviewToSectionGap = AppSpacing.x4;
+const _kidSectionHeaderGap = AppSpacing.x2;
+const _kidSectionCardGap = AppSpacing.x2;
+const _kidSectionToActionsGap = AppSpacing.x3;
+const _kidStackGap = AppSpacing.x3;
+const _kidPreviewPadding = EdgeInsetsDirectional.fromSTEB(
+  AppSpacing.x4,
+  AppSpacing.x4,
+  AppSpacing.x4,
+  AppSpacing.x4,
+);
+const _kidSectionCardPadding = EdgeInsetsDirectional.symmetric(
+  horizontal: AppSpacing.x3,
+  vertical: AppSpacing.x2,
+);
+const _kidMetricPadding = EdgeInsetsDirectional.fromSTEB(
+  AppSpacing.x3,
+  AppSpacing.x1,
+  AppSpacing.x3,
+  AppSpacing.x1,
+);
+const _kidPreviewIconBox = AppSpacing.searchBarCompactHeight;
+const _kidPreviewIconSize = AppSpacing.iconMd;
+const _kidMetricHeight = AppSpacing.searchBarCompactHeight;
+const _kidSectionRowHeight = AppSpacing.buttonCompact;
+const _kidSectionIconBox = AppSpacing.buttonCompact;
+const _kidSectionStatusRadius = AppSpacing.x3;
+const _kidSectionStatusIcon = AppSpacing.tradeBotSmallIcon;
+
+EdgeInsets _kidScrollPadding(double bottomInset) => EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  _kidScrollTopGap,
+  AppSpacing.contentPad,
+  bottomInset,
+);
 
 class KIDGeneratorPage extends ConsumerWidget {
   const KIDGeneratorPage({super.key, this.shellRenderMode});
@@ -69,34 +106,28 @@ class KIDGeneratorPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   key: KIDGeneratorPage.contentKey,
-                  padding: AppSpacing.tradeBotClientMoneyScrollPadding(
-                    bottomInset,
-                  ),
+                  padding: _kidScrollPadding(bottomInset),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const _RegulatoryNotice(),
-                      const SizedBox(height: AppSpacing.x6 + AppSpacing.x1),
+                      const SizedBox(height: _kidNoticeToPreviewGap),
                       _KidPreviewCard(document: snapshot.document),
-                      const SizedBox(
-                        height:
-                            AppSpacing.tradeBotClientMoneyTopGap -
-                            AppSpacing.tradeBotHairline,
-                      ),
+                      const SizedBox(height: _kidPreviewToSectionGap),
                       const VitSectionHeader(
                         title: 'Document Sections',
                         variant: VitSectionHeaderVariant.accentBar,
                         accentColor: _kidPrimary,
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotDisclosureGap),
+                      const SizedBox(height: _kidSectionHeaderGap),
                       for (final section in snapshot.sections) ...[
                         _KidSectionCard(section: section),
                         if (section != snapshot.sections.last)
-                          const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                          const SizedBox(height: _kidSectionCardGap),
                       ],
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
+                      const SizedBox(height: _kidSectionToActionsGap),
                       const _Actions(),
-                      const SizedBox(height: AppSpacing.tradeBotCardGap),
+                      const SizedBox(height: _kidStackGap),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: AppSpacing.cardPaddingCompact,
@@ -108,7 +139,7 @@ class KIDGeneratorPage extends ConsumerWidget {
                           contractId: 'kid-generator-review',
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotCardGap),
+                      const SizedBox(height: _kidStackGap),
                       const TradeBodyReviewSection(
                         title: 'KID body review',
                         message: 'KID generator body reviewed',
@@ -187,38 +218,37 @@ class _KidPreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotClientMoneyInsolvencyPadding,
+      padding: _kidPreviewPadding,
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               VitCard(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
+                width: _kidPreviewIconBox,
+                height: _kidPreviewIconBox,
                 variant: VitCardVariant.ghost,
                 borderColor: _kidPrimary.withValues(alpha: .24),
                 alignment: Alignment.center,
                 child: const Icon(
                   Icons.description_outlined,
                   color: _kidPrimary,
-                  size: AppSpacing.iconMd + AppSpacing.x3,
+                  size: _kidPreviewIconSize,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotSectionMarkerHeight),
+              const SizedBox(width: AppSpacing.tradeBotRowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       document.title,
-                      style: AppTextStyles.baseMedium.copyWith(
+                      style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: AppSpacing.tradeBotCardGap - AppSpacing.x1,
-                    ),
+                    const SizedBox(height: AppSpacing.x2),
                     Text(
                       'Last updated: ${document.lastUpdated} • '
                       'Version ${document.version}',
@@ -231,7 +261,7 @@ class _KidPreviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.tradeBotCardGap),
+          const SizedBox(height: _kidStackGap),
           Row(
             children: [
               Expanded(
@@ -264,10 +294,10 @@ class _DocumentMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.x7,
+      height: _kidMetricHeight,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.tradeBotClientMoneyMetricPadding,
+      padding: _kidMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -275,7 +305,7 @@ class _DocumentMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             value,
             style: AppTextStyles.captionSm.copyWith(
@@ -298,14 +328,14 @@ class _KidSectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       key: KIDGeneratorPage.sectionKey(section.title),
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: _kidSectionCardPadding,
       child: SizedBox(
-        height: AppSpacing.tradeBotQuestionIconBox,
+        height: _kidSectionRowHeight,
         child: Row(
           children: [
             SizedBox(
-              width: AppSpacing.tradeBotQuestionIconBox,
-              height: AppSpacing.tradeBotQuestionIconBox,
+              width: _kidSectionIconBox,
+              height: _kidSectionIconBox,
               child: Icon(
                 _iconFor(section.icon),
                 color: _kidPrimary,
@@ -323,12 +353,12 @@ class _KidSectionCard extends StatelessWidget {
               ),
             ),
             const CircleAvatar(
-              radius: AppSpacing.x4,
+              radius: _kidSectionStatusRadius,
               backgroundColor: AppColors.buy10,
               child: Icon(
                 Icons.check_circle_outline_rounded,
                 color: _kidGreen,
-                size: AppSpacing.inputPrefixIcon,
+                size: _kidSectionStatusIcon,
               ),
             ),
           ],
@@ -354,7 +384,7 @@ class _Actions extends StatelessWidget {
             onPressed: () {},
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardGap),
+        const SizedBox(width: _kidSectionCardGap),
         Expanded(
           child: _ActionButton(
             icon: Icons.download_rounded,

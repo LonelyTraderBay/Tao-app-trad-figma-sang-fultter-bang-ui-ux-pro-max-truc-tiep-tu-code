@@ -142,24 +142,14 @@ class _FilterPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitChoicePill(
       key: widgetKey,
-      color: selected ? AppModuleAccents.p2p : AppColors.surface2,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: Padding(
-          padding: AppSpacing.p2pLoginHistoryFilterPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.onAccent : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      padding: AppSpacing.p2pLoginHistoryFilterPadding,
+      accentColor: AppModuleAccents.p2p,
+      semanticLabel: 'Login history filter $label',
     );
   }
 }

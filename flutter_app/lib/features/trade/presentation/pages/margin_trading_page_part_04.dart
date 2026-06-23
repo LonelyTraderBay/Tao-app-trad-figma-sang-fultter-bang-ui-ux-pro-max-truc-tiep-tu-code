@@ -42,11 +42,13 @@ class _InfoBanner extends StatelessWidget {
 
 class _Panel extends StatelessWidget {
   const _Panel({
+    super.key,
     required this.child,
     this.color = _marginCard,
     this.borderColor = AppColors.cardBorder,
     this.padding,
     this.minHeight,
+    this.onTap,
   });
 
   final Widget child;
@@ -54,6 +56,7 @@ class _Panel extends StatelessWidget {
   final Color borderColor;
   final EdgeInsetsGeometry? padding;
   final double? minHeight;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +75,7 @@ class _Panel extends StatelessWidget {
       background: usesCustomColor ? ColoredBox(color: color) : null,
       clip: usesCustomColor,
       borderColor: borderColor,
+      onTap: onTap,
       child: child,
     );
   }

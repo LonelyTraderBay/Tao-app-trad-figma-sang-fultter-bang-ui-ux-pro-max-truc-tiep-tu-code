@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 TextStyle get savingsNotificationCaptionMedium =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.medium);
@@ -71,7 +72,10 @@ class SavingsNotificationTokenSwitch extends StatelessWidget {
       button: true,
       toggled: value,
       enabled: !disabled,
-      child: GestureDetector(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: AppSpacing.zeroInsets,
         onTap: disabled ? null : () => onChanged(!value),
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 150),

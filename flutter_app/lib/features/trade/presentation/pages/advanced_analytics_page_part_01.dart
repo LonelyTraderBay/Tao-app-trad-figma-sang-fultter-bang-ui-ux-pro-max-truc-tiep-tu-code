@@ -330,21 +330,18 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: AdvancedAnalyticsPage.filterKey(id),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        density: VitDensity.compact,
-        alignment: Alignment.center,
-        variant: VitCardVariant.inner,
-        borderColor: selected ? _advancedPurple : _advancedBorder,
-        child: Text(
-          id.toUpperCase(),
-          style: AppTextStyles.caption.copyWith(
-            color: selected ? _advancedPurple : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
+      density: VitDensity.compact,
+      alignment: Alignment.center,
+      variant: VitCardVariant.inner,
+      borderColor: selected ? _advancedPurple : _advancedBorder,
+      child: Text(
+        id.toUpperCase(),
+        style: AppTextStyles.caption.copyWith(
+          color: selected ? _advancedPurple : AppColors.text2,
+          fontWeight: AppTextStyles.bold,
         ),
       ),
     );

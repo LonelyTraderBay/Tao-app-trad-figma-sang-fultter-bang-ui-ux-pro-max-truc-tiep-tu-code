@@ -135,20 +135,15 @@ class _CategoryCard extends StatelessWidget {
                   small: true,
                 ),
                 const SizedBox(width: AppSpacing.x2),
-                InkWell(
+                VitIconButton(
                   key: LaunchpadNotifSoundPage.expandKey(category.id),
-                  onTap: onExpand,
-                  borderRadius: AppRadii.smRadius,
-                  child: Padding(
-                    padding: AppSpacing.launchpadPaddingX2,
-                    child: Icon(
-                      expanded
-                          ? Icons.keyboard_arrow_up_rounded
-                          : Icons.keyboard_arrow_down_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.iconSm,
-                    ),
-                  ),
+                  onPressed: onExpand,
+                  icon: expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  tooltip: expanded ? 'Thu gon danh muc' : 'Mo danh muc',
+                  variant: VitIconButtonVariant.transparent,
+                  size: VitIconButtonSize.sm,
                 ),
               ],
             ),
@@ -261,75 +256,56 @@ class _ExpandedCategorySettings extends StatelessWidget {
                   onChanged: onVolume,
                 ),
               ),
-              InkWell(
+              VitCard(
                 key: LaunchpadNotifSoundPage.previewKey(category.id),
                 onTap: onPreview,
-                borderRadius: AppRadii.inputRadius,
-                child: SizedBox(
-                  height: AppSpacing.buttonCompact,
-                  child: DecoratedBox(
-                    decoration: const ShapeDecoration(
-                      color: AppColors.surface2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: AppRadii.inputRadius,
-                        side: BorderSide(color: AppColors.cardBorder),
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.sm,
+                height: AppSpacing.buttonCompact,
+                padding: AppSpacing.launchpadPaddingX4,
+                child: Row(
+                  children: [
+                    Icon(
+                      playingPreview
+                          ? Icons.check_circle_outline_rounded
+                          : Icons.play_arrow_rounded,
+                      color: playingPreview ? AppColors.buy : category.accent,
+                      size: AppSpacing.iconSm,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Text(
+                      playingPreview ? 'Đang phát...' : 'Nghe thử',
+                      style: AppTextStyles.caption.copyWith(
+                        color: playingPreview ? AppColors.buy : AppColors.text2,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    child: Padding(
-                      padding: AppSpacing.launchpadPaddingX4,
-                      child: Row(
-                        children: [
-                          Icon(
-                            playingPreview
-                                ? Icons.check_circle_outline_rounded
-                                : Icons.play_arrow_rounded,
-                            color: playingPreview
-                                ? AppColors.buy
-                                : category.accent,
-                            size: AppSpacing.iconSm,
-                          ),
-                          const SizedBox(width: AppSpacing.x2),
-                          Text(
-                            playingPreview ? 'Đang phát...' : 'Nghe thử',
-                            style: AppTextStyles.caption.copyWith(
-                              color: playingPreview
-                                  ? AppColors.buy
-                                  : AppColors.text2,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                          if (playingPreview) ...[
-                            const SizedBox(width: AppSpacing.x3),
-                            for (var i = 0; i < 4; i++) ...[
-                              const SizedBox(width: AppSpacing.x1),
-                              Builder(
-                                builder: (context) {
-                                  final barHeight =
-                                      AppSpacing.launchpadSoundBarBaseHeight +
-                                      i *
-                                          AppSpacing
-                                              .launchpadSoundBarHeightStep;
-                                  return SizedBox(
-                                    width:
-                                        AppSpacing.launchpadVerticalMarkerWidth,
-                                    height: barHeight,
-                                    child: DecoratedBox(
-                                      decoration: ShapeDecoration(
-                                        color: category.accent,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: AppRadii.xsRadius,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
+                    if (playingPreview) ...[
+                      const SizedBox(width: AppSpacing.x3),
+                      for (var i = 0; i < 4; i++) ...[
+                        const SizedBox(width: AppSpacing.x1),
+                        Builder(
+                          builder: (context) {
+                            final barHeight =
+                                AppSpacing.launchpadSoundBarBaseHeight +
+                                i * AppSpacing.launchpadSoundBarHeightStep;
+                            return SizedBox(
+                              width: AppSpacing.launchpadVerticalMarkerWidth,
+                              height: barHeight,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: category.accent,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: AppRadii.xsRadius,
+                                  ),
+                                ),
                               ),
-                            ],
-                          ],
-                        ],
-                      ),
-                    ),
-                  ),
+                            );
+                          },
+                        ),
+                      ],
+                    ],
+                  ],
                 ),
               ),
             ],
@@ -357,33 +333,13 @@ class _SoundTypeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
       key: LaunchpadNotifSoundPage.soundTypeKey(categoryId, soundType.value),
+      label: soundType.label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.mdRadius,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? accent.withValues(alpha: .12) : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.mdRadius,
-            side: BorderSide(
-              color: active
-                  ? accent.withValues(alpha: .35)
-                  : AppColors.cardBorder,
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.launchpadPillPadding,
-          child: Text(
-            soundType.label,
-            style: AppTextStyles.micro.copyWith(
-              color: active ? accent : AppColors.text3,
-              fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-            ),
-          ),
-        ),
-      ),
+      accentColor: accent,
+      padding: AppSpacing.launchpadPillPadding,
     );
   }
 }

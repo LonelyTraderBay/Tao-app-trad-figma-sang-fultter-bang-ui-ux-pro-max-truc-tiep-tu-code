@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_risk_dashboard_page.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/staking_risk_score_calculator_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
@@ -79,6 +80,7 @@ void main() {
     expect(find.text('Low Risk'), findsOneWidget);
     expect(find.byKey(StakingRiskScoreCalculatorPage.radarKey), findsOneWidget);
     expect(find.text('Proceed with This Configuration'), findsOneWidget);
+    expect(find.byType(VitStickyFooter), findsNothing);
   });
 
   testWidgets('SC-384 first viewport reaches amount input', (tester) async {

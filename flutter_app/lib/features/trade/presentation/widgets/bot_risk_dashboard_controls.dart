@@ -92,50 +92,45 @@ class _EmergencyActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: BotRiskDashboardPage.emergencyButtonKey,
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        density: VitDensity.compact,
-        borderColor: _riskRed.withValues(alpha: .48),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.error_outline_rounded,
-              color: _riskRed,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Emergency Stop All Bots',
-                    style: AppTextStyles.caption.copyWith(
-                      color: _riskRed,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      variant: VitCardVariant.ghost,
+      density: VitDensity.compact,
+      borderColor: _riskRed.withValues(alpha: .48),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.error_outline_rounded,
+            color: _riskRed,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Emergency Stop All Bots',
+                  style: AppTextStyles.caption.copyWith(
+                    color: _riskRed,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    'Stop all $runningBots running bots immediately',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text3,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  'Stop all $runningBots running bots immediately',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-            Text(
-              '->',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-          ],
-        ),
+          ),
+          Text(
+            '->',
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+        ],
       ),
     );
   }

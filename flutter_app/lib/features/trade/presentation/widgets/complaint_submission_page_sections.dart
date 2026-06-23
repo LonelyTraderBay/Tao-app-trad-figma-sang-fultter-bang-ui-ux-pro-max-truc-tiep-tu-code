@@ -275,52 +275,51 @@ class _TermsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
+    return VitCard(
+      key: ComplaintSubmissionPage.acceptKey,
+      onTap: () => onChanged(!accepted),
+      density: VitDensity.compact,
       padding: AppSpacing.complaintSubmissionTermsPadding,
-      child: InkWell(
-        key: ComplaintSubmissionPage.acceptKey,
-        onTap: () => onChanged(!accepted),
-        borderRadius: AppRadii.cardRadius,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: _submissionCheckboxSize,
-              height: _submissionCheckboxSize,
-              child: Checkbox(
-                value: accepted,
-                onChanged: (value) => onChanged(value ?? false),
-                visualDensity: VisualDensity.compact,
-                side: const BorderSide(color: AppColors.text3),
-                activeColor: _submissionPrimary,
-              ),
+      borderColor: _submissionBorder.withValues(alpha: .76),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: _submissionCheckboxSize,
+            height: _submissionCheckboxSize,
+            child: Checkbox(
+              value: accepted,
+              onChanged: (value) => onChanged(value ?? false),
+              visualDensity: VisualDensity.compact,
+              side: const BorderSide(color: AppColors.text3),
+              activeColor: _submissionPrimary,
             ),
-            const SizedBox(width: _submissionCardSpace),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+          ),
+          const SizedBox(width: _submissionCardSpace),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  snapshot.termsIntro,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    height: _submissionLineReadable,
+                  ),
+                ),
+                const SizedBox(height: _submissionSpace),
+                for (final term in snapshot.terms)
                   Text(
-                    snapshot.termsIntro,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      height: _submissionLineReadable,
+                    '- $term',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      height: _submissionLineLong,
                     ),
                   ),
-                  const SizedBox(height: _submissionSpace),
-                  for (final term in snapshot.terms)
-                    Text(
-                      '- $term',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        height: _submissionLineLong,
-                      ),
-                    ),
-                ],
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

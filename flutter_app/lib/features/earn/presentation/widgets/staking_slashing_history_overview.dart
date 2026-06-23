@@ -174,53 +174,49 @@ class StakingSlashingTabs extends StatelessWidget {
         children: [
           for (final tab in StakingSlashingTab.values)
             Expanded(
-              child: Material(
-                color: AppColors.transparent,
-                child: InkWell(
-                  key: StakingSlashingHistoryKeys.tab(tab.name),
-                  onTap: () => onChanged(tab),
-                  child: Padding(
-                    padding: AppSpacing.earnTopPaddingX4,
-                    child: Column(
-                      children: [
-                        Text(
-                          stakingSlashingTabLabel(tab),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        TweenAnimationBuilder<double>(
-                          duration: const Duration(milliseconds: 160),
-                          tween: Tween<double>(
-                            end: active == tab ? AppSpacing.buttonHero : 0,
-                          ),
-                          builder: (context, width, _) {
-                            return SizedBox(
-                              width: width,
-                              height:
-                                  AppSpacing.stakingSlashingTabIndicatorHeight,
-                              child: DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  color: active == tab
-                                      ? AppColors.primarySoft
-                                      : AppColors.transparent,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: AppRadii.xsRadius,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+              child: VitCard(
+                key: StakingSlashingHistoryKeys.tab(tab.name),
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                padding: AppSpacing.earnTopPaddingX4,
+                onTap: () => onChanged(tab),
+                child: Column(
+                  children: [
+                    Text(
+                      stakingSlashingTabLabel(tab),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: active == tab
+                            ? AppColors.primarySoft
+                            : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: AppSpacing.x4),
+                    TweenAnimationBuilder<double>(
+                      duration: const Duration(milliseconds: 160),
+                      tween: Tween<double>(
+                        end: active == tab ? AppSpacing.buttonHero : 0,
+                      ),
+                      builder: (context, width, _) {
+                        return SizedBox(
+                          width: width,
+                          height: AppSpacing.stakingSlashingTabIndicatorHeight,
+                          child: DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: active == tab
+                                  ? AppColors.primarySoft
+                                  : AppColors.transparent,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: AppRadii.xsRadius,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

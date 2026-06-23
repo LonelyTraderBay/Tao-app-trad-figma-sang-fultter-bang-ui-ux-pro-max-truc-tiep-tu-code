@@ -59,7 +59,10 @@ class _UnderlinedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
         onTap: () => onChanged(value),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,

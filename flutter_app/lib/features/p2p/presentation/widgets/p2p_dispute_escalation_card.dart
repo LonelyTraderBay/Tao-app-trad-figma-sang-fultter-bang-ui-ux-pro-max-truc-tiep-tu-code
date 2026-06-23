@@ -151,50 +151,41 @@ class P2PDisputeEscalationCard extends StatelessWidget {
           ),
           if (nextLevel != null) ...[
             const SizedBox(height: AppSpacing.x3),
-            Material(
-              color: AppColors.warn10,
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.inputRadius,
-                side: BorderSide(color: AppColors.warn15),
+            VitCard(
+              key: escalateKey,
+              onTap: onEscalate,
+              variant: VitCardVariant.ghost,
+              radius: VitCardRadius.sm,
+              borderColor: AppColors.warn15,
+              background: const ColoredBox(color: AppColors.warn10),
+              clip: true,
+              constraints: const BoxConstraints(
+                minHeight: AppSpacing.inputHeight,
               ),
-              child: InkWell(
-                key: escalateKey,
-                onTap: onEscalate,
-                customBorder: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                ),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minHeight: AppSpacing.inputHeight,
+              padding: AppSpacing.p2pDisputeEscalatePadding,
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.arrow_upward_rounded,
+                    color: AppColors.warn,
+                    size: AppSpacing.iconSm,
                   ),
-                  child: Padding(
-                    padding: AppSpacing.p2pDisputeEscalatePadding,
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.arrow_upward_rounded,
-                          color: AppColors.warn,
-                          size: AppSpacing.iconSm,
-                        ),
-                        const SizedBox(width: AppSpacing.x2),
-                        Expanded(
-                          child: Text(
-                            'Chuyển lên Cấp ${nextLevel.level}: ${nextLevel.shortLabel}',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.warn,
-                              fontWeight: AppTextStyles.bold,
-                            ),
-                          ),
-                        ),
-                        const Icon(
-                          Icons.chevron_right_rounded,
-                          color: AppColors.warn,
-                          size: AppSpacing.iconSm,
-                        ),
-                      ],
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: Text(
+                      'Chuyển lên Cấp ${nextLevel.level}: ${nextLevel.shortLabel}',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.warn,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
                   ),
-                ),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.warn,
+                    size: AppSpacing.iconSm,
+                  ),
+                ],
               ),
             ),
           ],

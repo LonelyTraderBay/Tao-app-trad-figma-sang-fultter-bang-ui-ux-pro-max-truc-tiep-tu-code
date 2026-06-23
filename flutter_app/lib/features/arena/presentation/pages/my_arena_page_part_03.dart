@@ -87,9 +87,10 @@ class _RewardAnalyticsSection extends StatelessWidget {
                   const SizedBox(height: AppSpacing.x3),
               ],
               const SizedBox(height: AppSpacing.x5),
-              InkWell(
+              VitCard(
                 onTap: onViewChallenge,
-                borderRadius: AppRadii.smRadius,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
                 child: Padding(
                   padding: AppSpacing.arenaVerticalPaddingX2,
                   child: Row(
@@ -336,9 +337,10 @@ class _ArenaFooter extends StatelessWidget {
       children: [
         Material(
           color: AppColors.transparent,
-          child: InkWell(
+          child: VitCard(
             onTap: onRules,
-            borderRadius: AppRadii.smRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
             child: Padding(
               padding: AppSpacing.arenaPresetChipPadding,
               child: Row(

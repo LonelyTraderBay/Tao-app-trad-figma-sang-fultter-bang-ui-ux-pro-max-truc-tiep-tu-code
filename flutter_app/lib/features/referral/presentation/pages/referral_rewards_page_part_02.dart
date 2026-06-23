@@ -85,40 +85,15 @@ class _FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        key: ReferralRewardsPage.tabKey(filter.filter),
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: active ? AppColors.primary : AppColors.transparent,
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.mdRadius,
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.referralTabButtonPadding,
-              child: Center(
-                child: Text(
-                  filter.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? AppColors.onAccent : AppColors.text3,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: ReferralRewardsPage.tabKey(filter.filter),
+      label: filter.label,
+      selected: active,
+      onTap: onTap,
+      accentColor: AppColors.primary,
+      fullWidth: true,
+      height: VitDensity.compact.controlHeight,
+      padding: AppSpacing.referralTabButtonPadding,
     );
   }
 }
@@ -179,35 +154,14 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitChoicePill(
       key: ReferralRewardsPage.sortOptionKey(option.sort),
+      label: option.label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.smRadius,
-      child: SizedBox(
-        height: AppSpacing.buttonCompact - AppSpacing.x1,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? AppColors.primary12 : AppColors.transparent,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.referralSortChipPadding,
-            child: Center(
-              child: Text(
-                option.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? AppColors.primary : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: AppColors.primary,
+      height: AppSpacing.buttonCompact - AppSpacing.x1,
+      padding: AppSpacing.referralSortChipPadding,
     );
   }
 }
@@ -393,19 +347,14 @@ class _RewardRecordRow extends StatelessWidget {
             ),
             if (!pending) ...[
               const SizedBox(width: AppSpacing.x2),
-              IconButton(
+              VitInlineIconAction(
                 key: ReferralRewardsPage.reportKey(record.id),
                 onPressed: onReport,
-                icon: const Icon(Icons.warning_amber_rounded),
+                icon: Icons.warning_amber_rounded,
+                tooltip: 'Báo cáo phần thưởng',
                 color: AppColors.warn,
-                visualDensity: VisualDensity.compact,
-                style: IconButton.styleFrom(
-                  backgroundColor: AppColors.warn08,
-                  side: const BorderSide(color: AppColors.warn15),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                ),
+                size: AppSpacing.iconMd,
+                padding: AppSpacing.x2,
               ),
             ],
           ],

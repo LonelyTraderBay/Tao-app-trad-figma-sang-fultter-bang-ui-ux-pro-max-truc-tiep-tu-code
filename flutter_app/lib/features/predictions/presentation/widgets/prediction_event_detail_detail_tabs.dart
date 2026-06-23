@@ -65,31 +65,14 @@ class _DetailTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? AppColors.surface : AppColors.transparent,
-      borderRadius: AppRadii.smRadius,
-      child: InkWell(
-        key: tab.$3,
-        onTap: () => onChanged(tab.$1),
-        borderRadius: AppRadii.smRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Padding(
-            padding: AppSpacing.predictionDetailTabPadding,
-            child: Center(
-              child: Text(
-                tab.$2,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? AppColors.text1 : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.normal,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: tab.$3,
+      label: tab.$2,
+      selected: active,
+      onTap: () => onChanged(tab.$1),
+      tone: VitChoicePillTone.neutral,
+      height: VitDensity.compact.controlHeight,
+      padding: AppSpacing.predictionDetailTabPadding,
     );
   }
 }

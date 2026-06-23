@@ -273,17 +273,13 @@ class _PeriodButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onPressed,
+      accentColor: _costPrimary,
+      fullWidth: true,
       height: _costButtonExtent,
-      child: FilledButton(
-        style: FilledButton.styleFrom(
-          backgroundColor: selected ? _costPrimary : _costPanel2,
-          foregroundColor: selected ? AppColors.onAccent : AppColors.text2,
-          shape: const StadiumBorder(),
-        ),
-        onPressed: onPressed,
-        child: Text(label, style: AppTextStyles.micro),
-      ),
     );
   }
 }

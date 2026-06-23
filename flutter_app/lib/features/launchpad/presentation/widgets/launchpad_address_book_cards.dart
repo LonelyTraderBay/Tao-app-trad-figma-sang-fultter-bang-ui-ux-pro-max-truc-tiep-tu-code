@@ -30,100 +30,98 @@ class _AddressCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             key: LaunchpadAddressBookPage.expandKey(address.id),
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.md,
+            padding: AppSpacing.launchpadPaddingX4,
             onTap: onExpand,
-            child: Padding(
-              padding: AppSpacing.launchpadPaddingX4,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _ChainIcon(address: address),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                address.label,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.base.copyWith(
-                                  color: AppColors.text1,
-                                  fontWeight: AppTextStyles.heavy,
-                                ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _ChainIcon(address: address),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              address.label,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.base.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.heavy,
                               ),
                             ),
-                            if (address.isDefault) ...[
-                              const SizedBox(width: AppSpacing.x2),
-                              _Badge(
-                                label: 'MAC DINH',
-                                color: AppModuleAccents.launchpad,
-                              ),
-                            ],
-                            if (address.verified) ...[
-                              const SizedBox(width: AppSpacing.x1),
-                              const Icon(
-                                Icons.verified_user_outlined,
-                                color: AppColors.buy,
-                                size: AppSpacing.launchpadIconMd,
-                              ),
-                            ],
-                          ],
-                        ),
-                        const SizedBox(height: AppSpacing.x1),
-                        Text(
-                          address.maskedAddress,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                            fontWeight: FontWeight.w700,
                           ),
-                        ),
-                        const SizedBox(height: AppSpacing.x2),
-                        Wrap(
-                          spacing: AppSpacing.x1,
-                          runSpacing: AppSpacing.x1,
-                          children: [
-                            _Badge(label: address.chain, color: address.accent),
-                            for (final tag in address.tags.take(2))
-                              _Badge(label: tag, color: AppColors.text3),
+                          if (address.isDefault) ...[
+                            const SizedBox(width: AppSpacing.x2),
+                            _Badge(
+                              label: 'MAC DINH',
+                              color: AppModuleAccents.launchpad,
+                            ),
                           ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      IconButton(
-                        key: LaunchpadAddressBookPage.favoriteKey(address.id),
-                        onPressed: onFavorite,
-                        visualDensity: VisualDensity.compact,
-                        icon: Icon(
-                          address.isFavorite
-                              ? Icons.star_rounded
-                              : Icons.star_border_rounded,
-                          color: address.isFavorite
-                              ? AppColors.warn
-                              : AppColors.text3,
-                          size: AppSpacing.launchpadIcon3xl,
+                          if (address.verified) ...[
+                            const SizedBox(width: AppSpacing.x1),
+                            const Icon(
+                              Icons.verified_user_outlined,
+                              color: AppColors.buy,
+                              size: AppSpacing.launchpadIconMd,
+                            ),
+                          ],
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        address.maskedAddress,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      IconButton(
-                        key: LaunchpadAddressBookPage.copyKey(address.id),
-                        onPressed: onCopy,
-                        visualDensity: VisualDensity.compact,
-                        icon: Icon(
-                          copied ? Icons.check_rounded : Icons.copy_rounded,
-                          color: copied ? AppColors.buy : AppColors.text3,
-                          size: AppSpacing.launchpadIconXl,
-                        ),
+                      const SizedBox(height: AppSpacing.x2),
+                      Wrap(
+                        spacing: AppSpacing.x1,
+                        runSpacing: AppSpacing.x1,
+                        children: [
+                          _Badge(label: address.chain, color: address.accent),
+                          for (final tag in address.tags.take(2))
+                            _Badge(label: tag, color: AppColors.text3),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                Column(
+                  children: [
+                    VitIconButton(
+                      key: LaunchpadAddressBookPage.favoriteKey(address.id),
+                      icon: address.isFavorite
+                          ? Icons.star_rounded
+                          : Icons.star_border_rounded,
+                      tooltip: 'Favorite address',
+                      onPressed: onFavorite,
+                      variant: address.isFavorite
+                          ? VitIconButtonVariant.defaultAction
+                          : VitIconButtonVariant.transparent,
+                      size: VitIconButtonSize.sm,
+                    ),
+                    VitIconButton(
+                      key: LaunchpadAddressBookPage.copyKey(address.id),
+                      icon: copied ? Icons.check_rounded : Icons.copy_rounded,
+                      tooltip: 'Copy address',
+                      onPressed: onCopy,
+                      variant: copied
+                          ? VitIconButtonVariant.success
+                          : VitIconButtonVariant.transparent,
+                      size: VitIconButtonSize.sm,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           if (expanded)

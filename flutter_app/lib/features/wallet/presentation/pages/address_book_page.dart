@@ -25,7 +25,6 @@ const _bookPanel = AppColors.surface;
 const _bookPrimary = AppColors.primary;
 const _bookGreen = AppColors.buy;
 const _bookAmber = AppColors.caution;
-const _bookRed = AppColors.sell;
 const _bookNativeBottomClearance = 88.0;
 const _bookVisualBottomClearance = 112.0;
 const _bookScrollTopPad = 0.0;
@@ -37,7 +36,6 @@ const _bookStatsHeight = 62.0;
 const _bookCardMinHeight = 124.0;
 const _bookIconBox = 34.0;
 const _bookCopyHeight = 38.0;
-const _bookActionSize = 38.0;
 const _bookSecurityHeight = 62.0;
 const _bookCardPadding = EdgeInsetsDirectional.symmetric(
   horizontal: 12,
@@ -170,6 +168,9 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                             copied: _copiedId == address.id,
                             onCopy: () => _copyAddress(address),
                             onFavorite: () => _toggleFavorite(address.id),
+                            onEdit: () => _showActionNotice(
+                              'Chỉnh sửa địa chỉ sẽ mở trong bước kế tiếp',
+                            ),
                             onDelete: () => _confirmDelete(address),
                           ),
                         ],
@@ -182,6 +183,9 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                             copied: _copiedId == address.id,
                             onCopy: () => _copyAddress(address),
                             onFavorite: () => _toggleFavorite(address.id),
+                            onEdit: () => _showActionNotice(
+                              'Chỉnh sửa địa chỉ sẽ mở trong bước kế tiếp',
+                            ),
                             onDelete: () => _confirmDelete(address),
                           ),
                         ],
@@ -241,6 +245,15 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
     });
   }
 
+  void _showActionNotice(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 900),
+      ),
+    );
+  }
+
   void _confirmDelete(WalletSavedAddress address) {
     showDialog<void>(
       context: context,
@@ -250,11 +263,14 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
           title: const Text('Xóa địa chỉ'),
           content: Text('Bạn có chắc muốn xóa địa chỉ "${address.label}"?'),
           actions: [
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(context).pop(),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
               child: const Text('Hủy'),
             ),
-            TextButton(
+            VitCtaButton(
               onPressed: () {
                 setState(() {
                   _addresses = [
@@ -264,9 +280,14 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                 });
                 Navigator.of(context).pop();
               },
+              variant: VitCtaButtonVariant.destructive,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
               child: Text(
                 'Xóa',
-                style: AppTextStyles.caption.copyWith(color: _bookRed),
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.onAccent,
+                ),
               ),
             ),
           ],

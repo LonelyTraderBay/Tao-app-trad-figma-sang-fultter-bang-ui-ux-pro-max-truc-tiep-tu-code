@@ -19,6 +19,13 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_order_proof_widgets.dart';
 
+const double _p2pOrderProofVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pOrderProofNativeNavClearance =
+    _p2pOrderProofVisualNavClearance - AppSpacing.x4;
+const double _p2pOrderProofVisualClearance = AppSpacing.x3;
+const double _p2pOrderProofNativeClearance = AppSpacing.x2;
+
 class P2POrderProofPage extends ConsumerStatefulWidget {
   const P2POrderProofPage({
     super.key,
@@ -49,10 +56,11 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pOrderProofProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pOrderProofVisualNavClearance + _p2pOrderProofVisualClearance
+            : _p2pOrderProofNativeNavClearance +
+                  _p2pOrderProofNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -78,9 +86,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                   child: SingleChildScrollView(
                     key: P2POrderProofPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pFinancialSafetyBottomPadding(
-                      bottomInset,
-                    ),
+                    padding: EdgeInsets.only(bottom: scrollEndPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -91,7 +97,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const SizedBox(height: AppSpacing.x4),
+                              const SizedBox(height: AppSpacing.x3),
                               _UploadSection(
                                 title: snapshot.uploadTitle,
                                 subtitle: snapshot.uploadSubtitle,
@@ -100,13 +106,13 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                                 onGallery: () => _addProof('gallery'),
                               ),
                               if (_proofs.isNotEmpty) ...[
-                                const SizedBox(height: AppSpacing.x4),
+                                const SizedBox(height: AppSpacing.x3),
                                 _UploadedProofs(
                                   proofs: _proofs,
                                   onRemove: _removeProof,
                                 ),
                               ],
-                              const SizedBox(height: AppSpacing.x4),
+                              const SizedBox(height: AppSpacing.x3),
                               _TipsCard(
                                 title: snapshot.tipsTitle,
                                 tips: snapshot.tips,
@@ -128,7 +134,6 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                         ),
                         VitPageContent(
                           padding: VitContentPadding.compact,
-                          customGap: 0,
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,

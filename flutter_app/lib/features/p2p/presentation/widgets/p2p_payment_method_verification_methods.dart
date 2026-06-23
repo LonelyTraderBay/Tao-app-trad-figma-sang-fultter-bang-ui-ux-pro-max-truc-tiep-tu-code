@@ -12,20 +12,21 @@ class _MethodChooser extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _OwnershipHero(),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: AppSpacing.x3),
         Text(
           'Chọn phương thức xác minh',
           style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
         ),
-        const SizedBox(height: AppSpacing.x3),
-        for (final method in snapshot.methods) ...[
-          _VerificationMethodCard(
-            method: method,
-            onTap: () => onSelected(method.id),
-          ),
-          const SizedBox(height: AppSpacing.x3),
-        ],
         const SizedBox(height: AppSpacing.x2),
+        for (var index = 0; index < snapshot.methods.length; index++) ...[
+          _VerificationMethodCard(
+            method: snapshot.methods[index],
+            onTap: () => onSelected(snapshot.methods[index].id),
+          ),
+          if (index != snapshot.methods.length - 1)
+            const SizedBox(height: AppSpacing.x2),
+        ],
+        const SizedBox(height: AppSpacing.x1),
         _WarningNote(note: snapshot.warningNote),
       ],
     );

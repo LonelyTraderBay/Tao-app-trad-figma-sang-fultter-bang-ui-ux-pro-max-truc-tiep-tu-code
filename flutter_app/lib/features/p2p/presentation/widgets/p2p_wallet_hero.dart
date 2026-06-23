@@ -63,18 +63,19 @@ class _WalletHero extends StatelessWidget {
                   key: P2PWalletPage.privacyKey,
                   color: AppColors.onAccent.withValues(alpha: .18),
                   shape: const CircleBorder(),
-                  child: InkWell(
-                    onTap: onPrivacyToggle,
-                    customBorder: const CircleBorder(),
-                    child: SizedBox(
-                      width: _p2pWalletIconBoxExtent,
-                      height: _p2pWalletIconBoxExtent,
-                      child: Icon(
-                        balanceVisible
+                  child: SizedBox.square(
+                    dimension: _p2pWalletIconBoxExtent,
+                    child: Center(
+                      child: VitInlineIconAction(
+                        icon: balanceVisible
                             ? Icons.visibility_rounded
                             : Icons.visibility_off_rounded,
+                        tooltip: 'Toggle P2P wallet balance visibility',
+                        onPressed: onPrivacyToggle,
                         color: AppColors.onAccent,
                         size: AppSpacing.iconSm,
+                        padding: AppSpacing.x2,
+                        borderRadius: AppRadii.pillRadius,
                       ),
                     ),
                   ),
@@ -128,45 +129,38 @@ class _HeroActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: filled
-          ? AppColors.onAccent
-          : AppColors.onAccent.withValues(alpha: .18),
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            minHeight: _p2pWalletActionMinHeight,
-          ),
-          child: Padding(
-            padding: AppSpacing.p2pWalletHeroActionPadding,
-            child: Center(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      icon,
-                      color: filled ? AppModuleAccents.p2p : AppColors.onAccent,
-                      size: AppSpacing.iconSm,
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    Text(
-                      label,
-                      style: AppTextStyles.caption.copyWith(
-                        color: filled
-                            ? AppModuleAccents.p2p
-                            : AppColors.onAccent,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      background: ColoredBox(
+        color: filled
+            ? AppColors.onAccent
+            : AppColors.onAccent.withValues(alpha: .18),
+      ),
+      constraints: const BoxConstraints(minHeight: _p2pWalletActionMinHeight),
+      padding: AppSpacing.p2pWalletHeroActionPadding,
+      onTap: onTap,
+      clip: true,
+      child: Center(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                color: filled ? AppModuleAccents.p2p : AppColors.onAccent,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: filled ? AppModuleAccents.p2p : AppColors.onAccent,
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),

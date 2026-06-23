@@ -114,90 +114,78 @@ class _OutcomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isYes = outcome.label == 'Yes';
-    return Material(
-      color: outcome.color.withValues(alpha: isYes ? .08 : .07),
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(
-          color: outcome.color.withValues(alpha: selected ? .42 : .18),
-        ),
+    return VitCard(
+      onTap: onTap,
+      borderColor: outcome.color.withValues(alpha: selected ? .42 : .18),
+      background: ColoredBox(
+        color: outcome.color.withValues(alpha: isYes ? .08 : .07),
       ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      clip: true,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  SizedBox.square(
-                    dimension: AppSpacing.predictionDetailOutcomeDot,
-                    child: Material(
-                      color: outcome.color,
-                      shape: const CircleBorder(),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: AppSpacing.predictionDetailOutcomeLabelGap,
-                  ),
-                  Text(
-                    outcome.label,
-                    style: AppTextStyles.body.copyWith(
-                      color: outcome.color,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.x1),
-              Text(
-                '${outcome.chance}%',
-                style: AppTextStyles.sectionTitle.copyWith(
+              SizedBox.square(
+                dimension: AppSpacing.predictionDetailOutcomeDot,
+                child: Material(
                   color: outcome.color,
-                  fontFeatures: AppTextStyles.tabularFigures,
+                  shape: const CircleBorder(),
                 ),
               ),
-              const SizedBox(height: AppSpacing.x1),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: Text(
-                      isYes ? 'Best Bid' : 'Best Ask',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: AppSpacing.predictionDetailOutcomeChanceGap,
-                  ),
-                  Flexible(
-                    child: Text(
-                      _formatPrice(outcome.chance / 100),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.end,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                        fontFeatures: AppTextStyles.tabularFigures,
-                      ),
-                    ),
-                  ),
-                ],
+              const SizedBox(width: AppSpacing.predictionDetailOutcomeLabelGap),
+              Text(
+                outcome.label,
+                style: AppTextStyles.body.copyWith(
+                  color: outcome.color,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ],
           ),
-        ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            '${outcome.chance}%',
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: outcome.color,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  isYes ? 'Best Bid' : 'Best Ask',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ),
+              const SizedBox(
+                width: AppSpacing.predictionDetailOutcomeChanceGap,
+              ),
+              Flexible(
+                child: Text(
+                  _formatPrice(outcome.chance / 100),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -245,56 +233,45 @@ class _MultiOutcomeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected
-          ? outcome.color.withValues(alpha: .12)
-          : AppColors.surface,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
-        side: BorderSide(
-          color: selected
-              ? outcome.color.withValues(alpha: .34)
-              : AppColors.cardBorder,
-        ),
+    return VitCard(
+      onTap: onTap,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: selected
+          ? outcome.color.withValues(alpha: .34)
+          : AppColors.cardBorder,
+      background: selected
+          ? ColoredBox(color: outcome.color.withValues(alpha: .12))
+          : null,
+      clip: selected,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
       ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
+      child: Row(
+        children: [
+          SizedBox.square(
+            dimension: AppSpacing.predictionDetailMultiOutcomeDot,
+            child: Material(color: outcome.color, shape: const CircleBorder()),
           ),
-          child: Row(
-            children: [
-              SizedBox.square(
-                dimension: AppSpacing.predictionDetailMultiOutcomeDot,
-                child: Material(
-                  color: outcome.color,
-                  shape: const CircleBorder(),
-                ),
+          const SizedBox(width: AppSpacing.predictionDetailMultiOutcomeGap),
+          Expanded(
+            child: Text(
+              outcome.label,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
               ),
-              const SizedBox(width: AppSpacing.predictionDetailMultiOutcomeGap),
-              Expanded(
-                child: Text(
-                  outcome.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              Text(
-                '${outcome.chance}%',
-                style: AppTextStyles.body.copyWith(
-                  color: outcome.color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          Text(
+            '${outcome.chance}%',
+            style: AppTextStyles.body.copyWith(
+              color: outcome.color,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+        ],
       ),
     );
   }

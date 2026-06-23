@@ -94,17 +94,18 @@ class _AlertCard extends StatelessWidget {
                   semanticStatus: VitStatusPillStatus.success,
                 )
               else
-                InkWell(
+                VitInlineIconAction(
                   key: PriceAlertsPage.toggleKey(alert.id),
-                  onTap: onToggle,
-                  borderRadius: AppRadii.cardRadius,
-                  child: Icon(
-                    alert.isActive
-                        ? Icons.toggle_on_rounded
-                        : Icons.toggle_off_rounded,
-                    color: alert.isActive ? AppColors.buy : AppColors.text3,
-                    size: _alertsToggleIcon,
-                  ),
+                  icon: alert.isActive
+                      ? Icons.toggle_on_rounded
+                      : Icons.toggle_off_rounded,
+                  tooltip: alert.isActive
+                      ? 'Táº¯t cáº£nh bÃ¡o giÃ¡'
+                      : 'Báº­t cáº£nh bÃ¡o giÃ¡',
+                  onPressed: onToggle,
+                  color: alert.isActive ? AppColors.buy : AppColors.text3,
+                  size: _alertsToggleIcon,
+                  padding: AppSpacing.x1,
                 ),
               const SizedBox(width: _alertsActionGap),
               VitIconButton(

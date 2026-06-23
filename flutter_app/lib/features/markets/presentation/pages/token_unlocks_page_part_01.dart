@@ -172,7 +172,10 @@ class _UnderlinedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
         onTap: () => onChanged(value),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -337,22 +340,29 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? color.withValues(alpha: color == AppColors.text3 ? .06 : .12)
-          : AppColors.surface2,
-      borderRadius: AppRadii.smRadius,
-      child: InkWell(
+    return Semantics(
+      button: true,
+      selected: active,
+      label: label,
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        borderColor: active
+            ? color.withValues(alpha: color == AppColors.text3 ? .18 : .32)
+            : AppColors.transparent,
+        background: ColoredBox(
+          color: active
+              ? color.withValues(alpha: color == AppColors.text3 ? .06 : .12)
+              : AppColors.surface2,
+        ),
+        clip: true,
         onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: Padding(
-          padding: AppSpacing.tokenUnlocksFilterPadding,
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: active ? color : AppColors.text3,
-              fontWeight: AppTextStyles.medium,
-            ),
+        padding: AppSpacing.tokenUnlocksFilterPadding,
+        child: Text(
+          label,
+          style: AppTextStyles.micro.copyWith(
+            color: active ? color : AppColors.text3,
+            fontWeight: AppTextStyles.medium,
           ),
         ),
       ),

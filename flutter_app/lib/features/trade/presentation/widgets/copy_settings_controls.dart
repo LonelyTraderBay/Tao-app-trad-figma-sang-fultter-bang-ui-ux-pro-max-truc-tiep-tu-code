@@ -180,14 +180,20 @@ class _ToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => onChanged(!value),
-      borderRadius: AppRadii.xlRadius,
-      child: VitTogglePill(
-        enabled: value,
-        activeColor: _settingsPrimary,
-        inactiveColor: AppColors.surface3,
-        inactiveBorderColor: AppColors.surface3,
+    return Semantics(
+      button: true,
+      toggled: value,
+      child: VitCard(
+        onTap: () => onChanged(!value),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.lg,
+        padding: AppSpacing.zeroInsets,
+        child: VitTogglePill(
+          enabled: value,
+          activeColor: _settingsPrimary,
+          inactiveColor: AppColors.surface3,
+          inactiveBorderColor: AppColors.surface3,
+        ),
       ),
     );
   }
@@ -222,30 +228,14 @@ class _ChannelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
-      density: VitDensity.compact,
-      padding: AppSpacing.cardPaddingCompact,
-      borderColor: active ? _settingsPrimary : AppColors.cardBorder,
+    return VitChoicePill(
+      label: label,
+      selected: active,
       onTap: onTap,
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: active ? _settingsPrimary : AppColors.text3,
-            size: AppSpacing.walletTokenApprovalActionIcon,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? _settingsPrimary : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
-      ),
+      fullWidth: true,
+      density: VitDensity.compact,
+      leading: Icon(icon),
+      semanticLabel: '$label notification channel',
     );
   }
 }

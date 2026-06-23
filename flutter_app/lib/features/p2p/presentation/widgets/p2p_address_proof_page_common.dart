@@ -10,7 +10,7 @@ class _AddressConfirmCard extends StatelessWidget {
     return VitCard(
       key: P2PAddressProofPage.addressConfirmKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pAddressProofCardPadding,
+      padding: _p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -19,14 +19,14 @@ class _AddressConfirmCard extends StatelessWidget {
             title: 'Xác nhận địa chỉ',
             color: AppModuleAccents.p2p,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pAddressProofSectionGap),
           Text(
             address,
             style: AppTextStyles.baseMedium.copyWith(
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pAddressProofSectionGap),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -63,7 +63,7 @@ class _SecurityCard extends StatelessWidget {
     return VitCard(
       key: P2PAddressProofPage.securityKey,
       radius: VitCardRadius.md,
-      padding: AppSpacing.p2pAddressProofCardPadding,
+      padding: _p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -72,11 +72,11 @@ class _SecurityCard extends StatelessWidget {
             title: 'Bảo mật thông tin',
             color: AppColors.buy,
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pAddressProofSectionGap),
           for (final note in snapshot.securityNotes) ...[
             _ChecklistRow(text: note, color: AppColors.buy),
             if (note != snapshot.securityNotes.last)
-              const SizedBox(height: AppSpacing.x2),
+              const SizedBox(height: _p2pAddressProofTightGap),
           ],
         ],
       ),
@@ -126,7 +126,7 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.p2pAddressProofChecklistIconPadding,
+          padding: _p2pAddressProofChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: color,

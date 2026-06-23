@@ -127,33 +127,13 @@ class _RangeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
-        side: BorderSide(
-          color: selected ? AppColors.primary30 : AppColors.cardBorder,
-        ),
-      ),
-      child: InkWell(
-        key: SavingsAnalyticsPage.rangeKey(range),
-        onTap: onTap,
-        customBorder: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-        child: Padding(
-          padding: AppSpacing.zeroInsets.copyWith(
-            top: AppSpacing.x2,
-            bottom: AppSpacing.x2,
-          ),
-          child: Text(
-            range,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.primary : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: SavingsAnalyticsPage.rangeKey(range),
+      label: range,
+      selected: selected,
+      onTap: onTap,
+      fullWidth: true,
+      height: AppSpacing.buttonCompact,
     );
   }
 }

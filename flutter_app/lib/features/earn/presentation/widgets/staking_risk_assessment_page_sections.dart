@@ -194,64 +194,48 @@ class _RiskOptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeyedSubtree(
       key: semanticKey,
-      child: Material(
-        color: selected ? AppColors.primary12 : AppColors.surface2,
-        borderRadius: AppRadii.xlRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.xlRadius,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: selected ? AppColors.primary : AppColors.borderSolid,
-                ),
-                borderRadius: AppRadii.xlRadius,
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.earnCardPaddingX3,
-              child: Row(
+      child: VitCard(
+        variant: VitCardVariant.inner,
+        radius: VitCardRadius.lg,
+        borderColor: selected ? AppColors.primary : AppColors.borderSolid,
+        padding: AppSpacing.earnCardPaddingX3,
+        onTap: onTap,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          option.label,
-                          style: AppTextStyles.caption.copyWith(
-                            color: selected
-                                ? AppColors.primary
-                                : AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                            height: AppTextStyles.caption.height,
-                          ),
-                        ),
-                        if (option.description != null) ...[
-                          const SizedBox(height: AppSpacing.x1),
-                          Text(
-                            option.description!,
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                              height: AppTextStyles.micro.height,
-                            ),
-                          ),
-                        ],
-                      ],
+                  Text(
+                    option.label,
+                    style: AppTextStyles.caption.copyWith(
+                      color: selected ? AppColors.primary : AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                      height: AppTextStyles.caption.height,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Icon(
-                    selected
-                        ? Icons.check_circle_rounded
-                        : Icons.chevron_right_rounded,
-                    color: selected ? AppColors.primary : AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
+                  if (option.description != null) ...[
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      option.description!,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        height: AppTextStyles.micro.height,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
-          ),
+            const SizedBox(width: AppSpacing.x3),
+            Icon(
+              selected
+                  ? Icons.check_circle_rounded
+                  : Icons.chevron_right_rounded,
+              color: selected ? AppColors.primary : AppColors.text3,
+              size: AppSpacing.iconMd,
+            ),
+          ],
         ),
       ),
     );

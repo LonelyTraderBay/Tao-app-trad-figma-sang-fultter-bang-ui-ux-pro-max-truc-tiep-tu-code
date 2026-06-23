@@ -6,17 +6,17 @@ class _InfoBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      variant: VitCardVariant.hero,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaScheduleHeroPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            Icons.info_outline,
-            color: AppColors.primary,
-            size: AppSpacing.iconMd,
+          const _AccentIcon(
+            icon: Icons.auto_awesome_outlined,
+            accent: AppColors.primary,
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,6 +31,8 @@ class _InfoBanner extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 Text(
                   'Smart Scheduling tự động điều chỉnh thời gian DCA dựa trên điều kiện thị trường, giúp tối ưu chi phí và giảm rủi ro.',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text2,
                   ),
@@ -61,16 +63,24 @@ class _StrategySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const _SectionTitle(icon: Icons.flash_on_outlined, title: 'Chiến lược'),
-        const SizedBox(height: AppSpacing.x4),
-        for (final option in strategies)
-          Padding(
-            padding: AppSpacing.dcaBottomPaddingX3,
-            child: _StrategyTile(
-              option: option,
-              selected: option.strategy == active,
-              onTap: () => onChanged(option.strategy),
-            ),
+        const SizedBox(height: AppSpacing.x3),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const ClampingScrollPhysics(),
+          child: Row(
+            children: [
+              for (var index = 0; index < strategies.length; index++) ...[
+                _StrategyTile(
+                  option: strategies[index],
+                  selected: strategies[index].strategy == active,
+                  onTap: () => onChanged(strategies[index].strategy),
+                ),
+                if (index < strategies.length - 1)
+                  const SizedBox(width: AppSpacing.x2),
+              ],
+            ],
           ),
+        ),
       ],
     );
   }
@@ -90,42 +100,18 @@ class _StrategyTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = _accentForStrategy(option.strategy);
-    return VitCard(
-      key: DCAScheduleConfig.strategyKey(option.strategy),
-      borderColor: selected
-          ? accent.withValues(alpha: .72)
-          : AppColors.cardBorder,
-      onTap: onTap,
-      padding: AppSpacing.dcaPaddingX4,
-      child: Row(
-        children: [
-          _AccentIcon(icon: _iconForOption(option.icon), accent: accent),
-          const SizedBox(width: AppSpacing.x4),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  option.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  option.subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ),
-          if (selected) _SelectedDot(accent: accent),
-        ],
+    return SizedBox(
+      width: _dcaScheduleStrategyChipWidth,
+      child: VitChoicePill(
+        key: DCAScheduleConfig.strategyKey(option.strategy),
+        label: option.title,
+        selected: selected,
+        onTap: onTap,
+        accentColor: accent,
+        fullWidth: true,
+        leading: Icon(_iconForOption(option.icon)),
+        showSelectedIcon: selected,
+        semanticLabel: '${option.title}: ${option.subtitle}',
       ),
     );
   }
@@ -153,12 +139,19 @@ class _TimePreferenceSection extends StatelessWidget {
           icon: Icons.schedule_outlined,
           title: 'Khung giờ ưu tiên',
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: AppSpacing.x3),
         LayoutBuilder(
           builder: (context, constraints) {
-            final tileWidth = (constraints.maxWidth - AppSpacing.x3) / 2;
+            final availableWidth = constraints.maxWidth.isFinite
+                ? constraints.maxWidth
+                : AppSpacing.zero;
+            final useTwoColumns =
+                availableWidth >= _dcaScheduleTwoColumnMinWidth;
+            final tileWidth = useTwoColumns
+                ? (availableWidth - AppSpacing.x3) / 2
+                : availableWidth;
             return Wrap(
-              spacing: AppSpacing.x3,
+              spacing: useTwoColumns ? AppSpacing.x3 : AppSpacing.zero,
               runSpacing: AppSpacing.x3,
               children: [
                 for (final option in preferences)
@@ -200,7 +193,7 @@ class _TimeTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       borderColor: selected ? accent.withValues(alpha: .72) : null,
       onTap: onTap,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: _dcaScheduleCardPadding,
       child: Column(
         children: [
           Text(

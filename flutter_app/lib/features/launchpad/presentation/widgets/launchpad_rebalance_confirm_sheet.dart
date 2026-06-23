@@ -105,9 +105,12 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                       child: const Text('Xac nhan Rebalance (Mo phong)'),
                     ),
                     const SizedBox(height: AppSpacing.x2),
-                    TextButton(
+                    VitCtaButton(
                       key: cancelKey,
                       onPressed: onClose,
+                      variant: VitCtaButtonVariant.ghost,
+                      fullWidth: false,
+                      height: AppSpacing.buttonCompact,
                       child: Text(
                         'Huy',
                         style: AppTextStyles.caption.copyWith(

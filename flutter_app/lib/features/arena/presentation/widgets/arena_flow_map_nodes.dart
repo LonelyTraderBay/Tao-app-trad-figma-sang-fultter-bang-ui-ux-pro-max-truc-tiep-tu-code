@@ -73,9 +73,11 @@ class _FlowNodeRow extends StatelessWidget {
     final route = node.route;
     return Material(
       type: MaterialType.transparency,
-      child: InkWell(
+      child: VitCard(
         key: ArenaFlowMapPage.nodeKey(node.label),
         onTap: route == null ? null : () => onRoute(route),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: Padding(
           padding: _flowMapCardPadding,
           child: Row(

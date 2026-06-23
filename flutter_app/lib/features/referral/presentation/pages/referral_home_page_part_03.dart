@@ -211,7 +211,7 @@ class _DetailLinkRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = _detailStyle(item.id);
-    return InkWell(
+    return VitCard(
       key: switch (item.id) {
         'friends' => ReferralHomePage.detailHistoryKey,
         'rewards' => ReferralHomePage.detailRewardsKey,
@@ -219,6 +219,9 @@ class _DetailLinkRow extends StatelessWidget {
         _ => null,
       },
       onTap: onTap,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: EdgeInsets.zero,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           shape: Border(

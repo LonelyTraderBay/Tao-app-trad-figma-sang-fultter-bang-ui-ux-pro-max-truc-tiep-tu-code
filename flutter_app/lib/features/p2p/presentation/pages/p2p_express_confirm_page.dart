@@ -12,10 +12,28 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+
+const double _p2pExpressConfirmVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pExpressConfirmNativeNavClearance =
+    _p2pExpressConfirmVisualNavClearance - AppSpacing.x4;
+const double _p2pExpressConfirmVisualClearance = AppSpacing.x3;
+const double _p2pExpressConfirmNativeClearance = AppSpacing.x2;
+const double _p2pExpressConfirmSectionGap = AppSpacing.x2;
+const double _p2pExpressConfirmMajorGap = AppSpacing.x3;
+const double _p2pExpressConfirmDividerHeight = AppSpacing.dividerHairline;
+const EdgeInsets _p2pExpressConfirmScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pExpressConfirmCompactPadding = EdgeInsets.all(
+  AppSpacing.x2,
+);
 
 class P2PExpressConfirmPage extends ConsumerStatefulWidget {
   const P2PExpressConfirmPage({
@@ -65,12 +83,12 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
       state: P2PExpressConfirmViewState(snapshot: snapshot),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pExpressBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pExpressBottomInsetNative) +
+            ? _p2pExpressConfirmVisualNavClearance +
+                  _p2pExpressConfirmVisualClearance
+            : _p2pExpressConfirmNativeNavClearance +
+                  _p2pExpressConfirmNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final accent = snapshot.isBuy ? AppColors.buy : AppColors.sell;
 
@@ -97,46 +115,44 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                   child: SingleChildScrollView(
                     key: P2PExpressConfirmPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pExpressScrollPadding(bottomInset),
+                    padding: _p2pExpressConfirmScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _Hero(snapshot: snapshot, accent: accent),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: _p2pExpressConfirmSectionGap),
                         _SummaryCard(snapshot: snapshot, accent: accent),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: _p2pExpressConfirmSectionGap),
                         _MerchantCard(ad: snapshot.ad),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: _p2pExpressConfirmSectionGap),
                         _NoticeCard(
                           icon: Icons.lock_outline,
                           text:
                               '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset} ${snapshot.escrowNote}',
                           color: AppColors.buy,
                         ),
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: _p2pExpressConfirmSectionGap),
                         _NoticeCard(
                           icon: Icons.warning_amber_outlined,
                           text: snapshot.warningNote,
                           color: AppColors.warn,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
+                        const SizedBox(height: _p2pExpressConfirmMajorGap),
                         _ActionRow(
                           processing: _processing,
                           isBuy: snapshot.isBuy,
                           onCancel: () => _close(context),
                           onConfirm: () => _confirm(context, controller),
                         ),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Express order confirmation review',
-                              message:
-                                  'Trade direction, fiat amount, crypto amount, merchant, payment method, escrow note, fee, warning, cancel and confirm actions are reviewed before order creation.',
-                              contractId: 'SC-210',
-                            ),
-                          ],
+                        const SizedBox(height: _p2pExpressConfirmSectionGap),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Express order confirmation review',
+                          message:
+                              'Trade direction, fiat amount, crypto amount, merchant, payment method, escrow note, fee, warning, cancel and confirm actions are reviewed before order creation.',
+                          contractId: 'SC-210',
                         ),
                       ],
                     ),
@@ -332,7 +348,7 @@ class _SummaryLine extends StatelessWidget {
         ),
         if (!last)
           const Divider(
-            height: AppSpacing.p2pOrderDividerHeight,
+            height: _p2pExpressConfirmDividerHeight,
             color: AppColors.divider,
           ),
       ],
@@ -348,7 +364,7 @@ class _MerchantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pExpressCompactCardPadding,
+      padding: _p2pExpressConfirmCompactPadding,
       child: Row(
         children: [
           VitAssetAvatar(
@@ -440,7 +456,7 @@ class _NoticeCard extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: AppSpacing.p2pExpressCompactCardPadding,
+        padding: _p2pExpressConfirmCompactPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

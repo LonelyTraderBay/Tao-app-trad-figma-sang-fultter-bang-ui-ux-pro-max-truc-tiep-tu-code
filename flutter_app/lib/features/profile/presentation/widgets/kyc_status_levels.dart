@@ -103,10 +103,11 @@ class _KycLevelCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          GestureDetector(
+          VitCard(
             key: KYCPage.levelKey(level.level),
             onTap: onTap,
-            behavior: HitTestBehavior.opaque,
+            variant: VitCardVariant.ghost,
+            borderColor: AppColors.transparent,
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,

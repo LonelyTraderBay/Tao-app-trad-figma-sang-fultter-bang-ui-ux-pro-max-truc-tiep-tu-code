@@ -105,14 +105,27 @@ class _WalletGasOptimizerPageState
   Widget _contentForTab(WalletGasOptimizerSnapshot snapshot) {
     final tabContent = switch (_tab) {
       _tabTrends => _TrendsTab(snapshot: snapshot),
-      _tabTips => _TipsTab(snapshot: snapshot),
+      _tabTips => _TipsTab(
+        snapshot: snapshot,
+        onQuickAction: (label) => _showGasNotice('$label is being prepared'),
+      ),
       _ => _CurrentGasTab(
         snapshot: snapshot,
         selectedSpeed: _selectedSpeed,
         onSelectSpeed: (speed) => setState(() => _selectedSpeed = speed),
+        onRefresh: () => _showGasNotice('Gas prices refreshed'),
       ),
     };
 
     return tabContent;
+  }
+
+  void _showGasNotice(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 900),
+      ),
+    );
   }
 }

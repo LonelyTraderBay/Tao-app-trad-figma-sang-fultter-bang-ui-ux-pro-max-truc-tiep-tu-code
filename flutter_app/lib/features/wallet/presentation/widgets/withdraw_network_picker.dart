@@ -62,10 +62,11 @@ class WithdrawNetworkOption extends StatelessWidget {
       button: true,
       selected: selected,
       label: '${network.name} withdraw network',
-      child: GestureDetector(
+      child: VitCard(
         key: withdrawNetworkKey(network.id),
         onTap: onTap,
-        behavior: HitTestBehavior.opaque,
+        variant: VitCardVariant.ghost,
+        borderColor: AppColors.transparent,
         child: VitCard(
           margin: AppSpacing.walletWithdrawNetworkOptionMargin,
           variant: VitCardVariant.inner,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
@@ -112,56 +111,47 @@ class _CalendarDay extends StatelessWidget {
       (event) => event.impact == MarketCalendarImpact.high,
     );
 
-    return InkWell(
+    return VitCard(
+      variant: isToday || hasEvents
+          ? VitCardVariant.inner
+          : VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      borderColor: isToday
+          ? marketCalendarPrimary.withValues(alpha: .35)
+          : AppColors.transparent,
+      padding: EdgeInsets.zero,
       onTap: hasEvents ? () => onEventDaySelected(events.first) : null,
-      borderRadius: AppRadii.smRadius,
-      child: Material(
-        color: isToday
-            ? marketCalendarPrimary.withValues(alpha: .12)
-            : hasEvents
-            ? AppColors.surface2
-            : AppColors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.smRadius,
-          side: BorderSide(
-            color: isToday
-                ? marketCalendarPrimary.withValues(alpha: .35)
-                : AppColors.transparent,
-            width: AppSpacing.marketCalendarDayBorderWidth,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              day.toString(),
-              style: AppTextStyles.caption.copyWith(
-                color: isToday ? marketCalendarPrimary : AppColors.text1,
-                fontWeight: isToday ? AppTextStyles.bold : AppTextStyles.medium,
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            day.toString(),
+            style: AppTextStyles.caption.copyWith(
+              color: isToday ? marketCalendarPrimary : AppColors.text1,
+              fontWeight: isToday ? AppTextStyles.bold : AppTextStyles.medium,
             ),
-            if (hasEvents) ...[
-              const SizedBox(height: AppSpacing.marketCalendarGridSpacing),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (final event in events.take(3)) ...[
-                    Material(
-                      color: hasHigh
-                          ? AppColors.sell
-                          : marketCalendarEventTypeConfig(event.type).color,
-                      shape: const CircleBorder(),
-                      child: const SizedBox.square(
-                        dimension: AppSpacing.marketCalendarEventDot,
-                      ),
+          ),
+          if (hasEvents) ...[
+            const SizedBox(height: AppSpacing.marketCalendarGridSpacing),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (final event in events.take(3)) ...[
+                  Material(
+                    color: hasHigh
+                        ? AppColors.sell
+                        : marketCalendarEventTypeConfig(event.type).color,
+                    shape: const CircleBorder(),
+                    child: const SizedBox.square(
+                      dimension: AppSpacing.marketCalendarEventDot,
                     ),
-                    const SizedBox(width: AppSpacing.marketCalendarEventDotGap),
-                  ],
+                  ),
+                  const SizedBox(width: AppSpacing.marketCalendarEventDotGap),
                 ],
-              ),
-            ],
+              ],
+            ),
           ],
-        ),
+        ],
       ),
     );
   }

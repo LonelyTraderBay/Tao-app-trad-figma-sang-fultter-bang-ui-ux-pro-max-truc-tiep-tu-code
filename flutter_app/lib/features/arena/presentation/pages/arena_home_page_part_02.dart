@@ -204,9 +204,11 @@ class _RoomRow extends StatelessWidget {
         : (room.slotsFilled / room.slotsTotal).clamp(0.0, 1.0).toDouble();
     final color = _challengeStateColor(room.state);
 
-    return InkWell(
+    return VitCard(
       key: ArenaHomePage.roomKey(room.id),
       onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
       child: Padding(
         padding: const EdgeInsetsDirectional.symmetric(
           horizontal: AppSpacing.x3,

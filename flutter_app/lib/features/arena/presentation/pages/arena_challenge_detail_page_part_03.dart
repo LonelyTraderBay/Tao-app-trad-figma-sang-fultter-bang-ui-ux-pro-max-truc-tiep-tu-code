@@ -336,33 +336,29 @@ class _InlineAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            vertical: AppSpacing.x1 - AppSpacing.dividerHairline,
-          ),
-          child: Row(
-            children: [
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: const EdgeInsetsDirectional.symmetric(
+        vertical: AppSpacing.x1 - AppSpacing.dividerHairline,
+      ),
+      onTap: onTap,
+      child: Row(
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
               ),
-              const SizedBox(width: _challengeTinyGap),
-              Icon(icon, color: color, size: _challengeSmallIcon),
-            ],
+            ),
           ),
-        ),
+          const SizedBox(width: _challengeTinyGap),
+          Icon(icon, color: color, size: _challengeSmallIcon),
+        ],
       ),
     );
   }

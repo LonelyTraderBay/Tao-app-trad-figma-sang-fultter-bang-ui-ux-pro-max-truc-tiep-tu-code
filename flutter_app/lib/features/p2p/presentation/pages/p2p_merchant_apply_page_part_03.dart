@@ -35,30 +35,13 @@ class _ChoiceChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(
-          color: selected ? AppColors.primary30 : AppColors.cardBorder,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        customBorder: RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-        ),
-        child: Padding(
-          padding: AppSpacing.p2pMerchantApplyChoicePadding,
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.primarySoft : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      padding: AppSpacing.p2pMerchantApplyChoicePadding,
+      accentColor: AppModuleAccents.p2p,
+      semanticLabel: 'Merchant application choice $label',
     );
   }
 }

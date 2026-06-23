@@ -335,12 +335,12 @@ class _PreviewSheet extends StatelessWidget {
                         style: _baseBold.copyWith(color: AppColors.text1),
                       ),
                     ),
-                    IconButton(
+                    VitIconButton(
+                      icon: Icons.close_rounded,
+                      tooltip: 'Đóng',
                       onPressed: onClose,
-                      icon: const Icon(
-                        Icons.close_rounded,
-                        color: AppColors.text2,
-                      ),
+                      variant: VitIconButtonVariant.transparent,
+                      size: VitIconButtonSize.md,
                     ),
                   ],
                 ),

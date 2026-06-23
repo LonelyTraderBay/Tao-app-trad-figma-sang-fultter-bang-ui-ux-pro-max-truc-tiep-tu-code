@@ -212,7 +212,10 @@ class _UnderlinedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: InkWell(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: EdgeInsets.zero,
         onTap: () => onChanged(value),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -275,20 +278,16 @@ class _TotalValueHero extends StatelessWidget {
                   ),
                 ),
               ),
-              InkWell(
+              VitInlineIconAction(
                 key: PortfolioTrackerPage.hideBalanceKey,
-                onTap: onToggleHidden,
-                borderRadius: AppRadii.cardRadius,
-                child: Padding(
-                  padding: _portfolioHeroTogglePadding,
-                  child: Icon(
-                    hidden
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    size: _portfolioHeroToggleIcon,
-                    color: AppColors.text3,
-                  ),
-                ),
+                icon: hidden
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+                tooltip: hidden ? 'Hiá»‡n sá»‘ dÆ°' : 'áº¨n sá»‘ dÆ°',
+                onPressed: onToggleHidden,
+                color: AppColors.text3,
+                size: _portfolioHeroToggleIcon,
+                padding: AppSpacing.x1,
               ),
             ],
           ),

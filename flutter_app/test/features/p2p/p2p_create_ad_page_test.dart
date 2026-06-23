@@ -78,6 +78,15 @@ void main() {
     expect(find.text('Phương thức thanh toán *'), findsOneWidget);
     expect(find.text('Đăng quảng cáo BÁN USDT'), findsOneWidget);
 
+    expect(find.textContaining('Can bo sung:'), findsOneWidget);
+    expect(find.textContaining('Nhap gia'), findsOneWidget);
+    expect(find.textContaining('Nhap tong USDT'), findsOneWidget);
+    expect(find.textContaining('Chon phuong thuc thanh toan'), findsOneWidget);
+    expect(
+      tester.getRect(find.byKey(P2PCreateAdPage.publishButtonKey)).top,
+      greaterThan(tester.view.physicalSize.height),
+    );
+
     await tester.drag(
       find.byKey(P2PCreateAdPage.contentKey),
       const Offset(0, -920),
@@ -102,6 +111,11 @@ void main() {
 
     expect(find.textContaining('0.00%'), findsOneWidget);
     expect(find.text('Đã chọn 1/5'), findsOneWidget);
+
+    expect(find.textContaining('Can bo sung:'), findsNothing);
+
+    await tester.ensureVisible(find.byKey(P2PCreateAdPage.publishButtonKey));
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(P2PCreateAdPage.publishButtonKey));
     await tester.pumpAndSettle();

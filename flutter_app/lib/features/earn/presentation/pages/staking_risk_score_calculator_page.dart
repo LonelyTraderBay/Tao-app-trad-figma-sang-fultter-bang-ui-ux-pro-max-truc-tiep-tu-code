@@ -79,9 +79,7 @@ class _StakingRiskScoreCalculatorPageState
     final navInset = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
-    final stickyTailReserve = navInset + safeBottom;
-    final scrollTailReserve =
-        stickyTailReserve + AppSpacing.buttonStandard + AppSpacing.x3;
+    final scrollTailReserve = navInset + safeBottom + AppSpacing.x4;
     final riskScore = _riskScore;
     final riskColor = _riskColor(riskScore);
 
@@ -138,19 +136,13 @@ class _StakingRiskScoreCalculatorPageState
                       _RecommendationsSection(
                         recommendations: _activeRecommendations(snapshot),
                       ),
+                      VitCtaButton(
+                        key: StakingRiskScoreCalculatorPage.footerButtonKey,
+                        height: AppSpacing.buttonStandard,
+                        onPressed: () {},
+                        child: Text(snapshot.proceedLabel),
+                      ),
                     ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.only(bottom: stickyTailReserve),
-                child: VitStickyFooter(
-                  backgroundColor: AppColors.bg,
-                  child: VitCtaButton(
-                    key: StakingRiskScoreCalculatorPage.footerButtonKey,
-                    height: AppSpacing.buttonStandard,
-                    onPressed: () {},
-                    child: Text(snapshot.proceedLabel),
                   ),
                 ),
               ),

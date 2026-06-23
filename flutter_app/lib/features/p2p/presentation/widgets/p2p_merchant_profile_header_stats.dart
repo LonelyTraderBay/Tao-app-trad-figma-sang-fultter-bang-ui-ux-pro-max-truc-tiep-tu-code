@@ -105,14 +105,14 @@ class _ProfileHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _p2pMerchantSectionGap),
         Row(
           children: [
             Expanded(
               child: VitCtaButton(
                 key: P2PMerchantProfilePage.followButtonKey,
                 onPressed: onFollow,
-                height: AppSpacing.buttonCompact + AppSpacing.x3,
+                height: _p2pMerchantButtonHeight,
                 variant: following
                     ? VitCtaButtonVariant.secondary
                     : VitCtaButtonVariant.primary,
@@ -129,7 +129,7 @@ class _ProfileHeader extends StatelessWidget {
               key: P2PMerchantProfilePage.reportButtonKey,
               onPressed: onReport,
               fullWidth: false,
-              height: AppSpacing.buttonCompact + AppSpacing.x3,
+              height: _p2pMerchantButtonHeight,
               variant: VitCtaButtonVariant.danger,
               leading: const Icon(Icons.flag_outlined),
               child: const Text('Báo cáo'),
@@ -265,7 +265,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: _p2pMerchantCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -308,7 +308,7 @@ class _ReputationCard extends StatelessWidget {
     final merchant = snapshot.merchant;
     return VitCard(
       radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: _p2pMerchantCardPadding,
       child: Column(
         children: [
           Row(

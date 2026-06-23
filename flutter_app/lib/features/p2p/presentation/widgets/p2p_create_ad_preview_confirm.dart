@@ -18,9 +18,11 @@ class P2PCreateAdLivePreviewCard extends StatelessWidget {
       padding: AppSpacing.p2pMerchantCommerceCardPadding,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             onTap: onTap,
-            borderRadius: AppRadii.inputRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.zeroInsets,
             child: Row(
               children: [
                 const Icon(

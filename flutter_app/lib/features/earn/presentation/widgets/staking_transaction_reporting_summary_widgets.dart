@@ -74,42 +74,37 @@ class _Selectors extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(height: AppSpacing.x2),
-                Material(
-                  color: AppColors.surface3,
-                  borderRadius: AppRadii.inputRadius,
-                  child: InkWell(
-                    borderRadius: AppRadii.inputRadius,
-                    onTap: () {
-                      final currentIndex = snapshot.years.indexOf(year);
-                      final nextIndex =
-                          (currentIndex + 1) % snapshot.years.length;
-                      onYearChanged(snapshot.years[nextIndex]);
-                    },
-                    child: SizedBox(
-                      height: _transactionReportingControlExtent,
-                      child: Padding(
-                        padding: AppSpacing.zeroInsets.copyWith(
-                          left: AppSpacing.x4,
-                          right: AppSpacing.x4,
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                year,
-                                style: AppTextStyles.baseMedium.copyWith(
-                                  fontWeight: AppTextStyles.bold,
-                                ),
-                              ),
+                VitCard(
+                  variant: VitCardVariant.inner,
+                  radius: VitCardRadius.md,
+                  padding: AppSpacing.zeroInsets.copyWith(
+                    left: AppSpacing.x4,
+                    right: AppSpacing.x4,
+                  ),
+                  onTap: () {
+                    final currentIndex = snapshot.years.indexOf(year);
+                    final nextIndex =
+                        (currentIndex + 1) % snapshot.years.length;
+                    onYearChanged(snapshot.years[nextIndex]);
+                  },
+                  child: SizedBox(
+                    height: _transactionReportingControlExtent,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            year,
+                            style: AppTextStyles.baseMedium.copyWith(
+                              fontWeight: AppTextStyles.bold,
                             ),
-                            const Icon(
-                              Icons.expand_more_rounded,
-                              color: AppColors.text2,
-                              size: AppSpacing.iconSm,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        const Icon(
+                          Icons.expand_more_rounded,
+                          color: AppColors.text2,
+                          size: AppSpacing.iconSm,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -174,42 +169,39 @@ class _ReportingTabs extends StatelessWidget {
         children: [
           for (final tab in _ReportingTab.values)
             Expanded(
-              child: Material(
-                color: AppColors.transparent,
-                child: InkWell(
-                  key: StakingTransactionReportingPage.tabKey(tab.name),
-                  onTap: () => onChanged(tab),
-                  child: Padding(
-                    padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x3),
-                    child: Column(
-                      children: [
-                        Text(
-                          _tabLabel(tab),
-                          style: AppTextStyles.caption.copyWith(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x2),
-                        SizedBox(
-                          width: AppSpacing.buttonHero,
-                          height: _transactionReportingIndicatorExtent,
-                          child: AnimatedScale(
-                            duration: const Duration(milliseconds: 160),
-                            scale: active == tab ? 1 : 0,
-                            child: Material(
-                              color: active == tab
-                                  ? AppColors.primarySoft
-                                  : AppColors.transparent,
-                              borderRadius: AppRadii.xsRadius,
-                            ),
-                          ),
-                        ),
-                      ],
+              child: VitCard(
+                key: StakingTransactionReportingPage.tabKey(tab.name),
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x3),
+                onTap: () => onChanged(tab),
+                child: Column(
+                  children: [
+                    Text(
+                      _tabLabel(tab),
+                      style: AppTextStyles.caption.copyWith(
+                        color: active == tab
+                            ? AppColors.primarySoft
+                            : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: AppSpacing.x2),
+                    SizedBox(
+                      width: AppSpacing.buttonHero,
+                      height: _transactionReportingIndicatorExtent,
+                      child: AnimatedScale(
+                        duration: const Duration(milliseconds: 160),
+                        scale: active == tab ? 1 : 0,
+                        child: Material(
+                          color: active == tab
+                              ? AppColors.primarySoft
+                              : AppColors.transparent,
+                          borderRadius: AppRadii.xsRadius,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

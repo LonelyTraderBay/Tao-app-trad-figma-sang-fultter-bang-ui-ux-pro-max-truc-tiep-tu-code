@@ -100,7 +100,10 @@ class NetworkStatusPage extends ConsumerWidget {
                             'Check fee, latency, congestion, and confirmation status before deposit or withdrawal actions.',
                         density: VitDensity.compact,
                       ),
-                      _SummaryCard(snapshot: snapshot),
+                      _SummaryCard(
+                        snapshot: snapshot,
+                        onRefresh: () => _showNetworkRefreshNotice(context),
+                      ),
                       for (final network in snapshot.networks)
                         _NetworkCard(network: network),
                       const _LegendCard(),
@@ -112,6 +115,15 @@ class NetworkStatusPage extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _showNetworkRefreshNotice(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Đã làm mới trạng thái mạng'),
+        duration: Duration(milliseconds: 900),
       ),
     );
   }

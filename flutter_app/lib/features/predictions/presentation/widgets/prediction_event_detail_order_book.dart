@@ -18,66 +18,55 @@ class _OrderBookSection extends StatelessWidget {
     final bestAsk = snapshot.orderBook.asks.first.price;
     return Column(
       children: [
-        InkWell(
+        VitCard(
           key: PredictionEventDetailPage.orderBookToggleKey,
           onTap: onToggle,
-          borderRadius: AppRadii.cardRadius,
-          child: Material(
-            color: AppColors.surface,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.cardRadius,
-              side: const BorderSide(color: AppColors.cardBorder),
-            ),
-            child: Padding(
-              padding: AppSpacing.predictionDetailOrderBookTogglePadding,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.layers_rounded,
-                    color: _predictionPrimary,
-                    size: AppSpacing.predictionDetailOrderBookToggleIcon,
-                  ),
-                  const SizedBox(
-                    width: AppSpacing.predictionDetailOrderBookToggleGap,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Order Book',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: AppSpacing.predictionDetailOrderBookToggleGap,
-                  ),
-                  Flexible(
-                    child: Text(
-                      'Spread ${_formatPrice(bestAsk - bestBid)}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.end,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: AppSpacing.predictionDetailOrderBookToggleGap,
-                  ),
-                  Icon(
-                    expanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.predictionDetailOrderBookChevron,
-                  ),
-                ],
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.predictionDetailOrderBookTogglePadding,
+          child: Row(
+            children: [
+              const Icon(
+                Icons.layers_rounded,
+                color: _predictionPrimary,
+                size: AppSpacing.predictionDetailOrderBookToggleIcon,
               ),
-            ),
+              const SizedBox(
+                width: AppSpacing.predictionDetailOrderBookToggleGap,
+              ),
+              Expanded(
+                child: Text(
+                  'Order Book',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: AppSpacing.predictionDetailOrderBookToggleGap,
+              ),
+              Flexible(
+                child: Text(
+                  'Spread ${_formatPrice(bestAsk - bestBid)}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ),
+              const SizedBox(
+                width: AppSpacing.predictionDetailOrderBookToggleGap,
+              ),
+              Icon(
+                expanded
+                    ? Icons.keyboard_arrow_up_rounded
+                    : Icons.keyboard_arrow_down_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.predictionDetailOrderBookChevron,
+              ),
+            ],
           ),
         ),
         if (expanded) ...[

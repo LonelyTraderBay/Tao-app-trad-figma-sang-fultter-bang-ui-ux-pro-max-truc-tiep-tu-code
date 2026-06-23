@@ -108,31 +108,30 @@ class _FlowStepRow extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: InkWell(
+            child: VitCard(
               key: ArenaProductionReadyPage.flowStepKey(flowId, step.label),
+              variant: VitCardVariant.ghost,
+              radius: VitCardRadius.sm,
+              padding: AppSpacing.arenaProductionFlowStepPadding(last),
               onTap: () => onRoute(step.route),
-              borderRadius: AppRadii.smRadius,
-              child: Padding(
-                padding: AppSpacing.arenaProductionFlowStepPadding(last),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      step.label,
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    step.label,
+                    style: AppTextStyles.caption.copyWith(
+                      fontWeight: AppTextStyles.bold,
                     ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      step.description,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        height: AppTextStyles.numericMicro.height,
-                      ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    step.description,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      height: AppTextStyles.numericMicro.height,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

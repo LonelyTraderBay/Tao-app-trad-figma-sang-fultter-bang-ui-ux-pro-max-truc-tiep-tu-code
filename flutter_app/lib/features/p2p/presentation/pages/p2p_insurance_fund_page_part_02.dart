@@ -271,14 +271,15 @@ class _InsuranceTourOverlay extends StatelessWidget {
                   const SizedBox(height: AppSpacing.x3),
                   Row(
                     children: [
-                      TextButton(
+                      VitCtaButton(
                         onPressed: onClose,
-                        child: Text(
-                          'Bỏ qua',
-                          style: AppTextStyles.baseMedium.copyWith(
-                            color: AppColors.text3,
-                          ),
+                        variant: VitCtaButtonVariant.secondary,
+                        fullWidth: false,
+                        height: AppSpacing.buttonCompact,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.x4,
                         ),
+                        child: const Text('Bỏ qua'),
                       ),
                       const SizedBox(width: AppSpacing.x3),
                       Expanded(

@@ -184,12 +184,10 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.x3),
-                  SizedBox(
+                  VitCtaButton(
                     height: AppSpacing.ctaHeight,
-                    child: FilledButton(
-                      onPressed: () {},
-                      child: const Text('Get Sandbox API Key'),
-                    ),
+                    onPressed: () {},
+                    child: const Text('Get Sandbox API Key'),
                   ),
                 ],
               ),
@@ -214,24 +212,13 @@ class _LanguageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary : AppColors.surface2,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: StakingApiDocumentationKeys.language(example.language),
-        borderRadius: AppRadii.inputRadius,
-        onTap: onTap,
-        child: Padding(
-          padding: AppSpacing.earnPillPaddingLarge,
-          child: Text(
-            example.label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.onAccent : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: StakingApiDocumentationKeys.language(example.language),
+      label: example.label,
+      selected: selected,
+      onTap: onTap,
+      padding: AppSpacing.earnPillPaddingLarge,
+      semanticLabel: 'API example language ${example.label}',
     );
   }
 }

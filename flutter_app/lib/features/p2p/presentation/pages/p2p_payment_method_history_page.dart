@@ -15,6 +15,19 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
+const double _p2pPaymentHistoryVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pPaymentHistoryNativeNavClearance =
+    _p2pPaymentHistoryVisualNavClearance - AppSpacing.x4;
+const double _p2pPaymentHistoryVisualClearance = AppSpacing.x3;
+const double _p2pPaymentHistoryNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pPaymentHistoryScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
+
 class P2PPaymentMethodHistoryPage extends ConsumerWidget {
   const P2PPaymentMethodHistoryPage({super.key, this.shellRenderMode});
 
@@ -27,12 +40,12 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pPaymentMethodHistoryProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetNative) +
+            ? _p2pPaymentHistoryVisualNavClearance +
+                  _p2pPaymentHistoryVisualClearance
+            : _p2pPaymentHistoryNativeNavClearance +
+                  _p2pPaymentHistoryNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -57,7 +70,9 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodHistoryPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
+                    padding: _p2pPaymentHistoryScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       gap: VitContentGap.tight,

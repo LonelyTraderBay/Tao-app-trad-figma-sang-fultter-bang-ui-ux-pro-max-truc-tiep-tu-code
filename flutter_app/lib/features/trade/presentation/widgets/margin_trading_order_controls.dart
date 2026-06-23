@@ -23,7 +23,6 @@ class _SideToggle extends StatelessWidget {
             id: 'long',
             label: 'Long',
             icon: Icons.trending_up_rounded,
-            color: _marginGreen,
             active: side == 'long',
             onTap: () => onChanged('long'),
           ),
@@ -32,7 +31,6 @@ class _SideToggle extends StatelessWidget {
             id: 'short',
             label: 'Short',
             icon: Icons.trending_down_rounded,
-            color: AppColors.text3,
             active: side == 'short',
             onTap: () => onChanged('short'),
           ),
@@ -47,7 +45,6 @@ class _SideButton extends StatelessWidget {
     required this.id,
     required this.label,
     required this.icon,
-    required this.color,
     required this.active,
     required this.onTap,
   });
@@ -55,36 +52,24 @@ class _SideButton extends StatelessWidget {
   final String id;
   final String label;
   final IconData icon;
-  final Color color;
   final bool active;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final resolvedColor = active ? color : AppColors.text3;
     return Expanded(
-      child: VitCard(
+      child: VitChoicePill(
         key: MarginTradingPage.sideKey(id),
+        label: label,
+        selected: active,
         onTap: onTap,
-        alignment: Alignment.center,
-        variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
-        borderColor: active
-            ? color.withValues(alpha: .35)
-            : AppColors.transparent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: resolvedColor, size: AppSpacing.inputPrefixIcon),
-            const SizedBox(width: AppSpacing.transferTileGap),
-            Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: resolvedColor,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
+        fullWidth: true,
+        height: AppSpacing.ctaHeight,
+        tone: id == 'long'
+            ? VitChoicePillTone.success
+            : VitChoicePillTone.danger,
+        leading: Icon(icon),
+        semanticLabel: 'Chon huong $label margin',
       ),
     );
   }
@@ -104,63 +89,54 @@ class _LeverageSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
+      key: MarginTradingPage.leverageKey,
+      onTap: onTap,
       padding: AppSpacing.zeroInsets,
-      child: InkWell(
-        key: MarginTradingPage.leverageKey,
-        onTap: onTap,
-        borderRadius: AppRadii.cardRadius,
-        child: Padding(
-          padding: AppSpacing.zeroInsets.copyWith(
-            left: AppSpacing.walletAssetSectionGap,
-            top: AppSpacing.x4,
-            right: AppSpacing.walletAssetSectionGap,
-            bottom: AppSpacing.x4,
-          ),
-          child: Row(
-            children: [
-              const _MarginIconSurface(
-                icon: Icons.tune_rounded,
-                color: _marginAmber,
-                size: AppSpacing.buttonCompact,
-                iconSize: AppSpacing.inputPrefixIcon,
-              ),
-              const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Đòn bẩy',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.onAccent,
-                        fontWeight: AppTextStyles.bold,
-                      ),
+      child: Padding(
+        padding: AppSpacing.zeroInsets.copyWith(
+          left: AppSpacing.walletAssetSectionGap,
+          top: AppSpacing.x4,
+          right: AppSpacing.walletAssetSectionGap,
+          bottom: AppSpacing.x4,
+        ),
+        child: Row(
+          children: [
+            const _MarginIconSurface(
+              icon: Icons.tune_rounded,
+              color: _marginAmber,
+              size: AppSpacing.buttonCompact,
+              iconSize: AppSpacing.inputPrefixIcon,
+            ),
+            const SizedBox(width: AppSpacing.walletAssetHeroTopGap),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Đòn bẩy',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
                     ),
-                    const SizedBox(height: AppSpacing.hairlineStroke * 2),
-                    Text(
-                      'Nhân ${leverage}x giá trị vị thế',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: AppSpacing.hairlineStroke * 2),
+                  Text(
+                    'Nhân ${leverage}x giá trị vị thế',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
               ),
-              _MiniBadge(
-                label: '${leverage}x',
-                color: _marginAmber,
-                large: true,
-              ),
-              const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
-              Icon(
-                expanded
-                    ? Icons.keyboard_arrow_up_rounded
-                    : Icons.keyboard_arrow_down_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.inputPrefixIcon,
-              ),
-            ],
-          ),
+            ),
+            _MiniBadge(label: '${leverage}x', color: _marginAmber, large: true),
+            const SizedBox(width: AppSpacing.walletAssetChartBottomGap),
+            Icon(
+              expanded
+                  ? Icons.keyboard_arrow_up_rounded
+                  : Icons.keyboard_arrow_down_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.inputPrefixIcon,
+            ),
+          ],
         ),
       ),
     );

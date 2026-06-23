@@ -118,9 +118,12 @@ class _TokenDetailSheet extends StatelessWidget {
               Expanded(
                 child: Text(token.name, style: AppTextStyles.sectionTitle),
               ),
-              IconButton(
+              VitIconButton(
+                icon: Icons.close_rounded,
+                tooltip: 'Close',
                 onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.close_rounded, color: AppColors.text2),
+                variant: VitIconButtonVariant.transparent,
+                size: VitIconButtonSize.md,
               ),
             ],
           ),

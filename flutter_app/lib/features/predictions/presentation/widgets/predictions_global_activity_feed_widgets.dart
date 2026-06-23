@@ -39,8 +39,11 @@ class _ActivityRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final isBuy = activity.action == PredictionGlobalActivityAction.bought;
     final sideColor = isBuy ? AppColors.buy : AppColors.sell;
-    return InkWell(
+    return VitCard(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.zeroInsets,
       child: Stack(
         children: [
           Padding(

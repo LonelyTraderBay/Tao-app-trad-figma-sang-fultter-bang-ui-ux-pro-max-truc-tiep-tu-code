@@ -152,11 +152,15 @@ class _KycSupportCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x3),
-                GestureDetector(
-                  onTap: () {
+                VitCtaButton(
+                  onPressed: () {
                     HapticFeedback.selectionClick();
                     context.go(snapshot.supportRoute);
                   },
+                  variant: VitCtaButtonVariant.ghost,
+                  fullWidth: false,
+                  height: AppSpacing.buttonCompact,
+                  padding: AppSpacing.p2pKycInlineActionPadding,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

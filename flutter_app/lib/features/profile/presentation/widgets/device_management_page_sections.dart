@@ -173,20 +173,13 @@ class _OtherDevicesHeader extends StatelessWidget {
             label: 'C\u00C1C THI\u1EBET B\u1ECA KH\u00C1C ($count)',
           ),
         ),
-        GestureDetector(
+        VitCtaButton(
           key: DeviceManagementPage.logoutAllKey,
-          onTap: onLogoutAll,
-          behavior: HitTestBehavior.opaque,
-          child: Opacity(
-            opacity: onLogoutAll == null ? .45 : 1,
-            child: Text(
-              '\u0110\u0103ng xu\u1EA5t t\u1EA5t c\u1EA3',
-              style: AppTextStyles.micro.copyWith(
-                color: _devicesRed,
-                fontWeight: AppTextStyles.heavy,
-              ),
-            ),
-          ),
+          onPressed: onLogoutAll,
+          variant: VitCtaButtonVariant.destructive,
+          fullWidth: false,
+          height: AppSpacing.buttonCompact,
+          child: const Text('\u0110\u0103ng xu\u1EA5t t\u1EA5t c\u1EA3'),
         ),
       ],
     );

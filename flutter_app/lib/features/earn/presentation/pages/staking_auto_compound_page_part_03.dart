@@ -26,13 +26,12 @@ class _SuccessToast extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(color: AppColors.text1),
             ),
           ),
-          IconButton(
+          VitIconButton(
+            icon: Icons.close_rounded,
+            tooltip: 'Close',
             onPressed: onDismiss,
-            icon: const Icon(
-              Icons.close_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconMd,
-            ),
+            variant: VitIconButtonVariant.transparent,
+            size: VitIconButtonSize.md,
           ),
         ],
       ),
@@ -81,32 +80,22 @@ class _ToggleSwitch extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: enabled,
-      child: GestureDetector(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.lg,
+        padding: AppSpacing.zeroInsets,
         onTap: onTap,
-        child: SizedBox(
+        child: VitTogglePill(
+          enabled: enabled,
           width: AppSpacing.stakingAutoCompoundToggleWidth,
           height: AppSpacing.stakingAutoCompoundToggleHeight,
-          child: Material(
-            color: enabled ? AppColors.buy : AppColors.surface3,
-            borderRadius: AppRadii.xlRadius,
-            child: Padding(
-              padding: AppSpacing.earnPaddingX1,
-              child: AnimatedAlign(
-                duration: const Duration(milliseconds: 180),
-                curve: Curves.easeOut,
-                alignment: enabled
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: const SizedBox.square(
-                  dimension: AppSpacing.x5,
-                  child: Material(
-                    color: AppColors.onAccent,
-                    shape: CircleBorder(),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          knobSize: AppSpacing.x5,
+          knobMargin: AppSpacing.earnPaddingX1,
+          activeColor: AppColors.buy,
+          inactiveColor: AppColors.surface3,
+          inactiveKnobColor: AppColors.onAccent,
+          inactiveBorderColor: AppColors.surface3,
+          duration: const Duration(milliseconds: 180),
         ),
       ),
     );

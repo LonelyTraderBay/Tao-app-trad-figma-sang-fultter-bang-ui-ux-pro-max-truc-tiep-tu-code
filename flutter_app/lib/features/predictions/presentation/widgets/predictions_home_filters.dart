@@ -106,47 +106,14 @@ class _FilterTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _marketPrimary.withValues(alpha: .12)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
-        side: BorderSide(
-          color: active
-              ? _marketPrimary.withValues(alpha: .34)
-              : AppColors.borderSolid,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight - AppSpacing.x2,
-          child: Padding(
-            padding: AppSpacing.predictionHomeFilterPadding,
-            child: Row(
-              children: [
-                Icon(
-                  meta.icon,
-                  size: AppSpacing.predictionHomeFilterIcon,
-                  color: active ? _marketPrimary : AppColors.text3,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-                Text(
-                  meta.label,
-                  style: AppTextStyles.badge.copyWith(
-                    color: active ? _marketPrimary : AppColors.text3,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.normal,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: meta.label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _marketPrimary,
+      height: VitDensity.compact.controlHeight - AppSpacing.x2,
+      padding: AppSpacing.predictionHomeFilterPadding,
+      leading: Icon(meta.icon, size: AppSpacing.predictionHomeFilterIcon),
     );
   }
 }
@@ -209,37 +176,13 @@ class _CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active
-          ? _marketPrimary.withValues(alpha: .12)
-          : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.smRadius,
-        side: BorderSide(
-          color: active
-              ? _marketPrimary.withValues(alpha: .30)
-              : AppColors.borderSolid,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.smRadius,
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight - AppSpacing.x3,
-          child: Padding(
-            padding: AppSpacing.predictionHomeCategoryPadding,
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
-                  color: active ? _marketPrimary : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: _marketPrimary,
+      height: VitDensity.compact.controlHeight - AppSpacing.x3,
+      padding: AppSpacing.predictionHomeCategoryPadding,
     );
   }
 }

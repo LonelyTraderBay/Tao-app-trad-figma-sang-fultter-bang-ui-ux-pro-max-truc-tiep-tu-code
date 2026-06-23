@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
@@ -242,35 +241,12 @@ class SavingsSmartFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: active ? tone.withValues(alpha: .12) : AppColors.surface2,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: active
-                    ? tone.withValues(alpha: .45)
-                    : AppColors.cardBorder,
-              ),
-              borderRadius: AppRadii.xlRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.earnWidePillPadding,
-            child: Text(
-              label,
-              style: savingsSmartCaptionBold.copyWith(
-                color: active ? tone : AppColors.text2,
-                height: AppSpacing.savingsConsumerPillLineHeight,
-              ),
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
+      accentColor: tone,
+      padding: AppSpacing.earnWidePillPadding,
     );
   }
 }

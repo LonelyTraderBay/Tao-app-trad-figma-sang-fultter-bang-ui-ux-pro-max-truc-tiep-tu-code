@@ -129,10 +129,11 @@ class _FilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
-      child: InkWell(
+      child: VitCard(
         key: ArenaPointsLedgerPage.filterKey(filter.id),
         onTap: onTap,
-        borderRadius: AppRadii.smRadius,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.buttonCompact,
@@ -204,12 +205,14 @@ class _LedgerRow extends StatelessWidget {
 
     return Material(
       type: MaterialType.transparency,
-      child: InkWell(
+      child: VitCard(
         key: ArenaPointsLedgerPage.entryKey(entry.id),
         onTap: () {
           HapticFeedback.selectionClick();
           context.go(AppRoutePaths.arenaLedgerEntry(entry.id));
         },
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: Padding(
           padding: AppSpacing.arenaPointsLedgerRowPadding,
           child: Row(

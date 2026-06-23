@@ -201,38 +201,35 @@ class _TabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        key: StakingLiquidStakingPage.tabKey(tab.name),
-        onTap: onTap,
-        child: Padding(
-          padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x4),
-          child: Column(
-            children: [
-              Text(
-                _tabLabel(tab),
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x4),
-              SizedBox(
-                width: AppSpacing.buttonHero,
-                height: AppSpacing.stakingProductTabIndicatorHeight,
-                child: AnimatedScale(
-                  duration: const Duration(milliseconds: 160),
-                  scale: selected ? 1 : 0,
-                  child: Material(
-                    color: selected ? AppColors.primary : AppColors.transparent,
-                    borderRadius: AppRadii.xsRadius,
-                  ),
-                ),
-              ),
-            ],
+    return VitCard(
+      key: StakingLiquidStakingPage.tabKey(tab.name),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x4),
+      onTap: onTap,
+      child: Column(
+        children: [
+          Text(
+            _tabLabel(tab),
+            style: AppTextStyles.caption.copyWith(
+              color: selected ? AppColors.primary : AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+            ),
           ),
-        ),
+          const SizedBox(height: AppSpacing.x4),
+          SizedBox(
+            width: AppSpacing.buttonHero,
+            height: AppSpacing.stakingProductTabIndicatorHeight,
+            child: AnimatedScale(
+              duration: const Duration(milliseconds: 160),
+              scale: selected ? 1 : 0,
+              child: Material(
+                color: selected ? AppColors.primary : AppColors.transparent,
+                borderRadius: AppRadii.xsRadius,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

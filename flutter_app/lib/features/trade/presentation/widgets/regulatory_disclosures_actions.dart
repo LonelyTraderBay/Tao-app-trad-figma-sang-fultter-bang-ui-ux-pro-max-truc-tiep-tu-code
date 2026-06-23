@@ -15,37 +15,34 @@ class _ActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        density: VitDensity.compact,
-        borderColor: color,
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color: color,
-              size: AppSpacing.regulatoryDisclosuresActionIcon,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                title,
-                style: AppTextStyles.caption.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
+      variant: VitCardVariant.ghost,
+      density: VitDensity.compact,
+      borderColor: color,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: color,
+            size: AppSpacing.regulatoryDisclosuresActionIcon,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              title,
+              style: AppTextStyles.caption.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
-            Icon(
-              Icons.open_in_new_rounded,
-              color: color,
-              size: AppSpacing.regulatoryDisclosuresExternalIcon,
-            ),
-          ],
-        ),
+          ),
+          Icon(
+            Icons.open_in_new_rounded,
+            color: color,
+            size: AppSpacing.regulatoryDisclosuresExternalIcon,
+          ),
+        ],
       ),
     );
   }
@@ -59,46 +56,43 @@ class _ContactTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: RegulatoryDisclosuresPage.contactKey(contact.title),
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        density: VitDensity.compact,
-        child: Row(
-          children: [
-            Icon(
-              _contactIcon(contact.icon),
-              color: _legalPrimary,
-              size: AppSpacing.regulatoryDisclosuresContactIcon,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    contact.title,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
+      density: VitDensity.compact,
+      child: Row(
+        children: [
+          Icon(
+            _contactIcon(contact.icon),
+            color: _legalPrimary,
+            size: AppSpacing.regulatoryDisclosuresContactIcon,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  contact.title,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    contact.subtitle,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  contact.subtitle,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
-            const Icon(
-              Icons.open_in_new_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.regulatoryDisclosuresExternalIcon,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.open_in_new_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.regulatoryDisclosuresExternalIcon,
+          ),
+        ],
       ),
     );
   }
@@ -112,35 +106,32 @@ class _DocumentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       onTap: onTap,
-      borderRadius: AppRadii.cardRadius,
-      child: VitCard(
-        density: VitDensity.compact,
-        child: Row(
-          children: [
-            Icon(
-              _documentIcon(document.icon),
-              color: _legalPrimary,
-              size: AppSpacing.regulatoryDisclosuresActionIcon,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                document.title,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                ),
+      density: VitDensity.compact,
+      child: Row(
+        children: [
+          Icon(
+            _documentIcon(document.icon),
+            color: _legalPrimary,
+            size: AppSpacing.regulatoryDisclosuresActionIcon,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              document.title,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
               ),
             ),
-            const Icon(
-              Icons.chevron_right_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.regulatoryDisclosuresExternalIcon,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.regulatoryDisclosuresExternalIcon,
+          ),
+        ],
       ),
     );
   }

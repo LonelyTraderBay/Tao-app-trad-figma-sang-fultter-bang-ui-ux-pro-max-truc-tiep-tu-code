@@ -208,10 +208,12 @@ class _SecurityFeatureRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _statusColor(feature.status);
 
-    return InkWell(
+    return VitCard(
       key: P2PSecurityCenterPage.featureKey(feature.id),
       onTap: onTap,
-      borderRadius: AppRadii.lgRadius,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: AppSpacing.zeroInsets,
       child: Padding(
         padding: _p2pSecurityCompactPadding,
         child: Row(

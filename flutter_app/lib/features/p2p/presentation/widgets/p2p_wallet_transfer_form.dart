@@ -43,13 +43,13 @@ class _TransferForm extends StatelessWidget {
           destination: destination,
           onSwitch: onSwitch,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pTransferMajorGap),
         _AssetSelection(
           assets: snapshot.assets,
           selectedAsset: asset,
           onChanged: onAssetChanged,
         ),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pTransferMajorGap),
         _AmountInput(
           controller: amountController,
           asset: asset,
@@ -57,13 +57,13 @@ class _TransferForm extends StatelessWidget {
           onChanged: onAmountChanged,
           onMax: onMax,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _p2pTransferTightGap),
         _QuickPercentRow(onPercent: onPercent),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pTransferMajorGap),
         const _FeeNotice(),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pTransferTightGap),
         _EscrowNotice(text: snapshot.escrowNote),
-        const SizedBox(height: AppSpacing.x5),
+        const SizedBox(height: _p2pTransferMajorGap),
         _SubmitButton(
           enabled: canTransfer,
           label: amount > 0
@@ -71,7 +71,7 @@ class _TransferForm extends StatelessWidget {
               : 'Chuyển $asset',
           onTap: onSubmit,
         ),
-        const SizedBox(height: AppSpacing.x4),
+        const SizedBox(height: _p2pTransferActionGap),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
           title: 'P2P transfer review',
@@ -100,27 +100,28 @@ class _DirectionCard extends StatelessWidget {
     return VitCard(
       key: P2PWalletTransferPage.directionKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pWalletCardPadding,
+      padding: _p2pTransferCardPadding,
       child: Row(
         children: [
           Expanded(
             child: _WalletSide(label: 'Từ', balance: source),
           ),
           Padding(
-            padding: AppSpacing.p2pWalletTransferSwitchPadding,
+            padding: _p2pTransferSwitchPadding,
             child: Material(
               key: P2PWalletTransferPage.switchKey,
               color: AppModuleAccents.p2p.withValues(alpha: .16),
               shape: const CircleBorder(),
-              child: InkWell(
-                onTap: onSwitch,
-                customBorder: const CircleBorder(),
-                child: const SizedBox(
-                  width: AppSpacing.inputHeight,
-                  height: AppSpacing.inputHeight,
-                  child: Icon(
-                    Icons.swap_horiz_rounded,
+              child: SizedBox.square(
+                dimension: _p2pTransferSwitchSize,
+                child: Center(
+                  child: VitInlineIconAction(
+                    icon: Icons.swap_horiz_rounded,
+                    tooltip: 'Đổi chiều chuyển ví',
+                    onPressed: onSwitch,
                     color: AppModuleAccents.p2p,
+                    borderRadius: AppRadii.pillRadius,
+                    padding: AppSpacing.x2,
                   ),
                 ),
               ),
@@ -153,7 +154,7 @@ class _WalletSide extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.x1),
         Row(
           children: [
             Icon(_walletIcon(balance.walletKey), color: color, size: 17),
@@ -202,11 +203,9 @@ class _AssetSelection extends StatelessWidget {
       children: [
         Text(
           'Chọn tài sản',
-          style: AppTextStyles.baseMedium.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
+          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pTransferTightGap),
         Row(
           children: [
             for (var index = 0; index < assets.length; index++) ...[
@@ -252,9 +251,9 @@ class _AssetTile extends StatelessWidget {
             : AppColors.surface.withValues(alpha: .50),
       ),
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.p2pWalletTransferAssetTileMinHeight,
+        minHeight: _p2pTransferAssetTileMinHeight,
       ),
-      padding: AppSpacing.p2pWalletTransferAssetTilePadding,
+      padding: _p2pTransferAssetTilePadding,
       clip: true,
       onTap: onTap,
       child: Column(
@@ -297,13 +296,9 @@ class _AssetMark extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.mdRadius,
       child: SizedBox(
-        width: AppSpacing.x7,
-        height: AppSpacing.x7,
-        child: Icon(
-          icon,
-          color: color,
-          size: AppSpacing.p2pWalletTransactionIcon,
-        ),
+        width: _p2pTransferAssetMarkSize,
+        height: _p2pTransferAssetMarkSize,
+        child: Icon(icon, color: color, size: _p2pTransferAssetIcon),
       ),
     );
   }

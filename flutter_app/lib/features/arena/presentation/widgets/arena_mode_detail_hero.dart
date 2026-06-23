@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
@@ -161,10 +160,11 @@ class _CreatorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
-      child: InkWell(
+      child: VitCard(
         key: creatorKey,
         onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
         child: Padding(
           padding: AppSpacing.arenaVerticalPaddingX2,
           child: Row(

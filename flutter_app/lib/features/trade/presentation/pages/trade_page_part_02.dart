@@ -259,19 +259,26 @@ class _OrderForm extends StatelessWidget {
             onChanged: onChanged,
           ),
           const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              for (final pct in const [25, 50, 75, 100]) ...[
-                Expanded(
-                  child: _PctButton(
-                    key: TradePage.pctKey(pct),
-                    pct: pct,
-                    onTap: () => onPct(pct),
+          VitCard(
+            density: VitDensity.tool,
+            padding: AppSpacing.tradeSegmentedPadding,
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.sm,
+            borderColor: AppColors.cardBorder,
+            child: Row(
+              children: [
+                for (final pct in const [25, 50, 75, 100]) ...[
+                  Expanded(
+                    child: _PctButton(
+                      key: TradePage.pctKey(pct),
+                      pct: pct,
+                      onTap: () => onPct(pct),
+                    ),
                   ),
-                ),
-                if (pct != 100) const SizedBox(width: AppSpacing.x2),
+                  if (pct != 100) const SizedBox(width: AppSpacing.x1),
+                ],
               ],
-            ],
+            ),
           ),
           const SizedBox(height: AppSpacing.x3),
           _TpslSwitch(value: tpslEnabled, onChanged: onTpslChanged),
@@ -388,40 +395,52 @@ class _OrderTypeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _OrderTypeChip(
-          type: TradeOrderType.market,
-          active: active == TradeOrderType.market,
-          onSelected: onSelected,
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        _OrderTypeChip(
-          type: TradeOrderType.limit,
-          active: active == TradeOrderType.limit,
-          onSelected: onSelected,
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        _OrderTypeChip(
-          type: TradeOrderType.stop,
-          active: active == TradeOrderType.stop,
-          onSelected: onSelected,
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        VitCard(
-          constraints: BoxConstraints.tightFor(
-            width: VitDensity.compact.controlHeight,
-            height: VitDensity.compact.controlHeight,
+    return VitCard(
+      density: VitDensity.tool,
+      padding: AppSpacing.tradeSegmentedPadding,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: AppColors.cardBorder,
+      child: Row(
+        children: [
+          _OrderTypeChip(
+            type: TradeOrderType.market,
+            active: active == TradeOrderType.market,
+            onSelected: onSelected,
           ),
-          variant: VitCardVariant.inner,
-          alignment: Alignment.center,
-          borderColor: AppColors.borderSolid,
-          child: const Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: AppColors.text3,
+          const SizedBox(width: AppSpacing.x1),
+          _OrderTypeChip(
+            type: TradeOrderType.limit,
+            active: active == TradeOrderType.limit,
+            onSelected: onSelected,
           ),
-        ),
-      ],
+          const SizedBox(width: AppSpacing.x1),
+          _OrderTypeChip(
+            type: TradeOrderType.stop,
+            active: active == TradeOrderType.stop,
+            onSelected: onSelected,
+          ),
+          const SizedBox(width: AppSpacing.x1),
+          VitCard(
+            width: AppSpacing.buttonCompact,
+            height: AppSpacing.buttonCompact,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            borderColor: AppColors.borderSolid,
+            background: const DecoratedBox(
+              decoration: BoxDecoration(color: AppColors.portfolioBtnGhost),
+            ),
+            clip: true,
+            child: const Center(
+              child: Icon(
+                Icons.keyboard_arrow_down_rounded,
+                size: AppSpacing.iconMd,
+                color: AppColors.text2,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -446,26 +465,14 @@ class _OrderTypeChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: VitCard(
+      child: VitChoicePill(
         key: TradePage.orderTypeKey(type),
+        label: label,
+        selected: active,
         onTap: () => onSelected(type),
-        variant: active ? VitCardVariant.ghost : VitCardVariant.inner,
-        density: VitDensity.compact,
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: AppSpacing.x2,
-        ),
-        alignment: Alignment.center,
-        borderColor: active
-            ? AppColors.buy.withValues(alpha: .75)
-            : AppColors.borderSolid,
-        child: Text(
-          label,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.buy : AppColors.text2,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          ),
-        ),
+        fullWidth: true,
+        height: AppSpacing.buttonCompact,
+        accentColor: _tradePrimary,
       ),
     );
   }

@@ -33,83 +33,83 @@ class _RouteCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             key: LaunchpadBridgeComparePage.routeSelectKey(route.id),
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.lg,
+            padding: AppSpacing.launchpadPaddingX4,
             onTap: onSelect,
-            child: Padding(
-              padding: AppSpacing.launchpadPaddingX4,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _RankedProviderBadge(route: route, rank: rank),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                route.provider,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.base.copyWith(
-                                  color: AppColors.text1,
-                                  fontWeight: AppTextStyles.bold,
-                                ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _RankedProviderBadge(route: route, rank: rank),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              route.provider,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.base.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            if (route.recommended) const _RecommendedBadge(),
-                          ],
-                        ),
-                        const SizedBox(height: AppSpacing.x2),
-                        _RouteTags(route: route, comparison: comparison),
-                        const SizedBox(height: AppSpacing.x3),
-                        _RouteMetrics(route: route, comparison: comparison),
-                      ],
-                    ),
+                          ),
+                          if (route.recommended) const _RecommendedBadge(),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.x2),
+                      _RouteTags(route: route, comparison: comparison),
+                      const SizedBox(height: AppSpacing.x3),
+                      _RouteMetrics(route: route, comparison: comparison),
+                    ],
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Icon(
-                    selected
-                        ? Icons.check_circle_rounded
-                        : Icons.radio_button_unchecked_rounded,
-                    color: selected ? route.accent : AppColors.borderSolid,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Icon(
+                  selected
+                      ? Icons.check_circle_rounded
+                      : Icons.radio_button_unchecked_rounded,
+                  color: selected ? route.accent : AppColors.borderSolid,
+                  size: AppSpacing.iconMd,
+                ),
+              ],
             ),
           ),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
-          InkWell(
+          VitCard(
             key: LaunchpadBridgeComparePage.expandKey(route.id),
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.launchpadVerticalPaddingX2,
             onTap: onExpand,
-            child: Padding(
-              padding: AppSpacing.launchpadVerticalPaddingX2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Chi tiết',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  Icon(
-                    expanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Chi tiết',
+                  style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    size: AppSpacing.iconSm,
+                    fontWeight: AppTextStyles.bold,
                   ),
-                ],
-              ),
+                ),
+                Icon(
+                  expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.iconSm,
+                ),
+              ],
             ),
           ),
           if (expanded)

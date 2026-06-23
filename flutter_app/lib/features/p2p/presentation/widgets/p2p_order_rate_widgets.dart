@@ -111,15 +111,16 @@ class _StarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
+    return VitChoicePill(
       key: P2POrderRatePage.starKey(rating),
-      tooltip: '$rating stars',
-      onPressed: onPressed,
-      icon: Icon(
-        selected ? Icons.star_rounded : Icons.star_border_rounded,
-        color: selected ? AppColors.warn : AppColors.borderSolid,
-        size: AppSpacing.p2pOrderRatingStarIcon,
-      ),
+      label: '',
+      selected: selected,
+      onTap: onPressed,
+      height: AppSpacing.buttonCompact + AppSpacing.x3,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+      accentColor: AppColors.warn,
+      leading: Icon(selected ? Icons.star_rounded : Icons.star_border_rounded),
+      semanticLabel: '$rating stars',
     );
   }
 }
@@ -182,23 +183,15 @@ class _TagChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ActionChip(
+    return VitChoicePill(
       key: P2POrderRatePage.tagKey(tag.label),
-      onPressed: onPressed,
-      avatar: Icon(
-        _tagIcon(tag.iconKey),
-        color: selected ? AppColors.warn : AppColors.text3,
-        size: AppSpacing.iconSm,
-      ),
-      label: Text(tag.label),
-      backgroundColor: selected ? AppColors.warn15 : AppColors.surface2,
-      side: BorderSide(
-        color: selected ? AppColors.warningBorder : AppColors.borderSolid,
-      ),
-      labelStyle: AppTextStyles.micro.copyWith(
-        color: selected ? AppColors.warn : AppColors.text2,
-        fontWeight: selected ? AppTextStyles.bold : AppTextStyles.medium,
-      ),
+      label: tag.label,
+      selected: selected,
+      onTap: onPressed,
+      height: AppSpacing.buttonCompact,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+      accentColor: AppColors.warn,
+      leading: Icon(_tagIcon(tag.iconKey)),
     );
   }
 }
@@ -258,7 +251,7 @@ class _ActionRow extends StatelessWidget {
             child: const Text('Bo qua'),
           ),
         ),
-        const SizedBox(width: AppSpacing.x3),
+        const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: VitCtaButton(
             key: P2POrderRatePage.submitKey,
@@ -326,7 +319,7 @@ class _SuccessView extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: AppSpacing.x3),
             VitCtaButton(
               key: P2POrderRatePage.backToP2PKey,
               onPressed: onBackToP2P,

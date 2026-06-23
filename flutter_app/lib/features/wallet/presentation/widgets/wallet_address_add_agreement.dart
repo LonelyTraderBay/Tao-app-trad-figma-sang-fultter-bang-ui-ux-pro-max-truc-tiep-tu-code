@@ -185,10 +185,11 @@ class AddressAgreementRow extends StatelessWidget {
       selected: agreed,
       label: 'Confirm wallet address and network are correct',
       value: agreed ? 'Agreed' : 'Not agreed',
-      child: GestureDetector(
+      child: VitCard(
         key: const Key('sc143_address_agreement'),
         onTap: onTap,
-        behavior: HitTestBehavior.opaque,
+        variant: VitCardVariant.ghost,
+        borderColor: AppColors.transparent,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

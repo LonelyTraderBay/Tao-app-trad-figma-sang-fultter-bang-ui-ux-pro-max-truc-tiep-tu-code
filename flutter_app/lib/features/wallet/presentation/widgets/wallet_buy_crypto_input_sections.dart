@@ -247,24 +247,14 @@ class _PresetChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return VitChoicePill(
       key: Key('sc145_buy_crypto_preset_$amount'),
+      label: '${amount ~/ 1000}K',
+      selected: selected,
       onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: VitCard(
-        height: AppSpacing.walletBuyPresetChipHeight,
-        alignment: Alignment.center,
-        radius: VitCardRadius.sm,
-        borderColor: selected ? _buyPrimary : AppColors.borderSolid,
-        clip: true,
-        background: ColoredBox(color: selected ? _buyPrimary : _buyPanel2),
-        child: Text(
-          '${amount ~/ 1000}K',
-          style: AppTextStyles.badge.copyWith(
-            color: selected ? AppColors.onAccent : AppColors.text2,
-          ),
-        ),
-      ),
+      fullWidth: true,
+      height: AppSpacing.walletBuyPresetChipHeight,
+      accentColor: _buyPrimary,
     );
   }
 }
@@ -309,37 +299,34 @@ class _ReceivePanel extends StatelessWidget {
               ],
             ),
           ),
-          GestureDetector(
+          VitCard(
             key: const Key('sc145_buy_crypto_selector'),
             onTap: onCryptoTap,
-            behavior: HitTestBehavior.opaque,
-            child: VitCard(
-              height: AppSpacing.walletBuySelectorHeight,
-              padding: AppSpacing.walletBuySelectorPadding,
-              borderColor: AppColors.borderSolid,
-              clip: true,
-              background: const ColoredBox(color: _buyPanel),
-              child: Row(
-                children: [
-                  _CryptoLogo(
-                    option: crypto,
-                    size: AppSpacing.walletBuyCryptoLogoCompact,
+            height: AppSpacing.walletBuySelectorHeight,
+            padding: AppSpacing.walletBuySelectorPadding,
+            borderColor: AppColors.borderSolid,
+            clip: true,
+            background: const ColoredBox(color: _buyPanel),
+            child: Row(
+              children: [
+                _CryptoLogo(
+                  option: crypto,
+                  size: AppSpacing.walletBuyCryptoLogoCompact,
+                ),
+                const SizedBox(width: AppSpacing.walletBuyCompactGap),
+                Text(
+                  crypto.symbol,
+                  style: AppTextStyles.body.copyWith(
+                    fontWeight: AppTextStyles.medium,
                   ),
-                  const SizedBox(width: AppSpacing.walletBuyCompactGap),
-                  Text(
-                    crypto.symbol,
-                    style: AppTextStyles.body.copyWith(
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.walletBuyMicroGap),
-                  const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text2,
-                    size: 18,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(width: AppSpacing.walletBuyMicroGap),
+                const Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text2,
+                  size: 18,
+                ),
+              ],
             ),
           ),
         ],

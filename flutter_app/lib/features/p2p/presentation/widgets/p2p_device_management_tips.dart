@@ -10,7 +10,7 @@ class _SecurityTips extends StatelessWidget {
     return VitCard(
       key: P2PDeviceManagementPage.tipsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pSecurityDetailsCardPadding,
+      padding: _p2pDevicesCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -65,7 +65,7 @@ class _TipRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pSecurityDetailsBodyLineHeight,
+              height: _p2pDevicesBodyLineHeight,
             ),
           ),
         ),

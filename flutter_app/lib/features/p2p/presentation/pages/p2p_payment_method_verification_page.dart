@@ -21,6 +21,19 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 part '../widgets/p2p_payment_method_verification_methods.dart';
 part '../widgets/p2p_payment_method_verification_flow.dart';
 
+const double _p2pPaymentVerificationVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pPaymentVerificationNativeNavClearance =
+    _p2pPaymentVerificationVisualNavClearance - AppSpacing.x4;
+const double _p2pPaymentVerificationVisualClearance = AppSpacing.x3;
+const double _p2pPaymentVerificationNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pPaymentVerificationScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
+
 class P2PPaymentMethodVerificationPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodVerificationPage({
     super.key,
@@ -61,12 +74,12 @@ class _P2PPaymentMethodVerificationPageState
       p2pPaymentMethodVerificationProvider(widget.methodId),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetNative) +
+            ? _p2pPaymentVerificationVisualNavClearance +
+                  _p2pPaymentVerificationVisualClearance
+            : _p2pPaymentVerificationNativeNavClearance +
+                  _p2pPaymentVerificationNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -99,10 +112,12 @@ class _P2PPaymentMethodVerificationPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodVerificationPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
+                    padding: _p2pPaymentVerificationScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
-                      customGap: AppSpacing.x5,
+                      customGap: AppSpacing.x3,
                       children: [
                         if (_selectedMethodId == null)
                           _MethodChooser(
@@ -175,23 +190,22 @@ class _P2PPaymentMethodVerificationPageState
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
         actions: [
-          TextButton(
+          VitCtaButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(
-              'Hủy',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
+            variant: VitCtaButtonVariant.secondary,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            child: const Text('Hủy'),
           ),
-          TextButton(
+          VitCtaButton(
             key: P2PPaymentMethodVerificationPage.confirmSubmitKey,
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(
-              'Xác nhận',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+            variant: VitCtaButtonVariant.primary,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            child: const Text('Xác nhận'),
           ),
         ],
       ),

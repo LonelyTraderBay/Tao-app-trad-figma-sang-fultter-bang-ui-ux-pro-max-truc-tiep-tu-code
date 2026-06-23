@@ -87,23 +87,23 @@ class _RungTile extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
+          VitIconButton(
             tooltip: rung.autoRenew ? 'Tắt tự gia hạn' : 'Bật tự gia hạn',
+            icon: rung.autoRenew
+                ? Icons.autorenew_rounded
+                : Icons.block_flipped,
             onPressed: onToggleRenew,
-            icon: Icon(
-              rung.autoRenew ? Icons.autorenew_rounded : Icons.block_flipped,
-              color: rung.autoRenew ? AppColors.buy : AppColors.text3,
-              size: AppSpacing.iconSm,
-            ),
+            variant: rung.autoRenew
+                ? VitIconButtonVariant.success
+                : VitIconButtonVariant.transparent,
+            size: VitIconButtonSize.sm,
           ),
-          IconButton(
+          VitIconButton(
             tooltip: 'Xóa bậc',
+            icon: Icons.delete_outline_rounded,
             onPressed: onRemove,
-            icon: const Icon(
-              Icons.delete_outline_rounded,
-              color: AppColors.sell,
-              size: AppSpacing.iconSm,
-            ),
+            variant: VitIconButtonVariant.danger,
+            size: VitIconButtonSize.sm,
           ),
         ],
       ),

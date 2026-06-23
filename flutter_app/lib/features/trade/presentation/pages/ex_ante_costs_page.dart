@@ -22,7 +22,6 @@ part '../widgets/ex_ante_costs_scenarios_actions.dart';
 part '../widgets/ex_ante_costs_common.dart';
 
 const _costBackground = AppColors.bg;
-const _costPanel2 = AppColors.surface2;
 const _costBorder = AppColors.borderSolid;
 const _costPrimary = AppColors.primary;
 const _costGreen = AppColors.buy;

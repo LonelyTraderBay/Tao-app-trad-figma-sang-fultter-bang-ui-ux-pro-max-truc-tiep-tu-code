@@ -128,42 +128,14 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = primary ? AppColors.primary : AppColors.surface3;
-    final fg = primary ? AppColors.text1 : AppColors.text1;
-
-    return Semantics(
-      button: true,
-      label: label,
-      child: Material(
-        color: bg,
-        borderRadius: AppRadii.lgRadius,
-        child: InkWell(
-          borderRadius: AppRadii.lgRadius,
-          onTap: onTap,
-          child: Padding(
-            padding: AppSpacing.earnCardPaddingX3,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, color: fg, size: AppSpacing.iconSm),
-                const SizedBox(width: AppSpacing.x2),
-                Flexible(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
-                      color: fg,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      onPressed: onTap,
+      variant: primary
+          ? VitCtaButtonVariant.primary
+          : VitCtaButtonVariant.secondary,
+      fullWidth: true,
+      leading: Icon(icon),
+      child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 }

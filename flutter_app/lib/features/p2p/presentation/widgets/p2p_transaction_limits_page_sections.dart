@@ -16,7 +16,7 @@ class _TierHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy),
       ),
       child: Padding(
-        padding: AppSpacing.p2pTransactionLimitsCardPadding,
+        padding: _p2pLimitsCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -71,7 +71,7 @@ class _TierHero extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x5),
+            const SizedBox(height: _p2pLimitsMajorGap),
             Row(
               children: [
                 Expanded(
@@ -109,7 +109,7 @@ class _TierMetric extends StatelessWidget {
       color: AppColors.onAccent.withValues(alpha: .18),
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: AppSpacing.p2pTransactionLimitsInnerPadding,
+        padding: _p2pLimitsInnerPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -158,34 +158,25 @@ class _CurrentUsage extends StatelessWidget {
                 ),
               ),
             ),
-            TextButton(
+            VitCtaButton(
               key: P2PTransactionLimitsPage.trackerLinkKey,
               onPressed: () {
                 HapticFeedback.selectionClick();
                 context.go(snapshot.trackerRoute);
               },
-              style: TextButton.styleFrom(
-                foregroundColor: AppModuleAccents.p2p,
-                padding: AppSpacing.p2pTransactionLimitsTrackerPadding,
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Xem chi tiết'),
-                  SizedBox(width: AppSpacing.x1),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    size: AppSpacing.p2pTransactionLimitsTrackerIcon,
-                  ),
-                ],
-              ),
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: AppSpacing.p2pTransactionLimitsTrackerPadding,
+              trailing: const Icon(Icons.chevron_right_rounded),
+              child: const Text('Xem chi tiết'),
             ),
           ],
         ),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pTransactionLimitsCardPadding,
+          padding: _p2pLimitsCardPadding,
           child: Column(
             children: [
               for (var index = 0; index < snapshot.usageItems.length; index++)
@@ -293,7 +284,7 @@ class _LimitDetails extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pLimitsSectionGap),
         VitCard(
           radius: VitCardRadius.lg,
           padding: AppSpacing.zeroInsets,

@@ -9,24 +9,13 @@ class _PresetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Material(
-        color: AppColors.bg,
-        borderRadius: AppRadii.xlRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.xlRadius,
-          child: Padding(
-            padding: AppSpacing.crossModulePresetButtonPadding,
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
+      child: VitChoicePill(
+        label: label,
+        selected: false,
+        onTap: onTap,
+        tone: VitChoicePillTone.neutral,
+        fullWidth: true,
+        padding: AppSpacing.crossModulePresetButtonPadding,
       ),
     );
   }
@@ -201,25 +190,14 @@ class _FormatButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary : AppColors.bg,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        key: TaxReportCenter.formatKey(format),
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: Padding(
-          padding: AppSpacing.crossModuleFormatButtonPadding,
-          child: Text(
-            _formatLabel(format),
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.navCenterIcon : AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      key: TaxReportCenter.formatKey(format),
+      label: _formatLabel(format),
+      selected: selected,
+      onTap: onTap,
+      tone: VitChoicePillTone.primary,
+      fullWidth: true,
+      padding: AppSpacing.crossModuleFormatButtonPadding,
     );
   }
 }
@@ -313,38 +291,21 @@ class _GenerateReportButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: queued ? AppColors.buy : AppColors.primary,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: TaxReportCenter.generateButtonKey,
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: SizedBox(
-          height: AppSpacing.ctaHeight,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                queued
-                    ? Icons.check_circle_outline_rounded
-                    : Icons.description_outlined,
-                color: AppColors.navCenterIcon,
-                size: AppSpacing.iconMd,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                queued
-                    ? '${_formatLabel(format)} Export Queued'
-                    : 'Generate Tax Report',
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.navCenterIcon,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return VitCtaButton(
+      key: TaxReportCenter.generateButtonKey,
+      onPressed: onTap,
+      variant: queued
+          ? VitCtaButtonVariant.success
+          : VitCtaButtonVariant.primary,
+      leading: Icon(
+        queued
+            ? Icons.check_circle_outline_rounded
+            : Icons.description_outlined,
+      ),
+      child: Text(
+        queued
+            ? '${_formatLabel(format)} Export Queued'
+            : 'Generate Tax Report',
       ),
     );
   }

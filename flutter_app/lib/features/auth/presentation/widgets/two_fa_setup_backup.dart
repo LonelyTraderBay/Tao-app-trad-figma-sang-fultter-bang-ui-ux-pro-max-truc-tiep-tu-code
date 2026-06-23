@@ -126,10 +126,12 @@ class _BackupSavedRow extends StatelessWidget {
       button: true,
       checked: saved,
       label: 'Tôi đã lưu các mã dự phòng',
-      child: InkWell(
+      child: VitCard(
         key: TwoFASetupPage.backupSavedKey,
         onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
+        variant: VitCardVariant.ghost,
+        borderColor: AppColors.transparent,
+        padding: EdgeInsets.zero,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

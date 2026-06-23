@@ -129,17 +129,15 @@ class _EventLogCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x2),
-                IconButton(
+                VitIconButton(
                   key: LaunchpadEventLogPage.eventExpandKey(event.id),
-                  visualDensity: VisualDensity.compact,
                   onPressed: onExpand,
-                  icon: Icon(
-                    expanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.launchpadIcon2xl,
-                  ),
+                  icon: expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  tooltip: expanded ? 'Thu gon event' : 'Mo chi tiet event',
+                  variant: VitIconButtonVariant.transparent,
+                  size: VitIconButtonSize.sm,
                 ),
               ],
             ),

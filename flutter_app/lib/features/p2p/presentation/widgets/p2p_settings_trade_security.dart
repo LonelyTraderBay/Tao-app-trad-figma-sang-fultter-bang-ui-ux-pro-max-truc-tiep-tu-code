@@ -28,7 +28,7 @@ class _TradeOptionsCard extends StatelessWidget {
     return VitCard(
       key: P2PSettingsPage.tradeOptionsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pSettingsCardPadding,
+      padding: _p2pSettingsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -154,31 +154,13 @@ class _OptionChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitChoicePill(
       key: P2PSettingsPage.optionKey(group, value),
-      color: selected ? AppColors.primary12 : AppColors.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(
-          color: selected ? AppColors.primary40 : AppColors.transparent,
-        ),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: AppSpacing.p2pSettingsOptionChipPadding,
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: selected ? AppColors.primary : AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
+      label: label,
+      selected: selected,
+      onTap: onTap,
+      padding: AppSpacing.p2pSettingsOptionChipPadding,
+      semanticLabel: '$group $label',
     );
   }
 }
@@ -210,7 +192,7 @@ class _ToggleSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pSettingsHorizontalCardPadding,
+          padding: _p2pSettingsHorizontalCardPadding,
           child: Column(
             children: [
               for (var index = 0; index < toggles.length; index++)
@@ -253,7 +235,7 @@ class _SecuritySection extends StatelessWidget {
         VitCard(
           key: P2PSettingsPage.securityKey,
           radius: VitCardRadius.lg,
-          padding: AppSpacing.p2pSettingsHorizontalCardPadding,
+          padding: _p2pSettingsHorizontalCardPadding,
           child: Column(
             children: [
               for (final toggle in snapshot.securityToggles)
@@ -306,7 +288,7 @@ class _SettingToggleRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pSettingsRowPadding,
+          padding: _p2pSettingsRowPadding,
           child: Row(
             children: [
               _SettingIcon(icon: _settingsIcon(toggle.iconKey), color: color),
@@ -374,54 +356,54 @@ class _NavigationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        HapticFeedback.selectionClick();
-        onTap();
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: AppSpacing.p2pSettingsRowPadding,
-            child: Row(
-              children: [
-                _SettingIcon(icon: icon, color: color),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        label,
-                        style: AppTextStyles.caption.copyWith(
-                          fontWeight: AppTextStyles.bold,
-                        ),
+    return Column(
+      children: [
+        VitCard(
+          onTap: () {
+            HapticFeedback.selectionClick();
+            onTap();
+          },
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          padding: _p2pSettingsRowPadding,
+          child: Row(
+            children: [
+              _SettingIcon(icon: icon, color: color),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: AppTextStyles.bold,
                       ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        description,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      description,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconMd,
-                ),
-              ],
-            ),
+              ),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.iconMd,
+              ),
+            ],
           ),
-          if (!last)
-            const SizedBox(
-              height: AppSpacing.dividerHairline,
-              child: ColoredBox(color: AppColors.divider),
-            ),
-        ],
-      ),
+        ),
+        if (!last)
+          const SizedBox(
+            height: AppSpacing.dividerHairline,
+            child: ColoredBox(color: AppColors.divider),
+          ),
+      ],
     );
   }
 }

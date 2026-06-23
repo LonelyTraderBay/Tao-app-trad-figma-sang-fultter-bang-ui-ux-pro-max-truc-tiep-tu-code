@@ -25,33 +25,24 @@ class _AmountInput extends StatelessWidget {
             Expanded(
               child: Text(
                 'Số tiền',
-                style: AppTextStyles.baseMedium.copyWith(
+                style: AppTextStyles.caption.copyWith(
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
-            Material(
+            VitChoicePill(
               key: P2PWalletTransferPage.maxKey,
-              color: AppModuleAccents.p2p.withValues(alpha: .15),
-              borderRadius: AppRadii.mdRadius,
-              child: InkWell(
-                onTap: onMax,
-                borderRadius: AppRadii.mdRadius,
-                child: Padding(
-                  padding: AppSpacing.p2pWalletTransferChipPadding,
-                  child: Text(
-                    'MAX',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppModuleAccents.p2p,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-              ),
+              label: 'MAX',
+              selected: true,
+              onTap: onMax,
+              accentColor: AppModuleAccents.p2p,
+              height: AppSpacing.buttonCompact,
+              padding: AppSpacing.p2pWalletTransferChipPadding,
+              semanticLabel: 'Chọn số dư tối đa',
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x3),
+        const SizedBox(height: _p2pTransferTightGap),
         VitInput(
           controller: controller,
           fieldKey: P2PWalletTransferPage.amountFieldKey,

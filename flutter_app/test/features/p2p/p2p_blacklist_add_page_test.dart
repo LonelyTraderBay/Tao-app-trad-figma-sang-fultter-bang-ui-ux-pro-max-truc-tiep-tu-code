@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/p2p/data/p2p_repository.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_blacklist_add_page.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_blacklist_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
@@ -116,10 +117,10 @@ void main() {
     await tester.tap(find.byKey(P2PBlacklistAddPage.reasonKey('harassment')));
     await tester.pumpAndSettle();
 
-    final selectedTile = tester.widget<Material>(
+    final selectedTile = tester.widget<VitCard>(
       find.byKey(P2PBlacklistAddPage.reasonKey('harassment')),
     );
-    expect(selectedTile.color, AppColors.accent.withValues(alpha: .08));
+    expect(selectedTile.borderColor, AppColors.accent.withValues(alpha: .46));
   });
 
   testWidgets('SC-276 submit navigates to blacklist route', (tester) async {

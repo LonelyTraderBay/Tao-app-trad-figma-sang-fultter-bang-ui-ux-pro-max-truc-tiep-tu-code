@@ -44,6 +44,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(AddressAddPage.saveKey.finder, findsOneWidget);
+    await tester.ensureVisible(AddressAddPage.saveKey.finder);
+    await tester.pumpAndSettle();
     await tester.tap(AddressAddPage.saveKey.finder);
     await tester.pumpAndSettle();
 
@@ -80,6 +82,8 @@ void main() {
     expect(find.textContaining('Ownership review'), findsOneWidget);
     expect(find.textContaining('Limits:'), findsOneWidget);
 
+    await tester.ensureVisible(P2PPaymentMethodAddPage.saveButtonKey.finder);
+    await tester.pumpAndSettle();
     await tester.tap(P2PPaymentMethodAddPage.saveButtonKey.finder);
     await tester.pumpAndSettle();
 

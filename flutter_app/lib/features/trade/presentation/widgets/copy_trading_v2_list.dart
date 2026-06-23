@@ -76,29 +76,19 @@ class _SortChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadii.xlRadius,
-      child: VitCard(
-        width: _sortChipWidth(label),
+    return SizedBox(
+      width: _sortChipWidth(label),
+      child: VitChoicePill(
+        label: label,
+        selected: active,
+        onTap: onTap,
+        fullWidth: true,
         height: _copySortChipHeight,
-        alignment: Alignment.center,
         padding: AppSpacing.zeroInsets.copyWith(
           left: AppSpacing.walletAssetChartBottomGap,
           right: AppSpacing.walletAssetChartBottomGap,
         ),
-        variant: active ? VitCardVariant.standard : VitCardVariant.inner,
-        borderColor: active ? _copyPrimary : AppColors.cardBorder,
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.onAccent : AppColors.text2,
-              fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-            ),
-          ),
-        ),
+        semanticLabel: 'Sap xep copy trading theo $label',
       ),
     );
   }
@@ -287,32 +277,29 @@ class _DetailsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return VitCard(
       key: CopyTradingV2Page.detailKey(traderId),
       onTap: onOpen,
-      borderRadius: AppRadii.inputRadius,
-      child: VitCard(
-        height: _copyDetailsButtonHeight,
-        alignment: Alignment.center,
-        variant: VitCardVariant.inner,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Xem chi tiết',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            const Icon(
-              Icons.chevron_right_rounded,
+      height: _copyDetailsButtonHeight,
+      alignment: Alignment.center,
+      variant: VitCardVariant.inner,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Xem chi tiết',
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              size: AppSpacing.walletAssetSectionGap,
+              fontWeight: AppTextStyles.bold,
             ),
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text1,
+            size: AppSpacing.walletAssetSectionGap,
+          ),
+        ],
       ),
     );
   }

@@ -103,6 +103,11 @@ final class P2PCreateAdController {
         ? 0.0
         : ((effectivePrice - marketPrice) / marketPrice) * 100;
     final total = _parseP2PNum(draft.totalText);
+    final blockers = _publishBlockers(
+      draft: draft,
+      effectivePrice: effectivePrice,
+      total: total,
+    );
     final typeLabel = draft.adType == P2PTradeType.buy ? 'MUA' : 'BÁN';
     final paymentSummary = draft.selectedPayments.isEmpty
         ? 'Chưa chọn'
@@ -118,8 +123,7 @@ final class P2PCreateAdController {
       marketPrice: marketPrice,
       effectivePrice: effectivePrice,
       priceDiffPercent: priceDiffPercent,
-      canPublish:
-          effectivePrice > 0 && total > 0 && draft.selectedPayments.isNotEmpty,
+      canPublish: blockers.isEmpty,
       typeLabel: typeLabel,
       publishLabel: 'Đăng quảng cáo $typeLabel ${draft.asset}',
       marketPriceLabel: _formatP2PFiat(marketPrice),
@@ -146,11 +150,50 @@ final class P2PCreateAdController {
     return next;
   }
 
+  List<String> publishBlockers(P2PCreateAdDraft draft) {
+    final marketPrice = state.snapshot.marketPrices[draft.asset] ?? 25300;
+    final effectivePrice = _effectivePrice(draft, marketPrice);
+    final total = _parseP2PNum(draft.totalText);
+    return _publishBlockers(
+      draft: draft,
+      effectivePrice: effectivePrice,
+      total: total,
+    );
+  }
+
   int _effectivePrice(P2PCreateAdDraft draft, int marketPrice) {
     if (draft.priceType == 'fixed') {
       return _parseP2PNum(draft.priceText).round();
     }
     final margin = _parseP2PNum(draft.marginText);
     return (marketPrice * (1 + margin / 100)).round();
+  }
+
+  List<String> _publishBlockers({
+    required P2PCreateAdDraft draft,
+    required int effectivePrice,
+    required num total,
+  }) {
+    final blockers = <String>[];
+    final hasExplicitPrice = draft.priceType == 'fixed'
+        ? _parseP2PNum(draft.priceText) > 0
+        : draft.marginText.trim().isNotEmpty && effectivePrice > 0;
+    if (!hasExplicitPrice) {
+      blockers.add(
+        draft.priceType == 'fixed' ? 'Nhap gia' : 'Nhap bien do gia',
+      );
+    }
+    if (total <= 0) {
+      blockers.add('Nhap tong ${draft.asset}');
+    }
+    if (draft.selectedPayments.isEmpty) {
+      blockers.add('Chon phuong thuc thanh toan');
+    }
+    if (state.status == P2PHighRiskFlowStatus.offline) {
+      blockers.add('Ket noi lai truoc khi dang');
+    } else if (state.status.isBusy) {
+      blockers.add('Dang xu ly yeu cau');
+    }
+    return blockers;
   }
 }

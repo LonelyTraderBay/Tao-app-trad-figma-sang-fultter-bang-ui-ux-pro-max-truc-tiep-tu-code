@@ -19,6 +19,7 @@ class WalletAllWalletsTab extends StatelessWidget {
     required this.onSelectWallet,
     required this.onRevealWallet,
     required this.onCopyWallet,
+    required this.onAddWallet,
   });
 
   final WalletMultiManagerSnapshot snapshot;
@@ -28,6 +29,7 @@ class WalletAllWalletsTab extends StatelessWidget {
   final ValueChanged<String> onSelectWallet;
   final ValueChanged<WalletManagerItem> onCopyWallet;
   final ValueChanged<String> onRevealWallet;
+  final VoidCallback onAddWallet;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class WalletAllWalletsTab extends StatelessWidget {
             const SizedBox(height: AppSpacing.walletManagerAllWalletGap),
         ],
         const SizedBox(height: AppSpacing.walletManagerAllAddTopGap),
-        const WalletManagerAddWalletButton(),
+        WalletManagerAddWalletButton(onPressed: onAddWallet),
         const SizedBox(height: AppSpacing.walletManagerAllSecurityTopGap),
         const WalletManagerSecurityNotice(),
       ],

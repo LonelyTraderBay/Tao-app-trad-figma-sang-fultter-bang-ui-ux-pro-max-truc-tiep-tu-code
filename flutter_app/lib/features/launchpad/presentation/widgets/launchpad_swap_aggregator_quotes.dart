@@ -60,102 +60,101 @@ class _DexQuoteCard extends StatelessWidget {
       borderColor: quote.recommended ? AppColors.buy20 : AppColors.cardBorder,
       padding: EdgeInsets.zero,
       clip: true,
-      child: InkWell(
+      child: VitCard(
         key: LaunchpadSwapAggregatorPage.dexToggleKey(quote.id),
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.sm,
+        padding: AppSpacing.launchpadPaddingX4,
         onTap: onToggle,
-        child: Padding(
-          padding: AppSpacing.launchpadPaddingX4,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  _DexLogo(quote: quote),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(
-                          spacing: AppSpacing.x2,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            Text(
-                              quote.name,
-                              style: AppTextStyles.base.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                            if (quote.recommended) const _BestPill(),
-                          ],
-                        ),
-                        Text(
-                          quote.estimatedTime,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                _DexLogo(quote: quote),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        output.toStringAsFixed(4),
-                        style: AppTextStyles.base.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+                      Wrap(
+                        spacing: AppSpacing.x2,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            quote.name,
+                            style: AppTextStyles.base.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                          if (quote.recommended) const _BestPill(),
+                        ],
                       ),
                       Text(
-                        '~\$${amount.toStringAsFixed(0)}',
+                        quote.estimatedTime,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.x3),
-              Row(
-                children: [
-                  _Metric(
-                    label: 'Price Impact',
-                    value: '${quote.priceImpact.toStringAsFixed(2)}%',
-                    color: impactColor,
-                    align: TextAlign.start,
-                  ),
-                  _Metric(
-                    label: 'Gas Fee',
-                    value: '\$${quote.gas.toStringAsFixed(0)}',
-                    color: AppColors.text1,
-                    align: TextAlign.center,
-                  ),
-                  _Metric(
-                    label: 'Liquidity',
-                    value:
-                        '\$${(quote.liquidity / 1000000).toStringAsFixed(1)}M',
-                    color: AppColors.text1,
-                    align: TextAlign.end,
-                  ),
-                ],
-              ),
-              if (expanded) ...[
-                const SizedBox(height: AppSpacing.x3),
-                _RouteDetails(quote: quote),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      output.toStringAsFixed(4),
+                      style: AppTextStyles.base.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      '~\$${amount.toStringAsFixed(0)}',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
               ],
-              const SizedBox(height: AppSpacing.x1),
-              Icon(
-                expanded
-                    ? Icons.keyboard_arrow_up_rounded
-                    : Icons.keyboard_arrow_down_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.launchpadIcon2xl,
-              ),
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            Row(
+              children: [
+                _Metric(
+                  label: 'Price Impact',
+                  value: '${quote.priceImpact.toStringAsFixed(2)}%',
+                  color: impactColor,
+                  align: TextAlign.start,
+                ),
+                _Metric(
+                  label: 'Gas Fee',
+                  value: '\$${quote.gas.toStringAsFixed(0)}',
+                  color: AppColors.text1,
+                  align: TextAlign.center,
+                ),
+                _Metric(
+                  label: 'Liquidity',
+                  value: '\$${(quote.liquidity / 1000000).toStringAsFixed(1)}M',
+                  color: AppColors.text1,
+                  align: TextAlign.end,
+                ),
+              ],
+            ),
+            if (expanded) ...[
+              const SizedBox(height: AppSpacing.x3),
+              _RouteDetails(quote: quote),
             ],
-          ),
+            const SizedBox(height: AppSpacing.x1),
+            Icon(
+              expanded
+                  ? Icons.keyboard_arrow_up_rounded
+                  : Icons.keyboard_arrow_down_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.launchpadIcon2xl,
+            ),
+          ],
         ),
       ),
     );

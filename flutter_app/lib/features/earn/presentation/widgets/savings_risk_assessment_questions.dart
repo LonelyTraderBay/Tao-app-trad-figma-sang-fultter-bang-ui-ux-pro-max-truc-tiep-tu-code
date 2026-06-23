@@ -191,64 +191,59 @@ class _RiskOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return KeyedSubtree(
+    return VitCard(
       key: semanticKey,
-      child: Material(
-        color: selected ? AppColors.primary12 : AppColors.surface2,
-        borderRadius: AppRadii.lgRadius,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.lgRadius,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: selected ? AppColors.primary : AppColors.borderSolid,
-                ),
-                borderRadius: AppRadii.lgRadius,
-              ),
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.lg,
+      onTap: onTap,
+      clip: true,
+      padding: AppSpacing.earnCardPaddingX3,
+      background: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: selected ? AppColors.primary12 : AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: selected ? AppColors.primary : AppColors.borderSolid,
             ),
-            child: Padding(
-              padding: AppSpacing.earnCardPaddingX3,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _OptionMarker(value: option.value, selected: selected),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          option.label,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        if (option.description != null) ...[
-                          const SizedBox(height: AppSpacing.x1),
-                          Text(
-                            option.description!,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text3,
-                              height: AppTextStyles.caption.height,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
-              ),
-            ),
+            borderRadius: AppRadii.lgRadius,
           ),
         ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _OptionMarker(value: option.value, selected: selected),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  option.label,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                if (option.description != null) ...[
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    option.description!,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
+                      height: AppTextStyles.caption.height,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconMd,
+          ),
+        ],
       ),
     );
   }

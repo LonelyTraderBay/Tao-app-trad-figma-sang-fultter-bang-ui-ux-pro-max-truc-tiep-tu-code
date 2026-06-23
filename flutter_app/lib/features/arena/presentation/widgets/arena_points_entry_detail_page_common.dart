@@ -24,12 +24,13 @@ class _LinkedRow extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ),
-          InkWell(
+          VitCard(
             onTap: () {
               HapticFeedback.selectionClick();
               onTap();
             },
-            borderRadius: AppRadii.smRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
             child: Padding(
               padding: AppSpacing.arenaPointsEntryLinkPadding,
               child: Row(

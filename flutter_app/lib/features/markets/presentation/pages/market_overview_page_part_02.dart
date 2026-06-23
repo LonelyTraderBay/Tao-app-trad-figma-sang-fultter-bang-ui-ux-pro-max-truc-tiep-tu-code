@@ -210,10 +210,13 @@ class _MoverListCard extends StatelessWidget {
       density: VitDensity.compact,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
             key: headerKey,
             onTap: () => context.go(AppRoutePaths.marketsMovers),
-            borderRadius: AppRadii.smRadius,
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: EdgeInsets.zero,
+            borderColor: AppColors.transparent,
             child: Padding(
               padding: AppSpacing.marketOverviewMoverHeaderPadding,
               child: Row(
@@ -350,10 +353,13 @@ class _SectorPerformance extends StatelessWidget {
                     '${AppRoutePaths.marketsSectors}?id=${sector.id}',
                   ),
                 ),
-              InkWell(
+              VitCard(
                 key: MarketOverviewPage.allSectorsKey,
                 onTap: () => context.go(AppRoutePaths.marketsSectors),
-                borderRadius: AppRadii.smRadius,
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                padding: EdgeInsets.zero,
+                borderColor: AppColors.transparent,
                 child: Padding(
                   padding: AppSpacing.marketOverviewSectorActionPadding,
                   child: Row(
@@ -395,8 +401,12 @@ class _SectorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = sector.change24h >= 0;
     final color = positive ? AppColors.buy : AppColors.sell;
-    return InkWell(
+    return VitCard(
       onTap: onTap,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
+      borderColor: AppColors.transparent,
       child: Column(
         children: [
           Padding(

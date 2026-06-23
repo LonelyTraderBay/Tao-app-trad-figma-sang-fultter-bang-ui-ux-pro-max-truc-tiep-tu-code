@@ -16,6 +16,22 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
+const double _p2pComplianceVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pComplianceNativeNavClearance =
+    _p2pComplianceVisualNavClearance - AppSpacing.x4;
+const double _p2pComplianceVisualClearance = AppSpacing.x3;
+const double _p2pComplianceNativeClearance = AppSpacing.x2;
+const double _p2pComplianceIconBox = AppSpacing.x6;
+const double _p2pComplianceDividerHeight = AppSpacing.dividerHairline;
+const EdgeInsets _p2pComplianceScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pComplianceCompactPadding = EdgeInsets.all(AppSpacing.x2);
+
 class P2PComplianceOverviewPage extends ConsumerWidget {
   const P2PComplianceOverviewPage({super.key, this.shellRenderMode});
 
@@ -30,12 +46,11 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(p2pComplianceOverviewProvider);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pComplianceBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pComplianceBottomInsetNative) +
+            ? _p2pComplianceVisualNavClearance + _p2pComplianceVisualClearance
+            : _p2pComplianceNativeNavClearance +
+                  _p2pComplianceNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -60,7 +75,9 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
+                    padding: _p2pComplianceScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -82,7 +99,7 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                         _ComplianceChecklist(items: snapshot.items),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pComplianceCompactCardPadding,
+                          padding: _p2pComplianceCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Compliance checklist review',
@@ -190,7 +207,7 @@ class _ComplianceChecklist extends StatelessWidget {
             _ComplianceRow(item: items[index]),
             if (index != items.length - 1)
               const Divider(
-                height: AppSpacing.p2pComplianceDividerHeight,
+                height: _p2pComplianceDividerHeight,
                 color: AppColors.borderSolid,
               ),
           ],
@@ -207,70 +224,65 @@ class _ComplianceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.transparent,
-      child: InkWell(
-        key: P2PComplianceOverviewPage.itemKey(item.id),
-        onTap: () {
-          HapticFeedback.selectionClick();
-          context.go(item.route);
-        },
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
+    return VitCard(
+      key: P2PComplianceOverviewPage.itemKey(item.id),
+      onTap: () {
+        HapticFeedback.selectionClick();
+        context.go(item.route);
+      },
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
+      child: Row(
+        children: [
+          Material(
+            color: AppColors.buy15,
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadii.lgRadius,
+            ),
+            child: SizedBox(
+              width: _p2pComplianceIconBox,
+              height: _p2pComplianceIconBox,
+              child: Icon(
+                _iconFor(item.iconKey),
+                color: AppColors.buy,
+                size: AppSpacing.iconSm,
+              ),
+            ),
           ),
-          child: Row(
-            children: [
-              Material(
-                color: AppColors.buy15,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.lgRadius,
-                ),
-                child: SizedBox(
-                  width: AppSpacing.x6,
-                  height: AppSpacing.x6,
-                  child: Icon(
-                    _iconFor(item.iconKey),
-                    color: AppColors.buy,
-                    size: AppSpacing.iconSm,
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      item.value,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  item.value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.iconMd,
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          const SizedBox(width: AppSpacing.x3),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.text3,
+            size: AppSpacing.iconMd,
+          ),
+        ],
       ),
     );
   }

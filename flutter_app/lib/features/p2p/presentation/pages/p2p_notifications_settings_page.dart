@@ -16,6 +16,25 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
+const double _p2pNotificationsVisualClearance = AppSpacing.x3;
+const double _p2pNotificationsNativeClearance = AppSpacing.x2;
+const double _p2pNotificationsTitleLineHeight = 1.1;
+const double _p2pNotificationsDividerExtent = AppSpacing.dividerHairline;
+const EdgeInsets _p2pNotificationsCardPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsetsGeometry _p2pNotificationsChannelPadding =
+    EdgeInsetsDirectional.symmetric(
+      horizontal: AppSpacing.x2,
+      vertical: AppSpacing.x3,
+    );
+
+EdgeInsets _p2pNotificationsScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
+
 class P2PNotificationsSettingsPage extends ConsumerStatefulWidget {
   const P2PNotificationsSettingsPage({super.key, this.shellRenderMode});
 
@@ -41,12 +60,11 @@ class _P2PNotificationsSettingsPageState
     final snapshot = ref.watch(p2pNotificationSettingsProvider);
     _ensureState(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pNotificationBottomInsetVisual
+            ? DeviceMetrics.bottomChrome + _p2pNotificationsVisualClearance
             : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pNotificationBottomInsetNative) +
+                  _p2pNotificationsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -71,7 +89,7 @@ class _P2PNotificationsSettingsPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pComplianceScrollPadding(bottomInset),
+                    padding: _p2pNotificationsScrollPadding(scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -129,7 +147,7 @@ class _Hero extends StatelessWidget {
       key: P2PNotificationsSettingsPage.heroKey,
       radius: VitCardRadius.md,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pComplianceCompactCardPadding,
+      padding: _p2pNotificationsCardPadding,
       child: Row(
         children: [
           const Material(
@@ -155,7 +173,7 @@ class _Hero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.primary,
-                    height: AppSpacing.p2pComplianceTitleLineHeight,
+                    height: _p2pNotificationsTitleLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
@@ -203,7 +221,7 @@ class _SettingsCard extends StatelessWidget {
             if (index != snapshot.settings.length - 1)
               const Divider(
                 color: AppColors.borderSolid,
-                height: AppSpacing.p2pComplianceDividerHeight,
+                height: _p2pNotificationsDividerExtent,
               ),
           ],
         ],
@@ -226,7 +244,7 @@ class _SettingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pComplianceCompactCardPadding,
+      padding: _p2pNotificationsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -281,38 +299,16 @@ class _ChannelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? AppColors.buy : AppColors.text3;
-    return Material(
+    return VitChoicePill(
       key: P2PNotificationsSettingsPage.channelKey(settingId, channel.id),
-      color: selected ? AppColors.buy10 : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: BorderSide(color: selected ? AppColors.buy : AppColors.border),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.inputRadius,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x2,
-            vertical: AppSpacing.x3,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(channel.icon, color: color, size: AppSpacing.iconSm),
-              const SizedBox(height: AppSpacing.x1),
-              Text(
-                channel.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      label: channel.label,
+      selected: selected,
+      onTap: onTap,
+      tone: VitChoicePillTone.success,
+      height: AppSpacing.buttonCompact + AppSpacing.x4,
+      padding: _p2pNotificationsChannelPadding,
+      leading: Icon(channel.icon),
+      semanticLabel: '${channel.label} notifications',
     );
   }
 }

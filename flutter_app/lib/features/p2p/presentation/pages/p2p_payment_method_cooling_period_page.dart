@@ -17,6 +17,19 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
+const double _p2pPaymentCoolingVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pPaymentCoolingNativeNavClearance =
+    _p2pPaymentCoolingVisualNavClearance - AppSpacing.x4;
+const double _p2pPaymentCoolingVisualClearance = AppSpacing.x3;
+const double _p2pPaymentCoolingNativeClearance = AppSpacing.x2;
+const EdgeInsets _p2pPaymentCoolingScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x2,
+  AppSpacing.contentPad,
+  0,
+);
+
 class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
   const P2PPaymentMethodCoolingPeriodPage({super.key, this.shellRenderMode});
 
@@ -31,12 +44,12 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
     );
     final snapshot = controller.state.snapshot;
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pPaymentBottomInsetNative) +
+            ? _p2pPaymentCoolingVisualNavClearance +
+                  _p2pPaymentCoolingVisualClearance
+            : _p2pPaymentCoolingNativeNavClearance +
+                  _p2pPaymentCoolingNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -61,10 +74,12 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodCoolingPeriodPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentScrollPadding(bottomInset),
+                    padding: _p2pPaymentCoolingScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
-                      customGap: AppSpacing.x5,
+                      customGap: AppSpacing.x3,
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,11 +88,11 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                               daysLeft: controller.daysLeft,
                               hoursLeft: controller.hoursLeft,
                             ),
-                            const SizedBox(height: AppSpacing.x4),
+                            const SizedBox(height: AppSpacing.x3),
                             _TimelineCard(snapshot: snapshot),
-                            const SizedBox(height: AppSpacing.x5),
+                            const SizedBox(height: AppSpacing.x3),
                             _ReasonCard(reasons: snapshot.reasons),
-                            const SizedBox(height: AppSpacing.x5),
+                            const SizedBox(height: AppSpacing.x3),
                             _WaitingNote(
                               title: snapshot.waitTitle,
                               message: snapshot.waitMessage,
@@ -157,14 +172,14 @@ class _CoolingHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Material(
             color: AppColors.warn15,
             shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.mdRadius,
             ),
             child: Padding(
-              padding: AppSpacing.p2pPaymentCountdownPadding,
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
               child: Column(
                 children: [
                   Text(
@@ -204,7 +219,7 @@ class _TimelineCard extends StatelessWidget {
           Expanded(
             child: _TimeBlock(label: 'Thêm lúc', value: snapshot.addedAt),
           ),
-          const SizedBox(width: AppSpacing.x4),
+          const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: _TimeBlock(
               label: 'Sẵn sàng lúc',
@@ -280,7 +295,7 @@ class _ReasonCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          for (final reason in reasons) ...[
+          for (var index = 0; index < reasons.length; index++) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -292,7 +307,7 @@ class _ReasonCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
                   child: Text(
-                    reason,
+                    reasons[index],
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                     ),
@@ -300,7 +315,8 @@ class _ReasonCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.x2),
+            if (index != reasons.length - 1)
+              const SizedBox(height: AppSpacing.x2),
           ],
         ],
       ),

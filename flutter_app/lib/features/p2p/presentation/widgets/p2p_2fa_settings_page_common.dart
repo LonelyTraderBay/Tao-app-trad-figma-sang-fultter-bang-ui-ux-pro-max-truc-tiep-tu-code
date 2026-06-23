@@ -12,7 +12,7 @@ class _SecurityRecommendation extends StatelessWidget {
       radius: VitCardRadius.md,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pSecurityDetailsInnerPadding,
+      padding: _p2pTwoFactorInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,7 +38,7 @@ class _SecurityRecommendation extends StatelessWidget {
                   text,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pSecurityDetailsCaptionLineHeight,
+                    height: _p2pTwoFactorCaptionLineHeight,
                   ),
                 ),
               ],
@@ -73,7 +73,7 @@ class _IconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.p2pSecurityDetailsMethodIconBox,
+      dimension: _p2pTwoFactorMethodIconBox,
       child: Material(
         type: MaterialType.transparency,
         color: color.withValues(alpha: .12),
@@ -127,7 +127,7 @@ class _InlineNotice extends StatelessWidget {
                 text,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.p2pSecurityDetailsNoticeLineHeight,
+                  height: _p2pTwoFactorNoticeLineHeight,
                 ),
               ),
             ),

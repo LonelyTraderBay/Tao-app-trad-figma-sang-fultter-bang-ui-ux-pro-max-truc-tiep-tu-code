@@ -16,16 +16,19 @@ class MarketListHeader extends StatelessWidget {
       actions: [
         VitHeaderActionItem(
           type: VitHeaderActionType.overview,
+          size: VitHeaderActionSize.sm,
           tooltip: 'T\u1ED5ng quan th\u1ECB tr\u01B0\u1EDDng',
           onPressed: () => onNavigate('/markets/overview'),
         ),
         VitHeaderActionItem(
           type: VitHeaderActionType.analytics,
+          size: VitHeaderActionSize.sm,
           tooltip: 'Bi\u1EBFn \u0111\u1ED9ng',
           onPressed: () => onNavigate('/markets/movers'),
         ),
         VitHeaderActionItem(
           type: VitHeaderActionType.sectors,
+          size: VitHeaderActionSize.sm,
           tooltip: 'Ng\u00E0nh',
           onPressed: () => onNavigate('/markets/sectors'),
         ),

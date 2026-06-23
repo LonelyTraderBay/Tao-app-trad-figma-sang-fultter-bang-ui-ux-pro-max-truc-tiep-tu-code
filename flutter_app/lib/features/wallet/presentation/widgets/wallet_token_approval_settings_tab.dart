@@ -14,6 +14,7 @@ class WalletTokenApprovalSettingsTab extends StatelessWidget {
     required this.warnUnlimited,
     required this.onAutoRevoke,
     required this.onWarnUnlimited,
+    required this.onScanRisk,
     super.key,
   });
 
@@ -21,6 +22,7 @@ class WalletTokenApprovalSettingsTab extends StatelessWidget {
   final bool warnUnlimited;
   final VoidCallback onAutoRevoke;
   final VoidCallback onWarnUnlimited;
+  final VoidCallback onScanRisk;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,8 @@ class WalletTokenApprovalSettingsTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.walletTokenNoticeGap),
         VitCtaButton(
-          onPressed: () {},
+          key: const Key('sc150_token_approval_scan_risky'),
+          onPressed: onScanRisk,
           height: AppSpacing.walletTokenScanButtonHeight,
           child: const Text('Scan for Risky Approvals'),
         ),
@@ -71,52 +74,51 @@ class WalletTokenApprovalSettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.cardPadding,
-      borderColor: walletTokenApprovalBorder,
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
+    return Semantics(
+      button: true,
+      selected: enabled,
+      label: '$title setting',
+      value: enabled ? 'Enabled' : 'Disabled',
+      child: VitCard(
+        padding: AppSpacing.cardPadding,
+        borderColor: walletTokenApprovalBorder,
+        onTap: onTap,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: AppSpacing.walletAddressSectionGap),
-                Text(
-                  description,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ),
-          Semantics(
-            button: true,
-            selected: enabled,
-            label: '$title setting',
-            value: enabled ? 'Enabled' : 'Disabled',
-            child: GestureDetector(
-              onTap: onTap,
-              behavior: HitTestBehavior.opaque,
-              child: VitTogglePill(
-                enabled: enabled,
-                width: AppSpacing.walletAddressSwitchWidth,
-                height: AppSpacing.walletAddressSwitchHeight,
-                knobSize: AppSpacing.walletTokenSwitchKnob,
-                knobMargin: AppSpacing.walletTokenSwitchPadding,
-                activeColor: walletTokenApprovalPrimary,
-                inactiveColor: AppColors.surface3,
-                inactiveKnobColor: AppColors.onAccent,
-                duration: const Duration(milliseconds: 150),
+                  const SizedBox(height: AppSpacing.walletAddressSectionGap),
+                  Text(
+                    description,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text3,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            VitTogglePill(
+              enabled: enabled,
+              width: AppSpacing.walletAddressSwitchWidth,
+              height: AppSpacing.walletAddressSwitchHeight,
+              knobSize: AppSpacing.walletTokenSwitchKnob,
+              knobMargin: AppSpacing.walletTokenSwitchPadding,
+              activeColor: walletTokenApprovalPrimary,
+              inactiveColor: AppColors.surface3,
+              inactiveKnobColor: AppColors.onAccent,
+              duration: const Duration(milliseconds: 150),
+            ),
+          ],
+        ),
       ),
     );
   }

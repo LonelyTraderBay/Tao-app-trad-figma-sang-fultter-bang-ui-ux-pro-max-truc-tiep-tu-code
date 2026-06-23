@@ -246,12 +246,12 @@ class _RouteConfirmOverlay extends StatelessWidget {
                               ),
                             ),
                           ),
-                          IconButton(
+                          VitIconButton(
                             onPressed: onClose,
-                            icon: const Icon(
-                              Icons.close_rounded,
-                              color: AppColors.text2,
-                            ),
+                            icon: Icons.close_rounded,
+                            tooltip: 'Dong xac nhan route',
+                            variant: VitIconButtonVariant.transparent,
+                            size: VitIconButtonSize.md,
                           ),
                         ],
                       ),

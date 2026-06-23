@@ -167,44 +167,13 @@ class _PortfolioTabs extends StatelessWidget {
       runSpacing: AppSpacing.x3,
       children: [
         for (final tab in _PortfolioTab.values)
-          InkWell(
+          VitChoicePill(
             key: LaunchpadPortfolioPage.tabKey(tab.id),
+            label: tab.label,
+            selected: tab == activeTab,
             onTap: () => onChanged(tab),
-            borderRadius: AppRadii.inputRadius,
-            child: TweenAnimationBuilder<Color?>(
-              duration: const Duration(milliseconds: 160),
-              tween: ColorTween(
-                end: tab == activeTab
-                    ? AppColors.primary12
-                    : AppColors.surface2,
-              ),
-              builder: (context, color, child) {
-                return DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: color,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.inputRadius,
-                      side: BorderSide(
-                        color: tab == activeTab
-                            ? AppColors.primary30
-                            : AppColors.cardBorder,
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: AppSpacing.launchpadActionButtonPadding,
-                    child: child,
-                  ),
-                );
-              },
-              child: Text(
-                tab.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: tab == activeTab ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
+            accentColor: AppColors.primary,
+            padding: AppSpacing.launchpadActionButtonPadding,
           ),
       ],
     );

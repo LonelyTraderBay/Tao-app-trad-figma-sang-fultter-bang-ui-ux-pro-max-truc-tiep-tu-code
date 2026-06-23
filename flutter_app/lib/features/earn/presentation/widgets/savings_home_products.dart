@@ -72,34 +72,12 @@ class _SavingsFilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: selected ? AppColors.primary12 : AppColors.surface2,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: Padding(
-          padding: AppSpacing.earnCardPaddingX3X2,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                _filterIcon(filter),
-                color: selected ? AppColors.primary : AppColors.text2,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                _filterLabel(filter),
-                style: AppTextStyles.caption.copyWith(
-                  color: selected ? AppColors.primary : AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: _filterLabel(filter),
+      selected: selected,
+      onTap: onTap,
+      leading: Icon(_filterIcon(filter)),
+      padding: AppSpacing.earnCardPaddingX3X2,
     );
   }
 }
@@ -254,13 +232,17 @@ class _SavingsProductCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
-              TextButton.icon(
+              VitCtaButton(
                 key: product.id == 'sav001'
                     ? SavingsPage.productDetailButtonKey
                     : null,
                 onPressed: () => context.go(detailRoute),
-                icon: const Icon(Icons.chevron_right_rounded),
-                label: const Text('Chi tiết'),
+                variant: VitCtaButtonVariant.secondary,
+                fullWidth: false,
+                height: AppSpacing.savingsConsumerActionHeight,
+                padding: AppSpacing.earnHorizontalPaddingX4,
+                trailing: const Icon(Icons.chevron_right_rounded),
+                child: const Text('Chi tiết'),
               ),
               const Spacer(),
               VitCtaButton(

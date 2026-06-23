@@ -38,6 +38,50 @@ void main() {
     expect(preview.riskReviewLabel, snapshot.warningNote);
     expect(preview.escrowReviewLabel, snapshot.escrowNote);
 
+    expect(
+      controller.publishBlockers(
+        const P2PCreateAdDraft(
+          adType: P2PTradeType.sell,
+          asset: 'USDT',
+          currency: 'VND',
+          priceType: 'fixed',
+          paymentWindow: 30,
+          tradingHours: '24/7',
+          requireKyc: false,
+          requiredKycLevel: '1',
+          selectedPayments: {},
+          priceText: '',
+          marginText: '',
+          totalText: '',
+          minLimitText: '',
+          maxLimitText: '',
+        ),
+      ),
+      ['Nhap gia', 'Nhap tong USDT', 'Chon phuong thuc thanh toan'],
+    );
+
+    expect(
+      controller.publishBlockers(
+        const P2PCreateAdDraft(
+          adType: P2PTradeType.buy,
+          asset: 'USDT',
+          currency: 'VND',
+          priceType: 'floating',
+          paymentWindow: 15,
+          tradingHours: '24/7',
+          requireKyc: false,
+          requiredKycLevel: '1',
+          selectedPayments: {'Momo'},
+          priceText: '',
+          marginText: '',
+          totalText: '50',
+          minLimitText: '',
+          maxLimitText: '',
+        ),
+      ),
+      ['Nhap bien do gia'],
+    );
+
     final floatingPreview = controller.preview(
       const P2PCreateAdDraft(
         adType: P2PTradeType.buy,

@@ -10,7 +10,7 @@ class _DepthChartCard extends StatelessWidget {
     return VitCard(
       key: P2POrderBookPage.depthChartKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: _p2pOrderBookCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -25,13 +25,13 @@ class _DepthChartCard extends StatelessWidget {
                 ),
               ),
               const _LegendDot(color: AppColors.buy, label: 'Mua'),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: _p2pOrderBookSectionGap),
               const _LegendDot(color: AppColors.sell, label: 'Bán'),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: _p2pOrderBookSectionGap),
           SizedBox(
-            height: AppSpacing.p2pMarketplaceAnalyticsDepthChartHeight,
+            height: _p2pOrderBookDepthChartExtent,
             child: CustomPaint(painter: _DepthChartPainter(snapshot)),
           ),
         ],
@@ -54,8 +54,8 @@ class _LegendDot extends StatelessWidget {
           color: color,
           borderRadius: AppRadii.xsRadius,
           child: const SizedBox(
-            width: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
-            height: AppSpacing.p2pMarketplaceAnalyticsLegendDot,
+            width: _p2pOrderBookLegendDot,
+            height: _p2pOrderBookLegendDot,
           ),
         ),
         const SizedBox(width: AppSpacing.x1),
@@ -87,7 +87,7 @@ class _BestPriceCards extends StatelessWidget {
             tone: AppColors.buy,
           ),
         ),
-        const SizedBox(width: AppSpacing.x3),
+        const SizedBox(width: _p2pOrderBookSectionGap),
         Expanded(
           child: _BestPriceCard(
             title: 'ASK THẤP NHẤT',
@@ -123,17 +123,13 @@ class _BestPriceCard extends StatelessWidget {
       radius: VitCardRadius.lg,
       variant: VitCardVariant.inner,
       borderColor: tone.withValues(alpha: .28),
-      padding: AppSpacing.p2pMarketplaceAnalyticsCardPadding,
+      padding: _p2pOrderBookCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                color: tone,
-                size: AppSpacing.p2pMarketplaceAnalyticsSmallIcon,
-              ),
+              Icon(icon, color: tone, size: _p2pOrderBookSmallIcon),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
@@ -148,7 +144,7 @@ class _BestPriceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pOrderBookSectionGap),
           Text(
             _formatVnd(entry.priceVnd),
             overflow: TextOverflow.ellipsis,
@@ -157,12 +153,12 @@ class _BestPriceCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pOrderBookSectionGap),
           _MiniLine(
             label: 'Volume',
             value: '${_formatVolume(entry.volume)} $asset',
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pOrderBookSectionGap),
           _MiniLine(label: 'Lệnh', value: '${entry.orders}'),
         ],
       ),
@@ -221,7 +217,7 @@ class _OrderBookLists extends StatelessWidget {
             tone: AppColors.buy,
           ),
         ),
-        const SizedBox(width: AppSpacing.x3),
+        const SizedBox(width: _p2pOrderBookSectionGap),
         Expanded(
           child: _OrderBookSide(
             title: 'BÁN (ASK)',
@@ -252,7 +248,7 @@ class _OrderBookSide extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: _p2pOrderBookCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -287,7 +283,7 @@ class _OrderBookRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final widthFactor = (entry.total / maxTotal).clamp(.08, 1.0).toDouble();
     return SizedBox(
-      height: AppSpacing.p2pMarketplaceAnalyticsOrderRowHeight,
+      height: _p2pOrderBookOrderRowExtent,
       child: Stack(
         children: [
           Align(
@@ -302,7 +298,7 @@ class _OrderBookRow extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: AppSpacing.p2pMarketplaceAnalyticsOrderRowPadding,
+            padding: _p2pOrderBookRowPadding,
             child: Row(
               children: [
                 Text(

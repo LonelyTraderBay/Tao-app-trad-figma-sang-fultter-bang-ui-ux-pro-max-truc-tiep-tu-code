@@ -12,13 +12,38 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_insurance_certificate_page_sections.dart';
 part '../widgets/p2p_insurance_certificate_page_common.dart';
+
+const double _p2pInsuranceVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pInsuranceNativeNavClearance =
+    _p2pInsuranceVisualNavClearance - AppSpacing.x4;
+const double _p2pInsuranceVisualClearance = AppSpacing.x3;
+const double _p2pInsuranceNativeClearance = AppSpacing.x2;
+const double _p2pInsuranceSectionGap = AppSpacing.x3;
+const double _p2pInsuranceTightGap = AppSpacing.x2;
+const double _p2pInsuranceHeroIconBox = AppSpacing.x7;
+const double _p2pInsuranceBodyLineHeight = 1.35;
+const EdgeInsets _p2pInsuranceScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+const EdgeInsets _p2pInsuranceLargePadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pInsuranceCardPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pInsuranceHeroPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pInsuranceDividerBottomPadding = EdgeInsets.only(
+  bottom: AppSpacing.x2,
+);
+const EdgeInsets _p2pInsuranceBulletTopPadding = EdgeInsets.only(
+  top: AppSpacing.x2,
+);
 
 class P2PInsuranceCertificatePage extends ConsumerStatefulWidget {
   const P2PInsuranceCertificatePage({super.key, this.shellRenderMode});
@@ -42,10 +67,10 @@ class _P2PInsuranceCertificatePageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pInsuranceCertificateProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pInsuranceVisualNavClearance + _p2pInsuranceVisualClearance
+            : _p2pInsuranceNativeNavClearance + _p2pInsuranceNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -70,7 +95,9 @@ class _P2PInsuranceCertificatePageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDocumentScrollPadding(bottomInset),
+                    padding: _p2pInsuranceScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -81,25 +108,20 @@ class _P2PInsuranceCertificatePageState
                           },
                         ),
                         if (_feedback != null) ...[
-                          const SizedBox(height: AppSpacing.x4),
+                          const SizedBox(height: _p2pInsuranceSectionGap),
                           _FeedbackBanner(message: _feedback!),
                         ],
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pInsuranceSectionGap),
                         _CertificateCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pInsuranceSectionGap),
                         _DisclosureCard(snapshot: snapshot),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Insurance certificate state review',
-                              message:
-                                  'Certificate identity, coverage disclosure, download and share feedback, and policy limits remain visible before exporting P2P insurance proof.',
-                              contractId: 'SC-239',
-                            ),
-                          ],
+                        const SizedBox(height: _p2pInsuranceTightGap),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Insurance certificate state review',
+                          message:
+                              'Certificate identity, coverage disclosure, download and share feedback, and policy limits remain visible before exporting P2P insurance proof.',
+                          contractId: 'SC-239',
                         ),
                       ],
                     ),

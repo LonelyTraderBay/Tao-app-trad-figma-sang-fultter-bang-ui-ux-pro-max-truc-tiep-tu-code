@@ -11,13 +11,31 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_tax_reporting_page_sections.dart';
 part '../widgets/p2p_tax_reporting_page_common.dart';
+
+const double _p2pTaxVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pTaxNativeNavClearance =
+    _p2pTaxVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
+const double _p2pTaxVisualClearance = AppSpacing.x3;
+const double _p2pTaxNativeClearance = AppSpacing.x2;
+const double _p2pTaxMajorGap = AppSpacing.x3;
+const double _p2pTaxSectionGap = AppSpacing.x2;
+const double _p2pTaxIconBox = AppSpacing.searchBarCompactHeight;
+const double _p2pTaxNoticeLineHeight = 1.35;
+const EdgeInsets _p2pTaxCardPadding = EdgeInsets.all(AppSpacing.x3);
+
+EdgeInsets _p2pTaxScrollPadding(double scrollEndPadding) => EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  scrollEndPadding,
+);
 
 class P2PTaxReportingPage extends ConsumerStatefulWidget {
   const P2PTaxReportingPage({
@@ -66,10 +84,10 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
       )),
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pTaxVisualNavClearance + _p2pTaxVisualClearance
+            : _p2pTaxNativeNavClearance + _p2pTaxNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -94,14 +112,12 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDocumentScrollPadding(bottomInset),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      customGap: 0,
+                    padding: _p2pTaxScrollPadding(scrollEndPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _TaxHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pTaxMajorGap),
                         _YearSelector(
                           years: snapshot.years,
                           selectedYear: _selectedYear,
@@ -110,7 +126,7 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                             setState(() => _selectedYear = year);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pTaxMajorGap),
                         _JurisdictionSelector(
                           jurisdictions: snapshot.jurisdictions,
                           selectedCode: _jurisdiction,
@@ -119,13 +135,13 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                             setState(() => _jurisdiction = code);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x6),
+                        const SizedBox(height: _p2pTaxMajorGap),
                         _TaxSummary(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x6),
+                        const SizedBox(height: _p2pTaxMajorGap),
                         _TaxDocuments(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pTaxMajorGap),
                         _TaxDisclaimer(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pTaxMajorGap),
                         VitCtaButton(
                           key: P2PTaxReportingPage.detailCtaKey,
                           onPressed: () {

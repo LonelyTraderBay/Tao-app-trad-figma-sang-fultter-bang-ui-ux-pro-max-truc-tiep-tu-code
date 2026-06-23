@@ -21,6 +21,44 @@ part '../widgets/p2p_wallet_transfer_form.dart';
 part '../widgets/p2p_wallet_transfer_amount.dart';
 part '../widgets/p2p_wallet_transfer_confirm.dart';
 
+const _p2pTransferScrollTopGap = AppSpacing.x3;
+const _p2pTransferMajorGap = AppSpacing.x3;
+const _p2pTransferTightGap = AppSpacing.x2;
+const _p2pTransferActionGap = AppSpacing.x3;
+const _p2pTransferCardPadding = EdgeInsets.all(AppSpacing.x3);
+const _p2pTransferAssetTilePadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+  vertical: AppSpacing.x2,
+);
+const _p2pTransferConfirmRowPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x4,
+  vertical: AppSpacing.x3,
+);
+const _p2pTransferSwitchPadding = EdgeInsets.symmetric(
+  horizontal: AppSpacing.x2,
+);
+const _p2pTransferSwitchSize = AppSpacing.searchBarCompactHeight;
+const _p2pTransferAssetTileMinHeight = AppSpacing.x7 + AppSpacing.x3;
+const _p2pTransferAssetMarkSize = AppSpacing.searchBarCompactHeight;
+const _p2pTransferAssetIcon = AppSpacing.iconMd;
+const _p2pTransferConfirmIconBox = AppSpacing.x7;
+const _p2pTransferConfirmIcon = AppSpacing.iconLg;
+const _p2pTransferConfirmButtonHeight = AppSpacing.searchBarCompactHeight;
+const _p2pTransferVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const _p2pTransferNativeNavClearance =
+    _p2pTransferVisualNavClearance - AppSpacing.x4;
+const _p2pTransferVisualClearance = AppSpacing.x3;
+const _p2pTransferNativeClearance = AppSpacing.x2;
+
+EdgeInsets _p2pTransferScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      _p2pTransferScrollTopGap,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
+
 class P2PWalletTransferPage extends ConsumerStatefulWidget {
   const P2PWalletTransferPage({
     super.key,
@@ -90,10 +128,10 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
     }
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x5
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? _p2pTransferVisualNavClearance + _p2pTransferVisualClearance
+            : _p2pTransferNativeNavClearance + _p2pTransferNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final source = snapshot.sourceBalance(_type, _asset);
     final destination = snapshot.destinationBalance(_type, _asset);
@@ -127,7 +165,7 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pWalletScrollPadding(bottomInset),
+                    padding: _p2pTransferScrollPadding(scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       children: [

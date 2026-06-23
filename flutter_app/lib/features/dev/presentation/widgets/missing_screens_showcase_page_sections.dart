@@ -274,77 +274,77 @@ class _FlowRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final accent = _accentForId(flow.id);
 
-    return InkWell(
+    return VitCard(
       key: MissingScreensShowcasePage.flowKey(flow.id),
       onTap: onTap,
-      child: Padding(
-        padding: AppSpacing.devCardPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              children: [
-                DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: accent,
-                    shape: const CircleBorder(),
-                  ),
-                  child: const SizedBox(
-                    width: AppSpacing.x3,
-                    height: AppSpacing.x3,
-                  ),
-                ),
-                SizedBox(
-                  width: AppSpacing.x1,
-                  height: AppSpacing.x4,
-                  child: ColoredBox(color: _backgroundForId(flow.id)),
-                ),
-                Icon(
-                  Icons.arrow_forward_rounded,
+      variant: VitCardVariant.ghost,
+      borderColor: AppColors.transparent,
+      padding: AppSpacing.devCardPadding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: [
+              DecoratedBox(
+                decoration: ShapeDecoration(
                   color: accent,
-                  size: AppSpacing.iconSm,
+                  shape: const CircleBorder(),
+                ),
+                child: const SizedBox(
+                  width: AppSpacing.x3,
+                  height: AppSpacing.x3,
+                ),
+              ),
+              SizedBox(
+                width: AppSpacing.x1,
+                height: AppSpacing.x4,
+                child: ColoredBox(color: _backgroundForId(flow.id)),
+              ),
+              Icon(
+                Icons.arrow_forward_rounded,
+                color: accent,
+                size: AppSpacing.iconSm,
+              ),
+            ],
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: AppSpacing.x2,
+                  children: [
+                    Text(
+                      flow.from,
+                      style: AppTextStyles.captionSm.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.iconSm,
+                    ),
+                    Text(
+                      flow.to,
+                      style: AppTextStyles.captionSm.copyWith(
+                        color: accent,
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  flow.trigger,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: AppSpacing.x2,
-                    children: [
-                      Text(
-                        flow.from,
-                        style: AppTextStyles.captionSm.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.medium,
-                        ),
-                      ),
-                      const Icon(
-                        Icons.arrow_forward_rounded,
-                        color: AppColors.text3,
-                        size: AppSpacing.iconSm,
-                      ),
-                      Text(
-                        flow.to,
-                        style: AppTextStyles.captionSm.copyWith(
-                          color: accent,
-                          fontWeight: AppTextStyles.medium,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    flow.trigger,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

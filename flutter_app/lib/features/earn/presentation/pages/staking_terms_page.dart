@@ -325,37 +325,32 @@ class _TermsSectionCard extends StatelessWidget {
       key: StakingTermsPage.sectionKey(section.id),
       radius: VitCardRadius.lg,
       clip: true,
+      onTap: onTap,
       child: Column(
         children: [
-          Material(
-            color: AppColors.transparent,
-            child: InkWell(
-              onTap: onTap,
-              child: Padding(
-                padding: AppSpacing.earnCardPaddingX4,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        section.title,
-                        style: AppTextStyles.baseMedium.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
+          Padding(
+            padding: AppSpacing.earnCardPaddingX4,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    section.title,
+                    style: AppTextStyles.baseMedium.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
-                    AnimatedRotation(
-                      turns: expanded ? .5 : 0,
-                      duration: const Duration(milliseconds: 180),
-                      child: const Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        color: AppColors.text3,
-                        size: AppSpacing.earnTermsSectionChevron,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                AnimatedRotation(
+                  turns: expanded ? .5 : 0,
+                  duration: const Duration(milliseconds: 180),
+                  child: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: AppColors.text3,
+                    size: AppSpacing.earnTermsSectionChevron,
+                  ),
+                ),
+              ],
             ),
           ),
           AnimatedCrossFade(

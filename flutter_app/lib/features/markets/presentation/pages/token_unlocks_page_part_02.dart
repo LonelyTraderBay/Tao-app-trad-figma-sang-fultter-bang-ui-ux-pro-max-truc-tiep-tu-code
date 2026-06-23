@@ -26,98 +26,98 @@ class _UnlockCard extends StatelessWidget {
       padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
-          InkWell(
+          VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.tokenUnlocksCardHeaderPadding,
             onTap: onToggle,
-            child: Padding(
-              padding: AppSpacing.tokenUnlocksCardHeaderPadding,
-              child: Row(
-                children: [
-                  _TokenAvatar(
-                    unlock: unlock,
-                    size: AppSpacing.tokenUnlocksAvatarLg,
-                  ),
-                  const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(
-                          spacing: AppSpacing.tokenUnlocksBadgeSpacing,
-                          runSpacing: AppSpacing.tokenUnlocksBadgeRunSpacing,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            Text(
-                              unlock.symbol,
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                            _TinyBadge(
-                              label: impactConfig.label,
-                              color: impactConfig.color,
-                              bold: true,
-                            ),
-                            _TinyBadge(
-                              label: categoryConfig.label,
-                              color: categoryConfig.color,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: _unlockDateGap),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.schedule_rounded,
-                              size: AppSpacing.tokenUnlocksDateIcon,
-                              color: AppColors.text3,
-                            ),
-                            const SizedBox(width: _unlockDateGap),
-                            Flexible(
-                              child: Text(
-                                unlock.unlockDateLabel,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.micro.copyWith(
-                                  color: AppColors.text3,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: _unlockDateGap),
-                            Text(
-                              _countdownLabel(unlock),
-                              style: AppTextStyles.micro.copyWith(
-                                color: _countdownColor(unlock.daysUntil),
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+            child: Row(
+              children: [
+                _TokenAvatar(
+                  unlock: unlock,
+                  size: AppSpacing.tokenUnlocksAvatarLg,
+                ),
+                const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        _formatCompactUsd(unlock.unlockValueUsd),
-                        style: AppTextStyles.body.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+                      Wrap(
+                        spacing: AppSpacing.tokenUnlocksBadgeSpacing,
+                        runSpacing: AppSpacing.tokenUnlocksBadgeRunSpacing,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            unlock.symbol,
+                            style: AppTextStyles.body.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                          _TinyBadge(
+                            label: impactConfig.label,
+                            color: impactConfig.color,
+                            bold: true,
+                          ),
+                          _TinyBadge(
+                            label: categoryConfig.label,
+                            color: categoryConfig.color,
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: _unlockValueGap),
-                      Text(
-                        '${unlock.unlockPctCirculating.toStringAsFixed(1)}% supply',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.sell,
-                        ),
+                      const SizedBox(height: _unlockDateGap),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.schedule_rounded,
+                            size: AppSpacing.tokenUnlocksDateIcon,
+                            color: AppColors.text3,
+                          ),
+                          const SizedBox(width: _unlockDateGap),
+                          Flexible(
+                            child: Text(
+                              unlock.unlockDateLabel,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: _unlockDateGap),
+                          Text(
+                            _countdownLabel(unlock),
+                            style: AppTextStyles.micro.copyWith(
+                              color: _countdownColor(unlock.daysUntil),
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      _formatCompactUsd(unlock.unlockValueUsd),
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: _unlockValueGap),
+                    Text(
+                      '${unlock.unlockPctCirculating.toStringAsFixed(1)}% supply',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.sell,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           if (expanded)

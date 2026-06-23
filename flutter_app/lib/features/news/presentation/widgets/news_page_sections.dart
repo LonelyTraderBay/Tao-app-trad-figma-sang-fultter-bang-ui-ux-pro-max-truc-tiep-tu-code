@@ -65,46 +65,14 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = selected
-        ? selectedColor.withValues(alpha: .18)
-        : AppColors.surface2;
-    final border = selected
-        ? selectedColor.withValues(alpha: .72)
-        : AppColors.borderSolid.withValues(alpha: .48);
-    final textColor = selected ? selectedColor : AppColors.text2;
-
-    return SizedBox(
+    return VitChoicePill(
+      label: label,
+      selected: selected,
+      onTap: onTap,
       height: _newsFilterChipHeight,
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadii.mdRadius,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: bg,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: border),
-                borderRadius: AppRadii.mdRadius,
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.newsFilterChipPadding,
-              child: Center(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  style: AppTextStyles.captionSm.copyWith(
-                    color: textColor,
-                    fontWeight: AppTextStyles.bold,
-                    height: _newsTightLineHeight,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: selectedColor,
+      padding: AppSpacing.newsFilterChipPadding,
+      semanticLabel: label,
     );
   }
 }

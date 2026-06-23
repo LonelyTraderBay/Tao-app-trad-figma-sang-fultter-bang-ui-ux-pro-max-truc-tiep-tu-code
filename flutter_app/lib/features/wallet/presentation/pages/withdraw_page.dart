@@ -144,7 +144,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
                               asset: snapshot.asset,
                               network: selected,
                               controller: _addressController,
-                              onScan: () {},
+                              onScan: _showScanNotice,
                             ),
                             WithdrawRecentAddresses(
                               addresses: snapshot.recentAddresses,
@@ -235,6 +235,15 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
           },
         );
       },
+    );
+  }
+
+  void _showScanNotice() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Quét QR sẽ mở khi trình quét ví được kết nối'),
+        duration: Duration(milliseconds: 900),
+      ),
     );
   }
 

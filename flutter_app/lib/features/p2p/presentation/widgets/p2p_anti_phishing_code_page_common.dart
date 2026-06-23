@@ -16,34 +16,15 @@ class _SoftActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: color == AppColors.text1 ? .08 : .12),
-      borderRadius: AppRadii.mdRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.mdRadius,
-        child: Padding(
-          padding: AppSpacing.p2pSecurityDetailsActionPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitChoicePill(
+      label: label,
+      selected: true,
+      onTap: onTap,
+      fullWidth: true,
+      padding: AppSpacing.p2pSecurityDetailsActionPadding,
+      accentColor: color,
+      leading: Icon(icon),
+      semanticLabel: label,
     );
   }
 }
@@ -56,12 +37,15 @@ class _IconAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: AppSpacing.p2pSecurityDetailsIconActionBox,
-      child: IconButton(
+    return SizedBox(
+      width: AppSpacing.p2pSecurityDetailsIconActionBox,
+      height: AppSpacing.p2pSecurityDetailsIconActionBox,
+      child: VitIconButton(
+        icon: icon,
+        tooltip: 'Toggle anti-phishing code visibility',
         onPressed: onTap,
-        padding: AppSpacing.zeroInsets,
-        icon: Icon(icon, color: AppColors.text3, size: AppSpacing.iconSm),
+        size: VitIconButtonSize.sm,
+        variant: VitIconButtonVariant.transparent,
       ),
     );
   }

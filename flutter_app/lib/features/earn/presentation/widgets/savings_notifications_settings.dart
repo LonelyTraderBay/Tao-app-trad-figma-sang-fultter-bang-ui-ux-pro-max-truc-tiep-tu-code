@@ -202,36 +202,20 @@ class _ToggleSwitch extends StatelessWidget {
     return Semantics(
       button: true,
       toggled: on,
-      child: GestureDetector(
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        radius: VitCardRadius.md,
+        padding: EdgeInsets.zero,
         onTap: onTap,
-        child: SizedBox(
+        child: VitTogglePill(
+          enabled: on,
           width: AppSpacing.savingsNotificationSwitchWidth,
           height: AppSpacing.savingsNotificationSwitchHeight,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: on ? AppColors.primary : AppColors.borderSolid,
-              shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.mdRadius,
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.savingsNotificationSwitchInset,
-              child: AnimatedAlign(
-                duration: const Duration(milliseconds: 180),
-                alignment: on ? Alignment.centerRight : Alignment.centerLeft,
-                child: const SizedBox(
-                  width: AppSpacing.savingsNotificationSwitchThumb,
-                  height: AppSpacing.savingsNotificationSwitchThumb,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: AppColors.onAccent,
-                      shape: CircleBorder(),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          knobSize: AppSpacing.savingsNotificationSwitchThumb,
+          knobMargin: AppSpacing.savingsNotificationSwitchInset,
+          activeColor: AppColors.primary,
+          inactiveColor: AppColors.borderSolid,
+          inactiveKnobColor: AppColors.onAccent,
         ),
       ),
     );

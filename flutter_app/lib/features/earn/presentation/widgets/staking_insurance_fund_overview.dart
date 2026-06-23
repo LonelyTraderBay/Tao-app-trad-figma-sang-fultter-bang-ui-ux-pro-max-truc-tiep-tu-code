@@ -74,46 +74,43 @@ class StakingInsuranceFundTabs extends StatelessWidget {
         children: [
           for (final tab in StakingInsuranceFundTab.values)
             Expanded(
-              child: Material(
-                color: AppColors.transparent,
-                child: InkWell(
-                  key: StakingInsuranceFundKeys.tab(tab.name),
-                  onTap: () => onChanged(tab),
-                  child: Padding(
-                    padding: AppSpacing.earnTopPaddingX4,
-                    child: Column(
-                      children: [
-                        Text(
-                          stakingInsuranceFundTabLabel(tab),
-                          style: AppTextStyles.caption.copyWith(
+              child: VitCard(
+                key: StakingInsuranceFundKeys.tab(tab.name),
+                variant: VitCardVariant.ghost,
+                radius: VitCardRadius.sm,
+                padding: AppSpacing.earnTopPaddingX4,
+                onTap: () => onChanged(tab),
+                child: Column(
+                  children: [
+                    Text(
+                      stakingInsuranceFundTabLabel(tab),
+                      style: AppTextStyles.caption.copyWith(
+                        color: active == tab
+                            ? AppColors.primarySoft
+                            : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x4),
+                    AnimatedSize(
+                      duration: const Duration(milliseconds: 160),
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: active == tab ? AppSpacing.buttonHero : 0,
+                        height: AppSpacing.stakingProductTabIndicatorHeight,
+                        child: DecoratedBox(
+                          decoration: ShapeDecoration(
                             color: active == tab
                                 ? AppColors.primarySoft
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        AnimatedSize(
-                          duration: const Duration(milliseconds: 160),
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            width: active == tab ? AppSpacing.buttonHero : 0,
-                            height: AppSpacing.stakingProductTabIndicatorHeight,
-                            child: DecoratedBox(
-                              decoration: ShapeDecoration(
-                                color: active == tab
-                                    ? AppColors.primarySoft
-                                    : AppColors.transparent,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: AppRadii.xsRadius,
-                                ),
-                              ),
+                                : AppColors.transparent,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: AppRadii.xsRadius,
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

@@ -8,11 +8,13 @@ class _WhitelistModeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      key: AddressBookPage.whitelistModeKey,
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
+    return Semantics(
+      button: true,
+      selected: enabled,
+      label: 'Toggle address whitelist mode',
       child: VitCard(
+        key: AddressBookPage.whitelistModeKey,
+        onTap: onTap,
         height: _bookSecurityHeight,
         padding: _bookSecurityPadding,
         borderColor: AppColors.overlayStroke,

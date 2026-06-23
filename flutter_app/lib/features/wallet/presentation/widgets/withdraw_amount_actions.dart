@@ -35,51 +35,46 @@ class WithdrawRecentAddresses extends StatelessWidget {
             button: true,
             label: 'Use recent withdrawal address ${address.label}',
             hint: address.address,
-            child: GestureDetector(
+            child: VitCard(
               key: withdrawRecentAddressKey(address.label),
               onTap: () => onSelect(address),
-              behavior: HitTestBehavior.opaque,
-              child: VitCard(
-                variant: VitCardVariant.ghost,
-                borderColor: AppColors.divider,
-                padding: AppSpacing.walletWithdrawRecentAddressPadding,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            address.label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
-                            ),
+              variant: VitCardVariant.ghost,
+              borderColor: AppColors.divider,
+              padding: AppSpacing.walletWithdrawRecentAddressPadding,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          address.label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
                           ),
-                          const SizedBox(height: AppSpacing.x1),
-                          Text(
-                            address.address,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                            ),
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          address.address,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: AppSpacing.x2),
-                    Text(
-                      address.lastUsed,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Text(
+                    address.lastUsed,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
               ),
             ),
           ),
@@ -112,21 +107,15 @@ class WithdrawAmountInput extends StatelessWidget {
         Row(
           children: [
             const Expanded(child: WithdrawSectionLabel('Số lượng rút')),
-            Semantics(
-              button: true,
-              label: 'Use full withdrawable balance',
-              child: GestureDetector(
-                key: withdrawAllAmountKey,
-                onTap: onAll,
-                behavior: HitTestBehavior.opaque,
-                child: Text(
-                  'Tất cả',
-                  style: AppTextStyles.micro.copyWith(
-                    color: withdrawPrimary,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
+            VitChoicePill(
+              key: withdrawAllAmountKey,
+              label: 'Tất cả',
+              selected: false,
+              onTap: onAll,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+              accentColor: withdrawPrimary,
+              semanticLabel: 'Use full withdrawable balance',
             ),
           ],
         ),
@@ -220,47 +209,14 @@ class WithdrawSupportLink extends StatelessWidget {
     return Semantics(
       button: true,
       label: 'Open contextual withdrawal support',
-      child: GestureDetector(
+      child: VitCtaButton(
         key: withdrawSupportKey,
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: VitCard(
-          variant: VitCardVariant.inner,
-          borderColor: withdrawPrimary.withValues(alpha: .22),
-          padding: AppSpacing.walletWithdrawSupportPadding,
-          child: Row(
-            children: [
-              const Icon(
-                Icons.support_agent_rounded,
-                color: withdrawPrimary,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  'Cần hỗ trợ rút tiền?',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              Text(
-                'Mở hồ sơ',
-                style: AppTextStyles.micro.copyWith(
-                  color: withdrawPrimary,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: withdrawPrimary,
-                size: AppSpacing.iconSm,
-              ),
-            ],
-          ),
-        ),
+        onPressed: onTap,
+        variant: VitCtaButtonVariant.ghost,
+        height: AppSpacing.inputHeight - AppSpacing.x2,
+        leading: const Icon(Icons.support_agent_rounded),
+        trailing: const Icon(Icons.chevron_right_rounded),
+        child: const Text('Mở hồ sơ hỗ trợ'),
       ),
     );
   }
@@ -276,22 +232,11 @@ class WithdrawNextButton extends StatelessWidget {
     return Semantics(
       button: true,
       label: 'Preview withdrawal',
-      child: GestureDetector(
+      child: VitCtaButton(
         key: withdrawNextKey,
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: VitCard(
-          variant: VitCardVariant.standard,
-          height: AppSpacing.inputHeight,
-          borderColor: AppColors.primary,
-          alignment: Alignment.center,
-          child: Text(
-            'Tiếp tục →',
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
+        onPressed: onTap,
+        height: AppSpacing.inputHeight,
+        child: const Text('Tiếp tục →'),
       ),
     );
   }

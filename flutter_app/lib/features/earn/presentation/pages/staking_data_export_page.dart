@@ -367,50 +367,34 @@ class _FormatSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCard(
       key: StakingDataExportPage.formatKey,
-      color: AppColors.surface2,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        borderRadius: AppRadii.inputRadius,
-        onTap: () {
-          final index = options.indexOf(format);
-          final next = options[(index + 1) % options.length];
-          onChanged(next);
-        },
-        child: SizedBox(
-          height: AppSpacing.buttonStandard,
-          child: DecoratedBox(
-            decoration: const ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: AppColors.borderSolid),
-                borderRadius: AppRadii.inputRadius,
-              ),
-            ),
-            child: Padding(
-              padding: AppSpacing.earnHorizontalPaddingX3,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      format,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.body.copyWith(
-                        color: AppColors.text1,
-                      ),
-                    ),
-                  ),
-                  const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text2,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
-              ),
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.sm,
+      borderColor: AppColors.borderSolid,
+      height: AppSpacing.buttonStandard,
+      padding: AppSpacing.earnHorizontalPaddingX3,
+      onTap: () {
+        final index = options.indexOf(format);
+        final next = options[(index + 1) % options.length];
+        onChanged(next);
+      },
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              format,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.body.copyWith(color: AppColors.text1),
             ),
           ),
-        ),
+          const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: AppColors.text2,
+            size: AppSpacing.iconMd,
+          ),
+        ],
       ),
     );
   }

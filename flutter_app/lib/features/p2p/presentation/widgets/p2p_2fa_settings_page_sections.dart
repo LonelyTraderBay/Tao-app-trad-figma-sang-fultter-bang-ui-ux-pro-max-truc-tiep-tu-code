@@ -17,11 +17,11 @@ class _TwoFactorStatusCard extends StatelessWidget {
       color: AppColors.buy.withValues(alpha: .9),
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: AppSpacing.p2pSecurityDetailsCardPadding,
+        padding: _p2pTwoFactorCardPadding,
         child: Row(
           children: [
             SizedBox.square(
-              dimension: AppSpacing.p2pSecurityDetailsHeroIconBox,
+              dimension: _p2pTwoFactorHeroIconBox,
               child: Material(
                 type: MaterialType.transparency,
                 color: AppColors.onAccent.withValues(alpha: .18),
@@ -123,7 +123,7 @@ class _MethodRow extends StatelessWidget {
 
     return Padding(
       key: P2P2FASettingsPage.methodKey(method.id),
-      padding: AppSpacing.p2pSecurityDetailsCardPadding,
+      padding: _p2pTwoFactorCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -265,7 +265,7 @@ class _ThresholdRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2P2FASettingsPage.thresholdKey(threshold.id),
-      padding: AppSpacing.p2pSecurityDetailsCardPadding,
+      padding: _p2pTwoFactorCardPadding,
       child: Row(
         children: [
           _IconBadge(

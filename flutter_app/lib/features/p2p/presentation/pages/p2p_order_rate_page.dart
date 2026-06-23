@@ -19,6 +19,13 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
 part '../widgets/p2p_order_rate_widgets.dart';
 
+const double _p2pOrderRateVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pOrderRateNativeNavClearance =
+    _p2pOrderRateVisualNavClearance - AppSpacing.x4;
+const double _p2pOrderRateVisualClearance = AppSpacing.x3;
+const double _p2pOrderRateNativeClearance = AppSpacing.x2;
+
 class P2POrderRatePage extends ConsumerStatefulWidget {
   const P2POrderRatePage({
     super.key,
@@ -60,11 +67,10 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pOrderRateProvider(widget.orderId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pOrderBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pOrderBottomInsetNative) +
+            ? _p2pOrderRateVisualNavClearance + _p2pOrderRateVisualClearance
+            : _p2pOrderRateNativeNavClearance + _p2pOrderRateNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -96,12 +102,10 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
                         child: SingleChildScrollView(
                           key: P2POrderRatePage.contentKey,
                           physics: const ClampingScrollPhysics(),
-                          padding: AppSpacing.p2pOrderLifecycleScrollPadding(
-                            bottomInset,
-                          ),
+                          padding: EdgeInsets.only(bottom: scrollEndPadding),
                           child: VitPageContent(
                             padding: VitContentPadding.compact,
-                            customGap: AppSpacing.x3,
+                            customGap: AppSpacing.x2,
                             children: [
                               _MerchantSummary(order: snapshot.order),
                               _RatingCard(

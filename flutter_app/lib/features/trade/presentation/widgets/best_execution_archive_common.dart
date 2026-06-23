@@ -129,11 +129,13 @@ class _ArchiveReport extends StatelessWidget {
                 ),
                 _ReportStatus(status: report.status),
                 const SizedBox(width: AppSpacing.x3),
-                IconButton(
+                VitInlineIconAction(
+                  icon: Icons.download_rounded,
+                  tooltip: 'Export report',
                   onPressed: () => onExport(report.id),
-                  visualDensity: VisualDensity.compact,
-                  icon: const Icon(Icons.download_rounded, size: 16),
                   color: AppColors.text3,
+                  size: 16,
+                  padding: AppSpacing.x1,
                 ),
               ],
             ),
@@ -248,11 +250,13 @@ class _NoticePanel extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ),
-              IconButton(
-                visualDensity: VisualDensity.compact,
+              VitInlineIconAction(
+                icon: Icons.close_rounded,
+                tooltip: 'Dismiss notice',
                 onPressed: onClose,
-                icon: const Icon(Icons.close_rounded, size: 18),
                 color: AppColors.text3,
+                size: 18,
+                padding: AppSpacing.x1,
               ),
             ],
           ),

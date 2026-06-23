@@ -118,18 +118,15 @@ class _HeaderRow extends StatelessWidget {
             ),
           ),
         ),
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(),
+        VitInlineIconAction(
+          icon: balanceHidden
+              ? Icons.visibility_off_outlined
+              : Icons.visibility_outlined,
+          tooltip: balanceHidden ? 'Show balance' : 'Hide balance',
           onPressed: onToggle,
-          icon: Icon(
-            balanceHidden
-                ? Icons.visibility_off_outlined
-                : Icons.visibility_outlined,
-            color: AppColors.portfolioTextMuted,
-            size: AppSpacing.dcaOverviewInlineIcon,
-          ),
+          color: AppColors.portfolioTextMuted,
+          size: AppSpacing.dcaOverviewInlineIcon,
+          padding: AppSpacing.x1,
         ),
       ],
     );

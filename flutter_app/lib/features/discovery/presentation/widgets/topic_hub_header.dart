@@ -57,41 +57,14 @@ class _TopicChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = _accentForTopic(topic);
-    return InkWell(
+    return VitChoicePill(
       key: TopicHubPage.topicKey(topic.id),
+      label: topic.label,
+      selected: active,
       onTap: onTap,
-      borderRadius: AppRadii.lgRadius,
-      child: SizedBox(
-        height: AppSpacing.buttonCompact + AppSpacing.x2,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: active ? accent.withValues(alpha: .14) : AppColors.surface2,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: active
-                    ? accent.withValues(alpha: .44)
-                    : AppColors.transparent,
-                width: 1.5,
-              ),
-              borderRadius: AppRadii.lgRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.discoveryChipHorizontalPadding,
-            child: Center(
-              child: Text(
-                topic.label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? accent : AppColors.text2,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.medium,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      accentColor: accent,
+      height: AppSpacing.buttonCompact + AppSpacing.x2,
+      padding: AppSpacing.discoveryChipHorizontalPadding,
     );
   }
 }

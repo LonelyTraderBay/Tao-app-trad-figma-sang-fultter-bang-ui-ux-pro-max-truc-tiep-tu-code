@@ -10,7 +10,7 @@ class _OverallStatusCard extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.statusCardKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pKycCardPadding,
+      padding: _p2pKycCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -65,7 +65,7 @@ class _OverallStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pKycSectionGap),
           Row(
             children: [
               Expanded(
@@ -86,14 +86,14 @@ class _OverallStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pKycTightGap),
           _ProgressTrack(value: snapshot.progress),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: _p2pKycSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.md,
             borderColor: AppColors.primary20,
-            padding: AppSpacing.p2pKycNoticePadding,
+            padding: _p2pKycNoticePadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -171,7 +171,7 @@ class _StatusTimeline extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.timelineKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pKycNoticePadding,
+      padding: _p2pKycNoticePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -239,7 +239,7 @@ class _StepTimelineRow extends StatelessWidget {
             child: Padding(
               padding: isLast
                   ? AppSpacing.zeroInsets
-                  : AppSpacing.p2pKycTimelineRowPadding,
+                  : _p2pKycTimelineRowPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -258,7 +258,7 @@ class _StepTimelineRow extends StatelessWidget {
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            const SizedBox(height: AppSpacing.x1),
+                            const SizedBox(height: _p2pKycTightGap),
                             Text(
                               step.description,
                               maxLines: 1,
@@ -280,7 +280,7 @@ class _StepTimelineRow extends StatelessWidget {
                     ],
                   ),
                   if (step.completedAt != null) ...[
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: _p2pKycTightGap),
                     _StepMeta(
                       icon: Icons.check_circle_outline_rounded,
                       color: AppColors.text3,
@@ -289,7 +289,7 @@ class _StepTimelineRow extends StatelessWidget {
                   ],
                   if (step.status == P2PKycStepStatus.processing &&
                       step.estimatedTime != null) ...[
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: _p2pKycTightGap),
                     _StepMeta(
                       icon: Icons.schedule_rounded,
                       color: AppModuleAccents.p2p,
@@ -299,7 +299,7 @@ class _StepTimelineRow extends StatelessWidget {
                   if (step.status == P2PKycStepStatus.waiting &&
                       !step.hasAction &&
                       step.estimatedTime != null) ...[
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: _p2pKycTightGap),
                     _StepMeta(
                       icon: Icons.schedule_rounded,
                       color: AppColors.text3,
@@ -307,7 +307,7 @@ class _StepTimelineRow extends StatelessWidget {
                     ),
                   ],
                   if (step.hasAction) ...[
-                    const SizedBox(height: AppSpacing.x2),
+                    const SizedBox(height: _p2pKycTightGap),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: _StepActionButton(step: step),
@@ -361,38 +361,17 @@ class _StepActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppModuleAccents.p2p,
-      borderRadius: AppRadii.inputRadius,
-      child: InkWell(
-        key: P2PKycStatusPage.actionKey(step.id),
-        borderRadius: AppRadii.inputRadius,
-        onTap: () {
-          HapticFeedback.selectionClick();
-          context.go(step.actionRoute!);
-        },
-        child: Padding(
-          padding: AppSpacing.p2pKycInlineActionPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                step.actionLabel!,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.onAccent,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconSm,
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      key: P2PKycStatusPage.actionKey(step.id),
+      onPressed: () {
+        HapticFeedback.selectionClick();
+        context.go(step.actionRoute!);
+      },
+      fullWidth: false,
+      height: AppSpacing.buttonCompact,
+      padding: AppSpacing.p2pKycInlineActionPadding,
+      trailing: const Icon(Icons.chevron_right_rounded),
+      child: Text(step.actionLabel!),
     );
   }
 }

@@ -82,7 +82,10 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                       ),
                     ),
                     if (_createSheetOpen)
-                      _CreatePlanSheet(onClose: _closeCreateSheet),
+                      _CreatePlanSheet(
+                        bottomInset: scrollEndPadding,
+                        onClose: _closeCreateSheet,
+                      ),
                   ],
                 ),
               ),

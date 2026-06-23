@@ -60,22 +60,18 @@ class _SideButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: VitCtaButton(
-        onPressed: onTap,
-        variant: active
-            ? (color == _futuresGreen
-                  ? VitCtaButtonVariant.success
-                  : VitCtaButtonVariant.danger)
-            : VitCtaButtonVariant.ghost,
+      child: VitChoicePill(
+        label: label,
+        selected: active,
+        onTap: onTap,
+        fullWidth: true,
+        height: AppSpacing.ctaHeight,
+        tone: color == _futuresGreen
+            ? VitChoicePillTone.success
+            : VitChoicePillTone.danger,
         leading: Icon(icon),
         padding: AppSpacing.zeroInsets,
-        child: Text(
-          label,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
+        semanticLabel: 'Chon huong $label futures',
       ),
     );
   }
@@ -167,20 +163,14 @@ class _OrderTypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: VitCtaButton(
-        onPressed: onTap,
+      child: VitChoicePill(
+        label: label,
+        selected: active,
+        onTap: onTap,
+        fullWidth: true,
         height: AppSpacing.buttonCompact,
-        variant: active
-            ? VitCtaButtonVariant.primary
-            : VitCtaButtonVariant.ghost,
         padding: AppSpacing.zeroInsets,
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text2,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
+        semanticLabel: 'Chon loai lenh $label',
       ),
     );
   }
@@ -228,20 +218,16 @@ class _PercentRow extends StatelessWidget {
       children: [
         for (final pct in const [10, 25, 50, 100]) ...[
           Expanded(
-            child: VitCtaButton(
+            child: VitChoicePill(
               key: FuturesPage.pctKey(pct),
-              onPressed: () => onPercent(pct),
+              label: '$pct%',
+              selected: false,
+              onTap: () => onPercent(pct),
+              fullWidth: true,
               height: AppSpacing.walletTransactionStepLineHeight,
-              variant: VitCtaButtonVariant.ghost,
               padding: AppSpacing.zeroInsets,
-              child: Text(
-                '$pct%',
-                style: AppTextStyles.numericCode.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.futuresPercentButtonLineHeight,
-                ),
-              ),
+              tone: VitChoicePillTone.neutral,
+              semanticLabel: 'Dung $pct phan tram ky quy',
             ),
           ),
           if (pct != 100) const SizedBox(width: AppSpacing.x3),
@@ -317,23 +303,18 @@ class _ToggleChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCtaButton(
-      onPressed: onTap,
+    return VitChoicePill(
+      label: label,
+      selected: active,
+      onTap: onTap,
       height: AppSpacing.walletTransactionStepLineHeight,
-      variant: active
-          ? (activeColor == _futuresGreen
-                ? VitCtaButtonVariant.success
-                : VitCtaButtonVariant.danger)
-          : VitCtaButtonVariant.ghost,
+      fullWidth: true,
+      tone: activeColor == _futuresGreen
+          ? VitChoicePillTone.success
+          : VitChoicePillTone.danger,
       leading: Icon(icon),
       padding: AppSpacing.zeroInsets,
-      child: Text(
-        label,
-        style: AppTextStyles.captionSm.copyWith(
-          color: active ? AppColors.onAccent : AppColors.text2,
-          fontWeight: AppTextStyles.bold,
-        ),
-      ),
+      semanticLabel: 'Bat tat $label',
     );
   }
 }

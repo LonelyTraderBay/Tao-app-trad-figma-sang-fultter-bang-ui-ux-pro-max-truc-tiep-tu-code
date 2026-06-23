@@ -221,9 +221,11 @@ class _HistoryList extends StatelessWidget {
               ),
             ),
             if (unreadCount > 0)
-              TextButton(
+              VitCtaButton(
                 key: StakingNotificationsPage.markAllReadKey,
                 onPressed: onMarkAllRead,
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
                 child: Text(
                   'Đánh dấu tất cả đã đọc',
                   style: AppTextStyles.micro.copyWith(

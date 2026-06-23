@@ -5,43 +5,28 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class StakingCircleIconButton extends StatelessWidget {
   const StakingCircleIconButton({
     super.key,
     required this.icon,
     required this.onTap,
+    this.tooltip = 'Thao tác staking',
   });
 
   final IconData icon;
   final VoidCallback onTap;
+  final String tooltip;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.portfolioBtnGhost,
-      borderRadius: AppRadii.xlRadius,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadii.xlRadius,
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(color: AppColors.portfolioBtnGhostBorder),
-              borderRadius: AppRadii.xlRadius,
-            ),
-          ),
-          child: SizedBox(
-            width: AppSpacing.buttonCompact,
-            height: AppSpacing.buttonCompact,
-            child: Icon(
-              icon,
-              color: AppColors.onAccent,
-              size: AppSpacing.iconMd,
-            ),
-          ),
-        ),
-      ),
+    return VitIconButton(
+      icon: icon,
+      tooltip: tooltip,
+      onPressed: onTap,
+      variant: VitIconButtonVariant.ghost,
+      size: VitIconButtonSize.sm,
     );
   }
 }

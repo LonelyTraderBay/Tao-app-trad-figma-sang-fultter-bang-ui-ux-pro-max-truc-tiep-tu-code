@@ -116,42 +116,38 @@ class _OrderTabs extends StatelessWidget {
         children: [
           for (final tab in _AdvancedOrderTab.values)
             Expanded(
-              child: Material(
-                color: AppColors.transparent,
-                child: InkWell(
-                  key: StakingAdvancedOrdersPage.tabKey(tab.name),
-                  onTap: () => onChanged(tab),
-                  child: Padding(
-                    padding: AppSpacing.earnTopPaddingX4,
-                    child: Column(
-                      children: [
-                        Text(
-                          _tabLabel(tab),
-                          style: AppTextStyles.caption.copyWith(
-                            color: active == tab
-                                ? AppColors.primarySoft
-                                : AppColors.text3,
-                            fontWeight: AppTextStyles.bold,
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        SizedBox(
-                          width: active == tab ? AppSpacing.buttonHero : 0,
-                          height: AppSpacing.stakingProductTabIndicatorHeight,
-                          child: DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color: active == tab
-                                  ? AppColors.primarySoft
-                                  : AppColors.transparent,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: AppRadii.xsRadius,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+              child: VitCard(
+                key: StakingAdvancedOrdersPage.tabKey(tab.name),
+                variant: VitCardVariant.ghost,
+                padding: AppSpacing.earnTopPaddingX4,
+                onTap: () => onChanged(tab),
+                child: Column(
+                  children: [
+                    Text(
+                      _tabLabel(tab),
+                      style: AppTextStyles.caption.copyWith(
+                        color: active == tab
+                            ? AppColors.primarySoft
+                            : AppColors.text3,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: AppSpacing.x4),
+                    SizedBox(
+                      width: active == tab ? AppSpacing.buttonHero : 0,
+                      height: AppSpacing.stakingProductTabIndicatorHeight,
+                      child: DecoratedBox(
+                        decoration: ShapeDecoration(
+                          color: active == tab
+                              ? AppColors.primarySoft
+                              : AppColors.transparent,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: AppRadii.xsRadius,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

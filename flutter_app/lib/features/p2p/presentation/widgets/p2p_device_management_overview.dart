@@ -16,7 +16,7 @@ class _DeviceStatsCard extends StatelessWidget {
     return VitCard(
       key: P2PDeviceManagementPage.statsKey,
       radius: VitCardRadius.lg,
-      padding: AppSpacing.p2pSecurityDetailsCardPadding,
+      padding: _p2pDevicesCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -68,7 +68,7 @@ class _DeviceStat extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox.square(
-          dimension: AppSpacing.p2pSecurityDetailsIconBox,
+          dimension: _p2pDevicesIconBox,
           child: Material(
             type: MaterialType.transparency,
             color: color.withValues(alpha: .12),
@@ -106,7 +106,7 @@ class _TrustedDeviceNotice extends StatelessWidget {
         side: BorderSide(color: AppColors.primary20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pSecurityDetailsInnerPadding,
+        padding: _p2pDevicesInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -132,8 +132,7 @@ class _TrustedDeviceNotice extends StatelessWidget {
                     snapshot.infoBody,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height:
-                          AppSpacing.p2pSecurityDetailsDeviceNoticeLineHeight,
+                      height: _p2pDevicesNoticeLineHeight,
                     ),
                   ),
                 ],

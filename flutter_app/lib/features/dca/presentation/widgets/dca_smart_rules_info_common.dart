@@ -196,22 +196,24 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return VitCard(
+      onTap: onPressed,
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.sm,
+      padding: EdgeInsets.zero,
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
-      child: DecoratedBox(
-        decoration: const ShapeDecoration(
+      borderColor: AppColors.transparent,
+      clip: true,
+      child: const DecoratedBox(
+        decoration: ShapeDecoration(
           color: AppColors.sell10,
           shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
-        child: IconButton(
-          onPressed: onPressed,
-          padding: AppSpacing.zeroInsets,
-          icon: const Icon(
-            Icons.delete_outline_rounded,
-            size: AppSpacing.dcaSmartInlineIcon,
-            color: AppColors.sell,
-          ),
+        child: Icon(
+          Icons.delete_outline_rounded,
+          size: AppSpacing.dcaSmartInlineIcon,
+          color: AppColors.sell,
         ),
       ),
     );

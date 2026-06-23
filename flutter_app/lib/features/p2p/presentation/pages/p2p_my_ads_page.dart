@@ -13,7 +13,6 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -22,6 +21,32 @@ part '../widgets/p2p_my_ads_stats_cards.dart';
 part '../widgets/p2p_my_ads_empty_links.dart';
 
 enum _MyAdsFilter { all, active, paused }
+
+const double _p2pMyAdsVisualClearance = AppSpacing.x3;
+const double _p2pMyAdsNativeClearance = AppSpacing.x2;
+const double _p2pMyAdsMajorGap = AppSpacing.x3;
+const double _p2pMyAdsSectionGap = AppSpacing.x2;
+const double _p2pMyAdsTightGap = AppSpacing.x1;
+const double _p2pMyAdsStatExtent = AppSpacing.x7 + AppSpacing.x3;
+const double _p2pMyAdsActionExtent = AppSpacing.searchBarCompactHeight;
+const double _p2pMyAdsQuickIconBox = AppSpacing.searchBarCompactHeight;
+const EdgeInsets _p2pMyAdsCardPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _p2pMyAdsCompactPadding = EdgeInsets.all(AppSpacing.x2);
+const EdgeInsets _p2pMyAdsLargePadding = EdgeInsets.all(AppSpacing.x4);
+const EdgeInsets _p2pMyAdsQuickLinkPadding = EdgeInsets.symmetric(
+  vertical: AppSpacing.x2,
+);
+const EdgeInsets _p2pMyAdsDetailRightPadding = EdgeInsets.only(
+  right: AppSpacing.x2,
+);
+
+EdgeInsets _p2pMyAdsScrollPadding(double scrollEndPadding) =>
+    EdgeInsets.fromLTRB(
+      AppSpacing.contentPad,
+      AppSpacing.x3,
+      AppSpacing.contentPad,
+      scrollEndPadding,
+    );
 
 class P2PMyAdsPage extends ConsumerStatefulWidget {
   const P2PMyAdsPage({super.key, this.shellRenderMode});
@@ -69,10 +94,10 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
         })
         .toList(growable: false);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+            ? DeviceMetrics.bottomChrome + _p2pMyAdsVisualClearance
+            : DeviceMetrics.nativeBottomChrome + _p2pMyAdsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -106,9 +131,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
                   child: SingleChildScrollView(
                     key: P2PMyAdsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantCommerceScrollPadding(
-                      bottomInset,
-                    ),
+                    padding: _p2pMyAdsScrollPadding(scrollEndPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -117,7 +140,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
                           pausedCount: pausedCount,
                           totalVolume: totalVolume,
                         ),
-                        const SizedBox(height: AppSpacing.x4),
+                        const SizedBox(height: _p2pMyAdsMajorGap),
                         VitTabBar(
                           variant: VitTabBarVariant.segment,
                           activeKey: _filter.name,
@@ -140,7 +163,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.x5),
+                        const SizedBox(height: _p2pMyAdsMajorGap),
                         if (filtered.isEmpty)
                           _EmptyMyAds(snapshot: snapshot)
                         else
@@ -154,22 +177,17 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
                               onEdit: () => context.go(AppRoutePaths.p2pCreate),
                               onDelete: () => _confirmDelete(context, ad),
                             ),
-                            const SizedBox(height: AppSpacing.x2),
+                            const SizedBox(height: _p2pMyAdsSectionGap),
                           ],
-                        const SizedBox(height: AppSpacing.x2),
+                        const SizedBox(height: _p2pMyAdsSectionGap),
                         _QuickLinksCard(links: snapshot.quickLinks),
-                        VitPageContent(
-                          padding: VitContentPadding.compact,
-                          customGap: 0,
-                          children: const [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'My ads state review',
-                              message:
-                                  'Ad status, pause/delete state, analytics links, empty state, and active order impact stay visible before changing P2P advertisement exposure.',
-                              contractId: 'SC-225',
-                            ),
-                          ],
+                        const SizedBox(height: _p2pMyAdsSectionGap),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'My ads state review',
+                          message:
+                              'Ad status, pause/delete state, analytics links, empty state, and active order impact stay visible before changing P2P advertisement exposure.',
+                          contractId: 'SC-225',
                         ),
                       ],
                     ),
@@ -217,19 +235,21 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
           actions: [
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(
-                'Hủy',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
+              variant: VitCtaButtonVariant.secondary,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              child: const Text('Hủy'),
             ),
-            TextButton(
+            VitCtaButton(
               onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: Text(
-                'Xóa',
-                style: AppTextStyles.caption.copyWith(color: AppColors.sell),
-              ),
+              variant: VitCtaButtonVariant.danger,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              child: const Text('Xóa'),
             ),
           ],
         );

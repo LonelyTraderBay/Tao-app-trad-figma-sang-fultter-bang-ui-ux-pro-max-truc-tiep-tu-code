@@ -174,14 +174,17 @@ class _SupportCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
-          TextButton.icon(
+          VitCtaButton(
             key: ArenaGuidePage.supportKey,
             onPressed: onPressed,
-            icon: const Icon(
+            variant: VitCtaButtonVariant.ghost,
+            fullWidth: false,
+            height: AppSpacing.buttonCompact,
+            trailing: const Icon(
               Icons.chevron_right,
               size: AppSpacing.arenaGuideSupportChevron,
             ),
-            label: const Text('Hỗ trợ'),
+            child: const Text('Hỗ trợ'),
           ),
         ],
       ),

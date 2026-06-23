@@ -239,13 +239,16 @@ class _ShowMoreTipsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: TextButton.icon(
+      child: VitCtaButton(
         onPressed: onPressed,
-        icon: const Icon(
+        variant: VitCtaButtonVariant.ghost,
+        fullWidth: false,
+        height: AppSpacing.buttonCompact,
+        leading: const Icon(
           Icons.expand_more,
           size: AppSpacing.arenaGuideShowMoreIcon,
         ),
-        label: Text('Xem thêm $remaining mẹo'),
+        child: Text('Xem thêm $remaining mẹo'),
       ),
     );
   }

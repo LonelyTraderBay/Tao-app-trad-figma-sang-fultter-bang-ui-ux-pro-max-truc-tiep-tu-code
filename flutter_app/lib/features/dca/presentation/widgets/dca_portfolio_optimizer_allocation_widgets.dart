@@ -49,7 +49,7 @@ class _FrontierChip extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      ' Â· ',
+                      ' · ',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
@@ -172,11 +172,14 @@ class _SuggestionRow extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
-                    Text(
-                      '${suggestion.currentPercent.toStringAsFixed(0)}% â†’ ${suggestion.suggestedPercent.toStringAsFixed(0)}%',
-                      style: AppTextStyles.caption.copyWith(
-                        color: color,
-                        fontWeight: AppTextStyles.bold,
+                    Flexible(
+                      child: Text(
+                        '${suggestion.currentPercent.toStringAsFixed(0)}% → ${suggestion.suggestedPercent.toStringAsFixed(0)}%',
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption.copyWith(
+                          color: color,
+                          fontWeight: AppTextStyles.bold,
+                        ),
                       ),
                     ),
                   ],

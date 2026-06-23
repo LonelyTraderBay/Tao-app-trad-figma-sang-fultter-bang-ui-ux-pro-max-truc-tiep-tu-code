@@ -34,38 +34,37 @@ class _PairHeader extends StatelessWidget {
         child: Semantics(
           button: true,
           label: 'Ch\u1ECDn c\u1EB7p giao d\u1ECBch ${pair.symbol}',
-          child: InkWell(
+          child: VitCard(
+            variant: VitCardVariant.ghost,
+            radius: VitCardRadius.sm,
+            padding: AppSpacing.pairHeaderSymbolPadding,
             onTap: onPairTap,
-            borderRadius: AppRadii.headerActionRadius,
-            child: Padding(
-              padding: AppSpacing.pairHeaderSymbolPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  VitAssetAvatar(
-                    label: pair.baseAsset,
-                    accentColor: pair.logoColor,
-                    size: AppSpacing.pairHeaderLogo,
-                    radius: AppRadii.pillRadius,
-                  ),
-                  const SizedBox(width: AppSpacing.pairHeaderSymbolGap),
-                  Flexible(
-                    child: Text(
-                      pair.symbol,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.base.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                VitAssetAvatar(
+                  label: pair.baseAsset,
+                  accentColor: pair.logoColor,
+                  size: AppSpacing.pairHeaderLogo,
+                  radius: AppRadii.pillRadius,
+                ),
+                const SizedBox(width: AppSpacing.pairHeaderSymbolGap),
+                Flexible(
+                  child: Text(
+                    pair.symbol,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.base.copyWith(
+                      fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.pairHeaderChevronGap),
-                  const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text2,
-                    size: AppSpacing.pairHeaderChevron,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(width: AppSpacing.pairHeaderChevronGap),
+                const Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text2,
+                  size: AppSpacing.pairHeaderChevron,
+                ),
+              ],
             ),
           ),
         ),

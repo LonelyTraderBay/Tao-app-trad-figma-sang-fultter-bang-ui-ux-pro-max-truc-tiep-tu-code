@@ -87,10 +87,15 @@ class ProviderComparisonPage extends ConsumerWidget {
                             ),
                           ),
                           if (snapshot.selectedCount < snapshot.maxProviders)
-                            TextButton(
+                            VitCtaButton(
                               key: addProviderLinkKey,
                               onPressed: () =>
                                   context.go(AppRoutePaths.tradeCopyTrading),
+                              variant: VitCtaButtonVariant.ghost,
+                              fullWidth: false,
+                              height: AppSpacing.buttonCompact,
+                              padding: AppSpacing.authInlineTextButtonPadding,
+                              leading: const Icon(Icons.add_rounded),
                               child: const Text('+ Thêm provider'),
                             ),
                         ],

@@ -28,7 +28,6 @@ const _devicesDivider = AppColors.divider;
 const _devicesPrimary = AppColors.primary;
 const _devicesGreen = AppColors.buy;
 const _devicesAmber = AppColors.warn;
-const _devicesRed = AppColors.sell;
 const _devicesMuted = AppColors.text3;
 
 class DeviceManagementPage extends ConsumerStatefulWidget {

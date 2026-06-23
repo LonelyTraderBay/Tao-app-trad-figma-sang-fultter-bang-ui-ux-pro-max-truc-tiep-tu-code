@@ -24,6 +24,20 @@ part 'p2p_dashboard_page_part_02.dart';
 part 'p2p_dashboard_page_part_03.dart';
 part 'p2p_dashboard_page_part_04.dart';
 
+const double _p2pDashboardVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pDashboardNativeNavClearance =
+    _p2pDashboardVisualNavClearance - AppSpacing.x4;
+const double _p2pDashboardVisualClearance = AppSpacing.x3;
+const double _p2pDashboardNativeClearance = AppSpacing.x2;
+const double _p2pDashboardDividerHeight = AppSpacing.dividerHairline;
+const EdgeInsets _p2pDashboardScrollPadding = EdgeInsets.fromLTRB(
+  AppSpacing.contentPad,
+  AppSpacing.x3,
+  AppSpacing.contentPad,
+  0,
+);
+
 class P2PDashboardPage extends ConsumerStatefulWidget {
   const P2PDashboardPage({super.key, this.shellRenderMode});
 
@@ -62,12 +76,10 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pDashboardProvider(_timeFilter));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
+    final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pDashboardBottomInsetVisual
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pDashboardBottomInsetNative) +
+            ? _p2pDashboardVisualNavClearance + _p2pDashboardVisualClearance
+            : _p2pDashboardNativeNavClearance + _p2pDashboardNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -92,7 +104,9 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDashboardScrollPadding(bottomInset),
+                    padding: _p2pDashboardScrollPadding.copyWith(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,

@@ -177,14 +177,13 @@ class _FooterToolButton extends StatelessWidget {
       child: Semantics(
         button: true,
         label: label,
-        child: InkWell(
+        child: VitCard(
+          variant: VitCardVariant.ghost,
+          radius: VitCardRadius.sm,
+          width: AppSpacing.arenaStudioFooterToolButton,
+          height: AppSpacing.arenaStudioFooterToolButton,
           onTap: onTap,
-          borderRadius: AppRadii.smRadius,
-          child: SizedBox(
-            width: AppSpacing.arenaStudioFooterToolButton,
-            height: AppSpacing.arenaStudioFooterToolButton,
-            child: Icon(icon, color: AppColors.text3, size: AppSpacing.iconSm),
-          ),
+          child: Icon(icon, color: AppColors.text3, size: AppSpacing.iconSm),
         ),
       ),
     );

@@ -79,10 +79,16 @@ class _IconTile extends StatelessWidget {
 }
 
 class _Panel extends StatelessWidget {
-  const _Panel({required this.child, this.borderColor = AppColors.cardBorder});
+  const _Panel({
+    super.key,
+    required this.child,
+    this.borderColor = AppColors.cardBorder,
+    this.onTap,
+  });
 
   final Widget child;
   final Color borderColor;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +97,7 @@ class _Panel extends StatelessWidget {
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       borderColor: borderColor,
+      onTap: onTap,
       child: child,
     );
   }

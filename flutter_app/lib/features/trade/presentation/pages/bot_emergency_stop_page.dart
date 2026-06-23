@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -21,8 +20,6 @@ part '../widgets/bot_emergency_stop_page_sections.dart';
 part '../widgets/bot_emergency_stop_page_common.dart';
 
 const _stopBackground = AppColors.bg;
-const _stopPanel = AppColors.surface;
-const _stopPanel2 = AppColors.surface2;
 const _stopPrimary = AppColors.primary;
 const _stopGreen = AppColors.buy;
 const _stopRed = AppColors.sell;

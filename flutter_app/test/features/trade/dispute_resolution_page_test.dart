@@ -109,6 +109,10 @@ void main() {
     expect(find.text('Fee Discrepancy'), findsOneWidget);
     expect(find.text('Provider Misconduct'), findsOneWidget);
     expect(find.text('Submit Complaint'), findsOneWidget);
+    expect(
+      find.byKey(DisputeResolutionPage.submitKey).hitTestable(),
+      findsNothing,
+    );
   });
 
   testWidgets('SC-082 first viewport reaches complaint type inventory', (
@@ -137,11 +141,15 @@ void main() {
   ) async {
     await pumpDisputeResolution(tester);
 
+    await tester.ensureVisible(find.byKey(DisputeResolutionPage.submitKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(DisputeResolutionPage.submitKey));
     await tester.pumpAndSettle();
     expect(find.text('Active Cases'), findsNothing);
 
     await fillComplaintForm(tester);
+    await tester.ensureVisible(find.byKey(DisputeResolutionPage.submitKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(DisputeResolutionPage.submitKey));
     await tester.pumpAndSettle();
 
@@ -158,6 +166,8 @@ void main() {
     await pumpDisputeResolution(tester);
 
     await fillComplaintForm(tester);
+    await tester.ensureVisible(find.byKey(DisputeResolutionPage.submitKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(DisputeResolutionPage.submitKey));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(DisputeResolutionPage.tabKey('history')));

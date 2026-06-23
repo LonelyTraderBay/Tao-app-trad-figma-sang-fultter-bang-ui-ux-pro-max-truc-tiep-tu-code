@@ -56,12 +56,12 @@ class _ClaimSheet extends StatelessWidget {
                           ),
                         ),
                       ),
-                      IconButton(
+                      VitIconButton(
+                        icon: Icons.close_rounded,
+                        tooltip: 'Close',
                         onPressed: onClose,
-                        icon: const Icon(
-                          Icons.close_rounded,
-                          color: AppColors.text3,
-                        ),
+                        variant: VitIconButtonVariant.transparent,
+                        size: VitIconButtonSize.md,
                       ),
                     ],
                   ),
