@@ -55,6 +55,17 @@ void main() {
       findsOneWidget,
     );
 
+    await tester.enterText(
+      find.byKey(WithdrawPage.addressFieldKey),
+      'TXYZ1234567890abcdef',
+    );
+    await tester.ensureVisible(find.byKey(WithdrawPage.amountFieldKey));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(WithdrawPage.amountFieldKey), '100');
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(WithdrawPage.nextKey));
+    await tester.pumpAndSettle();
+
     await tester.tap(find.byKey(WithdrawPage.nextKey));
     await tester.pumpAndSettle();
 

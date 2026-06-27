@@ -7,7 +7,7 @@ class _ConvertFooter extends StatelessWidget {
     required this.targetSymbol,
     required this.enabled,
     required this.onTap,
-    this.horizontalPadding = 16,
+    this.horizontalPadding = AppSpacing.contentPad,
   });
 
   final double bottomSpace;
@@ -19,23 +19,21 @@ class _ConvertFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.modalScrimStrong,
-      child: Padding(
-        padding: EdgeInsetsDirectional.only(
-          start: horizontalPadding,
-          top: _dustFooterTopPad,
-          end: horizontalPadding,
-          bottom: bottomSpace + _dustGap,
-        ),
-        child: _PrimaryButton(
-          key: DustConverterPage.ctaKey,
-          enabled: enabled,
-          label: enabled
-              ? 'Chuy\u1EC3n \u0111\u1ED5i $selectedCount t\u00E0i s\u1EA3n \u2192 $targetSymbol'
-              : 'Ch\u1ECDn t\u00E0i s\u1EA3n \u0111\u1EC3 chuy\u1EC3n \u0111\u1ED5i',
-          onTap: onTap,
-        ),
+    final basePadding = horizontalPadding == 0
+        ? AppSpacing.zeroInsets
+        : AppSpacing.contentInsets;
+    return Padding(
+      padding: basePadding.copyWith(
+        top: _dustFooterTopPad,
+        bottom: bottomSpace + _dustGap,
+      ),
+      child: _PrimaryButton(
+        key: DustConverterPage.ctaKey,
+        enabled: enabled,
+        label: enabled
+            ? 'Chuy\u1EC3n \u0111\u1ED5i $selectedCount t\u00E0i s\u1EA3n \u2192 $targetSymbol'
+            : 'Ch\u1ECDn t\u00E0i s\u1EA3n \u0111\u1EC3 chuy\u1EC3n \u0111\u1ED5i',
+        onTap: onTap,
       ),
     );
   }
@@ -47,17 +45,20 @@ class _PrimaryButton extends StatelessWidget {
     required this.label,
     required this.enabled,
     required this.onTap,
+    this.variant = VitCtaButtonVariant.primary,
   });
 
   final String label;
   final bool enabled;
   final VoidCallback onTap;
+  final VitCtaButtonVariant variant;
 
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
       onPressed: enabled ? onTap : null,
-      height: _dustButtonHeight,
+      variant: variant,
+      height: AppSpacing.inputHeight,
       child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
@@ -78,26 +79,12 @@ class _PreviewRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.zeroInsets.copyWith(bottom: last ? 0 : _dustGap),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ),
-          Text(
-            value,
-            style: AppTextStyles.caption.copyWith(
-              color: valueColor,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
-      ),
+    return VitInfoRow(
+      label: label,
+      value: value,
+      valueColor: valueColor,
+      density: VitDensity.compact,
+      showDivider: !last,
     );
   }
 }
@@ -110,13 +97,13 @@ class _ConvertedBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _dustConvertedPadding,
-      borderColor: _dustGreen.withValues(alpha: .28),
+      density: VitDensity.compact,
+      borderColor: AppColors.buy20,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline,
-            color: _dustGreen,
+            color: AppColors.buy,
             size: AppSpacing.iconSm,
           ),
           const SizedBox(width: _dustInlineGap),
@@ -124,7 +111,7 @@ class _ConvertedBanner extends StatelessWidget {
             child: Text(
               '\u0110\u00E3 chuy\u1EC3n \u0111\u1ED5i sang $targetSymbol',
               style: AppTextStyles.caption.copyWith(
-                color: _dustGreen,
+                color: AppColors.buy,
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -144,8 +131,10 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      icon: Icons.auto_awesome_rounded,
       variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _dustPrimary,
+      accentColor: AppColors.primary,
+      density: VitDensity.compact,
     );
   }
 }

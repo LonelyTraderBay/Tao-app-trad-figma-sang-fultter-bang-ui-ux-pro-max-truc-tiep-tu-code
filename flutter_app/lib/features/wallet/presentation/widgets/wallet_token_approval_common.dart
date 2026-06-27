@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 
 const walletTokenApprovalBackground = AppColors.bg;
 const walletTokenApprovalPanel = AppColors.surface;
@@ -61,17 +63,54 @@ Color walletTokenApprovalRiskColor(String risk) {
   };
 }
 
+VitStatusPillStatus walletTokenApprovalRiskStatus(String risk) {
+  return switch (risk) {
+    'critical' => VitStatusPillStatus.error,
+    'high' => VitStatusPillStatus.orange,
+    'medium' => VitStatusPillStatus.warning,
+    'low' => VitStatusPillStatus.success,
+    _ => VitStatusPillStatus.neutral,
+  };
+}
+
+IconData walletTokenApprovalRiskIcon(String risk) {
+  return switch (risk) {
+    'critical' => Icons.report_gmailerrorred_rounded,
+    'high' => Icons.warning_amber_rounded,
+    'medium' => Icons.info_outline_rounded,
+    'low' => Icons.verified_user_outlined,
+    _ => Icons.shield_outlined,
+  };
+}
+
+String walletTokenApprovalRiskLabel(String risk) {
+  return switch (risk) {
+    'critical' => 'CRITICAL',
+    'high' => 'HIGH',
+    'medium' => 'MEDIUM',
+    'low' => 'LOW',
+    _ => risk.toUpperCase(),
+  };
+}
+
 class WalletTokenApprovalSectionLabel extends StatelessWidget {
-  const WalletTokenApprovalSectionLabel({required this.label, super.key});
+  const WalletTokenApprovalSectionLabel({
+    required this.label,
+    this.icon = Icons.security_rounded,
+    super.key,
+  });
 
   final String label;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return VitSectionHeader(
       title: label,
+      icon: icon,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: walletTokenApprovalPrimary,
+      density: VitDensity.compact,
     );
   }
 }
@@ -104,12 +143,9 @@ class WalletTokenApprovalInfoNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletTokenNoticeMinHeight,
-      ),
-      padding: AppSpacing.walletTokenNoticePadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
-      borderColor: walletTokenApprovalPrimary.withValues(alpha: .20),
+      borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -122,10 +158,7 @@ class WalletTokenApprovalInfoNotice extends StatelessWidget {
           Expanded(
             child: Text(
               'Token approvals allow smart contracts to spend your tokens. Revoke unused or suspicious approvals to protect your assets.',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                height: 1.48,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],

@@ -20,19 +20,18 @@ class _AssetTransactions extends StatelessWidget {
     }
 
     return VitCard(
-      padding: VitDensity.compact.cardPadding,
+      density: VitDensity.compact,
       borderColor: AppColors.overlayStroke,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Lịch sử giao dịch',
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
+          const VitSectionHeader(
+            title: 'Lịch sử giao dịch',
+            icon: Icons.receipt_long_outlined,
+            iconColor: _assetPrimary,
+            density: VitDensity.compact,
           ),
+          const SizedBox(height: AppSpacing.x2),
           for (final tx in transactions)
             _AssetTransactionRow(tx: tx, onTap: () => onNavigate(tx.route)),
         ],
@@ -54,18 +53,15 @@ class _AssetTransactionRow extends StatelessWidget {
       key: AssetDetailPage.transactionKey(tx.id),
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
-      padding: AppSpacing.zeroInsets.copyWith(
-        top: _assetTransactionVerticalPad,
-        bottom: _assetTransactionVerticalPad,
-      ),
+      padding: VitDensity.compact.cardPadding,
       onTap: onTap,
       child: Row(
         children: [
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            width: _assetTransactionIconSize,
-            height: _assetTransactionIconSize,
+            width: AppSpacing.walletAssetTransactionIcon,
+            height: AppSpacing.walletAssetTransactionIcon,
             alignment: Alignment.center,
             borderColor: color.withValues(alpha: .20),
             child: Icon(
@@ -76,7 +72,7 @@ class _AssetTransactionRow extends StatelessWidget {
               size: AppSpacing.walletAssetTransactionGlyph,
             ),
           ),
-          const SizedBox(width: _assetInlineGap),
+          const SizedBox(width: AppSpacing.walletAssetTransactionsGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +83,7 @@ class _AssetTransactionRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: _assetSmallGap),
+                const SizedBox(height: AppSpacing.walletAssetSmallGap),
                 Text(
                   tx.createdAt,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -108,12 +104,13 @@ class _AssetTransactionRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: _assetSmallGap),
-                Text(
-                  tx.status,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: color),
+                const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                VitStatusPill(
+                  label: tx.status,
+                  status: tx.isIncoming
+                      ? VitStatusPillStatus.success
+                      : VitStatusPillStatus.error,
+                  size: VitStatusPillSize.sm,
                 ),
               ],
             ),

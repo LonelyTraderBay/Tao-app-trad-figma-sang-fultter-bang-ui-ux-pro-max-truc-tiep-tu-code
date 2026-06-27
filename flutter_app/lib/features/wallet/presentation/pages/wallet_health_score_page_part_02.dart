@@ -74,6 +74,8 @@ class _SecurityTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final metric = snapshot.metricByCategory('Security');
     return VitPageContent(
+      padding: VitContentPadding.none,
+      gap: VitContentGap.tight,
       density: VitDensity.compact,
       children: [
         _ScoreSummaryCard(
@@ -103,6 +105,8 @@ class _DiversificationTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final metric = snapshot.metricByCategory('Diversification');
     return VitPageContent(
+      padding: VitContentPadding.none,
+      gap: VitContentGap.tight,
       density: VitDensity.compact,
       children: [
         _ScoreSummaryCard(
@@ -348,10 +352,14 @@ class _AssetDistributionCard extends StatelessWidget {
                         child: const SizedBox.expand(),
                       ),
                       const SizedBox(width: AppSpacing.x1),
-                      Text(
-                        slice.name,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text2,
+                      Expanded(
+                        child: Text(
+                          '${slice.name} ${slice.value}%',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text2,
+                          ),
                         ),
                       ),
                     ],

@@ -7,20 +7,18 @@ class RecentTransfersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          'L\u1ecbch s\u1eed chuy\u1ec3n g\u1ea7n \u0111\u00e2y',
-          style: AppTextStyles.baseMedium,
-        ),
-        const SizedBox(height: _transferSectionGap),
-        for (var i = 0; i < transfers.length; i++)
-          _RecentTransferRow(
-            transfer: transfers[i],
-            showDivider: i != transfers.length - 1,
-          ),
-      ],
+    return VitCard(
+      variant: VitCardVariant.standard,
+      density: VitDensity.compact,
+      child: Column(
+        children: [
+          for (var i = 0; i < transfers.length; i++)
+            _RecentTransferRow(
+              transfer: transfers[i],
+              showDivider: i != transfers.length - 1,
+            ),
+        ],
+      ),
     );
   }
 }
@@ -33,62 +31,13 @@ class _RecentTransferRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: _transferHistoryRowPadding,
-          child: Row(
-            children: [
-              VitCard(
-                width: _transferIconBox,
-                height: _transferIconBox,
-                variant: VitCardVariant.ghost,
-                background: ColoredBox(
-                  color: _transferPrimary.withValues(alpha: .12),
-                ),
-                alignment: Alignment.center,
-                clip: true,
-                child: Icon(
-                  Icons.swap_vert_rounded,
-                  color: _transferPrimary,
-                  size: _transferActionIcon,
-                ),
-              ),
-              const SizedBox(width: _transferInlineGap),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${transfer.fromWallet} \u2192 ${transfer.toWallet}',
-                      style: AppTextStyles.base.copyWith(
-                        color: AppColors.text1,
-                      ),
-                    ),
-                    const SizedBox(height: _transferTinyGap),
-                    Text(
-                      transfer.time,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Text(
-                '${formatTransferAssetAmount(transfer.amount)} ${transfer.asset}',
-                style: AppTextStyles.numericMicro,
-              ),
-            ],
-          ),
-        ),
-        if (showDivider)
-          const Divider(
-            height: AppSpacing.walletHistoryDividerHeight,
-            thickness: AppSpacing.walletHistoryDividerHeight,
-            color: AppColors.dividerBlueSubtle,
-          ),
-      ],
+    return VitInfoRow(
+      label:
+          '${transfer.fromWallet} \u2192 ${transfer.toWallet} \u00b7 ${transfer.time}',
+      value: '${formatTransferAssetAmount(transfer.amount)} ${transfer.asset}',
+      density: VitDensity.compact,
+      showDivider: showDivider,
+      leading: const Icon(Icons.swap_vert_rounded),
     );
   }
 }
@@ -110,39 +59,21 @@ class TransferWalletPickerRow extends StatelessWidget {
     final color = Color(wallet.colorHex);
     return VitCard(
       onTap: onTap,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      child: Column(
-        children: [
-          Padding(
-            padding: _transferHistoryRowPadding,
-            child: Row(
-              children: [
-                _WalletIcon(wallet: wallet, color: color),
-                const SizedBox(width: _transferInlineGap),
-                Expanded(
-                  child: Text(wallet.name, style: AppTextStyles.baseMedium),
-                ),
-                Text(
-                  formatTransferUsd(wallet.balanceUsd),
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                ),
-                const SizedBox(width: _transferInlineGap),
-                if (selected)
-                  const Icon(
-                    Icons.check_circle_rounded,
-                    color: _transferPrimary,
-                    size: _transferActionIcon,
-                  ),
-              ],
-            ),
-          ),
-          const Divider(
-            height: AppSpacing.walletHistoryDividerHeight,
-            thickness: AppSpacing.walletHistoryDividerHeight,
-            color: AppColors.divider,
-          ),
-        ],
+      variant: VitCardVariant.inner,
+      density: VitDensity.compact,
+      borderColor: selected ? _transferPrimary : AppColors.border,
+      child: VitInfoRow(
+        label: wallet.name,
+        value: formatTransferUsd(wallet.balanceUsd),
+        density: VitDensity.compact,
+        leading: _WalletIcon(wallet: wallet, color: color),
+        trailing: selected
+            ? const Icon(
+                Icons.check_circle_rounded,
+                color: _transferPrimary,
+                size: _transferActionIcon,
+              )
+            : null,
       ),
     );
   }
@@ -164,53 +95,21 @@ class TransferAssetPickerRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      child: Column(
-        children: [
-          Padding(
-            padding: _transferHistoryRowPadding,
-            child: Row(
-              children: [
-                _AssetLogo(asset: asset, size: _transferIconBox),
-                const SizedBox(width: _transferInlineGap),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(asset.symbol, style: AppTextStyles.baseMedium),
-                      const SizedBox(height: _transferTinyGap),
-                      Text(
-                        asset.name,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  formatTransferAssetAmount(asset.available),
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: AppColors.text2,
-                  ),
-                ),
-                const SizedBox(width: _transferTinyGap),
-                if (selected)
-                  const Icon(
-                    Icons.check_circle_rounded,
-                    color: _transferPrimary,
-                    size: _transferActionIcon,
-                  ),
-              ],
-            ),
-          ),
-          const Divider(
-            height: AppSpacing.walletHistoryDividerHeight,
-            thickness: AppSpacing.walletHistoryDividerHeight,
-            color: AppColors.divider,
-          ),
-        ],
+      variant: VitCardVariant.inner,
+      density: VitDensity.compact,
+      borderColor: selected ? _transferPrimary : AppColors.border,
+      child: VitInfoRow(
+        label: '${asset.symbol} \u00b7 ${asset.name}',
+        value: formatTransferAssetAmount(asset.available),
+        density: VitDensity.compact,
+        leading: _AssetLogo(asset: asset, size: _transferIconBox),
+        trailing: selected
+            ? const Icon(
+                Icons.check_circle_rounded,
+                color: _transferPrimary,
+                size: _transferActionIcon,
+              )
+            : null,
       ),
     );
   }
@@ -223,11 +122,11 @@ class TransferSuccessBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: _transferNoticePadding,
+      density: VitDensity.compact,
       borderColor: _transferGreen.withValues(alpha: .30),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.check_circle_outline_rounded,
             color: _transferGreen,
             size: _transferActionIcon,

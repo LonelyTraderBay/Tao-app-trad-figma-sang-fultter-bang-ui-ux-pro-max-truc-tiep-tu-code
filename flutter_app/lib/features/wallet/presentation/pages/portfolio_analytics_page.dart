@@ -27,10 +27,6 @@ const _analyticsBackground = AppColors.bg;
 const _analyticsPrimary = AppColors.primary;
 const _analyticsGreen = AppColors.buy;
 const _analyticsRed = AppColors.sell;
-const _walletAnalyticsVisualNavClearance = 114.0;
-const _walletAnalyticsNativeNavClearance = 88.0;
-const _walletAnalyticsChartAspectRatio = 1.85;
-const _walletAnalyticsAssetProgressHeight = 4.0;
 
 class PortfolioAnalyticsPage extends ConsumerStatefulWidget {
   const PortfolioAnalyticsPage({super.key, this.shellRenderMode});
@@ -61,11 +57,11 @@ class _PortfolioAnalyticsPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletPortfolioAnalyticsProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navClearance = mode.usesVisualQaFrame
-        ? _walletAnalyticsVisualNavClearance
-        : _walletAnalyticsNativeNavClearance;
-    final scrollEndPadding =
-        navClearance + MediaQuery.paddingOf(context).bottom;
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? AppSpacing.walletAnalyticsBottomInsetVisual
+            : AppSpacing.walletAnalyticsBottomInsetNative) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,12 +79,13 @@ class _PortfolioAnalyticsPageState
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: PortfolioAnalyticsPage.contentKey,
-                  padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
+                  bottomInset: bottomInset,
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
+                    gap: VitContentGap.tight,
                     children: [
                       _ValueSummary(snapshot: snapshot),
                       _ViewSwitcher(

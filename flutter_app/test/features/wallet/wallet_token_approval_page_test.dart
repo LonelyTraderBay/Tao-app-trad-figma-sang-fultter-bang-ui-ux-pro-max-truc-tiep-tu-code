@@ -12,11 +12,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpTokenApprovals(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpTokenApprovals(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -106,13 +106,16 @@ void main() {
       find.textContaining('Review the spender, token, allowance'),
       findsOneWidget,
     );
-    expect(find.textContaining('Spender: Unknown Contract'), findsOneWidget);
-    expect(find.textContaining('Token: WETH'), findsOneWidget);
-    expect(find.textContaining('Allowance: Unlimited'), findsOneWidget);
-    expect(find.textContaining('Gas estimate:'), findsOneWidget);
-    expect(find.textContaining('Impact:'), findsOneWidget);
+    expect(find.text('Spender'), findsOneWidget);
+    expect(find.text('Unknown Contract (0x1234...7890)'), findsOneWidget);
+    expect(find.text('Token'), findsOneWidget);
+    expect(find.text('WETH'), findsWidgets);
+    expect(find.text('Allowance'), findsOneWidget);
+    expect(find.textContaining('Unlimited'), findsWidgets);
+    expect(find.text('Gas estimate'), findsOneWidget);
+    expect(find.text('Impact'), findsOneWidget);
     expect(find.textContaining('mock flow'), findsNothing);
-    await tester.tapAt(const Offset(220, 500));
+    await tester.tap(find.byKey(WalletTokenApprovalPage.revokeSheetCancelKey));
     await tester.pumpAndSettle();
     expect(find.text('Revoke WETH approval'), findsNothing);
 
@@ -136,7 +139,7 @@ void main() {
   testWidgets('SC-150 first viewport reaches approval controls', (
     tester,
   ) async {
-    await pumpTokenApprovals(tester);
+    await pumpTokenApprovals(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,

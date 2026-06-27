@@ -9,12 +9,14 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
-  Future<void> pumpMultiManager(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpMultiManager(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -82,8 +84,40 @@ void main() {
     expect(find.text('Hardware Ledger'), findsOneWidget);
     expect(find.text('Add Wallet'), findsOneWidget);
     expect(
+      find.text('0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'),
+      findsNothing,
+    );
+    expect(
       find.textContaining('Addresses are masked by default'),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-148 first viewport reaches wallet controls', (tester) async {
+    await pumpMultiManager(tester, viewport: VitFirstViewport.minimumPhone);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'WalletMultiManagerPage',
+      semanticLabel: 'SC-148 WalletMultiManagerPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(WalletMultiManagerPage.tabKey('T\u1EA5t c\u1EA3')),
+      routeName: 'WalletMultiManagerPage',
+      actionLabel: 'the manager tabs',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(WalletMultiManagerPage.walletKey('w1')),
+      routeName: 'WalletMultiManagerPage',
+      actionLabel: 'the first wallet row',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(WalletMultiManagerPage.revealKey('w1')),
+      routeName: 'WalletMultiManagerPage',
+      actionLabel: 'the reveal wallet address control',
     );
   });
 
@@ -91,12 +125,23 @@ void main() {
     await pumpMultiManager(tester);
 
     expect(find.text('0x742d...0bEb'), findsOneWidget);
+    expect(find.byTooltip('Reveal Main Wallet address'), findsOneWidget);
+    expect(find.byTooltip('Copy Main Wallet address'), findsOneWidget);
+
+    await tester.tap(find.byKey(WalletMultiManagerPage.copyKey('w1')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'),
+      findsNothing,
+    );
+
     await tester.tap(find.byKey(WalletMultiManagerPage.revealKey('w1')));
     await tester.pumpAndSettle();
     expect(
       find.text('0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'),
       findsOneWidget,
     );
+    expect(find.byTooltip('Hide Main Wallet address'), findsOneWidget);
 
     await tester.tap(find.byKey(WalletMultiManagerPage.tabKey('Nh\u00F3m')));
     await tester.pumpAndSettle();
@@ -110,5 +155,18 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Recent Activity'), findsOneWidget);
     expect(find.text('22:32'), findsOneWidget);
+  });
+
+  testWidgets('SC-148 add wallet action shows deferred state', (tester) async {
+    await pumpMultiManager(tester);
+
+    await tester.tap(find.byKey(WalletMultiManagerPage.addWalletKey));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(WalletMultiManagerPage.addWalletNoticeKey),
+      findsOneWidget,
+    );
+    expect(find.text('Wallet creation is not connected yet.'), findsOneWidget);
   });
 }

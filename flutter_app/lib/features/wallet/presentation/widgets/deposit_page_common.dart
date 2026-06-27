@@ -17,7 +17,7 @@ class _DepositInfoCard extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: _depositCardPadding,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -27,47 +27,15 @@ class _DepositInfoCard extends StatelessWidget {
           ),
           const SizedBox(height: _depositGap),
           for (var i = 0; i < rows.length; i++) ...[
-            _InfoRow(label: rows[i].$1, value: rows[i].$2),
-            if (i != rows.length - 1) const SizedBox(height: _depositGap),
+            VitInfoRow(
+              label: rows[i].$1,
+              value: rows[i].$2,
+              density: VitDensity.compact,
+              showDivider: i != rows.length - 1,
+            ),
           ],
         ],
       ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-        ),
-        const SizedBox(width: _depositInlineGap),
-        Flexible(
-          child: Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.end,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -79,16 +47,19 @@ class _RefreshButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: DepositPage.refreshKey,
-      onTap: onTap,
-      label: 'Làm mới địa chỉ nạp',
-      selected: false,
-      fullWidth: true,
-      height: _depositRefreshHeight,
-      accentColor: _depositPrimary,
-      leading: const Icon(Icons.refresh_rounded),
-      padding: _depositCompactPadding,
+    return Tooltip(
+      message: 'Refresh deposit address',
+      child: VitChoicePill(
+        key: DepositPage.refreshKey,
+        onTap: onTap,
+        label: 'Làm mới địa chỉ nạp',
+        selected: false,
+        fullWidth: true,
+        height: _depositRefreshHeight,
+        accentColor: _depositPrimary,
+        leading: const Icon(Icons.refresh_rounded),
+        semanticLabel: 'Refresh deposit address',
+      ),
     );
   }
 }
@@ -106,14 +77,15 @@ class _NetworkOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      key: DepositPage.networkKey(network.id),
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: network.name,
       child: VitCard(
+        key: DepositPage.networkKey(network.id),
+        onTap: onTap,
         variant: VitCardVariant.inner,
-        padding: _depositCompactPadding,
+        density: VitDensity.compact,
         borderColor: selected ? _depositPrimary : AppColors.border,
         child: Row(
           children: [

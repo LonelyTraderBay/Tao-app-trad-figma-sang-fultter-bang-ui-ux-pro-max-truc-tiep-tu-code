@@ -7,19 +7,16 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletHealthScoreProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navClearance = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final scrollEndPadding =
-        navClearance +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
+    final scrollEndPadding = _healthScrollBottomInset(context, mode);
+    final primaryRecommendation = snapshot.priorityRecommendations.isEmpty
+        ? null
+        : snapshot.priorityRecommendations.first;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-151 WalletHealthScorePage',
       child: Material(
-        color: _healthBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Wallet Health',
@@ -29,18 +26,39 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _HealthTabs(
-                activeTab: _tab,
-                onChanged: (tab) => setState(() => _tab = tab),
-              ),
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: WalletHealthScorePage.contentKey,
-                  padding: AppSpacing.walletHealthScrollPadding(
-                    scrollEndPadding,
-                  ),
+                  bottomInset: scrollEndPadding,
                   physics: const ClampingScrollPhysics(),
-                  child: _buildTab(snapshot),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
+                    gap: VitContentGap.tight,
+                    children: [
+                      _OverallScoreCard(snapshot: snapshot),
+                      if (primaryRecommendation != null)
+                        _RecommendationCard(
+                          recommendation: primaryRecommendation,
+                          onTap: () =>
+                              _showRecommendationSheet(primaryRecommendation),
+                        )
+                      else
+                        const VitEmptyState(
+                          title: 'No priority recommendations',
+                          message:
+                              'Wallet health actions will appear here when needed.',
+                        ),
+                      _HealthTabs(
+                        activeTab: _tab,
+                        onChanged: (tab) => setState(() => _tab = tab),
+                      ),
+                      _buildTab(
+                        snapshot,
+                        primaryRecommendationId: primaryRecommendation?.id,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -50,13 +68,17 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
     );
   }
 
-  Widget _buildTab(WalletHealthScoreSnapshot snapshot) {
+  Widget _buildTab(
+    WalletHealthScoreSnapshot snapshot, {
+    String? primaryRecommendationId,
+  }) {
     if (_tab == _tabSecurity) return _SecurityTab(snapshot: snapshot);
     if (_tab == _tabDiversification) {
       return _DiversificationTab(snapshot: snapshot);
     }
     return _OverviewTab(
       snapshot: snapshot,
+      primaryRecommendationId: primaryRecommendationId,
       onRecommendationTap: _showRecommendationSheet,
     );
   }
@@ -69,36 +91,44 @@ class _WalletHealthScorePageState extends ConsumerState<WalletHealthScorePage> {
         borderRadius: AppRadii.sheetTopRadius,
       ),
       builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: AppSpacing.walletHealthSheetPadding,
-            child: VitPageContent(
-              density: VitDensity.compact,
-              children: [
-                Text(
-                  recommendation.actionLabel,
-                  style: AppTextStyles.sectionTitle,
+        return VitSheetPanel(
+          title: recommendation.actionLabel,
+          child: VitPageContent(
+            padding: VitContentPadding.none,
+            gap: VitContentGap.tight,
+            density: VitDensity.compact,
+            children: [
+              VitStatusPill(
+                label: '${recommendation.impact} impact advisory',
+                status: VitStatusPillStatus.warning,
+                size: VitStatusPillSize.sm,
+              ),
+              Text(
+                recommendation.description,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  height: 1.45,
                 ),
-                Text(
-                  recommendation.description,
+              ),
+              Text(
+                'This is an advisory health signal, not financial advice. Review account settings and live risk before taking action.',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  height: 1.32,
+                ),
+              ),
+              VitCtaButton(
+                key: WalletHealthScorePage.sheetCloseKey,
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  'Close',
                   style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: 1.45,
+                    color: AppColors.onAccent,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                VitCtaButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    'Done',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.onAccent,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
@@ -114,38 +144,27 @@ class _HealthTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      for (final tab in const [_tabOverview, _tabSecurity, _tabDiversification])
-        VitTabItem(
-          key: tab,
-          label: tab,
-          widgetKey: WalletHealthScorePage.tabKey(tab),
-        ),
-    ];
-
-    return Material(
-      color: _healthPanel,
-      child: SizedBox(
-        height: _healthTabBarHeight,
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: VitTabBar(
-                  tabs: tabs,
-                  activeKey: activeTab,
-                  onChanged: onChanged,
-                  variant: VitTabBarVariant.underline,
-                ),
-              ),
-            ),
-            const Divider(
-              height: AppSpacing.dividerHairline,
-              color: _healthBorder,
-            ),
-          ],
-        ),
-      ),
+    return VitTabBar(
+      tabs: [
+        for (final tab in const [
+          _tabOverview,
+          _tabSecurity,
+          _tabDiversification,
+        ])
+          VitTabItem(
+            key: tab,
+            label: tab,
+            icon: switch (tab) {
+              _tabOverview => Icons.health_and_safety_outlined,
+              _tabSecurity => Icons.shield_outlined,
+              _ => Icons.donut_large_rounded,
+            },
+            widgetKey: WalletHealthScorePage.tabKey(tab),
+          ),
+      ],
+      activeKey: activeTab,
+      onChanged: onChanged,
+      variant: VitTabBarVariant.segment,
     );
   }
 }
@@ -153,30 +172,37 @@ class _HealthTabs extends StatelessWidget {
 class _OverviewTab extends StatelessWidget {
   const _OverviewTab({
     required this.snapshot,
+    required this.primaryRecommendationId,
     required this.onRecommendationTap,
   });
 
   final WalletHealthScoreSnapshot snapshot;
+  final String? primaryRecommendationId;
   final ValueChanged<WalletHealthRecommendation> onRecommendationTap;
 
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+      padding: VitContentPadding.none,
+      gap: VitContentGap.tight,
       density: VitDensity.compact,
       children: [
-        _OverallScoreCard(snapshot: snapshot),
         _RadarCard(metrics: snapshot.metrics),
         const _SectionLabel(label: 'Chi ti\u1EBFt \u0111i\u1EC3m'),
         for (final metric in snapshot.metrics) ...[_MetricCard(metric: metric)],
         _TrendCard(history: snapshot.history),
-        const _SectionLabel(label: '\u0110\u1EC1 xu\u1EA5t \u01B0u ti\u00EAn'),
-        if (snapshot.priorityRecommendations.isEmpty)
+        const _SectionLabel(label: '\u0110\u1EC1 xu\u1EA5t th\u00EAm'),
+        if (snapshot.priorityRecommendations
+            .where((rec) => rec.id != primaryRecommendationId)
+            .isEmpty)
           const VitEmptyState(
-            title: 'No priority recommendations',
-            message: 'Wallet health actions will appear here when needed.',
+            title: 'No extra recommendations',
+            message: 'The highest-priority advisory action is shown above.',
           )
         else
-          for (final rec in snapshot.priorityRecommendations) ...[
+          for (final rec in snapshot.priorityRecommendations.where(
+            (rec) => rec.id != primaryRecommendationId,
+          )) ...[
             _RecommendationCard(
               recommendation: rec,
               onTap: () => onRecommendationTap(rec),
@@ -255,7 +281,7 @@ class _OverallScoreCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Your wallet is ${snapshot.overallMessage}',
+                  'Advisory snapshot only. Your wallet is ${snapshot.overallMessage}',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
                     height: 1.28,

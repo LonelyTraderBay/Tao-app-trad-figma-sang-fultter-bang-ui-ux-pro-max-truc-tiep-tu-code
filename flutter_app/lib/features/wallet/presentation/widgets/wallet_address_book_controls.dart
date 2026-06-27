@@ -1,21 +1,5 @@
 part of '../pages/address_book_page.dart';
 
-class _AddAddressButton extends StatelessWidget {
-  const _AddAddressButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitHeaderActionButton(
-      key: AddressBookPage.addKey,
-      type: VitHeaderActionType.add,
-      tooltip: 'Thêm địa chỉ',
-      onPressed: onTap,
-    );
-  }
-}
-
 class _SearchBox extends StatelessWidget {
   const _SearchBox({required this.controller, required this.onChanged});
 
@@ -28,6 +12,7 @@ class _SearchBox extends StatelessWidget {
       fieldKey: AddressBookPage.searchKey,
       controller: controller,
       placeholder: 'Tìm địa chỉ hoặc tên...',
+      variant: VitSearchBarVariant.compact,
       onChanged: (_) => onChanged(),
     );
   }
@@ -47,7 +32,7 @@ class _NetworkFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: _bookFilterHeight,
+      height: AppSpacing.walletAddressFilterHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
@@ -59,12 +44,13 @@ class _NetworkFilterBar extends StatelessWidget {
             label: filter,
             selected: selected,
             onTap: () => onChanged(filter),
-            height: _bookFilterHeight,
-            padding: _bookFilterPadding,
-            accentColor: _bookPrimary,
+            height: AppSpacing.walletAddressFilterHeight,
+            padding: AppSpacing.walletAddressFilterPadding,
+            accentColor: AppColors.primary,
           );
         },
-        separatorBuilder: (_, _) => const SizedBox(width: _bookInlineGap),
+        separatorBuilder: (_, _) =>
+            const SizedBox(width: AppSpacing.walletAddressStatsGap),
         itemCount: filters.length,
       ),
     );
@@ -79,16 +65,16 @@ class _AddressStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = [
-      (addresses.length.toString(), 'Tổng địa chỉ', _bookPrimary),
+      (addresses.length.toString(), 'Tổng địa chỉ', AppColors.primary),
       (
         addresses.where((address) => address.isFavorite).length.toString(),
         'Yêu thích',
-        _bookAmber,
+        AppColors.caution,
       ),
       (
         addresses.where((address) => address.isWhitelisted).length.toString(),
         'Whitelist',
-        _bookGreen,
+        AppColors.buy,
       ),
     ];
 
@@ -98,8 +84,8 @@ class _AddressStats extends StatelessWidget {
           Expanded(
             child: VitCard(
               variant: VitCardVariant.inner,
-              height: _bookStatsHeight,
               borderColor: AppColors.overlayStroke,
+              density: VitDensity.compact,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -110,41 +96,21 @@ class _AddressStats extends StatelessWidget {
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: _bookTinyGap),
+                  const SizedBox(height: AppSpacing.walletAddressCompactGap),
                   Text(
                     stats[i].$2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
             ),
           ),
-          if (i != stats.length - 1) const SizedBox(width: _bookInlineGap),
+          if (i != stats.length - 1)
+            const SizedBox(width: AppSpacing.walletAddressStatsGap),
         ],
-      ],
-    );
-  }
-}
-
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.label, this.icon, this.iconColor});
-
-  final String label;
-  final IconData? icon;
-  final Color? iconColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (icon != null) ...[
-          Icon(icon, color: iconColor, size: AppSpacing.iconSm),
-          const SizedBox(width: _bookTinyGap),
-        ],
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-        ),
       ],
     );
   }

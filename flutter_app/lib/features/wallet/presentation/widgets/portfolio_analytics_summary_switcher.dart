@@ -158,72 +158,30 @@ class _ViewSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const items = [
-      _ViewItem('overview', 'T\u1ED5ng quan', Icons.bar_chart_rounded),
-      _ViewItem(
-        'allocation',
-        'Ph\u00E2n b\u1ED5',
-        Icons.pie_chart_outline_rounded,
-      ),
-      _ViewItem('pnl', 'L\u00E3i/L\u1ED7', Icons.trending_up_rounded),
-    ];
-
-    return VitCard(
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
-      child: Row(
-        children: [
-          for (final item in items)
-            Expanded(
-              child: VitCard(
-                key: PortfolioAnalyticsPage.viewKey(item.id),
-                onTap: () => onChanged(item.id),
-                alignment: Alignment.center,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.md,
-                padding: const EdgeInsetsDirectional.symmetric(
-                  horizontal: AppSpacing.x2,
-                  vertical: AppSpacing.x2,
-                ),
-                background: ColoredBox(
-                  color: active == item.id
-                      ? _analyticsPrimary.withValues(alpha: .18)
-                      : AppColors.transparent,
-                ),
-                clip: true,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      item.icon,
-                      color: active == item.id
-                          ? _analyticsPrimary
-                          : AppColors.text2,
-                      size: AppSpacing.walletAnalyticsSwitcherIcon,
-                    ),
-                    const SizedBox(
-                      width: AppSpacing.walletAnalyticsSwitcherIconGap,
-                    ),
-                    Flexible(
-                      child: Text(
-                        item.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: active == item.id
-                              ? _analyticsPrimary
-                              : AppColors.text2,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
+    return VitTabBar(
+      tabs: [
+        VitTabItem(
+          key: 'overview',
+          label: 'T\u1ED5ng quan',
+          icon: Icons.bar_chart_rounded,
+          widgetKey: PortfolioAnalyticsPage.viewKey('overview'),
+        ),
+        VitTabItem(
+          key: 'allocation',
+          label: 'Ph\u00E2n b\u1ED5',
+          icon: Icons.pie_chart_outline_rounded,
+          widgetKey: PortfolioAnalyticsPage.viewKey('allocation'),
+        ),
+        VitTabItem(
+          key: 'pnl',
+          label: 'L\u00E3i/L\u1ED7',
+          icon: Icons.trending_up_rounded,
+          widgetKey: PortfolioAnalyticsPage.viewKey('pnl'),
+        ),
+      ],
+      activeKey: active,
+      onChanged: onChanged,
+      variant: VitTabBarVariant.segment,
     );
   }
 }

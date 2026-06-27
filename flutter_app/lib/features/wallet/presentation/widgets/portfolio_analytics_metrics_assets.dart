@@ -7,63 +7,29 @@ class _MetricsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _VitCardSurface(
-      padding: AppSpacing.walletAnalyticsMetricsPadding,
+    return VitCard(
+      density: VitDensity.compact,
+      borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Ch\u1EC9 s\u1ED1 hi\u1EC7u su\u1EA5t',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          const VitSectionHeader(
+            title: 'Ch\u1EC9 s\u1ED1 hi\u1EC7u su\u1EA5t',
+            icon: Icons.speed_rounded,
+            iconColor: _analyticsPrimary,
+            density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.walletAnalyticsMetricsTitleGap),
           for (final metric in metrics)
-            _MetricRow(metric: metric, isLast: metric == metrics.last),
+            VitInfoRow(
+              label: metric.label,
+              value: metric.value,
+              valueColor: Color(metric.colorHex),
+              density: VitDensity.compact,
+              showDivider: metric != metrics.last,
+            ),
         ],
       ),
-    );
-  }
-}
-
-class _MetricRow extends StatelessWidget {
-  const _MetricRow({required this.metric, required this.isLast});
-
-  final WalletPortfolioMetric metric;
-  final bool isLast;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            vertical: AppSpacing.x2,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  metric.label,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ),
-              Text(
-                metric.value,
-                style: AppTextStyles.caption.copyWith(
-                  color: Color(metric.colorHex),
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ],
-          ),
-        ),
-        if (!isLast)
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-      ],
     );
   }
 }
@@ -76,20 +42,19 @@ class _AssetsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _VitCardSurface(
-      padding: AppSpacing.zeroInsets,
+    return VitCard(
+      density: VitDensity.compact,
+      borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: AppSpacing.walletAnalyticsAssetsHeaderPadding,
-            child: Text(
-              'V\u1ECB th\u1EBF hi\u1EC7n t\u1EA1i',
-              style: AppTextStyles.body.copyWith(
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+          const VitSectionHeader(
+            title: 'V\u1ECB th\u1EBF hi\u1EC7n t\u1EA1i',
+            icon: Icons.account_balance_wallet_outlined,
+            iconColor: _analyticsPrimary,
+            density: VitDensity.compact,
           ),
+          const SizedBox(height: AppSpacing.x2),
           for (var i = 0; i < assets.length; i++)
             _AssetRow(
               asset: assets[i],
@@ -117,15 +82,12 @@ class _AssetRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(asset.colorHex);
     final pct = totalUsd == 0 ? 0.0 : (asset.usdValue / totalUsd) * 100;
-    final trendColor = asset.change24h >= 0 ? _analyticsGreen : _analyticsRed;
+    final trendTone = asset.change24h >= 0
+        ? VitMetricDeltaTone.positive
+        : VitMetricDeltaTone.negative;
 
     return Column(
       children: [
-        if (!isLast)
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
         Padding(
           padding: AppSpacing.walletAnalyticsAssetRowPadding,
           child: Row(
@@ -142,17 +104,27 @@ class _AssetRow extends StatelessWidget {
                         Expanded(
                           child: Text(
                             asset.symbol,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.body.copyWith(
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
                         ),
-                        Text(
-                          _formatUsd(asset.usdValue),
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                            fontFeatures: AppTextStyles.tabularFigures,
+                        const SizedBox(
+                          width: AppSpacing.walletAnalyticsAssetValueGap,
+                        ),
+                        Flexible(
+                          child: Text(
+                            _formatUsd(asset.usdValue),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.end,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                            ),
                           ),
                         ),
                       ],
@@ -166,7 +138,8 @@ class _AssetRow extends StatelessWidget {
                             borderRadius: AppRadii.xsRadius,
                             child: LinearProgressIndicator(
                               value: math.min(1, pct / 100),
-                              minHeight: _walletAnalyticsAssetProgressHeight,
+                              minHeight:
+                                  AppSpacing.walletAnalyticsAssetProgressHeight,
                               backgroundColor: AppColors.surface3,
                               valueColor: AlwaysStoppedAnimation<Color>(color),
                             ),
@@ -175,18 +148,18 @@ class _AssetRow extends StatelessWidget {
                         const SizedBox(
                           width: AppSpacing.walletAnalyticsAssetValueGap,
                         ),
-                        Text(
-                          '${asset.change24h >= 0 ? '+' : ''}${asset.change24h.toStringAsFixed(2)}%',
-                          style: AppTextStyles.micro.copyWith(
-                            color: trendColor,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+                        VitMetricDeltaPill(
+                          label:
+                              '${asset.change24h >= 0 ? '+' : ''}${asset.change24h.toStringAsFixed(2)}%',
+                          tone: trendTone,
                         ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     Text(
                       '${pct.toStringAsFixed(1)}% danh m\u1EE5c',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
@@ -197,6 +170,11 @@ class _AssetRow extends StatelessWidget {
             ],
           ),
         ),
+        if (!isLast)
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
       ],
     );
   }

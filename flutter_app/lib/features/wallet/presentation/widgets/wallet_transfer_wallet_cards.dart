@@ -1,7 +1,58 @@
 part of 'wallet_transfer_sections.dart';
 
-class TransferWalletCard extends StatelessWidget {
-  const TransferWalletCard({
+class TransferDirectionCard extends StatelessWidget {
+  const TransferDirectionCard({
+    super.key,
+    required this.fromKey,
+    required this.toKey,
+    required this.fromWallet,
+    required this.toWallet,
+    required this.onFromTap,
+    required this.onToTap,
+    required this.onSwap,
+  });
+
+  final Key fromKey;
+  final Key toKey;
+  final WalletTransferWallet fromWallet;
+  final WalletTransferWallet toWallet;
+  final VoidCallback onFromTap;
+  final VoidCallback onToTap;
+  final VoidCallback onSwap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: _TransferEndpointTile(
+            key: fromKey,
+            label: 'Từ',
+            wallet: fromWallet,
+            color: _transferPrimary,
+            onTap: onFromTap,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.x2),
+        TransferSwapButton(onTap: onSwap),
+        const SizedBox(width: AppSpacing.x2),
+        Expanded(
+          child: _TransferEndpointTile(
+            key: toKey,
+            label: 'Đến',
+            wallet: toWallet,
+            color: _transferGreen,
+            onTap: onToTap,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TransferEndpointTile extends StatelessWidget {
+  const _TransferEndpointTile({
     super.key,
     required this.label,
     required this.wallet,
@@ -18,40 +69,19 @@ class TransferWalletCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      child: SizedBox(
-        height: _transferWalletCardHeight,
-        child: Padding(
-          padding: _transferTilePadding,
-          child: Row(
+      variant: VitCardVariant.standard,
+      density: VitDensity.tool,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              SizedBox(
-                width: _transferWalletLabelWidth,
+              Expanded(
                 child: Text(
                   label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.badge.copyWith(color: AppColors.text3),
-                ),
-              ),
-              const SizedBox(width: _transferTinyGap),
-              _WalletIcon(wallet: wallet, color: color),
-              const SizedBox(width: _transferInlineGap),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(wallet.name, style: AppTextStyles.baseMedium),
-                    const SizedBox(height: _transferTinyGap),
-                    Text(
-                      'Số dư: ${formatTransferUsd(wallet.balanceUsd)}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                      ),
-                    ),
-                  ],
                 ),
               ),
               const Icon(
@@ -61,7 +91,29 @@ class TransferWalletCard extends StatelessWidget {
               ),
             ],
           ),
-        ),
+          const SizedBox(height: AppSpacing.x1),
+          Row(
+            children: [
+              _WalletIcon(wallet: wallet, color: color),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  wallet.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.baseMedium,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            formatTransferUsd(wallet.balanceUsd),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+          ),
+        ],
       ),
     );
   }

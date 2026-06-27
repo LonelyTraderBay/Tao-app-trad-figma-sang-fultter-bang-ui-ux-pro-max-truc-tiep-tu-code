@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
@@ -29,7 +30,7 @@ class WithdrawBalanceCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
       height: AppSpacing.inputHeight,
-      padding: AppSpacing.walletWithdrawBalancePadding,
+      density: VitDensity.tool,
       borderColor: AppColors.cardBorder,
       child: Row(
         children: [
@@ -71,7 +72,7 @@ class WithdrawNetworkSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const WithdrawSectionLabel('Mạng lưới'),
-        const SizedBox(height: AppSpacing.x3 + AppSpacing.x1),
+        const SizedBox(height: AppSpacing.x2),
         Semantics(
           button: true,
           label:
@@ -79,45 +80,43 @@ class WithdrawNetworkSelector extends StatelessWidget {
           child: VitCard(
             key: withdrawNetworkSelectorKey,
             onTap: onTap,
-            variant: VitCardVariant.ghost,
-            borderColor: AppColors.transparent,
-            child: VitCard(
-              variant: VitCardVariant.inner,
-              radius: VitCardRadius.md,
-              height: AppSpacing.inputHeight,
-              padding: AppSpacing.walletWithdrawSelectorPadding,
-              borderColor: withdrawPrimary.withValues(alpha: .34),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          network.name,
-                          style: AppTextStyles.control.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                          ),
+            variant: VitCardVariant.inner,
+            radius: VitCardRadius.md,
+            height: AppSpacing.inputHeight,
+            density: VitDensity.tool,
+            borderColor: withdrawPrimary.withValues(alpha: .34),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        network.name,
+                        style: AppTextStyles.control.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
                         ),
-                        const SizedBox(height: AppSpacing.x2),
-                        Text(
-                          'Phí: ${formatWithdrawNetworkFee(network.fee)} $asset · Tối thiểu: ${formatWithdrawCompact(network.minWithdraw)}',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text2,
-                          ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        'Phí: ${formatWithdrawNetworkFee(network.fee)} $asset · Tối thiểu: ${formatWithdrawCompact(network.minWithdraw)}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text2,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.text2,
-                    size: AppSpacing.transferActionIcon,
-                  ),
-                ],
-              ),
+                ),
+                const Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text2,
+                  size: AppSpacing.transferActionIcon,
+                ),
+              ],
             ),
           ),
         ),
@@ -151,6 +150,7 @@ class WithdrawAddressInput extends StatelessWidget {
     required this.network,
     required this.controller,
     required this.onScan,
+    required this.onChanged,
     super.key,
   });
 
@@ -158,6 +158,7 @@ class WithdrawAddressInput extends StatelessWidget {
   final WalletWithdrawNetwork network;
   final TextEditingController controller;
   final VoidCallback onScan;
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -199,6 +200,7 @@ class WithdrawAddressInput extends StatelessWidget {
           hintText: 'Nhập địa chỉ $asset (${network.name.split(' ').first})',
           semanticLabel: 'Withdrawal destination address',
           textStyle: AppTextStyles.control,
+          onChanged: onChanged,
           suffix: Padding(
             padding: AppSpacing.walletWithdrawInputSuffixPadding,
             child: Text(

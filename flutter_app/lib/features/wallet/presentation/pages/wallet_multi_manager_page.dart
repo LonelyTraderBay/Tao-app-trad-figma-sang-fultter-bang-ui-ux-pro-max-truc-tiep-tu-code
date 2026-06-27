@@ -5,29 +5,36 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_multi_manager_sections.dart';
-
-const _managerBackground = AppColors.bg;
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const _tabAll = 'T\u1EA5t c\u1EA3';
 const _tabGroups = 'Nh\u00F3m';
 const _tabActivity = 'Ho\u1EA1t \u0111\u1ED9ng';
+
+double _managerScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? AppSpacing.walletBottomInsetVisualChrome
+          : AppSpacing.walletBottomInsetNativeChrome) +
+      MediaQuery.paddingOf(context).bottom;
+}
 
 class WalletMultiManagerPage extends ConsumerStatefulWidget {
   const WalletMultiManagerPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc148_multi_manager_content');
   static const addWalletKey = Key('sc148_multi_manager_add_wallet');
+  static const addWalletNoticeKey = Key(
+    'sc148_multi_manager_add_wallet_notice',
+  );
   static const securityNoteKey = Key('sc148_multi_manager_security_note');
   static Key tabKey(String label) => Key('sc148_multi_manager_tab_$label');
   static Key walletKey(String id) => Key('sc148_multi_manager_wallet_$id');
@@ -47,24 +54,19 @@ class _WalletMultiManagerPageState
   String _selectedWalletId = 'w1';
   final Set<String> _revealedWalletIds = <String>{};
   String? _copiedWalletId;
+  String? _actionNotice;
 
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(walletMultiManagerProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletBottomInsetVisualChrome
-            : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletBottomInsetNativeChrome) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = _managerScrollBottomInset(context, mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-148 WalletMultiManagerPage',
       child: Material(
-        color: _managerBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Multi-Wallet Manager',
@@ -74,16 +76,31 @@ class _WalletMultiManagerPageState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              WalletManagerTabs(
-                activeTab: _tab,
-                onChanged: (tab) => setState(() => _tab = tab),
-              ),
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: WalletMultiManagerPage.contentKey,
-                  padding: AppSpacing.walletMultiManagerPageScrollPadding
-                      .copyWith(bottom: bottomInset),
-                  child: _contentForTab(snapshot),
+                  bottomInset: bottomInset,
+                  physics: const ClampingScrollPhysics(),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
+                    gap: VitContentGap.tight,
+                    children: [
+                      PortfolioSummaryCard(snapshot: snapshot),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review wallet privacy',
+                        message:
+                            'Reveal or copy masked wallet addresses only when you trust the destination and next step.',
+                        density: VitDensity.compact,
+                      ),
+                      WalletManagerTabs(
+                        activeTab: _tab,
+                        onChanged: (tab) => setState(() => _tab = tab),
+                      ),
+                      _contentForTab(snapshot),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -102,36 +119,16 @@ class _WalletMultiManagerPageState
         selectedWalletId: _selectedWalletId,
         revealedWalletIds: _revealedWalletIds,
         copiedWalletId: _copiedWalletId,
+        actionNotice: _actionNotice,
         onSelectWallet: (walletId) =>
             setState(() => _selectedWalletId = walletId),
         onRevealWallet: _toggleReveal,
         onCopyWallet: _copyWallet,
-        onAddWallet: () => _showActionNotice(
-          'Add Wallet will open after wallet creation is connected',
-        ),
+        onAddWallet: _showActionNotice,
       ),
     };
 
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      customGap: 0,
-      fullBleed: true,
-      children: [
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Review wallet privacy',
-          message:
-              'Reveal or copy masked wallet addresses only when you trust the destination and next step.',
-        ),
-        const SizedBox(height: AppSpacing.walletManagerRiskGap),
-        VitCard(
-          variant: VitCardVariant.standard,
-          radius: VitCardRadius.md,
-          padding: EdgeInsets.zero,
-          child: tabContent,
-        ),
-      ],
-    );
+    return tabContent;
   }
 
   void _toggleReveal(String walletId) {
@@ -150,12 +147,9 @@ class _WalletMultiManagerPageState
     setState(() => _copiedWalletId = wallet.id);
   }
 
-  void _showActionNotice(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(milliseconds: 900),
-      ),
-    );
+  void _showActionNotice() {
+    setState(() {
+      _actionNotice = 'Wallet creation is not connected yet.';
+    });
   }
 }

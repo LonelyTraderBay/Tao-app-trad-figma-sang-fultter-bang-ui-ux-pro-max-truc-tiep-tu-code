@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
@@ -29,7 +30,10 @@ class WalletTokenApprovalSettingsTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const WalletTokenApprovalSectionLabel(label: 'Security Settings'),
+        const WalletTokenApprovalSectionLabel(
+          label: 'Security Settings',
+          icon: Icons.tune_rounded,
+        ),
         const SizedBox(height: AppSpacing.walletTokenStatValueGap),
         WalletTokenApprovalSettingsRow(
           title: 'Auto-revoke Unused Approvals',
@@ -49,6 +53,7 @@ class WalletTokenApprovalSettingsTab extends StatelessWidget {
           key: const Key('sc150_token_approval_scan_risky'),
           onPressed: onScanRisk,
           height: AppSpacing.walletTokenScanButtonHeight,
+          leading: const Icon(Icons.manage_search_rounded),
           child: const Text('Scan for Risky Approvals'),
         ),
         const SizedBox(height: AppSpacing.walletTokenNoticeGap),
@@ -80,7 +85,7 @@ class WalletTokenApprovalSettingsRow extends StatelessWidget {
       label: '$title setting',
       value: enabled ? 'Enabled' : 'Disabled',
       child: VitCard(
-        padding: AppSpacing.cardPadding,
+        density: VitDensity.compact,
         borderColor: walletTokenApprovalBorder,
         onTap: onTap,
         child: Row(
@@ -130,7 +135,7 @@ class WalletTokenApprovalBestPracticesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.cardPadding,
+      density: VitDensity.compact,
       borderColor: walletTokenApprovalBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

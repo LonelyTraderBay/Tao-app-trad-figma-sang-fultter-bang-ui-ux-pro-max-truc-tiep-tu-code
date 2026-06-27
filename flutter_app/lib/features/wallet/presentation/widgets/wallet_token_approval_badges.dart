@@ -7,8 +7,12 @@ class WalletTokenRiskBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = walletTokenApprovalRiskColor(risk);
-    return VitAccentPill(label: risk.toUpperCase(), accentColor: color);
+    return VitStatusPill(
+      label: walletTokenApprovalRiskLabel(risk),
+      icon: walletTokenApprovalRiskIcon(risk),
+      status: walletTokenApprovalRiskStatus(risk),
+      size: VitStatusPillSize.sm,
+    );
   }
 }
 
@@ -20,13 +24,10 @@ class WalletTokenApprovalAmount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.walletTokenAmountHeight,
-      padding: AppSpacing.walletTokenAmountPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      borderColor: approval.unlimited
-          ? walletTokenApprovalRed.withValues(alpha: .20)
-          : null,
+      borderColor: approval.unlimited ? AppColors.sell20 : null,
       child: Row(
         children: [
           Expanded(
@@ -35,18 +36,22 @@ class WalletTokenApprovalAmount extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
-          Text(
-            approval.unlimited
-                ? '\u221E ${approval.amountLabel}'
-                : approval.amountLabel,
-            style: AppTextStyles.caption.copyWith(
-              color: approval.unlimited
-                  ? walletTokenApprovalRed
-                  : AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+          if (approval.unlimited)
+            const VitStatusPill(
+              label: 'Unlimited approval',
+              icon: Icons.all_inclusive_rounded,
+              status: VitStatusPillStatus.error,
+              size: VitStatusPillSize.sm,
+            )
+          else
+            Text(
+              approval.amountLabel,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
-          ),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -19,32 +20,21 @@ const walletManagerTabGroups = 'Nh\u00F3m';
 const walletManagerTabActivity = 'Ho\u1EA1t \u0111\u1ED9ng';
 
 class WalletManagerSectionLabel extends StatelessWidget {
-  const WalletManagerSectionLabel({super.key, required this.label});
+  const WalletManagerSectionLabel({
+    super.key,
+    required this.label,
+    this.icon = Icons.account_balance_wallet_outlined,
+  });
 
   final String label;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: AppSpacing.walletManagerSectionMarkerWidth,
-          height: AppSpacing.walletManagerSectionMarkerHeight,
-          child: ClipRRect(
-            borderRadius: AppRadii.hairlineRadius,
-            child: const ColoredBox(color: walletManagerPrimary),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.walletManagerSectionLabelGap),
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.textMutedDense,
-            fontWeight: AppTextStyles.medium,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
-        ),
-      ],
+    return VitSectionHeader(
+      title: label,
+      icon: icon,
+      density: VitDensity.compact,
     );
   }
 }
@@ -55,25 +45,27 @@ class WalletManagerTinyIconButton extends StatelessWidget {
     required this.buttonKey,
     required this.icon,
     required this.color,
+    required this.tooltip,
     required this.onTap,
   });
 
   final Key buttonKey;
   final IconData icon;
   final Color color;
+  final String tooltip;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitIconButton(
       key: buttonKey,
-      onTap: onTap,
-      width: AppSpacing.walletManagerTinyButton,
-      height: AppSpacing.walletManagerTinyButton,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      alignment: Alignment.center,
-      child: Icon(icon, color: color, size: AppSpacing.walletManagerTinyIcon),
+      icon: icon,
+      tooltip: tooltip,
+      onPressed: onTap,
+      size: VitIconButtonSize.sm,
+      variant: color == walletManagerGreen
+          ? VitIconButtonVariant.success
+          : VitIconButtonVariant.transparent,
     );
   }
 }

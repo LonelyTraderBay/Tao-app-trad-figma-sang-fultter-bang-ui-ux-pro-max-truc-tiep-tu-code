@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 
 part 'wallet_token_approval_cards.dart';
 part 'wallet_token_approval_badges.dart';
@@ -29,11 +31,12 @@ class WalletTokenActiveApprovalsTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        WalletTokenSecurityOverview(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.walletTokenSectionGap),
         WalletTokenCriticalAlert(count: snapshot.criticalCount),
         const SizedBox(height: AppSpacing.walletTokenAlertGap),
-        const WalletTokenApprovalSectionLabel(label: 'Active Approvals'),
+        const WalletTokenApprovalSectionLabel(
+          label: 'Active Approvals',
+          icon: Icons.shield_outlined,
+        ),
         const SizedBox(height: AppSpacing.walletTokenLabelGap),
         for (var i = 0; i < approvals.length; i++) ...[
           WalletTokenApprovalCard(approval: approvals[i], onRevoke: onRevoke),
@@ -57,8 +60,7 @@ class WalletTokenSecurityOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.walletTokenOverviewHeight,
-      padding: AppSpacing.walletTokenOverviewPadding,
+      density: VitDensity.compact,
       borderColor: walletTokenApprovalBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -119,7 +121,7 @@ class WalletTokenSecurityOverview extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.walletTokenMetricTopGap),
           Row(
             children: [
               WalletTokenOverviewMetric(
@@ -184,8 +186,7 @@ class WalletTokenCriticalAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      height: AppSpacing.walletTokenAlertHeight,
-      padding: AppSpacing.walletTokenAlertPadding,
+      density: VitDensity.compact,
       variant: VitCardVariant.inner,
       borderColor: walletTokenApprovalRed.withValues(alpha: .23),
       child: Row(
@@ -212,10 +213,7 @@ class WalletTokenCriticalAlert extends StatelessWidget {
                   'You have $count approval(s) to unverified contracts. Revoke immediately to protect your funds.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    height: 1.35,
-                  ),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ],
             ),

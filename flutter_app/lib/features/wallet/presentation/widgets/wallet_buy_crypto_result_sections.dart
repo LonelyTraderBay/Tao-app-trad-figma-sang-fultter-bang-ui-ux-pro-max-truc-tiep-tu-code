@@ -13,16 +13,28 @@ class _BuyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCtaButton(
-      key: const Key('sc145_buy_crypto_buy'),
-      onPressed: enabled ? onTap : null,
-      variant: VitCtaButtonVariant.success,
-      height: AppSpacing.ctaHeight,
-      child: Text(
-        enabled ? 'Mua $symbol' : 'Nhập số tiền mua',
-        style: AppTextStyles.baseMedium.copyWith(
-          color: enabled ? AppColors.onAccent : AppColors.text3,
-          fontWeight: AppTextStyles.bold,
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      label: enabled
+          ? 'Review buy order'
+          : 'Buy crypto disabled. Enter an amount within the supported limit.',
+      child: Tooltip(
+        message: enabled
+            ? 'Review buy order'
+            : 'Enter an amount within the supported limit.',
+        child: VitCtaButton(
+          key: const Key('sc145_buy_crypto_buy'),
+          onPressed: enabled ? onTap : null,
+          variant: VitCtaButtonVariant.success,
+          height: AppSpacing.ctaHeight,
+          child: Text(
+            enabled ? 'Mua $symbol' : 'Nhập số tiền mua',
+            style: AppTextStyles.baseMedium.copyWith(
+              color: enabled ? AppColors.onAccent : AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -36,6 +48,7 @@ class BuyConfirmContent extends StatelessWidget {
     required this.payment,
     required this.amountVnd,
     required this.receiveAmount,
+    required this.submitting,
     required this.onConfirm,
     required this.onBack,
   });
@@ -44,6 +57,7 @@ class BuyConfirmContent extends StatelessWidget {
   final WalletPaymentMethod payment;
   final int amountVnd;
   final double receiveAmount;
+  final bool submitting;
   final VoidCallback onConfirm;
   final VoidCallback onBack;
 
@@ -52,9 +66,14 @@ class BuyConfirmContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const VitSectionHeader(
+          title: 'Chi tiết xác nhận',
+          icon: Icons.receipt_long_outlined,
+          iconColor: _buyPrimary,
+          accentColor: _buyPrimary,
+        ),
         VitCard(
-          padding: AppSpacing.walletBuyConfirmPadding,
-          radius: VitCardRadius.lg,
+          density: VitDensity.compact,
           borderColor: AppColors.primary40,
           clip: true,
           background: const ColoredBox(color: AppColors.surface),
@@ -70,25 +89,39 @@ class BuyConfirmContent extends StatelessWidget {
                 style: AppTextStyles.sectionTitle.copyWith(color: _buyGreen),
               ),
               const SizedBox(height: AppSpacing.walletBuyConfirmAmountGap),
-              _RateRow(
+              VitInfoRow(
                 label: 'Thanh toán',
                 value: '${_formatInt(amountVnd)} VND',
+                density: VitDensity.compact,
+                showDivider: true,
               ),
-              const SizedBox(height: AppSpacing.walletBuyInlineGap),
-              _RateRow(label: 'Phương thức', value: payment.name),
-              const SizedBox(height: AppSpacing.walletBuyInlineGap),
-              const _RateRow(
+              VitInfoRow(
+                label: 'Phương thức',
+                value: payment.name,
+                density: VitDensity.compact,
+                showDivider: true,
+              ),
+              const VitInfoRow(
                 label: 'Phí',
                 value: 'Miễn phí',
                 valueColor: _buyGreen,
+                density: VitDensity.compact,
               ),
             ],
           ),
         ),
         const SizedBox(height: AppSpacing.walletBuySectionGap),
-        _ActionButton(label: 'Xác nhận thanh toán', onTap: onConfirm),
+        _ActionButton(
+          label: submitting ? 'Đang xử lý' : 'Xác nhận thanh toán',
+          onTap: onConfirm,
+          enabled: !submitting,
+        ),
         const SizedBox(height: AppSpacing.walletBuyInlineGap),
-        _GhostButton(label: 'Quay lại chỉnh sửa', onTap: onBack),
+        _GhostButton(
+          label: 'Quay lại chỉnh sửa',
+          onTap: onBack,
+          enabled: !submitting,
+        ),
       ],
     );
   }
@@ -117,49 +150,56 @@ class BuySuccessState extends StatelessWidget {
       semanticLabel: 'SC-145 BuyCryptoPage Success',
       child: Material(
         color: _buyBackground,
-        child: Column(
-          children: [
-            const VitHeader(
-              title: 'Mua Crypto',
-              subtitle: 'Giao dịch · Wallet',
-            ),
-            Expanded(
-              child: Padding(
-                padding: AppSpacing.walletBuySuccessPadding,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CircleAvatar(
-                      radius: AppSpacing.walletBuySuccessIconRadius,
-                      backgroundColor: AppColors.buy10,
-                      child: Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: _buyGreen,
-                        size: AppSpacing.walletBuySuccessGlyph,
+        child: VitAutoHideHeaderScaffold(
+          header: const VitHeader(
+            title: 'Mua Crypto',
+            subtitle: 'Giao dịch · Wallet',
+          ),
+          child: VitInsetScrollView(
+            bottomInset: AppSpacing.walletBuySuccessCtaGap,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              gap: VitContentGap.tight,
+              children: [
+                VitCard(
+                  variant: VitCardVariant.standard,
+                  density: VitDensity.compact,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const CircleAvatar(
+                        radius: AppSpacing.walletBuySuccessIconRadius,
+                        backgroundColor: AppColors.buy10,
+                        child: Icon(
+                          Icons.check_circle_outline_rounded,
+                          color: _buyGreen,
+                          size: AppSpacing.walletBuySuccessGlyph,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: AppSpacing.walletBuySuccessTitleGap),
-                    Text(
-                      'Đặt lệnh thành công!',
-                      style: AppTextStyles.sectionTitle,
-                    ),
-                    const SizedBox(height: AppSpacing.walletBuyCompactGap),
-                    Text(
-                      'Lệnh mua ${_formatCrypto(receiveAmount)} ${crypto.symbol} từ ${_formatInt(amountVnd)} VND đã được đặt.',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
+                      const SizedBox(
+                        height: AppSpacing.walletBuySuccessTitleGap,
                       ),
-                    ),
-                    const SizedBox(height: AppSpacing.walletBuySuccessCtaGap),
-                    _ActionButton(label: 'Về Ví', onTap: onWallet),
-                    const SizedBox(height: AppSpacing.walletBuyInlineGap),
-                    _GhostButton(label: 'Mua thêm', onTap: onBuyMore),
-                  ],
+                      Text(
+                        'Đặt lệnh thành công!',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.sectionTitle,
+                      ),
+                      const SizedBox(height: AppSpacing.walletBuyCompactGap),
+                      Text(
+                        'Lệnh mua ${_formatCrypto(receiveAmount)} ${crypto.symbol} từ ${_formatInt(amountVnd)} VND đã được đặt.',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                _ActionButton(label: 'Về Ví', onTap: onWallet),
+                _GhostButton(label: 'Mua thêm', onTap: onBuyMore),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -167,21 +207,26 @@ class BuySuccessState extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-  const _ActionButton({required this.label, required this.onTap});
+  const _ActionButton({
+    required this.label,
+    required this.onTap,
+    this.enabled = true,
+  });
 
   final String label;
   final VoidCallback onTap;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
-      onPressed: onTap,
+      onPressed: enabled ? onTap : null,
       variant: VitCtaButtonVariant.primary,
       height: AppSpacing.ctaHeight,
       child: Text(
         label,
         style: AppTextStyles.baseMedium.copyWith(
-          color: AppColors.onAccent,
+          color: enabled ? AppColors.onAccent : AppColors.text3,
           fontWeight: AppTextStyles.bold,
         ),
       ),
@@ -190,21 +235,26 @@ class _ActionButton extends StatelessWidget {
 }
 
 class _GhostButton extends StatelessWidget {
-  const _GhostButton({required this.label, required this.onTap});
+  const _GhostButton({
+    required this.label,
+    required this.onTap,
+    this.enabled = true,
+  });
 
   final String label;
   final VoidCallback onTap;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
     return VitCtaButton(
-      onPressed: onTap,
+      onPressed: enabled ? onTap : null,
       variant: VitCtaButtonVariant.ghost,
       height: AppSpacing.ctaHeight,
       child: Text(
         label,
         style: AppTextStyles.baseMedium.copyWith(
-          color: AppColors.text2,
+          color: enabled ? AppColors.text2 : AppColors.text3,
           fontWeight: AppTextStyles.bold,
         ),
       ),
@@ -227,8 +277,8 @@ class BuyCryptoOptionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      margin: AppSpacing.walletBuyOptionRowMargin,
-      padding: AppSpacing.walletBuyOptionRowPadding,
+      variant: VitCardVariant.inner,
+      density: VitDensity.compact,
       borderColor: selected ? _buyPrimary : AppColors.borderSolid,
       clip: true,
       background: ColoredBox(
@@ -249,7 +299,7 @@ class BuyCryptoOptionRow extends StatelessWidget {
             const Icon(
               Icons.check_circle_rounded,
               color: _buyPrimary,
-              size: 18,
+              size: AppSpacing.iconMd,
             ),
         ],
       ),

@@ -14,76 +14,85 @@ class _DustAssetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(asset.colorHex);
-    return VitCard(
-      key: DustConverterPage.assetKey(asset.id),
-      onTap: onTap,
-      height: _dustAssetRowHeight,
-      padding: _dustAssetRowPadding,
-      variant: VitCardVariant.ghost,
-      borderColor: selected
-          ? color.withValues(alpha: .45)
-          : AppColors.transparent,
-      background: ColoredBox(
-        color: selected ? color.withValues(alpha: .07) : _dustPanel2,
-      ),
-      clip: true,
-      child: Row(
-        children: [
-          Icon(
-            selected
-                ? Icons.check_box_rounded
-                : Icons.check_box_outline_blank_rounded,
-            color: selected ? _dustPrimary : _dustMuted,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: _dustTinyGap),
-          _TokenLogo(symbol: asset.symbol, color: color, size: _dustTokenLogo),
-          const SizedBox(width: _dustInlineGap),
-          Expanded(
-            child: Column(
+    return Semantics(
+      button: true,
+      selected: selected,
+      label:
+          '${selected ? 'Selected' : 'Not selected'} dust asset ${asset.symbol}, ${asset.availableLabel}, approximately ${_formatUsd(asset.usdValue, preciseSmall: true)}',
+      child: VitCard(
+        key: DustConverterPage.assetKey(asset.id),
+        onTap: onTap,
+        density: VitDensity.compact,
+        variant: VitCardVariant.ghost,
+        borderColor: selected
+            ? color.withValues(alpha: .45)
+            : AppColors.transparent,
+        background: ColoredBox(
+          color: selected ? color.withValues(alpha: .07) : _dustPanel2,
+        ),
+        clip: true,
+        child: Row(
+          children: [
+            Icon(
+              selected
+                  ? Icons.check_box_rounded
+                  : Icons.check_box_outline_blank_rounded,
+              color: selected ? AppColors.primary : _dustMuted,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: _dustTinyGap),
+            _TokenLogo(
+              symbol: asset.symbol,
+              color: color,
+              size: _dustTokenLogo,
+            ),
+            const SizedBox(width: _dustInlineGap),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    asset.symbol,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(height: _dustTinyGap),
+                  Text(
+                    asset.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: _dustMuted),
+                  ),
+                ],
+              ),
+            ),
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  asset.symbol,
+                  asset.availableLabel,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
                 const SizedBox(height: _dustTinyGap),
                 Text(
-                  asset.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: _dustMuted),
+                  '\u2248 ${_formatUsd(asset.usdValue, preciseSmall: true)}',
+                  style: AppTextStyles.micro.copyWith(
+                    color: _dustMuted,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ],
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                asset.availableLabel,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-              const SizedBox(height: _dustTinyGap),
-              Text(
-                '\u2248 ${_formatUsd(asset.usdValue, preciseSmall: true)}',
-                style: AppTextStyles.micro.copyWith(
-                  color: _dustMuted,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

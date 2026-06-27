@@ -347,8 +347,8 @@ feature_widget,,flutter_app/lib/features/earn/presentation/widgets/staking_dashb
 feature_widget,,flutter_app/lib/features/earn/presentation/widgets/staking_dashboard_summary.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart,flutter_app/lib/features/earn/presentation/widgets/staking_earn_hero_tabs.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/earn/presentation/widgets/staking_earn_hero_tabs.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart,flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart,fail,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,8,no,-
+feature_widget,flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart,flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart,fail,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,8,no,-
 feature_widget,,flutter_app/lib/features/earn/presentation/widgets/staking_earn_products.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart,flutter_app/lib/features/earn/presentation/widgets/staking_earn_products.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/earn/presentation/widgets/staking_earnings_calendar_grid.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -1488,7 +1488,7 @@ feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_addr
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_form.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_preview.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_selectors.dart,warn,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,no,-
+feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_selectors.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_address_book_controls.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart,flutter_app/lib/features/wallet/presentation/widgets/wallet_address_book_controls.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart,flutter_app/lib/features/wallet/presentation/widgets/wallet_address_book_list.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -1521,9 +1521,9 @@ feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_mana
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_manager_tabs.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_multi_manager_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_page_allocation_sections.dart,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
-feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_page_asset_sections.dart,warn,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,no,-
-feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_page_balance_sections.dart,warn,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,3,no,-
-feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_page_dca_tool_sections.dart,warn,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,2,no,-
+feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_page_asset_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_page_balance_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_page_dca_tool_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_page_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_token_active_approvals_tab.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_token_approval_badges.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -1533,13 +1533,13 @@ feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_toke
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_token_approval_settings_tab.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_token_approval_tabs.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_token_revoke_sheet.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_asset_amount.dart,warn,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,no,-
+feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_asset_amount.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_confirm_sheet.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_history_picker.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_wallet_cards.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/wallet_unavailable_banner.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
-feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/withdraw_amount_actions.dart,warn,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,no,-
+feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/withdraw_amount_actions.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/withdraw_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,,flutter_app/lib/features/wallet/presentation/widgets/withdraw_form_sections.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 feature_widget,flutter_app/lib/features/wallet/presentation/pages/withdraw_limits_page.dart,flutter_app/lib/features/wallet/presentation/widgets/withdraw_limits_page_common.dart,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
@@ -2437,7 +2437,7 @@ root_page_bundle_summary,flutter_app/lib/features/arena/presentation/pages/arena
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_apply_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade/presentation/pages/dispute_resolution_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/p2p_order_page.dart,4 files,exception,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,3,yes,allowed_source_keyword: custompainter
-root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
+root_page_bundle_summary,flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart,4 files,fail,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,8,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade/presentation/pages/regulatory_reports_dashboard_page.dart,4 files,exception,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,yes,allowed_source_keyword: custompainter
 root_page_bundle_summary,flutter_app/lib/features/p2p/presentation/pages/p2p_claim_detail_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-
 root_page_bundle_summary,flutter_app/lib/features/trade/presentation/pages/risk_management_demo_page.dart,4 files,pass,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no,-

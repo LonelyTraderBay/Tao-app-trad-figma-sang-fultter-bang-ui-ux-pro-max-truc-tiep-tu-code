@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_active_approvals_tab.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
@@ -12,13 +13,13 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_to
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_tabs.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_revoke_sheet.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 
 class WalletTokenApprovalPage extends ConsumerStatefulWidget {
   const WalletTokenApprovalPage({super.key, this.shellRenderMode});
@@ -48,11 +49,12 @@ class _WalletTokenApprovalPageState
   @override
   Widget build(BuildContext context) {
     final controller = ref.watch(tokenApprovalControllerProvider);
+    final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.x7 + AppSpacing.x6
-            : AppSpacing.x7) +
+            ? AppSpacing.walletBottomInsetVisualChrome
+            : AppSpacing.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -70,18 +72,33 @@ class _WalletTokenApprovalPageState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              WalletTokenApprovalTabs(
-                activeTab: _tab,
-                onChanged: (tab) => setState(() => _tab = tab),
-              ),
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: WalletTokenApprovalPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: AppSpacing.x4,
-                    bottom: scrollEndClearance,
+                  bottomInset: scrollEndClearance,
+                  physics: const ClampingScrollPhysics(),
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
+                    gap: VitContentGap.tight,
+                    children: [
+                      WalletTokenSecurityOverview(snapshot: snapshot),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review token approval risk',
+                        message:
+                            'Preview spender, token, allowance, gas estimate, and impact before any revoke confirmation.',
+                        contractId:
+                            '${snapshot.criticalCount} critical / ${snapshot.unlimitedCount} unlimited',
+                        density: VitDensity.compact,
+                      ),
+                      WalletTokenApprovalTabs(
+                        activeTab: _tab,
+                        onChanged: (tab) => setState(() => _tab = tab),
+                      ),
+                      _contentForTab(controller),
+                    ],
                   ),
-                  child: _tabSurface(_contentForTab(controller)),
                 ),
               ),
             ],
@@ -94,59 +111,22 @@ class _WalletTokenApprovalPageState
   Widget _contentForTab(TokenApprovalController controller) {
     final snapshot = controller.state.snapshot;
     if (_tab == walletTokenApprovalTabHistory) {
-      return VitPageContent(
-        padding: VitContentPadding.none,
-        gap: VitContentGap.tight,
-        fullBleed: true,
-        children: [WalletTokenApprovalHistoryTab(snapshot: snapshot)],
-      );
+      return WalletTokenApprovalHistoryTab(snapshot: snapshot);
     }
     if (_tab == walletTokenApprovalTabSettings) {
-      return VitPageContent(
-        padding: VitContentPadding.none,
-        gap: VitContentGap.tight,
-        fullBleed: true,
-        children: [
-          WalletTokenApprovalSettingsTab(
-            autoRevokeUnused: _autoRevokeUnused,
-            warnUnlimited: _warnUnlimited,
-            onAutoRevoke: () =>
-                setState(() => _autoRevokeUnused = !_autoRevokeUnused),
-            onWarnUnlimited: () =>
-                setState(() => _warnUnlimited = !_warnUnlimited),
-            onScanRisk: _showScanRiskNotice,
-          ),
-        ],
+      return WalletTokenApprovalSettingsTab(
+        autoRevokeUnused: _autoRevokeUnused,
+        warnUnlimited: _warnUnlimited,
+        onAutoRevoke: () =>
+            setState(() => _autoRevokeUnused = !_autoRevokeUnused),
+        onWarnUnlimited: () => setState(() => _warnUnlimited = !_warnUnlimited),
+        onScanRisk: _showScanRiskNotice,
       );
     }
-    return VitPageContent(
-      padding: VitContentPadding.none,
-      gap: VitContentGap.tight,
-      fullBleed: true,
-      children: [
-        VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Review token approval risk',
-          message:
-              'Prioritize critical, unlimited, and unused approvals before revoking permissions.',
-          contractId:
-              '${snapshot.criticalCount} critical / ${snapshot.unlimitedCount} unlimited',
-        ),
-        WalletTokenActiveApprovalsTab(
-          snapshot: snapshot,
-          onRevoke: (approval) => _showRevokeSheet(controller, approval),
-          onRevokeAll: () => _showRevokeSheet(controller, null),
-        ),
-      ],
-    );
-  }
-
-  Widget _tabSurface(Widget child) {
-    return VitCard(
-      variant: VitCardVariant.standard,
-      radius: VitCardRadius.md,
-      padding: AppSpacing.cardPadding,
-      child: child,
+    return WalletTokenActiveApprovalsTab(
+      snapshot: snapshot,
+      onRevoke: (approval) => _showRevokeSheet(controller, approval),
+      onRevokeAll: () => _showRevokeSheet(controller, null),
     );
   }
 
@@ -165,7 +145,9 @@ class _WalletTokenApprovalPageState
   void _showScanRiskNotice() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Đã quét lại danh sách approval rủi ro'),
+        content: Text(
+          '\u0110\u00e3 qu\u00e9t l\u1ea1i danh s\u00e1ch approval r\u1ee7i ro',
+        ),
         duration: Duration(milliseconds: 900),
       ),
     );

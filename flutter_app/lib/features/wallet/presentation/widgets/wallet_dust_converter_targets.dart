@@ -44,50 +44,59 @@ class _TargetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(target.colorHex);
-    return VitCard(
-      key: DustConverterPage.targetKey(target.symbol),
-      onTap: onTap,
-      height: _dustTargetHeight,
-      padding: _dustTargetPadding,
-      variant: VitCardVariant.ghost,
-      borderColor: selected ? color.withValues(alpha: .7) : _dustBorder,
-      background: ColoredBox(
-        color: selected ? color.withValues(alpha: .11) : _dustPanel2,
-      ),
-      clip: true,
-      child: Row(
-        children: [
-          _TokenLogo(symbol: target.symbol, color: color, size: _dustTokenLogo),
-          const SizedBox(width: _dustInlineGap),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  target.symbol,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: '${target.symbol} conversion target',
+      child: VitCard(
+        key: DustConverterPage.targetKey(target.symbol),
+        onTap: onTap,
+        density: VitDensity.compact,
+        variant: VitCardVariant.ghost,
+        borderColor: selected ? color.withValues(alpha: .7) : _dustBorder,
+        background: ColoredBox(
+          color: selected ? color.withValues(alpha: .11) : _dustPanel2,
+        ),
+        clip: true,
+        child: Row(
+          children: [
+            _TokenLogo(
+              symbol: target.symbol,
+              color: color,
+              size: _dustTokenLogo,
+            ),
+            const SizedBox(width: _dustInlineGap),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    target.symbol,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: _dustTinyGap),
-                Text(
-                  target.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: _dustMuted),
-                ),
-              ],
+                  const SizedBox(height: _dustTinyGap),
+                  Text(
+                    target.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: _dustMuted),
+                  ),
+                ],
+              ),
             ),
-          ),
-          if (selected)
-            const Icon(
-              Icons.check_circle_outline,
-              color: _dustGreen,
-              size: AppSpacing.iconSm,
-            ),
-        ],
+            if (selected)
+              const VitStatusPill(
+                label: 'Ch\u1ECDn',
+                icon: Icons.check_circle_outline,
+                status: VitStatusPillStatus.success,
+                size: VitStatusPillSize.sm,
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -111,30 +120,43 @@ class _SelectAllRow extends StatelessWidget {
     final label = selectedAll && totalCount > 0
         ? 'B\u1ECF ch\u1ECDn t\u1EA5t c\u1EA3'
         : 'Ch\u1ECDn t\u1EA5t c\u1EA3';
-    return VitCard(
-      key: DustConverterPage.selectAllKey,
-      onTap: onTap,
-      height: _dustSelectAllHeight,
-      padding: _dustSelectAllPadding,
-      variant: VitCardVariant.inner,
-      child: Row(
-        children: [
-          Icon(
-            selectedAll && totalCount > 0
-                ? Icons.check_box_rounded
-                : Icons.check_box_outline_blank_rounded,
-            color: selectedCount > 0 ? _dustPrimary : _dustMuted,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: _dustInlineGap),
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
+    return Semantics(
+      button: true,
+      selected: selectedAll && totalCount > 0,
+      value: '$selectedCount of $totalCount selected',
+      child: VitCard(
+        key: DustConverterPage.selectAllKey,
+        onTap: onTap,
+        density: VitDensity.compact,
+        variant: VitCardVariant.inner,
+        child: Row(
+          children: [
+            Icon(
+              selectedAll && totalCount > 0
+                  ? Icons.check_box_rounded
+                  : Icons.check_box_outline_blank_rounded,
+              color: selectedCount > 0 ? AppColors.primary : _dustMuted,
+              size: AppSpacing.iconSm,
             ),
-          ),
-        ],
+            const SizedBox(width: _dustInlineGap),
+            Expanded(
+              child: Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ),
+            VitStatusPill(
+              label: '$selectedCount/$totalCount',
+              status: selectedCount > 0
+                  ? VitStatusPillStatus.info
+                  : VitStatusPillStatus.neutral,
+              size: VitStatusPillSize.sm,
+            ),
+          ],
+        ),
       ),
     );
   }

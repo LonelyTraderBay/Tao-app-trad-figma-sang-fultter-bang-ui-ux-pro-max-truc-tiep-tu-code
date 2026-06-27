@@ -23,13 +23,11 @@ part '../widgets/deposit_page_sections.dart';
 part '../widgets/deposit_page_common.dart';
 
 const _depositBackground = AppColors.bg;
-const _depositPanel = AppColors.surface;
 const _depositPrimary = AppColors.primary;
 const _depositGreen = AppColors.buy;
 const _depositRed = AppColors.sell;
 const _depositNativeBottomClearance = 88.0;
 const _depositVisualBottomClearance = 112.0;
-const _depositScrollTopPad = 0.0;
 const _depositGap = 8.0;
 const _depositTinyGap = 4.0;
 const _depositInlineGap = 8.0;
@@ -38,20 +36,6 @@ const _depositQrSize = 132.0;
 const _depositStatusDotSize = AppSpacing.x2 - AppSpacing.dividerHairline * 2;
 const _depositCopyButtonHeight = 44.0;
 const _depositRefreshHeight = 44.0;
-const _depositCardPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x3,
-);
-const _depositCompactPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const _depositSheetPadding = EdgeInsetsDirectional.fromSTEB(
-  AppSpacing.x4,
-  AppSpacing.x4 - AppSpacing.dividerHairline * 2,
-  AppSpacing.x4,
-  AppSpacing.x4,
-);
 
 double _depositScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
@@ -116,37 +100,53 @@ class _DepositPageState extends ConsumerState<DepositPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: DepositPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: _depositScrollTopPad,
-                    bottom: bottomInset,
-                  ),
+                  bottomInset: bottomInset,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    fullBleed: true,
                     children: [
+                      const VitSectionHeader(
+                        title: 'M\u1EA1ng n\u1EA1p',
+                        icon: Icons.hub_outlined,
+                        iconColor: _depositPrimary,
+                        accentColor: _depositPrimary,
+                      ),
                       _NetworkSelector(
                         asset: snapshot.asset,
                         selected: selected,
                         onTap: () => _openNetworkPicker(snapshot.networks),
                       ),
-                      const SizedBox(height: _depositGap),
-                      _WarningCard(asset: snapshot.asset, network: selected),
-                      const SizedBox(height: _depositGap),
+                      const VitSectionHeader(
+                        title: '\u0110\u1ECBa ch\u1EC9 n\u1EA1p',
+                        icon: Icons.qr_code_2_rounded,
+                        iconColor: _depositPrimary,
+                        accentColor: _depositPrimary,
+                      ),
                       _QrAddressCard(
                         asset: snapshot.asset,
                         network: selected,
                         copied: _copied,
                         onCopy: () => _copyAddress(selected.address),
                       ),
-                      const SizedBox(height: _depositGap),
+                      const VitSectionHeader(
+                        title: 'An to\u00E0n',
+                        icon: Icons.shield_outlined,
+                        iconColor: _depositRed,
+                        accentColor: _depositRed,
+                      ),
+                      _WarningCard(asset: snapshot.asset, network: selected),
+                      const VitSectionHeader(
+                        title: 'Chi ti\u1EBFt n\u1EA1p',
+                        icon: Icons.receipt_long_outlined,
+                        iconColor: _depositPrimary,
+                        accentColor: _depositPrimary,
+                      ),
                       _DepositInfoCard(
                         asset: snapshot.asset,
                         network: selected,
                       ),
-                      const SizedBox(height: _depositGap),
                       _RefreshButton(onTap: _refreshDepositIntent),
                     ],
                   ),
@@ -188,37 +188,28 @@ class _DepositPageState extends ConsumerState<DepositPage> {
   void _openNetworkPicker(List<WalletDepositNetwork> networks) {
     showVitBottomSheet<void>(
       context: context,
-      backgroundColor: _depositPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
+      isScrollControlled: true,
       builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: _depositSheetPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text('Chọn mạng lưới', style: AppTextStyles.sectionTitle),
-                const SizedBox(height: _depositGap),
-                for (final network in networks) ...[
-                  _NetworkOption(
-                    network: network,
-                    selected:
-                        network.id == _selectedNetworkId ||
-                        (_selectedNetworkId == null &&
-                            network.id == networks.first.id),
-                    onTap: () {
-                      setState(() => _selectedNetworkId = network.id);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  const SizedBox(height: _depositTinyGap),
-                ],
-              ],
-            ),
+        return VitSheetPanel(
+          title: 'Chọn mạng lưới',
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: networks.length,
+            separatorBuilder: (_, _) => const SizedBox(height: _depositTinyGap),
+            itemBuilder: (context, index) {
+              final network = networks[index];
+              return _NetworkOption(
+                network: network,
+                selected:
+                    network.id == _selectedNetworkId ||
+                    (_selectedNetworkId == null &&
+                        network.id == networks.first.id),
+                onTap: () {
+                  setState(() => _selectedNetworkId = network.id);
+                  Navigator.of(context).pop();
+                },
+              );
+            },
           ),
         );
       },

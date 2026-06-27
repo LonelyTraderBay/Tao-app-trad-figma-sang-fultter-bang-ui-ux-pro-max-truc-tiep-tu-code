@@ -10,7 +10,6 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -32,7 +31,6 @@ const _healthAmber = AppColors.caution;
 const _healthOrange = AppColors.riskHigh;
 const _healthRed = AppColors.sell;
 const _healthPurple = AppColors.accent;
-const _healthTabBarHeight = 48.0;
 const _healthCompactGaugeSize = 88.0;
 const _healthMetricProgressHeight = 5.0;
 const _healthLegendSwatchHeight = 10.0;
@@ -41,10 +39,18 @@ const _tabOverview = 'T\u1ED5ng quan';
 const _tabSecurity = 'B\u1EA3o m\u1EADt';
 const _tabDiversification = '\u0110a d\u1EA1ng h\u00F3a';
 
+double _healthScrollBottomInset(BuildContext context, ShellRenderMode mode) {
+  return (mode.usesVisualQaFrame
+          ? AppSpacing.walletBottomInsetVisualChrome
+          : AppSpacing.walletBottomInsetNativeChrome) +
+      MediaQuery.paddingOf(context).bottom;
+}
+
 class WalletHealthScorePage extends ConsumerStatefulWidget {
   const WalletHealthScorePage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc151_health_score_content');
+  static const sheetCloseKey = Key('sc151_health_score_sheet_close');
   static Key tabKey(String label) => Key('sc151_health_score_tab_$label');
   static Key metricKey(String category) =>
       Key('sc151_health_score_metric_$category');

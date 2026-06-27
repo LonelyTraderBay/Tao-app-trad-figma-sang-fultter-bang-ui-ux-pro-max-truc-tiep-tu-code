@@ -15,25 +15,24 @@ class _WhitelistModeCard extends StatelessWidget {
       child: VitCard(
         key: AddressBookPage.whitelistModeKey,
         onTap: onTap,
-        height: _bookSecurityHeight,
-        padding: _bookSecurityPadding,
+        density: VitDensity.compact,
         borderColor: AppColors.overlayStroke,
         child: Row(
           children: [
             VitCard(
-              width: _bookIconBox,
-              height: _bookIconBox,
+              width: AppSpacing.buttonCompact,
+              height: AppSpacing.buttonCompact,
               variant: VitCardVariant.inner,
               radius: VitCardRadius.lg,
               borderColor: enabled ? AppColors.buy20 : AppColors.borderSolid,
               alignment: Alignment.center,
               child: Icon(
                 Icons.lock_outline_rounded,
-                color: enabled ? _bookGreen : AppColors.text3,
+                color: enabled ? AppColors.buy : AppColors.text3,
                 size: AppSpacing.iconSm,
               ),
             ),
-            const SizedBox(width: _bookInlineGap),
+            const SizedBox(width: AppSpacing.walletAddressActionGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +46,7 @@ class _WhitelistModeCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: _bookTinyGap),
+                  const SizedBox(height: AppSpacing.walletAddressCompactGap),
                   Text(
                     enabled
                         ? 'Chỉ rút tới địa chỉ whitelist'
@@ -74,7 +73,7 @@ class _SwitchPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitTogglePill(enabled: enabled, activeColor: _bookGreen);
+    return VitTogglePill(enabled: enabled, activeColor: AppColors.buy);
   }
 }
 
@@ -84,38 +83,36 @@ class _SecurityTip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _bookSecurityPadding,
+      density: VitDensity.compact,
       borderColor: AppColors.primary15,
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
-            Icons.shield_outlined,
-            color: _bookPrimary,
-            size: AppSpacing.iconSm,
+          const VitSectionHeader(
+            title: 'Bảo mật địa chỉ',
+            icon: Icons.shield_outlined,
+            iconColor: AppColors.primary,
+            density: VitDensity.compact,
           ),
-          const SizedBox(width: _bookInlineGap),
-          Expanded(
-            child: Text.rich(
-              TextSpan(
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: 1.45,
-                ),
-                children: [
-                  TextSpan(
-                    text: 'Bảo mật: ',
-                    style: AppTextStyles.caption.copyWith(
-                      color: _bookPrimary,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  TextSpan(
-                    text:
-                        'Địa chỉ whitelist được bảo vệ bởi 2FA. Chỉ có thể rút tới địa chỉ đã được xác minh.',
-                  ),
-                ],
+          Text.rich(
+            TextSpan(
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                height: 1.45,
               ),
+              children: [
+                TextSpan(
+                  text: 'Bảo mật: ',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const TextSpan(
+                  text:
+                      'Địa chỉ whitelist được bảo vệ bởi 2FA. Chỉ có thể rút tới địa chỉ đã được xác minh.',
+                ),
+              ],
             ),
           ),
         ],

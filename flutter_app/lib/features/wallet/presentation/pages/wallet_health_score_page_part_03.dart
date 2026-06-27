@@ -113,6 +113,7 @@ class _SectionLabel extends StatelessWidget {
       title: label,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: _healthPrimary,
+      density: VitDensity.compact,
     );
   }
 }

@@ -26,7 +26,7 @@ class _NetworkSelector extends StatelessWidget {
           variant: VitCardVariant.inner,
           radius: VitCardRadius.sm,
           height: _depositSelectorHeight,
-          padding: _depositCompactPadding,
+          density: VitDensity.tool,
           borderColor: _depositPrimary,
           onTap: onTap,
           child: Row(
@@ -117,7 +117,7 @@ class _WarningCard extends StatelessWidget {
         const SizedBox(height: _depositGap),
         VitCard(
           constraints: const BoxConstraints(minHeight: 0),
-          padding: _depositCompactPadding,
+          density: VitDensity.compact,
           borderColor: _depositRed.withValues(alpha: .38),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +177,7 @@ class _QrAddressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _depositCardPadding,
+      density: VitDensity.compact,
       child: Column(
         children: [
           _QrCode(address: network.address),
@@ -198,21 +198,29 @@ class _QrAddressCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: _depositGap),
-          VitCtaButton(
-            key: DepositPage.copyAddressKey,
-            onPressed: onCopy,
-            height: _depositCopyButtonHeight,
-            variant: copied
-                ? VitCtaButtonVariant.success
-                : VitCtaButtonVariant.primary,
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
+          Tooltip(
+            message: copied ? 'Deposit address copied' : 'Copy deposit address',
+            child: Semantics(
+              button: true,
+              liveRegion: copied,
+              label: copied ? 'Deposit address copied' : 'Copy deposit address',
+              child: VitCtaButton(
+                key: DepositPage.copyAddressKey,
+                onPressed: onCopy,
+                height: _depositCopyButtonHeight,
+                density: VitDensity.compact,
+                variant: copied
+                    ? VitCtaButtonVariant.success
+                    : VitCtaButtonVariant.primary,
+                leading: Icon(
+                  copied ? Icons.check_circle_outline : Icons.copy_rounded,
+                  size: AppSpacing.iconSm,
+                ),
+                child: Text(
+                  copied ? 'Đã sao chép địa chỉ!' : 'Sao chép địa chỉ',
+                ),
+              ),
             ),
-            leading: Icon(
-              copied ? Icons.check_circle_outline : Icons.copy_rounded,
-              size: AppSpacing.iconSm,
-            ),
-            child: Text(copied ? 'Đã sao chép địa chỉ!' : 'Sao chép địa chỉ'),
           ),
         ],
       ),
@@ -237,7 +245,7 @@ class _QrCode extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
         clipBehavior: Clip.antiAlias,
         child: Padding(
-          padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+          padding: VitDensity.compact.cardPadding,
           child: CustomPaint(painter: _QrPainter(address)),
         ),
       ),

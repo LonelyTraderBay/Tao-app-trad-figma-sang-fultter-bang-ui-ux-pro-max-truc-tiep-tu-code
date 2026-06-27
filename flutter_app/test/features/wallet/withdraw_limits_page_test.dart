@@ -13,11 +13,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpWithdrawLimits(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpWithdrawLimits(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -29,6 +29,19 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+  }
+
+  Finder semanticsLabel(Pattern pattern) {
+    return find.byWidgetPredicate((widget) {
+      if (widget is! Semantics) return false;
+      final label = widget.properties.label;
+      if (label == null) return false;
+      return switch (pattern) {
+        String() => label == pattern,
+        RegExp() => pattern.hasMatch(label),
+        _ => false,
+      };
+    });
   }
 
   test('SC-153 mock repository exposes withdraw limits BE draft', () {
@@ -81,10 +94,16 @@ void main() {
     expect(find.text('Level 0'), findsOneWidget);
     expect(find.text('Level 3'), findsOneWidget);
     expect(find.text('HI\u1EC6N T\u1EA0I'), findsOneWidget);
+    expect(find.text('\u0110\u00E3 m\u1EDF'), findsWidgets);
+    expect(find.text('X\u00E1c minh KYC'), findsOneWidget);
+    expect(find.text('FAQ t\u0129nh'), findsOneWidget);
+    expect(semanticsLabel(RegExp(r'C\u1EA7n KYC KYC Level 3')), findsOneWidget);
   });
 
-  testWidgets('SC-153 first viewport reaches first KYC tier', (tester) async {
-    await pumpWithdrawLimits(tester);
+  testWidgets('SC-153 first viewport reaches current tier usage', (
+    tester,
+  ) async {
+    await pumpWithdrawLimits(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -93,15 +112,24 @@ void main() {
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(WithdrawLimitsPage.tierKey(0)),
+      find.byKey(WithdrawLimitsPage.currentTierKey),
       routeName: 'WithdrawLimitsPage',
-      actionLabel: 'the first KYC tier card',
+      actionLabel: 'the current KYC tier summary',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(WithdrawLimitsPage.dailyUsageKey),
+      routeName: 'WithdrawLimitsPage',
+      actionLabel: 'the daily usage bar',
     );
   });
 
   testWidgets('SC-153 wires locked tier to KYC edge', (tester) async {
     await pumpWithdrawLimits(tester);
 
+    expect(find.text('X\u00E1c minh KYC'), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(WithdrawLimitsPage.tierKey(3)));
     await tester.tap(find.byKey(WithdrawLimitsPage.tierKey(3)));
     await tester.pumpAndSettle();
 

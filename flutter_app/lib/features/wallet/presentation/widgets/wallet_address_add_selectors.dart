@@ -60,15 +60,10 @@ class _NetworkChip extends StatelessWidget {
         padding: AppSpacing.walletAddressAddNetworkChipPadding,
         accentColor: addressAddPrimary,
         semanticLabel: '${network.label} address network',
-        leading: SizedBox(
-          width: AppSpacing.walletAddressAddNetworkDot,
-          height: AppSpacing.walletAddressAddNetworkDot,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Color(network.colorHex),
-              shape: BoxShape.circle,
-            ),
-          ),
+        leading: Icon(
+          Icons.circle_rounded,
+          color: Color(network.colorHex),
+          size: AppSpacing.walletAddressAddNetworkDot,
         ),
       ),
     );

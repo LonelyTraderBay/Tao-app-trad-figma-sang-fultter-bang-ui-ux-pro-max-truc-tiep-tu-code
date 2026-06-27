@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
@@ -8,6 +9,7 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_ad
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_common.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_preview.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_selectors.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 
 class AddressAddForm extends StatelessWidget {
   const AddressAddForm({
@@ -51,6 +53,34 @@ class AddressAddForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const VitSectionHeader(
+          title: 'Mạng & tài sản',
+          icon: Icons.account_tree_outlined,
+          density: VitDensity.compact,
+        ),
+        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+        const AddressFieldLabel(label: 'Mạng lưới', required: true),
+        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
+        AddressNetworkGrid(
+          networks: snapshot.networks,
+          selectedId: selectedNetworkId,
+          onChanged: onNetworkChanged,
+        ),
+        const SizedBox(height: AppSpacing.walletAddressAddPreviewGap),
+        const AddressFieldLabel(label: 'Tài sản'),
+        const SizedBox(height: AppSpacing.walletAddressAddAssetLabelGap),
+        AddressAssetSelector(
+          assets: snapshot.assets,
+          selectedAsset: selectedAsset,
+          onChanged: onAssetChanged,
+        ),
+        const SizedBox(height: AppSpacing.walletAddressAddPreviewGap),
+        const VitSectionHeader(
+          title: 'Chi tiết địa chỉ',
+          icon: Icons.account_balance_wallet_outlined,
+          density: VitDensity.compact,
+        ),
+        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
         AddressFieldSection(
           label: 'Tên địa chỉ',
           required: true,
@@ -84,23 +114,7 @@ class AddressAddForm extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.walletAddressAddFormSectionGap),
-        const AddressFieldLabel(label: 'Mạng lưới', required: true),
-        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
-        AddressNetworkGrid(
-          networks: snapshot.networks,
-          selectedId: selectedNetworkId,
-          onChanged: onNetworkChanged,
-        ),
-        const SizedBox(height: AppSpacing.walletAddressAddFormSectionGap),
-        const AddressFieldLabel(label: 'Tài sản'),
-        const SizedBox(height: AppSpacing.walletAddressAddAssetLabelGap),
-        AddressAssetSelector(
-          assets: snapshot.assets,
-          selectedAsset: selectedAsset,
-          onChanged: onAssetChanged,
-        ),
-        const SizedBox(height: AppSpacing.walletAddressAddAddressSectionGap),
+        const SizedBox(height: AppSpacing.walletAddressAddPreviewGap),
         AddressFieldSection(
           label: 'Địa chỉ ví',
           required: true,
@@ -117,7 +131,7 @@ class AddressAddForm extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
-        const SizedBox(height: AppSpacing.walletAddressAddMemoGap),
+        const SizedBox(height: AppSpacing.walletAddressAddPreviewGap),
         AddressFieldSection(
           label: 'Memo / Tag',
           optionalText: '(tùy chọn)',
@@ -126,15 +140,21 @@ class AddressAddForm extends StatelessWidget {
             semanticLabel: 'Address memo optional',
             controller: memoController,
             hintText: 'Nhập memo nếu cần...',
-            height: AppSpacing.walletAddressAddMemoHeight,
             onChanged: onInputChanged,
           ),
         ),
-        const SizedBox(height: AppSpacing.sectionGapRelaxed),
+        const SizedBox(height: AppSpacing.walletAddressAddPreviewGap),
+        const VitSectionHeader(
+          title: 'Bảo mật & xác nhận',
+          icon: Icons.verified_user_outlined,
+          iconColor: AppColors.caution,
+          density: VitDensity.compact,
+        ),
+        const SizedBox(height: AppSpacing.walletAddressStatsValueGap),
         AddressWhitelistCard(enabled: whitelist, onTap: onWhitelistChanged),
-        const SizedBox(height: AppSpacing.walletAddressAddAgreementGap),
+        const SizedBox(height: AppSpacing.walletAddressAddPreviewGap),
         const AddressWarningCard(),
-        const SizedBox(height: AppSpacing.walletAddressAddAgreementGap),
+        const SizedBox(height: AppSpacing.walletAddressAddPreviewGap),
         AddressAgreementRow(agreed: agreed, onTap: onAgreementChanged),
         if (labelController.text.trim().isNotEmpty &&
             addressController.text.trim().isNotEmpty) ...[

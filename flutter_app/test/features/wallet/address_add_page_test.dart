@@ -4,17 +4,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/wallet/data/wallet_repository.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/address_book_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/address_add_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_preview.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
-  Future<void> pumpAddressAdd(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpAddressAdd(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -25,6 +29,26 @@ void main() {
         ),
       ),
     );
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> fillRequiredAddressForm(WidgetTester tester) async {
+    await tester.tap(find.byKey(AddressAddPage.networkKey('trc20')));
+    await tester.tap(find.byKey(AddressAddPage.assetKey('USDT')));
+    await tester.enterText(
+      find.byKey(AddressAddPage.labelFieldKey),
+      'Ví lạnh cá nhân',
+    );
+    await tester.enterText(
+      find.byKey(AddressAddPage.addressFieldKey),
+      'TQnKxxx4d8eRh9Kf2Lz5mNp7Yz123',
+    );
+    await tester.ensureVisible(find.byKey(AddressAddPage.whitelistKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(AddressAddPage.whitelistKey));
+    await tester.ensureVisible(find.byKey(AddressAddPage.agreementKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(AddressAddPage.agreementKey));
     await tester.pumpAndSettle();
   }
 
@@ -98,23 +122,7 @@ void main() {
   ) async {
     await pumpAddressAdd(tester);
 
-    await tester.tap(find.byKey(AddressAddPage.networkKey('trc20')));
-    await tester.tap(find.byKey(AddressAddPage.assetKey('USDT')));
-    await tester.enterText(
-      find.byKey(AddressAddPage.labelFieldKey),
-      'Ví lạnh cá nhân',
-    );
-    await tester.enterText(
-      find.byKey(AddressAddPage.addressFieldKey),
-      'TQnKxxx4d8eRh9Kf2Lz5mNp7Yz123',
-    );
-    await tester.ensureVisible(find.byKey(AddressAddPage.whitelistKey));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(AddressAddPage.whitelistKey));
-    await tester.ensureVisible(find.byKey(AddressAddPage.agreementKey));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(AddressAddPage.agreementKey));
-    await tester.pumpAndSettle();
+    await fillRequiredAddressForm(tester);
 
     expect(find.byKey(AddressAddPage.networkKey('trc20')), findsOneWidget);
     expect(find.byKey(AddressAddPage.assetKey('USDT')), findsOneWidget);
@@ -131,5 +139,57 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Xác nhận lưu'), findsOneWidget);
+  });
+
+  testWidgets('SC-143 first viewport reaches required address setup', (
+    tester,
+  ) async {
+    await pumpAddressAdd(tester, viewport: VitFirstViewport.minimumPhone);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-143 AddressAddPage',
+      semanticLabel: 'SC-143 AddressAddPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(AddressAddPage.networkKey('erc20')),
+      routeName: 'SC-143 AddressAddPage',
+      actionLabel: 'the default network selector',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(AddressAddPage.assetKey('ETH')),
+      routeName: 'SC-143 AddressAddPage',
+      actionLabel: 'the default asset selector',
+    );
+    expectFirstViewportVisible(
+      tester,
+      find.byKey(AddressAddPage.labelFieldKey),
+      targetLabel: 'the address label field',
+    );
+  });
+
+  testWidgets('SC-143 confirmation saves then returns to address book', (
+    tester,
+  ) async {
+    await pumpAddressAdd(tester);
+    await fillRequiredAddressForm(tester);
+
+    await tester.ensureVisible(find.byKey(AddressAddPage.saveKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(AddressAddPage.saveKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xác nhận lưu địa chỉ'), findsOneWidget);
+    expect(find.text('TQnKxxx4d8eRh9Kf...Np7Yz123'), findsOneWidget);
+
+    await tester.tap(find.byKey(AddressConfirmPreviewSheet.confirmButtonKey));
+    await tester.pump();
+    expect(find.byType(AddressSavedState), findsOneWidget);
+
+    await tester.pump(const Duration(milliseconds: 950));
+    await tester.pumpAndSettle();
+    expect(find.byType(AddressBookPage), findsOneWidget);
   });
 }

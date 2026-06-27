@@ -3,12 +3,6 @@ part of 'wallet_page_sections.dart';
 const double _walletAssetSectionGap = AppSpacing.x2;
 const double _walletAssetHeaderButtonHeight =
     AppSpacing.searchBarCompactHeight - AppSpacing.x2;
-const EdgeInsets _walletAssetRowCompactPadding = EdgeInsets.fromLTRB(
-  AppSpacing.x3,
-  AppSpacing.x3,
-  AppSpacing.x2,
-  AppSpacing.x3,
-);
 const double _walletAssetAvatarCompactSize = AppSpacing.x6 - AppSpacing.x1;
 const double _walletAssetRowGap = AppSpacing.x3;
 const double _walletAssetTextGap = AppSpacing.x1;
@@ -235,7 +229,7 @@ class _AssetRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: _walletAssetRowCompactPadding,
+            padding: VitDensity.compact.cardPadding,
             child: Row(
               children: [
                 VitAssetAvatar(

@@ -4,10 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_transfer_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -16,23 +13,16 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 
 const _transferBackground = AppColors.bg;
-const _transferPanel = AppColors.surface;
 const _transferPrimary = AppColors.primary;
 const _transferGreen = AppColors.buy;
 const _transferNativeBottomClearance = 88.0;
 const _transferVisualBottomClearance = 112.0;
-const _transferScrollTopPad = 0.0;
-const _transferGap = 8.0;
-const _transferTinyGap = 4.0;
-const _transferCardPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 10,
-);
-const _transferSheetPadding = EdgeInsetsDirectional.fromSTEB(16, 14, 16, 16);
 
 double _transferScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
@@ -86,7 +76,8 @@ class _TransferPageState extends ConsumerState<TransferPage> {
     final toWallet = _wallet(snapshot, _toWalletId);
     final asset = _asset(snapshot, _assetId);
     final usdValue = _amount * asset.usdRate;
-    final canTransfer = _amount > 0 && _amount <= asset.available;
+    final validationMessage = _transferValidationMessage(asset);
+    final canTransfer = validationMessage == null;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -104,71 +95,53 @@ class _TransferPageState extends ConsumerState<TransferPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: TransferPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: _transferScrollTopPad,
-                    bottom: bottomInset,
-                  ),
+                  bottomInset: bottomInset,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.tight,
                     children: [
-                      if (_showSuccess) ...[
-                        const TransferSuccessBanner(),
-                        const SizedBox(height: _transferGap),
-                      ],
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.md,
-                        padding: _transferCardPadding,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          customGap: _transferGap,
-                          fullBleed: true,
-                          children: [
-                            TransferWalletCard(
-                              key: TransferPage.fromWalletKey,
-                              label: 'T\u1eeb',
-                              wallet: fromWallet,
-                              color: _transferPrimary,
-                              onTap: () => _showWalletPicker(
-                                title: 'Ch\u1ecdn v\u00ed ngu\u1ed3n',
-                                snapshot: snapshot,
-                                excludedWalletId: _toWalletId,
-                                selectedWalletId: _fromWalletId,
-                                onSelected: (id) =>
-                                    setState(() => _fromWalletId = id),
-                              ),
-                            ),
-                            TransferSwapButton(onTap: _swapWallets),
-                            TransferWalletCard(
-                              key: TransferPage.toWalletKey,
-                              label: '\u0110\u1ebfn',
-                              wallet: toWallet,
-                              color: _transferGreen,
-                              onTap: () => _showWalletPicker(
-                                title: 'Ch\u1ecdn v\u00ed nh\u1eadn',
-                                snapshot: snapshot,
-                                excludedWalletId: _fromWalletId,
-                                selectedWalletId: _toWalletId,
-                                onSelected: (id) =>
-                                    setState(() => _toWalletId = id),
-                              ),
-                            ),
-                          ],
+                      if (_showSuccess) const TransferSuccessBanner(),
+                      const VitSectionHeader(
+                        title: 'Lu\u1ed3ng chuy\u1ec3n',
+                        icon: Icons.swap_vert_rounded,
+                        iconColor: _transferPrimary,
+                        accentColor: _transferPrimary,
+                      ),
+                      TransferDirectionCard(
+                        fromKey: TransferPage.fromWalletKey,
+                        toKey: TransferPage.toWalletKey,
+                        fromWallet: fromWallet,
+                        toWallet: toWallet,
+                        onSwap: _swapWallets,
+                        onFromTap: () => _showWalletPicker(
+                          title: 'Ch\u1ecdn v\u00ed ngu\u1ed3n',
+                          snapshot: snapshot,
+                          excludedWalletId: _toWalletId,
+                          selectedWalletId: _fromWalletId,
+                          onSelected: (id) =>
+                              setState(() => _fromWalletId = id),
+                        ),
+                        onToTap: () => _showWalletPicker(
+                          title: 'Ch\u1ecdn v\u00ed nh\u1eadn',
+                          snapshot: snapshot,
+                          excludedWalletId: _fromWalletId,
+                          selectedWalletId: _toWalletId,
+                          onSelected: (id) => setState(() => _toWalletId = id),
                         ),
                       ),
-                      const SizedBox(height: _transferGap),
-                      TransferAssetCard(
-                        asset: asset,
-                        onTap: () => _showAssetPicker(snapshot),
+                      const VitSectionHeader(
+                        title: 'T\u00e0i s\u1ea3n & s\u1ed1 l\u01b0\u1ee3ng',
+                        icon: Icons.account_balance_wallet_outlined,
+                        iconColor: _transferPrimary,
+                        accentColor: _transferPrimary,
                       ),
-                      const SizedBox(height: _transferGap),
                       TransferAmountCard(
                         controller: _amountController,
                         asset: asset,
+                        errorText: validationMessage,
+                        onAssetTap: () => _showAssetPicker(snapshot),
                         onChanged: () => setState(() {}),
                         onMax: () {
                           _amountController.text = formatTransferAssetAmount(
@@ -177,21 +150,29 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                           setState(() {});
                         },
                       ),
-                      if (_amount > 0) ...[
-                        const SizedBox(height: _transferTinyGap),
-                        Text(
-                          '\u2248 ${formatTransferUsd(usdValue)}',
-                          style: AppTextStyles.control.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: _transferGap),
+                      if (_amount > 0)
+                        TransferAmountEstimate(usdValue: usdValue),
+                      const VitSectionHeader(
+                        title: 'Xem l\u1ea1i an to\u00e0n',
+                        icon: Icons.verified_user_outlined,
+                        iconColor: _transferGreen,
+                        accentColor: _transferGreen,
+                      ),
                       const TransferInfoNotice(),
-                      const SizedBox(height: _transferGap),
+                      VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Review transfer before confirmation',
+                        message:
+                            'Check source wallet, destination wallet, amount, fee, and confirmation details before submitting.',
+                        contractId:
+                            '${fromWallet.name} -> ${toWallet.name} / ${asset.symbol}',
+                      ),
+                      if (validationMessage != null)
+                        TransferValidationNotice(message: validationMessage),
                       TransferButton(
                         key: TransferPage.submitKey,
                         enabled: canTransfer,
+                        disabledReason: validationMessage,
                         onTap: canTransfer
                             ? () => _showConfirmSheet(
                                 fromWallet: fromWallet,
@@ -202,16 +183,12 @@ class _TransferPageState extends ConsumerState<TransferPage> {
                               )
                             : null,
                       ),
-                      const SizedBox(height: _transferGap),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review transfer before confirmation',
-                        message:
-                            'Check source wallet, destination wallet, amount, fee, and masked confirmation details before submitting.',
-                        contractId:
-                            '${fromWallet.name} -> ${toWallet.name} / ${asset.symbol}',
+                      const VitSectionHeader(
+                        title: 'L\u1ecbch s\u1eed g\u1ea7n \u0111\u00e2y',
+                        icon: Icons.history_rounded,
+                        iconColor: _transferPrimary,
+                        accentColor: _transferPrimary,
                       ),
-                      const SizedBox(height: _transferGap),
                       RecentTransfersList(transfers: snapshot.recentTransfers),
                     ],
                   ),
@@ -249,6 +226,20 @@ class _TransferPageState extends ConsumerState<TransferPage> {
     });
   }
 
+  String? _transferValidationMessage(WalletTransferAsset asset) {
+    final rawAmount = _amountController.text.trim();
+    if (rawAmount.isEmpty) {
+      return 'Nh\u1eadp s\u1ed1 l\u01b0\u1ee3ng tr\u01b0\u1edbc khi xem l\u1ea1i chuy\u1ec3n n\u1ed9i b\u1ed9.';
+    }
+    if (_amount <= 0) {
+      return 'S\u1ed1 l\u01b0\u1ee3ng ph\u1ea3i l\u1edbn h\u01a1n 0 tr\u01b0\u1edbc khi xem l\u1ea1i.';
+    }
+    if (_amount > asset.available) {
+      return 'S\u1ed1 l\u01b0\u1ee3ng v\u01b0\u1ee3t qu\u00e1 kh\u1ea3 d\u1ee5ng ${formatTransferAssetAmount(asset.available)} ${asset.symbol}.';
+    }
+    return null;
+  }
+
   void _showWalletPicker({
     required String title,
     required WalletTransferSnapshot snapshot,
@@ -256,35 +247,31 @@ class _TransferPageState extends ConsumerState<TransferPage> {
     required String selectedWalletId,
     required ValueChanged<String> onSelected,
   }) {
+    final eligibleWallets = snapshot.wallets
+        .where((wallet) => wallet.id != excludedWalletId)
+        .toList(growable: false);
+
     showVitBottomSheet<void>(
       context: context,
-      backgroundColor: _transferPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
+      isScrollControlled: true,
       builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: _transferSheetPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(title, style: AppTextStyles.baseMedium),
-                const SizedBox(height: _transferGap),
-                for (final wallet in snapshot.wallets)
-                  if (wallet.id != excludedWalletId)
-                    TransferWalletPickerRow(
-                      wallet: wallet,
-                      selected: wallet.id == selectedWalletId,
-                      onTap: () {
-                        onSelected(wallet.id);
-                        Navigator.of(context).pop();
-                      },
-                    ),
-              ],
-            ),
+        return VitSheetPanel(
+          title: title,
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: eligibleWallets.length,
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.x1),
+            itemBuilder: (context, index) {
+              final wallet = eligibleWallets[index];
+              return TransferWalletPickerRow(
+                wallet: wallet,
+                selected: wallet.id == selectedWalletId,
+                onTap: () {
+                  onSelected(wallet.id);
+                  Navigator.of(context).pop();
+                },
+              );
+            },
           ),
         );
       },
@@ -294,38 +281,28 @@ class _TransferPageState extends ConsumerState<TransferPage> {
   void _showAssetPicker(WalletTransferSnapshot snapshot) {
     showVitBottomSheet<void>(
       context: context,
-      backgroundColor: _transferPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
+      isScrollControlled: true,
       builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
-            padding: _transferSheetPadding,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Ch\u1ecdn t\u00e0i s\u1ea3n',
-                  style: AppTextStyles.baseMedium,
-                ),
-                const SizedBox(height: _transferGap),
-                for (final asset in snapshot.assets)
-                  TransferAssetPickerRow(
-                    asset: asset,
-                    selected: asset.id == _assetId,
-                    onTap: () {
-                      setState(() {
-                        _assetId = asset.id;
-                        _amountController.clear();
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  ),
-              ],
-            ),
+        return VitSheetPanel(
+          title: 'Ch\u1ecdn t\u00e0i s\u1ea3n',
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: snapshot.assets.length,
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.x1),
+            itemBuilder: (context, index) {
+              final asset = snapshot.assets[index];
+              return TransferAssetPickerRow(
+                asset: asset,
+                selected: asset.id == _assetId,
+                onTap: () {
+                  setState(() {
+                    _assetId = asset.id;
+                    _amountController.clear();
+                  });
+                  Navigator.of(context).pop();
+                },
+              );
+            },
           ),
         );
       },
@@ -341,10 +318,7 @@ class _TransferPageState extends ConsumerState<TransferPage> {
   }) {
     showVitBottomSheet<void>(
       context: context,
-      backgroundColor: _transferPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
+      isScrollControlled: true,
       builder: (context) => TransferConfirmSheet(
         fromWallet: fromWallet,
         toWallet: toWallet,

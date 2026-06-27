@@ -10,114 +10,121 @@ class _NetworkCard extends StatelessWidget {
     final tokenColor = Color(network.colorHex);
     final healthColor = _healthColor(network.health);
     final congestionColor = _congestionColor(network.congestionPct);
-    return VitCard(
-      key: NetworkStatusPage.networkKey(network.id),
-      padding: VitDensity.compact.cardPadding,
-      borderColor: _networkBorder,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              _TokenLogo(symbol: network.symbol, color: tokenColor),
-              const SizedBox(width: _networkInlineGap),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            network.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
+    final congestionLabel = _congestionLabel(network.congestionPct);
+    return Semantics(
+      label:
+          '${network.name}: ${_healthLabel(network.health)}, '
+          'congestion ${network.congestionPct}%, fee ${network.gasFee}, '
+          'confirmation ${network.avgConfirmTime}',
+      child: VitCard(
+        key: NetworkStatusPage.networkKey(network.id),
+        padding: VitDensity.compact.cardPadding,
+        borderColor: healthColor.withValues(alpha: .34),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                _TokenLogo(symbol: network.symbol, color: tokenColor),
+                const SizedBox(width: _networkInlineGap),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              network.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
                             ),
                           ),
+                          const SizedBox(width: _networkTinyGap),
+                          _HealthPill(health: network.health),
+                        ],
+                      ),
+                      const SizedBox(height: _networkTinyGap),
+                      Text(
+                        'Block #${_formatInt(network.blockHeight)}',
+                        style: AppTextStyles.micro.copyWith(
+                          color: _networkMuted,
                         ),
-                        const SizedBox(width: _networkTinyGap),
-                        _HealthPill(
-                          label: _healthLabel(network.health),
-                          color: healthColor,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: _networkTinyGap),
-                    Text(
-                      'Block #${_formatInt(network.blockHeight)}',
-                      style: AppTextStyles.micro.copyWith(color: _networkMuted),
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              VitCard(
-                width: _networkActionIconBoxSize,
-                height: _networkActionIconBoxSize,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.md,
-                background: ColoredBox(
-                  color: healthColor.withValues(alpha: .08),
+                VitCard(
+                  width: _networkActionIconBoxSize,
+                  height: _networkActionIconBoxSize,
+                  variant: VitCardVariant.ghost,
+                  radius: VitCardRadius.md,
+                  background: ColoredBox(
+                    color: healthColor.withValues(alpha: .08),
+                  ),
+                  clip: true,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    _healthIcon(network.health),
+                    color: healthColor,
+                    size: AppSpacing.walletNetworkActionIcon,
+                  ),
                 ),
-                clip: true,
-                alignment: Alignment.center,
-                child: Icon(
-                  _healthIcon(network.health),
-                  color: healthColor,
-                  size: AppSpacing.walletNetworkActionIcon,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: _networkCardGap),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'M\u1EE9c t\u1EA3i m\u1EA1ng',
-                  style: AppTextStyles.micro.copyWith(color: _networkMuted),
-                ),
-              ),
-              Text(
-                '${network.congestionPct}%',
-                style: AppTextStyles.micro.copyWith(
-                  color: congestionColor,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: _networkTinyGap),
-          _CongestionBar(
-            percent: network.congestionPct,
-            color: congestionColor,
-          ),
-          const SizedBox(height: _networkCardGap),
-          _StatsGrid(network: network),
-          const SizedBox(height: _networkCardGap),
-          Row(
-            children: [
-              Expanded(
-                child: _AvailabilityChip(
-                  label: 'N\u1EA1p',
-                  enabled: network.depositEnabled,
-                ),
-              ),
-              const SizedBox(width: _networkTinyGap),
-              Expanded(
-                child: _AvailabilityChip(
-                  label: 'R\u00FAt',
-                  enabled: network.withdrawEnabled,
-                ),
-              ),
-            ],
-          ),
-          if (network.notes != null) ...[
+              ],
+            ),
             const SizedBox(height: _networkCardGap),
-            _NetworkNote(note: network.notes!),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'M\u1EE9c t\u1EA3i m\u1EA1ng',
+                    style: AppTextStyles.micro.copyWith(color: _networkMuted),
+                  ),
+                ),
+                Text(
+                  '${network.congestionPct}% - $congestionLabel',
+                  style: AppTextStyles.micro.copyWith(
+                    color: congestionColor,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: _networkTinyGap),
+            _CongestionBar(
+              percent: network.congestionPct,
+              color: congestionColor,
+              label: congestionLabel,
+            ),
+            const SizedBox(height: _networkCardGap),
+            _StatsGrid(network: network),
+            const SizedBox(height: _networkCardGap),
+            Row(
+              children: [
+                Expanded(
+                  child: _AvailabilityChip(
+                    label: 'N\u1EA1p',
+                    enabled: network.depositEnabled,
+                  ),
+                ),
+                const SizedBox(width: _networkTinyGap),
+                Expanded(
+                  child: _AvailabilityChip(
+                    label: 'R\u00FAt',
+                    enabled: network.withdrawEnabled,
+                  ),
+                ),
+              ],
+            ),
+            if (network.notes != null) ...[
+              const SizedBox(height: _networkCardGap),
+              _NetworkNote(note: network.notes!),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
@@ -219,20 +226,28 @@ class _StatTile extends StatelessWidget {
 }
 
 class _CongestionBar extends StatelessWidget {
-  const _CongestionBar({required this.percent, required this.color});
+  const _CongestionBar({
+    required this.percent,
+    required this.color,
+    required this.label,
+  });
 
   final int percent;
   final Color color;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: AppRadii.pillRadius,
-      child: LinearProgressIndicator(
-        minHeight: AppSpacing.walletNetworkProgressHeight,
-        value: (percent / 100).clamp(0, 1).toDouble(),
-        color: color.withValues(alpha: .55),
-        backgroundColor: color.withValues(alpha: .08),
+    return Semantics(
+      label: 'Network congestion $percent%, $label',
+      child: ClipRRect(
+        borderRadius: AppRadii.pillRadius,
+        child: LinearProgressIndicator(
+          minHeight: AppSpacing.walletNetworkProgressHeight,
+          value: (percent / 100).clamp(0, 1).toDouble(),
+          color: color.withValues(alpha: .55),
+          backgroundColor: color.withValues(alpha: .08),
+        ),
       ),
     );
   }
@@ -246,31 +261,18 @@ class _AvailabilityChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = enabled ? _networkGreen : _networkRed;
     return VitCard(
       height: _networkAvailabilityHeight,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.sm,
-      background: ColoredBox(color: color.withValues(alpha: .05)),
-      clip: true,
       alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            enabled ? Icons.check_circle_outline : Icons.wifi_off_rounded,
-            color: color,
-            size: AppSpacing.statusPillIconSizeMd,
-          ),
-          const SizedBox(width: _networkTinyGap),
-          Text(
-            '$label ${enabled ? 'OK' : 'T\u1EA1m d\u1EEBng'}',
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
+      child: VitStatusPill(
+        label: '$label ${enabled ? 'OK' : 'T\u1EA1m d\u1EEBng'}',
+        status: enabled
+            ? VitStatusPillStatus.success
+            : VitStatusPillStatus.error,
+        icon: enabled ? Icons.check_circle_outline : Icons.wifi_off_rounded,
+        size: VitStatusPillSize.sm,
       ),
     );
   }

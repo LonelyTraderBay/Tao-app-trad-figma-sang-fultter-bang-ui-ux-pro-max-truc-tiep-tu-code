@@ -3,11 +3,13 @@ part of '../pages/transaction_detail_page.dart';
 class _TransactionDetailContent extends StatelessWidget {
   const _TransactionDetailContent({
     required this.tx,
+    required this.copiedValue,
     required this.onCopy,
     required this.onSupport,
   });
 
   final WalletTransaction tx;
+  final String? copiedValue;
   final ValueChanged<String> onCopy;
   final VoidCallback onSupport;
 
@@ -21,15 +23,9 @@ class _TransactionDetailContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SummaryCard(tx: tx, type: type, status: status),
-        const SizedBox(height: _detailGap),
         _ProgressCard(tx: tx),
-        const SizedBox(height: _detailGap),
-        _DetailsCard(rows: details, onCopy: onCopy),
-        const SizedBox(height: _detailGap),
-        if (tx.txHash != null) ...[
-          const _ExplorerButton(),
-          const SizedBox(height: _detailGap),
-        ],
+        _DetailsCard(rows: details, copiedValue: copiedValue, onCopy: onCopy),
+        if (tx.txHash != null) ...[const _ExplorerButton()],
         _SupportButton(onTap: onSupport),
       ],
     );
@@ -49,15 +45,15 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _VitCardSurface(
-      padding: _detailCardPadding,
+    return VitCard(
+      density: VitDensity.compact,
       child: Column(
         children: [
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            width: _detailIconBox,
-            height: _detailIconBox,
+            width: AppSpacing.walletTransactionSummaryIconSize,
+            height: AppSpacing.walletTransactionSummaryIconSize,
             alignment: Alignment.center,
             borderColor: type.color.withValues(alpha: .22),
             child: Icon(
@@ -66,12 +62,12 @@ class _SummaryCard extends StatelessWidget {
               size: AppSpacing.walletTransactionSummaryStatusIcon,
             ),
           ),
-          const SizedBox(height: _detailGap),
+          const SizedBox(height: AppSpacing.x2),
           Text(
             type.label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: _detailTinyGap),
+          const SizedBox(height: AppSpacing.x1),
           Text(
             '${type.isDebit ? '-' : '+'}${_formatAmount(tx)} ${tx.asset}',
             textAlign: TextAlign.center,
@@ -81,7 +77,7 @@ class _SummaryCard extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: _detailTinyGap),
+          const SizedBox(height: AppSpacing.x1),
           VitStatusPill(
             label: status.label,
             icon: status.icon,
@@ -120,16 +116,18 @@ class _ProgressCard extends StatelessWidget {
       ),
     ];
 
-    return _VitCardSurface(
-      padding: _detailCardPadding,
+    return VitCard(
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Tiến trình',
-            style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
+          const VitSectionHeader(
+            title: 'Tiến trình',
+            icon: Icons.timeline_rounded,
+            iconColor: _detailPrimary,
+            density: VitDensity.compact,
           ),
-          const SizedBox(height: _detailGap),
+          const SizedBox(height: AppSpacing.x3),
           for (var i = 0; i < steps.length; i++)
             _ProgressRow(step: steps[i], isLast: i == steps.length - 1),
         ],
@@ -156,32 +154,37 @@ class _ProgressRow extends StatelessWidget {
       children: [
         Column(
           children: [
-            ClipRRect(
-              borderRadius: AppRadii.pillRadius,
-              child: SizedBox(
-                width: _detailProgressDot,
-                height: _detailProgressDot,
-                child: ColoredBox(color: color),
+            SizedBox.square(
+              dimension: AppSpacing.walletTransactionProgressDotSize,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color,
+                  shape: const CircleBorder(),
+                ),
               ),
             ),
             if (!isLast)
-              Padding(
-                padding: _detailLinePadding,
-                child: SizedBox(
-                  width: _detailProgressLineWidth,
-                  height: _detailProgressLineHeight,
-                  child: ColoredBox(
-                    color: step.done ? _detailGreen : AppColors.borderSolid,
+              Column(
+                children: [
+                  const SizedBox(
+                    height: AppSpacing.walletTransactionProgressLineSpacing,
                   ),
-                ),
+                  SizedBox(
+                    width: AppSpacing.walletTransactionProgressLineWidth,
+                    height: AppSpacing.walletTransactionStepLineHeight,
+                    child: ColoredBox(
+                      color: step.done ? _detailGreen : AppColors.borderSolid,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.walletTransactionProgressLineSpacing,
+                  ),
+                ],
               ),
           ],
         ),
-        const SizedBox(width: _detailInlineGap),
-        Padding(
-          padding: AppSpacing.zeroInsets.copyWith(
-            bottom: isLast ? 0 : _detailGap,
-          ),
+        const SizedBox(width: AppSpacing.walletTransactionExplorerLabelGap),
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -195,12 +198,13 @@ class _ProgressRow extends StatelessWidget {
                 ),
               ),
               if (step.time != null) ...[
-                const SizedBox(height: _detailTinyGap),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   step.time!,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
+              if (!isLast) const SizedBox(height: AppSpacing.x3),
             ],
           ),
         ),
@@ -210,29 +214,36 @@ class _ProgressRow extends StatelessWidget {
 }
 
 class _DetailsCard extends StatelessWidget {
-  const _DetailsCard({required this.rows, required this.onCopy});
+  const _DetailsCard({
+    required this.rows,
+    required this.copiedValue,
+    required this.onCopy,
+  });
 
   final List<_DetailRowData> rows;
+  final String? copiedValue;
   final ValueChanged<String> onCopy;
 
   @override
   Widget build(BuildContext context) {
-    return _VitCardSurface(
-      padding: EdgeInsets.zero,
+    return VitCard(
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: _detailHeaderPadding,
-            child: Text(
-              'Thông tin chi tiết',
-              style: AppTextStyles.body.copyWith(
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+          const VitSectionHeader(
+            title: 'Thông tin chi tiết',
+            icon: Icons.article_outlined,
+            iconColor: _detailPrimary,
+            density: VitDensity.compact,
           ),
+          const SizedBox(height: AppSpacing.x2),
           for (final row in rows)
-            _DetailInfoRow(row: row, onCopy: () => onCopy(row.value)),
+            _DetailInfoRow(
+              row: row,
+              copied: copiedValue == (row.copyValue ?? row.value),
+              onCopy: () => onCopy(row.copyValue ?? row.value),
+            ),
         ],
       ),
     );
@@ -240,64 +251,46 @@ class _DetailsCard extends StatelessWidget {
 }
 
 class _DetailInfoRow extends StatelessWidget {
-  const _DetailInfoRow({required this.row, required this.onCopy});
+  const _DetailInfoRow({
+    required this.row,
+    required this.copied,
+    required this.onCopy,
+  });
 
   final _DetailRowData row;
+  final bool copied;
   final VoidCallback onCopy;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Divider(
-          height: AppSpacing.walletHistoryDividerHeight,
-          thickness: AppSpacing.walletHistoryDividerHeight,
-          color: AppColors.divider,
-        ),
-        ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: _detailInfoRowMinHeight),
-          child: Padding(
-            padding: _detailRowPadding,
-            child: Row(
+    return VitInfoRow(
+      label: row.label,
+      value: row.value,
+      density: VitDensity.compact,
+      showDivider: true,
+      trailing: row.copyable
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: Text(
-                    row.label,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text2,
-                    ),
+                if (copied) ...[
+                  const VitStatusPill(
+                    label: 'Đã sao chép',
+                    icon: Icons.check_rounded,
+                    status: VitStatusPillStatus.success,
+                    size: VitStatusPillSize.sm,
                   ),
-                ),
-                const SizedBox(width: _detailInlineGap),
-                Flexible(
-                  child: Text(
-                    row.value,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
-                ),
-                if (row.copyable) ...[
-                  const SizedBox(width: _detailTinyGap),
-                  VitIconButton(
-                    key: TransactionDetailPage.copyTxIdKey,
-                    icon: Icons.copy_rounded,
-                    tooltip: 'Copy transaction field',
-                    size: VitIconButtonSize.sm,
-                    onPressed: onCopy,
-                  ),
+                  const SizedBox(width: AppSpacing.x1),
                 ],
+                VitIconButton(
+                  key: TransactionDetailPage.copyTxIdKey,
+                  icon: Icons.copy_rounded,
+                  tooltip: 'Copy transaction field',
+                  size: VitIconButtonSize.sm,
+                  onPressed: onCopy,
+                ),
               ],
-            ),
-          ),
-        ),
-      ],
+            )
+          : null,
     );
   }
 }
@@ -309,7 +302,7 @@ class _ExplorerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: TransactionDetailPage.explorerKey,
-      height: _detailExplorerHeight,
+      height: AppSpacing.walletTransactionExplorerHeight,
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
       borderColor: _detailPrimary.withValues(alpha: .28),
@@ -321,7 +314,7 @@ class _ExplorerButton extends StatelessWidget {
             color: _detailPrimary,
             size: AppSpacing.walletTransactionActionIcon,
           ),
-          const SizedBox(width: _detailTinyGap),
+          const SizedBox(width: AppSpacing.walletTransactionExplorerLabelGap),
           Text(
             'Xem trên Explorer',
             style: AppTextStyles.caption.copyWith(

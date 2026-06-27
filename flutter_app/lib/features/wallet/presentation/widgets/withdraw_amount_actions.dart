@@ -90,6 +90,7 @@ class WithdrawAmountInput extends StatelessWidget {
     required this.asset,
     required this.available,
     required this.controller,
+    required this.onChanged,
     required this.onAll,
     super.key,
   });
@@ -97,6 +98,7 @@ class WithdrawAmountInput extends StatelessWidget {
   final String asset;
   final double available;
   final TextEditingController controller;
+  final ValueChanged<String> onChanged;
   final VoidCallback onAll;
 
   @override
@@ -113,58 +115,67 @@ class WithdrawAmountInput extends StatelessWidget {
               selected: false,
               onTap: onAll,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
               accentColor: withdrawPrimary,
               semanticLabel: 'Use full withdrawable balance',
             ),
           ],
         ),
         const SizedBox(height: AppSpacing.rowGap),
-        VitCard(
-          variant: VitCardVariant.inner,
-          borderColor: withdrawPrimary.withValues(alpha: .25),
-          padding: AppSpacing.cardPadding,
-          child: Row(
-            children: [
-              Expanded(
-                child: Semantics(
-                  textField: true,
-                  label: 'Withdrawal amount',
-                  hint: 'Enter amount in $asset',
-                  child: TextField(
-                    key: withdrawAmountFieldKey,
-                    controller: controller,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                    ],
-                    style: AppTextStyles.amountSm.copyWith(
-                      fontFeatures: AppTextStyles.tabularFigures,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      isCollapsed: true,
-                      hintText: '0.00',
-                      hintStyle: AppTextStyles.amountSm.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.rowGap),
-              Text(
-                asset,
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-              ),
-            ],
+        VitInput(
+          fieldKey: withdrawAmountFieldKey,
+          controller: controller,
+          semanticLabel: 'Withdrawal amount',
+          hintText: '0.00',
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+          ],
+          textStyle: AppTextStyles.amountSm.copyWith(
+            fontFeatures: AppTextStyles.tabularFigures,
+            fontWeight: AppTextStyles.bold,
+          ),
+          onChanged: onChanged,
+          suffix: Text(
+            asset,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ),
       ],
+    );
+  }
+}
+
+class WithdrawPreviewBlockedNotice extends StatelessWidget {
+  const WithdrawPreviewBlockedNotice({required this.message, super.key});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      density: VitDensity.compact,
+      borderColor: withdrawAmber.withValues(alpha: .30),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            Icons.info_outline_rounded,
+            color: withdrawAmber,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              message,
+              style: AppTextStyles.micro.copyWith(
+                color: withdrawAmber,
+                fontWeight: AppTextStyles.medium,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -177,7 +188,7 @@ class WithdrawWarning extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.standard,
       borderColor: withdrawAmber.withValues(alpha: .30),
-      padding: AppSpacing.cardPadding,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -223,20 +234,30 @@ class WithdrawSupportLink extends StatelessWidget {
 }
 
 class WithdrawNextButton extends StatelessWidget {
-  const WithdrawNextButton({required this.onTap, super.key});
+  const WithdrawNextButton({
+    required this.onTap,
+    this.disabledReason,
+    super.key,
+  });
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
+  final String? disabledReason;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
+      enabled: onTap != null,
       label: 'Preview withdrawal',
-      child: VitCtaButton(
-        key: withdrawNextKey,
-        onPressed: onTap,
-        height: AppSpacing.inputHeight,
-        child: const Text('Tiếp tục →'),
+      hint: disabledReason,
+      child: Tooltip(
+        message: disabledReason ?? 'Preview withdrawal',
+        child: VitCtaButton(
+          key: withdrawNextKey,
+          onPressed: onTap,
+          height: AppSpacing.inputHeight,
+          child: const Text('Tiếp tục →'),
+        ),
       ),
     );
   }

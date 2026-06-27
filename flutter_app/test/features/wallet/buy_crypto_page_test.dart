@@ -9,12 +9,14 @@ import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
-  Future<void> pumpBuyCrypto(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpBuyCrypto(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -104,5 +106,52 @@ void main() {
 
     expect(find.text('Xác nhận mua'), findsOneWidget);
     expect(find.text('Xác nhận thanh toán'), findsOneWidget);
+  });
+
+  testWidgets('SC-145 first viewport reaches amount input', (tester) async {
+    await pumpBuyCrypto(tester, viewport: VitFirstViewport.minimumPhone);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'BuyCryptoPage',
+      semanticLabel: 'SC-145 BuyCryptoPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(BuyCryptoPage.amountFieldKey),
+      routeName: 'BuyCryptoPage',
+      actionLabel: 'the buy amount input',
+      minVisibleHeight: 20,
+    );
+  });
+
+  testWidgets('SC-145 review and success states work at 360 px', (
+    tester,
+  ) async {
+    await pumpBuyCrypto(tester, viewport: VitFirstViewport.minimumPhone);
+
+    await tester.tap(find.byKey(BuyCryptoPage.presetKey(100000)));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(BuyCryptoPage.buyButtonKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(BuyCryptoPage.buyButtonKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xác nhận mua'), findsOneWidget);
+    expect(find.text('Chi tiết xác nhận'), findsOneWidget);
+    expect(find.text('Miễn phí'), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Xác nhận thanh toán'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Xác nhận thanh toán'));
+    await tester.pump();
+
+    expect(find.text('Đang xử lý'), findsOneWidget);
+
+    await tester.pumpAndSettle();
+
+    expect(find.text('Đặt lệnh thành công!'), findsOneWidget);
+    expect(find.text('Về Ví'), findsOneWidget);
+    expect(find.text('Mua thêm'), findsOneWidget);
   });
 }

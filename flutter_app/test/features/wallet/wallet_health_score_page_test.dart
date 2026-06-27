@@ -12,12 +12,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpHealthScore(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-
+  Future<void> pumpHealthScore(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
     await tester.pumpWidget(
       ProviderScope(
         child: VitTradeApp(
@@ -77,6 +76,7 @@ void main() {
     expect(find.text('Overall Health Score'), findsOneWidget);
     expect(find.text('67'), findsOneWidget);
     expect(find.text('Good'), findsOneWidget);
+    expect(find.text('Enable 2FA'), findsOneWidget);
     expect(find.text('Health Breakdown'), findsOneWidget);
     expect(find.text('Chi ti\u1EBFt \u0111i\u1EC3m'), findsOneWidget);
     expect(find.text('Security'), findsOneWidget);
@@ -86,10 +86,10 @@ void main() {
     expect(find.text('Backup & Recovery'), findsOneWidget);
   });
 
-  testWidgets('SC-151 first viewport reaches first health metric', (
+  testWidgets('SC-151 first viewport reaches priority recommendation', (
     tester,
   ) async {
-    await pumpHealthScore(tester);
+    await pumpHealthScore(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -98,10 +98,27 @@ void main() {
     );
     expectFirstViewportVisible(
       tester,
-      find.byKey(WalletHealthScorePage.metricKey('Security')),
-      targetLabel: 'the first wallet health metric card',
+      find.byKey(WalletHealthScorePage.recommendationKey('r1')),
+      targetLabel: 'the priority recommendation action',
       minVisibleHeight: 24,
     );
+  });
+
+  testWidgets('SC-151 recommendation sheet has clear close action', (
+    tester,
+  ) async {
+    await pumpHealthScore(tester);
+
+    await tester.tap(find.byKey(WalletHealthScorePage.recommendationKey('r1')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Enable Now'), findsWidgets);
+    expect(find.textContaining('not financial advice'), findsOneWidget);
+    expect(find.byKey(WalletHealthScorePage.sheetCloseKey), findsOneWidget);
+
+    await tester.tap(find.byKey(WalletHealthScorePage.sheetCloseKey));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('not financial advice'), findsNothing);
   });
 
   testWidgets(
@@ -124,8 +141,8 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.text('Asset Distribution'), findsOneWidget);
-      expect(find.text('BTC'), findsOneWidget);
-      expect(find.text('Stablecoins'), findsOneWidget);
+      expect(find.text('BTC 42%'), findsOneWidget);
+      expect(find.text('Stablecoins 18%'), findsOneWidget);
       expect(find.text('Concentration Risk'), findsOneWidget);
       expect(find.text('Diversification Tips'), findsOneWidget);
     },

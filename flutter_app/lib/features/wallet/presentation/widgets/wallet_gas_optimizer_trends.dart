@@ -8,6 +8,8 @@ class _TrendsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+      padding: VitContentPadding.none,
+      gap: VitContentGap.tight,
       density: VitDensity.compact,
       children: [
         _ChartCard(
@@ -89,7 +91,7 @@ class _BestTimeCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Best Time to Transact',
+                      'Lower Activity Window',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
@@ -97,7 +99,7 @@ class _BestTimeCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     Text(
-                      'Gas fees are typically lowest between 2 AM - 6 AM UTC.',
+                      'Historically, fees have often been lower between 2 AM - 6 AM UTC. Confirm live fees before signing.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
                         height: 1.28,
@@ -113,14 +115,14 @@ class _BestTimeCard extends StatelessWidget {
             children: const [
               Expanded(
                 child: _BestTimeMetric(
-                  label: 'Avg Low Price',
+                  label: 'Historical low',
                   value: '12 Gwei',
                 ),
               ),
               SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: _BestTimeMetric(
-                  label: 'Potential Saving',
+                  label: 'Observed variance',
                   value: '~52%',
                 ),
               ),

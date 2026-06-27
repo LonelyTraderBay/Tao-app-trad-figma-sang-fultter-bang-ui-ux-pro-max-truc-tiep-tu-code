@@ -12,11 +12,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpPendingDeposits(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpPendingDeposits(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -28,6 +28,19 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+  }
+
+  Finder semanticsLabel(Pattern pattern) {
+    return find.byWidgetPredicate((widget) {
+      if (widget is! Semantics) return false;
+      final label = widget.properties.label;
+      if (label == null) return false;
+      return switch (pattern) {
+        String() => label == pattern,
+        RegExp() => pattern.hasMatch(label),
+        _ => false,
+      };
+    });
   }
 
   test('SC-152 mock repository exposes pending deposits BE draft', () {
@@ -77,15 +90,22 @@ void main() {
     expect(find.text('\u0110\u00E3 ghi nh\u1EADn'), findsWidgets);
     expect(find.text('N\u1EA1p BTC'), findsOneWidget);
     expect(find.text('\u0110ang x\u00E1c nh\u1EADn'), findsWidgets);
+    expect(find.text('1/2 y\u00EAu c\u1EA7u'), findsOneWidget);
+    expect(find.text('X\u00E1c nh\u1EADn y\u00EAu c\u1EA7u'), findsWidgets);
     expect(find.text('+5,000.00'), findsOneWidget);
     expect(find.text('+0.050000'), findsOneWidget);
     expect(find.text('X\u00E1c nh\u1EADn blockchain'), findsWidgets);
+    expect(semanticsLabel('Refresh pending deposit statuses'), findsOneWidget);
+    expect(
+      semanticsLabel(RegExp(r'Copy transaction hash for .+')),
+      findsWidgets,
+    );
   });
 
   testWidgets('SC-152 first viewport reaches first pending deposit', (
     tester,
   ) async {
-    await pumpPendingDeposits(tester);
+    await pumpPendingDeposits(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -113,8 +133,27 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(PendingDepositsPage.depositKey('pd001')), findsOneWidget);
     expect(find.byKey(PendingDepositsPage.depositKey('pd004')), findsOneWidget);
+    await tester.ensureVisible(
+      find.byKey(PendingDepositsPage.copyKey('pd001')),
+    );
     await tester.tap(find.byKey(PendingDepositsPage.copyKey('pd001')));
     await tester.pumpAndSettle();
     expect(find.text('\u0110\u00E3 ch\u00E9p'), findsOneWidget);
+    expect(semanticsLabel('Transaction hash copied for USDT'), findsOneWidget);
+  });
+
+  testWidgets('SC-152 refresh shows visible status feedback', (tester) async {
+    await pumpPendingDeposits(tester);
+
+    await tester.tap(find.byKey(PendingDepositsPage.refreshKey));
+    await tester.pump();
+
+    expect(find.byKey(PendingDepositsPage.refreshFeedbackKey), findsOneWidget);
+    expect(
+      find.text(
+        'V\u1EEBa c\u1EADp nh\u1EADt tr\u1EA1ng th\u00E1i n\u1EA1p ti\u1EC1n',
+      ),
+      findsOneWidget,
+    );
   });
 }

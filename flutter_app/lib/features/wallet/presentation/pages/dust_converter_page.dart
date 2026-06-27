@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -21,60 +20,19 @@ part '../widgets/wallet_dust_converter_targets.dart';
 part '../widgets/wallet_dust_converter_assets.dart';
 part '../widgets/wallet_dust_converter_confirm.dart';
 
-const _dustBackground = AppColors.bg;
-const _dustPanel = AppColors.surface;
 const _dustPanel2 = AppColors.surface3;
-const _dustHeroBorder = AppColors.primary20;
 const _dustBorder = AppColors.overlayStroke;
-const _dustPrimary = AppColors.primary;
-const _dustGreen = AppColors.buy;
 const _dustAmber = AppColors.caution;
 const _dustMuted = AppColors.text3;
-const _dustNativeBottomClearance = 88.0;
-const _dustVisualBottomClearance = 112.0;
-const _dustScrollTopPad = 0.0;
-const _dustGap = 8.0;
-const _dustTinyGap = 4.0;
-const _dustInlineGap = 8.0;
-const _dustHeroIconBox = 40.0;
-const _dustHeroStatHeight = 48.0;
-const _dustTargetHeight = 54.0;
-const _dustSelectAllHeight = 40.0;
-const _dustAssetRowHeight = 58.0;
-const _dustTokenLogo = 34.0;
-const _dustButtonHeight = 46.0;
-const _dustHeroPadding = EdgeInsetsDirectional.all(12);
-const _dustHeroStatPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 8,
-  vertical: 4,
-);
-const _dustTargetPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 10,
-  vertical: 6,
-);
-const _dustSelectAllPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 8,
-);
-const _dustAssetRowPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 8,
-);
-const _dustFooterTopPad = 8.0;
-const _dustSheetPadding = EdgeInsetsDirectional.fromSTEB(16, 14, 16, 16);
-const _dustPreviewPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 12,
-);
-const _dustConvertedPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 10,
-);
+const _dustGap = AppSpacing.x2;
+const _dustTinyGap = AppSpacing.x1;
+const _dustInlineGap = AppSpacing.x2;
+const _dustHeroIconBox = AppSpacing.buttonCompact;
+const _dustTokenLogo = AppSpacing.buttonCompact - AppSpacing.x1;
+const _dustFooterTopPad = AppSpacing.x2;
 
-double _dustBottomSpace(BuildContext context, ShellRenderMode mode) {
-  return (mode.usesVisualQaFrame
-          ? _dustVisualBottomClearance
-          : _dustNativeBottomClearance) +
+double _dustBottomSpace(BuildContext context) {
+  return AppSpacing.walletDustInlineFooterBottomGap +
       MediaQuery.paddingOf(context).bottom;
 }
 
@@ -85,6 +43,7 @@ class DustConverterPage extends ConsumerStatefulWidget {
   static const selectAllKey = Key('sc154_dust_converter_select_all');
   static const ctaKey = Key('sc154_dust_converter_cta');
   static const confirmSheetKey = Key('sc154_dust_converter_confirm_sheet');
+  static const confirmCancelKey = Key('sc154_dust_converter_confirm_cancel');
   static const confirmButtonKey = Key('sc154_dust_converter_confirm_button');
   static Key targetKey(String symbol) =>
       Key('sc154_dust_converter_target_$symbol');
@@ -109,18 +68,13 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
         .where((asset) => _selectedIds.contains(asset.id))
         .toList(growable: false);
     final selectedTotal = _sumUsd(selectedAssets);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomSpace = _dustBottomSpace(context, mode);
-    final inlineFooter =
-        mode.usesVisualQaFrame &&
-        MediaQuery.sizeOf(context).height >
-            AppSpacing.walletDustInlineFooterHeightThreshold;
+    final bottomSpace = _dustBottomSpace(context);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-154 DustConverterPage',
       child: Material(
-        color: _dustBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF',
@@ -131,17 +85,14 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: DustConverterPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: _dustScrollTopPad,
-                    bottom: _dustGap,
-                  ),
+                  bottomInset: _dustGap,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    fullBleed: true,
+                    gap: VitContentGap.tight,
                     children: [
                       if (_converted)
                         _ConvertedBanner(targetSymbol: _targetSymbol),
@@ -152,6 +103,7 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                             'Confirm selected assets, conversion fee, receive amount, and target asset before submitting.',
                         contractId:
                             '${_selectedIds.length} selected / $_targetSymbol',
+                        density: VitDensity.compact,
                       ),
                       _DustHero(
                         snapshot: snapshot,
@@ -200,39 +152,23 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                         if (asset != assets.last)
                           const SizedBox(height: _dustTinyGap),
                       ],
-                      if (inlineFooter) ...[
-                        _ConvertFooter(
-                          bottomSpace: 0,
-                          horizontalPadding: 0,
-                          selectedCount: _selectedIds.length,
-                          targetSymbol: _targetSymbol,
-                          enabled: _selectedIds.isNotEmpty,
-                          onTap: () => _showConfirmSheet(
-                            context,
-                            snapshot,
-                            selectedAssets,
-                            selectedTotal,
-                          ),
+                      _ConvertFooter(
+                        bottomSpace: bottomSpace,
+                        horizontalPadding: 0,
+                        selectedCount: _selectedIds.length,
+                        targetSymbol: _targetSymbol,
+                        enabled: _selectedIds.isNotEmpty,
+                        onTap: () => _showConfirmSheet(
+                          context,
+                          snapshot,
+                          selectedAssets,
+                          selectedTotal,
                         ),
-                        const SizedBox(height: _dustVisualBottomClearance),
-                      ],
+                      ),
                     ],
                   ),
                 ),
               ),
-              if (!inlineFooter)
-                _ConvertFooter(
-                  bottomSpace: bottomSpace,
-                  selectedCount: _selectedIds.length,
-                  targetSymbol: _targetSymbol,
-                  enabled: _selectedIds.isNotEmpty,
-                  onTap: () => _showConfirmSheet(
-                    context,
-                    snapshot,
-                    selectedAssets,
-                    selectedTotal,
-                  ),
-                ),
             ],
           ),
         ),
@@ -263,32 +199,29 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
 
     showVitBottomSheet<void>(
       context: context,
-      backgroundColor: _dustPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
+      backgroundColor: AppColors.surface,
       builder: (context) {
-        return SafeArea(
-          top: false,
-          child: Padding(
+        return VitSheetPanel(
+          title: 'X\u00E1c nh\u1EADn chuy\u1EC3n \u0111\u1ED5i',
+          child: KeyedSubtree(
             key: DustConverterPage.confirmSheetKey,
-            padding: _dustSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'X\u00E1c nh\u1EADn chuy\u1EC3n \u0111\u1ED5i',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Review conversion preview',
+                  message:
+                      'Confirm selected assets, conversion fee, receive amount, target asset, and next step before submitting.',
+                  contractId:
+                      '${selectedAssets.length} assets / $_targetSymbol',
+                  density: VitDensity.compact,
                 ),
-                const SizedBox(height: _dustGap),
+                const SizedBox(height: AppSpacing.x3),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  radius: VitCardRadius.sm,
-                  padding: _dustPreviewPadding,
+                  density: VitDensity.compact,
                   borderColor: _dustBorder,
                   child: Column(
                     children: [
@@ -308,24 +241,41 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
                       _PreviewRow(
                         label: 'Nh\u1EADn \u0111\u01B0\u1EE3c',
                         value: '${_formatAmount(received)} $_targetSymbol',
-                        valueColor: _dustGreen,
+                        valueColor: AppColors.buy,
                         last: true,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: _dustGap),
-                _PrimaryButton(
-                  key: DustConverterPage.confirmButtonKey,
-                  label: 'Chuy\u1EC3n \u0111\u1ED5i sang $_targetSymbol',
-                  enabled: true,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    setState(() {
-                      _converted = true;
-                      _selectedIds.clear();
-                    });
-                  },
+                const SizedBox(height: AppSpacing.x3),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _PrimaryButton(
+                        key: DustConverterPage.confirmCancelKey,
+                        label: 'H\u1EE7y',
+                        enabled: true,
+                        variant: VitCtaButtonVariant.secondary,
+                        onTap: () => Navigator.of(context).pop(),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.rowGapRegular),
+                    Expanded(
+                      child: _PrimaryButton(
+                        key: DustConverterPage.confirmButtonKey,
+                        label: 'Chuy\u1EC3n \u0111\u1ED5i sang $_targetSymbol',
+                        enabled: true,
+                        variant: VitCtaButtonVariant.danger,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          setState(() {
+                            _converted = true;
+                            _selectedIds.clear();
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

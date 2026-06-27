@@ -2,77 +2,124 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-part '../widgets/network_status_summary.dart';
 part '../widgets/network_status_cards_stats.dart';
 part '../widgets/network_status_legend_common.dart';
+part '../widgets/network_status_summary.dart';
 
-const _networkBackground = AppColors.bg;
 const _networkBorder = AppColors.overlayStroke;
-const _networkPrimary = AppColors.primary;
 const _networkGreen = AppColors.buy;
 const _networkAmber = AppColors.caution;
 const _networkOrange = AppColors.riskHigh;
 const _networkRed = AppColors.sell;
 const _networkMuted = AppColors.text3;
-const _networkNativeBottomClearance = 88.0;
-const _networkVisualBottomClearance = 112.0;
-const _networkScrollTopPad = 0.0;
-const _networkInlineGap = 10.0;
-const _networkTinyGap = 4.0;
-const _networkCardGap = 8.0;
-const _networkSummaryIconSize = 40.0;
-const _networkSummaryStatHeight = 44.0;
-const _networkLogoSize = 36.0;
-const _networkActionIconBoxSize = 34.0;
-const _networkStatHeight = 52.0;
-const _networkAvailabilityHeight = 32.0;
-const _networkLegendIconSize = 28.0;
-const _networkCompactStatPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 8,
-  vertical: 4,
-);
+const _networkInlineGap = AppSpacing.x2;
+const _networkTinyGap = AppSpacing.x1;
+const _networkCardGap = AppSpacing.x2;
+const _networkSummaryIconSize = AppSpacing.walletNetworkSummaryIcon;
+const _networkSummaryStatHeight = AppSpacing.walletNetworkSummaryStatHeight;
+const _networkLogoSize = AppSpacing.buttonCompact;
+const _networkActionIconBoxSize = AppSpacing.walletNetworkActionIconBox;
+const _networkStatHeight = AppSpacing.walletNetworkStatHeight;
+const _networkAvailabilityHeight = AppSpacing.walletNetworkAvailabilityHeight;
+const _networkCompactStatPadding = AppSpacing.walletNetworkStatPadding;
 
 double _networkScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? _networkVisualBottomClearance
-          : _networkNativeBottomClearance) +
+          ? AppSpacing.walletBottomInsetVisualChrome
+          : AppSpacing.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
 }
 
-class NetworkStatusPage extends ConsumerWidget {
+enum _NetworkStatusFilter { all, issues, maintenance }
+
+extension _NetworkStatusFilterX on _NetworkStatusFilter {
+  String get key {
+    return switch (this) {
+      _NetworkStatusFilter.all => 'all',
+      _NetworkStatusFilter.issues => 'issues',
+      _NetworkStatusFilter.maintenance => 'maintenance',
+    };
+  }
+
+  String get label {
+    return switch (this) {
+      _NetworkStatusFilter.all => 'T\u1EA5t c\u1EA3',
+      _NetworkStatusFilter.issues => 'C\u1EA7n ch\u00FA \u00FD',
+      _NetworkStatusFilter.maintenance => 'B\u1EA3o tr\u00EC',
+    };
+  }
+
+  IconData get icon {
+    return switch (this) {
+      _NetworkStatusFilter.all => Icons.hub_outlined,
+      _NetworkStatusFilter.issues => Icons.warning_amber_rounded,
+      _NetworkStatusFilter.maintenance => Icons.wifi_off_rounded,
+    };
+  }
+
+  bool includes(WalletNetworkInfo network) {
+    return switch (this) {
+      _NetworkStatusFilter.all => true,
+      _NetworkStatusFilter.issues => network.health != 'operational',
+      _NetworkStatusFilter.maintenance => network.health == 'down',
+    };
+  }
+}
+
+_NetworkStatusFilter _networkFilterFromKey(String key) {
+  return _NetworkStatusFilter.values.firstWhere(
+    (filter) => filter.key == key,
+    orElse: () => _NetworkStatusFilter.all,
+  );
+}
+
+class NetworkStatusPage extends ConsumerStatefulWidget {
   const NetworkStatusPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc155_network_status_content');
   static const refreshKey = Key('sc155_network_status_refresh');
+  static const refreshFeedbackKey = Key(
+    'sc155_network_status_refresh_feedback',
+  );
+  static Key filterKey(String id) => Key('sc155_network_status_filter_$id');
   static Key networkKey(String id) => Key('sc155_network_status_$id');
 
   final ShellRenderMode? shellRenderMode;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<NetworkStatusPage> createState() => _NetworkStatusPageState();
+}
+
+class _NetworkStatusPageState extends ConsumerState<NetworkStatusPage> {
+  _NetworkStatusFilter _filter = _NetworkStatusFilter.all;
+  String? _refreshFeedback;
+
+  @override
+  Widget build(BuildContext context) {
     final snapshot = ref.watch(walletNetworkStatusProvider);
-    final mode = shellRenderMode ?? defaultShellRenderMode();
+    final networks = _visibleNetworks(snapshot.networks);
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _networkScrollBottomInset(context, mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-155 NetworkStatusPage',
       child: Material(
-        color: _networkBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tr\u1EA1ng th\u00E1i m\u1EA1ng',
@@ -83,15 +130,14 @@ class NetworkStatusPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: NetworkStatusPage.contentKey,
-                  padding: AppSpacing.walletNetworkStatusPageScrollPadding
-                      .copyWith(top: _networkScrollTopPad, bottom: bottomInset),
+                  bottomInset: bottomInset,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    fullBleed: true,
+                    gap: VitContentGap.tight,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
@@ -102,10 +148,34 @@ class NetworkStatusPage extends ConsumerWidget {
                       ),
                       _SummaryCard(
                         snapshot: snapshot,
-                        onRefresh: () => _showNetworkRefreshNotice(context),
+                        refreshFeedback: _refreshFeedback,
+                        onRefresh: _refreshNetworkStatus,
                       ),
-                      for (final network in snapshot.networks)
-                        _NetworkCard(network: network),
+                      _NetworkFilterTabs(
+                        active: _filter,
+                        snapshot: snapshot,
+                        onChanged: (filter) => setState(() {
+                          _filter = filter;
+                        }),
+                      ),
+                      VitSectionHeader(
+                        title: _filter == _NetworkStatusFilter.all
+                            ? 'M\u1EA1ng theo m\u1EE9c \u01B0u ti\u00EAn'
+                            : '${_filter.label} (${networks.length})',
+                        icon: Icons.route_rounded,
+                        density: VitDensity.compact,
+                      ),
+                      if (networks.isEmpty)
+                        const VitEmptyState(
+                          title:
+                              'Kh\u00F4ng c\u00F3 m\u1EA1ng ph\u00F9 h\u1EE3p',
+                          message:
+                              'Th\u1EED b\u1ED9 l\u1ECDc kh\u00E1c ho\u1EB7c l\u00E0m m\u1EDBi tr\u1EA1ng th\u00E1i m\u1EA1ng.',
+                          icon: Icons.wifi_find_rounded,
+                        )
+                      else
+                        for (final network in networks)
+                          _NetworkCard(network: network),
                       const _LegendCard(),
                       const _DisclaimerCard(),
                     ],
@@ -119,12 +189,19 @@ class NetworkStatusPage extends ConsumerWidget {
     );
   }
 
-  void _showNetworkRefreshNotice(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Đã làm mới trạng thái mạng'),
-        duration: Duration(milliseconds: 900),
-      ),
-    );
+  List<WalletNetworkInfo> _visibleNetworks(List<WalletNetworkInfo> networks) {
+    return [...networks.where(_filter.includes)]..sort((a, b) {
+      final priority = _networkPriority(a).compareTo(_networkPriority(b));
+      if (priority != 0) return priority;
+      return b.congestionPct.compareTo(a.congestionPct);
+    });
+  }
+
+  void _refreshNetworkStatus() {
+    ref.invalidate(walletNetworkStatusProvider);
+    setState(() {
+      _refreshFeedback =
+          '\u0110\u00E3 l\u00E0m m\u1EDBi tr\u1EA1ng th\u00E1i m\u1EA1ng';
+    });
   }
 }

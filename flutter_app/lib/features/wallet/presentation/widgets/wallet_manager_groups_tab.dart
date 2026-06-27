@@ -18,7 +18,10 @@ class WalletGroupsTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const WalletManagerSectionLabel(label: 'Wallet Groups'),
+        const WalletManagerSectionLabel(
+          label: 'Wallet Groups',
+          icon: Icons.folder_outlined,
+        ),
         const SizedBox(height: AppSpacing.walletManagerGroupsSectionGap),
         for (var i = 0; i < snapshot.groups.length; i++) ...[
           _GroupCard(

@@ -12,103 +12,114 @@ class _KycTierCard extends StatelessWidget {
     final isCurrent = tier.level == currentLevel;
     final isCompleted = tier.level < currentLevel;
     final isLocked = tier.level > currentLevel;
+    final stateLabel = isLocked
+        ? 'C\u1EA7n KYC'
+        : isCurrent
+        ? 'HI\u1EC6N T\u1EA0I'
+        : '\u0110\u00E3 m\u1EDF';
+    final stateIcon = isLocked
+        ? Icons.lock_outline_rounded
+        : isCompleted
+        ? Icons.check_circle_outline_rounded
+        : Icons.star_border_rounded;
+    final stateStatus = isLocked
+        ? VitStatusPillStatus.warning
+        : isCurrent
+        ? VitStatusPillStatus.info
+        : VitStatusPillStatus.success;
 
-    return VitCard(
-      key: WithdrawLimitsPage.tierKey(tier.level),
-      onTap: isLocked
-          ? () => context.go(AppRoutePaths.profileKyc)
-          : () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    isCurrent
-                        ? 'Bạn đang ở ${tier.name}'
-                        : '${tier.name} đã được mở khóa',
-                  ),
-                  duration: const Duration(milliseconds: 900),
-                ),
-              );
-            },
-      height: _limitsTierHeight,
-      padding: _limitsTierPadding,
-      borderColor: isCurrent ? tierColor.withValues(alpha: .45) : _limitsBorder,
-      child: Row(
-        children: [
-          VitCard(
-            width: _limitsIconBox,
-            height: _limitsIconBox,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
-            borderColor: tierColor.withValues(alpha: isCurrent ? .45 : .26),
-            background: ColoredBox(
-              color: tierColor.withValues(alpha: isCurrent ? .15 : .12),
+    return Semantics(
+      button: isLocked,
+      label:
+          '$stateLabel KYC Level ${tier.level}, ${tier.name}, daily limit ${_formatUsd(tier.dailyLimit)}',
+      child: VitCard(
+        key: WithdrawLimitsPage.tierKey(tier.level),
+        onTap: isLocked ? () => context.go(AppRoutePaths.profileKyc) : null,
+        constraints: const BoxConstraints(
+          minHeight: AppSpacing.inputHeight + AppSpacing.x5,
+        ),
+        density: VitDensity.compact,
+        borderColor: isCurrent
+            ? tierColor.withValues(alpha: .45)
+            : AppColors.overlayStroke,
+        child: Row(
+          children: [
+            VitCard(
+              width: _limitsIconBox,
+              height: _limitsIconBox,
+              variant: VitCardVariant.ghost,
+              radius: VitCardRadius.lg,
+              borderColor: tierColor.withValues(alpha: isCurrent ? .45 : .26),
+              background: ColoredBox(
+                color: tierColor.withValues(alpha: isCurrent ? .15 : .12),
+              ),
+              clip: true,
+              alignment: Alignment.center,
+              child: Icon(
+                stateIcon,
+                color: tierColor,
+                size: AppSpacing.transferActionIcon,
+              ),
             ),
-            clip: true,
-            alignment: Alignment.center,
-            child: Icon(
-              isLocked
-                  ? Icons.lock_outline_rounded
-                  : isCompleted
-                  ? Icons.check_circle_outline_rounded
-                  : Icons.star_border_rounded,
-              color: tierColor,
-              size: AppSpacing.transferActionIcon,
-            ),
-          ),
-          const SizedBox(width: _limitsInlineGap),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Level ${tier.level}',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(width: _limitsTinyGap),
-                    Flexible(
-                      child: Text(
-                        tier.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: tierColor,
+            const SizedBox(width: _limitsInlineGap),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Level ${tier.level}',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                    ),
-                    if (isCurrent) ...[
                       const SizedBox(width: _limitsTinyGap),
-                      VitAccentPill(
-                        label: 'HI\u1EC6N T\u1EA0I',
-                        accentColor: tierColor,
+                      Flexible(
+                        child: Text(
+                          tier.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: tierColor,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
                       ),
                     ],
-                  ],
-                ),
-                const SizedBox(height: _limitsTinyGap),
-                Text(
-                  tier.dailyLimit > 0
-                      ? '${_formatUsd(tier.dailyLimit)}/ng\u00E0y'
-                      : 'Kh\u00F4ng c\u00F3 h\u1EA1n m\u1EE9c',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: _limitsMuted),
-                ),
-              ],
+                  ),
+                  const SizedBox(height: _limitsTinyGap),
+                  Text(
+                    tier.dailyLimit > 0
+                        ? '${_formatUsd(tier.dailyLimit)}/ng\u00E0y'
+                        : 'Kh\u00F4ng c\u00F3 h\u1EA1n m\u1EE9c',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.sectionLabel,
-            size: 21,
-          ),
-        ],
+            const SizedBox(width: _limitsTinyGap),
+            if (isLocked)
+              VitStatusPill(
+                key: WithdrawLimitsPage.upgradeKycKey,
+                label: 'X\u00E1c minh KYC',
+                icon: Icons.open_in_new_rounded,
+                status: stateStatus,
+                size: VitStatusPillSize.sm,
+              )
+            else
+              VitStatusPill(
+                label: stateLabel,
+                icon: stateIcon,
+                status: stateStatus,
+                size: VitStatusPillSize.sm,
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -122,17 +133,27 @@ class _FaqCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _limitsCardPadding,
-      borderColor: _limitsBorder,
+      density: VitDensity.compact,
+      borderColor: AppColors.overlayStroke,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'C\u00E2u h\u1ECFi th\u01B0\u1EDDng g\u1EB7p',
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
+          const Row(
+            children: [
+              Expanded(
+                child: VitSectionHeader(
+                  title: 'C\u00E2u h\u1ECFi th\u01B0\u1EDDng g\u1EB7p',
+                  icon: Icons.help_outline_rounded,
+                  density: VitDensity.compact,
+                ),
+              ),
+              VitStatusPill(
+                label: 'FAQ t\u0129nh',
+                icon: Icons.article_outlined,
+                status: VitStatusPillStatus.neutral,
+                size: VitStatusPillSize.sm,
+              ),
+            ],
           ),
           const SizedBox(height: _limitsGap),
           for (var i = 0; i < faqs.length; i++) ...[
@@ -146,7 +167,7 @@ class _FaqCard extends StatelessWidget {
             const SizedBox(height: _limitsTinyGap),
             Text(
               faqs[i].answer,
-              style: AppTextStyles.micro.copyWith(color: _limitsMuted),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
             if (i != faqs.length - 1) ...[
               const SizedBox(height: _limitsGap),

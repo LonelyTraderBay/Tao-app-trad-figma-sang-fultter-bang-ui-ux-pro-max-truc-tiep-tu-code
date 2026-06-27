@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
 
 class AddressWhitelistCard extends StatelessWidget {
   const AddressWhitelistCard({
@@ -26,18 +29,14 @@ class AddressWhitelistCard extends StatelessWidget {
       child: VitCard(
         key: const Key('sc143_address_whitelist'),
         onTap: onTap,
-        height: AppSpacing.walletAddressAddWhitelistHeight,
-        padding: AppSpacing.walletAddressSecurityPadding,
-        variant: VitCardVariant.ghost,
+        density: VitDensity.compact,
         borderColor: AppColors.overlayStroke,
-        background: const ColoredBox(color: addressAddPanel),
-        clip: true,
         child: Row(
           children: [
             VitCard(
-              width: AppSpacing.walletAddressIconSize,
-              height: AppSpacing.walletAddressIconSize,
-              variant: VitCardVariant.ghost,
+              width: AppSpacing.buttonCompact,
+              height: AppSpacing.buttonCompact,
+              variant: VitCardVariant.inner,
               borderColor: enabled
                   ? AppColors.buy.withValues(alpha: .30)
                   : AppColors.borderSolid,
@@ -91,28 +90,13 @@ class _SwitchPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitTogglePill(
+      enabled: enabled,
+      activeColor: addressAddGreen,
       width: AppSpacing.walletAddressAddSwitchWidth,
       height: AppSpacing.walletAddressAddSwitchHeight,
-      radius: VitCardRadius.sm,
-      variant: VitCardVariant.ghost,
-      borderColor: enabled ? addressAddGreen : AppColors.borderSolid,
-      background: ColoredBox(
-        color: enabled ? addressAddGreen : addressAddPanel2,
-      ),
-      clip: true,
-      child: AnimatedAlign(
-        alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
-        duration: const Duration(milliseconds: 160),
-        child: Padding(
-          padding: AppSpacing.walletAddressAddSwitchKnobMargin,
-          child: SizedBox(
-            width: AppSpacing.walletAddressAddSwitchKnob,
-            height: AppSpacing.walletAddressAddSwitchKnob,
-            child: ClipOval(child: ColoredBox(color: AppColors.onAccent)),
-          ),
-        ),
-      ),
+      knobSize: AppSpacing.walletAddressAddSwitchKnob,
+      knobMargin: AppSpacing.walletAddressAddSwitchKnobMargin,
     );
   }
 }
@@ -122,48 +106,13 @@ class AddressWarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.walletAddressSecurityPadding,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.caution.withValues(alpha: .15),
-      background: ColoredBox(color: AppColors.caution.withValues(alpha: .06)),
-      clip: true,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: AppSpacing.walletAddressAddWarningIconPadding,
-            child: Icon(
-              Icons.warning_amber_rounded,
-              color: addressAddAmber,
-              size: AppSpacing.walletAddressAddIcon,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.rowGapRegular),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Lưu ý quan trọng',
-                  style: AppTextStyles.caption.copyWith(
-                    color: addressAddAmber,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.rowGap),
-                Text(
-                  'Kiểm tra kỹ địa chỉ và mạng lưới trước khi lưu. Rút tiền sai địa chỉ hoặc sai mạng sẽ mất vĩnh viễn và không thể khôi phục.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightLong,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return const VitHighRiskStatePanel(
+      state: VitHighRiskUiState.riskReview,
+      title: 'Lưu ý quan trọng',
+      message:
+          'Kiểm tra kỹ địa chỉ và mạng lưới trước khi lưu. Rút tiền sai địa chỉ hoặc sai mạng sẽ mất vĩnh viễn và không thể khôi phục.',
+      contractId: 'Address add preview',
+      density: VitDensity.compact,
     );
   }
 }

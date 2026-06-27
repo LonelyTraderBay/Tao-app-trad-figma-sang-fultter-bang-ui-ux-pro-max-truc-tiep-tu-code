@@ -15,11 +15,9 @@ void main() {
   Future<void> pumpWithdraw(
     WidgetTester tester, {
     String initialLocation = AppRoutePaths.walletWithdraw,
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
   }) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -116,6 +114,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('ERC20 (Ethereum)'), findsOneWidget);
 
+    await tester.ensureVisible(find.byKey(WithdrawPage.allAmountKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(WithdrawPage.allAmountKey));
     await tester.pumpAndSettle();
     expect(find.text('10,200.00'), findsOneWidget);
@@ -124,7 +124,7 @@ void main() {
   testWidgets('SC-139 first viewport reaches withdrawal controls', (
     tester,
   ) async {
-    await pumpWithdraw(tester);
+    await pumpWithdraw(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -139,11 +139,61 @@ void main() {
     );
   });
 
+  testWidgets('SC-139 disabled preview explains missing withdrawal input', (
+    tester,
+  ) async {
+    await pumpWithdraw(tester);
+
+    expect(
+      find.text('Enter a complete destination address before preview.'),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.byKey(WithdrawPage.nextKey), warnIfMissed: false);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xác nhận rút tiền'), findsNothing);
+  });
+
+  testWidgets('SC-139 valid withdrawal opens fee and risk preview sheet', (
+    tester,
+  ) async {
+    await pumpWithdraw(tester, viewport: VitFirstViewport.minimumPhone);
+
+    await tester.enterText(
+      find.byKey(WithdrawPage.addressFieldKey),
+      'TXYZ1234567890abcdef',
+    );
+    await tester.ensureVisible(find.byKey(WithdrawPage.amountFieldKey));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(WithdrawPage.amountFieldKey), '100');
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Enter a complete destination address before preview.'),
+      findsNothing,
+    );
+
+    await tester.ensureVisible(find.byKey(WithdrawPage.nextKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(WithdrawPage.nextKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xác nhận rút tiền'), findsOneWidget);
+    expect(find.text('Phí mạng'), findsOneWidget);
+    expect(find.text('Nhận dự kiến'), findsOneWidget);
+    expect(find.text('TXYZ12...cdef'), findsOneWidget);
+    expect(find.byKey(WithdrawPage.cancelConfirmKey), findsOneWidget);
+    expect(find.byKey(WithdrawPage.confirmWithdrawKey), findsOneWidget);
+  });
+
   testWidgets('SC-139 support opens contextual withdrawal support', (
     tester,
   ) async {
     await pumpWithdraw(tester);
 
+    await tester.ensureVisible(find.byKey(WithdrawPage.supportKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(WithdrawPage.supportKey));
     await tester.pumpAndSettle();
 

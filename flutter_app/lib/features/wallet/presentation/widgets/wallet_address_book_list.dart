@@ -19,111 +19,115 @@ class _AddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: _bookCardMinHeight),
-      child: VitCard(
-        padding: _bookCardPadding,
-        borderColor: AppColors.overlayStroke,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _ShieldBadge(whitelisted: address.isWhitelisted),
-                const SizedBox(width: _bookInlineGap),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              address.label,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.baseMedium.copyWith(
-                                fontWeight: AppTextStyles.bold,
-                              ),
+    return VitCard(
+      density: VitDensity.compact,
+      borderColor: AppColors.overlayStroke,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _ShieldBadge(whitelisted: address.isWhitelisted),
+              const SizedBox(width: AppSpacing.walletAddressActionGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            address.label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.baseMedium.copyWith(
+                              fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          if (address.isWhitelisted) ...[
-                            const SizedBox(width: _bookTinyGap),
-                            const _WhitelistBadge(),
-                          ],
+                        ),
+                        if (address.isWhitelisted) ...[
+                          const SizedBox(
+                            width: AppSpacing.walletAddressCompactGap,
+                          ),
+                          const _WhitelistBadge(),
                         ],
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.walletAddressCompactGap),
+                    Wrap(
+                      spacing: AppSpacing.walletAddressCompactGap,
+                      runSpacing: AppSpacing.walletAddressCompactGap,
+                      children: [
+                        _MiniTag(address.network),
+                        _MiniTag(address.asset),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.walletAddressCompactGap),
+                    Text(
+                      _maskAddress(address.address),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.numericMicro.copyWith(
+                        color: AppColors.text3,
                       ),
-                      const SizedBox(height: _bookTinyGap),
-                      Row(
-                        children: [
-                          _MiniTag(address.network),
-                          const SizedBox(width: _bookInlineGap),
-                          _MiniTag(address.asset),
-                        ],
+                    ),
+                    if (address.lastUsed != null) ...[
+                      const SizedBox(
+                        height: AppSpacing.walletAddressCompactGap,
                       ),
-                      const SizedBox(height: _bookTinyGap),
                       Text(
-                        address.address,
+                        'D\u00F9ng g\u1EA7n nh\u1EA5t: ${address.lastUsed}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.numericMicro.copyWith(
+                        style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
                         ),
                       ),
-                      if (address.lastUsed != null) ...[
-                        const SizedBox(height: _bookTinyGap),
-                        Text(
-                          'D\u00F9ng g\u1EA7n nh\u1EA5t: ${address.lastUsed}',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
                     ],
-                  ),
+                  ],
                 ),
-              ],
-            ),
-            const SizedBox(height: _bookGap),
-            Row(
-              children: [
-                Expanded(
-                  child: _CopyButton(
-                    copied: copied,
-                    onTap: onCopy,
-                    addressId: address.id,
-                  ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.walletAddressActionGap),
+          Row(
+            children: [
+              Expanded(
+                child: _CopyButton(
+                  copied: copied,
+                  onTap: onCopy,
+                  addressId: address.id,
                 ),
-                const SizedBox(width: _bookTinyGap),
-                _RoundActionButton(
-                  key: AddressBookPage.favoriteKey(address.id),
-                  icon: address.isFavorite
-                      ? Icons.star_rounded
-                      : Icons.star_outline_rounded,
-                  tooltip: 'Y\u00EAu th\u00EDch \u0111\u1ECBa ch\u1EC9',
-                  filled: address.isFavorite,
-                  onTap: onFavorite,
-                ),
-                const SizedBox(width: _bookTinyGap),
-                _RoundActionButton(
-                  key: AddressBookPage.editKey(address.id),
-                  icon: Icons.edit_rounded,
-                  tooltip: 'S\u1EEDa \u0111\u1ECBa ch\u1EC9',
-                  onTap: onEdit,
-                ),
-                const SizedBox(width: _bookTinyGap),
-                _RoundActionButton(
-                  key: AddressBookPage.deleteKey(address.id),
-                  icon: Icons.delete_outline_rounded,
-                  tooltip: 'X\u00F3a \u0111\u1ECBa ch\u1EC9',
-                  danger: true,
-                  onTap: onDelete,
-                ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              const SizedBox(width: AppSpacing.walletAddressCompactGap),
+              _RoundActionButton(
+                key: AddressBookPage.favoriteKey(address.id),
+                icon: address.isFavorite
+                    ? Icons.star_rounded
+                    : Icons.star_outline_rounded,
+                tooltip: 'Y\u00EAu th\u00EDch \u0111\u1ECBa ch\u1EC9',
+                filled: address.isFavorite,
+                onTap: onFavorite,
+              ),
+              const SizedBox(width: AppSpacing.walletAddressCompactGap),
+              _RoundActionButton(
+                key: AddressBookPage.editKey(address.id),
+                icon: Icons.edit_rounded,
+                tooltip: 'S\u1EEDa \u0111\u1ECBa ch\u1EC9',
+                onTap: onEdit,
+              ),
+              const SizedBox(width: AppSpacing.walletAddressCompactGap),
+              _RoundActionButton(
+                key: AddressBookPage.deleteKey(address.id),
+                icon: Icons.delete_outline_rounded,
+                tooltip: 'X\u00F3a \u0111\u1ECBa ch\u1EC9',
+                danger: true,
+                onTap: onDelete,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -137,14 +141,14 @@ class _ShieldBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      width: _bookIconBox,
-      height: _bookIconBox,
+      width: AppSpacing.buttonCompact,
+      height: AppSpacing.buttonCompact,
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
       alignment: Alignment.center,
       child: Icon(
         Icons.shield_outlined,
-        color: whitelisted ? _bookGreen : AppColors.text3,
+        color: whitelisted ? AppColors.buy : AppColors.text3,
         size: AppSpacing.iconSm,
       ),
     );
@@ -172,12 +176,11 @@ class _MiniTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.text2,
-        fontWeight: AppTextStyles.bold,
-      ),
+    return VitStatusPill(
+      label: label,
+      status: VitStatusPillStatus.neutral,
+      size: VitStatusPillSize.sm,
+      outline: true,
     );
   }
 }
@@ -195,16 +198,20 @@ class _CopyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: AddressBookPage.copyKey(addressId),
-      label: copied ? '\u0110\u00E3 copy' : 'Sao ch\u00E9p',
-      selected: copied,
-      onTap: onTap,
-      height: _bookCopyHeight,
-      fullWidth: true,
-      accentColor: _bookPrimary,
-      leading: Icon(
-        copied ? Icons.check_circle_outline_rounded : Icons.copy_rounded,
+    return Semantics(
+      button: true,
+      label: copied ? 'Address copied' : 'Copy masked wallet address',
+      child: VitChoicePill(
+        key: AddressBookPage.copyKey(addressId),
+        label: copied ? '\u0110\u00E3 copy' : 'Sao ch\u00E9p',
+        selected: copied,
+        onTap: onTap,
+        height: AppSpacing.walletAddressCopyHeight,
+        fullWidth: true,
+        accentColor: AppColors.primary,
+        leading: Icon(
+          copied ? Icons.check_circle_outline_rounded : Icons.copy_rounded,
+        ),
       ),
     );
   }
@@ -249,31 +256,13 @@ class _EmptyAddressState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.walletAddressEmptyPadding,
-      child: Column(
-        children: [
-          const VitCard(
-            width: AppSpacing.walletAddressEmptyIconSize,
-            height: AppSpacing.walletAddressEmptyIconSize,
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.lg,
-            alignment: Alignment.center,
-            child: Icon(
-              Icons.shield_outlined,
-              color: AppColors.text3,
-              size: AppSpacing.walletAddressEmptyIconGlyph,
-            ),
-          ),
-          const SizedBox(height: _bookInlineGap),
-          Text(
-            'Kh\u00F4ng t\u00ECm th\u1EA5y \u0111\u1ECBa ch\u1EC9',
-            style: AppTextStyles.body.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: _bookGap),
-          _AddAddressButton(onTap: onAdd),
-        ],
-      ),
+    return VitEmptyState(
+      title: 'Kh\u00F4ng t\u00ECm th\u1EA5y \u0111\u1ECBa ch\u1EC9',
+      message:
+          'Th\u00EAm \u0111\u1ECBa ch\u1EC9 \u0111\u00E3 x\u00E1c minh \u0111\u1EC3 r\u00FAt ti\u1EC1n nhanh h\u01A1n.',
+      icon: Icons.shield_outlined,
+      actionLabel: 'Th\u00EAm \u0111\u1ECBa ch\u1EC9',
+      onAction: onAdd,
     );
   }
 }

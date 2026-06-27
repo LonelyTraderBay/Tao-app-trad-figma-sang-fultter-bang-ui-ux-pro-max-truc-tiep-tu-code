@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
 
 class WalletTokenApprovalHistoryTab extends StatelessWidget {
   const WalletTokenApprovalHistoryTab({required this.snapshot, super.key});
@@ -17,11 +19,14 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const WalletTokenApprovalSectionLabel(label: 'Revoked Approvals'),
+        const WalletTokenApprovalSectionLabel(
+          label: 'Revoked Approvals',
+          icon: Icons.history_rounded,
+        ),
         const SizedBox(height: AppSpacing.walletTokenStatValueGap),
         for (final revoked in snapshot.revokedApprovals) ...[
           VitCard(
-            padding: AppSpacing.walletTokenHistoryRowPadding,
+            density: VitDensity.compact,
             borderColor: walletTokenApprovalBorder,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,9 +60,11 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text(
-                  revoked.revokedAtLabel,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                VitStatusPill(
+                  label: revoked.revokedAtLabel,
+                  icon: Icons.schedule_rounded,
+                  status: VitStatusPillStatus.neutral,
+                  size: VitStatusPillSize.sm,
                 ),
               ],
             ),
@@ -66,7 +73,7 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
         ],
         const SizedBox(height: AppSpacing.x1),
         VitCard(
-          padding: AppSpacing.cardPadding,
+          density: VitDensity.compact,
           borderColor: walletTokenApprovalBorder,
           child: const Row(
             children: [

@@ -11,7 +11,7 @@ class _SupportButton extends StatelessWidget {
       key: TransactionDetailPage.supportKey,
       onPressed: onTap,
       variant: VitCtaButtonVariant.warning,
-      height: _detailActionHeight,
+      height: AppSpacing.walletTransactionMissingActionHeight,
       leading: const Icon(Icons.chat_bubble_outline_rounded),
       child: const Text('Liên hệ hỗ trợ'),
     );
@@ -25,50 +25,12 @@ class _MissingTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: _detailGap),
-        VitCard(
-          variant: VitCardVariant.inner,
-          radius: VitCardRadius.sm,
-          width: _detailMissingIconBox,
-          height: _detailMissingIconBox,
-          alignment: Alignment.center,
-          child: const Icon(Icons.error_outline_rounded, color: _detailRed),
-        ),
-        const SizedBox(height: _detailGap),
-        Text(
-          'Không tìm thấy giao dịch',
-          style: AppTextStyles.body.copyWith(
-            color: AppColors.text2,
-            fontWeight: AppTextStyles.medium,
-          ),
-        ),
-        const SizedBox(height: _detailGap),
-        VitCtaButton(
-          onPressed: onBack,
-          variant: VitCtaButtonVariant.primary,
-          fullWidth: false,
-          height: _detailActionHeight,
-          child: const Text('Quay lại lịch sử'),
-        ),
-      ],
-    );
-  }
-}
-
-class _VitCardSurface extends StatelessWidget {
-  const _VitCardSurface({required this.child, required this.padding});
-
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      padding: padding,
-      borderColor: AppColors.cardBorder,
-      child: child,
+    return VitEmptyState(
+      title: 'Không tìm thấy giao dịch',
+      message: 'Kiểm tra lại lịch sử ví hoặc quay lại danh sách giao dịch.',
+      icon: Icons.error_outline_rounded,
+      actionLabel: 'Quay lại lịch sử',
+      onAction: onBack,
     );
   }
 }
@@ -178,11 +140,13 @@ final class _DetailRowData {
   const _DetailRowData({
     required this.label,
     required this.value,
+    this.copyValue,
     this.copyable = false,
   });
 
   final String label;
   final String value;
+  final String? copyValue;
   final bool copyable;
 }
 
@@ -204,7 +168,8 @@ List<_DetailRowData> _detailsFor(WalletTransaction tx, bool isDebit) {
     rows.add(
       _DetailRowData(
         label: isDebit ? 'Địa chỉ nhận' : 'Địa chỉ gửi',
-        value: tx.address!,
+        value: _maskSensitiveValue(tx.address!),
+        copyValue: tx.address!,
         copyable: true,
       ),
     );
@@ -216,6 +181,11 @@ List<_DetailRowData> _detailsFor(WalletTransaction tx, bool isDebit) {
   }
   rows.add(_DetailRowData(label: 'Thời gian', value: tx.createdAt));
   return rows;
+}
+
+String _maskSensitiveValue(String value) {
+  if (value.length <= 12) return value;
+  return '${value.substring(0, 6)}...${value.substring(value.length - 4)}';
 }
 
 String _formatAmount(WalletTransaction tx) {

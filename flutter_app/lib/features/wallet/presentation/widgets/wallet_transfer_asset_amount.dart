@@ -1,62 +1,5 @@
 part of 'wallet_transfer_sections.dart';
 
-class TransferAssetCard extends StatelessWidget {
-  const TransferAssetCard({
-    super.key,
-    required this.asset,
-    required this.onTap,
-  });
-
-  final WalletTransferAsset asset;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      key: const Key('sc146_transfer_asset'),
-      onTap: onTap,
-      variant: VitCardVariant.standard,
-      padding: _transferCardInnerPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'T\u00e0i s\u1ea3n',
-            style: AppTextStyles.badge.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: _transferTinyGap),
-          Row(
-            children: [
-              _AssetLogo(asset: asset, size: _transferIconBox),
-              const SizedBox(width: _transferInlineGap),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(asset.symbol, style: AppTextStyles.baseMedium),
-                    const SizedBox(height: _transferTinyGap),
-                    Text(
-                      'Kh\u1ea3 d\u1ee5ng: ${formatTransferAssetAmount(asset.available)} ${asset.symbol}',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: AppColors.text3,
-                size: _transferActionIcon,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _AssetLogo extends StatelessWidget {
   const _AssetLogo({required this.asset, required this.size});
 
@@ -80,12 +23,16 @@ class TransferAmountCard extends StatelessWidget {
     super.key,
     required this.controller,
     required this.asset,
+    this.errorText,
+    required this.onAssetTap,
     required this.onChanged,
     required this.onMax,
   });
 
   final TextEditingController controller;
   final WalletTransferAsset asset;
+  final String? errorText;
+  final VoidCallback onAssetTap;
   final VoidCallback onChanged;
   final VoidCallback onMax;
 
@@ -93,9 +40,25 @@ class TransferAmountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.standard,
-      padding: _transferCardInnerPadding,
+      density: VitDensity.compact,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          VitInfoRow(
+            key: const Key('sc146_transfer_asset'),
+            label:
+                '${asset.symbol} \u00b7 ${formatTransferAssetAmount(asset.available)} ${asset.symbol} kh\u1ea3 d\u1ee5ng',
+            value: 'Ch\u1ecdn',
+            density: VitDensity.compact,
+            leading: _AssetLogo(asset: asset, size: _transferIconBox),
+            trailing: const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: AppColors.text3,
+              size: _transferActionIcon,
+            ),
+            onTap: onAssetTap,
+          ),
+          const SizedBox(height: AppSpacing.rowGap),
           Row(
             children: [
               Expanded(
@@ -110,47 +73,46 @@ class TransferAmountCard extends StatelessWidget {
                 selected: false,
                 onTap: onMax,
                 height: AppSpacing.buttonCompact,
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
                 accentColor: _transferPrimary,
               ),
             ],
           ),
-          const SizedBox(height: _transferSectionGap),
-          Row(
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: _transferAmountFieldHeight,
-                  child: TextField(
-                    key: const Key('sc146_transfer_amount'),
-                    controller: controller,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                    ],
-                    onChanged: (_) => onChanged(),
-                    style: AppTextStyles.amountSm,
-                    decoration: InputDecoration(
-                      hintText: '0.00',
-                      hintStyle: AppTextStyles.amountSm.copyWith(
-                        color: AppColors.text2,
-                      ),
-                      border: InputBorder.none,
-                      isCollapsed: true,
-                    ),
-                  ),
-                ),
-              ),
-              Text(
-                asset.symbol,
-                style: AppTextStyles.control.copyWith(color: AppColors.text2),
-              ),
+          const SizedBox(height: AppSpacing.rowGap),
+          VitInput(
+            fieldKey: const Key('sc146_transfer_amount'),
+            controller: controller,
+            semanticLabel: 'Internal transfer amount',
+            hintText: '0.00',
+            errorText: errorText,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
             ],
+            onChanged: (_) => onChanged(),
+            textStyle: AppTextStyles.amountSm,
+            suffix: Text(
+              asset.symbol,
+              style: AppTextStyles.control.copyWith(color: AppColors.text2),
+            ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class TransferAmountEstimate extends StatelessWidget {
+  const TransferAmountEstimate({super.key, required this.usdValue});
+
+  final double usdValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitInfoRow(
+      label: 'Gi\u00e1 tr\u1ecb \u01b0\u1edbc t\u00ednh',
+      value: formatTransferUsd(usdValue),
+      density: VitDensity.compact,
+      leading: const Icon(Icons.payments_outlined),
     );
   }
 }
@@ -162,24 +124,21 @@ class TransferInfoNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      constraints: const BoxConstraints(minHeight: 52),
-      padding: _transferNoticePadding,
+      constraints: const BoxConstraints(minHeight: AppSpacing.inputHeight),
+      density: VitDensity.compact,
       borderColor: _transferPrimary.withValues(alpha: .20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.only(top: 1),
-            child: Icon(
-              Icons.info_outline_rounded,
-              color: _transferPrimary,
-              size: _transferActionIcon,
-            ),
+          const Icon(
+            Icons.info_outline_rounded,
+            color: _transferPrimary,
+            size: _transferActionIcon,
           ),
           const SizedBox(width: _transferInlineGap),
           Expanded(
             child: Text(
-              'Chuy\u1ec3n n\u1ed9i b\u1ed9 gi\u00e1 tr\u1ecb v\u00ed, t\u00ednh ph\u00ed, x\u1eed l\u00fd ngay l\u1eadp t\u1ee5c. Kh\u00f4ng c\u1ea7n x\u00e1c nh\u1eadn blockchain.',
+              'Chuy\u1ec3n gi\u1eefa v\u00ed VitTrade x\u1eed l\u00fd n\u1ed9i b\u1ed9. Xem l\u1ea1i v\u00ed ngu\u1ed3n, v\u00ed nh\u1eadn, s\u1ed1 l\u01b0\u1ee3ng v\u00e0 ph\u00ed tr\u01b0\u1edbc khi x\u00e1c nh\u1eadn.',
               style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
@@ -189,21 +148,72 @@ class TransferInfoNotice extends StatelessWidget {
   }
 }
 
-class TransferButton extends StatelessWidget {
-  const TransferButton({super.key, required this.enabled, required this.onTap});
+class TransferValidationNotice extends StatelessWidget {
+  const TransferValidationNotice({super.key, required this.message});
 
-  final bool enabled;
-  final VoidCallback? onTap;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
-    return VitCtaButton(
-      onPressed: enabled ? onTap : null,
-      height: _transferButtonHeight,
-      child: Text(
-        'X\u00e1c nh\u1eadn chuy\u1ec3n',
-        style: AppTextStyles.control.copyWith(
-          color: enabled ? AppColors.onAccent : AppColors.text3,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      density: VitDensity.compact,
+      borderColor: AppColors.sell.withValues(alpha: .26),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.sell,
+            size: _transferActionIcon,
+          ),
+          const SizedBox(width: _transferInlineGap),
+          Expanded(
+            child: Text(
+              message,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.sell,
+                fontWeight: AppTextStyles.medium,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TransferButton extends StatelessWidget {
+  const TransferButton({
+    super.key,
+    required this.enabled,
+    required this.onTap,
+    this.disabledReason,
+  });
+
+  final bool enabled;
+  final VoidCallback? onTap;
+  final String? disabledReason;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      label: enabled
+          ? 'Preview internal transfer'
+          : 'Internal transfer disabled. $disabledReason',
+      child: Tooltip(
+        message: disabledReason ?? 'Preview internal transfer',
+        child: VitCtaButton(
+          onPressed: enabled ? onTap : null,
+          height: AppSpacing.inputHeight,
+          child: Text(
+            'X\u00e1c nh\u1eadn chuy\u1ec3n',
+            style: AppTextStyles.control.copyWith(
+              color: enabled ? AppColors.onAccent : AppColors.text3,
+            ),
+          ),
         ),
       ),
     );

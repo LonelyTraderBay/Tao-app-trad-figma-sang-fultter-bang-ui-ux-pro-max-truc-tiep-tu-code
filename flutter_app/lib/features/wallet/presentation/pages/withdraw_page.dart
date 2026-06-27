@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_common.dart';
@@ -17,9 +16,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 
 class WithdrawPage extends ConsumerStatefulWidget {
   const WithdrawPage({
@@ -79,6 +79,12 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
     );
     final snapshot = controller.state.snapshot;
     final selected = controller.selectedNetwork(_selectedNetworkId);
+    final validationMessage = controller.validationMessage(
+      address: _addressController.text,
+      amount: _amountController.text,
+      network: selected,
+    );
+    final canPreview = validationMessage == null;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
@@ -108,102 +114,105 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: WithdrawPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: AppSpacing.x4,
-                    bottom: scrollEndClearance,
-                  ),
+                  bottomInset: scrollEndClearance,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
-                    fullBleed: true,
                     children: [
-                      VitCard(
-                        variant: VitCardVariant.ghost,
-                        radius: VitCardRadius.md,
-                        padding: EdgeInsets.zero,
-                        child: WithdrawBalanceCard(
-                          asset: snapshot.asset,
-                          value: snapshot.available,
-                        ),
+                      WithdrawBalanceCard(
+                        asset: snapshot.asset,
+                        value: snapshot.available,
                       ),
-                      VitCard(
-                        padding: AppSpacing.cardPadding,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          gap: VitContentGap.tight,
-                          fullBleed: true,
-                          children: [
-                            WithdrawNetworkSelector(
-                              asset: snapshot.asset,
-                              network: selected,
-                              onTap: () => _openNetworkPicker(controller),
-                            ),
-                            WithdrawAddressInput(
-                              asset: snapshot.asset,
-                              network: selected,
-                              controller: _addressController,
-                              onScan: _showScanNotice,
-                            ),
-                            WithdrawRecentAddresses(
-                              addresses: snapshot.recentAddresses,
-                              onSelect: (address) {
-                                _addressController.text = address.address;
-                                setState(() {});
-                              },
-                            ),
-                            WithdrawAmountInput(
-                              asset: snapshot.asset,
-                              available: snapshot.available,
-                              controller: _amountController,
-                              onAll: () {
-                                _amountController.text = formatWithdrawBalance(
-                                  snapshot.available,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          ],
-                        ),
+                      const VitSectionHeader(
+                        title: 'Mạng rút',
+                        icon: Icons.hub_outlined,
+                        iconColor: withdrawPrimary,
+                        accentColor: withdrawPrimary,
                       ),
-                      VitCard(
-                        padding: AppSpacing.cardPadding,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          gap: VitContentGap.tight,
-                          fullBleed: true,
-                          children: [
-                            const WithdrawWarning(),
-                            WithdrawSupportLink(
-                              onTap: () => context.go(
-                                ContextualSupportContracts.supportRouteFor(
-                                  ContextualSupportFlow.withdrawal,
-                                  referenceId:
-                                      'withdraw-${snapshot.asset.toLowerCase()}',
-                                  sourceRoute: widget.assetScoped
-                                      ? AppRoutePaths.walletWithdrawAsset(
-                                          snapshot.asset,
-                                        )
-                                      : AppRoutePaths.walletWithdraw,
-                                  issueLabel:
-                                      'Withdrawal support for ${snapshot.asset}',
-                                ),
-                              ),
-                            ),
-                            WithdrawNextButton(
-                              onTap: () =>
-                                  _showConfirmPreview(controller, selected),
-                            ),
-                            if (snapshot.highRiskContractId != null)
-                              VitHighRiskStatePanel(
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'Withdrawal safety states active',
-                                message:
-                                    'Limits, setup, fee preview, confirmation, submitted status and recovery are tracked as one money-movement contract.',
-                                contractId: snapshot.highRiskContractId,
-                              ),
-                          ],
+                      WithdrawNetworkSelector(
+                        asset: snapshot.asset,
+                        network: selected,
+                        onTap: () => _openNetworkPicker(controller),
+                      ),
+                      const VitSectionHeader(
+                        title: 'Địa chỉ nhận',
+                        icon: Icons.wallet_outlined,
+                        iconColor: withdrawPrimary,
+                        accentColor: withdrawPrimary,
+                      ),
+                      WithdrawAddressInput(
+                        asset: snapshot.asset,
+                        network: selected,
+                        controller: _addressController,
+                        onScan: _showScanNotice,
+                        onChanged: (_) => setState(() {}),
+                      ),
+                      WithdrawRecentAddresses(
+                        addresses: snapshot.recentAddresses,
+                        onSelect: (address) {
+                          _addressController.text = address.address;
+                          setState(() {});
+                        },
+                      ),
+                      const VitSectionHeader(
+                        title: 'Số lượng',
+                        icon: Icons.payments_outlined,
+                        iconColor: withdrawPrimary,
+                        accentColor: withdrawPrimary,
+                      ),
+                      WithdrawAmountInput(
+                        asset: snapshot.asset,
+                        available: snapshot.available,
+                        controller: _amountController,
+                        onChanged: (_) => setState(() {}),
+                        onAll: () {
+                          _amountController.text = formatWithdrawBalance(
+                            snapshot.available,
+                          );
+                          setState(() {});
+                        },
+                      ),
+                      const VitSectionHeader(
+                        title: 'Xem lại an toàn',
+                        icon: Icons.verified_user_outlined,
+                        iconColor: withdrawAmber,
+                        accentColor: withdrawAmber,
+                      ),
+                      const WithdrawWarning(),
+                      if (snapshot.highRiskContractId != null)
+                        VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Withdrawal safety states active',
+                          message:
+                              'Limits, setup, fee preview, confirmation, submitted status and recovery are tracked as one money-movement contract.',
+                          contractId: snapshot.highRiskContractId,
+                        ),
+                      if (validationMessage != null)
+                        WithdrawPreviewBlockedNotice(
+                          message: validationMessage,
+                        ),
+                      WithdrawNextButton(
+                        onTap: canPreview
+                            ? () => _showConfirmPreview(controller, selected)
+                            : null,
+                        disabledReason: validationMessage,
+                      ),
+                      WithdrawSupportLink(
+                        onTap: () => context.go(
+                          ContextualSupportContracts.supportRouteFor(
+                            ContextualSupportFlow.withdrawal,
+                            referenceId:
+                                'withdraw-${snapshot.asset.toLowerCase()}',
+                            sourceRoute: widget.assetScoped
+                                ? AppRoutePaths.walletWithdrawAsset(
+                                    snapshot.asset,
+                                  )
+                                : AppRoutePaths.walletWithdraw,
+                            issueLabel:
+                                'Withdrawal support for ${snapshot.asset}',
+                          ),
                         ),
                       ),
                     ],
@@ -221,10 +230,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
     final networks = controller.state.snapshot.networks;
     showVitBottomSheet<void>(
       context: context,
-      backgroundColor: withdrawPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
+      isScrollControlled: true,
       builder: (context) {
         return WithdrawNetworkPicker(
           networks: networks,
@@ -265,10 +271,7 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
 
     showVitBottomSheet<void>(
       context: context,
-      backgroundColor: withdrawPanel,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.sheetTopRadius,
-      ),
+      isScrollControlled: true,
       builder: (context) => WithdrawPreviewSheet(preview: preview),
     );
   }

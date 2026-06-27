@@ -1,10 +1,15 @@
 part of '../pages/network_status_page.dart';
 
 class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({required this.snapshot, required this.onRefresh});
+  const _SummaryCard({
+    required this.snapshot,
+    required this.onRefresh,
+    this.refreshFeedback,
+  });
 
   final WalletNetworkStatusSnapshot snapshot;
   final VoidCallback onRefresh;
+  final String? refreshFeedback;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +79,19 @@ class _SummaryCard extends StatelessWidget {
               ),
             ],
           ),
+          if (refreshFeedback != null) ...[
+            const SizedBox(height: _networkCardGap),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: VitStatusPill(
+                key: NetworkStatusPage.refreshFeedbackKey,
+                label: refreshFeedback!,
+                status: VitStatusPillStatus.info,
+                icon: Icons.check_circle_outline_rounded,
+                size: VitStatusPillSize.sm,
+              ),
+            ),
+          ],
           const SizedBox(height: _networkCardGap),
           Row(
             children: [
@@ -99,6 +117,46 @@ class _SummaryCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _NetworkFilterTabs extends StatelessWidget {
+  const _NetworkFilterTabs({
+    required this.active,
+    required this.snapshot,
+    required this.onChanged,
+  });
+
+  final _NetworkStatusFilter active;
+  final WalletNetworkStatusSnapshot snapshot;
+  final ValueChanged<_NetworkStatusFilter> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active.key,
+      onChanged: (key) => onChanged(_networkFilterFromKey(key)),
+      tabs: [
+        for (final filter in _NetworkStatusFilter.values)
+          VitTabItem(
+            key: filter.key,
+            label: _filterLabel(filter),
+            icon: filter.icon,
+            widgetKey: NetworkStatusPage.filterKey(filter.key),
+          ),
+      ],
+    );
+  }
+
+  String _filterLabel(_NetworkStatusFilter filter) {
+    return switch (filter) {
+      _NetworkStatusFilter.all => '${filter.label} ${snapshot.networks.length}',
+      _NetworkStatusFilter.issues =>
+        '${filter.label} ${snapshot.issueCount + snapshot.downCount}',
+      _NetworkStatusFilter.maintenance =>
+        '${filter.label} ${snapshot.downCount}',
+    };
   }
 }
 

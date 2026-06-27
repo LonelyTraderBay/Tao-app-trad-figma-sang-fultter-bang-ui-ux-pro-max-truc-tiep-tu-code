@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -18,8 +19,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
-
-const _walletBackground = AppColors.bg;
 
 class WalletPage extends ConsumerStatefulWidget {
   const WalletPage({super.key, this.shellRenderMode});
@@ -77,11 +76,13 @@ class _WalletPageState extends ConsumerState<WalletPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-135 WalletPage',
       child: Material(
-        color: _walletBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
             title: 'V\u00ED t\u00E0i s\u1EA3n',
+            subtitle:
+                'S\u1ED1 d\u01B0, c\u00F4ng c\u1EE5 v\u00E0 t\u00E0i s\u1EA3n',
             showBack: showBack,
             onBack: showBack
                 ? () => goBackOrFallback(
@@ -96,7 +97,7 @@ class _WalletPageState extends ConsumerState<WalletPage> {
             bottomInset: bottomInset,
             child: VitPageContent(
               padding: VitContentPadding.compact,
-              customGap: AppSpacing.x3,
+              density: VitDensity.compact,
               children: [
                 if (snapshot.supportedStates.contains(WalletScreenState.error))
                   WalletUnavailableBanner(message: snapshot.actionDraft),
@@ -113,14 +114,23 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                     pendingDeposits: pendingDeposits,
                     onNavigate: _navigate,
                   ),
+                const VitSectionHeader(
+                  title: 'C\u00F4ng c\u1EE5 v\u00ED',
+                  icon: Icons.grid_view_rounded,
+                  iconColor: AppModuleAccents.wallet,
+                  accentColor: AppModuleAccents.wallet,
+                ),
+                WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
                 VitSectionHeader(
-                  title: _tab == 'assets' ? 'Tài sản' : 'Phân bổ',
+                  title: _tab == 'assets'
+                      ? 'T\u00E0i s\u1EA3n'
+                      : 'Ph\u00E2n b\u1ED5',
                   icon: _tab == 'assets'
                       ? Icons.account_balance_wallet_outlined
                       : Icons.donut_large_rounded,
                   iconColor: AppModuleAccents.wallet,
                   accentColor: AppModuleAccents.wallet,
-                  actionLabel: _tab == 'assets' ? 'Phân tích' : null,
+                  actionLabel: _tab == 'assets' ? 'Ph\u00E2n t\u00EDch' : null,
                   onAction: _tab == 'assets'
                       ? () => _navigate('/wallet/portfolio-analytics')
                       : null,
@@ -142,18 +152,11 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                 else
                   WalletAllocationCard(assets: snapshot.assets),
                 const VitSectionHeader(
-                  title: 'Mua định kỳ',
+                  title: 'Mua \u0111\u1ECBnh k\u1EF3',
                   icon: Icons.sync_alt_rounded,
                   iconColor: AppColors.accent,
                 ),
                 WalletDcaCard(dca: snapshot.dca),
-                const VitSectionHeader(
-                  title: 'Công cụ ví',
-                  icon: Icons.grid_view_rounded,
-                  iconColor: AppModuleAccents.wallet,
-                  accentColor: AppModuleAccents.wallet,
-                ),
-                WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
               ],
             ),
           ),

@@ -12,12 +12,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpGasOptimizer(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-
+  Future<void> pumpGasOptimizer(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
     await tester.pumpWidget(
       ProviderScope(
         child: VitTradeApp(
@@ -75,12 +74,12 @@ void main() {
     expect(find.text('Hien tai'), findsOneWidget);
     expect(find.text('Xu huong'), findsOneWidget);
     expect(find.text('Meo tiet kiem'), findsOneWidget);
-    expect(find.text('Low Gas Prices - Good Time!'), findsOneWidget);
+    expect(find.text('Gas is below 24h average'), findsOneWidget);
     expect(find.textContaining('11% below'), findsOneWidget);
     expect(find.text('Chon toc do giao dich'), findsOneWidget);
     expect(find.text('Slow'), findsOneWidget);
     expect(find.text('15 Gwei'), findsOneWidget);
-    expect(find.text('Standard'), findsOneWidget);
+    expect(find.text('Standard'), findsWidgets);
     expect(find.text('RECOMMENDED'), findsOneWidget);
     expect(find.text('25 Gwei'), findsOneWidget);
     expect(find.text('Fast'), findsOneWidget);
@@ -94,7 +93,7 @@ void main() {
   testWidgets('SC-149 first viewport reaches gas comparison fee row', (
     tester,
   ) async {
-    await pumpGasOptimizer(tester);
+    await pumpGasOptimizer(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -118,11 +117,19 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Slow'), findsOneWidget);
 
+    await tester.tap(find.byKey(WalletGasOptimizerPage.refreshKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(WalletGasOptimizerPage.feedbackKey), findsOneWidget);
+    expect(
+      find.text('Gas estimates refreshed. Confirm fees before signing.'),
+      findsOneWidget,
+    );
+
     await tester.tap(find.byKey(WalletGasOptimizerPage.tabKey('Xu huong')));
     await tester.pumpAndSettle();
     expect(find.text('24h Gas Price Trends'), findsOneWidget);
     expect(find.text('Network Activity'), findsOneWidget);
-    expect(find.text('Best Time to Transact'), findsOneWidget);
+    expect(find.text('Lower Activity Window'), findsOneWidget);
 
     await tester.tap(
       find.byKey(WalletGasOptimizerPage.tabKey('Meo tiet kiem')),

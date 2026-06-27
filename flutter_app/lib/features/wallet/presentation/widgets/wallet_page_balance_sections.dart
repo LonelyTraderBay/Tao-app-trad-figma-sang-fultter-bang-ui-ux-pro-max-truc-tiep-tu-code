@@ -1,18 +1,5 @@
 part of 'wallet_page_sections.dart';
 
-const EdgeInsets _walletHeroCompactPadding = EdgeInsets.fromLTRB(
-  AppSpacing.x4,
-  AppSpacing.x3,
-  AppSpacing.x4,
-  AppSpacing.x3,
-);
-const EdgeInsets _walletBreakdownCompactPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x3,
-);
-const EdgeInsets _walletHeroActionCompactPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-);
 const double _walletHeroPrimaryActionHeight =
     AppSpacing.searchBarCompactHeight - AppSpacing.x1;
 const double _walletHeroSecondaryActionHeight =
@@ -52,7 +39,7 @@ class WalletBalanceHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.lg,
       clip: true,
-      padding: _walletHeroCompactPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: _walletPrimary.withValues(alpha: .20),
       background: const VitHeroGlow(),
       child: Column(
@@ -83,7 +70,7 @@ class WalletBalanceHero extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           Text(
             hidden ? '••••••' : _formatUsd(snapshot.totalUsd),
-            style: AppTextStyles.amountLg.copyWith(
+            style: AppTextStyles.heroNumber.copyWith(
               color: AppColors.onAccent,
               letterSpacing: 0,
             ),
@@ -175,7 +162,6 @@ class _HeroActionButton extends StatelessWidget {
           ? VitCtaButtonVariant.primary
           : VitCtaButtonVariant.secondary,
       onPressed: onTap,
-      padding: _walletHeroActionCompactPadding,
       leading: Icon(_actionIcon(action.iconKey)),
       child: Text(action.label),
     );
@@ -222,7 +208,6 @@ class _CompactActionChip extends StatelessWidget {
       density: VitDensity.compact,
       variant: VitCtaButtonVariant.ghost,
       onPressed: onTap,
-      padding: _walletHeroActionCompactPadding,
       leading: Icon(_actionIcon(action.iconKey), color: color),
       child: Text(action.label),
     );
@@ -251,7 +236,7 @@ class _BreakdownRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.md,
-      padding: _walletBreakdownCompactPadding,
+      padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.onAccent.withValues(alpha: .08),
       child: Row(
         children: [

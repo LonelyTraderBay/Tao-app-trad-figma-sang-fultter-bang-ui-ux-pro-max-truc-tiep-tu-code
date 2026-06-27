@@ -18,7 +18,10 @@ class WalletActivityTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const WalletManagerSectionLabel(label: 'Recent Activity'),
+        const WalletManagerSectionLabel(
+          label: 'Recent Activity',
+          icon: Icons.history_rounded,
+        ),
         const SizedBox(height: AppSpacing.walletManagerActivitySectionGap),
         for (var i = 0; i < snapshot.wallets.length; i++) ...[
           _ActivityRow(wallet: snapshot.wallets[i]),

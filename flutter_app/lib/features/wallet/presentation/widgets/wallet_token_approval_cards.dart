@@ -16,100 +16,91 @@ class WalletTokenApprovalCard extends StatelessWidget {
     final bordered =
         approval.riskLevel == 'critical' || approval.riskLevel == 'high';
     final showUnusedWarning = approval.unlimited && approval.usageCount == 0;
-    return VitCard(
-      key: walletTokenApprovalApprovalKey(approval.id),
-      constraints: BoxConstraints(
-        minHeight: showUnusedWarning
-            ? AppSpacing.walletTokenApprovalWarningMinHeight
-            : AppSpacing.walletTokenApprovalMinHeight,
-      ),
-      padding: AppSpacing.walletTokenApprovalPadding,
-      borderColor: bordered ? riskColor : walletTokenApprovalBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              WalletTokenCategoryIcon(approval: approval),
-              const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
-              Expanded(
-                child: WalletTokenApprovalHeaderText(approval: approval),
-              ),
-              const SizedBox(width: AppSpacing.walletTokenApprovalActionGap),
-              Semantics(
-                button: true,
-                label:
-                    'Revoke approval for ${approval.token} to ${approval.spenderName}',
-                child: VitCard(
+    return Semantics(
+      container: true,
+      label:
+          '${walletTokenApprovalRiskLabel(approval.riskLevel)} risk token approval for ${approval.token}. '
+          '${approval.unlimited ? 'Unlimited allowance. ' : ''}'
+          'Spender ${approval.spenderName}, ${approval.maskedSpender}.',
+      child: VitCard(
+        key: walletTokenApprovalApprovalKey(approval.id),
+        density: VitDensity.compact,
+        borderColor: bordered ? riskColor : walletTokenApprovalBorder,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                WalletTokenCategoryIcon(approval: approval),
+                const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
+                Expanded(
+                  child: WalletTokenApprovalHeaderText(approval: approval),
+                ),
+                const SizedBox(width: AppSpacing.walletTokenApprovalActionGap),
+                VitIconButton(
                   key: walletTokenApprovalRevokeKey(approval.id),
-                  onTap: () => onRevoke(approval),
-                  width: AppSpacing.walletTokenApprovalActionSize,
-                  height: AppSpacing.walletTokenApprovalActionSize,
-                  variant: VitCardVariant.inner,
-                  borderColor: walletTokenApprovalRed.withValues(alpha: .26),
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.delete_outline_rounded,
-                    color: walletTokenApprovalRed,
-                    size: AppSpacing.walletTokenApprovalActionIcon,
-                  ),
+                  icon: Icons.delete_outline_rounded,
+                  tooltip:
+                      'Revoke approval for ${approval.token} to ${approval.spenderName}',
+                  onPressed: () => onRevoke(approval),
+                  variant: VitIconButtonVariant.danger,
+                  size: VitIconButtonSize.sm,
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.walletTokenApprovalContentGap),
+            WalletTokenApprovalAmount(approval: approval),
+            const SizedBox(height: AppSpacing.walletTokenApprovalAmountGap),
+            Row(
+              children: [
+                WalletTokenApprovalStat(
+                  label: 'Approved',
+                  value: approval.approvedAtLabel,
+                ),
+                WalletTokenApprovalStat(
+                  label: 'Last Used',
+                  value: approval.lastUsedLabel,
+                ),
+                WalletTokenApprovalStat(
+                  label: 'Usage',
+                  value: '${approval.usageCount}x',
+                ),
+              ],
+            ),
+            if (showUnusedWarning) ...[
+              const SizedBox(height: AppSpacing.walletTokenApprovalUnusedGap),
+              VitCard(
+                density: VitDensity.compact,
+                variant: VitCardVariant.inner,
+                radius: VitCardRadius.sm,
+                borderColor: AppColors.sell20,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.warning_amber_rounded,
+                      color: walletTokenApprovalRed,
+                      size: AppSpacing.walletTokenApprovalUnusedIcon,
+                    ),
+                    const SizedBox(
+                      width: AppSpacing.walletTokenApprovalUnusedTextGap,
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Unused unlimited approval - revoke to protect funds',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.micro.copyWith(
+                          color: walletTokenApprovalRed,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: AppSpacing.walletTokenApprovalContentGap),
-          WalletTokenApprovalAmount(approval: approval),
-          const SizedBox(height: AppSpacing.walletTokenApprovalAmountGap),
-          Row(
-            children: [
-              WalletTokenApprovalStat(
-                label: 'Approved',
-                value: approval.approvedAtLabel,
-              ),
-              WalletTokenApprovalStat(
-                label: 'Last Used',
-                value: approval.lastUsedLabel,
-              ),
-              WalletTokenApprovalStat(
-                label: 'Usage',
-                value: '${approval.usageCount}x',
-              ),
-            ],
-          ),
-          if (showUnusedWarning) ...[
-            const SizedBox(height: AppSpacing.walletTokenApprovalUnusedGap),
-            VitCard(
-              height: AppSpacing.walletTokenApprovalUnusedHeight,
-              padding: AppSpacing.walletTokenApprovalUnusedPadding,
-              variant: VitCardVariant.inner,
-              radius: VitCardRadius.sm,
-              borderColor: walletTokenApprovalRed.withValues(alpha: .20),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.warning_amber_rounded,
-                    color: walletTokenApprovalRed,
-                    size: AppSpacing.walletTokenApprovalUnusedIcon,
-                  ),
-                  const SizedBox(
-                    width: AppSpacing.walletTokenApprovalUnusedTextGap,
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Unused unlimited approval - revoke to protect funds',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: walletTokenApprovalRed,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
-        ],
+        ),
       ),
     );
   }
@@ -167,14 +158,19 @@ class WalletTokenApprovalHeaderText extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            Icon(
-              approval.verified
-                  ? Icons.check_circle_outline_rounded
-                  : Icons.cancel_outlined,
-              color: approval.verified
-                  ? walletTokenApprovalGreen
-                  : walletTokenApprovalRed,
-              size: AppSpacing.walletTokenVerifiedIcon,
+            Tooltip(
+              message: approval.verified
+                  ? 'Verified spender'
+                  : 'Unverified spender',
+              child: Icon(
+                approval.verified
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.cancel_outlined,
+                color: approval.verified
+                    ? walletTokenApprovalGreen
+                    : walletTokenApprovalRed,
+                size: AppSpacing.walletTokenVerifiedIcon,
+              ),
             ),
             WalletTokenRiskBadge(risk: approval.riskLevel),
           ],

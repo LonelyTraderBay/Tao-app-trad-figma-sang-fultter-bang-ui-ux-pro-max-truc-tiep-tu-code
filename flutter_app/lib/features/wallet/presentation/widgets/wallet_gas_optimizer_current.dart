@@ -8,38 +8,23 @@ class _GasTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      for (final tab in const [_tabCurrent, _tabTrends, _tabTips])
-        VitTabItem(
-          key: tab,
-          label: tab,
-          widgetKey: WalletGasOptimizerPage.tabKey(tab),
-        ),
-    ];
-
-    return Material(
-      color: _gasPanel,
-      child: SizedBox(
-        height: _gasTabBarHeight,
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: VitTabBar(
-                  tabs: tabs,
-                  activeKey: activeTab,
-                  onChanged: onChanged,
-                  variant: VitTabBarVariant.underline,
-                ),
-              ),
-            ),
-            const Divider(
-              height: AppSpacing.dividerHairline,
-              color: _gasBorder,
-            ),
-          ],
-        ),
-      ),
+    return VitTabBar(
+      tabs: [
+        for (final tab in const [_tabCurrent, _tabTrends, _tabTips])
+          VitTabItem(
+            key: tab,
+            label: tab,
+            icon: switch (tab) {
+              _tabCurrent => Icons.bolt_rounded,
+              _tabTrends => Icons.show_chart_rounded,
+              _ => Icons.lightbulb_outline_rounded,
+            },
+            widgetKey: WalletGasOptimizerPage.tabKey(tab),
+          ),
+      ],
+      activeKey: activeTab,
+      onChanged: onChanged,
+      variant: VitTabBarVariant.segment,
     );
   }
 }
@@ -60,6 +45,8 @@ class _CurrentGasTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+      padding: VitContentPadding.none,
+      gap: VitContentGap.tight,
       density: VitDensity.compact,
       children: [
         _GasStatusCard(snapshot: snapshot),
@@ -90,8 +77,8 @@ class _GasStatusCard extends StatelessWidget {
     final isHigh = vsAverage > 10;
     final color = isLow ? _gasGreen : (isHigh ? _gasRed : _gasAmber);
     final title = isLow
-        ? 'Low Gas Prices - Good Time!'
-        : (isHigh ? 'High Gas Prices' : 'Normal Gas Prices');
+        ? 'Gas is below 24h average'
+        : (isHigh ? 'Gas is above 24h average' : 'Gas is near average');
 
     return VitCard(
       density: VitDensity.compact,
@@ -118,12 +105,17 @@ class _GasStatusCard extends StatelessWidget {
                   ),
                 ),
               ),
+              VitStatusPill(
+                label: snapshot.recommendedLevel.label,
+                status: VitStatusPillStatus.info,
+                size: VitStatusPillSize.sm,
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
           Text.rich(
             TextSpan(
-              text: 'Current gas ',
+              text: 'Current gas is estimated ',
               children: [
                 TextSpan(
                   text:
@@ -133,7 +125,9 @@ class _GasStatusCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const TextSpan(text: ' 24h average'),
+                const TextSpan(
+                  text: ' 24h average. Fees can change before confirmation.',
+                ),
               ],
             ),
             style: AppTextStyles.control.copyWith(color: AppColors.text2),
@@ -155,6 +149,7 @@ class _SectionLabel extends StatelessWidget {
       title: label,
       variant: VitSectionHeaderVariant.accentBar,
       accentColor: _gasPrimary,
+      density: VitDensity.compact,
     );
   }
 }
@@ -187,22 +182,26 @@ class _GasLevelCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x1,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Expanded(
-                          child: Text(
-                            level.label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.control.copyWith(
-                              fontWeight: AppTextStyles.bold,
-                            ),
+                        Text(
+                          level.label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.control.copyWith(
+                            fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        if (level.recommended) ...[
-                          const SizedBox(width: AppSpacing.x2),
-                          const _RecommendedBadge(),
-                        ],
+                        if (selected)
+                          const VitStatusPill(
+                            label: 'Selected',
+                            status: VitStatusPillStatus.info,
+                            size: VitStatusPillSize.sm,
+                          ),
+                        if (level.recommended) const _RecommendedBadge(),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -227,7 +226,7 @@ class _GasLevelCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.x1),
                   Text(
-                    '~\$${level.usd.toStringAsFixed(2)}',
+                    '~\$${level.usd.toStringAsFixed(2)} est.',
                     style: AppTextStyles.badge.copyWith(
                       color: AppColors.text3,
                       fontWeight: AppTextStyles.normal,
@@ -244,7 +243,7 @@ class _GasLevelCard extends StatelessWidget {
               minHeight: 5,
               value: level.gwei / 50,
               color: color,
-              backgroundColor: _gasBackground,
+              backgroundColor: AppColors.bg,
             ),
           ),
         ],

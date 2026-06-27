@@ -11,7 +11,7 @@ class _AmountStatus extends StatelessWidget {
     final status = _StatusMeta.from(tx.status);
 
     return SizedBox(
-      width: _historyAmountColumnWidth,
+      width: AppSpacing.walletHistoryAmountColumnWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -27,14 +27,14 @@ class _AmountStatus extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: _historyTinyGap),
+          const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
           VitStatusPill(
             label: status.label,
             status: _pillStatus(tx.status),
             size: VitStatusPillSize.sm,
           ),
           if (tx.fee != null && tx.fee! > 0) ...[
-            const SizedBox(height: _historyTinyGap),
+            const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
             Text(
               'Phí: \$${tx.fee!.toStringAsFixed(2)}',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -51,35 +51,38 @@ class _EndOfList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: _historyEndPadding,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(
-            width: AppSpacing.walletHistoryDividerWidth,
-            child: Divider(
-              height: AppSpacing.walletHistoryDividerHeight,
-              thickness: AppSpacing.walletHistoryDividerHeight,
-              color: AppColors.borderSolid,
+    return Column(
+      children: [
+        const SizedBox(height: AppSpacing.walletHistoryEndListTopPad),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              width: AppSpacing.walletHistoryDividerWidth,
+              child: Divider(
+                height: AppSpacing.walletHistoryDividerHeight,
+                thickness: AppSpacing.walletHistoryDividerHeight,
+                color: AppColors.borderSolid,
+              ),
             ),
-          ),
-          const SizedBox(width: _historyInlineGap),
-          Text(
-            'Đã tải hết',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(width: _historyInlineGap),
-          const SizedBox(
-            width: AppSpacing.walletHistoryDividerWidth,
-            child: Divider(
-              height: AppSpacing.walletHistoryDividerHeight,
-              thickness: AppSpacing.walletHistoryDividerHeight,
-              color: AppColors.borderSolid,
+            const SizedBox(width: AppSpacing.walletHistoryEndListGap),
+            Text(
+              'Đã tải hết',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(width: AppSpacing.walletHistoryEndListGap),
+            const SizedBox(
+              width: AppSpacing.walletHistoryDividerWidth,
+              child: Divider(
+                height: AppSpacing.walletHistoryDividerHeight,
+                thickness: AppSpacing.walletHistoryDividerHeight,
+                color: AppColors.borderSolid,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.walletHistoryEndListBottomPad),
+      ],
     );
   }
 }

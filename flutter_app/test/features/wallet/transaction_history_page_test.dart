@@ -12,11 +12,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpHistory(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpHistory(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -73,7 +73,7 @@ void main() {
     expect(find.text('Lịch sử giao dịch'), findsOneWidget);
     expect(find.text('Lịch sử · Wallet'), findsOneWidget);
     expect(find.text('6 giao dịch'), findsOneWidget);
-    expect(find.text('Xuất CSV'), findsOneWidget);
+    expect(find.text('Yêu cầu CSV'), findsOneWidget);
     expect(find.text('21/02/2024'), findsOneWidget);
     expect(find.text('Nạp USDT'), findsOneWidget);
     expect(find.text('+5,000.00 USDT'), findsOneWidget);
@@ -83,7 +83,7 @@ void main() {
   testWidgets('SC-136 first viewport reaches first transaction row', (
     tester,
   ) async {
-    await pumpHistory(tester);
+    await pumpHistory(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -95,6 +95,20 @@ void main() {
       find.byKey(TransactionHistoryPage.transactionKey('tx001')),
       routeName: 'TransactionHistoryPage',
       actionLabel: 'the first transaction row',
+    );
+  });
+
+  testWidgets('SC-136 export action reads as a CSV request notice', (
+    tester,
+  ) async {
+    await pumpHistory(tester);
+
+    await tester.tap(find.byKey(TransactionHistoryPage.exportKey));
+    await tester.pump();
+
+    expect(
+      find.text('Yêu cầu xuất CSV cho 6 giao dịch đã được ghi nhận'),
+      findsOneWidget,
     );
   });
 

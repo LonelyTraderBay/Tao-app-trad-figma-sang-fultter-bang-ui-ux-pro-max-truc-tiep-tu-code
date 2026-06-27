@@ -44,11 +44,11 @@ failed=0
 | HEB-C02C | Margin entry | `lib/features/trade/presentation/pages/margin_trading_page.dart` | PASS | line 115 | Margin keeps Trade as direct parent fallback. |
 | HEB-C02D | Bot entry | `lib/features/trade/presentation/pages/trading_bots_page.dart` | PASS | line 89 | Bot keeps Trade as direct parent fallback. |
 | HEB-C02E | Copy Trade entry | `lib/features/trade/presentation/pages/copy_trading_page.dart` | PASS | line 75 | Copy Trade keeps Trade as direct parent fallback. |
-| HEB-C02F | DCA entry | `lib/features/dca/presentation/pages/dca_page_part_01.dart` | PASS | line 119 | DCA is reached from Home but its safe direct parent remains Trade. |
+| HEB-C02F | DCA entry | `lib/features/dca/presentation/pages/dca_page_part_01.dart` | PASS | line 122 | DCA is reached from Home but its safe direct parent remains Trade. |
 | HEB-C02G | Savings entry | `lib/features/earn/presentation/pages/savings_page.dart` | PASS | line 82 | Savings pops to Home when Home-pushed and falls back to Earn directly. |
 | HEB-C02H | Prediction Markets entry | `lib/features/predictions/presentation/pages/predictions_home_page.dart` | PASS | line 95 | Prediction Markets falls back to Markets when opened directly. |
-| HEB-C02I | Wallet entry | `lib/features/wallet/presentation/pages/wallet_page.dart` | PASS | line 74 | Wallet shows a back button only when Home/source history exists. |
-| HEB-C02J | Withdraw next action | `lib/features/wallet/presentation/pages/withdraw_page.dart` | PASS | line 103 | Home next-action withdraw returns Home; direct withdraw falls back to Wallet. |
+| HEB-C02I | Wallet entry | `lib/features/wallet/presentation/pages/wallet_page.dart` | PASS | line 73 | Wallet shows a back button only when Home/source history exists. |
+| HEB-C02J | Withdraw next action | `lib/features/wallet/presentation/pages/withdraw_page.dart` | PASS | line 109 | Home next-action withdraw returns Home; direct withdraw falls back to Wallet. |
 | HEB-C02K | Pair detail entry | `lib/features/markets/presentation/pages/pair_detail_page.dart` | PASS | line 95 | Home market rows return Home; direct pair detail falls back to Markets. |
 | HEB-C02L | Instrument chrome | `lib/shared/layout/vit_top_chrome.dart` | PASS | line 114 | Instrument headers can show both back and an instrument leading slot. |
 | HEB-C03 | Home source coverage | `lib/features/home/presentation/pages/home_page_part_03.dart` | PASS | line 1 | Part 03 currently has no Home outgoing route; update matrix if this changes. |

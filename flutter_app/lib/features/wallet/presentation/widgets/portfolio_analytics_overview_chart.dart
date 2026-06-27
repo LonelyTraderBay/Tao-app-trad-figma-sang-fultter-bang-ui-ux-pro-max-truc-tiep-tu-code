@@ -21,11 +21,11 @@ class _OverviewContent extends StatelessWidget {
           active: activePeriod,
           onChanged: onPeriodChanged,
         ),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.walletAnalyticsOverviewPeriodGap),
         _ChartCard(points: snapshot.history),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.walletAnalyticsOverviewChartGap),
         _MetricsCard(metrics: snapshot.metrics),
-        const SizedBox(height: AppSpacing.x2),
+        const SizedBox(height: AppSpacing.walletAnalyticsOverviewMetricsGap),
         _AssetsCard(assets: snapshot.assets, totalUsd: snapshot.totalUsd),
       ],
     );
@@ -45,21 +45,18 @@ class _PeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
+    return VitTabBar(
+      tabs: [
         for (final period in periods)
-          Expanded(
-            child: VitChoicePill(
-              key: PortfolioAnalyticsPage.periodKey(period),
-              label: period,
-              selected: active == period,
-              onTap: () => onChanged(period),
-              fullWidth: true,
-              height: VitDensity.compact.controlHeight,
-              accentColor: _analyticsPrimary,
-            ),
+          VitTabItem(
+            key: period,
+            label: period,
+            widgetKey: PortfolioAnalyticsPage.periodKey(period),
           ),
       ],
+      activeKey: active,
+      onChanged: onChanged,
+      variant: VitTabBarVariant.segment,
     );
   }
 }
@@ -71,14 +68,29 @@ class _ChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _VitCardSurface(
+    return VitCard(
+      density: VitDensity.compact,
+      borderColor: AppColors.cardBorder,
       padding: AppSpacing.walletAnalyticsChartPadding,
-      child: AspectRatio(
-        aspectRatio: _walletAnalyticsChartAspectRatio,
-        child: CustomPaint(
-          painter: _PortfolioAreaPainter(points),
-          child: const SizedBox.expand(),
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const VitSectionHeader(
+            title: 'Bi\u1EC3u \u0111\u1ED3 danh m\u1EE5c',
+            icon: Icons.area_chart_rounded,
+            iconColor: _analyticsGreen,
+            accentColor: _analyticsGreen,
+            density: VitDensity.compact,
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          SizedBox(
+            height: AppSpacing.walletAnalyticsChartHeight,
+            child: CustomPaint(
+              painter: _PortfolioAreaPainter(points),
+              child: const SizedBox.expand(),
+            ),
+          ),
+        ],
       ),
     );
   }

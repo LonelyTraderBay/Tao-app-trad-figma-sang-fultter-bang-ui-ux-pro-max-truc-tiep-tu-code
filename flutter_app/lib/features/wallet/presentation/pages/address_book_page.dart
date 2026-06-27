@@ -20,41 +20,16 @@ part '../widgets/wallet_address_book_controls.dart';
 part '../widgets/wallet_address_book_security.dart';
 part '../widgets/wallet_address_book_list.dart';
 
-const _bookBackground = AppColors.bg;
-const _bookPanel = AppColors.surface;
-const _bookPrimary = AppColors.primary;
-const _bookGreen = AppColors.buy;
-const _bookAmber = AppColors.caution;
-const _bookNativeBottomClearance = 88.0;
-const _bookVisualBottomClearance = 112.0;
-const _bookScrollTopPad = 0.0;
-const _bookGap = 8.0;
-const _bookTinyGap = 4.0;
-const _bookInlineGap = 8.0;
-const _bookFilterHeight = 34.0;
-const _bookStatsHeight = 62.0;
-const _bookCardMinHeight = 124.0;
-const _bookIconBox = 34.0;
-const _bookCopyHeight = 38.0;
-const _bookSecurityHeight = 62.0;
-const _bookCardPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 10,
-);
-const _bookFilterPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 6,
-);
-const _bookSecurityPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 10,
-);
-
 double _bookScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? _bookVisualBottomClearance
-          : _bookNativeBottomClearance) +
+          ? AppSpacing.walletBottomInsetVisualChrome
+          : AppSpacing.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
+}
+
+String _maskAddress(String address) {
+  if (address.length <= 12) return address;
+  return '${address.substring(0, 6)}...${address.substring(address.length - 4)}';
 }
 
 class AddressBookPage extends ConsumerStatefulWidget {
@@ -109,7 +84,7 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-144 AddressBookPage',
       child: Material(
-        color: _bookBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Sổ địa chỉ',
@@ -129,25 +104,23 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: AddressBookPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: _bookScrollTopPad,
-                    bottom: bottomInset,
-                  ),
+                  bottomInset: bottomInset,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    fullBleed: true,
+                    gap: VitContentGap.tight,
                     children: [
-                      _SearchBox(
-                        controller: _searchController,
-                        onChanged: () => setState(() {}),
-                      ),
                       _WhitelistModeCard(
                         enabled: _whitelistOnly,
                         onTap: () =>
                             setState(() => _whitelistOnly = !_whitelistOnly),
+                      ),
+                      _AddressStats(addresses: _addresses),
+                      _SearchBox(
+                        controller: _searchController,
+                        onChanged: () => setState(() {}),
                       ),
                       _NetworkFilterBar(
                         filters: snapshot.networkFilters,
@@ -155,12 +128,13 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                         onChanged: (filter) =>
                             setState(() => _networkFilter = filter),
                       ),
-                      _AddressStats(addresses: _addresses),
                       if (favorites.isNotEmpty) ...[
-                        const _SectionTitle(
+                        const VitSectionHeader(
+                          title: 'Yêu thích',
                           icon: Icons.star_rounded,
-                          iconColor: _bookAmber,
-                          label: 'Yêu thích',
+                          iconColor: AppColors.caution,
+                          accentColor: AppColors.caution,
+                          density: VitDensity.compact,
                         ),
                         for (final address in favorites) ...[
                           _AddressCard(
@@ -176,7 +150,11 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                         ],
                       ],
                       if (others.isNotEmpty) ...[
-                        const _SectionTitle(label: 'Tất cả địa chỉ'),
+                        const VitSectionHeader(
+                          title: 'Tất cả địa chỉ',
+                          icon: Icons.list_alt_rounded,
+                          density: VitDensity.compact,
+                        ),
                         for (final address in others) ...[
                           _AddressCard(
                             address: address,
@@ -259,9 +237,11 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: _bookPanel,
+          backgroundColor: AppColors.surface,
           title: const Text('Xóa địa chỉ'),
-          content: Text('Bạn có chắc muốn xóa địa chỉ "${address.label}"?'),
+          content: Text(
+            'Bạn có chắc muốn xóa địa chỉ "${address.label}" (${_maskAddress(address.address)})?',
+          ),
           actions: [
             VitCtaButton(
               onPressed: () => Navigator.of(context).pop(),

@@ -10,38 +10,20 @@ class _PlaceholderAnalyticsView extends StatelessWidget {
     final title = view == 'allocation'
         ? 'Ph\u00E2n b\u1ED5 danh m\u1EE5c'
         : 'L\u00E3i/L\u1ED7';
-    return _VitCardSurface(
-      padding: AppSpacing.walletAnalyticsPlaceholderPadding,
-      child: Text(
-        title,
-        style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
+
+    return VitCard(
+      density: VitDensity.compact,
+      borderColor: AppColors.cardBorder,
+      child: VitSectionHeader(
+        title: title,
+        icon: view == 'allocation'
+            ? Icons.pie_chart_outline_rounded
+            : Icons.trending_up_rounded,
+        iconColor: _analyticsPrimary,
+        density: VitDensity.compact,
       ),
     );
   }
-}
-
-class _VitCardSurface extends StatelessWidget {
-  const _VitCardSurface({required this.child, this.padding});
-
-  final Widget child;
-  final EdgeInsetsGeometry? padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      padding: padding ?? VitDensity.compact.cardPadding,
-      borderColor: AppColors.cardBorder,
-      child: child,
-    );
-  }
-}
-
-final class _ViewItem {
-  const _ViewItem(this.id, this.label, this.icon);
-
-  final String id;
-  final String label;
-  final IconData icon;
 }
 
 String _formatUsd(double value, {bool symbol = true}) {

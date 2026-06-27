@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,29 +23,12 @@ const _historyBackground = AppColors.bg;
 const _historyPrimary = AppColors.primary;
 const _historyGreen = AppColors.buy;
 const _historyRed = AppColors.sell;
-const _historyNativeBottomClearance = 88.0;
-const _historyVisualBottomClearance = 112.0;
-const _historyScrollTopPad = 0.0;
-const _historyGap = 8.0;
-const _historyTinyGap = 4.0;
-const _historyInlineGap = 8.0;
-const _historyIconBox = 36.0;
-const _historyAmountColumnWidth = 108.0;
-const _historyExportPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 8,
-);
-const _historyRowPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 8,
-);
-const _historySectionHeaderPadding = EdgeInsetsDirectional.fromSTEB(4, 6, 0, 6);
-const _historyEndPadding = EdgeInsetsDirectional.only(top: 10, bottom: 14);
 
 double _historyScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? _historyVisualBottomClearance
-          : _historyNativeBottomClearance) +
+          ? DeviceMetrics.bottomChrome
+          : DeviceMetrics.nativeBottomChrome) +
+      AppSpacing.x6 +
       MediaQuery.paddingOf(context).bottom;
 }
 
@@ -66,6 +50,7 @@ class TransactionHistoryPage extends ConsumerStatefulWidget {
 class _TransactionHistoryPageState
     extends ConsumerState<TransactionHistoryPage> {
   String _filter = 'all';
+  String? _exportNotice;
 
   @override
   Widget build(BuildContext context) {
@@ -98,36 +83,57 @@ class _TransactionHistoryPageState
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: TransactionHistoryPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: _historyScrollTopPad,
-                    bottom: bottomInset,
-                  ),
+                  bottomInset: bottomInset,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    fullBleed: true,
+                    gap: VitContentGap.tight,
                     children: [
                       _ExportBar(
                         count: transactions.length,
                         onExport: () => _showExportNotice(transactions.length),
                       ),
-                      const SizedBox(height: _historyGap),
+                      if (_exportNotice != null)
+                        _ExportNotice(message: _exportNotice!),
+                      const VitSectionHeader(
+                        title: 'Bộ lọc giao dịch',
+                        icon: Icons.tune_rounded,
+                        iconColor: _historyPrimary,
+                        density: VitDensity.compact,
+                      ),
                       _FilterTabs(
                         filters: snapshot.filters,
                         active: _filter,
-                        onChanged: (id) => setState(() => _filter = id),
+                        onChanged: (id) => setState(() {
+                          _filter = id;
+                          _exportNotice = null;
+                        }),
                       ),
-                      const SizedBox(height: _historyGap),
-                      for (final group in grouped)
-                        _TransactionGroup(
-                          group: group,
-                          onTransactionTap: (tx) => context.go(
-                            AppRoutePaths.walletTransaction(tx.id),
+                      const VitSectionHeader(
+                        title: 'Giao dịch gần đây',
+                        icon: Icons.receipt_long_outlined,
+                        iconColor: _historyPrimary,
+                        density: VitDensity.compact,
+                      ),
+                      if (transactions.isEmpty)
+                        const VitEmptyState(
+                          title: 'Không có giao dịch',
+                          message:
+                              'Thử chọn bộ lọc khác hoặc quay lại sau khi ví có hoạt động mới.',
+                          icon: Icons.receipt_long_outlined,
+                        )
+                      else ...[
+                        for (final group in grouped)
+                          _TransactionGroup(
+                            group: group,
+                            onTransactionTap: (tx) => context.go(
+                              AppRoutePaths.walletTransaction(tx.id),
+                            ),
                           ),
-                        ),
-                      if (transactions.isNotEmpty) const _EndOfList(),
+                        const _EndOfList(),
+                      ],
                     ],
                   ),
                 ),
@@ -172,11 +178,8 @@ class _TransactionHistoryPageState
   }
 
   void _showExportNotice(int count) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$count giao dịch đã được chuẩn bị để xuất CSV'),
-        duration: const Duration(milliseconds: 900),
-      ),
-    );
+    setState(() {
+      _exportNotice = 'Yêu cầu xuất CSV cho $count giao dịch đã được ghi nhận';
+    });
   }
 }

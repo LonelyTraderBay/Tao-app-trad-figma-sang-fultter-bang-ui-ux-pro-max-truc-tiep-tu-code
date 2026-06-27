@@ -12,17 +12,18 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpDetail(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpDetail(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+    String transactionId = 'tx001',
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
         child: VitTradeApp(
           routerConfig: createAppRouter(
-            initialLocation: AppRoutePaths.walletTransaction('tx001'),
+            initialLocation: AppRoutePaths.walletTransaction(transactionId),
           ),
         ),
       ),
@@ -74,7 +75,7 @@ void main() {
   });
 
   testWidgets('SC-141 first viewport reaches TxID copy action', (tester) async {
-    await pumpDetail(tester);
+    await pumpDetail(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -87,6 +88,31 @@ void main() {
       routeName: 'TransactionDetailPage',
       actionLabel: 'the transaction copy action',
     );
+  });
+
+  testWidgets('SC-141 copy action shows inline confirmation', (tester) async {
+    await pumpDetail(tester, viewport: VitFirstViewport.minimumPhone);
+
+    await tester.ensureVisible(
+      find.byKey(TransactionDetailPage.copyTxIdKey).first,
+    );
+    await tester.tap(find.byKey(TransactionDetailPage.copyTxIdKey).first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Đã sao chép'), findsOneWidget);
+  });
+
+  testWidgets('SC-141 missing transaction uses shared empty state', (
+    tester,
+  ) async {
+    await pumpDetail(tester, transactionId: 'missing-tx');
+
+    expect(find.text('Không tìm thấy giao dịch'), findsOneWidget);
+    expect(
+      find.text('Kiểm tra lại lịch sử ví hoặc quay lại danh sách giao dịch.'),
+      findsOneWidget,
+    );
+    expect(find.text('Quay lại lịch sử'), findsOneWidget);
   });
 
   testWidgets('SC-141 support action navigates to placeholder safely', (

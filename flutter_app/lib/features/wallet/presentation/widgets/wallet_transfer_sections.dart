@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -11,6 +12,9 @@ import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 
 part 'wallet_transfer_confirm_sheet.dart';
 part 'wallet_transfer_wallet_cards.dart';
@@ -19,33 +23,9 @@ part 'wallet_transfer_history_picker.dart';
 
 const _transferPrimary = AppColors.primary;
 const _transferGreen = AppColors.buy;
-const _transferSectionGap = 8.0;
-const _transferTinyGap = 4.0;
-const _transferInlineGap = 8.0;
-const _transferIconBox = 34.0;
-const _transferWalletLabelWidth = 34.0;
-const _transferActionIcon = 18.0;
-const _transferWalletCardHeight = 70.0;
-const _transferAmountFieldHeight = 30.0;
-const _transferButtonHeight = 46.0;
-const _transferSheetBottomClearance = 88.0;
-const _transferCardInnerPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 10,
-);
-const _transferTilePadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 6,
-);
-const _transferNoticePadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 10,
-);
-const _transferSheetPadding = EdgeInsetsDirectional.fromSTEB(16, 14, 16, 16);
-const _transferHistoryRowPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 8,
-);
+const _transferInlineGap = AppSpacing.rowGap;
+const _transferIconBox = AppSpacing.buttonCompact;
+const _transferActionIcon = AppSpacing.transferActionIcon;
 
 String formatTransferUsd(double value) {
   return '\$${_withCommas(value.toStringAsFixed(2))}';

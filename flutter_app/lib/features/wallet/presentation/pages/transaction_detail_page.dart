@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,9 +8,9 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -25,39 +27,16 @@ const _detailBackground = AppColors.bg;
 const _detailPrimary = AppColors.primary;
 const _detailGreen = AppColors.buy;
 const _detailRed = AppColors.sell;
-const _detailNativeBottomClearance = 88.0;
-const _detailVisualBottomClearance = 112.0;
-const _detailScrollTopPad = 0.0;
-const _detailGap = 8.0;
-const _detailTinyGap = 4.0;
-const _detailInlineGap = 8.0;
-const _detailIconBox = 42.0;
-const _detailMissingIconBox = 42.0;
-const _detailProgressDot = 10.0;
-const _detailProgressLineWidth = 2.0;
-const _detailProgressLineHeight = 22.0;
-const _detailInfoRowMinHeight = 44.0;
-const _detailExplorerHeight = 44.0;
-const _detailActionHeight = 44.0;
-const _detailCardPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 12,
-);
-const _detailHeaderPadding = EdgeInsetsDirectional.fromSTEB(12, 12, 12, 8);
-const _detailRowPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 8,
-);
-const _detailLinePadding = EdgeInsetsDirectional.symmetric(vertical: 3);
 
 double _detailScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? _detailVisualBottomClearance
-          : _detailNativeBottomClearance) +
+          ? DeviceMetrics.bottomChrome
+          : DeviceMetrics.nativeBottomChrome) +
+      AppSpacing.x6 +
       MediaQuery.paddingOf(context).bottom;
 }
 
-class TransactionDetailPage extends ConsumerWidget {
+class TransactionDetailPage extends ConsumerStatefulWidget {
   const TransactionDetailPage({
     super.key,
     required this.transactionId,
@@ -73,9 +52,27 @@ class TransactionDetailPage extends ConsumerWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final snapshot = ref.watch(walletTransactionDetailProvider(transactionId));
-    final mode = shellRenderMode ?? defaultShellRenderMode();
+  ConsumerState<TransactionDetailPage> createState() =>
+      _TransactionDetailPageState();
+}
+
+class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
+  String? _copiedValue;
+
+  @override
+  void didUpdateWidget(covariant TransactionDetailPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.transactionId != widget.transactionId) {
+      _copiedValue = null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref.watch(
+      walletTransactionDetailProvider(widget.transactionId),
+    );
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _detailScrollBottomInset(context, mode);
 
     return VitPageLayout(
@@ -94,16 +91,13 @@ class TransactionDetailPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: _detailScrollTopPad,
-                    bottom: bottomInset,
-                  ),
+                child: VitInsetScrollView(
+                  key: TransactionDetailPage.contentKey,
+                  bottomInset: bottomInset,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    fullBleed: true,
+                    gap: VitContentGap.tight,
                     children: [
                       snapshot.transaction == null
                           ? _MissingTransaction(
@@ -112,7 +106,8 @@ class TransactionDetailPage extends ConsumerWidget {
                             )
                           : _TransactionDetailContent(
                               tx: snapshot.transaction!,
-                              onCopy: (value) => _copyValue(context, value),
+                              copiedValue: _copiedValue,
+                              onCopy: _copyValue,
                               onSupport: () => context.go(
                                 ContextualSupportContracts.supportRouteFor(
                                   ContextualSupportFlow.withdrawal,
@@ -135,14 +130,10 @@ class TransactionDetailPage extends ConsumerWidget {
     );
   }
 
-  Future<void> _copyValue(BuildContext context, String value) async {
-    await Clipboard.setData(ClipboardData(text: value));
-    if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Đã sao chép'),
-        duration: Duration(milliseconds: 900),
-      ),
+  void _copyValue(String value) {
+    setState(() => _copiedValue = value);
+    unawaited(
+      Clipboard.setData(ClipboardData(text: value)).catchError((Object _) {}),
     );
   }
 }

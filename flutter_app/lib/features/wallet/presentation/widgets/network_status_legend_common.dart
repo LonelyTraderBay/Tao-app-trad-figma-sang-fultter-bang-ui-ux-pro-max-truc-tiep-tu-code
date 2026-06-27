@@ -25,64 +25,21 @@ class _LegendCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: _networkCardGap),
-          Row(
+          Wrap(
+            spacing: _networkTinyGap,
+            runSpacing: _networkTinyGap,
             children: [
-              for (var col = 0; col < 2; col++) ...[
-                Expanded(
-                  child: Column(
-                    children: [
-                      for (var row = 0; row < 2; row++) ...[
-                        _LegendItem(
-                          health: rows[col + row * 2].$1,
-                          label: rows[col + row * 2].$2,
-                        ),
-                        if (row == 0) const SizedBox(height: _networkCardGap),
-                      ],
-                    ],
-                  ),
+              for (final row in rows)
+                VitStatusPill(
+                  label: row.$2,
+                  status: _healthStatus(row.$1),
+                  icon: _healthIcon(row.$1),
+                  size: VitStatusPillSize.sm,
                 ),
-              ],
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _LegendItem extends StatelessWidget {
-  const _LegendItem({required this.health, required this.label});
-
-  final String health;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = _healthColor(health);
-    return Row(
-      children: [
-        VitCard(
-          width: _networkLegendIconSize,
-          height: _networkLegendIconSize,
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
-          background: ColoredBox(color: color.withValues(alpha: .08)),
-          clip: true,
-          alignment: Alignment.center,
-          child: Icon(
-            _healthIcon(health),
-            color: color,
-            size: AppSpacing.walletNetworkLegendIconGlyph,
-          ),
-        ),
-        const SizedBox(width: _networkInlineGap),
-        Expanded(
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -94,13 +51,13 @@ class _DisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: VitDensity.compact.cardPadding,
-      borderColor: _networkPrimary.withValues(alpha: .25),
+      borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
-            color: _networkPrimary,
+            color: AppColors.primary,
             size: AppSpacing.walletTokenNoticeIcon,
           ),
           const SizedBox(width: _networkInlineGap),
@@ -149,14 +106,18 @@ class _TokenLogo extends StatelessWidget {
 }
 
 class _HealthPill extends StatelessWidget {
-  const _HealthPill({required this.label, required this.color});
+  const _HealthPill({required this.health});
 
-  final String label;
-  final Color color;
+  final String health;
 
   @override
   Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: color);
+    return VitStatusPill(
+      label: _healthLabel(health),
+      status: _healthStatus(health),
+      icon: _healthIcon(health),
+      size: VitStatusPillSize.sm,
+    );
   }
 }
 
@@ -180,6 +141,16 @@ Color _healthColor(String health) {
   };
 }
 
+VitStatusPillStatus _healthStatus(String health) {
+  return switch (health) {
+    'operational' => VitStatusPillStatus.success,
+    'degraded' => VitStatusPillStatus.warning,
+    'congested' => VitStatusPillStatus.orange,
+    'down' => VitStatusPillStatus.error,
+    _ => VitStatusPillStatus.neutral,
+  };
+}
+
 IconData _healthIcon(String health) {
   return switch (health) {
     'operational' => Icons.check_circle_outline_rounded,
@@ -194,6 +165,22 @@ Color _congestionColor(int pct) {
   if (pct > 70) return _networkOrange;
   if (pct > 40) return _networkAmber;
   return _networkGreen;
+}
+
+String _congestionLabel(int pct) {
+  if (pct > 70) return 'T\u1EAFc ngh\u1EBDn';
+  if (pct > 40) return 'Cao';
+  if (pct > 15) return 'B\u00ECnh th\u01B0\u1EDDng';
+  return 'Th\u1EA5p';
+}
+
+int _networkPriority(WalletNetworkInfo network) {
+  return switch (network.health) {
+    'down' => 0,
+    'congested' => 1,
+    'degraded' => 2,
+    _ => 3,
+  };
 }
 
 String _formatInt(int value) {

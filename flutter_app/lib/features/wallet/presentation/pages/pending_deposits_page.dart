@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,40 +20,14 @@ import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart
 part '../widgets/pending_deposits_page_sections.dart';
 part '../widgets/pending_deposits_page_common.dart';
 
-const _pendingBackground = AppColors.bg;
-const _pendingBorder = AppColors.overlayStroke;
-const _pendingPrimary = AppColors.primary;
-const _pendingGreen = AppColors.buy;
-const _pendingAmber = AppColors.caution;
-const _pendingRed = AppColors.sell;
-const _pendingNativeBottomClearance = 88.0;
-const _pendingVisualBottomClearance = 112.0;
-const _pendingSummaryHeight = 76.0;
-const _pendingIconBox = 34.0;
-const _pendingNoticeMinHeight = 34.0;
-const _pendingProgressHeight = 6.0;
-const _pendingProgressDot = 7.0;
-const _pendingGap = 8.0;
-const _pendingTinyGap = 4.0;
-const _pendingInlineGap = 8.0;
-const _pendingScrollTopPad = 0.0;
-const _pendingCardPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 12,
-);
-const _pendingDetailsPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 10,
-  vertical: 10,
-);
-const _pendingNoticePadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 10,
-  vertical: 8,
-);
+const _pendingGap = AppSpacing.x2;
+const _pendingTinyGap = AppSpacing.x1;
+const _pendingInlineGap = AppSpacing.x2;
 
 double _pendingScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? _pendingVisualBottomClearance
-          : _pendingNativeBottomClearance) +
+          ? AppSpacing.walletPendingBottomInsetVisual
+          : AppSpacing.walletPendingBottomInsetNative) +
       MediaQuery.paddingOf(context).bottom;
 }
 
@@ -63,6 +38,9 @@ class PendingDepositsPage extends ConsumerStatefulWidget {
 
   static const contentKey = Key('sc152_pending_deposits_content');
   static const refreshKey = Key('sc152_pending_deposits_refresh');
+  static const refreshFeedbackKey = Key(
+    'sc152_pending_deposits_refresh_feedback',
+  );
   static Key filterKey(String filter) =>
       Key('sc152_pending_deposits_filter_$filter');
   static Key depositKey(String id) => Key('sc152_pending_deposit_$id');
@@ -78,6 +56,7 @@ class PendingDepositsPage extends ConsumerStatefulWidget {
 class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
   _DepositFilter _filter = _DepositFilter.all;
   String? _copiedId;
+  String? _lastRefreshLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +69,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-152 PendingDepositsPage',
       child: Material(
-        color: _pendingBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'N\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD',
@@ -101,16 +80,14 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: PendingDepositsPage.contentKey,
-                  padding: AppSpacing.walletPendingScrollPadding(
-                    bottomInset,
-                  ).copyWith(top: _pendingScrollTopPad),
+                  bottomInset: bottomInset,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    fullBleed: true,
+                    gap: VitContentGap.tight,
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
@@ -121,7 +98,8 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                       ),
                       _SummaryBanner(
                         pendingCount: snapshot.pendingCount,
-                        onRefresh: () {},
+                        lastRefreshLabel: _lastRefreshLabel,
+                        onRefresh: _refreshDeposits,
                       ),
                       _FilterChips(
                         active: _filter,
@@ -135,8 +113,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                           _DepositCard(
                             deposit: deposit,
                             copied: _copiedId == deposit.id,
-                            onCopy: () =>
-                                setState(() => _copiedId = deposit.id),
+                            onCopy: () => _copyHash(deposit),
                           ),
                       const _InfoNotice(),
                     ],
@@ -171,5 +148,14 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
             .toList(growable: false),
       _DepositFilter.all => deposits,
     };
+  }
+
+  Future<void> _copyHash(WalletPendingDeposit deposit) async {
+    setState(() => _copiedId = deposit.id);
+    await Clipboard.setData(ClipboardData(text: deposit.txHash));
+  }
+
+  void _refreshDeposits() {
+    setState(() => _lastRefreshLabel = 'Vừa cập nhật trạng thái nạp tiền');
   }
 }

@@ -18,9 +18,8 @@ class _DustHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
-      padding: _dustHeroPadding,
-      borderColor: _dustHeroBorder,
+      density: VitDensity.compact,
+      borderColor: AppColors.primary20,
       child: Column(
         children: [
           Row(
@@ -77,13 +76,13 @@ class _DustHero extends StatelessWidget {
               _HeroStat(
                 value: selectedCount.toString(),
                 label: '\u0110\u00E3 ch\u1ECDn',
-                color: _dustPrimary,
+                color: AppColors.primary,
               ),
               const SizedBox(width: _dustTinyGap),
               _HeroStat(
                 value: _formatUsd(selectedValue),
                 label: 'Gi\u00E1 tr\u1ECB',
-                color: _dustGreen,
+                color: AppColors.buy,
               ),
             ],
           ),
@@ -108,8 +107,7 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: VitCard(
-        height: _dustHeroStatHeight,
-        padding: _dustHeroStatPadding,
+        density: VitDensity.tool,
         variant: VitCardVariant.inner,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

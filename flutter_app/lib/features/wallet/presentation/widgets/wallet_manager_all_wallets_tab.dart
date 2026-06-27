@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -16,6 +17,7 @@ class WalletAllWalletsTab extends StatelessWidget {
     required this.selectedWalletId,
     required this.revealedWalletIds,
     required this.copiedWalletId,
+    required this.actionNotice,
     required this.onSelectWallet,
     required this.onRevealWallet,
     required this.onCopyWallet,
@@ -26,6 +28,7 @@ class WalletAllWalletsTab extends StatelessWidget {
   final String selectedWalletId;
   final Set<String> revealedWalletIds;
   final String? copiedWalletId;
+  final String? actionNotice;
   final ValueChanged<String> onSelectWallet;
   final ValueChanged<WalletManagerItem> onCopyWallet;
   final ValueChanged<String> onRevealWallet;
@@ -36,12 +39,23 @@ class WalletAllWalletsTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _PortfolioSummaryCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.walletManagerAllSummaryGap),
-        WalletManagerDistributionCard(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.walletManagerAllDistributionGap),
         const WalletManagerSectionLabel(label: 'T\u1EA5t c\u1EA3 v\u00ED'),
         const SizedBox(height: AppSpacing.walletManagerAllSectionGap),
+        WalletManagerAddWalletButton(onPressed: onAddWallet),
+        if (actionNotice != null) ...[
+          const SizedBox(height: AppSpacing.walletManagerAllSectionGap),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: VitStatusPill(
+              key: const Key('sc148_multi_manager_add_wallet_notice'),
+              label: actionNotice!,
+              status: VitStatusPillStatus.info,
+              icon: Icons.info_outline_rounded,
+              size: VitStatusPillSize.sm,
+            ),
+          ),
+        ],
+        const SizedBox(height: AppSpacing.walletManagerAllWalletGap),
         for (var i = 0; i < snapshot.wallets.length; i++) ...[
           _WalletCard(
             wallet: snapshot.wallets[i],
@@ -55,17 +69,17 @@ class WalletAllWalletsTab extends StatelessWidget {
           if (i != snapshot.wallets.length - 1)
             const SizedBox(height: AppSpacing.walletManagerAllWalletGap),
         ],
-        const SizedBox(height: AppSpacing.walletManagerAllAddTopGap),
-        WalletManagerAddWalletButton(onPressed: onAddWallet),
         const SizedBox(height: AppSpacing.walletManagerAllSecurityTopGap),
         const WalletManagerSecurityNotice(),
+        const SizedBox(height: AppSpacing.walletManagerAllDistributionGap),
+        WalletManagerDistributionCard(snapshot: snapshot),
       ],
     );
   }
 }
 
-class _PortfolioSummaryCard extends StatelessWidget {
-  const _PortfolioSummaryCard({required this.snapshot});
+class PortfolioSummaryCard extends StatelessWidget {
+  const PortfolioSummaryCard({super.key, required this.snapshot});
 
   final WalletMultiManagerSnapshot snapshot;
 
@@ -73,7 +87,6 @@ class _PortfolioSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = snapshot.totalChangeUsd >= 0;
     return VitCard(
-      height: AppSpacing.walletManagerSummaryHeight,
       padding: AppSpacing.walletManagerSummaryPadding,
       variant: VitCardVariant.ghost,
       borderColor: walletManagerBorder,
@@ -90,35 +103,26 @@ class _PortfolioSummaryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.walletManagerSummaryTitleGap),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Wrap(
+            spacing: AppSpacing.walletManagerSummaryValueGap,
+            runSpacing: AppSpacing.walletManagerSummaryMetricGap,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
                 formatWalletManagerUsd(snapshot.totalBalance, decimals: 0),
-                style: AppTextStyles.amountMd.copyWith(
+                style: AppTextStyles.amountBase.copyWith(
                   height: AppSpacing.tradeBotLineHeightTight,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletManagerSummaryValueGap),
-              Icon(
-                positive
-                    ? Icons.arrow_outward_rounded
-                    : Icons.south_east_rounded,
-                color: positive ? walletManagerGreen : walletManagerRed,
-                size: AppSpacing.walletManagerSummaryTrendIcon,
-              ),
-              const SizedBox(width: AppSpacing.walletManagerSummaryTrendGap),
-              Text(
-                formatWalletManagerPct(snapshot.totalChangePct),
-                style: AppTextStyles.caption.copyWith(
-                  color: positive ? walletManagerGreen : walletManagerRed,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
-                ),
+              VitMetricDeltaPill(
+                label: formatWalletManagerPct(snapshot.totalChangePct),
+                tone: positive
+                    ? VitMetricDeltaTone.positive
+                    : VitMetricDeltaTone.negative,
               ),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.walletManagerSummaryMetricGap),
           Row(
             children: [
               _SummaryMetric(
@@ -211,8 +215,7 @@ class _WalletCard extends StatelessWidget {
     return VitCard(
       key: Key('sc148_multi_manager_wallet_${wallet.id}'),
       onTap: onTap,
-      height: AppSpacing.walletManagerWalletCardHeight,
-      padding: AppSpacing.walletManagerWalletCardPadding,
+      padding: VitDensity.compact.cardPadding,
       variant: VitCardVariant.ghost,
       borderColor: selected ? accent : walletManagerBorder,
       background: ColoredBox(
@@ -289,6 +292,9 @@ class _WalletCard extends StatelessWidget {
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
                           color: AppColors.text3,
+                          tooltip: revealed
+                              ? 'Hide ${wallet.name} address'
+                              : 'Reveal ${wallet.name} address',
                           onTap: onReveal,
                         ),
                         const SizedBox(
@@ -302,6 +308,7 @@ class _WalletCard extends StatelessWidget {
                               ? Icons.check_circle_outline_rounded
                               : Icons.copy_rounded,
                           color: copied ? walletManagerGreen : AppColors.text3,
+                          tooltip: 'Copy ${wallet.name} address',
                           onTap: onCopy,
                         ),
                       ],
@@ -362,7 +369,7 @@ class _WalletCard extends StatelessWidget {
               ],
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: AppSpacing.walletManagerWalletFooterGap),
           const SizedBox(
             height: AppSpacing.walletManagerWalletDividerHeight,
             child: ColoredBox(color: AppColors.border),

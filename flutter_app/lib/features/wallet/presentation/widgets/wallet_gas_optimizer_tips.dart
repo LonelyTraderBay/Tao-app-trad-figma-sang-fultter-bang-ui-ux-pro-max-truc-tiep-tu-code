@@ -9,6 +9,8 @@ class _TipsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
+      padding: VitContentPadding.none,
+      gap: VitContentGap.tight,
       density: VitDensity.compact,
       children: [
         const _SectionLabel(label: 'Gas Optimization Tips'),
@@ -99,7 +101,7 @@ class _TipCard extends StatelessWidget {
                               size: AppSpacing.walletGasSavingIcon,
                             ),
                             Text(
-                              tip.potentialSaving,
+                              'Est. ${tip.potentialSaving}',
                               style: AppTextStyles.caption.copyWith(
                                 color: _gasGreen,
                                 fontWeight: AppTextStyles.bold,
@@ -147,6 +149,11 @@ class _QuickActionsCard extends StatelessWidget {
   const _QuickActionsCard({required this.onAction});
 
   final ValueChanged<String> onAction;
+  static const _actions = [
+    'Set Gas Price Alert',
+    'Schedule Transaction',
+    'View L2 Options',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -163,47 +170,18 @@ class _QuickActionsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
-          for (final label in const [
-            'Set Gas Price Alert',
-            'Schedule Transaction',
-            'View L2 Options',
-          ])
-            Padding(
-              padding: AppSpacing.zeroInsets.copyWith(
-                bottom: AppSpacing.walletGasQuickActionBottomGap,
-              ),
-              child: VitCard(
-                height: VitDensity.compact.controlHeight,
-                density: VitDensity.compact,
-                radius: VitCardRadius.sm,
-                borderColor: _gasBorder,
-                onTap: () => onAction(label),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.bolt_outlined,
-                      color: AppColors.text3,
-                      size: AppSpacing.walletGasQuickActionIcon,
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    Expanded(
-                      child: Text(
-                        label,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.medium,
-                        ),
-                      ),
-                    ),
-                    const Icon(
-                      Icons.arrow_forward_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.walletGasQuickActionArrow,
-                    ),
-                  ],
-                ),
-              ),
+          for (var i = 0; i < _actions.length; i++) ...[
+            VitServiceTile(
+              icon: Icons.bolt_outlined,
+              label: _actions[i],
+              accentColor: _gasPrimary,
+              density: VitServiceTileDensity.compact,
+              badgeLabel: 'Deferred',
+              onTap: () => onAction(_actions[i]),
             ),
+            if (i != _actions.length - 1)
+              const SizedBox(height: AppSpacing.walletGasQuickActionBottomGap),
+          ],
         ],
       ),
     );

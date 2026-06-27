@@ -14,11 +14,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpAssetDetail(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpAssetDetail(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -91,23 +91,30 @@ void main() {
     expect(find.text('+0.100000 BTC'), findsOneWidget);
   });
 
-  testWidgets('SC-147 first viewport reaches first transaction row', (
-    tester,
-  ) async {
-    await pumpAssetDetail(tester);
+  testWidgets(
+    'SC-147 first viewport reaches asset actions and period controls',
+    (tester) async {
+      await pumpAssetDetail(tester, viewport: VitFirstViewport.minimumPhone);
 
-    expectRouteSemanticInFirstViewport(
-      tester,
-      routeName: 'AssetDetailPage',
-      semanticLabel: 'SC-147 AssetDetailPage',
-    );
-    expectActionableInFirstViewport(
-      tester,
-      find.byKey(AssetDetailPage.transactionKey('tx001')),
-      routeName: 'AssetDetailPage',
-      actionLabel: 'the first transaction row',
-    );
-  });
+      expectRouteSemanticInFirstViewport(
+        tester,
+        routeName: 'AssetDetailPage',
+        semanticLabel: 'SC-147 AssetDetailPage',
+      );
+      expectActionableInFirstViewport(
+        tester,
+        find.byKey(AssetDetailPage.actionKey('deposit')),
+        routeName: 'AssetDetailPage',
+        actionLabel: 'the deposit asset action',
+      );
+      expectActionableInFirstViewport(
+        tester,
+        find.byKey(AssetDetailPage.periodKey('1M')),
+        routeName: 'AssetDetailPage',
+        actionLabel: 'the active chart period control',
+      );
+    },
+  );
 
   testWidgets('SC-147 period, action, and transaction navigation work', (
     tester,

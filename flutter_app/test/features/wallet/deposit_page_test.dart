@@ -15,11 +15,9 @@ void main() {
   Future<void> pumpDeposit(
     WidgetTester tester, {
     String initialLocation = AppRoutePaths.walletDeposit,
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
   }) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -85,7 +83,7 @@ void main() {
   testWidgets('SC-137 first viewport reaches copy address action', (
     tester,
   ) async {
-    await pumpDeposit(tester);
+    await pumpDeposit(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,

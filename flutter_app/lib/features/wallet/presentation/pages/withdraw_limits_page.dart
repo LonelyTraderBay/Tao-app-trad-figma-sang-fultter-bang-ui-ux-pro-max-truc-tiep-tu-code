@@ -19,40 +19,16 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 part '../widgets/withdraw_limits_page_sections.dart';
 part '../widgets/withdraw_limits_page_common.dart';
 
-const _limitsBackground = AppColors.bg;
-const _limitsHeroBorder = AppColors.primary20;
-const _limitsBorder = AppColors.overlayStroke;
-const _limitsPrimary = AppColors.primary;
-const _limitsGreen = AppColors.buy;
-const _limitsAmber = AppColors.caution;
-const _limitsMuted = AppColors.text3;
-const _limitsNativeBottomClearance = 88.0;
-const _limitsVisualBottomClearance = 112.0;
-const _limitsScrollTopPad = 0.0;
-const _limitsGap = 8.0;
-const _limitsTinyGap = 4.0;
-const _limitsInlineGap = 8.0;
-const _limitsIconBox = 38.0;
-const _limitsStatHeight = 50.0;
-const _limitsTierHeight = 72.0;
-const _limitsProgressHeight = 6.0;
-const _limitsCardPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 12,
-);
-const _limitsTierPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 12,
-  vertical: 8,
-);
-const _limitsCompactStatPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: 8,
-  vertical: 6,
-);
+const _limitsGap = AppSpacing.x3;
+const _limitsTinyGap = AppSpacing.x1;
+const _limitsInlineGap = AppSpacing.x3;
+const _limitsIconBox = AppSpacing.buttonCompact;
+const _limitsProgressHeight = AppSpacing.x2 + AppSpacing.dividerHairline;
 
 double _limitsScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? _limitsVisualBottomClearance
-          : _limitsNativeBottomClearance) +
+          ? AppSpacing.walletBottomInsetVisualChrome
+          : AppSpacing.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
 }
 
@@ -60,6 +36,9 @@ class WithdrawLimitsPage extends ConsumerWidget {
   const WithdrawLimitsPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc153_withdraw_limits_content');
+  static const currentTierKey = Key('sc153_withdraw_limits_current_tier');
+  static const dailyUsageKey = Key('sc153_withdraw_limits_daily_usage');
+  static const monthlyUsageKey = Key('sc153_withdraw_limits_monthly_usage');
   static const upgradeKycKey = Key('sc153_withdraw_limits_upgrade_kyc');
   static Key tierKey(int level) => Key('sc153_withdraw_limits_tier_$level');
 
@@ -75,7 +54,7 @@ class WithdrawLimitsPage extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-153 WithdrawLimitsPage',
       child: Material(
-        color: _limitsBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'H\u1EA1n m\u1EE9c r\u00FAt ti\u1EC1n',
@@ -86,31 +65,30 @@ class WithdrawLimitsPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: WithdrawLimitsPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top: _limitsScrollTopPad,
-                    bottom: bottomInset,
-                  ),
+                  bottomInset: bottomInset,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    fullBleed: true,
+                    gap: VitContentGap.tight,
                     children: [
                       _CurrentTierCard(snapshot: snapshot),
                       _QuickStats(tier: snapshot.currentTier),
+                      const _LimitWarning(),
                       const VitSectionHeader(
                         title:
                             'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
+                        icon: Icons.verified_user_outlined,
                         variant: VitSectionHeaderVariant.accentBar,
+                        density: VitDensity.compact,
                       ),
                       for (final tier in snapshot.tiers)
                         _KycTierCard(
                           tier: tier,
                           currentLevel: snapshot.currentLevel,
                         ),
-                      const _LimitWarning(),
                       _FaqCard(faqs: snapshot.faqs),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,

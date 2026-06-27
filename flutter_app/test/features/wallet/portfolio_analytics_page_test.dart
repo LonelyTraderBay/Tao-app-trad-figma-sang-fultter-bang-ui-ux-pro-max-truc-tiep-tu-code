@@ -12,11 +12,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpPortfolioAnalytics(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpPortfolioAnalytics(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -77,7 +77,10 @@ void main() {
   testWidgets('SC-142 first viewport reaches period selector controls', (
     tester,
   ) async {
-    await pumpPortfolioAnalytics(tester);
+    await pumpPortfolioAnalytics(
+      tester,
+      viewport: VitFirstViewport.minimumPhone,
+    );
 
     expectRouteSemanticInFirstViewport(
       tester,

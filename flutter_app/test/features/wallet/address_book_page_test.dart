@@ -13,11 +13,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpAddressBook(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpAddressBook(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -70,13 +70,18 @@ void main() {
     expect(find.text('5'), findsOneWidget);
     expect(find.text('Ví lạnh cá nhân'), findsOneWidget);
     expect(find.text('Binance Exchange'), findsOneWidget);
+    expect(
+      find.text('bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'),
+      findsNothing,
+    );
+    expect(find.text('bc1qxy...0wlh'), findsOneWidget);
     expect(find.byKey(AddressBookPage.copyKey('addr1')), findsOneWidget);
   });
 
   testWidgets('SC-144 first viewport reaches first address copy action', (
     tester,
   ) async {
-    await pumpAddressBook(tester);
+    await pumpAddressBook(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -102,5 +107,28 @@ void main() {
     await tester.tap(find.byKey(AddressBookPage.addKey));
     await tester.pumpAndSettle();
     expect(find.byType(AddressAddPage), findsOneWidget);
+  });
+
+  testWidgets('SC-144 delete confirmation removes a masked saved address', (
+    tester,
+  ) async {
+    await pumpAddressBook(tester);
+
+    await tester.ensureVisible(find.byKey(AddressBookPage.deleteKey('addr1')));
+    await tester.tap(find.byKey(AddressBookPage.deleteKey('addr1')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Xóa địa chỉ'), findsOneWidget);
+    expect(
+      find.text(
+        'Bạn có chắc muốn xóa địa chỉ "Ví lạnh cá nhân" (bc1qxy...0wlh)?',
+      ),
+      findsOneWidget,
+    );
+
+    await tester.tap(find.text('Xóa'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Ví lạnh cá nhân'), findsNothing);
   });
 }

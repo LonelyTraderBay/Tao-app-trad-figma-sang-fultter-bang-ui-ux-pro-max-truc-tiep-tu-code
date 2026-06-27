@@ -13,8 +13,8 @@ Generated from `flutter_app/tool/design_token_consistency_audit.dart`.
 ## Summary
 ```text
 generated=2026-06-12
-status_fail=28
-status_warn=95
+status_fail=31
+status_warn=89
 status_exception=240
 rows=2591
 ```
@@ -29,7 +29,7 @@ Global debt is report-only while the migration baseline is still being reduced. 
 | p2p | 173 | 1911 | pass |
 | profile | 0 | 1037 | pass |
 | trade | 2 | 9072 | pass |
-| wallet | 9 | 759 | pass |
+| wallet | 0 | 759 | pass |
 
 ## Typography Debt By Module
 
@@ -67,125 +67,125 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | scope | bundle | path | status | total | fontSize | fontFamily | w800/w900 | near1Height | edgeInsets | sizedBox | borderRadius | radius | container | decoration | gridCount | fixedWH | exception |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_ads_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_ads_page.dart` | fail | 8 | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart` | fail | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart` | fail | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart` | `4 files` | fail | 8 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_selfie_verification_page.dart` | `3 files` | fail | 8 | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_ads_page.dart` | `3 files` | fail | 8 | 0 | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_selfie_verification_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_selfie_verification_page.dart` | fail | 7 | 0 | 0 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_certificate_page.dart` | `3 files` | fail | 7 | 0 | 0 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_certificate_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_certificate_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_page.dart` | `4 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_orders_page.dart` | `3 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_methods_page.dart` | `3 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_methods_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_methods_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_selfie_verification_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_selfie_verification_page.dart` | fail | 7 | 0 | 0 | 0 | 0 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` | `3 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_methods_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_methods_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_orders_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_orders_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_fraud_prevention_page.dart` | `4 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_methods_page.dart` | `3 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_fraud_prevention_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_fraud_prevention_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_my_orders_page.dart` | `3 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_certificate_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_certificate_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_page.dart` | `4 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_detail_page.dart` | `4 files` | fail | 6 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_settings_page.dart` | `3 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_settings_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_settings_page.dart` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_ownership_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_ownership_page.dart` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_wallet_transfer_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_wallet_transfer_page.dart` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_wallet_transfer_page.dart` | `4 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_create_ad_page.dart` | `2 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_address_proof_page.dart` | `3 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_ownership_page.dart` | `1 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_settings_page.dart` | `3 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_limit_tracker_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_limit_tracker_page.dart` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_wallet_transfer_page.dart` | `4 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_settings_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_settings_page.dart` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_ownership_page.dart` | `1 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_limit_tracker_page.dart` | `1 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` | `4 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart` | `3 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_risk_assessment_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_risk_assessment_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_profile_page.dart` | `3 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_kyc_status_page.dart` | `3 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_address_proof_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_address_proof_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_create_ad_page.dart` | `2 files` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_wallet_transfer_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_wallet_transfer_page.dart` | fail | 5 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_risk_assessment_page.dart` | `1 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_profile_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_profile_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_kyc_status_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_kyc_status_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_create_ad_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_create_ad_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_resolution_page.dart` | `1 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_kyc_status_page.dart` | `3 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` | `4 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_profile_page.dart` | `3 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_address_proof_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_address_proof_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_kyc_status_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_kyc_status_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_risk_assessment_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_risk_assessment_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_profile_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_profile_page.dart` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_escrow_balance_page.dart` | `3 files` | warn | 4 | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_resolution_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_resolution_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_device_management_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_device_management_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_rate_page.dart` | `2 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_2fa_settings_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_2fa_settings_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_video_verification_page.dart` | `1 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_transaction_limits_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_transaction_limits_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_2fa_settings_page.dart` | `3 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_balance_sections.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_verification_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_verification_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_verification_page.dart` | `3 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_transaction_limits_page.dart` | `3 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/markets/presentation/widgets/market_list_pairs.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_device_management_page.dart` | `4 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_video_verification_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_video_verification_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_tax_reporting_page.dart` | `3 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_transaction_limits_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_transaction_limits_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_2fa_settings_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_2fa_settings_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_2fa_settings_page.dart` | `3 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_verification_page.dart` | `3 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/markets/presentation/widgets/market_list_pairs.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_transaction_limits_page.dart` | `3 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_verification_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_verification_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_device_management_page.dart` | `4 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_device_management_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_device_management_page.dart` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_resolution_page.dart` | `1 files` | warn | 3 | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_aml_screening_page.dart` | `1 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_notifications_settings_page.dart` | `1 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_compliance_overview_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_compliance_overview_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_cooling_period_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_cooling_period_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_dca_tool_sections.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_order_rate_widgets.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_confirm_page.dart` | `1 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_aml_screening_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_aml_screening_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_confirm_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_confirm_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_compliance_overview_page.dart` | `1 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page_part_03.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_rate_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_order_rate_widgets.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_notifications_settings_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_notifications_settings_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_tax_reporting_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_tax_reporting_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_confirm_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_confirm_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page_part_03.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_aml_screening_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_aml_screening_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_compliance_overview_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_compliance_overview_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_notifications_settings_page.dart` | `1 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_tax_reporting_page.dart` | `3 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_order_rate_widgets.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_compliance_overview_page.dart` | `1 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_cooling_period_page.dart` | `1 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_evidence_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_evidence_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_rate_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_rate_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/trade/presentation/pages/kid_generator_page.dart` | `flutter_app/lib/features/trade/presentation/pages/kid_generator_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_proof_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_proof_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_login_history_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_login_history_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_express_confirm_page.dart` | `1 files` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_rate_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_order_rate_widgets.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_cooling_period_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_cooling_period_page.dart` | warn | 2 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_history_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_large_transaction_justification_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_large_transaction_justification_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/trade/presentation/pages/kid_generator_page.dart` | `flutter_app/lib/features/trade/presentation/pages/kid_generator_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_large_transaction_justification_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_fund_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_fund_page_part_02.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_home_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_home_page_part_02.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| shared_widget | `` | `flutter_app/lib/shared/widgets/vit_choice_pill.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_history_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_history_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_evidence_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_evidence_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/trade/presentation/pages/kid_generator_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_evidence_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_source_of_funds_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_contribution_history_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| shared_widget | `` | `flutter_app/lib/shared/widgets/vit_choice_pill.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_source_of_funds_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_source_of_funds_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_fund_lock_history_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_suspicious_activity_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_suspicious_activity_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_add_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_detail_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_detail_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_detail_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_home_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_home_page_part_02.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_suspicious_activity_page.dart` | `1 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_detail_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_dispute_detail_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_dashboard_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_dashboard_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_contribution_history_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_contribution_history_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_proof_page.dart` | `2 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_contribution_history_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_contribution_history_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_source_of_funds_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_source_of_funds_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_add_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_blacklist_add_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_fund_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_fund_page_part_02.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_ad_detail_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_ad_detail_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_large_transaction_justification_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_large_transaction_justification_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_achievements_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_achievements_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/withdraw_amount_actions.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_asset_amount.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_history_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_history_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_asset_sections.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_selectors.dart` | warn | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | - |
-| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_suspicious_activity_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_suspicious_activity_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_selfie_verification_page_common.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_achievements_page.dart` | `3 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/p2p/presentation/pages/p2p_payment_method_add_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_payment_method_add_page_common.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_payment_method_add_page_common.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_insurance_certificate_page_common.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_achievements_page.dart` | `3 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_login_history_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_login_history_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_proof_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_proof_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_rate_page.dart` | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_rate_page.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_ad_detail_page.dart` | `3 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_insurance_certificate_page_common.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/p2p/presentation/pages/p2p_insurance_certificate_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_insurance_certificate_page_common.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_create_ad_page_sections.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/p2p/presentation/pages/p2p_create_ad_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_create_ad_page_sections.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_address_proof_page_sections.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `flutter_app/lib/features/p2p/presentation/pages/p2p_address_proof_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_address_proof_page_sections.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_home_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/p2p/presentation/pages/p2p_address_proof_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_address_proof_page_sections.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/markets/presentation/widgets/market_list_tools.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_login_history_page.dart` | `4 files` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/markets/presentation/widgets/market_list_movers.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/markets/presentation/widgets/market_list_filters.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/p2p/presentation/pages/p2p_selfie_verification_page.dart` | `flutter_app/lib/features/p2p/presentation/widgets/p2p_selfie_verification_page_common.dart` | warn | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 
 ## Report File Matrix
 | scope | bundle | path | status | fontSize | fontFamily | w800/w900 | height~1 | edgeInsets | sizedBox | borderRadius | radius | container | decoration | crossAxisCount | childAspectRatio | mainAxisExtent | fixedWidth | fixedHeight | exception |
@@ -538,8 +538,8 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking_dashboard_summary.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_hero_tabs.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_hero_tabs.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart` | fail | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_positions_common.dart` | fail | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_products.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart` | `flutter_app/lib/features/earn/presentation/widgets/staking_earn_products.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/earn/presentation/widgets/staking_earnings_calendar_grid.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -1679,7 +1679,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_form.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_preview.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_selectors.dart` | warn | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_add_selectors.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_book_controls.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_book_controls.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_address_book_list.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -1712,9 +1712,9 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_manager_tabs.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_multi_manager_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_allocation_sections.dart` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_asset_sections.dart` | warn | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_balance_sections.dart` | warn | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_dca_tool_sections.dart` | warn | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_asset_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_balance_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_dca_tool_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_page_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_token_active_approvals_tab.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_token_approval_badges.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -1724,13 +1724,13 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_token_approval_settings_tab.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_token_approval_tabs.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_token_revoke_sheet.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_asset_amount.dart` | warn | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_asset_amount.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_confirm_sheet.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_history_picker.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_transfer_wallet_cards.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/wallet_unavailable_banner.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
-| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/withdraw_amount_actions.dart` | warn | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/withdraw_amount_actions.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/withdraw_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `` | `flutter_app/lib/features/wallet/presentation/widgets/withdraw_form_sections.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | feature_widget | `flutter_app/lib/features/wallet/presentation/pages/withdraw_limits_page.dart` | `flutter_app/lib/features/wallet/presentation/widgets/withdraw_limits_page_common.dart` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
@@ -2628,7 +2628,7 @@ This section counts only local typography drift: `fontSize`, `fontFamily`, and `
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_merchant_apply_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/trade/presentation/pages/dispute_resolution_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_order_page.dart` | `4 files` | exception | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
-| root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
+| root_page_bundle_summary | `flutter_app/lib/features/earn/presentation/pages/staking_earn_page.dart` | `4 files` | fail | 0 | 0 | 0 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/trade/presentation/pages/regulatory_reports_dashboard_page.dart` | `4 files` | exception | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | allowed_source_keyword: custompainter |
 | root_page_bundle_summary | `flutter_app/lib/features/p2p/presentation/pages/p2p_claim_detail_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |
 | root_page_bundle_summary | `flutter_app/lib/features/trade/presentation/pages/risk_management_demo_page.dart` | `4 files` | pass | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | - |

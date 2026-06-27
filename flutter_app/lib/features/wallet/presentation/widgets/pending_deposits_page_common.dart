@@ -16,8 +16,10 @@ class _StatusNotice extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      constraints: const BoxConstraints(minHeight: _pendingNoticeMinHeight),
-      padding: _pendingNoticePadding,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletPendingNoticeMinHeight,
+      ),
+      padding: AppSpacing.walletPendingNoticePadding,
       borderColor: color.withValues(alpha: .22),
       child: Row(
         children: [
@@ -56,39 +58,57 @@ class _DepositDetails extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      padding: _pendingDetailsPadding,
       child: Column(
         children: [
-          _DetailRow(label: 'M\u1EA1ng', value: deposit.network),
-          const SizedBox(height: _pendingTinyGap),
-          _DetailRow(
-            label: 'Th\u1EDDi gian d\u1EF1 ki\u1EBFn',
-            value: deposit.estimatedArrival,
+          VitInfoRow(
+            label: 'X\u00E1c nh\u1EADn y\u00EAu c\u1EA7u',
+            value:
+                '${deposit.confirmations}/${deposit.requiredConfirmations} x\u00E1c nh\u1EADn',
+            leading: const Icon(Icons.fact_check_outlined),
+            valueColor: _statusConfig(deposit.status).color,
+            density: VitDensity.compact,
+            showDivider: true,
           ),
-          const SizedBox(height: _pendingTinyGap),
-          _DetailRow(
+          VitInfoRow(
+            label: 'Th\u1EDDi \u0111i\u1EC3m g\u1EEDi',
+            value: deposit.createdAt,
+            leading: const Icon(Icons.schedule_rounded),
+            density: VitDensity.compact,
+            showDivider: true,
+          ),
+          VitInfoRow(
+            label: 'ETA',
+            value: deposit.estimatedArrival,
+            leading: const Icon(Icons.timelapse_rounded),
+            density: VitDensity.compact,
+            showDivider: true,
+          ),
+          VitInfoRow(
+            label: 'M\u1EA1ng',
+            value: deposit.network,
+            leading: const Icon(Icons.hub_outlined),
+            density: VitDensity.compact,
+            showDivider: true,
+          ),
+          VitInfoRow(
             label: 'T\u1EEB \u0111\u1ECBa ch\u1EC9',
             value: deposit.fromAddress,
+            leading: const Icon(Icons.account_balance_wallet_outlined),
+            density: VitDensity.compact,
+            showDivider: true,
           ),
-          const SizedBox(height: _pendingTinyGap),
-          Row(
-            children: [
-              Text(
-                'TxHash',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-              const SizedBox(width: _pendingInlineGap),
-              Flexible(
-                child: Text(
-                  deposit.txHash,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.right,
-                  style: AppTextStyles.micro.copyWith(color: _pendingPrimary),
-                ),
-              ),
-              const SizedBox(width: _pendingTinyGap),
-              VitStatusPill(
+          VitInfoRow(
+            label: 'TxHash',
+            value: deposit.txHash,
+            leading: const Icon(Icons.receipt_long_outlined),
+            valueColor: AppColors.primary,
+            density: VitDensity.compact,
+            trailing: Semantics(
+              button: true,
+              label: copied
+                  ? 'Transaction hash copied for ${deposit.asset}'
+                  : 'Copy transaction hash for ${deposit.asset}',
+              child: VitStatusPill(
                 key: PendingDepositsPage.copyKey(deposit.id),
                 label: copied ? '\u0110\u00E3 ch\u00E9p' : 'Copy',
                 icon: copied ? Icons.check_rounded : Icons.content_copy_rounded,
@@ -98,40 +118,10 @@ class _DepositDetails extends StatelessWidget {
                 size: VitStatusPillSize.sm,
                 onTap: onCopy,
               ),
-            ],
+            ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _DetailRow extends StatelessWidget {
-  const _DetailRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ),
-        Flexible(
-          child: Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.right,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -141,29 +131,11 @@ class _EmptyDeposits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: _pendingCardPadding,
-      child: Column(
-        children: [
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
-            width: _pendingIconBox,
-            height: _pendingIconBox,
-            alignment: Alignment.center,
-            child: const Icon(
-              Icons.inbox_outlined,
-              color: AppColors.text3,
-              size: AppSpacing.walletPendingEmptyIconGlyph,
-            ),
-          ),
-          const SizedBox(height: _pendingGap),
-          Text(
-            'Kh\u00F4ng c\u00F3 giao d\u1ECBch n\u1EA1p n\u00E0o',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+    return const VitEmptyState(
+      title: 'Kh\u00F4ng c\u00F3 giao d\u1ECBch n\u1EA1p n\u00E0o',
+      message:
+          'B\u1ED9 l\u1ECDc hi\u1EC7n t\u1EA1i kh\u00F4ng c\u00F3 giao d\u1ECBch c\u1EA7n theo d\u00F5i.',
+      icon: Icons.inbox_outlined,
     );
   }
 }
@@ -174,14 +146,14 @@ class _InfoNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _pendingNoticePadding,
-      borderColor: _pendingPrimary.withValues(alpha: .15),
+      padding: AppSpacing.walletPendingInfoPadding,
+      borderColor: AppColors.primary.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
-            color: _pendingPrimary,
+            color: AppColors.primary,
             size: AppSpacing.walletPendingNoticeIcon,
           ),
           const SizedBox(width: _pendingInlineGap),
@@ -198,29 +170,44 @@ class _InfoNotice extends StatelessWidget {
 }
 
 final class _DepositStatusConfig {
-  const _DepositStatusConfig({required this.label, required this.color});
+  const _DepositStatusConfig({
+    required this.label,
+    required this.color,
+    required this.icon,
+    required this.status,
+  });
 
   final String label;
   final Color color;
+  final IconData icon;
+  final VitStatusPillStatus status;
 }
 
 _DepositStatusConfig _statusConfig(String status) {
   return switch (status) {
     'credited' => const _DepositStatusConfig(
       label: '\u0110\u00E3 ghi nh\u1EADn',
-      color: _pendingGreen,
+      color: AppColors.buy,
+      icon: Icons.check_circle_outline_rounded,
+      status: VitStatusPillStatus.success,
     ),
     'failed' => const _DepositStatusConfig(
       label: 'Th\u1EA5t b\u1EA1i',
-      color: _pendingRed,
+      color: AppColors.sell,
+      icon: Icons.warning_amber_rounded,
+      status: VitStatusPillStatus.error,
     ),
     'processing' => const _DepositStatusConfig(
       label: '\u0110ang x\u1EED l\u00FD',
-      color: _pendingPrimary,
+      color: AppColors.primary,
+      icon: Icons.sync_rounded,
+      status: VitStatusPillStatus.info,
     ),
     _ => const _DepositStatusConfig(
       label: '\u0110ang x\u00E1c nh\u1EADn',
-      color: _pendingAmber,
+      color: AppColors.caution,
+      icon: Icons.access_time_rounded,
+      status: VitStatusPillStatus.warning,
     ),
   };
 }

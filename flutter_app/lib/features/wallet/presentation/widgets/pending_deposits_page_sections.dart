@@ -1,26 +1,33 @@
 part of '../pages/pending_deposits_page.dart';
 
 class _SummaryBanner extends StatelessWidget {
-  const _SummaryBanner({required this.pendingCount, required this.onRefresh});
+  const _SummaryBanner({
+    required this.pendingCount,
+    required this.onRefresh,
+    this.lastRefreshLabel,
+  });
 
   final int pendingCount;
   final VoidCallback onRefresh;
+  final String? lastRefreshLabel;
 
   @override
   Widget build(BuildContext context) {
     final hasPending = pendingCount > 0;
-    final color = hasPending ? _pendingAmber : _pendingGreen;
+    final color = hasPending ? AppColors.caution : AppColors.buy;
     return VitCard(
-      height: _pendingSummaryHeight,
-      padding: _pendingCardPadding,
-      borderColor: _pendingBorder,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletPendingSummaryHeight,
+      ),
+      padding: AppSpacing.walletPendingCardPadding,
+      borderColor: AppColors.overlayStroke,
       child: Row(
         children: [
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.sm,
-            width: _pendingIconBox,
-            height: _pendingIconBox,
+            width: AppSpacing.walletPendingAssetIconBox,
+            height: AppSpacing.walletPendingAssetIconBox,
             alignment: Alignment.center,
             borderColor: color.withValues(alpha: .22),
             child: Icon(
@@ -50,9 +57,13 @@ class _SummaryBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: _pendingTinyGap),
                 Text(
-                  hasPending
-                      ? 'Trang t\u1EF1 \u0111\u1ED9ng c\u1EADp nh\u1EADt m\u1ED7i 5 gi\u00E2y'
-                      : 'Kh\u00F4ng c\u00F3 giao d\u1ECBch n\u00E0o \u0111ang ch\u1EDD',
+                  lastRefreshLabel ??
+                      (hasPending
+                          ? 'Trang t\u1EF1 \u0111\u1ED9ng c\u1EADp nh\u1EADt m\u1ED7i 5 gi\u00E2y'
+                          : 'Kh\u00F4ng c\u00F3 giao d\u1ECBch n\u00E0o \u0111ang ch\u1EDD'),
+                  key: lastRefreshLabel == null
+                      ? null
+                      : PendingDepositsPage.refreshFeedbackKey,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -61,12 +72,16 @@ class _SummaryBanner extends StatelessWidget {
             ),
           ),
           const SizedBox(width: _pendingInlineGap),
-          VitIconButton(
-            key: PendingDepositsPage.refreshKey,
-            icon: Icons.refresh_rounded,
-            tooltip: 'Refresh pending deposits',
-            size: VitIconButtonSize.sm,
-            onPressed: onRefresh,
+          Semantics(
+            button: true,
+            label: 'Refresh pending deposit statuses',
+            child: VitIconButton(
+              key: PendingDepositsPage.refreshKey,
+              icon: Icons.refresh_rounded,
+              tooltip: 'Refresh pending deposits',
+              size: VitIconButtonSize.sm,
+              onPressed: onRefresh,
+            ),
           ),
         ],
       ),
@@ -97,15 +112,20 @@ class _FilterChips extends StatelessWidget {
       runSpacing: _pendingTinyGap,
       children: [
         for (final item in items)
-          VitStatusPill(
-            key: PendingDepositsPage.filterKey(item.$1.name),
-            label: item.$2,
-            status: active == item.$1
-                ? VitStatusPillStatus.info
-                : VitStatusPillStatus.neutral,
-            size: VitStatusPillSize.sm,
-            outline: active != item.$1,
-            onTap: () => onChanged(item.$1),
+          Semantics(
+            button: true,
+            selected: active == item.$1,
+            label: '${item.$2} pending deposit filter',
+            child: VitStatusPill(
+              key: PendingDepositsPage.filterKey(item.$1.name),
+              label: item.$2,
+              status: active == item.$1
+                  ? VitStatusPillStatus.info
+                  : VitStatusPillStatus.neutral,
+              size: VitStatusPillSize.sm,
+              outline: active != item.$1,
+              onTap: () => onChanged(item.$1),
+            ),
           ),
       ],
     );
@@ -128,8 +148,8 @@ class _DepositCard extends StatelessWidget {
     final config = _statusConfig(deposit.status);
     return VitCard(
       key: PendingDepositsPage.depositKey(deposit.id),
-      padding: _pendingCardPadding,
-      borderColor: _pendingBorder,
+      padding: AppSpacing.walletPendingCardPadding,
+      borderColor: AppColors.overlayStroke,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -138,8 +158,8 @@ class _DepositCard extends StatelessWidget {
               VitCard(
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.sm,
-                width: _pendingIconBox,
-                height: _pendingIconBox,
+                width: AppSpacing.walletPendingAssetIconBox,
+                height: AppSpacing.walletPendingAssetIconBox,
                 alignment: Alignment.center,
                 borderColor: config.color.withValues(alpha: .22),
                 child: Icon(
@@ -211,7 +231,7 @@ class _DepositCard extends StatelessWidget {
           if (deposit.status == 'credited') ...[
             const SizedBox(height: _pendingGap),
             _StatusNotice(
-              color: _pendingGreen,
+              color: AppColors.buy,
               icon: Icons.check_circle_outline_rounded,
               text:
                   '\u0110\u00E3 ghi nh\u1EADn v\u00E0o v\u00ED \u2014 ${deposit.confirmations}/${deposit.requiredConfirmations} x\u00E1c nh\u1EADn',
@@ -220,7 +240,7 @@ class _DepositCard extends StatelessWidget {
           if (deposit.status == 'failed') ...[
             const SizedBox(height: _pendingGap),
             const _StatusNotice(
-              color: _pendingRed,
+              color: AppColors.sell,
               icon: Icons.warning_amber_rounded,
               text:
                   'Giao d\u1ECBch th\u1EA5t b\u1EA1i \u2014 li\u00EAn h\u1EC7 h\u1ED7 tr\u1EE3 n\u1EBFu \u0111\u00E3 g\u1EEDi ti\u1EC1n',
@@ -241,9 +261,10 @@ class _DepositStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitAccentPill(
+    return VitStatusPill(
       label: config.label,
-      accentColor: config.color,
+      icon: config.icon,
+      status: config.status,
       size: VitStatusPillSize.sm,
     );
   }
@@ -258,57 +279,64 @@ class _ConfirmationProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dotCount = deposit.requiredConfirmations.clamp(2, 12);
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                'X\u00E1c nh\u1EADn blockchain',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-              ),
-            ),
-            Text(
-              '${deposit.confirmations}/${deposit.requiredConfirmations}',
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: _pendingTinyGap),
-        ClipRRect(
-          borderRadius: AppRadii.pillRadius,
-          child: SizedBox(
-            height: _pendingProgressHeight,
-            child: LinearProgressIndicator(
-              value: deposit.progress.clamp(.05, 1),
-              backgroundColor: AppColors.surface3,
-              valueColor: AlwaysStoppedAnimation<Color>(color),
-            ),
-          ),
-        ),
-        const SizedBox(height: _pendingTinyGap),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            for (var i = 0; i < dotCount; i++)
-              ClipRRect(
-                borderRadius: AppRadii.pillRadius,
-                child: SizedBox(
-                  width: _pendingProgressDot,
-                  height: _pendingProgressDot,
-                  child: ColoredBox(
-                    color: i < deposit.confirmations
-                        ? color
-                        : AppColors.surface3,
-                  ),
+    return Semantics(
+      container: true,
+      label:
+          'Blockchain confirmations ${deposit.confirmations} of ${deposit.requiredConfirmations}',
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'X\u00E1c nh\u1EADn blockchain',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
               ),
-          ],
-        ),
-      ],
+              VitStatusPill(
+                label:
+                    '${deposit.confirmations}/${deposit.requiredConfirmations} y\u00EAu c\u1EA7u',
+                icon: Icons.fact_check_outlined,
+                status: deposit.confirmations >= deposit.requiredConfirmations
+                    ? VitStatusPillStatus.success
+                    : VitStatusPillStatus.warning,
+                size: VitStatusPillSize.sm,
+              ),
+            ],
+          ),
+          const SizedBox(height: _pendingTinyGap),
+          ClipRRect(
+            borderRadius: AppRadii.pillRadius,
+            child: SizedBox(
+              height: AppSpacing.walletPendingProgressHeight,
+              child: LinearProgressIndicator(
+                value: deposit.progress.clamp(.05, 1),
+                backgroundColor: AppColors.surface3,
+                valueColor: AlwaysStoppedAnimation<Color>(color),
+              ),
+            ),
+          ),
+          const SizedBox(height: _pendingTinyGap),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              for (var i = 0; i < dotCount; i++)
+                ClipRRect(
+                  borderRadius: AppRadii.pillRadius,
+                  child: SizedBox(
+                    width: AppSpacing.walletPendingProgressDot,
+                    height: AppSpacing.walletPendingProgressDot,
+                    child: ColoredBox(
+                      color: i < deposit.confirmations
+                          ? color
+                          : AppColors.surface3,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

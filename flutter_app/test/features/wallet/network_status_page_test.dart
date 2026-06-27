@@ -12,11 +12,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 import '../../helpers/first_viewport_test_utils.dart';
 
 void main() {
-  Future<void> pumpNetworkStatus(WidgetTester tester) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  Future<void> pumpNetworkStatus(
+    WidgetTester tester, {
+    VitFirstViewport viewport = VitFirstViewport.qaPhone,
+  }) async {
+    configureFirstViewport(tester, viewport);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -78,16 +78,18 @@ void main() {
     expect(find.byKey(NetworkStatusPage.networkKey('eth')), findsOneWidget);
     expect(find.text('Bitcoin'), findsOneWidget);
     expect(find.text('Ethereum'), findsOneWidget);
-    expect(find.text('25%'), findsOneWidget);
-    expect(find.text('42%'), findsOneWidget);
+    expect(find.text('25% - B\u00ECnh th\u01B0\u1EDDng'), findsOneWidget);
+    expect(find.text('42% - Cao'), findsOneWidget);
     expect(find.text('N\u1EA1p OK'), findsWidgets);
     expect(find.text('R\u00FAt OK'), findsWidgets);
+    expect(find.byKey(NetworkStatusPage.filterKey('all')), findsOneWidget);
+    expect(find.byKey(NetworkStatusPage.filterKey('issues')), findsOneWidget);
   });
 
   testWidgets('SC-155 first viewport reaches first network card', (
     tester,
   ) async {
-    await pumpNetworkStatus(tester);
+    await pumpNetworkStatus(tester, viewport: VitFirstViewport.minimumPhone);
 
     expectRouteSemanticInFirstViewport(
       tester,
@@ -96,10 +98,40 @@ void main() {
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(NetworkStatusPage.networkKey('btc')),
+      find.byKey(NetworkStatusPage.filterKey('all')),
       routeName: 'NetworkStatusPage',
-      actionLabel: 'the first network status card',
+      actionLabel: 'the status filter controls',
     );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(NetworkStatusPage.networkKey('polygon')),
+      routeName: 'NetworkStatusPage',
+      actionLabel: 'the highest-risk network status card',
+    );
+  });
+
+  testWidgets('SC-155 refresh and filters give visible feedback', (
+    tester,
+  ) async {
+    await pumpNetworkStatus(tester);
+
+    await tester.tap(find.byKey(NetworkStatusPage.refreshKey));
+    await tester.pump();
+
+    expect(find.byKey(NetworkStatusPage.refreshFeedbackKey), findsOneWidget);
+    expect(
+      find.text(
+        '\u0110\u00E3 l\u00E0m m\u1EDBi tr\u1EA1ng th\u00E1i m\u1EA1ng',
+      ),
+      findsWidgets,
+    );
+
+    await tester.tap(find.byKey(NetworkStatusPage.filterKey('maintenance')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(NetworkStatusPage.networkKey('polygon')), findsOneWidget);
+    expect(find.byKey(NetworkStatusPage.networkKey('btc')), findsNothing);
+    expect(find.text('B\u1EA3o tr\u00EC (1)'), findsOneWidget);
   });
 
   testWidgets('SC-155 full list includes maintenance and legend', (

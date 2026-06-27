@@ -11,10 +11,12 @@ class _CurrentTierCard extends StatelessWidget {
     final tierColor = Color(tier.colorHex);
 
     return VitCard(
-      padding: _limitsCardPadding,
+      key: WithdrawLimitsPage.currentTierKey,
+      density: VitDensity.compact,
       radius: VitCardRadius.lg,
-      borderColor: _limitsHeroBorder,
+      borderColor: AppColors.primary20,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -48,9 +50,11 @@ class _CurrentTierCard extends StatelessWidget {
                         ),
                         const SizedBox(width: _limitsInlineGap),
                         Flexible(
-                          child: VitAccentPill(
+                          child: VitStatusPill(
                             label: tier.name,
-                            accentColor: tierColor,
+                            icon: Icons.verified_user_outlined,
+                            status: VitStatusPillStatus.success,
+                            size: VitStatusPillSize.sm,
                           ),
                         ),
                       ],
@@ -58,16 +62,23 @@ class _CurrentTierCard extends StatelessWidget {
                     const SizedBox(height: _limitsTinyGap),
                     Text(
                       '\u0110\u00E3 x\u00E1c minh',
-                      style: AppTextStyles.micro.copyWith(color: _limitsMuted),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
                     ),
                   ],
                 ),
               ),
-              Icon(Icons.check_circle_outline, color: tierColor, size: 22),
+              Icon(
+                Icons.check_circle_outline,
+                color: tierColor,
+                size: AppSpacing.iconMd,
+              ),
             ],
           ),
           const SizedBox(height: _limitsGap),
           _LimitProgress(
+            key: WithdrawLimitsPage.dailyUsageKey,
             label: 'H\u1EA1n m\u1EE9c r\u00FAt/ng\u00E0y',
             used: snapshot.usedToday,
             limit: tier.dailyLimit,
@@ -76,6 +87,7 @@ class _CurrentTierCard extends StatelessWidget {
           ),
           const SizedBox(height: _limitsGap),
           _LimitProgress(
+            key: WithdrawLimitsPage.monthlyUsageKey,
             label: 'H\u1EA1n m\u1EE9c r\u00FAt/th\u00E1ng',
             used: snapshot.usedMonth,
             limit: tier.monthlyLimit,
@@ -90,6 +102,7 @@ class _CurrentTierCard extends StatelessWidget {
 
 class _LimitProgress extends StatelessWidget {
   const _LimitProgress({
+    super.key,
     required this.label,
     required this.used,
     required this.limit,
@@ -106,6 +119,7 @@ class _LimitProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [
@@ -115,12 +129,17 @@ class _LimitProgress extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
-            Text(
-              '${_formatUsd(used)} / ${_formatUsd(limit)}',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
+            Flexible(
+              child: Text(
+                '${_formatUsd(used)} / ${_formatUsd(limit)}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.end,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
               ),
             ),
           ],
@@ -131,7 +150,7 @@ class _LimitProgress extends StatelessWidget {
           child: LinearProgressIndicator(
             minHeight: _limitsProgressHeight,
             value: (percent / 100).clamp(0, 1).toDouble(),
-            color: _limitsGreen,
+            color: AppColors.buy,
             backgroundColor: AppColors.surface3,
           ),
         ),
@@ -142,14 +161,18 @@ class _LimitProgress extends StatelessWidget {
               child: Text(
                 'C\u00F2n l\u1EA1i: ${_formatUsd(remaining)}',
                 style: AppTextStyles.micro.copyWith(
-                  color: _limitsGreen,
+                  color: AppColors.buy,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
-            Text(
-              '${percent.toStringAsFixed(1)}% \u0111\u00E3 d\u00F9ng',
-              style: AppTextStyles.micro.copyWith(color: _limitsMuted),
+            VitStatusPill(
+              label: '${percent.toStringAsFixed(1)}% \u0111\u00E3 d\u00F9ng',
+              icon: Icons.speed_rounded,
+              status: percent >= 80
+                  ? VitStatusPillStatus.warning
+                  : VitStatusPillStatus.neutral,
+              size: VitStatusPillSize.sm,
             ),
           ],
         ),
@@ -169,17 +192,20 @@ class _QuickStats extends StatelessWidget {
       (
         label: 'R\u00FAt/ng\u00E0y t\u1ED1i \u0111a',
         value: _formatUsd(tier.dailyLimit),
-        color: _limitsPrimary,
+        color: AppColors.primary,
+        icon: Icons.calendar_today_outlined,
       ),
       (
         label: 'Giao d\u1ECBch \u0111\u01A1n',
         value: _formatUsd(tier.singleTxLimit),
-        color: _limitsGreen,
+        color: AppColors.buy,
+        icon: Icons.receipt_long_outlined,
       ),
       (
         label: 'R\u00FAt/th\u00E1ng',
         value: _formatUsd(tier.monthlyLimit),
-        color: _limitsAmber,
+        color: AppColors.caution,
+        icon: Icons.date_range_outlined,
       ),
     ];
 
@@ -189,12 +215,13 @@ class _QuickStats extends StatelessWidget {
           Expanded(
             child: VitCard(
               variant: VitCardVariant.inner,
-              height: _limitsStatHeight,
-              padding: _limitsCompactStatPadding,
-              borderColor: _limitsBorder,
+              density: VitDensity.compact,
+              borderColor: AppColors.overlayStroke,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Icon(stat.icon, color: stat.color, size: AppSpacing.iconSm),
+                  const SizedBox(height: _limitsTinyGap),
                   FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
@@ -212,7 +239,7 @@ class _QuickStats extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.micro.copyWith(color: _limitsMuted),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -231,14 +258,14 @@ class _LimitWarning extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _limitsCardPadding,
-      borderColor: _limitsAmber.withValues(alpha: .34),
+      density: VitDensity.compact,
+      borderColor: AppColors.caution.withValues(alpha: .34),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
-            color: _limitsAmber,
+            color: AppColors.caution,
             size: AppSpacing.walletAddressAddIcon,
           ),
           const SizedBox(width: _limitsInlineGap),
@@ -254,16 +281,13 @@ class _LimitWarning extends StatelessWidget {
                     text:
                         'R\u00FAt tr\u00EAn \$50,000.00 c\u1EA7n x\u00E1c minh video call.',
                     style: AppTextStyles.caption.copyWith(
-                      color: _limitsAmber,
+                      color: AppColors.caution,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
                 ],
               ),
-              style: AppTextStyles.caption.copyWith(
-                color: _limitsAmber,
-                height: 1.35,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.caution),
             ),
           ),
         ],

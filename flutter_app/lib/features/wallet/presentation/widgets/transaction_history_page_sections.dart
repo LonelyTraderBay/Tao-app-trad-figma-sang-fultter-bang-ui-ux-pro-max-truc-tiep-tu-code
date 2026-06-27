@@ -10,8 +10,7 @@ class _ExportBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      padding: _historyExportPadding,
+      density: VitDensity.compact,
       child: Row(
         children: [
           Expanded(
@@ -22,11 +21,42 @@ class _ExportBar extends StatelessWidget {
           ),
           VitStatusPill(
             key: TransactionHistoryPage.exportKey,
-            label: 'Xuất CSV',
+            label: 'Yêu cầu CSV',
             icon: Icons.cloud_download_outlined,
             status: VitStatusPillStatus.info,
             size: VitStatusPillSize.md,
             onTap: onExport,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExportNotice extends StatelessWidget {
+  const _ExportNotice({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      density: VitDensity.compact,
+      borderColor: AppColors.primary20,
+      child: Row(
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: _historyPrimary,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              message,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
           ),
         ],
       ),
@@ -47,44 +77,18 @@ class _FilterTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      physics: const ClampingScrollPhysics(),
-      child: Row(
-        children: [
-          for (var i = 0; i < filters.length; i++) ...[
-            _FilterChip(
-              filter: filters[i],
-              active: filters[i].id == active,
-              onTap: () => onChanged(filters[i].id),
-            ),
-            if (i != filters.length - 1) const SizedBox(width: _historyTinyGap),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.filter,
-    required this.active,
-    required this.onTap,
-  });
-
-  final WalletTransactionFilter filter;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: TransactionHistoryPage.filterKey(filter.id),
-      label: filter.label,
-      selected: active,
-      onTap: onTap,
-      accentColor: AppColors.primary,
+    return VitTabBar(
+      tabs: [
+        for (final filter in filters)
+          VitTabItem(
+            key: filter.id,
+            label: filter.label,
+            widgetKey: TransactionHistoryPage.filterKey(filter.id),
+          ),
+      ],
+      activeKey: active,
+      onChanged: onChanged,
+      variant: VitTabBarVariant.pill,
     );
   }
 }
@@ -110,26 +114,16 @@ class _TransactionGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: _historySectionHeaderPadding,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              _formatDate(group.date),
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
+        VitSectionHeader(
+          title: _formatDate(group.date),
+          icon: Icons.calendar_today_outlined,
+          iconColor: AppColors.text2,
+          density: VitDensity.compact,
         ),
-        const Divider(
-          height: AppSpacing.walletHistoryDividerHeight,
-          thickness: AppSpacing.walletHistoryDividerHeight,
-          color: AppColors.divider,
-        ),
+        const SizedBox(height: AppSpacing.x1),
         for (final tx in group.transactions)
           _TransactionRow(tx: tx, onTap: () => onTransactionTap(tx)),
+        const SizedBox(height: AppSpacing.x2),
       ],
     );
   }
@@ -149,30 +143,32 @@ class _TransactionRow extends StatelessWidget {
       key: TransactionHistoryPage.transactionKey(tx.id),
       onTap: onTap,
       variant: VitCardVariant.ghost,
+      density: VitDensity.compact,
+      constraints: const BoxConstraints(
+        minHeight: AppSpacing.walletHistoryItemMinHeight,
+      ),
       borderColor: AppColors.transparent,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: _historyRowPadding,
-            child: Row(
-              children: [
-                _TransactionIcon(meta: meta),
-                const SizedBox(width: _historyInlineGap),
-                Expanded(
-                  child: _TransactionInfo(tx: tx, meta: meta),
-                ),
-                const SizedBox(width: _historyTinyGap),
-                _AmountStatus(tx: tx, meta: meta),
-                const SizedBox(width: _historyTinyGap),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconMd,
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              _TransactionIcon(meta: meta),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: _TransactionInfo(tx: tx, meta: meta),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              _AmountStatus(tx: tx, meta: meta),
+              const SizedBox(width: AppSpacing.x2),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.iconMd,
+              ),
+            ],
           ),
+          const SizedBox(height: AppSpacing.x2),
           const Divider(
             height: AppSpacing.walletHistoryDividerHeight,
             thickness: AppSpacing.walletHistoryDividerHeight,
@@ -195,8 +191,8 @@ class _TransactionIcon extends StatelessWidget {
       return VitCard(
         variant: VitCardVariant.inner,
         radius: VitCardRadius.sm,
-        width: _historyIconBox,
-        height: _historyIconBox,
+        width: AppSpacing.buttonCompact,
+        height: AppSpacing.buttonCompact,
         alignment: Alignment.center,
         borderColor: meta.color.withValues(alpha: .22),
         child: const Icon(
@@ -210,8 +206,8 @@ class _TransactionIcon extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.sm,
-      width: _historyIconBox,
-      height: _historyIconBox,
+      width: AppSpacing.buttonCompact,
+      height: AppSpacing.buttonCompact,
       alignment: Alignment.center,
       borderColor: meta.color.withValues(alpha: .22),
       child: Icon(meta.icon, color: AppColors.text1, size: AppSpacing.iconSm),
@@ -240,7 +236,7 @@ class _TransactionInfo extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: _historyTinyGap),
+        const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
         Text(
           _timePart(tx.createdAt),
           maxLines: 1,
@@ -248,7 +244,7 @@ class _TransactionInfo extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         if (tx.network != null) ...[
-          const SizedBox(height: _historyTinyGap),
+          const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
           Text(
             'Mạng: ${tx.network}',
             maxLines: 1,
@@ -257,7 +253,7 @@ class _TransactionInfo extends StatelessWidget {
           ),
         ],
         if (tx.txHash != null) ...[
-          const SizedBox(height: _historyTinyGap),
+          const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
           Text(
             tx.txHash!,
             maxLines: 1,
