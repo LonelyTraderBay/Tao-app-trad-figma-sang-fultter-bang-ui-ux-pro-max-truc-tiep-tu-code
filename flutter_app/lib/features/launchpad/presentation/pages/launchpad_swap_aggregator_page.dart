@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -96,7 +97,9 @@ class _LaunchpadSwapAggregatorPageState
         ? DeviceMetrics.bottomChrome
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
-    final ctaInset = _activeTab == _SwapTab.compare ? 118.0 : 0.0;
+    final ctaInset = _activeTab == _SwapTab.compare
+        ? AppSpacing.launchpadSwapStickyCtaClearance
+        : 0.0;
     final scrollTailReserve = navInset + safeBottom + AppSpacing.x3 + ctaInset;
 
     return VitPageLayout(
@@ -115,67 +118,59 @@ class _LaunchpadSwapAggregatorPageState
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
               ),
-              child: Column(
-                children: [
-                  _Tabs(
-                    activeTab: _activeTab,
-                    onChanged: (tab) => setState(() => _activeTab = tab),
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      key: LaunchpadSwapAggregatorPage.contentKey,
-                      physics: const ClampingScrollPhysics(),
-                      child: VitPageContent(
-                        padding: VitContentPadding.compact,
-                        gap: VitContentGap.tight,
-                        children: [
-                          if (_activeTab == _SwapTab.compare) ...[
-                            _SwapInputCard(
-                              fromToken: _fromToken,
-                              toToken: _toToken,
-                              amountController: _amountController,
-                              output: output,
-                              bestPrice: bestDex.price,
-                              onFlip: () {
-                                setState(() {
-                                  final previous = _fromToken;
-                                  _fromToken = _toToken;
-                                  _toToken = previous;
-                                });
-                              },
-                              onAmountChanged: (_) => setState(() {}),
-                            ),
-                            _BestRouteAlert(bestDex: bestDex, savings: savings),
-                            _DexList(
-                              quotes: snapshot.dexQuotes,
-                              amount: amount,
-                              expandedDexId: _expandedDexId,
-                              onToggle: (id) => setState(() {
-                                _expandedDexId = _expandedDexId == id
-                                    ? null
-                                    : id;
-                              }),
-                            ),
-                            _SwapWarning(slippage: _slippage),
-                            if (_swapPreview != null)
-                              _SwapPreview(message: _swapPreview!),
-                          ] else if (_activeTab == _SwapTab.history) ...[
-                            _HistorySection(history: snapshot.history),
-                          ] else ...[
-                            _SettingsSection(
-                              slippage: _slippage,
-                              autoRefresh: _autoRefresh,
-                              onSlippageChanged: (value) =>
-                                  setState(() => _slippage = value),
-                              onAutoRefreshChanged: (value) =>
-                                  setState(() => _autoRefresh = value),
-                            ),
-                          ],
-                        ],
-                      ),
+              child: VitInsetScrollView(
+                key: LaunchpadSwapAggregatorPage.contentKey,
+                physics: const ClampingScrollPhysics(),
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  gap: VitContentGap.tight,
+                  children: [
+                    _Tabs(
+                      activeTab: _activeTab,
+                      onChanged: (tab) => setState(() => _activeTab = tab),
                     ),
-                  ),
-                ],
+                    if (_activeTab == _SwapTab.compare) ...[
+                      _SwapInputCard(
+                        fromToken: _fromToken,
+                        toToken: _toToken,
+                        amountController: _amountController,
+                        output: output,
+                        bestPrice: bestDex.price,
+                        onFlip: () {
+                          setState(() {
+                            final previous = _fromToken;
+                            _fromToken = _toToken;
+                            _toToken = previous;
+                          });
+                        },
+                        onAmountChanged: (_) => setState(() {}),
+                      ),
+                      _BestRouteCard(bestDex: bestDex, savings: savings),
+                      _DexList(
+                        quotes: snapshot.dexQuotes,
+                        amount: amount,
+                        expandedDexId: _expandedDexId,
+                        onToggle: (id) => setState(() {
+                          _expandedDexId = _expandedDexId == id ? null : id;
+                        }),
+                      ),
+                      _SwapWarning(slippage: _slippage),
+                      if (_swapPreview != null)
+                        _SwapPreview(message: _swapPreview!),
+                    ] else if (_activeTab == _SwapTab.history) ...[
+                      _HistorySection(history: snapshot.history),
+                    ] else ...[
+                      _SettingsSection(
+                        slippage: _slippage,
+                        autoRefresh: _autoRefresh,
+                        onSlippageChanged: (value) =>
+                            setState(() => _slippage = value),
+                        onAutoRefreshChanged: (value) =>
+                            setState(() => _autoRefresh = value),
+                      ),
+                    ],
+                  ],
+                ),
               ),
             ),
             if (_activeTab == _SwapTab.compare)
@@ -192,7 +187,7 @@ class _LaunchpadSwapAggregatorPageState
                           'Swap ${_amountController.text} $_fromToken qua ${bestDex.name}';
                     }),
                     leading: const Icon(Icons.repeat_rounded),
-                    child: Text('Swap voi ${bestDex.name}'),
+                    child: Text('Swap v\u1EDBi ${bestDex.name}'),
                   ),
                 ),
               ),

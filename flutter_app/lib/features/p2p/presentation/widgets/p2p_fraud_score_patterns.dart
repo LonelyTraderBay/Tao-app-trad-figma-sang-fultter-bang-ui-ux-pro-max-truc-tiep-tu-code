@@ -17,8 +17,8 @@ class _SafetyScoreCard extends StatelessWidget {
 
     return VitCard(
       key: P2PFraudPreventionPage.scoreKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pFraudCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -68,7 +68,7 @@ class _SafetyScoreCard extends StatelessWidget {
               color: AppColors.warn10,
               borderRadius: AppRadii.lgRadius,
               child: Padding(
-                padding: _p2pFraudInnerPadding,
+                padding: AppSpacing.p2pFraudInnerPadding,
                 child: Row(
                   children: [
                     const Icon(
@@ -164,14 +164,14 @@ class _PatternCard extends StatelessWidget {
 
     return VitCard(
       key: P2PFraudPreventionPage.patternKey(pattern.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: _p2pFraudPatternPadding,
+            padding: AppSpacing.p2pFraudPatternPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -252,7 +252,7 @@ class _ExpandedPattern extends StatelessWidget {
           child: ColoredBox(color: AppColors.divider),
         ),
         Padding(
-          padding: _p2pFraudPatternPadding,
+          padding: AppSpacing.p2pFraudPatternPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

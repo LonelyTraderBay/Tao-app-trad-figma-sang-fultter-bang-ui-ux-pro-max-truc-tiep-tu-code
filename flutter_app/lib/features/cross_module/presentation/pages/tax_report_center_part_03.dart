@@ -91,7 +91,7 @@ class _TaxSettingsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.sectionGap),
         VitCard(
           padding: AppSpacing.crossModuleCardPadding,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -248,7 +248,7 @@ class _ToggleSwitch extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       width: AppSpacing.inputHeight,
       height: AppSpacing.x6,
@@ -328,7 +328,7 @@ class _IconAction extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       width: AppSpacing.x6,
       height: AppSpacing.x6,

@@ -58,7 +58,7 @@ class _AssetChip extends StatelessWidget {
         minWidth: _p2pOrderBookAssetChipMinWidth,
         minHeight: _p2pOrderBookAssetChipMinExtent,
       ),
-      padding: _p2pOrderBookSelectorPadding,
+      padding: AppSpacing.p2pOrderBookSelectorPadding,
       onTap: onTap,
       clip: true,
       child: Column(
@@ -104,8 +104,8 @@ class _MarketTicker extends StatelessWidget {
     final tone = market.changePct >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
       key: P2POrderBookPage.tickerKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pOrderBookCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pOrderBookCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -123,7 +123,7 @@ class _MarketTicker extends StatelessWidget {
                   child: VitCard(
                     key: P2POrderBookPage.refreshKey,
                     variant: VitCardVariant.inner,
-                    radius: VitCardRadius.sm,
+                    radius: VitCardRadius.standard,
                     width: _p2pOrderBookRefreshExtent,
                     height: _p2pOrderBookRefreshExtent,
                     onTap: onRefresh,

@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/bot_drawdown_analyzer_page_sections.dart';
 part '../widgets/bot_drawdown_analyzer_page_common.dart';
@@ -50,11 +51,10 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getBotDrawdownAnalyzer();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? _drawdownFramedScrollClearance
-            : _drawdownNativeScrollClearance) +
-        MediaQuery.paddingOf(context).bottom;
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

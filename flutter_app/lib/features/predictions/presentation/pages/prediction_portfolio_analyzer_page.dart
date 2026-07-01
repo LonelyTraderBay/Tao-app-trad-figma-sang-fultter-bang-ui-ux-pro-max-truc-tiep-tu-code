@@ -91,6 +91,8 @@ class _PredictionPortfolioAnalyzerPageState
                       footerPadding,
                     ),
                     child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       density: VitDensity.compact,
                       children: [
                         ...switch (_activeTab) {

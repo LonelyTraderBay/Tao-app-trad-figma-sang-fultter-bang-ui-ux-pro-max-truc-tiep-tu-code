@@ -136,7 +136,7 @@ class _WalletIcon extends StatelessWidget {
       width: _transferIconBox,
       height: _transferIconBox,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       background: ColoredBox(color: color.withValues(alpha: .13)),
       alignment: Alignment.center,
       clip: true,

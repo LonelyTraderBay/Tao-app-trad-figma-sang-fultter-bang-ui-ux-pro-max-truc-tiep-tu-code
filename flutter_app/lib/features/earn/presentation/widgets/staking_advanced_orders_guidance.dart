@@ -13,7 +13,7 @@ class _HowItWorks extends StatelessWidget {
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

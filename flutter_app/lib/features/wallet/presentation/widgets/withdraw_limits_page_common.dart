@@ -48,7 +48,7 @@ class _KycTierCard extends StatelessWidget {
               width: _limitsIconBox,
               height: _limitsIconBox,
               variant: VitCardVariant.ghost,
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               borderColor: tierColor.withValues(alpha: isCurrent ? .45 : .26),
               background: ColoredBox(
                 color: tierColor.withValues(alpha: isCurrent ? .15 : .12),

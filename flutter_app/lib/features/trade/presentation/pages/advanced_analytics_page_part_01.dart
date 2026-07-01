@@ -10,11 +10,10 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
         .watch(tradeReadModelControllerProvider)
         .getAdvancedAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
+    final scrollClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -32,20 +31,17 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: AdvancedAnalyticsPage.contentKey,
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.tradeBotCardGap,
-                    AppSpacing.contentPad,
-                    scrollClearance,
-                  ),
+                  bottomInset: scrollClearance,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
-                      _HeroCard(stats: snapshot.stats),
+                      VitTradeSection(
+                        title: 'Tổng quan',
+                        child: _HeroCard(stats: snapshot.stats),
+                      ),
                       _UnderlineTabs(
                         activeId: _tab,
                         onChanged: (id) => setState(() => _tab = id),
@@ -70,8 +66,14 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                             'AI signals, sizing, and journal metrics are decision-support tools. Confirm risk limits before using them for live orders.',
                         contractId: 'SC-092',
                       ),
-                      _ModelInfoCard(),
-                      _FeaturesCard(features: snapshot.features),
+                      VitTradeSection(
+                        title: 'Model info',
+                        child: _ModelInfoCard(),
+                      ),
+                      VitTradeSection(
+                        title: 'Features',
+                        child: _FeaturesCard(features: snapshot.features),
+                      ),
                     ],
                   ),
                 ),
@@ -202,22 +204,18 @@ class _UnderlineTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      child: VitTabBar(
-        activeKey: activeId,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
-        tabs: [
-          for (final tab in _tabs)
-            VitTabItem(
-              key: tab.$1,
-              label: tab.$2,
-              icon: tab.$3,
-              widgetKey: AdvancedAnalyticsPage.tabKey(tab.$1),
-            ),
-        ],
-      ),
+    return VitSegmentedTabBar(
+      activeKey: activeId,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in _tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            icon: tab.$3,
+            widgetKey: AdvancedAnalyticsPage.tabKey(tab.$1),
+          ),
+      ],
     );
   }
 }

@@ -10,11 +10,10 @@ class _MarketDataAnalyticsPageState
         .watch(tradeReadModelControllerProvider)
         .getMarketDataAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6);
+    final scrollClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -32,20 +31,21 @@ class _MarketDataAnalyticsPageState
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: MarketDataAnalyticsPage.contentKey,
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.tradeBotCardGap,
-                    AppSpacing.contentPad,
-                    scrollClearance,
-                  ),
+                  bottomInset: scrollClearance,
                   child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
+                    padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
-                      _PairSelector(snapshot: snapshot),
+                      VitTradeInstrumentHero(
+                        symbol: snapshot.selectedPair,
+                        priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
+                        changePct: snapshot.fundingRate.currentRatePct,
+                        highLabel: _formatCompactUsd(snapshot.openInterest.high24h),
+                        lowLabel: _formatCompactUsd(snapshot.openInterest.low24h),
+                        volumeLabel: _formatCompactUsd(snapshot.openInterest.current),
+                      ),
                       _MarketAnalyticsRiskPanel(snapshot: snapshot),
                       _UnderlineTabs(
                         activeId: _tab,
@@ -69,37 +69,6 @@ class _MarketDataAnalyticsPageState
   }
 }
 
-class _PairSelector extends StatelessWidget {
-  const _PairSelector({required this.snapshot});
-
-  final TradeMarketDataAnalyticsSnapshot snapshot;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      child: Row(
-        children: [
-          Expanded(
-            child: _HeaderValue(
-              label: 'Analyzing',
-              value: snapshot.selectedPair,
-              alignRight: false,
-            ),
-          ),
-          _HeaderValue(
-            label: 'Mark Price',
-            value: '\$${_formatMoney(snapshot.markPrice)}',
-            valueColor: _analyticsGreen,
-            alignRight: true,
-            monospace: true,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _MarketAnalyticsRiskPanel extends StatelessWidget {
   const _MarketAnalyticsRiskPanel({required this.snapshot});
 
@@ -118,46 +87,6 @@ class _MarketAnalyticsRiskPanel extends StatelessWidget {
   }
 }
 
-class _HeaderValue extends StatelessWidget {
-  const _HeaderValue({
-    required this.label,
-    required this.value,
-    required this.alignRight,
-    this.valueColor = AppColors.text1,
-    this.monospace = false,
-  });
-
-  final String label;
-  final String value;
-  final bool alignRight;
-  final Color valueColor;
-  final bool monospace;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: alignRight
-          ? CrossAxisAlignment.end
-          : CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-        ),
-        Text(
-          value,
-          style: AppTextStyles.baseMedium.copyWith(
-            color: valueColor,
-            fontWeight: AppTextStyles.bold,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _UnderlineTabs extends StatelessWidget {
   const _UnderlineTabs({required this.activeId, required this.onChanged});
 
@@ -172,21 +101,17 @@ class _UnderlineTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      child: VitTabBar(
-        activeKey: activeId,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
-        tabs: [
-          for (final tab in _tabs)
-            VitTabItem(
-              key: tab.$1,
-              label: tab.$2,
-              widgetKey: MarketDataAnalyticsPage.tabKey(tab.$1),
-            ),
-        ],
-      ),
+    return VitSegmentedTabBar(
+      activeKey: activeId,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in _tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: MarketDataAnalyticsPage.tabKey(tab.$1),
+          ),
+      ],
     );
   }
 }

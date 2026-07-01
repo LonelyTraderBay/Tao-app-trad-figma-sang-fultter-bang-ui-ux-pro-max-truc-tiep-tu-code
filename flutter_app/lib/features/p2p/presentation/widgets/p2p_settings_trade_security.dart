@@ -27,8 +27,8 @@ class _TradeOptionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PSettingsPage.tradeOptionsKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pSettingsCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pSettingsPageCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -191,8 +191,8 @@ class _ToggleSection extends StatelessWidget {
         _SectionLabel(icon: icon, label: label, color: color),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          radius: VitCardRadius.lg,
-          padding: _p2pSettingsHorizontalCardPadding,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.p2pSettingsPageHorizontalCardPadding,
           child: Column(
             children: [
               for (var index = 0; index < toggles.length; index++)
@@ -234,8 +234,8 @@ class _SecuritySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           key: P2PSettingsPage.securityKey,
-          radius: VitCardRadius.lg,
-          padding: _p2pSettingsHorizontalCardPadding,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.p2pSettingsPageHorizontalCardPadding,
           child: Column(
             children: [
               for (final toggle in snapshot.securityToggles)
@@ -288,7 +288,7 @@ class _SettingToggleRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: _p2pSettingsRowPadding,
+          padding: AppSpacing.p2pSettingsPageRowPadding,
           child: Row(
             children: [
               _SettingIcon(icon: _settingsIcon(toggle.iconKey), color: color),
@@ -364,8 +364,8 @@ class _NavigationRow extends StatelessWidget {
             onTap();
           },
           variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
-          padding: _p2pSettingsRowPadding,
+          radius: VitCardRadius.standard,
+          padding: AppSpacing.p2pSettingsPageRowPadding,
           child: Row(
             children: [
               _SettingIcon(icon: icon, color: color),

@@ -128,9 +128,10 @@ List<RouteBase> _marketPairRoutes(ShellRenderMode shellRenderMode) {
       name: AppRouteNames.sc046PairDepth,
       builder: (_, state) {
         final pairId = state.pathParameters['pairId'] ?? 'btcusdt';
+        final returnTo = state.uri.queryParameters['returnTo'];
         return MarketDepthPage(
           pairId: pairId,
-          backPath: AppRoutePaths.pairDetail(pairId),
+          backPath: returnTo ?? AppRoutePaths.pairDetail(pairId),
           shellRenderMode: shellRenderMode,
         );
       },

@@ -192,7 +192,7 @@ class _AssetAvatar extends StatelessWidget {
       width: AppSpacing.walletAnalyticsAssetAvatar,
       height: AppSpacing.walletAnalyticsAssetAvatar,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: .56),
       background: ColoredBox(color: color.withValues(alpha: .18)),
       clip: true,

@@ -3,8 +3,9 @@ part of 'trade_page.dart';
 class _TradePageState extends ConsumerState<TradePage> {
   late TradeOrderSide _side;
   TradeOrderType _orderType = TradeOrderType.limit;
-  String _dataTab = 'chart';
-  String _activeTab = 'order';
+  VitTradeViewMode _viewMode = VitTradeViewMode.charts;
+  String _chartsSubTab = 'orderbook';
+  String _dockTab = 'positions';
   final _priceController = TextEditingController(text: '67543.21');
   final _amountController = TextEditingController();
   bool _tpslEnabled = false;
@@ -22,20 +23,82 @@ class _TradePageState extends ConsumerState<TradePage> {
     super.dispose();
   }
 
+  VitOrderBookPanel _orderBookPanel(TradeScreenSnapshot snapshot) {
+    return VitOrderBookPanel(
+      density: _viewMode == VitTradeViewMode.trade
+          ? VitOrderBookPanelDensity.compact
+          : VitOrderBookPanelDensity.standard,
+      asks: [
+        for (final level in snapshot.orderBook.asks)
+          VitOrderBookLevel(
+            price: level.price,
+            amount: level.amount,
+            total: level.total,
+          ),
+      ],
+      bids: [
+        for (final level in snapshot.orderBook.bids)
+          VitOrderBookLevel(
+            price: level.price,
+            amount: level.amount,
+            total: level.total,
+          ),
+      ],
+    );
+  }
+
+  Widget _orderForm({
+    required TradePair pair,
+    required TradeScreenSnapshot snapshot,
+    required TradeOrderPreview preview,
+    required bool canSubmit,
+    required TradeOrderController orderController,
+    required bool compact,
+  }) {
+    return KeyedSubtree(
+      key: TradePage.orderTabKey,
+      child: _OrderForm(
+        side: _side,
+        orderType: _orderType,
+        pair: pair,
+        balances: snapshot.balances,
+        priceController: _priceController,
+        amountController: _amountController,
+        tpslEnabled: _tpslEnabled,
+        preview: preview,
+        canSubmit: canSubmit,
+        compact: compact,
+        onSideChanged: (side) => setState(() => _side = side),
+        onTypeChanged: (type) => setState(() => _orderType = type),
+        onPct: (pct) => setState(() {
+          final price = double.tryParse(_priceController.text) ?? pair.price;
+          final available = _side == TradeOrderSide.buy
+              ? snapshot.balances.usdtAvailable / price
+              : snapshot.balances.baseAvailable;
+          _amountController.text = (available * pct / 100).toStringAsFixed(6);
+        }),
+        onTpslChanged: (value) => setState(() => _tpslEnabled = value),
+        onChanged: () => setState(() {}),
+        onSubmit: () {
+          final receipt = orderController.submit();
+          context.go(AppRoutePaths.tradeOrderReceipt);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Đã gửi ${receipt.orderId}')),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeScreenProvider(widget.pairId));
     final pair = snapshot.pair;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final chromeInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final scrollClearance =
-        chromeInset +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x6 + AppSpacing.x5
-            : AppSpacing.x5 + AppSpacing.x3);
+    final scrollClearance = tradeTerminalScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
     final amount = double.tryParse(_amountController.text) ?? 0;
     final price = double.tryParse(_priceController.text) ?? pair.price;
     final draft = TradeOrderDraft(
@@ -52,113 +115,127 @@ class _TradePageState extends ConsumerState<TradePage> {
     final canSubmit = orderController.canSubmit;
     final showBack =
         widget.chartVariant == TradeChartVariant.pairRoute || context.canPop();
+    final productNav = _tradeProductNavigation(context, pair);
+    final orderForm = _orderForm(
+      pair: pair,
+      snapshot: snapshot,
+      preview: preview,
+      canSubmit: canSubmit,
+      orderController: orderController,
+      compact: _viewMode == VitTradeViewMode.trade,
+    );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-048 TradePage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: SingleChildScrollView(
-          key: TradePage.contentKey,
-          padding: AppSpacing.zeroInsets.copyWith(bottom: scrollClearance),
-          child: VitPageContent(
-            padding: VitContentPadding.none,
-            density: VitDensity.compact,
-            fullBleed: true,
-            children: [
-              _TradeHeader(
-                pair: pair,
-                showBack: showBack,
-                onBack: showBack
-                    ? () => goBackOrFallback(
-                        context,
-                        fallbackPath: AppRoutePaths.trade,
-                        mode: BackNavigationMode.historyThenFallback,
-                      )
-                    : null,
-              ),
-              _QuickNavRow(pair: pair),
-              _DataTabs(
-                active: _dataTab,
-                onSelected: (value) => setState(() => _dataTab = value),
-              ),
-              Padding(
-                padding: AppSpacing.zeroInsets.copyWith(
-                  left: AppSpacing.contentPad,
-                  right: AppSpacing.contentPad,
+    final bodyChildren = <Widget>[
+      if (_viewMode == VitTradeViewMode.charts) ...[
+        VitTradeChartPanel(variant: _mapChartVariant(widget.chartVariant)),
+        const SizedBox(height: AppSpacing.x3),
+        _ChartsSubTabs(
+          active: _chartsSubTab,
+          onSelected: (value) => setState(() => _chartsSubTab = value),
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        if (_chartsSubTab == 'orderbook')
+          _orderBookPanel(snapshot)
+        else
+          VitTradesTapePanel(
+            trades: [
+              for (final trade in snapshot.trades)
+                VitTradesTapePrint(
+                  price: trade.price,
+                  amount: trade.amount,
+                  time: trade.time,
+                  isBuy: trade.isBuy,
                 ),
-                child: _MarketDataPanel(
-                  active: _dataTab,
-                  snapshot: snapshot,
-                  chartVariant: widget.chartVariant,
-                ),
-              ),
-              Padding(
-                padding: AppSpacing.contentInsets,
-                child: _OrderTabs(
-                  active: _activeTab,
-                  openCount: snapshot.orders.length + 2,
-                  onSelected: (value) => setState(() => _activeTab = value),
-                ),
-              ),
-              if (_activeTab == 'order')
-                _OrderForm(
-                  side: _side,
-                  orderType: _orderType,
-                  pair: pair,
-                  balances: snapshot.balances,
-                  priceController: _priceController,
-                  amountController: _amountController,
-                  tpslEnabled: _tpslEnabled,
-                  preview: preview,
-                  canSubmit: canSubmit,
-                  onSideChanged: (side) => setState(() => _side = side),
-                  onTypeChanged: (type) => setState(() => _orderType = type),
-                  onPct: (pct) => setState(() {
-                    final available = _side == TradeOrderSide.buy
-                        ? snapshot.balances.usdtAvailable / price
-                        : snapshot.balances.baseAvailable;
-                    _amountController.text = (available * pct / 100)
-                        .toStringAsFixed(6);
-                  }),
-                  onTpslChanged: (value) =>
-                      setState(() => _tpslEnabled = value),
-                  onChanged: () => setState(() {}),
-                  onSubmit: () {
-                    final receipt = orderController.submit();
-                    context.go(AppRoutePaths.tradeOrderReceipt);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Đã gửi ${receipt.orderId}')),
-                    );
-                  },
-                )
-              else if (_activeTab == 'open')
-                _OpenOrdersList(orders: snapshot.orders)
-              else
-                _HistoryList(),
-              if (snapshot.highRiskContractId != null) ...[
-                Padding(
-                  padding: AppSpacing.contentInsets,
-                  child: VitHighRiskStatePanel(
-                    state: VitHighRiskUiState.riskReview,
-                    density: VitDensity.compact,
-                    title: 'Spot order risk states active',
-                    message:
-                        'Setup, preview, confirmation, submission, receipt and support use the shared high-risk flow contract.',
-                    contractId: snapshot.highRiskContractId,
-                  ),
-                ),
-              ],
             ],
           ),
+        const SizedBox(height: AppSpacing.x3),
+        orderForm,
+      ] else ...[
+        VitTradeSplitPanel(
+          form: orderForm,
+          marketPanel: _orderBookPanel(snapshot),
         ),
+      ],
+    ];
+
+    return VitTradeTerminalLayout(
+      semanticLabel: 'SC-048 TradePage',
+      scrollKey: TradePage.contentKey,
+      scrollBottomInset: scrollClearance,
+      header: _TradeTerminalHeader(
+        pair: pair,
+        showBack: showBack,
+        onBack: showBack
+            ? () => goBackOrFallback(
+                context,
+                fallbackPath: AppRoutePaths.trade,
+                mode: BackNavigationMode.historyThenFallback,
+              )
+            : null,
+      ),
+      ticker: VitTradeTickerStrip(
+        symbol: pair.symbol,
+        priceLabel: _formatPrice(pair.price),
+        changePct: pair.changePct,
+        highLabel: _formatPrice(pair.price * 1.02),
+        lowLabel: _formatPrice(pair.price * 0.98),
+        volumeLabel: '252.58K',
+      ),
+      productTabs: VitTradeProductTabs(
+        activeId: 'spot',
+        tabs: productNav.tabs,
+        overflowItems: productNav.overflow,
+      ),
+      viewModeToggle: VitTradeViewModeToggle(
+        mode: _viewMode,
+        chartsKey: TradePage.viewModeChartsKey,
+        tradeKey: TradePage.viewModeTradeKey,
+        onChanged: (value) => setState(() => _viewMode = value),
+      ),
+      bodyChildren: bodyChildren,
+      footer: snapshot.highRiskContractId != null
+          ? VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              density: VitDensity.compact,
+              title: 'Spot order risk states active',
+              message:
+                  'Setup, preview, confirmation, submission, receipt and support use the shared high-risk flow contract.',
+              contractId: snapshot.highRiskContractId,
+            )
+          : null,
+      portfolioPanel: VitTradePortfolioPanel(
+        expandKey: TradePage.portfolioExpandKey,
+        activeKey: _dockTab,
+        onChanged: (value) => setState(() => _dockTab = value),
+        tabs: [
+          VitTabItem(
+            key: 'positions',
+            label: 'Vị thế (${snapshot.positions.length})',
+            widgetKey: TradePage.positionsTabKey,
+          ),
+          VitTabItem(
+            key: 'open',
+            label: 'Lệnh mở (${snapshot.orders.length + 2})',
+            widgetKey: TradePage.openOrdersTabKey,
+          ),
+          VitTabItem(
+            key: 'history',
+            label: 'Lịch sử',
+            widgetKey: TradePage.historyTabKey,
+          ),
+        ],
+        child: switch (_dockTab) {
+          'open' => _OpenOrdersList(orders: snapshot.orders),
+          'history' => const _HistoryList(),
+          _ => _PositionsList(positions: snapshot.positions),
+        },
       ),
     );
   }
 }
 
-class _TradeHeader extends StatelessWidget {
-  const _TradeHeader({
+class _TradeTerminalHeader extends StatelessWidget {
+  const _TradeTerminalHeader({
     required this.pair,
     required this.showBack,
     required this.onBack,
@@ -171,16 +248,17 @@ class _TradeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logoColor = Color(pair.logoColorHex);
-    return VitTopChrome(
-      type: VitTopChromeType.instrument,
+    return VitTradeTerminalHeader(
+      symbol: pair.symbol,
       showBack: showBack,
       onBack: onBack,
       backKey: TradePage.backKey,
+      onPairTap: () => context.go(AppRoutePaths.tradePair(pair.id)),
       leading: VitCard(
         width: AppSpacing.tradeHeaderLogo,
         height: AppSpacing.tradeHeaderLogo,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         alignment: Alignment.center,
         borderColor: logoColor.withValues(alpha: .26),
         child: Text(
@@ -191,306 +269,194 @@ class _TradeHeader extends StatelessWidget {
           ),
         ),
       ),
-      body: Semantics(
-        button: true,
-        label: 'Ch\u1ECDn c\u1EB7p giao d\u1ECBch ${pair.symbol}',
-        child: VitCard(
-          onTap: () => context.go(AppRoutePaths.tradePair(pair.id)),
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
-          padding: AppSpacing.tradeHeaderBodyPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: Text(
-                  pair.symbol,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.sectionTitle,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.tradeHeaderChevronGap),
-              const Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: AppColors.text2,
-                size: AppSpacing.tradeHeaderChevron,
-              ),
-            ],
-          ),
-        ),
-      ),
-      trailing: SizedBox(
-        width: AppSpacing.tradeHeaderTrailingWidth,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              _formatPrice(pair.price),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.baseMedium.copyWith(
-                color: AppColors.buy,
-                fontFeatures: AppTextStyles.tabularFigures,
-                letterSpacing: .6,
-              ),
-            ),
-            Text(
-              '+${pair.changePct.toStringAsFixed(2)}%',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.buy,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
 
-class _QuickNavRow extends StatelessWidget {
-  const _QuickNavRow({required this.pair});
+class _TradeProductNavigation {
+  const _TradeProductNavigation({required this.tabs, required this.overflow});
 
-  final TradePair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final items = [
-      _TradeHubItem(
-        id: 'spot',
-        label: 'Spot',
-        badge: 'Core',
-        icon: Icons.show_chart_rounded,
-        color: AppModuleAccents.trade,
-        route: AppRoutePaths.tradePair(pair.id),
-      ),
-      const _TradeHubItem(
-        id: 'convert',
-        label: 'Convert',
-        badge: 'Core',
-        icon: Icons.swap_horiz_rounded,
-        color: AppModuleAccents.trade,
-        route: AppRoutePaths.tradeConvert,
-      ),
-      _TradeHubItem(
-        id: 'futures',
-        label: 'Futures',
-        badge: 'Risk',
-        icon: Icons.bar_chart_rounded,
-        color: AppColors.sell,
-        route: AppRoutePaths.tradeFutures(pair.id),
-      ),
-      const _TradeHubItem(
-        id: 'margin',
-        label: 'Margin',
-        badge: 'Pro',
-        icon: Icons.trending_up_rounded,
-        color: AppModuleAccents.trade,
-        route: AppRoutePaths.tradeMargin,
-      ),
-      const _TradeHubItem(
-        id: 'bots',
-        label: 'Bot',
-        badge: 'Auto',
-        icon: Icons.smart_toy_rounded,
-        color: AppModuleAccents.trade,
-        route: AppRoutePaths.tradeBots,
-      ),
-      const _TradeHubItem(
-        id: 'copy',
-        label: 'Copy',
-        badge: 'Social',
-        icon: Icons.content_copy_rounded,
-        color: AppModuleAccents.trade,
-        route: AppRoutePaths.tradeCopyTrading,
-      ),
-      const _TradeHubItem(
-        id: 'dca',
-        label: 'DCA',
-        badge: 'Plan',
-        icon: Icons.repeat_rounded,
-        color: AppModuleAccents.dca,
-        route: AppRoutePaths.dca,
-      ),
-      const _TradeHubItem(
-        id: 'wallet',
-        label: 'Wallet',
-        badge: 'Funds',
-        icon: Icons.account_balance_wallet_rounded,
-        color: AppModuleAccents.wallet,
-        route: AppRoutePaths.wallet,
-      ),
-      const _TradeHubItem(
-        id: 'p2p',
-        label: 'P2P',
-        badge: 'Escrow',
-        icon: Icons.groups_rounded,
-        color: AppModuleAccents.p2p,
-        route: AppRoutePaths.p2p,
-      ),
-      const _TradeHubItem(
-        id: 'earn',
-        label: 'Earn',
-        badge: 'Yield',
-        icon: Icons.account_balance_rounded,
-        color: AppModuleAccents.earn,
-        route: AppRoutePaths.earnStaking,
-      ),
-      const _TradeHubItem(
-        id: 'launchpad',
-        label: 'Launchpad',
-        badge: 'Token',
-        icon: Icons.rocket_launch_rounded,
-        color: AppModuleAccents.launchpad,
-        route: AppRoutePaths.launchpad,
-      ),
-      const _TradeHubItem(
-        id: 'predictions',
-        label: 'Dự đoán',
-        badge: 'Market',
-        icon: Icons.adjust_rounded,
-        color: AppModuleAccents.predictions,
-        route: AppRoutePaths.marketsPredictions,
-      ),
-      const _TradeHubItem(
-        id: 'arena',
-        label: 'Arena',
-        badge: 'Points',
-        icon: Icons.sports_esports_outlined,
-        color: AppModuleAccents.arena,
-        route: AppRoutePaths.arena,
-      ),
-      const _TradeHubItem(
-        id: 'rewards',
-        label: 'Rewards',
-        badge: 'Growth',
-        icon: Icons.card_giftcard_rounded,
-        color: AppModuleAccents.rewards,
-        route: AppRoutePaths.rewards,
-      ),
-      const _TradeHubItem(
-        id: 'support',
-        label: 'Hỗ trợ',
-        badge: 'Help',
-        icon: Icons.support_agent_rounded,
-        color: AppModuleAccents.support,
-        route: AppRoutePaths.support,
-      ),
-    ];
-
-    return SizedBox(
-      height: _tradeCompactQuickNavHeight,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: AppSpacing.zeroInsets.copyWith(
-          left: AppSpacing.contentPad,
-          right: AppSpacing.contentPad,
-        ),
-        children: [
-          for (final item in items)
-            _QuickNavChip(
-              key: TradePage.quickNavKey(item.id),
-              icon: item.icon,
-              label: item.label,
-              badge: item.badge,
-              color: item.color,
-              onTap: () => context.go(item.route),
-            ),
-        ],
-      ),
-    );
-  }
+  final List<VitTradeProductTab> tabs;
+  final List<VitTradeProductOverflowItem> overflow;
 }
 
-class _TradeHubItem {
-  const _TradeHubItem({
-    required this.id,
-    required this.label,
-    required this.badge,
-    required this.icon,
-    required this.color,
-    required this.route,
-  });
+_TradeProductNavigation _tradeProductNavigation(
+  BuildContext context,
+  TradePair pair,
+) {
+  final hubItems = _tradeHubItems(context, pair);
+  const primaryIds = ['spot', 'futures', 'margin', 'convert'];
+  VitTradeProductTab tabFor(VitTradeHubItem item) => VitTradeProductTab(
+    id: item.id,
+    label: item.label,
+    tabKey: item.tileKey,
+    onTap: item.onTap,
+  );
+  VitTradeProductOverflowItem overflowFor(VitTradeHubItem item) =>
+      VitTradeProductOverflowItem(
+        id: item.id,
+        label: item.label,
+        badge: item.badge,
+        icon: item.icon,
+        accentColor: item.accentColor,
+        tileKey: item.tileKey,
+        onTap: item.onTap,
+      );
 
-  final String id;
-  final String label;
-  final String badge;
-  final IconData icon;
-  final Color color;
-  final String route;
+  return _TradeProductNavigation(
+    tabs: [
+      for (final id in primaryIds)
+        tabFor(hubItems.firstWhere((item) => item.id == id)),
+    ],
+    overflow: [
+      for (final item in hubItems)
+        if (!primaryIds.contains(item.id)) overflowFor(item),
+    ],
+  );
 }
 
-class _QuickNavChip extends StatelessWidget {
-  const _QuickNavChip({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.badge,
-    required this.color,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final String badge;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.zeroInsets.copyWith(right: AppSpacing.x2),
-      child: VitCard(
-        onTap: onTap,
-        width: _tradeCompactQuickChipWidth,
-        density: VitDensity.tool,
-        padding: AppSpacing.zeroInsets.copyWith(
-          left: AppSpacing.x3,
-          top: AppSpacing.x2,
-          right: AppSpacing.x3,
-          bottom: AppSpacing.x2,
-        ),
-        radius: VitCardRadius.sm,
-        borderColor: color.withValues(alpha: .24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: color, size: AppSpacing.iconSm),
-                const SizedBox(width: AppSpacing.x1),
-                Expanded(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.x1),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: AppSpacing.x7 + AppSpacing.x5,
-                ),
-                child: VitAccentPill(label: badge, accentColor: color),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+List<VitTradeHubItem> _tradeHubItems(BuildContext context, TradePair pair) {
+  return [
+    VitTradeHubItem(
+      id: 'spot',
+      label: 'Spot',
+      badge: 'Core',
+      icon: Icons.show_chart_rounded,
+      accentColor: AppModuleAccents.trade,
+      tileKey: TradePage.quickNavKey('spot'),
+      onTap: () => context.go(AppRoutePaths.tradePair(pair.id)),
+    ),
+    VitTradeHubItem(
+      id: 'convert',
+      label: 'Convert',
+      badge: 'Core',
+      icon: Icons.swap_horiz_rounded,
+      accentColor: AppModuleAccents.trade,
+      tileKey: TradePage.quickNavKey('convert'),
+      onTap: () => context.go(AppRoutePaths.tradeConvert),
+    ),
+    VitTradeHubItem(
+      id: 'futures',
+      label: 'Futures',
+      badge: 'Risk',
+      icon: Icons.bar_chart_rounded,
+      accentColor: AppColors.sell,
+      tileKey: TradePage.quickNavKey('futures'),
+      onTap: () => context.go(AppRoutePaths.tradeFutures(pair.id)),
+    ),
+    VitTradeHubItem(
+      id: 'margin',
+      label: 'Margin',
+      badge: 'Pro',
+      icon: Icons.trending_up_rounded,
+      accentColor: AppModuleAccents.trade,
+      tileKey: TradePage.quickNavKey('margin'),
+      onTap: () => context.go(AppRoutePaths.tradeMargin),
+    ),
+    VitTradeHubItem(
+      id: 'bots',
+      label: 'Bot',
+      badge: 'Auto',
+      icon: Icons.smart_toy_rounded,
+      accentColor: AppModuleAccents.trade,
+      tileKey: TradePage.quickNavKey('bots'),
+      onTap: () => context.go(AppRoutePaths.tradeBots),
+    ),
+    VitTradeHubItem(
+      id: 'copy',
+      label: 'Copy',
+      badge: 'Social',
+      icon: Icons.content_copy_rounded,
+      accentColor: AppModuleAccents.trade,
+      tileKey: TradePage.quickNavKey('copy'),
+      onTap: () => context.go(AppRoutePaths.tradeCopyTrading),
+    ),
+    VitTradeHubItem(
+      id: 'dca',
+      label: 'DCA',
+      badge: 'Plan',
+      icon: Icons.repeat_rounded,
+      accentColor: AppModuleAccents.dca,
+      tileKey: TradePage.quickNavKey('dca'),
+      onTap: () => context.go(AppRoutePaths.dca),
+    ),
+    VitTradeHubItem(
+      id: 'wallet',
+      label: 'Wallet',
+      badge: 'Funds',
+      icon: Icons.account_balance_wallet_rounded,
+      accentColor: AppModuleAccents.wallet,
+      tileKey: TradePage.quickNavKey('wallet'),
+      onTap: () => context.go(AppRoutePaths.wallet),
+    ),
+    VitTradeHubItem(
+      id: 'p2p',
+      label: 'P2P',
+      badge: 'Escrow',
+      icon: Icons.groups_rounded,
+      accentColor: AppModuleAccents.p2p,
+      tileKey: TradePage.quickNavKey('p2p'),
+      onTap: () => context.go(AppRoutePaths.p2p),
+    ),
+    VitTradeHubItem(
+      id: 'earn',
+      label: 'Earn',
+      badge: 'Yield',
+      icon: Icons.account_balance_rounded,
+      accentColor: AppModuleAccents.earn,
+      tileKey: TradePage.quickNavKey('earn'),
+      onTap: () => context.go(AppRoutePaths.earnStaking),
+    ),
+    VitTradeHubItem(
+      id: 'launchpad',
+      label: 'Launchpad',
+      badge: 'Token',
+      icon: Icons.rocket_launch_rounded,
+      accentColor: AppModuleAccents.launchpad,
+      tileKey: TradePage.quickNavKey('launchpad'),
+      onTap: () => context.go(AppRoutePaths.launchpad),
+    ),
+    VitTradeHubItem(
+      id: 'predictions',
+      label: 'Dự đoán',
+      badge: 'Market',
+      icon: Icons.adjust_rounded,
+      accentColor: AppModuleAccents.predictions,
+      tileKey: TradePage.quickNavKey('predictions'),
+      onTap: () => context.go(AppRoutePaths.marketsPredictions),
+    ),
+    VitTradeHubItem(
+      id: 'arena',
+      label: 'Arena',
+      badge: 'Points',
+      icon: Icons.sports_esports_outlined,
+      accentColor: AppModuleAccents.arena,
+      tileKey: TradePage.quickNavKey('arena'),
+      onTap: () => context.go(AppRoutePaths.arena),
+    ),
+    VitTradeHubItem(
+      id: 'rewards',
+      label: 'Rewards',
+      badge: 'Growth',
+      icon: Icons.card_giftcard_rounded,
+      accentColor: AppModuleAccents.rewards,
+      tileKey: TradePage.quickNavKey('rewards'),
+      onTap: () => context.go(AppRoutePaths.rewards),
+    ),
+    VitTradeHubItem(
+      id: 'support',
+      label: 'Hỗ trợ',
+      badge: 'Help',
+      icon: Icons.support_agent_rounded,
+      accentColor: AppModuleAccents.support,
+      tileKey: TradePage.quickNavKey('support'),
+      onTap: () => context.go(AppRoutePaths.support),
+    ),
+  ];
 }
 
-class _DataTabs extends StatelessWidget {
-  const _DataTabs({required this.active, required this.onSelected});
+class _ChartsSubTabs extends StatelessWidget {
+  const _ChartsSubTabs({required this.active, required this.onSelected});
 
   final String active;
   final ValueChanged<String> onSelected;
@@ -498,155 +464,48 @@ class _DataTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabs = const [
-      ('chart', 'Chart', TradePage.chartTabKey),
       ('orderbook', 'Sổ lệnh', TradePage.orderBookTabKey),
       ('trades', 'Giao dịch', TradePage.tradesTabKey),
     ];
-    return Padding(
-      padding: AppSpacing.contentInsets,
-      child: VitCard(
-        density: VitDensity.tool,
-        padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
-        variant: VitCardVariant.inner,
-        radius: VitCardRadius.sm,
-        child: Row(
-          children: [
-            for (final tab in tabs)
-              Expanded(
-                child: _SegmentButton(
-                  key: tab.$3,
-                  label: tab.$2,
-                  active: active == tab.$1,
-                  onTap: () => onSelected(tab.$1),
-                ),
-              ),
-          ],
-        ),
-      ),
+    return VitSegmentedChoice.withPrimaryAccent<String>(
+      selected: active,
+      onChanged: onSelected,
+      options: [
+        for (final tab in tabs)
+          VitSegmentedChoiceOption(key: tab.$3, value: tab.$1, label: tab.$2),
+      ],
     );
   }
 }
 
-class _MarketDataPanel extends StatelessWidget {
-  const _MarketDataPanel({
-    required this.active,
-    required this.snapshot,
-    required this.chartVariant,
-  });
+class _PositionsList extends StatelessWidget {
+  const _PositionsList({required this.positions});
 
-  final String active;
-  final TradeScreenSnapshot snapshot;
-  final TradeChartVariant chartVariant;
+  final List<TradePosition> positions;
 
   @override
   Widget build(BuildContext context) {
-    if (active == 'orderbook') return _OrderBookPanel(book: snapshot.orderBook);
-    if (active == 'trades') return _TradesPanel(trades: snapshot.trades);
-    return _ChartPanel(variant: chartVariant);
-  }
-}
-
-class _ChartPanel extends StatelessWidget {
-  const _ChartPanel({required this.variant});
-
-  final TradeChartVariant variant;
-
-  @override
-  Widget build(BuildContext context) {
-    final pairRoute = variant == TradeChartVariant.pairRoute;
-    return VitCard(
-      height: _tradeCompactChartHeight,
-      borderColor: _tradePrimary.withValues(alpha: .35),
-      clip: true,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: CustomPaint(
-              painter: pairRoute
-                  ? _PairRouteChartPainter()
-                  : _CandlestickPainter(),
-            ),
+    if (positions.isEmpty) {
+      return Text(
+        'Chưa có vị thế Spot',
+        style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+      );
+    }
+    return VitTradeOrderList(
+      records: [
+        for (final position in positions)
+          VitTradeOrderRecord(
+            id: position.symbol,
+            symbol: position.symbol,
+            sideLabel: position.side == TradeOrderSide.buy ? 'MUA' : 'BÁN',
+            sideColor: position.side == TradeOrderSide.buy
+                ? AppColors.buy
+                : AppColors.sell,
+            detail:
+                '${_formatMoney(position.notional)} · PnL ${_formatMoney(position.pnl)}',
           ),
-          Positioned(
-            left: AppSpacing.tradeChartOverlayInset,
-            top: AppSpacing.tradeChartOverlayTop,
-            child: pairRoute
-                ? const VitStatusPill(
-                    label: '24H',
-                    status: VitStatusPillStatus.error,
-                    size: VitStatusPillSize.sm,
-                  )
-                : VitCard(
-                    width: AppSpacing.tradeChartLogoSize,
-                    height: AppSpacing.tradeChartLogoSize,
-                    variant: VitCardVariant.ghost,
-                    radius: VitCardRadius.lg,
-                    borderColor: AppColors.sell.withValues(alpha: .30),
-                    child: const SizedBox.shrink(),
-                  ),
-          ),
-          Positioned(
-            left: AppSpacing.tradeChartTvLeft,
-            bottom: AppSpacing.tradeChartTvBottom,
-            child: Text(
-              'TV',
-              style: AppTextStyles.sectionTitle.copyWith(
-                color: AppColors.onAccent,
-              ),
-            ),
-          ),
-          if (pairRoute) ...[
-            Positioned(
-              right: AppSpacing.tradeChartOverlayInset,
-              top: AppSpacing.tradeChartPriceRightTop,
-              child: Text(
-                '70000.00',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3.withValues(alpha: .85),
-                ),
-              ),
-            ),
-            Positioned(
-              right: AppSpacing.tradeChartOverlayInset,
-              bottom: AppSpacing.tradeChartPriceRightBottom,
-              child: Text(
-                '68000.00',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3.withValues(alpha: .85),
-                ),
-              ),
-            ),
-          ],
-          Positioned(
-            right: AppSpacing.tradeChartPriceRight,
-            top: pairRoute
-                ? AppSpacing.tradeChartPriceTopPair
-                : AppSpacing.tradeChartPriceTopDefault,
-            child: _PriceBadge(
-              label: pairRoute ? '70821.46' : '67545.13',
-              color: AppColors.sell,
-            ),
-          ),
-          Positioned(
-            right: AppSpacing.tradeChartPriceRight,
-            top: pairRoute
-                ? AppSpacing.tradeChartPriceTopPairSecond
-                : AppSpacing.tradeChartPriceTopDefaultSecond,
-            child: _PriceBadge(
-              label: pairRoute ? '70821.46' : '67254.13',
-              color: AppColors.buy,
-            ),
-          ),
-          Positioned(
-            right: AppSpacing.tradeChartPriceRight,
-            bottom: AppSpacing.tradeChartTvBottom,
-            child: _PriceBadge(
-              label: pairRoute ? '70.39K' : '252.58K',
-              color: AppColors.buy,
-            ),
-          ),
-        ],
-      ),
+      ],
+      emptyLabel: 'Chưa có vị thế Spot',
     );
   }
 }

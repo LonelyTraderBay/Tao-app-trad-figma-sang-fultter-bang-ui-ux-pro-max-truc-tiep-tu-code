@@ -50,7 +50,7 @@ class _ProgressCard extends StatelessWidget {
 
     return VitCard(
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -204,7 +204,7 @@ class _RouteCard extends StatelessWidget {
     return VitCard(
       key: RouteChecker.routeKey(route.path),
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: tested ? AppColors.buy20 : AppColors.borderSolid,
       onTap: onTap,
       child: Row(

@@ -119,7 +119,7 @@ class _HeroFeeBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -156,7 +156,7 @@ class _VipTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       density: VitDensity.tool,
       child: VitTabBar(
         variant: VitTabBarVariant.pill,

@@ -8,7 +8,7 @@ class _HeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
@@ -114,7 +114,7 @@ class _CategoryChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: onTap,
       clip: true,
       padding: AppSpacing.earnPillPaddingLarge,
@@ -199,13 +199,13 @@ class _FAQCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _categoryColor(item.category);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             onTap: onTap,
             padding: AppSpacing.earnPillPadding,
             child: Row(

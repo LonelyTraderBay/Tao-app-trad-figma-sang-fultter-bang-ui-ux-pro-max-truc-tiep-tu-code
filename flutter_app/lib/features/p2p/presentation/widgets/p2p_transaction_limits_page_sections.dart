@@ -16,7 +16,7 @@ class _TierHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy),
       ),
       child: Padding(
-        padding: _p2pLimitsCardPadding,
+        padding: AppSpacing.p2pTransactionLimitsCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -109,7 +109,7 @@ class _TierMetric extends StatelessWidget {
       color: AppColors.onAccent.withValues(alpha: .18),
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: _p2pLimitsInnerPadding,
+        padding: AppSpacing.p2pTransactionLimitsInnerPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -175,8 +175,8 @@ class _CurrentUsage extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
-          radius: VitCardRadius.lg,
-          padding: _p2pLimitsCardPadding,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.p2pTransactionLimitsCardPadding,
           child: Column(
             children: [
               for (var index = 0; index < snapshot.usageItems.length; index++)
@@ -286,7 +286,7 @@ class _LimitDetails extends StatelessWidget {
         ),
         const SizedBox(height: _p2pLimitsSectionGap),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
           child: Column(
             children: [

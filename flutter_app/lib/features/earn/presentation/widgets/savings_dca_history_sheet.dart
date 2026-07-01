@@ -31,7 +31,7 @@ class _ExecutionCard extends StatelessWidget {
 
     return VitCard(
       key: SavingsDCAPage.executionKey(execution.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
@@ -101,7 +101,7 @@ class _CreatePlanSheet extends StatelessWidget {
       top: false,
       child: VitCard(
         key: SavingsDCAPage.createSheetKey,
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         padding: AppSpacing.earnCardPaddingX3,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -156,7 +156,7 @@ class _ProductRow extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [

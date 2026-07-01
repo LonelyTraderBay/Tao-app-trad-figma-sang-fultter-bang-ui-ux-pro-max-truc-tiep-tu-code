@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/bot_risk_disclosure_page_sections.dart';
 part '../widgets/bot_risk_disclosure_page_common.dart';
@@ -27,8 +28,6 @@ const _botRiskPrimary = AppColors.primary;
 const _botRiskGreen = AppColors.buy;
 const _riskSpace = AppSpacing.x2;
 const _riskTinySpace = AppSpacing.x1;
-const _riskVisualScrollClearance = 112.0;
-const _riskNativeScrollClearance = 72.0;
 const _riskIconTile = 34.0;
 const _riskActionHeight = 44.0;
 const _riskLineTight = 1.2;
@@ -57,11 +56,10 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
         .watch(tradeReadModelControllerProvider)
         .getBotRiskDisclosure();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _riskVisualScrollClearance
-            : _riskNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

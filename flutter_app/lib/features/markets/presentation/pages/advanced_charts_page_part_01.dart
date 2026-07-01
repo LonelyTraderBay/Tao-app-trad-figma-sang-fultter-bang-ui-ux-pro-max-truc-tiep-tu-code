@@ -213,7 +213,7 @@ class _UnderlinedTab extends StatelessWidget {
       child: VitCard(
         onTap: () => onChanged(value),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         borderColor: AppColors.transparent,
         child: Column(
@@ -272,7 +272,7 @@ class _ActiveIndicatorSummary extends StatelessWidget {
             key: AdvancedChartsPage.clearAllKey,
             onTap: onClearAll,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: _advancedClearButtonPadding,
             constraints: const BoxConstraints(
               minHeight: _advancedActionMinHeight,
@@ -326,7 +326,7 @@ class _ActiveIndicatorChips extends StatelessWidget {
                   VitCard(
                     onTap: () => onRemove(indicator.id),
                     variant: VitCardVariant.ghost,
-                    radius: VitCardRadius.sm,
+                    radius: VitCardRadius.standard,
                     padding: EdgeInsets.zero,
                     width: _advancedChipRemoveIcon,
                     height: _advancedChipRemoveIcon,

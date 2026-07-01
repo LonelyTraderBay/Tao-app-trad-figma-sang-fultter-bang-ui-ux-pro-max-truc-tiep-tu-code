@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
@@ -15,6 +16,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_terminal_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 part 'margin_trading_page_part_01.dart';
@@ -54,6 +57,7 @@ class MarginTradingPage extends ConsumerStatefulWidget {
   static const leverageKey = Key('sc085_leverage');
   static const maxAmountKey = Key('sc085_max_amount');
   static const submitKey = Key('sc085_submit');
+  static const portfolioExpandKey = Key('sc085_portfolio_expand');
 
   final String pairId;
   final bool pairRouteVariant;
@@ -65,7 +69,8 @@ class MarginTradingPage extends ConsumerStatefulWidget {
 
 class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
   late String _mode = 'cross';
-  late String _tab = 'trade';
+  late String _dockTab = 'positions';
+  VitTradeViewMode _viewMode = VitTradeViewMode.charts;
   late String _side = 'long';
   late int _leverage = 5;
   late String _orderType = 'limit';
@@ -86,15 +91,10 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
     final totalPnl = controller.totalPnlForMode(_mode);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final chromeInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final scrollClearance =
-        chromeInset +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x6 + AppSpacing.x6
-            : AppSpacing.x5 + AppSpacing.x5);
+    final scrollClearance = tradeTerminalScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -120,17 +120,11 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: SingleChildScrollView(
+                    child: VitInsetScrollView(
                       key: MarginTradingPage.contentKey,
-                      padding: AppSpacing.zeroInsets.copyWith(
-                        left: AppSpacing.contentPad,
-                        top: AppSpacing.rowPy,
-                        right: AppSpacing.contentPad,
-                        bottom: scrollClearance,
-                      ),
+                      bottomInset: scrollClearance,
                       child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        fullBleed: true,
+                        padding: VitContentPadding.compact,
                         density: VitDensity.compact,
                         children: [
                           _ClientCategoryCard(
@@ -154,56 +148,165 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                             onChanged: (id) => setState(() => _mode = id),
                             keyBuilder: MarginTradingPage.modeKey,
                           ),
-                          _SegmentedTabs(
-                            tabs: [
-                              for (final tab in snapshot.contentTabs)
-                                TradeMarginTab(
-                                  id: tab.id,
-                                  label: tab.id == 'positions'
-                                      ? '${tab.label} (${modePositions.length})'
-                                      : tab.label,
-                                ),
-                            ],
-                            activeId: _tab,
-                            onChanged: (id) => setState(() => _tab = id),
-                            keyBuilder: MarginTradingPage.tabKey,
+                          VitTradeTickerStrip(
+                            symbol: snapshot.pair.symbol,
+                            priceLabel: snapshot.referencePrices.lastPrice
+                                .toStringAsFixed(2),
+                            changePct: snapshot.pair.changePct,
+                            highLabel: snapshot.referencePrices.markPrice
+                                .toStringAsFixed(2),
+                            lowLabel: snapshot.referencePrices.indexPrice
+                                .toStringAsFixed(2),
+                            volumeLabel: snapshot.trade.pair.symbol,
                           ),
-                          VitPageSection(
-                            density: VitDensity.compact,
-                            children: [
-                              if (_tab == 'trade')
-                                _TradeTab(
-                                  snapshot: snapshot,
-                                  side: _side,
-                                  leverage: _leverage,
-                                  orderType: _orderType,
-                                  amount: _amount,
-                                  showLeverageSheet: _showLeverageSheet,
-                                  onSideChanged: (side) =>
-                                      setState(() => _side = side),
-                                  onLeverageToggle: () => setState(
-                                    () => _showLeverageSheet =
-                                        !_showLeverageSheet,
-                                  ),
-                                  onLeverageChanged: (leverage) => setState(() {
-                                    _leverage = leverage;
-                                    _showLeverageSheet = false;
-                                  }),
-                                  onOrderTypeChanged: (type) =>
-                                      setState(() => _orderType = type),
-                                  onMaxAmount: () => setState(() {
-                                    _amount = controller.maxAmountFor(
-                                      leverage: _leverage,
-                                    );
-                                  }),
-                                  onNotice: (notice) =>
-                                      setState(() => _notice = notice),
-                                )
-                              else if (_tab == 'positions')
-                                _PositionsTab(positions: modePositions)
-                              else
-                                const _OrdersTab(),
+                          const SizedBox(height: AppSpacing.x3),
+                          VitTradeProductTabs(
+                            activeId: 'margin',
+                            tabs: [
+                              VitTradeProductTab(
+                                id: 'spot',
+                                label: 'Spot',
+                                onTap: () => context.go(
+                                  AppRoutePaths.tradePair(widget.pairId),
+                                ),
+                              ),
+                              VitTradeProductTab(
+                                id: 'futures',
+                                label: 'Futures',
+                                onTap: () => context.go(
+                                  AppRoutePaths.tradeFutures(widget.pairId),
+                                ),
+                              ),
+                              VitTradeProductTab(
+                                id: 'margin',
+                                label: 'Margin',
+                                onTap: () {},
+                              ),
+                              VitTradeProductTab(
+                                id: 'convert',
+                                label: 'Convert',
+                                onTap: () =>
+                                    context.go(AppRoutePaths.tradeConvert),
+                              ),
                             ],
+                          ),
+                          const SizedBox(height: AppSpacing.x3),
+                          VitTradeViewModeToggle(
+                            mode: _viewMode,
+                            onChanged: (value) =>
+                                setState(() => _viewMode = value),
+                          ),
+                          const SizedBox(height: AppSpacing.x3),
+                          if (_viewMode == VitTradeViewMode.charts) ...[
+                            const VitTradeChartPanel(
+                              variant: VitTradeChartVariant.pairRoute,
+                            ),
+                            const SizedBox(height: AppSpacing.x3),
+                          ],
+                          if (_viewMode == VitTradeViewMode.trade)
+                            VitTradeSplitPanel(
+                              form: _TradeTab(
+                                snapshot: snapshot,
+                                side: _side,
+                                leverage: _leverage,
+                                orderType: _orderType,
+                                amount: _amount,
+                                showLeverageSheet: _showLeverageSheet,
+                                compact: true,
+                                onSideChanged: (side) =>
+                                    setState(() => _side = side),
+                                onLeverageToggle: () => setState(
+                                  () => _showLeverageSheet =
+                                      !_showLeverageSheet,
+                                ),
+                                onLeverageChanged: (leverage) => setState(() {
+                                  _leverage = leverage;
+                                  _showLeverageSheet = false;
+                                }),
+                                onOrderTypeChanged: (type) =>
+                                    setState(() => _orderType = type),
+                                onMaxAmount: () => setState(() {
+                                  _amount = controller.maxAmountFor(
+                                    leverage: _leverage,
+                                  );
+                                }),
+                                onNotice: (notice) =>
+                                    setState(() => _notice = notice),
+                              ),
+                              marketPanel: VitOrderBookPanel(
+                                density: VitOrderBookPanelDensity.compact,
+                                asks: [
+                                  for (final level
+                                      in snapshot.trade.orderBook.asks)
+                                    VitOrderBookLevel(
+                                      price: level.price,
+                                      amount: level.amount,
+                                      total: level.total,
+                                    ),
+                                ],
+                                bids: [
+                                  for (final level
+                                      in snapshot.trade.orderBook.bids)
+                                    VitOrderBookLevel(
+                                      price: level.price,
+                                      amount: level.amount,
+                                      total: level.total,
+                                    ),
+                                ],
+                              ),
+                            )
+                          else
+                            _TradeTab(
+                              snapshot: snapshot,
+                              side: _side,
+                              leverage: _leverage,
+                              orderType: _orderType,
+                              amount: _amount,
+                              showLeverageSheet: _showLeverageSheet,
+                              compact: false,
+                              onSideChanged: (side) =>
+                                  setState(() => _side = side),
+                              onLeverageToggle: () => setState(
+                                () =>
+                                    _showLeverageSheet = !_showLeverageSheet,
+                              ),
+                              onLeverageChanged: (leverage) => setState(() {
+                                _leverage = leverage;
+                                _showLeverageSheet = false;
+                              }),
+                              onOrderTypeChanged: (type) =>
+                                  setState(() => _orderType = type),
+                              onMaxAmount: () => setState(() {
+                                _amount = controller.maxAmountFor(
+                                  leverage: _leverage,
+                                );
+                              }),
+                              onNotice: (notice) =>
+                                  setState(() => _notice = notice),
+                            ),
+                          const SizedBox(height: AppSpacing.x3),
+                          VitTradePortfolioPanel(
+                            expandKey: MarginTradingPage.portfolioExpandKey,
+                            activeKey: _dockTab,
+                            onChanged: (id) => setState(() => _dockTab = id),
+                            tabs: [
+                              VitTabItem(
+                                key: 'positions',
+                                label:
+                                    'Vị thế (${modePositions.length})',
+                                widgetKey: MarginTradingPage.tabKey(
+                                  'positions',
+                                ),
+                              ),
+                              VitTabItem(
+                                key: 'orders',
+                                label: 'Lệnh',
+                                widgetKey: MarginTradingPage.tabKey('orders'),
+                              ),
+                            ],
+                            child: _dockTab == 'orders'
+                                ? const _OrdersTab()
+                                : _PositionsTab(positions: modePositions),
                           ),
                           _AccountHero(
                             account: snapshot.account,

@@ -9,7 +9,7 @@ class _SecurityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PIdentityVerificationPage.securityKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

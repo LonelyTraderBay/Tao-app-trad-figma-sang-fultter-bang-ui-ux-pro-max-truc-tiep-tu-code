@@ -53,94 +53,100 @@ class _PortfolioSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pnlColor = snapshot.totalPnl >= 0 ? AppColors.buy : AppColors.sell;
+    final pnlTone = snapshot.totalPnl >= 0
+        ? VitMetricDeltaTone.positive
+        : VitMetricDeltaTone.negative;
+
     return VitCard(
-      density: VitDensity.compact,
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
+      clip: true,
+      padding: AppSpacing.homePortfolioCardPadding,
+      background: const VitHeroGlow(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Total Portfolio Value',
-            style: AppTextStyles.badge.copyWith(color: AppColors.text3),
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.portfolioTextDim,
+              fontWeight: AppTextStyles.medium,
+            ),
           ),
-          const SizedBox(height: AppSpacing.x1),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            _formatMoney(snapshot.totalPortfolioValue),
+            style: AppTextStyles.heroNumber.copyWith(
+              color: AppColors.onAccent,
+              letterSpacing: 0,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                _formatMoney(snapshot.totalPortfolioValue),
-                style: AppTextStyles.amountMd.copyWith(color: AppColors.text1),
-              ),
-              const SizedBox(width: AppSpacing.predictionAnalyzerPnlGap),
-              Padding(
-                padding: AppSpacing.predictionAnalyzerPnlPadding,
-                child: Row(
-                  children: [
-                    Icon(
-                      snapshot.totalPnl >= 0
-                          ? Icons.trending_up_rounded
-                          : Icons.trending_down_rounded,
-                      color: pnlColor,
-                      size: AppSpacing.predictionAnalyzerPnlIcon,
-                    ),
-                    const SizedBox(
-                      width: AppSpacing.predictionAnalyzerPnlIconGap,
-                    ),
-                    Text(
+              Flexible(
+                child: VitMetricDeltaPill(
+                  label:
                       '${snapshot.totalPnl >= 0 ? '+' : ''}${_formatMoney(snapshot.totalPnl)}',
-                      style: AppTextStyles.baseMedium.copyWith(
-                        color: pnlColor,
-                        fontWeight: AppTextStyles.bold,
-                        fontFeatures: AppTextStyles.tabularFigures,
-                      ),
-                    ),
-                  ],
+                  tone: pnlTone,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
-                child: _SummaryMetric(
-                  label: 'Invested',
-                  value: _formatMoney(snapshot.totalInvested),
+                child: VitCardStat(
+                  child: _SummaryMetric(
+                    label: 'Invested',
+                    value: _formatMoney(snapshot.totalInvested),
+                  ),
                 ),
               ),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: _SummaryMetric(
-                  label: 'Return %',
-                  value:
-                      '${snapshot.totalPnlPercent >= 0 ? '+' : ''}${snapshot.totalPnlPercent.toStringAsFixed(2)}%',
-                  valueColor: pnlColor,
+                child: VitCardStat(
+                  child: _SummaryMetric(
+                    label: 'Return %',
+                    value:
+                        '${snapshot.totalPnlPercent >= 0 ? '+' : ''}${snapshot.totalPnlPercent.toStringAsFixed(2)}%',
+                    valueColor: snapshot.totalPnl >= 0
+                        ? AppColors.buy
+                        : AppColors.sell,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
-                child: _SummaryMetric(
-                  label: 'Realized P/L',
-                  value:
-                      '${snapshot.realizedPnl >= 0 ? '+' : ''}${_formatMoney(snapshot.realizedPnl)}',
-                  valueColor: snapshot.realizedPnl >= 0
-                      ? AppColors.buy
-                      : AppColors.sell,
-                  small: true,
+                child: VitCardStat(
+                  child: _SummaryMetric(
+                    label: 'Realized P/L',
+                    value:
+                        '${snapshot.realizedPnl >= 0 ? '+' : ''}${_formatMoney(snapshot.realizedPnl)}',
+                    valueColor: snapshot.realizedPnl >= 0
+                        ? AppColors.buy
+                        : AppColors.sell,
+                    small: true,
+                  ),
                 ),
               ),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: _SummaryMetric(
-                  label: 'Unrealized P/L',
-                  value:
-                      '${snapshot.unrealizedPnl >= 0 ? '+' : ''}${_formatMoney(snapshot.unrealizedPnl)}',
-                  valueColor: snapshot.unrealizedPnl >= 0
-                      ? AppColors.buy
-                      : AppColors.sell,
-                  small: true,
+                child: VitCardStat(
+                  child: _SummaryMetric(
+                    label: 'Unrealized P/L',
+                    value:
+                        '${snapshot.unrealizedPnl >= 0 ? '+' : ''}${_formatMoney(snapshot.unrealizedPnl)}',
+                    valueColor: snapshot.unrealizedPnl >= 0
+                        ? AppColors.buy
+                        : AppColors.sell,
+                    small: true,
+                  ),
                 ),
               ),
             ],
@@ -197,10 +203,10 @@ class _StatsGrid extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final stat = stats[index];
-        return VitCard(
-          density: VitDensity.compact,
+        return VitCardStat(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
@@ -253,9 +259,9 @@ class _CategoryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Portfolio by Category',
-            style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
+          const VitSectionHeader(
+            title: 'Portfolio by Category',
+            density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.x2),
           Center(

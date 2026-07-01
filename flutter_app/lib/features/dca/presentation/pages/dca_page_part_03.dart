@@ -119,7 +119,7 @@ class _PlanIconButton extends StatelessWidget {
       height: VitDensity.compact.controlHeight,
       child: VitCard(
         variant: VitCardVariant.inner,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         onTap: onTap,
         child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
@@ -236,7 +236,7 @@ class _CreatePlanSheet extends StatelessWidget {
               child: VitCard(
                 onTap: onClose,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 padding: AppSpacing.zeroInsets,
                 borderColor: AppColors.transparent,
                 child: const SizedBox.expand(),
@@ -246,7 +246,7 @@ class _CreatePlanSheet extends StatelessWidget {
               padding: AppSpacing.dcaBottomSheetPadding(bottomInset),
               child: VitCard(
                 key: DCAPage.createSheetKey,
-                radius: VitCardRadius.lg,
+                radius: VitCardRadius.large,
                 density: VitDensity.compact,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

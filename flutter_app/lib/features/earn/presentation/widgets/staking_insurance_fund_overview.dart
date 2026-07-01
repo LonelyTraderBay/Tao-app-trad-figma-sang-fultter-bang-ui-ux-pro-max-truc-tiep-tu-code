@@ -77,7 +77,7 @@ class StakingInsuranceFundTabs extends StatelessWidget {
               child: VitCard(
                 key: StakingInsuranceFundKeys.tab(tab.name),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 padding: AppSpacing.earnTopPaddingX4,
                 onTap: () => onChanged(tab),
                 child: Column(

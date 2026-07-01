@@ -149,7 +149,7 @@ class _SettingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       onTap: onToggle,
       child: Row(
@@ -204,7 +204,7 @@ class _ToggleSwitch extends StatelessWidget {
       toggled: on,
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.md,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         onTap: onTap,
         child: VitTogglePill(

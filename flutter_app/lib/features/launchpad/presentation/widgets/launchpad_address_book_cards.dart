@@ -33,7 +33,7 @@ class _AddressCard extends StatelessWidget {
           VitCard(
             key: LaunchpadAddressBookPage.expandKey(address.id),
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.launchpadPaddingX4,
             onTap: onExpand,
             child: Row(

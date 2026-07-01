@@ -152,7 +152,7 @@ class _CancelHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         children: [
@@ -360,7 +360,7 @@ class _CancelWarning extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
       padding: AppSpacing.p2pRiskControlsInnerPadding,

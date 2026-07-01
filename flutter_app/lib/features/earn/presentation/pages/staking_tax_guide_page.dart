@@ -86,7 +86,7 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
                     children: [
                       VitCard(
                         variant: VitCardVariant.standard,
-                        radius: VitCardRadius.md,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: StakingTaxDisclaimerBanner(snapshot: snapshot),
                       ),

@@ -75,7 +75,7 @@ class _ExplainerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PAntiPhishingCodePage.explainerKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -152,7 +152,7 @@ class _EmailExampleCard extends StatelessWidget {
 
     return VitCard(
       key: P2PAntiPhishingCodePage.exampleKey(example.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: color,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
@@ -196,7 +196,7 @@ class _EmailExampleCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.x2),
                     VitCard(
-                      radius: VitCardRadius.sm,
+                      radius: VitCardRadius.standard,
                       variant: VitCardVariant.inner,
                       borderColor: AppColors.transparent,
                       padding: AppSpacing.p2pSecurityDetailsInnerPadding,

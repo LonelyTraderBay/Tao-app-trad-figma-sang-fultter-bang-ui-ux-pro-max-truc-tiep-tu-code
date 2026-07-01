@@ -51,7 +51,7 @@ class SavingsRedeemPage extends ConsumerWidget {
                   const SizedBox(height: AppSpacing.x7 + AppSpacing.x6),
                   VitCard(
                     variant: VitCardVariant.standard,
-                    radius: VitCardRadius.md,
+                    radius: VitCardRadius.standard,
                     padding: AppSpacing.zeroInsets,
                     child: _MissingPositionState(snapshot: snapshot),
                   ),

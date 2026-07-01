@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -43,9 +44,6 @@ const _submissionMultilineHeight = 104.0;
 const _submissionEvidenceHeight = 124.0;
 const _submissionEvidenceIconSize = 40.0;
 const _submissionCheckboxSize = 24.0;
-const _submissionVisualScrollClearance = 150.0;
-const _submissionNativeScrollClearance = 126.0;
-
 class ComplaintSubmissionPage extends ConsumerStatefulWidget {
   const ComplaintSubmissionPage({super.key, this.shellRenderMode});
 
@@ -83,12 +81,10 @@ class _ComplaintSubmissionPageState
         .watch(tradeReadModelControllerProvider)
         .getComplaintSubmission();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final safeArea = MediaQuery.paddingOf(context).bottom;
-    final scrollEndClearance =
-        safeArea +
-        (mode.usesVisualQaFrame
-            ? _submissionVisualScrollClearance
-            : _submissionNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
     final canSubmit = _canSubmit(snapshot);
 
     return VitPageLayout(

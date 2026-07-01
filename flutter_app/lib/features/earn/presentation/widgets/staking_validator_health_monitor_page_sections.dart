@@ -9,7 +9,7 @@ class _SummaryStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingValidatorHealthMonitorPage.statsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
@@ -110,7 +110,7 @@ class _ValidatorCard extends StatelessWidget {
     final statusColor = _statusColor(validator.status);
     return VitCard(
       key: StakingValidatorHealthMonitorPage.validatorKey(validator.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: onTap,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
@@ -323,7 +323,7 @@ class _TrendSection extends StatelessWidget {
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             children: [

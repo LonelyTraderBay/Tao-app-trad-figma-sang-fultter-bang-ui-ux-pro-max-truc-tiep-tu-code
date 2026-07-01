@@ -71,7 +71,7 @@ class _OrderBreakdownCard extends StatelessWidget {
     ];
     return VitCard(
       key: P2PDashboardPage.breakdownKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -100,7 +100,7 @@ class _TopMerchantsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PDashboardPage.merchantsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,7 +144,7 @@ class _RecentActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PDashboardPage.activityKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

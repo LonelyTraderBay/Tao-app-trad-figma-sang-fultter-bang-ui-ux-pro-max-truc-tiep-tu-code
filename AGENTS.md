@@ -73,6 +73,37 @@ search/discovery, and profile surfaces with clearly separated sections.
 - Support phone-first layouts at 360 px and up.
 - Include loading, empty, error, offline, submitting, and success states where
   the flow needs them.
+- Do not wrap `VitTabBar` / `VitSegmentedTabBar` in `VitCard` or `DecoratedBox`
+  with a border — segment tabs render their own pill outline.
+- Binary or semantic 2–4 option toggles (MUA/BÁN, Long/Short) use
+  `VitSegmentedChoice`, not `VitCard` + `Row` + full-width `VitChoicePill`.
+- Preset amount/% shortcut rows use `VitPresetChipRow`; do not wrap
+  `VitCard(inner + border)` around pill rows.
+- Delete local `_SegmentButton` duplicates after migration; use shared primitives.
+- Open Arena community rules footer chip uses `VitCommunityRulesLink`; do not
+  duplicate local `_CommunityRules*` widgets.
+
+### Radius rules
+
+Canonical tiers (see `AppRadii` in `app_radii.dart`):
+
+| Role | Token | px |
+| --- | --- | --- |
+| Interactive controls | `AppRadii.inputRadius` | 14 |
+| Standard cards | `AppRadii.cardRadius` | 16 |
+| Large / hero cards | `AppRadii.cardLargeRadius` | 24 |
+| Micro surfaces | `AppRadii.smRadius` | 8 |
+| Status pills | `AppRadii.pillRadius` | 999 |
+
+- CTA, input, tab, chip, segmented choice, preset row, section link, and header
+  icon buttons use `inputRadius` only.
+- `VitCard` uses `VitCardRadius.standard` (16) by default and
+  `VitCardRadius.large` (24) for hero/large surfaces.
+- Avatars, delta chips, and icon backgrounds use `smRadius` (micro).
+- `VitStatusPill` / `VitAccentPill` use `pillRadius` only.
+- Do not use `BorderRadius.circular()` outside `app_radii.dart`.
+- Do not use `AppRadii.mdRadius` or `AppRadii.headerActionRadius` for new UI;
+  they are legacy chart/chrome values.
 
 ## Financial Safety
 

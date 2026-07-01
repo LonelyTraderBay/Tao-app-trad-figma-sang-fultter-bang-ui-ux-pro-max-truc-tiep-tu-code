@@ -156,18 +156,21 @@ class _AmountCard extends StatelessWidget {
             muted: cryptoAmount == 0,
           ),
           const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              for (final percent in const [25, 50, 75, 100]) ...[
-                Expanded(
-                  child: _PercentButton(
-                    percent: percent,
-                    selected: selectedPercent == percent,
-                    onTap: () => onPercent(percent),
-                  ),
+          VitPresetChipRow<double>(
+            selectedValue: selectedPercent?.toDouble(),
+            onTap: (value) => onPercent(value.round()),
+            accentColor: AppModuleAccents.p2p,
+            height: AppSpacing.buttonCompact,
+            padding: AppSpacing.p2pAdDetailPercentPadding,
+            gap: AppSpacing.x3,
+            items: [
+              for (final percent in const [25, 50, 75, 100])
+                VitPresetChipItem(
+                  key: P2PAdDetailPage.percentKey(percent),
+                  value: percent.toDouble(),
+                  label: '$percent%',
+                  semanticLabel: 'Chọn $percent% số lượng quảng cáo P2P',
                 ),
-                if (percent != 100) const SizedBox(width: AppSpacing.x3),
-              ],
             ],
           ),
         ],
@@ -223,32 +226,6 @@ class _InputShell extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _PercentButton extends StatelessWidget {
-  const _PercentButton({
-    required this.percent,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final int percent;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: P2PAdDetailPage.percentKey(percent),
-      label: '$percent%',
-      selected: selected,
-      onTap: onTap,
-      accentColor: AppModuleAccents.p2p,
-      height: AppSpacing.buttonCompact,
-      padding: AppSpacing.p2pAdDetailPercentPadding,
-      semanticLabel: 'Chọn $percent% số lượng quảng cáo P2P',
     );
   }
 }

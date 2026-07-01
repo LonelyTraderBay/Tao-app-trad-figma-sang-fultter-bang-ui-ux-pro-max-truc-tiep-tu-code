@@ -13,7 +13,7 @@ class _PositionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadStakingPage.positionKey(position.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -179,7 +179,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
 
     return VitCard(
       key: LaunchpadStakingPage.calculatorKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

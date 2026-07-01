@@ -15,7 +15,7 @@ class _HelpHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.supportCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -112,7 +112,7 @@ class _QuickActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.supportQuickCardPadding,
       onTap: onTap,
       child: Row(

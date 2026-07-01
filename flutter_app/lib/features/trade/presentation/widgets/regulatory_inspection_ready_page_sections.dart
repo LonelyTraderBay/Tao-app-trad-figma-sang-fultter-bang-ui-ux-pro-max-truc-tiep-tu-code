@@ -19,7 +19,7 @@ class _ComplianceScoreCard extends StatelessWidget {
             children: [
               const VitCard(
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.md,
+                radius: VitCardRadius.standard,
                 width: AppSpacing.buttonCompact,
                 height: AppSpacing.buttonCompact,
                 borderColor: _inspectionGreen,
@@ -142,7 +142,7 @@ class _QuickStatCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       padding: AppSpacing.cardPaddingCompact,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

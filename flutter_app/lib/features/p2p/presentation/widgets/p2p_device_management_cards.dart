@@ -76,7 +76,7 @@ class _DeviceCard extends StatelessWidget {
 
     return VitCard(
       key: P2PDeviceManagementPage.deviceKey(device.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.standard,
       borderColor: device.isTrusted ? null : AppColors.warningBorder,
       padding: AppSpacing.zeroInsets,
@@ -85,7 +85,7 @@ class _DeviceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: _p2pDevicesCardPadding,
+            padding: AppSpacing.p2pDevicesCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -252,7 +252,7 @@ class _ExpandedDeviceDetails extends StatelessWidget {
           color: AppColors.divider,
         ),
         Padding(
-          padding: _p2pDevicesCardPadding,
+          padding: AppSpacing.p2pDevicesCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -355,7 +355,7 @@ class _CurrentDeviceMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
       padding: AppSpacing.p2pSecurityDetailsActionPadding,

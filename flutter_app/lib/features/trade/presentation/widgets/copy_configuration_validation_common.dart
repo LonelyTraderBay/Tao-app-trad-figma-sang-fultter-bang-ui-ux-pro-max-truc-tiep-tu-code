@@ -119,27 +119,6 @@ class _SummaryRow extends StatelessWidget {
   }
 }
 
-class _PresetButton extends StatelessWidget {
-  const _PresetButton({required this.label, required this.onPressed});
-
-  final String label;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: false,
-      onTap: onPressed,
-      fullWidth: true,
-      height: _configurationPresetHeight,
-      padding: AppSpacing.zeroInsets,
-      tone: VitChoicePillTone.neutral,
-      semanticLabel: 'Dat von copy $label',
-    );
-  }
-}
-
 class _RiskPill extends StatelessWidget {
   const _RiskPill({required this.level});
 

@@ -61,7 +61,7 @@ class StakingProposalsPage extends ConsumerWidget {
                     children: [
                       VitCard(
                         variant: VitCardVariant.standard,
-                        radius: VitCardRadius.md,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: _ProposalList(proposals: snapshot.proposals),
                       ),
@@ -114,7 +114,7 @@ class _ProposalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingProposalsPage.proposalKey(proposal.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       onTap: onVote,
       child: Column(

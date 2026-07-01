@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -25,8 +26,6 @@ const _trackingGreen = AppColors.buy;
 const _trackingAmber = AppColors.caution;
 const _trackingSpace = AppSpacing.x2;
 const _trackingTinySpace = AppSpacing.x1;
-const _trackingVisualScrollClearance = 112.0;
-const _trackingNativeScrollClearance = 72.0;
 const _trackingIconTile = 36.0;
 const _trackingTimelineRailWidth = 28.0;
 const _trackingTimelineDotRadius = 12.0;
@@ -54,11 +53,10 @@ class ComplaintTrackingPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getComplaintTracking(complaintId: complaintId);
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _trackingVisualScrollClearance
-            : _trackingNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -143,7 +141,7 @@ class _StatusCard extends StatelessWidget {
                 height: _trackingIconTile,
                 variant: VitCardVariant.ghost,
                 density: VitDensity.compact,
-                padding: EdgeInsets.zero,
+                padding: AppSpacing.zeroInsets,
                 borderColor: _trackingAmber.withValues(alpha: .24),
                 alignment: Alignment.center,
                 child: const Icon(

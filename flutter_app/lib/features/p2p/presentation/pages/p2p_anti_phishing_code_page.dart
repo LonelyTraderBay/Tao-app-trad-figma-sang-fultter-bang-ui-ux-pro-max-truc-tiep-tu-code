@@ -155,7 +155,7 @@ class _P2PAntiPhishingCodePageState
   Widget _currentCodeCard({required String code}) {
     return VitCard(
       key: P2PAntiPhishingCodePage.codeCardKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -185,7 +185,7 @@ class _P2PAntiPhishingCodePageState
           ),
           const SizedBox(height: AppSpacing.x2),
           VitCard(
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             variant: VitCardVariant.inner,
             borderColor: AppColors.borderSolid,
             padding: const EdgeInsetsDirectional.symmetric(
@@ -241,7 +241,7 @@ class _P2PAntiPhishingCodePageState
   Widget _editCodeCard() {
     return VitCard(
       key: P2PAntiPhishingCodePage.codeCardKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

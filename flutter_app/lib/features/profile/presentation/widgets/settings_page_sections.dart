@@ -32,7 +32,7 @@ class _CurrencyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       density: VitDensity.compact,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: _settingsBorder,
       child: Row(
         children: [
@@ -141,7 +141,7 @@ class _LanguageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: _settingsBorder,
       clip: true,
       child: Column(
@@ -234,7 +234,7 @@ class _SettingsListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: _settingsBorder,
       clip: true,
       child: Column(

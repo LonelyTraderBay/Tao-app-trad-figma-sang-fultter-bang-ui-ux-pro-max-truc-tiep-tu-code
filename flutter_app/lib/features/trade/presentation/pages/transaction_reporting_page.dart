@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/transactio
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_notice.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_reports.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_stats.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -55,11 +56,10 @@ class _TransactionReportingPageState
       query: _query,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 118
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = copyTradingScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

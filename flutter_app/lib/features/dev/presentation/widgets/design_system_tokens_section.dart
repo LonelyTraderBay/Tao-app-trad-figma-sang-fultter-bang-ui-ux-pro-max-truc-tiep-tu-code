@@ -26,7 +26,7 @@ class DesignSystemTokensSection extends StatelessWidget {
       children: [
         VitCard(
           padding: AppSpacing.devTokenCardPadding,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           child: Column(
             children: [
               for (final token in tokens) ...[

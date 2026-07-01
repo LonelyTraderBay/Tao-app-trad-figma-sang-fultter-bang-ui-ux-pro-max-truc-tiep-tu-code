@@ -51,7 +51,7 @@ class _Switch extends StatelessWidget {
       child: VitCard(
         key: key,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         onTap: onTap,
         child: VitTogglePill(
           enabled: enabled,

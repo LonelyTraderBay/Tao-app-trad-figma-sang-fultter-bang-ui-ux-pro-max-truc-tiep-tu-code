@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/copy_safety_overview.dart';
 part '../widgets/copy_safety_metrics_tools.dart';
@@ -25,8 +26,6 @@ const _safetyPrimary = AppColors.primary;
 const _safetyWarningBorder = AppColors.warningBorderStrong;
 const _safetySpace = AppSpacing.x2;
 const _safetyCardSpace = AppSpacing.x3;
-const _safetyVisualScrollClearance = 112.0;
-const _safetyNativeScrollClearance = 72.0;
 const _safetyHeroMinHeight = 84.0;
 const _safetyTabsHeight = 60.0;
 const _safetyHeroLineHeight = 1.08;
@@ -64,11 +63,10 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
     _activeTabId ??= snapshot.defaultTabId;
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _safetyVisualScrollClearance
-            : _safetyNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

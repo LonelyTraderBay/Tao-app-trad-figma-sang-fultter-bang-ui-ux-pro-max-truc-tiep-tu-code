@@ -50,7 +50,7 @@ class _ReportCard extends StatelessWidget {
     return Opacity(
       opacity: isPublished ? 1 : 0.78,
       child: VitCard(
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         padding: AppSpacing.earnCardPaddingX4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

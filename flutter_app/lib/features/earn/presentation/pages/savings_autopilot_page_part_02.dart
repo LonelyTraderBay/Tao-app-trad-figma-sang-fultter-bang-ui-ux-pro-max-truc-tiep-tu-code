@@ -126,7 +126,7 @@ class _ActionTile extends StatelessWidget {
     return VitCard(
       key: SavingsAutoPilotPage.actionKey(action.id),
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX3,
       onTap: onTap,
       child: Row(
@@ -323,7 +323,7 @@ class _ModeCard extends StatelessWidget {
     return VitCard(
       key: SavingsAutoPilotPage.modeKey(item.id),
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected ? color.withValues(alpha: .4) : null,
       padding: AppSpacing.earnPaddingX3,
       onTap: onTap,
@@ -392,7 +392,7 @@ class _BudgetCard extends StatelessWidget {
       children: [
         VitCard(
           variant: VitCardVariant.inner,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppColors.primary30,
           padding: AppSpacing.earnCardPaddingX3X2,
           child: Row(
@@ -461,7 +461,7 @@ class _SwitchRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3X2,
       child: Row(
         children: [

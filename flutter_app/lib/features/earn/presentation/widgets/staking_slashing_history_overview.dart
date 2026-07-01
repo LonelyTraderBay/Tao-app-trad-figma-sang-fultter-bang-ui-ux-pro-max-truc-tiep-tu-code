@@ -60,7 +60,7 @@ class StakingSlashingSummaryStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingSlashingHistoryKeys.stats,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: GridView.count(
         crossAxisCount: AppSpacing.stakingSlashingStatsGridColumns,
@@ -177,7 +177,7 @@ class StakingSlashingTabs extends StatelessWidget {
               child: VitCard(
                 key: StakingSlashingHistoryKeys.tab(tab.name),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 padding: AppSpacing.earnTopPaddingX4,
                 onTap: () => onChanged(tab),
                 child: Column(

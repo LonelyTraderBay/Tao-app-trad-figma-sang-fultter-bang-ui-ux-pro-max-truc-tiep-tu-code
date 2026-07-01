@@ -27,7 +27,7 @@ class _ScenarioInputs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingRiskScoreCalculatorPage.formKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -138,7 +138,7 @@ class _RiskDropdown extends StatelessWidget {
     return VitCard(
       key: fieldKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       onTap: () => _showOptions(context),
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(

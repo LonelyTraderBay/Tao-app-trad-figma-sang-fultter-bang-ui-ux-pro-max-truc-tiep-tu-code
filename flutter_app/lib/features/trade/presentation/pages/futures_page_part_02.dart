@@ -8,71 +8,28 @@ class _SideSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
+    return VitSegmentedChoice<TradeFuturesSide>(
+      selected: side,
+      onChanged: onChanged,
       height: AppSpacing.futuresSideSwitchHeight,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.hairlineStroke * 2,
-        top: AppSpacing.hairlineStroke * 2,
-        right: AppSpacing.hairlineStroke * 2,
-        bottom: AppSpacing.hairlineStroke * 2,
-      ),
-      child: Row(
-        children: [
-          _SideButton(
-            key: FuturesPage.sideKey('long'),
-            label: 'Long',
-            icon: Icons.trending_up_rounded,
-            active: side == TradeFuturesSide.long,
-            color: _futuresGreen,
-            onTap: () => onChanged(TradeFuturesSide.long),
-          ),
-          _SideButton(
-            key: FuturesPage.sideKey('short'),
-            label: 'Short',
-            icon: Icons.trending_down_rounded,
-            active: side == TradeFuturesSide.short,
-            color: _futuresRed,
-            onTap: () => onChanged(TradeFuturesSide.short),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SideButton extends StatelessWidget {
-  const _SideButton({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.active,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitChoicePill(
-        label: label,
-        selected: active,
-        onTap: onTap,
-        fullWidth: true,
-        height: AppSpacing.ctaHeight,
-        tone: color == _futuresGreen
-            ? VitChoicePillTone.success
-            : VitChoicePillTone.danger,
-        leading: Icon(icon),
-        padding: AppSpacing.zeroInsets,
-        semanticLabel: 'Chon huong $label futures',
-      ),
+      options: [
+        VitSegmentedChoiceOption(
+          key: FuturesPage.sideKey('long'),
+          value: TradeFuturesSide.long,
+          label: 'Long',
+          accentColor: _futuresGreen,
+          leading: const Icon(Icons.trending_up_rounded),
+          semanticLabel: 'Chon huong Long futures',
+        ),
+        VitSegmentedChoiceOption(
+          key: FuturesPage.sideKey('short'),
+          value: TradeFuturesSide.short,
+          label: 'Short',
+          accentColor: _futuresRed,
+          leading: const Icon(Icons.trending_down_rounded),
+          semanticLabel: 'Chon huong Short futures',
+        ),
+      ],
     );
   }
 }
@@ -92,48 +49,37 @@ class _OrderTypeAndLeverage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: VitCard(
-            variant: VitCardVariant.inner,
-            height: AppSpacing.futuresOrderTypeSelectorHeight,
-            padding: AppSpacing.zeroInsets.copyWith(
-              left: AppSpacing.hairlineStroke * 2,
-              top: AppSpacing.hairlineStroke * 2,
-              right: AppSpacing.hairlineStroke * 2,
-              bottom: AppSpacing.hairlineStroke * 2,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final stacked = constraints.maxWidth < 300;
+        final orderTypeSelector = VitSegmentedChoice.withPrimaryAccent<TradeFuturesOrderType>(
+          selected: orderType,
+          onChanged: onOrderTypeChanged,
+          height: AppSpacing.futuresOrderTypeSelectorHeight,
+          options: [
+            VitSegmentedChoiceOption(
+              key: FuturesPage.orderTypeKey('market'),
+              value: TradeFuturesOrderType.market,
+              label: 'Thị trường',
             ),
-            child: Row(
-              children: [
-                _OrderTypeButton(
-                  key: FuturesPage.orderTypeKey('market'),
-                  label: 'Thị trường',
-                  active: orderType == TradeFuturesOrderType.market,
-                  onTap: () => onOrderTypeChanged(TradeFuturesOrderType.market),
-                ),
-                _OrderTypeButton(
-                  key: FuturesPage.orderTypeKey('limit'),
-                  label: 'Giới hạn',
-                  active: orderType == TradeFuturesOrderType.limit,
-                  onTap: () => onOrderTypeChanged(TradeFuturesOrderType.limit),
-                ),
-              ],
+            VitSegmentedChoiceOption(
+              key: FuturesPage.orderTypeKey('limit'),
+              value: TradeFuturesOrderType.limit,
+              label: 'Giới hạn',
             ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        VitCtaButton(
+          ],
+        );
+        final leverageButton = VitCtaButton(
           key: FuturesPage.leverageKey,
           onPressed: onLeverage,
-          fullWidth: false,
+          fullWidth: stacked,
           height: AppSpacing.searchBarCompactHeight,
           variant: VitCtaButtonVariant.ghost,
           leading: const Icon(Icons.bolt_rounded),
-          trailing: const Icon(Icons.keyboard_arrow_down_rounded),
+          trailing: stacked ? null : const Icon(Icons.keyboard_arrow_down_rounded),
           padding: AppSpacing.zeroInsets.copyWith(
             left: AppSpacing.rowPy,
-            right: AppSpacing.x3,
+            right: AppSpacing.x2,
           ),
           child: Text(
             '${leverage}x',
@@ -142,36 +88,25 @@ class _OrderTypeAndLeverage extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class _OrderTypeButton extends StatelessWidget {
-  const _OrderTypeButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitChoicePill(
-        label: label,
-        selected: active,
-        onTap: onTap,
-        fullWidth: true,
-        height: AppSpacing.buttonCompact,
-        padding: AppSpacing.zeroInsets,
-        semanticLabel: 'Chon loai lenh $label',
-      ),
+        );
+        if (stacked) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              orderTypeSelector,
+              const SizedBox(height: AppSpacing.x2),
+              leverageButton,
+            ],
+          );
+        }
+        return Row(
+          children: [
+            Expanded(child: orderTypeSelector),
+            const SizedBox(width: AppSpacing.x2),
+            leverageButton,
+          ],
+        );
+      },
     );
   }
 }
@@ -214,24 +149,20 @@ class _PercentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (final pct in const [10, 25, 50, 100]) ...[
-          Expanded(
-            child: VitChoicePill(
-              key: FuturesPage.pctKey(pct),
-              label: '$pct%',
-              selected: false,
-              onTap: () => onPercent(pct),
-              fullWidth: true,
-              height: AppSpacing.walletTransactionStepLineHeight,
-              padding: AppSpacing.zeroInsets,
-              tone: VitChoicePillTone.neutral,
-              semanticLabel: 'Dung $pct phan tram ky quy',
-            ),
+    return VitPresetChipRow<int>(
+      onTap: onPercent,
+      gap: AppSpacing.x2,
+      height: AppSpacing.walletTransactionStepLineHeight,
+      padding: AppSpacing.zeroInsets,
+      tone: VitChoicePillTone.neutral,
+      items: [
+        for (final pct in const [10, 25, 50, 100])
+          VitPresetChipItem(
+            key: FuturesPage.pctKey(pct),
+            value: pct,
+            label: '$pct%',
+            semanticLabel: 'Dung $pct phan tram ky quy',
           ),
-          if (pct != 100) const SizedBox(width: AppSpacing.x3),
-        ],
       ],
     );
   }

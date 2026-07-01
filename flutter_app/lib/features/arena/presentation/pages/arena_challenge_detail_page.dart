@@ -197,7 +197,7 @@ class _ArenaChallengeDetailPageState
                           onBlock: _showBlockSheet,
                           onLeave: _showLeaveSheet,
                         ),
-                        _CommunityRulesLink(
+                        VitCommunityRulesLink(
                           onTap: () => _go(AppRoutePaths.arenaSafety),
                         ),
                         const _ArenaFooterNotice(),

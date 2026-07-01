@@ -9,7 +9,7 @@ class _RewardAssetRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _transactionReportingCardPadding,
       child: Row(
         children: [
@@ -75,7 +75,7 @@ class _TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _transactionReportingCardPadding,
       child: Column(
         children: [
@@ -254,7 +254,7 @@ class _ExportCategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: onTap,
       padding: _transactionReportingCardPadding,
       child: Row(
@@ -301,7 +301,7 @@ class _ResourceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _transactionReportingCardPadding,
       child: Row(
         children: [

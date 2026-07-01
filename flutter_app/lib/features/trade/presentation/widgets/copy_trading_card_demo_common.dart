@@ -20,7 +20,7 @@ class _InfoPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       borderColor: borderColor,
       child: Column(
@@ -72,7 +72,7 @@ class _ScoreCard extends StatelessWidget {
     return Expanded(
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.md,
+        radius: VitCardRadius.standard,
         padding: AppSpacing.tradeBotCopyDemoCompactPadding,
         borderColor: selected ? color : null,
         background: ColoredBox(color: _statusTintColor(status)),

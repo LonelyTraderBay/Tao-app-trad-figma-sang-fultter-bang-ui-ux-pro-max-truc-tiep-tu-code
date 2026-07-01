@@ -25,12 +25,6 @@ const double _p2pDisputeDetailNativeNavClearance =
     _p2pDisputeDetailVisualNavClearance - AppSpacing.x4;
 const double _p2pDisputeDetailVisualClearance = AppSpacing.x3;
 const double _p2pDisputeDetailNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pDisputeDetailScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PDisputeDetailPage extends ConsumerStatefulWidget {
   const P2PDisputeDetailPage({
@@ -117,8 +111,8 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
                   child: SingleChildScrollView(
                     key: P2PDisputeDetailPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pDisputeDetailScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pDisputeDetailScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -72,7 +72,7 @@ class VitServiceTile extends StatelessWidget {
       button: onTap != null,
       label: label,
       child: VitCard(
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         borderColor: accentColor.withValues(alpha: .18),
         clip: true,
         onTap: onTap,
@@ -203,7 +203,7 @@ class VitModuleHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: accentColor.withValues(alpha: .22),
       padding:
           padding ??
@@ -236,7 +236,7 @@ class VitMetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: density == VitDensity.standard
           ? const EdgeInsetsDirectional.all(AppSpacing.x4)
           : density.cardPadding,

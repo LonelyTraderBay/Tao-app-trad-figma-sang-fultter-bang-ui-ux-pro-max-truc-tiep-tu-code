@@ -37,7 +37,7 @@ class _ReviewRow extends StatelessWidget {
     final urgent = product.id == 'prod-3';
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       padding: AppSpacing.cardPaddingCompact,
       child: Row(

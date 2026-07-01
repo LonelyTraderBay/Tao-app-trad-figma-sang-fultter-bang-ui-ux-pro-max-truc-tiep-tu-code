@@ -29,14 +29,6 @@ const double _p2pLimitsNativeClearance = AppSpacing.x2;
 const double _p2pLimitsSectionGap = AppSpacing.x2;
 const double _p2pLimitsMajorGap = AppSpacing.x3;
 const double _p2pLimitsInfoLineHeight = 1.34;
-const EdgeInsets _p2pLimitsScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pLimitsCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pLimitsInnerPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PTransactionLimitsPage extends ConsumerWidget {
   const P2PTransactionLimitsPage({super.key, this.shellRenderMode});
@@ -93,8 +85,8 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pLimitsScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pTransactionLimitsScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

@@ -18,10 +18,10 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: toneBg == null ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: toneBg == null ? null : tone.withValues(alpha: .18),
-      padding: _p2pTaxCardPadding,
+      padding: AppSpacing.p2pTaxCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,8 +98,8 @@ class _TaxDocumentRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(document.toneKey);
     return VitCard(
-      radius: VitCardRadius.lg,
-      padding: _p2pTaxCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pTaxCardPadding,
       child: Row(
         children: [
           SizedBox.square(
@@ -171,7 +171,7 @@ class _TaxDisclaimer extends StatelessWidget {
         side: BorderSide(color: AppColors.sell20),
       ),
       child: Padding(
-        padding: _p2pTaxCardPadding,
+        padding: AppSpacing.p2pTaxCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

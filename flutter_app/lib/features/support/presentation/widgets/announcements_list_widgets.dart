@@ -110,7 +110,7 @@ class _AnnouncementCard extends StatelessWidget {
     final style = _typeStyle(announcement.type);
     return VitCard(
       key: AnnouncementsPage.announcementKey(announcement.id),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.supportCardPadding,
       onTap: onTap,
       child: Row(

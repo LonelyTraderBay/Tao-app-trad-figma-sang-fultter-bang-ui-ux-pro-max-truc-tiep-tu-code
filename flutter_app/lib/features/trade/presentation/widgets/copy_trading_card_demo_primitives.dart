@@ -53,7 +53,7 @@ class CopyTradingSmallButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.tradeBotCopyDemoInlinePadding,
       borderColor: AppColors.primary20,
       background: const ColoredBox(color: AppColors.primary15),

@@ -1,5 +1,54 @@
 part of 'active_copies_page.dart';
 
+class _ActiveCopyList extends StatelessWidget {
+  const _ActiveCopyList({
+    required this.copies,
+    required this.expandedCopyId,
+    required this.onToggle,
+    required this.onViewDetails,
+    required this.onConfigure,
+    required this.onStop,
+  });
+
+  final List<TradeActiveCopy> copies;
+  final String? expandedCopyId;
+  final ValueChanged<String> onToggle;
+  final ValueChanged<TradeActiveCopy> onViewDetails;
+  final ValueChanged<TradeActiveCopy> onConfigure;
+  final ValueChanged<TradeActiveCopy> onStop;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      clip: true,
+      density: VitDensity.compact,
+      child: Column(
+        children: [
+          for (var i = 0; i < copies.length; i++) ...[
+            _ActiveCopyCard(
+              key: ActiveCopiesPage.copyKey(copies[i].id),
+              copy: copies[i],
+              expanded: expandedCopyId == copies[i].id,
+              onToggle: () => onToggle(copies[i].id),
+              onViewDetails: () => onViewDetails(copies[i]),
+              onConfigure: () => onConfigure(copies[i]),
+              onStop: copies[i].status == TradeActiveCopyStatus.coolingOff
+                  ? null
+                  : () => onStop(copies[i]),
+            ),
+            if (i < copies.length - 1)
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class _PortfolioOverview extends StatelessWidget {
   const _PortfolioOverview({required this.snapshot});
 
@@ -22,22 +71,6 @@ class _PortfolioOverview extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(
-                  'Tổng quan portfolio',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-              Text(
-                '${snapshot.activeCopies} active',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
                 child: _PortfolioMetric(
                   label: 'Vốn đầu tư',
                   value: _formatUsd(snapshot.totalCapital),
@@ -49,11 +82,24 @@ class _PortfolioOverview extends StatelessWidget {
                   value: _formatUsd(snapshot.totalValue),
                 ),
               ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      '${snapshot.activeCopies} active',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             density: VitDensity.compact,
             borderColor: color,
             child: Row(
@@ -147,23 +193,17 @@ class _SegmentedTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      radius: VitCardRadius.lg,
-      child: VitTabBar(
-        variant: VitTabBarVariant.segment,
-        activeKey: activeTab,
-        onChanged: onChanged,
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.id,
-              label: tab.label,
-              widgetKey: ActiveCopiesPage.tabKey(tab.id),
-            ),
-        ],
-      ),
+    return VitSegmentedTabBar(
+      activeKey: activeTab,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: ActiveCopiesPage.tabKey(tab.id),
+          ),
+      ],
     );
   }
 }
@@ -192,9 +232,8 @@ class _ActiveCopyCard extends StatelessWidget {
     final positive = copy.pnl >= 0;
     final pnlColor = positive ? AppColors.buy : AppColors.sell;
 
-    return VitCard(
-      density: VitDensity.compact,
-      borderColor: AppColors.cardBorder,
+    return Padding(
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [
           Row(
@@ -353,7 +392,7 @@ class _MiniValueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -30,8 +31,6 @@ const _cassAmber = AppColors.caution;
 const _cassRed = AppColors.sell;
 const _cassSpace = AppSpacing.x2;
 const _cassTinySpace = AppSpacing.x1;
-const _cassVisualScrollClearance = 112.0;
-const _cassNativeScrollClearance = 72.0;
 const _recordIconTile = 34.0;
 const _exportButtonHeight = 44.0;
 const _cassLineTight = 1.2;
@@ -61,11 +60,10 @@ class _CassReconciliationPageState
         .watch(tradeReadModelControllerProvider)
         .getCassReconciliation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _cassVisualScrollClearance
-            : _cassNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

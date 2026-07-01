@@ -39,7 +39,7 @@ class _TaxActivityCard extends StatelessWidget {
       opacity: activity.taxable ? 1 : 0.58,
       child: VitCard(
         padding: AppSpacing.crossModuleCardPadding,
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -144,7 +144,7 @@ class _ExportFormatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.crossModuleCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -217,7 +217,7 @@ class _JurisdictionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.crossModuleCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -336,7 +336,7 @@ class _ReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.crossModuleCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

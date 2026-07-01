@@ -30,7 +30,7 @@ class _LinkedRow extends StatelessWidget {
               onTap();
             },
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             child: Padding(
               padding: AppSpacing.arenaPointsEntryLinkPadding,
               child: Row(

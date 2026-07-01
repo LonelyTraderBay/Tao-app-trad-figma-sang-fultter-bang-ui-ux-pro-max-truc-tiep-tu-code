@@ -17,7 +17,7 @@ class _TwoFactorStatusCard extends StatelessWidget {
       color: AppColors.buy.withValues(alpha: .9),
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: _p2pTwoFactorCardPadding,
+        padding: AppSpacing.p2pTwoFactorCardPadding,
         child: Row(
           children: [
             SizedBox.square(
@@ -82,7 +82,7 @@ class _MethodSection extends StatelessWidget {
         const _SectionTitle('Phương thức xác thực'),
         const SizedBox(height: AppSpacing.x4),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
@@ -123,7 +123,7 @@ class _MethodRow extends StatelessWidget {
 
     return Padding(
       key: P2P2FASettingsPage.methodKey(method.id),
-      padding: _p2pTwoFactorCardPadding,
+      padding: AppSpacing.p2pTwoFactorCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -187,7 +187,7 @@ class _MethodRow extends StatelessWidget {
           if (method.enabled && !method.isPrimary) ...[
             const SizedBox(height: AppSpacing.x3),
             VitCard(
-              radius: VitCardRadius.md,
+              radius: VitCardRadius.standard,
               variant: VitCardVariant.inner,
               padding: AppSpacing.p2pSecurityDetailsActionPadding,
               onTap: onSetPrimary,
@@ -232,7 +232,7 @@ class _ThresholdSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
@@ -265,7 +265,7 @@ class _ThresholdRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2P2FASettingsPage.thresholdKey(threshold.id),
-      padding: _p2pTwoFactorCardPadding,
+      padding: AppSpacing.p2pTwoFactorCardPadding,
       child: Row(
         children: [
           _IconBadge(
@@ -303,7 +303,7 @@ class _ThresholdRow extends StatelessWidget {
           ),
           if (threshold.editable) ...[
             VitCard(
-              radius: VitCardRadius.md,
+              radius: VitCardRadius.standard,
               variant: VitCardVariant.inner,
               padding: AppSpacing.p2pSecurityDetailsEditPadding,
               child: Text(

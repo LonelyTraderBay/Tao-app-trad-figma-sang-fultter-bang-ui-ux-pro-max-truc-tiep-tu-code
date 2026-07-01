@@ -199,7 +199,7 @@ class _ExportFormatTile extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: active ? VitCardVariant.inner : VitCardVariant.standard,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: active ? AppColors.primary30 : AppColors.cardBorder,
       padding: AppSpacing.launchpadMetricCardPadding,
       child: Column(

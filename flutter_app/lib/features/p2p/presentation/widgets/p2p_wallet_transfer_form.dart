@@ -99,15 +99,15 @@ class _DirectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PWalletTransferPage.directionKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pTransferCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pWalletTransferCardPadding,
       child: Row(
         children: [
           Expanded(
             child: _WalletSide(label: 'Từ', balance: source),
           ),
           Padding(
-            padding: _p2pTransferSwitchPadding,
+            padding: AppSpacing.p2pWalletTransferDirectionSwitchPadding,
             child: Material(
               key: P2PWalletTransferPage.switchKey,
               color: AppModuleAccents.p2p.withValues(alpha: .16),
@@ -242,7 +242,7 @@ class _AssetTile extends StatelessWidget {
     final color = _assetColor(asset.symbol);
     return VitCard(
       key: P2PWalletTransferPage.assetKey(asset.symbol),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.inner,
       borderColor: selected ? color : AppColors.cardBorder,
       background: ColoredBox(
@@ -253,7 +253,7 @@ class _AssetTile extends StatelessWidget {
       constraints: const BoxConstraints(
         minHeight: _p2pTransferAssetTileMinHeight,
       ),
-      padding: _p2pTransferAssetTilePadding,
+      padding: AppSpacing.p2pWalletTransferAssetChipPadding,
       clip: true,
       onTap: onTap,
       child: Column(

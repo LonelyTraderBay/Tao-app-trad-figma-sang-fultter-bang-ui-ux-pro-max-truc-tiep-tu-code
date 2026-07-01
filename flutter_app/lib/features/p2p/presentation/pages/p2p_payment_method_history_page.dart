@@ -21,12 +21,6 @@ const double _p2pPaymentHistoryNativeNavClearance =
     _p2pPaymentHistoryVisualNavClearance - AppSpacing.x4;
 const double _p2pPaymentHistoryVisualClearance = AppSpacing.x3;
 const double _p2pPaymentHistoryNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pPaymentHistoryScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PPaymentMethodHistoryPage extends ConsumerWidget {
   const P2PPaymentMethodHistoryPage({super.key, this.shellRenderMode});
@@ -70,8 +64,8 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodHistoryPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pPaymentHistoryScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pPaymentHistoryScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
@@ -202,7 +196,7 @@ class _TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PPaymentMethodHistoryPage.txKey(transaction.id),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pPaymentCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

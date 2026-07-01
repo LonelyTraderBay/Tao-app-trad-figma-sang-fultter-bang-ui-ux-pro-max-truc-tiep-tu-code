@@ -90,7 +90,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
               VitCard(
                 onTap: onViewChallenge,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 child: Padding(
                   padding: AppSpacing.arenaVerticalPaddingX2,
                   child: Row(
@@ -335,35 +335,7 @@ class _ArenaFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Material(
-          color: AppColors.transparent,
-          child: VitCard(
-            onTap: onRules,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
-            child: Padding(
-              padding: AppSpacing.arenaPresetChipPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.menu_book_outlined,
-                    color: AppColors.primary,
-                    size: AppSpacing.myArenaFooterIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    'Quy t\u1EAFc c\u1ED9ng \u0111\u1ED3ng',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        VitCommunityRulesLink(onTap: onRules),
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           density: VitDensity.compact,

@@ -82,7 +82,7 @@ class _TopTab extends StatelessWidget {
       child: VitCard(
         key: tabKey(tab.name),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         onTap: () => onChanged(tab),
         child: Column(
           mainAxisSize: MainAxisSize.min,

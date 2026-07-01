@@ -45,7 +45,7 @@ class SavingsReceiptPage extends ConsumerWidget {
                   const SizedBox(height: AppSpacing.x7),
                   VitCard(
                     variant: VitCardVariant.standard,
-                    radius: VitCardRadius.md,
+                    radius: VitCardRadius.standard,
                     padding: AppSpacing.zeroInsets,
                     child: _EmptyReceiptState(snapshot: snapshot),
                   ),

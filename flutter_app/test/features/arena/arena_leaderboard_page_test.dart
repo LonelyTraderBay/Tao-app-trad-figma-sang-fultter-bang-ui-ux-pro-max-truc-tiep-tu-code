@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_creator_page.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_leaderboard_page.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_safety_center_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
@@ -131,6 +132,6 @@ void main() {
     await tester.ensureVisible(find.byKey(ArenaLeaderboardPage.rulesKey));
     await tester.tap(find.byKey(ArenaLeaderboardPage.rulesKey));
     await tester.pumpAndSettle();
-    expect(find.text('Hướng dẫn Arena'), findsOneWidget);
+    expect(find.byType(ArenaSafetyCenterPage), findsOneWidget);
   });
 }

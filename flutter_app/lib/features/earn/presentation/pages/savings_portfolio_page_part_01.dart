@@ -39,27 +39,21 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [
-                  VitCard(
-                    variant: VitCardVariant.inner,
-                    radius: VitCardRadius.lg,
-                    padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
-                    child: VitTabBar(
-                      variant: VitTabBarVariant.segment,
-                      activeKey: _tab.name,
-                      onChanged: (key) {
-                        HapticFeedback.selectionClick();
-                        setState(() => _tab = _PortfolioTab.values.byName(key));
-                      },
-                      tabs: const [
-                        VitTabItem(key: 'overview', label: 'Tổng quan'),
-                        VitTabItem(
-                          key: 'positions',
-                          label: 'Vị thế',
-                          widgetKey: SavingsPortfolioPage.positionsTabKey,
-                        ),
-                        VitTabItem(key: 'earnings', label: 'Thu nhập'),
-                      ],
-                    ),
+                  VitSegmentedTabBar(
+                    activeKey: _tab.name,
+                    onChanged: (key) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _tab = _PortfolioTab.values.byName(key));
+                    },
+                    tabs: const [
+                      VitTabItem(key: 'overview', label: 'Tổng quan'),
+                      VitTabItem(
+                        key: 'positions',
+                        label: 'Vị thế',
+                        widgetKey: SavingsPortfolioPage.positionsTabKey,
+                      ),
+                      VitTabItem(key: 'earnings', label: 'Thu nhập'),
+                    ],
                   ),
                   if (_tab == _PortfolioTab.overview)
                     _OverviewTab(
@@ -159,7 +153,7 @@ class _PortfolioHero extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsPortfolioCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

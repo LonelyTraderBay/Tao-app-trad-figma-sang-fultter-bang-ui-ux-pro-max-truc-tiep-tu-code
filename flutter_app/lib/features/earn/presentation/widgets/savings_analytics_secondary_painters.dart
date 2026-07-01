@@ -31,7 +31,7 @@ class _SecondaryTabContent extends StatelessWidget {
     };
 
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.cardPaddingHero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

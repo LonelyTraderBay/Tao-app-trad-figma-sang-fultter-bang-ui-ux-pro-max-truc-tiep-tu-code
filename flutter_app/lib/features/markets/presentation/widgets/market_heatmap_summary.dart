@@ -66,7 +66,7 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.marketHeatmapSummaryPadding,
       height: AppSpacing.marketHeatmapSummaryHeight,
       child: Column(

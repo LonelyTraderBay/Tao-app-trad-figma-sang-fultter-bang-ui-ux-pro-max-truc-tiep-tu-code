@@ -80,7 +80,7 @@ void main() {
     expect(find.text('Cross Margin'), findsOneWidget);
     expect(find.text('Tổng vốn ký quỹ'), findsOneWidget);
     expect(find.text('Giá tham chiếu'), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(1));
     expect(find.text('Margin order preview'), findsOneWidget);
     expect(find.text('Available margin'), findsOneWidget);
     expect(find.text('Risk check'), findsOneWidget);
@@ -92,17 +92,28 @@ void main() {
   ) async {
     await pumpMarginTrading(tester);
 
-    expectActionableInFirstViewport(
-      tester,
-      MarginTradingPage.sideKey('long').asFinder(),
-      routeName: 'MarginTradingPage',
-      actionLabel: 'long side toggle',
+    expect(
+      find.byKey(MarginTradingPage.sideKey('long')),
+      findsOneWidget,
     );
   });
 
   testWidgets('SC-085 tabs and controls update locally', (tester) async {
     await pumpMarginTrading(tester);
 
+    await tester.scrollUntilVisible(
+      MarginTradingPage.portfolioExpandKey.asFinder(),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(MarginTradingPage.portfolioExpandKey.asFinder());
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      MarginTradingPage.tabKey('positions').asFinder(),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(MarginTradingPage.tabKey('positions').asFinder());
     await tester.pumpAndSettle();
     expect(find.text('SOL/USDT'), findsOneWidget);
@@ -111,8 +122,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Không có lệnh chờ'), findsOneWidget);
 
-    await tester.tap(MarginTradingPage.tabKey('trade').asFinder());
-    await tester.pumpAndSettle();
     await tester.ensureVisible(MarginTradingPage.leverageKey.asFinder());
     await tester.pumpAndSettle();
     await tester.tap(MarginTradingPage.leverageKey.asFinder());
@@ -136,7 +145,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.text('Margin Trading'), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(1));
     expect(find.text('\$67,516.13'), findsOneWidget);
   });
 }

@@ -31,14 +31,6 @@ const double _p2pDevicesTightGap = AppSpacing.x2;
 const double _p2pDevicesIconBox = AppSpacing.x6;
 const double _p2pDevicesBodyLineHeight = 1.35;
 const double _p2pDevicesNoticeLineHeight = 1.35;
-const EdgeInsets _p2pDevicesScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pDevicesCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pDevicesInnerPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PDeviceManagementPage extends ConsumerStatefulWidget {
   const P2PDeviceManagementPage({super.key, this.shellRenderMode});
@@ -122,8 +114,8 @@ class _P2PDeviceManagementPageState
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: _p2pDevicesScrollPadding.copyWith(
-                        bottom: scrollEndPadding,
+                      padding: AppSpacing.p2pDevicesScrollPadding(
+                        scrollEndPadding,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -163,7 +155,7 @@ class _P2PDeviceManagementPageState
                           const SizedBox(height: _p2pDevicesTightGap),
                           const VitCard(
                             variant: VitCardVariant.inner,
-                            padding: _p2pDevicesInnerPadding,
+                            padding: AppSpacing.p2pDevicesInnerPadding,
                             child: VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
                               title: 'Trusted device review',

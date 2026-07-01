@@ -14,7 +14,7 @@ class _BugBountySection extends StatelessWidget {
       children: [
         VitCard(
           key: StakingAuditReportsPage.bugBountyKey,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

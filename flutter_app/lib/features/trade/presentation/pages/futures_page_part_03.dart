@@ -48,11 +48,17 @@ class _PositionCard extends StatelessWidget {
                     : 'SHORT',
                 color: color,
               ),
-              const SizedBox(width: AppSpacing.x3),
-              Text(position.symbol, style: AppTextStyles.baseMedium),
-              const SizedBox(width: AppSpacing.x3),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  position.symbol,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.baseMedium,
+                ),
+              ),
               _StatusPill(label: '${position.leverage}x', color: _tradePrimary),
-              const Spacer(),
+              const SizedBox(width: AppSpacing.x2),
               Text(
                 '${position.pnl >= 0 ? '+' : '-'}\$${position.pnl.abs().toStringAsFixed(2)}',
                 style: AppTextStyles.numericCode.copyWith(
@@ -169,13 +175,25 @@ class _AccountRow extends StatelessWidget {
       padding: AppSpacing.zeroInsets.copyWith(bottom: AppSpacing.x3),
       child: Row(
         children: [
-          Text(label, style: AppTextStyles.caption),
-          const Spacer(),
-          Text(
-            value,
-            style: AppTextStyles.numericCode.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+          Expanded(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Flexible(
+            child: Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.right,
+              style: AppTextStyles.numericCode.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+              ),
             ),
           ),
         ],
@@ -251,4 +269,9 @@ String _formatMoney(double value) {
     if (left > 1 && left % 3 == 1) buffer.write(',');
   }
   return '\$${buffer.toString()}.${parts.last}';
+}
+
+String _formatFuturesPrice(double value) {
+  final formatted = _formatMoney(value);
+  return formatted.startsWith(r'$') ? formatted.substring(1) : formatted;
 }

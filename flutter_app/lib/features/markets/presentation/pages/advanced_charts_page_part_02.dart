@@ -27,7 +27,7 @@ class _IndicatorCard extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: _advancedIndicatorHeaderPadding,
             onTap: onToggleExpanded,
             child: Row(
@@ -183,7 +183,7 @@ class _IndicatorToggle extends StatelessWidget {
       label: active ? 'Táº¯t chá»‰ bÃ¡o' : 'Báº­t chá»‰ bÃ¡o',
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         width: _advancedToggleSize,
         height: _advancedToggleSize,
         borderColor: active ? color : AppColors.borderSolid,

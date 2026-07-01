@@ -28,7 +28,7 @@ class SavingsNotificationMasterSummaryCard extends StatelessWidget {
     return VitCard(
       key: SavingsNotificationPreferencesKeys.summary,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
@@ -143,7 +143,7 @@ class SavingsNotificationStatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,22 +180,15 @@ class SavingsNotificationTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface,
-        shape: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnHorizontalPaddingX4,
-        child: VitTabBar(
-          variant: VitTabBarVariant.underline,
+    return Padding(
+      padding: AppSpacing.earnHorizontalPaddingX4,
+        child: VitSegmentedTabBar(
           activeKey: active,
           onChanged: onChanged,
           tabs: [
             for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
           ],
         ),
-      ),
     );
   }
 }

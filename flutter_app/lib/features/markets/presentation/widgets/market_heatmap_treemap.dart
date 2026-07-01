@@ -172,7 +172,7 @@ class _HeatmapTile extends StatelessWidget {
     return VitCard(
       key: MarketHeatmapKeys.tile(coin.id),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.transparent,
       padding: large
           ? AppSpacing.marketHeatmapTilePaddingLarge

@@ -223,7 +223,7 @@ class _EvidenceUploadCard extends StatelessWidget {
               width: _submissionEvidenceIconSize,
               height: _submissionEvidenceIconSize,
               variant: VitCardVariant.inner,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               alignment: Alignment.center,
               child: Icon(
                 Icons.upload_rounded,

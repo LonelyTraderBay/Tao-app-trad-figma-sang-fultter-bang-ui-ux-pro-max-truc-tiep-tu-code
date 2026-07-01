@@ -124,7 +124,7 @@ class _MetricStrip extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.zeroInsets,
       child: Row(
         children: [
@@ -218,7 +218,7 @@ class _AllocationRow extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.dcaPaddingX3,
       child: Column(
         children: [

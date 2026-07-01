@@ -167,7 +167,7 @@ class _EncryptionDiagram extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PE2EInfoPage.diagramKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.buy20,
       padding: _p2pE2ECardPadding,
       child: Column(
@@ -297,7 +297,7 @@ class _InfoItemCard extends StatelessWidget {
 
     return VitCard(
       key: P2PE2EInfoPage.infoItemKey(item.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _p2pE2ECardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -350,7 +350,7 @@ class _FingerprintCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PE2EInfoPage.fingerprintKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _p2pE2ECardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -405,7 +405,7 @@ class _HowItWorks extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PE2EInfoPage.stepsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _p2pE2ECardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -55,7 +55,7 @@ class _SectionChip extends StatelessWidget {
       key: ArenaUniversalPresetLibraryPage.sectionKey(section.id),
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.warn : AppColors.borderSolid,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.arenaPresetSectionChipPadding,
       onTap: onTap,
       child: Row(

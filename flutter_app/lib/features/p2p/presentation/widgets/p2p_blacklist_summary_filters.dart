@@ -11,8 +11,8 @@ class _SummaryCard extends StatelessWidget {
     final counts = _reasonCounts(entries);
     return VitCard(
       key: P2PBlacklistPage.summaryKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pBlacklistCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pBlacklistListCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -106,7 +106,7 @@ class _FilterRail extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       physics: const ClampingScrollPhysics(),
-      padding: _p2pBlacklistFilterRailPadding,
+      padding: AppSpacing.p2pBlacklistFilterRailPadding,
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -142,7 +142,7 @@ class _FilterChip extends StatelessWidget {
       label: filter.label,
       selected: selected,
       onTap: onTap,
-      padding: _p2pBlacklistFilterChipPadding,
+      padding: AppSpacing.p2pBlacklistListFilterChipPadding,
       accentColor: color,
       semanticLabel: 'Blacklist filter ${filter.label}',
     );

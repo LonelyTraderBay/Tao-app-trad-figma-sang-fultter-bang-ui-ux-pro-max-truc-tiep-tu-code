@@ -86,7 +86,9 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                   child: SingleChildScrollView(
                     key: P2POrderProofPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: scrollEndPadding),
+                    padding: AppSpacing.p2pOrderLifecycleScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

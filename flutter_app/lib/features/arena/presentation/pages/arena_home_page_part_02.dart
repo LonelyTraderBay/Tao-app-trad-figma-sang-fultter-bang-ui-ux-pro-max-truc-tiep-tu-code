@@ -208,7 +208,7 @@ class _RoomRow extends StatelessWidget {
       key: ArenaHomePage.roomKey(room.id),
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       child: Padding(
         padding: const EdgeInsetsDirectional.symmetric(
           horizontal: AppSpacing.x3,

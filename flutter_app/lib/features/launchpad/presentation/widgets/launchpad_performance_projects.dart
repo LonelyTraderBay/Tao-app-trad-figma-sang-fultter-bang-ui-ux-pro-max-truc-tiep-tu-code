@@ -31,7 +31,7 @@ class _HistoricalProjectCard extends StatelessWidget {
         : AppColors.sell;
     return VitCard(
       key: LaunchpadPerformancePage.projectKey(project.id),
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: _launchpadPerformanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -153,7 +153,7 @@ class _PriceBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: _launchpadPerformanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

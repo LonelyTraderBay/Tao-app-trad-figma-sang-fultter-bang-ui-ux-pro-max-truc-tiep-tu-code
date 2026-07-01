@@ -20,7 +20,7 @@ class _WhatIfHero extends StatelessWidget {
     return VitCard(
       key: SavingsWhatIfPage.summaryKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +138,7 @@ class _WhatIfTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnHorizontalPaddingX3,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
@@ -214,7 +214,7 @@ class _ScenarioCard extends StatelessWidget {
     final color = _riskColor(scenario.riskLevel);
     return VitCard(
       key: SavingsWhatIfPage.scenarioKey(scenario.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       borderColor: selected ? color.withValues(alpha: .45) : null,
       onTap: onTap,
@@ -297,7 +297,7 @@ class _CustomScenarioControls extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
@@ -393,7 +393,7 @@ class _PortfolioList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsWhatIfPage.portfolioKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [

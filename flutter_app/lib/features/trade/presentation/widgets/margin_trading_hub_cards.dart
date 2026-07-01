@@ -20,7 +20,7 @@ class _FeatureCard extends StatelessWidget {
                 width: _hubIconTile,
                 height: _hubIconTile,
                 density: VitDensity.compact,
-                padding: EdgeInsets.zero,
+                padding: AppSpacing.zeroInsets,
                 borderColor: color.withValues(alpha: .18),
                 child: Icon(
                   _featureIcon(feature.phase),

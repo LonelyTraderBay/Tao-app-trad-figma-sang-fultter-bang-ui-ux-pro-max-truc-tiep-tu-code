@@ -17,7 +17,7 @@ class _WhitelistAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _p2pSecurityCompactPadding,
       onTap: onTap,
       child: Row(
@@ -67,7 +67,7 @@ class _SecurityScoreCard extends StatelessWidget {
 
     return VitCard(
       key: P2PSecurityCenterPage.scoreKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _p2pSecurityCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -175,7 +175,7 @@ class _SecurityFeatures extends StatelessWidget {
         const _SectionTitle('Tính năng bảo mật'),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
@@ -212,7 +212,7 @@ class _SecurityFeatureRow extends StatelessWidget {
       key: P2PSecurityCenterPage.featureKey(feature.id),
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.zeroInsets,
       child: Padding(
         padding: _p2pSecurityCompactPadding,

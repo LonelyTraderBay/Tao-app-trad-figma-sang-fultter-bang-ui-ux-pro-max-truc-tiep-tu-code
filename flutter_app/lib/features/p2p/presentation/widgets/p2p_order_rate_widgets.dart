@@ -8,8 +8,8 @@ class _MerchantSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pOrderRateCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -58,7 +58,7 @@ class _RatingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+      padding: AppSpacing.p2pOrderRateCardPadding,
       child: Column(
         children: [
           Text(
@@ -117,7 +117,7 @@ class _StarButton extends StatelessWidget {
       selected: selected,
       onTap: onPressed,
       height: AppSpacing.buttonCompact + AppSpacing.x3,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x2),
+      padding: AppSpacing.p2pOrderRateStarChipPadding,
       accentColor: AppColors.warn,
       leading: Icon(selected ? Icons.star_rounded : Icons.star_border_rounded),
       semanticLabel: '$rating stars',
@@ -189,7 +189,7 @@ class _TagChip extends StatelessWidget {
       selected: selected,
       onTap: onPressed,
       height: AppSpacing.buttonCompact,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+      padding: AppSpacing.p2pOrderRateTagChipPadding,
       accentColor: AppColors.warn,
       leading: Icon(_tagIcon(tag.iconKey)),
     );
@@ -282,7 +282,7 @@ class _SuccessView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: VitCard(
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         padding: AppSpacing.p2pOrderLifecycleSuccessPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,

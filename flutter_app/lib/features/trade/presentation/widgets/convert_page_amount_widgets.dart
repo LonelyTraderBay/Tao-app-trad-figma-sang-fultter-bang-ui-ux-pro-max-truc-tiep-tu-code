@@ -1,7 +1,140 @@
 part of '../pages/convert_page.dart';
 
-class _AmountCard extends StatelessWidget {
-  const _AmountCard({
+class _ConvertHeroCard extends StatelessWidget {
+  const _ConvertHeroCard({
+    required this.fromAsset,
+    required this.toAsset,
+    required this.amountController,
+    required this.quoteAmount,
+    required this.quoteLabel,
+    required this.countdown,
+    required this.favoritePairs,
+    required this.activeFrom,
+    required this.activeTo,
+    required this.onFromChanged,
+    required this.onFromAssetTap,
+    required this.onToAssetTap,
+    required this.onPercent,
+    required this.onSwap,
+    required this.onFavoriteSelected,
+  });
+
+  final TradeConvertAsset fromAsset;
+  final TradeConvertAsset toAsset;
+  final TextEditingController amountController;
+  final double quoteAmount;
+  final String quoteLabel;
+  final String countdown;
+  final List<TradeConvertFavoritePair> favoritePairs;
+  final String activeFrom;
+  final String activeTo;
+  final VoidCallback onFromChanged;
+  final VoidCallback onFromAssetTap;
+  final VoidCallback onToAssetTap;
+  final ValueChanged<int> onPercent;
+  final VoidCallback onSwap;
+  final ValueChanged<TradeConvertFavoritePair> onFavoriteSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
+      clip: true,
+      padding: AppSpacing.cardPadding,
+      background: const VitHeroGlow(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.sync_rounded,
+                color: _tradePrimary,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  quoteLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.onAccent.withValues(alpha: .82),
+                    fontWeight: AppTextStyles.medium,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                ),
+              ),
+              VitAccentPill(label: countdown, accentColor: _tradePrimary),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          _AmountSection(
+            label: 'Từ',
+            asset: fromAsset,
+            amountController: amountController,
+            input: true,
+            onChanged: onFromChanged,
+            onAssetTap: onFromAssetTap,
+            onPercent: onPercent,
+          ),
+          Transform.translate(
+            offset: const Offset(0, -AppSpacing.x2),
+            child: Center(
+              child: VitIconButton(
+                key: ConvertPage.swapKey,
+                onPressed: onSwap,
+                icon: Icons.swap_vert_rounded,
+                tooltip: 'Đảo chiều cặp',
+                variant: VitIconButtonVariant.primary,
+                size: VitIconButtonSize.md,
+              ),
+            ),
+          ),
+          Transform.translate(
+            offset: const Offset(0, -AppSpacing.x4),
+            child: _AmountSection(
+              label: 'Sang',
+              asset: toAsset,
+              quoteAmount: quoteAmount,
+              onAssetTap: onToAssetTap,
+            ),
+          ),
+          if (favoritePairs.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.x2),
+            SizedBox(
+              height: AppSpacing.convertFavoriteChipHeight,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: favoritePairs.length,
+                separatorBuilder: (_, _) =>
+                    const SizedBox(width: AppSpacing.x2),
+                itemBuilder: (context, index) {
+                  final pair = favoritePairs[index];
+                  final active =
+                      pair.fromSymbol == activeFrom &&
+                      pair.toSymbol == activeTo;
+                  return VitChoicePill(
+                    key: ConvertPage.favoriteKey(pair.label),
+                    label: pair.label,
+                    selected: active,
+                    onTap: () => onFavoriteSelected(pair),
+                    accentColor: _tradePrimary,
+                    height: AppSpacing.convertChipHeight,
+                  );
+                },
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _AmountSection extends StatelessWidget {
+  const _AmountSection({
     required this.label,
     required this.asset,
     required this.onAssetTap,
@@ -23,116 +156,106 @@ class _AmountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = input ? _convertFromCardHeight : _convertToCardHeight;
     final balanceLabel =
         'Số dư: ${formatConvertBalance(asset.balance, asset.symbol)} ${asset.symbol}';
-    return VitCard(
-      height: height,
-      density: VitDensity.compact,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.x4 + AppSpacing.x1,
-        top: AppSpacing.x4 + AppSpacing.x1,
-        right: AppSpacing.x4 + AppSpacing.x1,
-        bottom: AppSpacing.x4 + AppSpacing.x1,
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.medium,
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.onAccent.withValues(alpha: .72),
+                fontWeight: AppTextStyles.medium,
               ),
-              const SizedBox(width: _convertSpace),
-              Text(
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
                 balanceLabel,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
+                  color: AppColors.onAccent.withValues(alpha: .62),
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: _convertSpace),
-          Row(
-            children: [
-              _AssetButton(
-                key: input ? ConvertPage.fromAssetKey : ConvertPage.toAssetKey,
-                asset: asset,
-                onTap: onAssetTap,
-              ),
-              const SizedBox(width: _convertSpace),
-              Expanded(
-                child: input
-                    ? VitInput(
-                        fieldKey: ConvertPage.amountFieldKey,
-                        controller: amountController!,
-                        hintText: '0.00',
-                        textAlign: TextAlign.right,
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                            RegExp(r'^\d*\.?\d{0,8}'),
-                          ),
-                        ],
-                        onChanged: (_) => onChanged?.call(),
-                        textStyle: AppTextStyles.sectionTitle.copyWith(
-                          color: AppColors.text1,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      )
-                    : Text(
-                        formatConvertQuoteAmount(
-                          quoteAmount ?? 0,
-                          asset.symbol,
-                        ),
-                        textAlign: TextAlign.right,
-                        style: AppTextStyles.sectionTitle.copyWith(
-                          color: AppColors.text3,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-              ),
-            ],
-          ),
-          if (input) ...[
-            const SizedBox(height: _convertSpace),
-            Row(
-              children: [
-                for (final pct in const [25, 50, 75, 100]) ...[
-                  _PercentChip(
-                    key: ConvertPage.pctKey(pct),
-                    label: '$pct%',
-                    onTap: () => onPercent?.call(pct),
-                  ),
-                  if (pct != 100) const SizedBox(width: _convertSpace),
-                ],
-              ],
-            ),
-            const SizedBox(height: _convertSpace),
-            Row(
-              children: [
-                Text(
-                  'Min: \$10',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(width: AppSpacing.x4),
-                Text(
-                  'Max: \$500,000',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
             ),
           ],
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        Row(
+          children: [
+            _AssetButton(
+              key: input ? ConvertPage.fromAssetKey : ConvertPage.toAssetKey,
+              asset: asset,
+              onTap: onAssetTap,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: input
+                  ? VitInput(
+                      fieldKey: ConvertPage.amountFieldKey,
+                      controller: amountController!,
+                      hintText: '0.00',
+                      textAlign: TextAlign.right,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d{0,8}'),
+                        ),
+                      ],
+                      onChanged: (_) => onChanged?.call(),
+                      textStyle: AppTextStyles.sectionTitle.copyWith(
+                        color: AppColors.onAccent,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    )
+                  : Text(
+                      formatConvertQuoteAmount(quoteAmount ?? 0, asset.symbol),
+                      textAlign: TextAlign.right,
+                      style: AppTextStyles.sectionTitle.copyWith(
+                        color: AppColors.onAccent.withValues(alpha: .55),
+                        fontFeatures: AppTextStyles.tabularFigures,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+            ),
+          ],
+        ),
+        if (input) ...[
+          const SizedBox(height: AppSpacing.x2),
+          VitPresetChipRow.percentBalance(
+            onTap: onPercent!,
+            keyFor: ConvertPage.pctKey,
+            accentColor: _tradePrimary,
+            height: AppSpacing.convertChipHeight,
+            padding: AppSpacing.zeroInsets,
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Row(
+            children: [
+              Text(
+                'Min: \$10',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.onAccent.withValues(alpha: .5),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x4),
+              Text(
+                'Max: \$500,000',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.onAccent.withValues(alpha: .5),
+                ),
+              ),
+            ],
+          ),
         ],
-      ),
+      ],
     );
   }
 }
@@ -149,70 +272,37 @@ class _AssetButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
-      height: _convertControlHeight,
+      height: AppSpacing.convertControlHeight,
       density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.rowGapRegular,
         right: AppSpacing.rowGapRegular,
       ),
-      borderColor: _tradePrimary.withValues(alpha: .22),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          VitCard(
-            width: 26,
-            height: 26,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
-            alignment: Alignment.center,
-            borderColor: color.withValues(alpha: .22),
-            child: Text(
-              asset.symbol.substring(0, math.min(3, asset.symbol.length)),
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
+          VitAssetAvatar(
+            label: asset.symbol,
+            accentColor: color,
+            size: AppSpacing.buttonCompact - AppSpacing.x2,
+            radius: AppRadii.smRadius,
+            border: true,
           ),
-          const SizedBox(width: _convertSpace),
+          const SizedBox(width: AppSpacing.x2),
           Text(
             asset.symbol,
             style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
+              color: AppColors.onAccent,
               fontWeight: AppTextStyles.bold,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
-          const Icon(
+          Icon(
             Icons.keyboard_arrow_down_rounded,
-            color: AppColors.text2,
-            size: 16,
+            color: AppColors.onAccent.withValues(alpha: .72),
+            size: AppSpacing.iconSm,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _PercentChip extends StatelessWidget {
-  const _PercentChip({super.key, required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: _convertChipHeight,
-      width: _convertControlHeight,
-      child: VitChoicePill(
-        label: label,
-        selected: false,
-        onTap: onTap,
-        fullWidth: true,
-        height: _convertChipHeight,
-        padding: EdgeInsets.zero,
-        accentColor: _tradePrimary,
       ),
     );
   }

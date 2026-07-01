@@ -21,14 +21,6 @@ const double _p2pAmlNativeClearance = AppSpacing.x2;
 const double _p2pAmlIconBox = AppSpacing.buttonCompact;
 const double _p2pAmlDividerExtent = AppSpacing.dividerHairline;
 const double _p2pAmlInfoLineHeight = 1.35;
-const EdgeInsets _p2pAmlCardPadding = EdgeInsets.all(AppSpacing.x2);
-
-EdgeInsets _p2pAmlScrollPadding(double scrollEndPadding) => EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  scrollEndPadding,
-);
 
 class P2PAmlScreeningPage extends ConsumerWidget {
   const P2PAmlScreeningPage({super.key, this.shellRenderMode});
@@ -74,7 +66,9 @@ class P2PAmlScreeningPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pAmlScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pAmlScreeningScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -118,7 +112,7 @@ class _AmlHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy),
       ),
       child: Padding(
-        padding: _p2pAmlCardPadding,
+        padding: AppSpacing.p2pAmlScreeningCardPadding,
         child: Row(
           children: [
             Material(
@@ -179,8 +173,8 @@ class _AmlSchedule extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PAmlScreeningPage.scheduleKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pAmlCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pAmlScreeningCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -244,7 +238,7 @@ class _AmlCheckList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PAmlScreeningPage.checksKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: EdgeInsets.zero,
       clip: true,
       child: Column(
@@ -274,7 +268,7 @@ class _AmlCheckRow extends StatelessWidget {
 
     return Padding(
       key: P2PAmlScreeningPage.checkKey(check.id),
-      padding: _p2pAmlCardPadding,
+      padding: AppSpacing.p2pAmlScreeningCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -351,7 +345,7 @@ class _AmlInfoNotice extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .24)),
       ),
       child: Padding(
-        padding: _p2pAmlCardPadding,
+        padding: AppSpacing.p2pAmlScreeningCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

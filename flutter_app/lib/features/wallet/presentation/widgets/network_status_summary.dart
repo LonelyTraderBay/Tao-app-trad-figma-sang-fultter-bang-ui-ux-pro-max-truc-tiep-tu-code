@@ -26,7 +26,7 @@ class _SummaryCard extends StatelessWidget {
 
     return VitCard(
       padding: VitDensity.compact.cardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: summaryColor.withValues(alpha: .34),
       child: Column(
         children: [
@@ -36,7 +36,7 @@ class _SummaryCard extends StatelessWidget {
                 width: _networkSummaryIconSize,
                 height: _networkSummaryIconSize,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.md,
+                radius: VitCardRadius.standard,
                 borderColor: summaryColor.withValues(alpha: .42),
                 background: ColoredBox(
                   color: summaryColor.withValues(alpha: .08),

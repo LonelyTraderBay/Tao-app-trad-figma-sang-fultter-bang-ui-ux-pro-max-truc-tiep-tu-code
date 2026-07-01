@@ -101,7 +101,7 @@ class _RecommendationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.onboardingCardPadding,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
       onTap: onTap,
       child: Row(

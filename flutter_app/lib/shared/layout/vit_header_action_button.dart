@@ -120,12 +120,12 @@ class VitHeaderActionButton extends StatelessWidget {
           height: metrics.size,
           child: Material(
             color: AppColors.transparent,
-            borderRadius: AppRadii.headerActionRadius,
+            borderRadius: AppRadii.inputRadius,
             child: Ink(
               decoration: ShapeDecoration(
                 color: style.background,
                 shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.headerActionRadius,
+                  borderRadius: AppRadii.inputRadius,
                   side: style.border == null
                       ? BorderSide.none
                       : BorderSide(color: style.border!),
@@ -133,7 +133,7 @@ class VitHeaderActionButton extends StatelessWidget {
               ),
               child: InkWell(
                 onTap: _enabled ? onPressed : null,
-                borderRadius: AppRadii.headerActionRadius,
+                borderRadius: AppRadii.inputRadius,
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [

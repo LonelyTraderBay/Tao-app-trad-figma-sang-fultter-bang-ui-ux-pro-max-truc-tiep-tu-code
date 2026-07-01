@@ -52,7 +52,7 @@ class _Composer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingSocialFeedPage.composerKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
@@ -88,7 +88,7 @@ class _FeedTabs extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.tabsKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnHorizontalPaddingX3,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
@@ -129,7 +129,7 @@ class _PostCard extends StatelessWidget {
     final typeMeta = _PostTypeMeta.fromType(post.type);
     return VitCard(
       key: StakingSocialFeedPage.postKey(post.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -333,7 +333,7 @@ class _CommunityStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingSocialFeedPage.statsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

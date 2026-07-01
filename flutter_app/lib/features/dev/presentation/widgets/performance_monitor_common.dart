@@ -16,7 +16,7 @@ class _TipCard extends StatelessWidget {
 
     return VitCard(
       padding: AppSpacing.devCompactPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

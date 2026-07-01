@@ -255,7 +255,7 @@ class _ArenaStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.x7 + AppSpacing.x5,
@@ -372,7 +372,7 @@ class _QuickLinkButton extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: VitDensity.compact.controlHeight,
@@ -508,7 +508,7 @@ class _ArenaTabPill extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: VitDensity.compact.controlHeight,

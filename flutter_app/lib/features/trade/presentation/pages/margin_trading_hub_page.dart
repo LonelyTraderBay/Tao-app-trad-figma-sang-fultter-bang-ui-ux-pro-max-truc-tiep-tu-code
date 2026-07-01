@@ -14,9 +14,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/margin_trading_hub_widgets.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/margin_trading_hub_hero_nav.dart';
 part '../widgets/margin_trading_hub_cards.dart';
@@ -28,8 +30,6 @@ const _hubPrimary = AppColors.primary;
 const _hubGreen = AppColors.buy;
 const _hubSpace = AppSpacing.x2;
 const _hubTinySpace = AppSpacing.x1;
-const _hubVisualScrollClearance = 112.0;
-const _hubNativeScrollClearance = 72.0;
 const _hubHeroIconTile = 44.0;
 const _hubIconTile = 34.0;
 const _hubLineTight = 1.2;
@@ -54,11 +54,10 @@ class MarginTradingHubPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getMarginTradingHub();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _hubVisualScrollClearance
-            : _hubNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -76,17 +75,21 @@ class MarginTradingHubPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
+                  bottomInset: scrollEndClearance,
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
-                      _HeroCard(stats: snapshot.stats),
-                      _NavigationCard(items: snapshot.menuItems),
+                      VitTradeSection(
+                        title: 'Margin suite',
+                        child: _HeroCard(stats: snapshot.stats),
+                      ),
+                      VitTradeSection(
+                        title: 'Điều hướng',
+                        child: _NavigationCard(items: snapshot.menuItems),
+                      ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Margin suite risk review',
@@ -95,9 +98,23 @@ class MarginTradingHubPage extends ConsumerWidget {
                         contractId: 'SC-090 margin hub review',
                         density: VitDensity.compact,
                       ),
-                      for (final feature in snapshot.features)
-                        _FeatureCard(feature: feature),
-                      _ComplianceCard(compliance: snapshot.compliance),
+                      VitTradeSection(
+                        title: 'Tính năng',
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            for (final feature in snapshot.features) ...[
+                              _FeatureCard(feature: feature),
+                              if (feature != snapshot.features.last)
+                                const SizedBox(height: AppSpacing.x3),
+                            ],
+                          ],
+                        ),
+                      ),
+                      VitTradeSection(
+                        title: 'Tuân thủ',
+                        child: _ComplianceCard(compliance: snapshot.compliance),
+                      ),
                     ],
                   ),
                 ),

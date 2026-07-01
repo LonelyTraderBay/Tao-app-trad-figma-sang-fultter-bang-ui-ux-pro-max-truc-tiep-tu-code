@@ -15,7 +15,7 @@ class _AllocationComparisonCard extends StatelessWidget {
 
     return VitCard(
       key: SavingsAutoRebalancePage.allocationKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
@@ -207,7 +207,7 @@ class _DriftStatusCard extends StatelessWidget {
 
     return VitCard(
       key: SavingsAutoRebalancePage.driftStatusKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
       child: Row(
         children: [
@@ -267,7 +267,7 @@ class _DriftHistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsAutoRebalancePage.driftChartKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
@@ -362,7 +362,7 @@ class _AutoStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsAutoRebalancePage.autoStatusKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [

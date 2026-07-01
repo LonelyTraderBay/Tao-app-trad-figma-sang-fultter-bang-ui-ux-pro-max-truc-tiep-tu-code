@@ -81,7 +81,7 @@ class _StakingSlashingHistoryPageState
                     children: [
                       VitCard(
                         variant: VitCardVariant.standard,
-                        radius: VitCardRadius.md,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: StakingSlashingInsuranceBanner(
                           snapshot: snapshot,

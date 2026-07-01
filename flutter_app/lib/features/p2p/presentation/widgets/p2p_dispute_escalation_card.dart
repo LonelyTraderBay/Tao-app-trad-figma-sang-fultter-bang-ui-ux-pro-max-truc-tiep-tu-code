@@ -155,7 +155,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
               key: escalateKey,
               onTap: onEscalate,
               variant: VitCardVariant.ghost,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               borderColor: AppColors.warn15,
               background: const ColoredBox(color: AppColors.warn10),
               clip: true,

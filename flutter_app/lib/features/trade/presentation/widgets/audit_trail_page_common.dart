@@ -20,7 +20,7 @@ class _AuditEntryCard extends StatelessWidget {
             height: AppSpacing.tradeToolIconTileSm,
             alignment: Alignment.center,
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             borderColor: style.color.withValues(alpha: .28),
             child: Icon(style.icon, color: style.color, size: 19),
           ),

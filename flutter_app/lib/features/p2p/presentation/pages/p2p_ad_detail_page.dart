@@ -27,12 +27,6 @@ const double _p2pAdDetailNativeNavClearance =
     _p2pAdDetailVisualNavClearance - AppSpacing.x4;
 const double _p2pAdDetailVisualClearance = AppSpacing.x3;
 const double _p2pAdDetailNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pAdDetailScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PAdDetailPage extends ConsumerStatefulWidget {
   const P2PAdDetailPage({super.key, required this.adId, this.shellRenderMode});
@@ -93,8 +87,8 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                   child: SingleChildScrollView(
                     key: P2PAdDetailPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pAdDetailScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pAdDetailFlushScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

@@ -9,7 +9,7 @@ class _ThresholdCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: VitDensity.compact.cardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
@@ -80,7 +80,7 @@ class _FrequencyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -128,7 +128,7 @@ class _FrequencyOptionTile extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       borderColor: AppColors.transparent,
       clip: true,
@@ -197,7 +197,7 @@ class _AdvancedSettings extends StatelessWidget {
           key: DCARebalanceConfig.advancedToggleKey,
           onTap: onToggleExpanded,
           variant: VitCardVariant.ghost,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           padding: AppSpacing.dcaVerticalPaddingX3,
           borderColor: AppColors.transparent,
           child: Row(
@@ -238,7 +238,7 @@ class _AdvancedSettings extends StatelessWidget {
           secondChild: Column(
             children: [
               VitCard(
-                radius: VitCardRadius.lg,
+                radius: VitCardRadius.large,
                 padding: VitDensity.compact.cardPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -290,7 +290,7 @@ class _AdvancedSettings extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.x3),
               VitCard(
-                radius: VitCardRadius.lg,
+                radius: VitCardRadius.large,
                 padding: VitDensity.compact.cardPadding,
                 child: Column(
                   children: [
@@ -391,7 +391,7 @@ class _InlineRebalanceActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -513,7 +513,7 @@ class _PreviewSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x3),
                 VitCard(
-                  radius: VitCardRadius.lg,
+                  radius: VitCardRadius.large,
                   padding: VitDensity.compact.cardPadding,
                   child: SafeArea(
                     top: false,

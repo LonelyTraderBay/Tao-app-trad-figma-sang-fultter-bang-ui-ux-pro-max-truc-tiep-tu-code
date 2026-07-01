@@ -9,8 +9,8 @@ class _EscrowTimelineCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PEscrowDetailPage.timelineKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pEscrowCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -81,7 +81,7 @@ class _TimelineRow extends StatelessWidget {
           child: Padding(
             padding: isLast
                 ? AppSpacing.zeroInsets
-                : _p2pEscrowTimelineRowPadding,
+                : AppSpacing.p2pEscrowDetailTimelineRowPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -137,7 +137,7 @@ class _SecurityNotice extends StatelessWidget {
       message: snapshot.securityBody,
       iconColor: AppColors.buy,
       titleColor: AppColors.buy,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.buy20,
       messageStyle: AppTextStyles.caption.copyWith(
         color: AppColors.text2,
@@ -156,8 +156,8 @@ class _OrderLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PEscrowDetailPage.orderLinkKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pEscrowCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pOrder(orderId));
@@ -199,9 +199,9 @@ class _FeedbackBanner extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.feedbackKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
-      padding: _p2pEscrowInnerPadding,
+      padding: AppSpacing.p2pEscrowDetailInnerPadding,
       child: Row(
         children: [
           const Icon(

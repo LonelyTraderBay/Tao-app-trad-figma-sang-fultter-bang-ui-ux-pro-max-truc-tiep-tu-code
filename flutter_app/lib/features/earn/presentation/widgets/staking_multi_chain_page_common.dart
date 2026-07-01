@@ -13,7 +13,7 @@ class _ChainPositionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingMultiChainPage.chainKey(position.chainId),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
@@ -147,7 +147,7 @@ class _ActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +190,7 @@ class _ApyComparison extends StatelessWidget {
 
     return VitCard(
       key: StakingMultiChainPage.apyComparisonKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -250,7 +250,7 @@ class _Benefits extends StatelessWidget {
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

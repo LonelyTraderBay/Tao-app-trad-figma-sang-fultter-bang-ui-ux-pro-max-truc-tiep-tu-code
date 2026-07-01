@@ -16,7 +16,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.arenaStudioCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +83,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
           const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.arenaStudioFeeTogglePadding,
             onTap: () {
               HapticFeedback.selectionClick();

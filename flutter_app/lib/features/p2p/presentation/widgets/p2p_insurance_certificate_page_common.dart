@@ -9,9 +9,9 @@ class _FeedbackBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
-      padding: _p2pInsuranceCardPadding,
+      padding: AppSpacing.p2pInsuranceCertificateCardPadding,
       child: Row(
         children: [
           const Icon(
@@ -44,8 +44,8 @@ class _DisclosureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
-      padding: _p2pInsuranceCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pInsuranceCertificateCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -88,7 +88,7 @@ class _CertificateInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: bottomGap),
+      padding: AppSpacing.p2pDocumentInfoRowPadding(bottomGap),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -130,7 +130,7 @@ class _CoverageLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: _p2pInsuranceBulletTopPadding,
+      padding: AppSpacing.p2pInsuranceCertificateBulletPadding,
       child: Row(
         children: [
           Expanded(

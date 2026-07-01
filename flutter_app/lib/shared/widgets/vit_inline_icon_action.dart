@@ -13,7 +13,7 @@ class VitInlineIconAction extends StatelessWidget {
     this.color = AppColors.text2,
     this.size = AppSpacing.homePortfolioHeaderIcon,
     this.padding = AppSpacing.homePortfolioHeaderActionPadding,
-    this.borderRadius = AppRadii.smRadius,
+    this.borderRadius = AppRadii.inputRadius,
   });
 
   final IconData icon;

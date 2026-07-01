@@ -15,7 +15,7 @@ class _DisputeTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       child: Row(
         children: [
@@ -25,7 +25,7 @@ class _DisputeTabs extends StatelessWidget {
                 key: DisputeResolutionPage.tabKey(tab.id),
                 onTap: () => onChanged(tab.id),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -64,7 +64,7 @@ class _DisputeTabs extends StatelessWidget {
                           : 0,
                       height: AppSpacing.dividerHairline,
                       variant: VitCardVariant.inner,
-                      radius: VitCardRadius.sm,
+                      radius: VitCardRadius.standard,
                       borderColor: _disputePrimary,
                       background: const ColoredBox(color: _disputePrimary),
                       child: const SizedBox.shrink(),

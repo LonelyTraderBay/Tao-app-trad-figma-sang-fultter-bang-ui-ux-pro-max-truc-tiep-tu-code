@@ -19,7 +19,7 @@ class _StickyActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.tradeBotFooterPadding.copyWith(bottom: bottomPadding),
       child: Row(
         children: [

@@ -106,7 +106,7 @@ class _PrivacyChip extends StatelessWidget {
       key: ArenaGovernanceGatePage.privacyKey(option.id),
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.accent20 : AppColors.borderSolid,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.arenaGovernancePrivacyChipPadding,
       onTap: onTap,
       child: Column(

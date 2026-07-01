@@ -31,14 +31,6 @@ const double _p2pTwoFactorHeroIconBox = AppSpacing.x6;
 const double _p2pTwoFactorMethodIconBox = AppSpacing.x6;
 const double _p2pTwoFactorCaptionLineHeight = 1.34;
 const double _p2pTwoFactorNoticeLineHeight = 1.35;
-const EdgeInsets _p2pTwoFactorScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pTwoFactorCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pTwoFactorInnerPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2P2FASettingsPage extends ConsumerStatefulWidget {
   const P2P2FASettingsPage({super.key, this.shellRenderMode});
@@ -111,8 +103,8 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pTwoFactorScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pTwoFactorScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -137,7 +129,7 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
                         const SizedBox(height: _p2pTwoFactorTightGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pTwoFactorInnerPadding,
+                          padding: AppSpacing.p2pTwoFactorInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P 2FA change review',

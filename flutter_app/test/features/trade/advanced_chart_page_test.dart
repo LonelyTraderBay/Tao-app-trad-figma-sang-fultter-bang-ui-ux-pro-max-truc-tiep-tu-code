@@ -148,7 +148,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(TradePage), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.text('BTC/USDT'), findsNWidgets(2));
   });
 
   testWidgets('SC-055 alert action opens SC-014 price alerts', (tester) async {

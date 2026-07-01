@@ -73,7 +73,7 @@ class _PaymentMethodCard extends StatelessWidget {
             width: AppSpacing.walletBuyPaymentLogoSize,
             height: AppSpacing.walletBuyPaymentLogoSize,
             alignment: Alignment.center,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             clip: true,
             background: ColoredBox(
               color: Color(method.logoColorHex).withValues(alpha: .18),
@@ -149,7 +149,7 @@ class _PopularBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.walletBuyPopularBadgePadding,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       clip: true,
       background: const ColoredBox(color: AppColors.buy10),
       child: Text(

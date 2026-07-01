@@ -107,23 +107,17 @@ class _AttributionTabs extends StatelessWidget {
       ('correlation', 'Correlation'),
     ];
 
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      padding: AppSpacing.zeroInsets,
-      child: VitTabBar(
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.$1,
-              label: tab.$2,
-              widgetKey: PerformanceAttributionPage.tabKey(tab.$1),
-            ),
-        ],
-        activeKey: activeTab,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
-      ),
+    return VitSegmentedTabBar(
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: PerformanceAttributionPage.tabKey(tab.$1),
+          ),
+      ],
+      activeKey: activeTab,
+      onChanged: onChanged,
     );
   }
 }

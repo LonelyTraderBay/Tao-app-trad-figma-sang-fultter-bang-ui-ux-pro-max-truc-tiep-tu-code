@@ -26,7 +26,7 @@ class StakingCustodyReconciliationSection extends StatelessWidget {
       children: [
         VitCard(
           key: StakingCustodyKeys.reconciliation,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,7 +71,7 @@ class StakingCustodyTransparencySection extends StatelessWidget {
       children: [
         VitCard(
           key: StakingCustodyKeys.transparency,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

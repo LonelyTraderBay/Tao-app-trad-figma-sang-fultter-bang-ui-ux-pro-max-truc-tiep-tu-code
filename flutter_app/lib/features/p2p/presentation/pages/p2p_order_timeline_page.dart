@@ -129,7 +129,7 @@ class _TimelineHeroCard extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             width: AppSpacing.buttonCompact,
             height: AppSpacing.buttonCompact,
             alignment: Alignment.center,

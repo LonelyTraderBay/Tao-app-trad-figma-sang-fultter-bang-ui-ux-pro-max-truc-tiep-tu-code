@@ -51,7 +51,7 @@ class _QuickActionCard extends StatelessWidget {
 
     return VitCard(
       key: P2PSecurityCenterPage.quickActionKey(action.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.borderSolid,
       padding: _p2pSecurityCompactPadding,
@@ -91,7 +91,7 @@ class _RecentEvents extends StatelessWidget {
         const _SectionTitle('Hoạt động gần đây'),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
           child: Column(
             children: [

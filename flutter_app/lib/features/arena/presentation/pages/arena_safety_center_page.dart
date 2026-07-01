@@ -39,7 +39,6 @@ const double _safetyProcessLineWidth = AppSpacing.dividerHairline;
 const double _safetyProcessLineHeight = AppSpacing.x5;
 const double _safetyInfoIcon = AppSpacing.iconSm + AppSpacing.x2;
 const double _safetyDividerHeight = AppSpacing.dividerHairline;
-const double _safetyFooterIcon = AppSpacing.iconSm + AppSpacing.x2;
 
 class ArenaSafetyCenterPage extends ConsumerWidget {
   const ArenaSafetyCenterPage({super.key, this.shellRenderMode});
@@ -156,7 +155,7 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
                           onPressed: () => _acknowledge(context),
                           child: Text(snapshot.ctaLabel),
                         ),
-                        _SafetyFooter(label: snapshot.footerLabel),
+                        VitCommunityRulesLink(label: snapshot.footerLabel),
                       ],
                     ),
                   ),

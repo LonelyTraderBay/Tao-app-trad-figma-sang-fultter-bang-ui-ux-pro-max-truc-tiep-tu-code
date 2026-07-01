@@ -30,7 +30,7 @@ class _SeveritySection extends StatelessWidget {
           VitCard(
             density: VitDensity.compact,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             borderColor: color.withValues(alpha: .65),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

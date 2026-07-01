@@ -83,7 +83,7 @@ class _DemoFrame extends StatelessWidget {
     final color = _toneColor(tone);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .18),
       density: VitDensity.compact,
       child: Row(

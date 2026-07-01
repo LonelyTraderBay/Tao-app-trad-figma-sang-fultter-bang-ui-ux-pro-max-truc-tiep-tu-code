@@ -97,7 +97,7 @@ class _PolicyHeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PInsurancePolicyPage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,7 +207,7 @@ class _PolicyNoticeCard extends StatelessWidget {
     return VitCard(
       key: P2PInsurancePolicyPage.noticeKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary30,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
@@ -264,7 +264,7 @@ class _PolicySectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,7 +329,7 @@ class _PrivacyNoticeCard extends StatelessWidget {
     return VitCard(
       key: P2PInsurancePolicyPage.privacyKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

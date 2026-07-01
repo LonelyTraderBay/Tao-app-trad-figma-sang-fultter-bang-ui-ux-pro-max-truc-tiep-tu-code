@@ -145,7 +145,7 @@ class _DcaOverviewCard extends StatelessWidget {
     final overview = snapshot.overview;
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -382,7 +382,7 @@ class _OverviewMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

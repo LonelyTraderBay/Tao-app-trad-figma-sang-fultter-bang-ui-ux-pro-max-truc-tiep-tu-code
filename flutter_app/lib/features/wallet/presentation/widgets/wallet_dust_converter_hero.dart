@@ -18,8 +18,12 @@ class _DustHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
+      clip: true,
       density: VitDensity.compact,
       borderColor: AppColors.primary20,
+      background: const VitHeroGlow(),
       child: Column(
         children: [
           Row(
@@ -28,7 +32,7 @@ class _DustHero extends StatelessWidget {
                 width: _dustHeroIconBox,
                 height: _dustHeroIconBox,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.md,
+                radius: VitCardRadius.standard,
                 borderColor: _dustAmber.withValues(alpha: .5),
                 background: ColoredBox(
                   color: _dustAmber.withValues(alpha: .14),
@@ -50,14 +54,17 @@ class _DustHero extends StatelessWidget {
                       'D\u1ECDn d\u1EB9p v\u00ED',
                       style: AppTextStyles.body.copyWith(
                         fontWeight: AppTextStyles.bold,
+                        color: AppColors.onAccent,
                       ),
                     ),
                     const SizedBox(height: _dustTinyGap),
                     Text(
                       'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF (d\u01B0\u1EDBi ${_formatUsd(snapshot.dustThresholdUsd)}) sang $targetSymbol',
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(color: _dustMuted),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.onAccent.withValues(alpha: .68),
+                      ),
                     ),
                   ],
                 ),
@@ -128,7 +135,9 @@ class _HeroStat extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.onAccent.withValues(alpha: .68),
+              ),
             ),
           ],
         ),

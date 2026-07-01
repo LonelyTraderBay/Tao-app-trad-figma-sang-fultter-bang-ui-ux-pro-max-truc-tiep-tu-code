@@ -183,7 +183,7 @@ class _ReferenceCard extends StatelessWidget {
             VitCard(
               key: ArenaPointsEntryDetailPage.copyRefKey,
               variant: VitCardVariant.inner,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               onTap: onCopy,
               padding: AppSpacing.arenaPointsEntryCopyPadding,
               child: Row(

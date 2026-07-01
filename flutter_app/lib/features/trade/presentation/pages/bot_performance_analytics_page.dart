@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/bot_performance_charts_strategy.dart';
 part '../widgets/bot_performance_metrics_summary.dart';
@@ -30,8 +31,6 @@ const _analyticsAmber = AppColors.caution;
 const _analyticsRed = AppColors.sell;
 const _chartAxis = AppColors.chartAxisStrong;
 const _chartTrack = AppColors.chartTrack;
-const double _analyticsVisualScrollClearance = 108;
-const double _analyticsNativeScrollClearance = 72;
 const double _analyticsSpace = AppSpacing.x2;
 const double _analyticsTinySpace = AppSpacing.x1;
 const double _analyticsChartExtent = 150;
@@ -68,11 +67,10 @@ class _BotPerformanceAnalyticsPageState
         .watch(tradeReadModelControllerProvider)
         .getBotPerformanceAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? _analyticsVisualScrollClearance
-            : _analyticsNativeScrollClearance) +
-        MediaQuery.paddingOf(context).bottom;
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

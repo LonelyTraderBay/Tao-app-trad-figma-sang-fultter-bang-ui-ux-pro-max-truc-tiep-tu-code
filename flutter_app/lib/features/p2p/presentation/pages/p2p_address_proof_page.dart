@@ -28,27 +28,6 @@ const _p2pAddressProofVisualClearance = AppSpacing.x3;
 const _p2pAddressProofNativeClearance = AppSpacing.x2;
 const _p2pAddressProofSectionGap = AppSpacing.x2;
 const _p2pAddressProofTightGap = AppSpacing.x1;
-const _p2pAddressProofCardPadding = EdgeInsets.all(AppSpacing.x2);
-const _p2pAddressProofHeroIconPadding = EdgeInsetsDirectional.all(
-  AppSpacing.x2,
-);
-const _p2pAddressProofUploadVerticalPadding = EdgeInsetsDirectional.symmetric(
-  vertical: AppSpacing.x3,
-);
-const _p2pAddressProofDocumentExamplePadding = EdgeInsets.only(
-  left: AppSpacing.buttonCompact + AppSpacing.x2,
-);
-const _p2pAddressProofChecklistIconPadding = EdgeInsets.only(
-  top: AppSpacing.dividerHairline,
-);
-
-EdgeInsets _p2pAddressProofScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x2,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PAddressProofPage extends ConsumerStatefulWidget {
   const P2PAddressProofPage({super.key, this.shellRenderMode});
@@ -115,7 +94,9 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pAddressProofScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pAddressProofScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,

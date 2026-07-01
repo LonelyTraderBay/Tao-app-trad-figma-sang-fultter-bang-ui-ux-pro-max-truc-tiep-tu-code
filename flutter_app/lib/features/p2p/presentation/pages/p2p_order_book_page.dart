@@ -33,23 +33,6 @@ const double _p2pOrderBookDepthChartExtent = 112;
 const double _p2pOrderBookOrderRowExtent = AppSpacing.x5 - AppSpacing.x1;
 const double _p2pOrderBookLegendDot = AppSpacing.x3;
 const double _p2pOrderBookSmallIcon = AppSpacing.iconSm;
-const EdgeInsets _p2pOrderBookCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pOrderBookCompactPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pOrderBookSelectorPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _p2pOrderBookRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-);
-
-EdgeInsets _p2pOrderBookScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2POrderBookPage extends ConsumerStatefulWidget {
   const P2POrderBookPage({super.key, this.shellRenderMode});
@@ -105,7 +88,9 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pOrderBookScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pOrderBookScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -132,7 +117,7 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                         const SizedBox(height: _p2pOrderBookSectionGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pOrderBookCompactPadding,
+                          padding: AppSpacing.p2pOrderBookCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Order book liquidity review',

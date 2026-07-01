@@ -55,7 +55,7 @@ class _AcknowledgementRow extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.arenaJoinAcknowledgementMinHeight,

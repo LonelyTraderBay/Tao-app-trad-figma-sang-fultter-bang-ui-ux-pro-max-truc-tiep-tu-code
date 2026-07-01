@@ -70,7 +70,7 @@ class _IconTile extends StatelessWidget {
       height: size,
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       borderColor: color.withValues(alpha: .28),
       child: Icon(icon, color: color, size: size * .5),

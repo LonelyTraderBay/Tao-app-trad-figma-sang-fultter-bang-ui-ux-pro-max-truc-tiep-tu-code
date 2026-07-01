@@ -9,8 +9,8 @@ class _SecurityTips extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PDeviceManagementPage.tipsKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pDevicesCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pDevicesCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

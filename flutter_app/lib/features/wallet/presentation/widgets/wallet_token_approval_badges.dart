@@ -26,7 +26,7 @@ class WalletTokenApprovalAmount extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: approval.unlimited ? AppColors.sell20 : null,
       child: Row(
         children: [

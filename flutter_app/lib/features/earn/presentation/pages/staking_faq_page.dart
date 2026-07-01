@@ -215,7 +215,7 @@ class _FAQCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _categoryColor(item.category);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       clip: true,
       onTap: onTap,
@@ -325,7 +325,7 @@ class _SupportPanel extends StatelessWidget {
       key: StakingFAQPage.supportKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

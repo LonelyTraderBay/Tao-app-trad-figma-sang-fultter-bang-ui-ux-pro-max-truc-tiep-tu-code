@@ -71,7 +71,7 @@ class _SmallIconAction extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       width: AppSpacing.x6,
       height: AppSpacing.x6,

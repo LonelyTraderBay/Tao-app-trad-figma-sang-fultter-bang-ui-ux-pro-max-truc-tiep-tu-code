@@ -71,7 +71,7 @@ class _UnderlinedTab extends StatelessWidget {
     return Expanded(
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         onTap: () => onChanged(value),
         child: Column(

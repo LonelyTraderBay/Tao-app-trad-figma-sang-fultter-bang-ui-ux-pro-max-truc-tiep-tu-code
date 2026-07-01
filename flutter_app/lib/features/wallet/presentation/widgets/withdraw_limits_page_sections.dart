@@ -13,7 +13,7 @@ class _CurrentTierCard extends StatelessWidget {
     return VitCard(
       key: WithdrawLimitsPage.currentTierKey,
       density: VitDensity.compact,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -24,7 +24,7 @@ class _CurrentTierCard extends StatelessWidget {
                 width: _limitsIconBox,
                 height: _limitsIconBox,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.md,
+                radius: VitCardRadius.standard,
                 borderColor: tierColor.withValues(alpha: .5),
                 background: ColoredBox(color: tierColor.withValues(alpha: .14)),
                 clip: true,

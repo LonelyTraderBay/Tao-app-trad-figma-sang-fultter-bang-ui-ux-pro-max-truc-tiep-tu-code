@@ -130,7 +130,7 @@ class _TaxTabs extends StatelessWidget {
                       key: TaxReportCenter.tabKey(tab.tab),
                       onTap: () => onChanged(tab.tab),
                       variant: VitCardVariant.ghost,
-                      radius: VitCardRadius.sm,
+                      radius: VitCardRadius.standard,
                       padding: EdgeInsets.zero,
                       borderColor: AppColors.transparent,
                       child: Column(
@@ -282,7 +282,7 @@ class _TaxSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.crossModuleCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -413,7 +413,7 @@ class _TaxPeriodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.crossModuleCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

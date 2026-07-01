@@ -10,7 +10,7 @@ class _ExportHero extends StatelessWidget {
     return VitCard(
       key: SavingsExportPage.summaryKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -249,7 +249,7 @@ class _ReportTypeCard extends StatelessWidget {
     return VitCard(
       key: SavingsExportPage.reportTypeKey(report.id),
       variant: selected ? VitCardVariant.inner : VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected ? AppColors.buy : AppColors.cardBorder,
       onTap: onTap,
       padding: AppSpacing.earnCardPaddingX4,

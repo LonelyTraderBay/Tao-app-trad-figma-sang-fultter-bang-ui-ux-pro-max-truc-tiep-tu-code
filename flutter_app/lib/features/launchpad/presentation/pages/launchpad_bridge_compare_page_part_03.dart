@@ -278,7 +278,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                       const SizedBox(height: AppSpacing.x4),
                       VitCard(
                         variant: VitCardVariant.inner,
-                        radius: VitCardRadius.lg,
+                        radius: VitCardRadius.large,
                         padding: AppSpacing.launchpadPaddingX4,
                         child: Row(
                           children: [

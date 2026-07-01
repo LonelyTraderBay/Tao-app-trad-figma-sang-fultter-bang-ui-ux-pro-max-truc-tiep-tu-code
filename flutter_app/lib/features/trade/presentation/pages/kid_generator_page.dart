@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -21,29 +22,15 @@ const _kidBackground = AppColors.bg;
 const _kidBorder = AppColors.borderSolid;
 const _kidPrimary = AppColors.primary;
 const _kidGreen = AppColors.buy;
-const _kidScrollTopGap = AppSpacing.x3;
 const _kidNoticeToPreviewGap = AppSpacing.x3;
 const _kidPreviewToSectionGap = AppSpacing.x4;
 const _kidSectionHeaderGap = AppSpacing.x2;
 const _kidSectionCardGap = AppSpacing.x2;
 const _kidSectionToActionsGap = AppSpacing.x3;
 const _kidStackGap = AppSpacing.x3;
-const _kidPreviewPadding = EdgeInsetsDirectional.fromSTEB(
-  AppSpacing.x4,
-  AppSpacing.x4,
-  AppSpacing.x4,
-  AppSpacing.x4,
-);
-const _kidSectionCardPadding = EdgeInsetsDirectional.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const _kidMetricPadding = EdgeInsetsDirectional.fromSTEB(
-  AppSpacing.x3,
-  AppSpacing.x1,
-  AppSpacing.x3,
-  AppSpacing.x1,
-);
+const _kidPreviewPadding = AppSpacing.kidGeneratorPreviewPadding;
+const _kidSectionCardPadding = AppSpacing.kidGeneratorSectionCardPadding;
+const _kidMetricPadding = AppSpacing.kidGeneratorMetricPadding;
 const _kidPreviewIconBox = AppSpacing.searchBarCompactHeight;
 const _kidPreviewIconSize = AppSpacing.iconMd;
 const _kidMetricHeight = AppSpacing.searchBarCompactHeight;
@@ -52,12 +39,8 @@ const _kidSectionIconBox = AppSpacing.buttonCompact;
 const _kidSectionStatusRadius = AppSpacing.x3;
 const _kidSectionStatusIcon = AppSpacing.tradeBotSmallIcon;
 
-EdgeInsets _kidScrollPadding(double bottomInset) => EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  _kidScrollTopGap,
-  AppSpacing.contentPad,
-  bottomInset,
-);
+EdgeInsets _kidScrollPadding(double bottomInset) =>
+    AppSpacing.kidGeneratorScrollPadding(bottomInset);
 
 class KIDGeneratorPage extends ConsumerWidget {
   const KIDGeneratorPage({super.key, this.shellRenderMode});
@@ -76,11 +59,10 @@ class KIDGeneratorPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getKidGenerator();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + 70
-            : DeviceMetrics.nativeBottomChrome + 28) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = copyTradingScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -296,7 +278,7 @@ class _DocumentMetric extends StatelessWidget {
     return VitCard(
       height: _kidMetricHeight,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: _kidMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

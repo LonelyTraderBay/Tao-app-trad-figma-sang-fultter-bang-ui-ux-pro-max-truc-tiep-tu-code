@@ -74,7 +74,7 @@ class _StakingCustodyPageState extends ConsumerState<StakingCustodyPage> {
                     children: [
                       VitCard(
                         variant: VitCardVariant.standard,
-                        radius: VitCardRadius.md,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: StakingCustodyHeroCard(snapshot: snapshot),
                       ),

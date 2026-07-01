@@ -49,7 +49,7 @@ class _FormatCard extends StatelessWidget {
     return VitCard(
       key: SavingsExportPage.formatKey(format.id),
       variant: selected ? VitCardVariant.inner : VitCardVariant.standard,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: selected ? AppColors.buy : AppColors.cardBorder,
       onTap: onTap,
       padding: AppSpacing.earnCardPaddingX4,
@@ -219,7 +219,7 @@ class _OptionRow extends StatelessWidget {
     return VitCard(
       key: SavingsExportPage.optionKey(option.id),
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       onTap: onTap,
       padding: AppSpacing.earnCardPaddingX4X3,
       child: Row(

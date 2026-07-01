@@ -134,7 +134,7 @@ class _IconTextRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       padding: AppSpacing.copySafetyIconTextPadding,
       child: Row(
@@ -165,7 +165,7 @@ class _SimpleCard extends StatelessWidget {
     final accent = color ?? AppColors.text1;
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       width: double.infinity,
       padding: AppSpacing.cardPaddingCompact,

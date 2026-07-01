@@ -97,7 +97,7 @@ class _ModeButton extends StatelessWidget {
         onTap: () => onChanged(id),
         alignment: Alignment.center,
         variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         borderColor: active ? AppColors.primary : AppColors.transparent,
         child: Text(
           label,

@@ -247,7 +247,7 @@ class _TitleChip extends StatelessWidget {
     return VitCard(
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.sell20 : AppColors.borderSolid,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.arenaPresetChipPadding,
       onTap: onTap,
       child: ConstrainedBox(

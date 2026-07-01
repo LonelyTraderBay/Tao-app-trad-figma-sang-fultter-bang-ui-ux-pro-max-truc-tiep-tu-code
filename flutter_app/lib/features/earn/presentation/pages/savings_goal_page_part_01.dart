@@ -172,7 +172,7 @@ class _GoalSummaryCard extends StatelessWidget {
     return VitCard(
       key: SavingsGoalPage.summaryKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [
@@ -308,7 +308,7 @@ class _GoalCard extends StatelessWidget {
 
     return VitCard(
       key: SavingsGoalPage.goalKey(goal.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Column(

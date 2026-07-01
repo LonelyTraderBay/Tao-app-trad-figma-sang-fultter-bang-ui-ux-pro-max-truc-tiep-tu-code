@@ -272,6 +272,252 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
+  testWidgets('VitSegmentedChoice renders borderless buy sell pills', (
+    tester,
+  ) async {
+    var selected = 'buy';
+
+    await tester.pumpWidget(
+      _wrap(
+        StatefulBuilder(
+          builder: (context, setState) {
+            return VitSegmentedChoice<String>(
+              selected: selected,
+              onChanged: (value) => setState(() => selected = value),
+              options: const [
+                VitSegmentedChoiceOption(
+                  value: 'buy',
+                  label: 'MUA',
+                  accentColor: AppColors.buy,
+                ),
+                VitSegmentedChoiceOption(
+                  value: 'sell',
+                  label: 'BÁN',
+                  accentColor: AppColors.sell,
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+
+    expect(find.text('MUA'), findsOneWidget);
+    expect(find.text('BÁN'), findsOneWidget);
+    expect(find.byType(VitSegmentedChoice<String>), findsOneWidget);
+
+    await tester.tap(find.text('BÁN'));
+    await tester.pump();
+
+    expect(selected, 'sell');
+  });
+
+  testWidgets('VitSegmentedChoice.buySell factory toggles MUA and BAN', (
+    tester,
+  ) async {
+    var isBuy = true;
+
+    await tester.pumpWidget(
+      _wrap(
+        StatefulBuilder(
+          builder: (context, setState) {
+            return VitSegmentedChoice.buySell(
+              isBuy: isBuy,
+              onChanged: (value) => setState(() => isBuy = value),
+            );
+          },
+        ),
+      ),
+    );
+
+    expect(find.text('MUA'), findsOneWidget);
+    expect(find.text('BÁN'), findsOneWidget);
+
+    await tester.tap(find.text('BÁN'));
+    await tester.pump();
+
+    expect(isBuy, isFalse);
+  });
+
+  testWidgets('VitCommunityRulesLink renders label and handles tap', (
+    tester,
+  ) async {
+    var tapped = false;
+
+    await tester.pumpWidget(
+      _wrap(VitCommunityRulesLink(onTap: () => tapped = true)),
+    );
+
+    expect(find.text('Quy tắc cộng đồng'), findsOneWidget);
+    expect(find.byIcon(Icons.menu_book_outlined), findsOneWidget);
+
+    await tester.tap(find.text('Quy tắc cộng đồng'));
+    await tester.pump();
+
+    expect(tapped, isTrue);
+  });
+
+  testWidgets('VitCommunityRulesLink static mode does not crash', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(const VitCommunityRulesLink(label: 'Quy tắc cộng đồng')),
+    );
+
+    expect(find.text('Quy tắc cộng đồng'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('VitCommunityRulesLink uses ghost VitCard not CTA or inner', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_wrap(VitCommunityRulesLink(onTap: () {})));
+
+    final linkFinder = find.byType(VitCommunityRulesLink);
+    expect(linkFinder, findsOneWidget);
+
+    expect(
+      find.ancestor(
+        of: find.text('Quy tắc cộng đồng'),
+        matching: find.byType(VitCtaButton),
+      ),
+      findsNothing,
+    );
+
+    final cards = tester.widgetList<VitCard>(
+      find.descendant(of: linkFinder, matching: find.byType(VitCard)),
+    );
+
+    expect(cards.length, 1);
+    expect(cards.first.variant, VitCardVariant.ghost);
+    expect(cards.first.variant, isNot(VitCardVariant.inner));
+  });
+
+  testWidgets('VitPresetChipRow.percentBalance renders and taps', (
+    tester,
+  ) async {
+    int? tapped;
+
+    await tester.pumpWidget(
+      _wrap(
+        VitPresetChipRow.percentBalance(
+          onTap: (value) => tapped = value,
+          keyFor: (value) => Key('pct_$value'),
+        ),
+      ),
+    );
+
+    expect(find.text('25%'), findsOneWidget);
+    expect(find.text('100%'), findsOneWidget);
+
+    await tester.tap(find.text('50%'));
+    await tester.pump();
+
+    expect(tapped, 50);
+  });
+
+  testWidgets('VitPresetChipRow highlights selectedValue', (tester) async {
+    await tester.pumpWidget(
+      _wrap(
+        VitPresetChipRow.percentBalance(
+          selectedValue: 75,
+          onTap: (_) {},
+          keyFor: (value) => Key('pct_$value'),
+        ),
+      ),
+    );
+
+    final selectedPill = tester.widget<VitChoicePill>(
+      find.byWidgetPredicate(
+        (widget) => widget is VitChoicePill && widget.label == '75%',
+      ),
+    );
+    expect(selectedPill.selected, isTrue);
+  });
+
+  testWidgets('VitPresetChipRow has no VitCard ancestor', (tester) async {
+    await tester.pumpWidget(
+      _wrap(
+        VitPresetChipRow.percentBalance(
+          onTap: (_) {},
+          keyFor: (value) => Key('pct_$value'),
+        ),
+      ),
+    );
+
+    expect(
+      find.ancestor(
+        of: find.byType(VitPresetChipRow<int>),
+        matching: find.byType(VitCard),
+      ),
+      findsNothing,
+    );
+  });
+
+  testWidgets('VitSegmentedTabBar has no VitCard outer wrapper', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        VitSegmentedTabBar(
+          activeKey: 'overview',
+          onChanged: (_) {},
+          tabs: const [
+            VitTabItem(key: 'overview', label: 'Overview'),
+            VitTabItem(key: 'history', label: 'History'),
+          ],
+        ),
+      ),
+    );
+
+    expect(find.byType(VitSegmentedTabBar), findsOneWidget);
+    expect(find.byType(VitCard), findsNothing);
+    expect(
+      find.ancestor(
+        of: find.byType(VitSegmentedTabBar),
+        matching: find.byType(VitCard),
+      ),
+      findsNothing,
+    );
+  });
+
+  testWidgets('segment tab unselected pills use ghost border', (tester) async {
+    await tester.pumpWidget(
+      _wrap(
+        VitSegmentedTabBar(
+          activeKey: 'overview',
+          onChanged: (_) {},
+          tabs: const [
+            VitTabItem(key: 'overview', label: 'Overview'),
+            VitTabItem(key: 'history', label: 'History'),
+          ],
+        ),
+      ),
+    );
+
+    final inactiveDecorations = tester
+        .widgetList<DecoratedBox>(
+          find.descendant(
+            of: find.byType(VitSegmentedTabBar),
+            matching: find.byWidgetPredicate(
+              (widget) =>
+                  widget is DecoratedBox &&
+                  widget.decoration is ShapeDecoration,
+            ),
+          ),
+        )
+        .map((box) => box.decoration as ShapeDecoration)
+        .where((decoration) => decoration.color == AppColors.transparent)
+        .toList();
+
+    expect(inactiveDecorations, isNotEmpty);
+
+    final inactiveShape =
+        inactiveDecorations.first.shape as RoundedRectangleBorder;
+
+    expect(inactiveShape.side.color, AppColors.portfolioBtnGhostBorder);
+  });
+
   testWidgets('VitChoicePill renders selected and disabled states', (
     tester,
   ) async {

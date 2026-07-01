@@ -78,23 +78,17 @@ class _SectionTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
-      padding: AppSpacing.enterpriseStatesTabShellPadding,
-      child: VitTabBar(
-        variant: VitTabBarVariant.segment,
-        activeKey: active.name,
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.section.name,
-              label: tab.label,
-              widgetKey: EnterpriseStatesPage.sectionKey(tab.section),
-            ),
-        ],
-        onChanged: (key) => onChanged(_sectionFromKey(key)),
-      ),
+    return VitSegmentedTabBar(
+      activeKey: active.name,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.section.name,
+            label: tab.label,
+            widgetKey: EnterpriseStatesPage.sectionKey(tab.section),
+          ),
+      ],
+      onChanged: (key) => onChanged(_sectionFromKey(key)),
     );
   }
 }

@@ -4,7 +4,9 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
   final _marginController = TextEditingController();
   TradeFuturesSide _side = TradeFuturesSide.long;
   TradeFuturesOrderType _orderType = TradeFuturesOrderType.market;
-  String _tab = 'trade';
+  VitTradeViewMode _viewMode = VitTradeViewMode.charts;
+  String _chartsSubTab = 'orderbook';
+  String _dockTab = 'positions';
   final int _leverage = 10;
   bool _takeProfit = false;
   bool _stopLoss = false;
@@ -16,83 +18,192 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     super.dispose();
   }
 
+  VitOrderBookPanel _orderBookPanel(TradeFuturesSnapshot snapshot) {
+    final book = snapshot.trade.orderBook;
+    return VitOrderBookPanel(
+      density: _viewMode == VitTradeViewMode.trade
+          ? VitOrderBookPanelDensity.compact
+          : VitOrderBookPanelDensity.standard,
+      asks: [
+        for (final level in book.asks)
+          VitOrderBookLevel(
+            price: level.price,
+            amount: level.amount,
+            total: level.total,
+          ),
+      ],
+      bids: [
+        for (final level in book.bids)
+          VitOrderBookLevel(
+            price: level.price,
+            amount: level.amount,
+            total: level.total,
+          ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeFuturesProvider(widget.pairId));
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.contentPad);
+    final scrollClearance = tradeTerminalScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-057 FuturesPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: SingleChildScrollView(
-          padding: AppSpacing.zeroInsets.copyWith(
-            left: AppSpacing.contentPad,
-            top: AppSpacing.rowPy,
-            right: AppSpacing.contentPad,
-            bottom: bottomInset,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _FuturesHeader(
-                pair: snapshot.pair,
-                onClose: () =>
-                    context.go(AppRoutePaths.tradePair(widget.pairId)),
-                onChart: () =>
-                    context.go(AppRoutePaths.tradeAdvancedChart(widget.pairId)),
-              ),
-              const SizedBox(height: AppSpacing.contentPad),
-              _FuturesTabs(
-                active: _tab,
-                positionCount: snapshot.positions.length,
-                onChanged: (tab) => setState(() => _tab = tab),
-              ),
-              const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
-              if (_tab == 'trade')
-                _TradeTab(
-                  snapshot: snapshot,
-                  pairId: widget.pairId,
-                  side: _side,
-                  orderType: _orderType,
-                  leverage: _leverage,
-                  marginController: _marginController,
-                  takeProfit: _takeProfit,
-                  stopLoss: _stopLoss,
-                  receipt: _receipt,
-                  onSideChanged: (side) => setState(() {
-                    _side = side;
-                    _receipt = null;
-                  }),
-                  onOrderTypeChanged: (type) => setState(() {
-                    _orderType = type;
-                    _receipt = null;
-                  }),
-                  onLeverage: () => context.go(
-                    AppRoutePaths.tradeFuturesLeverage(widget.pairId),
-                  ),
-                  onPercent: _setPercent,
-                  onChanged: () => setState(() => _receipt = null),
-                  onTakeProfit: () =>
-                      setState(() => _takeProfit = !_takeProfit),
-                  onStopLoss: () => setState(() => _stopLoss = !_stopLoss),
-                  onSubmit: _submit,
-                )
-              else if (_tab == 'positions')
-                _PositionsTab(snapshot: snapshot)
-              else
-                _OrdersTab(onTrade: () => setState(() => _tab = 'trade')),
+    final tradeForm = _TradeTab(
+      snapshot: snapshot,
+      pairId: widget.pairId,
+      side: _side,
+      orderType: _orderType,
+      leverage: _leverage,
+      marginController: _marginController,
+      takeProfit: _takeProfit,
+      stopLoss: _stopLoss,
+      receipt: _receipt,
+      compact: _viewMode == VitTradeViewMode.trade,
+      onSideChanged: (side) => setState(() {
+        _side = side;
+        _receipt = null;
+      }),
+      onOrderTypeChanged: (type) => setState(() {
+        _orderType = type;
+        _receipt = null;
+      }),
+      onLeverage: () =>
+          context.go(AppRoutePaths.tradeFuturesLeverage(widget.pairId)),
+      onPercent: _setPercent,
+      onChanged: () => setState(() => _receipt = null),
+      onTakeProfit: () => setState(() => _takeProfit = !_takeProfit),
+      onStopLoss: () => setState(() => _stopLoss = !_stopLoss),
+      onSubmit: _submit,
+    );
+
+    final bodyChildren = <Widget>[
+      if (_viewMode == VitTradeViewMode.charts) ...[
+        VitTradeChartPanel(variant: VitTradeChartVariant.pairRoute),
+        const SizedBox(height: AppSpacing.x3),
+        _FuturesChartsSubTabs(
+          active: _chartsSubTab,
+          onSelected: (value) => setState(() => _chartsSubTab = value),
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        if (_chartsSubTab == 'orderbook')
+          _orderBookPanel(snapshot)
+        else
+          VitTradesTapePanel(
+            trades: [
+              for (final trade in snapshot.trade.trades)
+                VitTradesTapePrint(
+                  price: trade.price,
+                  amount: trade.amount,
+                  time: trade.time,
+                  isBuy: trade.isBuy,
+                ),
             ],
           ),
+        const SizedBox(height: AppSpacing.x3),
+        tradeForm,
+      ] else ...[
+        VitTradeSplitPanel(
+          form: tradeForm,
+          marketPanel: _orderBookPanel(snapshot),
         ),
+      ],
+    ];
+
+    return VitTradeTerminalLayout(
+      semanticLabel: 'SC-057 FuturesPage',
+      scrollKey: const Key('sc057_futures_scroll_content'),
+      scrollBottomInset: scrollClearance,
+      header: VitTradeTerminalHeader(
+        symbol: snapshot.pair.symbol,
+        showBack: true,
+        onBack: () => context.go(AppRoutePaths.tradePair(widget.pairId)),
+        backKey: FuturesPage.closeKey,
+        onPairTap: () => context.go(AppRoutePaths.tradePair(widget.pairId)),
+        trailing: VitIconButton(
+          key: FuturesPage.chartKey,
+          icon: Icons.trending_up_rounded,
+          tooltip: 'Open futures chart',
+          onPressed: () =>
+              context.go(AppRoutePaths.tradeAdvancedChart(widget.pairId)),
+          variant: VitIconButtonVariant.ghost,
+          size: VitIconButtonSize.md,
+        ),
+        subtitle: Text(
+          '${_formatMoney(snapshot.pair.price)} (+${snapshot.pair.changePct.toStringAsFixed(2)}%)',
+          style: AppTextStyles.numericCode.copyWith(
+            color: _futuresGreen,
+            height: AppSpacing.futuresPriceLineHeight,
+          ),
+        ),
+      ),
+      ticker: VitTradeTickerStrip(
+        symbol: snapshot.pair.symbol,
+        priceLabel: _formatFuturesPrice(snapshot.pair.price),
+        changePct: snapshot.pair.changePct,
+        highLabel: _formatFuturesPrice(snapshot.pair.price * 1.02),
+        lowLabel: _formatFuturesPrice(snapshot.pair.price * 0.98),
+        volumeLabel: '1.2B',
+        trailing: const VitStatusPill(
+          label: 'FUTURES',
+          status: VitStatusPillStatus.error,
+          size: VitStatusPillSize.sm,
+        ),
+      ),
+      productTabs: VitTradeProductTabs(
+        activeId: 'futures',
+        tabs: [
+          VitTradeProductTab(
+            id: 'spot',
+            label: 'Spot',
+            onTap: () => context.go(AppRoutePaths.tradePair(widget.pairId)),
+          ),
+          VitTradeProductTab(
+            id: 'futures',
+            label: 'Futures',
+            onTap: () {},
+          ),
+          VitTradeProductTab(
+            id: 'margin',
+            label: 'Margin',
+            onTap: () => context.go(AppRoutePaths.tradeMargin),
+          ),
+          VitTradeProductTab(
+            id: 'convert',
+            label: 'Convert',
+            onTap: () => context.go(AppRoutePaths.tradeConvert),
+          ),
+        ],
+      ),
+      viewModeToggle: VitTradeViewModeToggle(
+        mode: _viewMode,
+        chartsKey: FuturesPage.viewModeChartsKey,
+        tradeKey: FuturesPage.viewModeTradeKey,
+        onChanged: (value) => setState(() => _viewMode = value),
+      ),
+      bodyChildren: bodyChildren,
+      portfolioPanel: VitTradePortfolioPanel(
+        expandKey: FuturesPage.portfolioExpandKey,
+        activeKey: _dockTab,
+        onChanged: (value) => setState(() => _dockTab = value),
+        tabs: [
+          VitTabItem(
+            key: 'positions',
+            label: 'Vị thế (${snapshot.positions.length})',
+            widgetKey: FuturesPage.tabKey('positions'),
+          ),
+          VitTabItem(
+            key: 'orders',
+            label: 'Lệnh',
+            widgetKey: FuturesPage.tabKey('orders'),
+          ),
+        ],
+        child: _dockTab == 'orders'
+            ? _OrdersTab(onTrade: () => setState(() => _dockTab = 'positions'))
+            : _PositionsTab(snapshot: snapshot),
       ),
     );
   }
@@ -125,6 +236,33 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
       _receipt = controller.submit();
       _marginController.clear();
     });
+  }
+}
+
+class _FuturesChartsSubTabs extends StatelessWidget {
+  const _FuturesChartsSubTabs({required this.active, required this.onSelected});
+
+  final String active;
+  final ValueChanged<String> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitSegmentedChoice.withPrimaryAccent<String>(
+      selected: active,
+      onChanged: onSelected,
+      options: [
+        VitSegmentedChoiceOption(
+          key: FuturesPage.orderBookTabKey,
+          value: 'orderbook',
+          label: 'Sổ lệnh',
+        ),
+        VitSegmentedChoiceOption(
+          key: FuturesPage.tradesTabKey,
+          value: 'trades',
+          label: 'Giao dịch',
+        ),
+      ],
+    );
   }
 }
 
@@ -199,41 +337,6 @@ class _FuturesHeader extends StatelessWidget {
   }
 }
 
-class _FuturesTabs extends StatelessWidget {
-  const _FuturesTabs({
-    required this.active,
-    required this.positionCount,
-    required this.onChanged,
-  });
-
-  final String active;
-  final int positionCount;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final tabs = [
-      ('trade', 'Giao dịch', Icons.bolt_rounded),
-      ('positions', 'Vị thế ($positionCount)', Icons.bar_chart_rounded),
-      ('orders', 'Lệnh', Icons.receipt_long_rounded),
-    ];
-    return VitTabBar(
-      variant: VitTabBarVariant.segment,
-      activeKey: active,
-      onChanged: onChanged,
-      tabs: [
-        for (final tab in tabs)
-          VitTabItem(
-            key: tab.$1,
-            label: tab.$2,
-            icon: tab.$3,
-            widgetKey: FuturesPage.tabKey(tab.$1),
-          ),
-      ],
-    );
-  }
-}
-
 class _TradeTab extends ConsumerWidget {
   const _TradeTab({
     required this.snapshot,
@@ -245,6 +348,7 @@ class _TradeTab extends ConsumerWidget {
     required this.takeProfit,
     required this.stopLoss,
     required this.receipt,
+    required this.compact,
     required this.onSideChanged,
     required this.onOrderTypeChanged,
     required this.onLeverage,
@@ -264,6 +368,7 @@ class _TradeTab extends ConsumerWidget {
   final bool takeProfit;
   final bool stopLoss;
   final TradeFuturesReceipt? receipt;
+  final bool compact;
   final ValueChanged<TradeFuturesSide> onSideChanged;
   final ValueChanged<TradeFuturesOrderType> onOrderTypeChanged;
   final VoidCallback onLeverage;
@@ -294,24 +399,28 @@ class _TradeTab extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _MarketStats(snapshot: snapshot),
-        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+        const SizedBox(height: AppSpacing.x3),
         _SideSwitch(side: side, onChanged: onSideChanged),
-        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+        const SizedBox(height: AppSpacing.x3),
         _OrderTypeAndLeverage(
           orderType: orderType,
           leverage: leverage,
           onOrderTypeChanged: onOrderTypeChanged,
           onLeverage: onLeverage,
         ),
-        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+        const SizedBox(height: AppSpacing.x3),
         _MarginInput(controller: marginController, onChanged: onChanged),
-        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+        const SizedBox(height: AppSpacing.x3),
         _PercentRow(onPercent: onPercent),
-        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
-        if (margin > 0) ...[
+        if (margin > 0 && !compact) ...[
+          const SizedBox(height: AppSpacing.x3),
           _PreviewCard(pair: snapshot.pair, preview: preview),
-          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
         ],
+        if (margin > 0 && compact) ...[
+          const SizedBox(height: AppSpacing.x2),
+          _PreviewCard(pair: snapshot.pair, preview: preview),
+        ],
+        const SizedBox(height: AppSpacing.x3),
         Row(
           children: [
             Expanded(
@@ -337,7 +446,7 @@ class _TradeTab extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+        const SizedBox(height: AppSpacing.x3),
         _SubmitButton(
           side: side,
           enabled: preview.canOpen,
@@ -345,29 +454,31 @@ class _TradeTab extends ConsumerWidget {
           leverage: leverage,
           onTap: onSubmit,
         ),
-        const SizedBox(height: AppSpacing.rowPy),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Futures margin review',
-          message:
-              'Review leverage, margin, liquidation price, fees, TP/SL, and order side before opening a futures position.',
-          contractId: 'SC-057',
-        ),
-        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
-        const VitBanner(
-          variant: VitBannerVariant.warning,
-          icon: Icons.warning_amber_rounded,
-          message:
-              'Giao dịch hợp đồng tương lai có rủi ro cao. Bạn có thể mất toàn bộ ký quỹ. Chỉ giao dịch số tiền bạn có thể chấp nhận mất.',
-        ),
-        const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Futures order review',
-          message:
-              'Leverage limit, margin, liquidation price, fee preview, TP/SL, and order side must be reviewed before confirmation.',
-          contractId: 'SC-057',
-        ),
+        if (!compact) ...[
+          const SizedBox(height: AppSpacing.rowPy),
+          const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Futures margin review',
+            message:
+                'Review leverage, margin, liquidation price, fees, TP/SL, and order side before opening a futures position.',
+            contractId: 'SC-057',
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          const VitBanner(
+            variant: VitBannerVariant.warning,
+            icon: Icons.warning_amber_rounded,
+            message:
+                'Giao dịch hợp đồng tương lai có rủi ro cao. Bạn có thể mất toàn bộ ký quỹ. Chỉ giao dịch số tiền bạn có thể chấp nhận mất.',
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Futures order review',
+            message:
+                'Leverage limit, margin, liquidation price, fee preview, TP/SL, and order side must be reviewed before confirmation.',
+            contractId: 'SC-057',
+          ),
+        ],
       ],
     );
   }
@@ -419,7 +530,7 @@ class _MarketStats extends StatelessWidget {
               ),
             ),
           ),
-          if (i != stats.length - 1) const SizedBox(width: AppSpacing.x3),
+          if (i != stats.length - 1) const SizedBox(width: AppSpacing.x2),
         ],
       ],
     );

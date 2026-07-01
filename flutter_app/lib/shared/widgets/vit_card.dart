@@ -8,14 +8,20 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 
 enum VitCardVariant { standard, hero, inner, ghost }
 
-enum VitCardRadius { sm, md, lg }
+enum VitCardRadius {
+  /// 16px — standard card surface.
+  standard,
+
+  /// 24px — hero/large card surface.
+  large,
+}
 
 class VitCard extends StatelessWidget {
   const VitCard({
     super.key,
     required this.child,
     this.variant = VitCardVariant.standard,
-    this.radius = VitCardRadius.md,
+    this.radius = VitCardRadius.standard,
     this.padding,
     this.density,
     this.margin,
@@ -46,11 +52,9 @@ class VitCard extends StatelessWidget {
 
   BorderRadius get _borderRadius {
     switch (radius) {
-      case VitCardRadius.sm:
-        return AppRadii.mdRadius;
-      case VitCardRadius.md:
+      case VitCardRadius.standard:
         return AppRadii.cardRadius;
-      case VitCardRadius.lg:
+      case VitCardRadius.large:
         return AppRadii.cardLargeRadius;
     }
   }

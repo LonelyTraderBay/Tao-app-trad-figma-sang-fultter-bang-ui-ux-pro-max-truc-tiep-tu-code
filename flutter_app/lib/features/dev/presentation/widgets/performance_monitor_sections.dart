@@ -9,7 +9,7 @@ class _PerformanceScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -107,7 +107,7 @@ class _VitalsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         children: [
           for (final metric in metrics) ...[
@@ -170,7 +170,7 @@ class _MemoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         children: [
           Row(
@@ -220,7 +220,7 @@ class _LazyChunksCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -277,7 +277,7 @@ class _ResourcesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         children: [
           for (final resource in resources) ...[

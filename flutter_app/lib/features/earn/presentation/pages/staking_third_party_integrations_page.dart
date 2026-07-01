@@ -116,7 +116,7 @@ class _IntegrationsHero extends StatelessWidget {
     return VitCard(
       key: StakingThirdPartyIntegrationsPage.heroKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.accent30,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
@@ -183,7 +183,7 @@ class _IntegrationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingThirdPartyIntegrationsPage.integrationKey(integration.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
@@ -270,7 +270,7 @@ class _ApiAccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingThirdPartyIntegrationsPage.apiKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -31,14 +31,8 @@ const double _p2pMerchantTightGap = AppSpacing.x2;
 const double _p2pMerchantButtonHeight =
     AppSpacing.buttonCompact + AppSpacing.x1;
 const double _p2pMerchantActionHeight = AppSpacing.buttonCompact;
-const double _p2pMerchantBodyLineHeight = 1.35;
-const EdgeInsets _p2pMerchantScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pMerchantCardPadding = EdgeInsets.all(AppSpacing.x3);
+const double _p2pMerchantBodyLineHeight =
+    AppSpacing.p2pMerchantCommerceBodyLineHeight;
 
 enum _MerchantProfileTab { ads, reviews }
 
@@ -103,8 +97,8 @@ class _P2PMerchantProfilePageState
                   child: SingleChildScrollView(
                     key: P2PMerchantProfilePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pMerchantScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pMerchantCommercePageScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -196,7 +190,7 @@ class _P2PMerchantProfilePageState
               variant: VitCtaButtonVariant.secondary,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Hủy'),
             ),
             VitCtaButton(
@@ -204,7 +198,7 @@ class _P2PMerchantProfilePageState
               variant: VitCtaButtonVariant.warning,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Chặn'),
             ),
           ],

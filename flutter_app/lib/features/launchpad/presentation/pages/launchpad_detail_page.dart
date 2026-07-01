@@ -116,7 +116,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.launchpadPaddingX5,
           borderColor: project.accent.withValues(alpha: .24),
           child: Row(
@@ -191,7 +191,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           variant: VitCardVariant.inner,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.launchpadPaddingX5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +249,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           variant: VitCardVariant.ghost,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.launchpadPaddingX5,
           borderColor: project.accent.withValues(alpha: .24),
           child: Column(

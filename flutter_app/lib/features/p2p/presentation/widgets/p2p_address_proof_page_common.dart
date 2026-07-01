@@ -9,8 +9,8 @@ class _AddressConfirmCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PAddressProofPage.addressConfirmKey,
-      radius: VitCardRadius.md,
-      padding: _p2pAddressProofCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -62,8 +62,8 @@ class _SecurityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PAddressProofPage.securityKey,
-      radius: VitCardRadius.md,
-      padding: _p2pAddressProofCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -126,7 +126,7 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: _p2pAddressProofChecklistIconPadding,
+          padding: AppSpacing.p2pAddressProofChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: color,

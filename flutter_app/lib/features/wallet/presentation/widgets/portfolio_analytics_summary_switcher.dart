@@ -10,7 +10,7 @@ class _ValueSummary extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: _analyticsPrimary.withValues(alpha: .32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +115,7 @@ class _QuickStat extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       background: ColoredBox(color: AppColors.onAccent.withValues(alpha: .055)),
       clip: true,
       child: Column(

@@ -10,14 +10,14 @@ class _CertificateCard extends StatelessWidget {
     return VitCard(
       key: P2PInsuranceCertificatePage.cardKey,
       clip: true,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary40,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _CertificateHero(),
           Padding(
-            padding: _p2pInsuranceLargePadding,
+            padding: AppSpacing.p2pInsuranceCertificateLargePadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -49,7 +49,7 @@ class _CertificateHero extends StatelessWidget {
     return Material(
       color: AppModuleAccents.p2p,
       child: Padding(
-        padding: _p2pInsuranceHeroPadding,
+        padding: AppSpacing.p2pInsuranceCertificateHeroPadding,
         child: Column(
           children: [
             SizedBox.square(
@@ -100,7 +100,7 @@ class _CertificateIdBlock extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: _p2pInsuranceDividerBottomPadding,
+          padding: AppSpacing.p2pInsuranceCertificateDividerPadding,
           child: Column(
             children: [
               Text(
@@ -165,8 +165,8 @@ class _CoverageBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
-      padding: _p2pInsuranceCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pInsuranceCertificateCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -206,7 +206,7 @@ class _ValidityRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: _p2pInsuranceDividerBottomPadding,
+          padding: AppSpacing.p2pInsuranceCertificateDividerPadding,
           child: _CertificateInfoRow(
             icon: Icons.calendar_month_outlined,
             label: 'Hiệu lực',
@@ -275,9 +275,9 @@ class _AuditCallout extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
-      padding: _p2pInsuranceCardPadding,
+      padding: AppSpacing.p2pInsuranceCertificateCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

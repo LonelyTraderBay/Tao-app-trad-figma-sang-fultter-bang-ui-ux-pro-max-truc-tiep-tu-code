@@ -136,7 +136,7 @@ void main() {
     await tester.tap(find.byKey(TradingBotsPage.tabKey('strategies')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Hiệu suất chiến lược (30 ngày gần đây)'), findsOneWidget);
+    expect(find.text('Hiệu suất chiến lược'), findsOneWidget);
     expect(find.text('Tạo Bot DCA Bot'), findsOneWidget);
 
     await tester.tap(find.byKey(TradingBotsPage.strategyCreateKey('dca')));

@@ -43,7 +43,7 @@ class _MetricCompareCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final dcaWins = metric.winner == DcaPerformanceWinner.dca;
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -25,7 +25,7 @@ class _AutoPilotHero extends StatelessWidget {
     return VitCard(
       key: SavingsAutoPilotPage.summaryKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -363,7 +363,7 @@ class _ModuleTile extends StatelessWidget {
     return VitCard(
       key: SavingsAutoPilotPage.moduleKey(module.id),
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: enabled ? null : AppColors.borderSolid,
       onTap: onTap,
       padding: AppSpacing.earnPaddingX3,

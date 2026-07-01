@@ -15,8 +15,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
+import '../widgets/trade_module_layout.dart';
 
 part '../widgets/copy_notifications_page_sections.dart';
 part '../widgets/copy_notifications_page_common.dart';
@@ -59,13 +61,11 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
     final tabs = _tabsFor(notifications, snapshot.tabs);
     final filteredNotifications = _filtered(notifications, activeTab);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? AppSpacing.x7 : AppSpacing.x5);
+
+    final bottomInset = copyTradingScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

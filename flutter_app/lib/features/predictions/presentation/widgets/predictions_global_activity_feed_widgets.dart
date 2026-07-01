@@ -42,7 +42,7 @@ class _ActivityRow extends StatelessWidget {
     return VitCard(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.zeroInsets,
       child: Stack(
         children: [

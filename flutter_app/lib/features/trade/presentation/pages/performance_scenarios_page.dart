@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -29,8 +30,6 @@ const _scenarioAmber = AppColors.caution;
 const _scenarioGreen = AppColors.buy;
 const _scenarioSpace = AppSpacing.x2;
 const _scenarioTinySpace = AppSpacing.x1;
-const _scenarioVisualScrollClearance = 112.0;
-const _scenarioNativeScrollClearance = 72.0;
 const _scenarioIconTile = 34.0;
 const _scenarioLineTight = 1.2;
 
@@ -60,11 +59,10 @@ class _PerformanceScenariosPageState
         .getPerformanceScenarios();
     final selectedPeriod = _holdingPeriod ?? snapshot.defaultHoldingPeriod;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _scenarioVisualScrollClearance
-            : _scenarioNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

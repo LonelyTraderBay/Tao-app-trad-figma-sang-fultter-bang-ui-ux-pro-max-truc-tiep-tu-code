@@ -129,7 +129,7 @@ class _ComparisonTable extends StatelessWidget {
 
     return VitCard(
       key: SavingsComparisonPage.comparisonTableKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       clip: true,
       child: Column(
         children: [

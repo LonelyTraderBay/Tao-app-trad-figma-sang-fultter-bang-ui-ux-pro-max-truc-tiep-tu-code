@@ -25,15 +25,12 @@ class _RiskTabs extends StatelessWidget {
         widgetKey: RiskManagementDemoPage.tabKey(_RiskTab.calculator.name),
       ),
     ];
-    return VitCard(
-      variant: VitCardVariant.inner,
+    return SizedBox(
       height: _riskTabExtent,
-      padding: AppSpacing.tradeSegmentedPadding,
-      child: VitTabBar(
+      child: VitSegmentedTabBar(
         tabs: tabs,
         activeKey: active.name,
         onChanged: (id) => onChanged(_RiskTab.values.byName(id)),
-        variant: VitTabBarVariant.segment,
       ),
     );
   }

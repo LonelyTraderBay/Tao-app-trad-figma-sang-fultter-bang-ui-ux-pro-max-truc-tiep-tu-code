@@ -70,7 +70,7 @@ class _ActionStack extends StatelessWidget {
             VitCard(
               width: _challengeShareSize,
               height: _challengeShareSize,
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               onTap: () => HapticFeedback.selectionClick(),
               child: const Center(
                 child: Icon(Icons.share_outlined, color: AppColors.text2),
@@ -121,33 +121,6 @@ class _ActionStack extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-class _CommunityRulesLink extends StatelessWidget {
-  const _CommunityRulesLink({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: VitCtaButton(
-        variant: VitCtaButtonVariant.ghost,
-        fullWidth: false,
-        height: _challengeShareSize,
-        padding: _challengeCardPaddingTight,
-        onPressed: onTap,
-        leading: const Icon(Icons.menu_book_outlined, size: _challengeMdIcon),
-        child: Text(
-          'Quy tắc cộng đồng',
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.primary,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -338,7 +311,7 @@ class _InlineAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: const EdgeInsetsDirectional.symmetric(
         vertical: AppSpacing.x1 - AppSpacing.dividerHairline,
       ),

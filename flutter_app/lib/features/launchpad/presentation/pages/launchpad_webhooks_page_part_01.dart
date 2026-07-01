@@ -95,7 +95,7 @@ class _StatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .22),
       background: ColoredBox(color: color.withValues(alpha: .08)),
       padding: AppSpacing.launchpadVerticalPaddingX2,
@@ -305,7 +305,7 @@ class _SubscriptionCard extends StatelessWidget {
                     key: LaunchpadWebhooksPage.expandKey(subscription.id),
                     onTap: onExpand,
                     variant: VitCardVariant.ghost,
-                    radius: VitCardRadius.sm,
+                    radius: VitCardRadius.standard,
                     padding: AppSpacing.launchpadPaddingX3,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

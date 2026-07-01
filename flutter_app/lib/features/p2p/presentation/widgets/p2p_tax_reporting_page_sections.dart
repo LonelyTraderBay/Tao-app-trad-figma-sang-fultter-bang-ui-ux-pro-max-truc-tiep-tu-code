@@ -15,7 +15,7 @@ class _TaxHero extends StatelessWidget {
         side: BorderSide(color: AppColors.accent),
       ),
       child: Padding(
-        padding: _p2pTaxCardPadding,
+        padding: AppSpacing.p2pTaxCardPadding,
         child: Row(
           children: [
             SizedBox.square(
@@ -195,13 +195,13 @@ class _JurisdictionTile extends StatelessWidget {
       key: P2PTaxReportingPage.jurisdictionKey(jurisdiction.code),
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: selected ? AppColors.accent : AppColors.borderSolid,
       background: ColoredBox(
         color: selected ? AppColors.accent12 : AppColors.bg,
       ),
       constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-      padding: _p2pTaxCardPadding,
+      padding: AppSpacing.p2pTaxCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -299,10 +299,10 @@ class _TaxSummary extends StatelessWidget {
         ),
         const SizedBox(height: _p2pTaxSectionGap),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           variant: VitCardVariant.inner,
           borderColor: AppColors.accent20,
-          padding: _p2pTaxCardPadding,
+          padding: AppSpacing.p2pTaxCardPadding,
           child: Row(
             children: [
               Expanded(

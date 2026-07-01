@@ -99,7 +99,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
       children: [
         VitCard(
           key: StakingCustodyKeys.custodian,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

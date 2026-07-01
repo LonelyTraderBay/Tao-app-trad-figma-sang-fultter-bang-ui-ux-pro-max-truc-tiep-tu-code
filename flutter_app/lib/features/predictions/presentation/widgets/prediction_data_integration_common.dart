@@ -124,7 +124,7 @@ class _InlineIconButton extends StatelessWidget {
       height: AppSpacing.predictionDataInlineButtonSize,
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.zeroInsets,
       child: Icon(
         icon,

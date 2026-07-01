@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part 'active_copies_page_part_01.dart';
 part 'active_copies_page_part_02.dart';
@@ -57,15 +58,10 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
     final controller = ref.watch(tradeActiveCopiesControllerProvider);
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final chromeInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final scrollClearance =
-        chromeInset +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x6 + AppSpacing.x6
-            : AppSpacing.x5 + AppSpacing.x5);
+    final scrollClearance = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
     final copies = _filteredCopies(snapshot.copies);
 
     return VitPageLayout(
@@ -92,20 +88,17 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: SingleChildScrollView(
+                    child: VitInsetScrollView(
                       key: ActiveCopiesPage.contentKey,
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                        AppSpacing.contentPad,
-                        AppSpacing.tradeBotCardGap,
-                        AppSpacing.contentPad,
-                        scrollClearance,
-                      ),
+                      bottomInset: scrollClearance,
                       child: VitPageContent(
-                        padding: VitContentPadding.none,
+                        padding: VitContentPadding.compact,
                         density: VitDensity.compact,
-                        fullBleed: true,
                         children: [
-                          _PortfolioOverview(snapshot: snapshot.portfolio),
+                          VitTradeSection(
+                            title: 'Tổng quan portfolio',
+                            child: _PortfolioOverview(snapshot: snapshot.portfolio),
+                          ),
                           VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             density: VitDensity.compact,
@@ -122,44 +115,49 @@ class _ActiveCopiesPageState extends ConsumerState<ActiveCopiesPage> {
                               _expandedCopyId = null;
                             }),
                           ),
-                          if (copies.isEmpty)
-                            _EmptyCopiesState(
-                              history: _activeTab == 'history',
-                              onExplore: () =>
-                                  context.go(AppRoutePaths.tradeCopyTrading),
-                            )
-                          else
-                            for (final copy in copies)
-                              _ActiveCopyCard(
-                                key: ActiveCopiesPage.copyKey(copy.id),
-                                copy: copy,
-                                expanded: _expandedCopyId == copy.id,
-                                onToggle: () => setState(() {
-                                  _expandedCopyId = _expandedCopyId == copy.id
-                                      ? null
-                                      : copy.id;
-                                }),
-                                onViewDetails: () => context.go(
-                                  AppRoutePaths.tradeCopyProvider(
-                                    copy.providerId,
-                                    backPath: AppRoutePaths.tradeCopyActive,
-                                  ),
-                                ),
-                                onConfigure: () => context.go(
-                                  AppRoutePaths.tradeCopyProviderConfiguration(
-                                    copy.providerId,
-                                    backPath: AppRoutePaths.tradeCopyActive,
-                                  ),
-                                ),
-                                onStop:
-                                    copy.status ==
-                                        TradeActiveCopyStatus.coolingOff
-                                    ? null
-                                    : () => setState(() {
+                          VitTradeSection(
+                            title: 'Danh sách copy',
+                            child: copies.isEmpty
+                                ? _EmptyCopiesState(
+                                    history: _activeTab == 'history',
+                                    onExplore: () => context.go(
+                                      AppRoutePaths.tradeCopyTrading,
+                                    ),
+                                  )
+                                : _ActiveCopyList(
+                                    copies: copies,
+                                    expandedCopyId: _expandedCopyId,
+                                    onToggle: (copyId) => setState(() {
+                                      _expandedCopyId =
+                                          _expandedCopyId == copyId
+                                          ? null
+                                          : copyId;
+                                    }),
+                                    onViewDetails: (copy) => context.go(
+                                      AppRoutePaths.tradeCopyProvider(
+                                        copy.providerId,
+                                        backPath: AppRoutePaths.tradeCopyActive,
+                                      ),
+                                    ),
+                                    onConfigure: (copy) => context.go(
+                                      AppRoutePaths
+                                          .tradeCopyProviderConfiguration(
+                                        copy.providerId,
+                                        backPath: AppRoutePaths.tradeCopyActive,
+                                      ),
+                                    ),
+                                    onStop: (copy) {
+                                      if (copy.status ==
+                                          TradeActiveCopyStatus.coolingOff) {
+                                        return;
+                                      }
+                                      setState(() {
                                         _pendingStopCopy = copy;
                                         _confirmText = '';
-                                      }),
-                              ),
+                                      });
+                                    },
+                                  ),
+                          ),
                           if (_actionStatus != null) ...[
                             _ActionStatusBanner(text: _actionStatus!),
                           ],

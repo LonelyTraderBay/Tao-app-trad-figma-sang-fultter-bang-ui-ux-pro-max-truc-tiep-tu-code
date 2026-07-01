@@ -191,7 +191,7 @@ class _TemplateCard extends StatelessWidget {
     return VitCard(
       key: ArenaStudioPage.templateKey(template.id),
       borderColor: selected ? _arenaAccent : null,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.arenaPaddingX3,
       onTap: template.verifiedOnly ? null : onTap,
       child: Row(
@@ -334,18 +334,7 @@ class _CommunityRulesFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VitCtaButton(
-          onPressed: onTapRules,
-          variant: VitCtaButtonVariant.ghost,
-          fullWidth: false,
-          height: AppSpacing.buttonCompact,
-          padding: AppSpacing.zeroInsets,
-          leading: const Icon(
-            Icons.menu_book_outlined,
-            size: AppSpacing.arenaStudioCommunityIcon,
-          ),
-          child: const Text('Quy tắc cộng đồng'),
-        ),
+        VitCommunityRulesLink(onTap: onTapRules),
         const SizedBox(height: AppSpacing.x1),
         VitCard(
           variant: VitCardVariant.inner,

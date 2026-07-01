@@ -36,7 +36,7 @@ class _PairHeader extends StatelessWidget {
           label: 'Ch\u1ECDn c\u1EB7p giao d\u1ECBch ${pair.symbol}',
           child: VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.pairHeaderSymbolPadding,
             onTap: onPairTap,
             child: Row(

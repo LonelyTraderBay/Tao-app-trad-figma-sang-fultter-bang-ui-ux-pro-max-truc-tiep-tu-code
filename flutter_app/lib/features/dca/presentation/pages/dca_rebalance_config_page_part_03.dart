@@ -132,7 +132,7 @@ class _PillButton extends StatelessWidget {
     return VitCard(
       onTap: enabled ? onTap : null,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       borderColor: AppColors.transparent,
       clip: true,
@@ -268,7 +268,7 @@ class _IconBadgeButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       width: AppSpacing.iconLg,
       height: AppSpacing.iconLg,
@@ -299,7 +299,7 @@ class _TogglePill extends StatelessWidget {
       child: VitCard(
         onTap: () => onChanged(!value),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         width: AppSpacing.dcaRebalanceToggleWidth,
         height: _dcaRebalanceToggleHeight,

@@ -95,7 +95,7 @@ class _ForumHero extends StatelessWidget {
     return VitCard(
       key: StakingForumPage.heroKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.accent30,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
@@ -158,7 +158,7 @@ class _CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingForumPage.categoryKey(category.name),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       onTap: () {},
       child: Column(
@@ -216,7 +216,7 @@ class _ThreadCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingForumPage.threadKey(index),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3X4,
       onTap: () {},
       child: Column(

@@ -9,8 +9,8 @@ class _SupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PKycStatusPage.supportKey,
-      radius: VitCardRadius.md,
-      padding: _p2pKycCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pKycCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

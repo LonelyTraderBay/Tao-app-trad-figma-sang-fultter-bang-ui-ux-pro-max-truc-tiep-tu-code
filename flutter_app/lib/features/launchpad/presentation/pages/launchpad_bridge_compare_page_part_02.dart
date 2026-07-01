@@ -23,7 +23,7 @@ class _RouteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadBridgeComparePage.routeKey(route.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected
           ? route.accent.withValues(alpha: .48)
           : route.recommended
@@ -36,7 +36,7 @@ class _RouteCard extends StatelessWidget {
           VitCard(
             key: LaunchpadBridgeComparePage.routeSelectKey(route.id),
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.launchpadPaddingX4,
             onTap: onSelect,
             child: Row(
@@ -89,7 +89,7 @@ class _RouteCard extends StatelessWidget {
           VitCard(
             key: LaunchpadBridgeComparePage.expandKey(route.id),
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.launchpadVerticalPaddingX2,
             onTap: onExpand,
             child: Row(

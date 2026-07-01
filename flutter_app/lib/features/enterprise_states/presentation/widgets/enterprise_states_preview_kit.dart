@@ -112,7 +112,7 @@ class _PreviewFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       clip: true,
       padding: AppSpacing.zeroInsets,
       child: Column(

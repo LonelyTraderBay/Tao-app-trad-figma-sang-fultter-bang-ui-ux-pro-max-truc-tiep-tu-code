@@ -340,7 +340,7 @@ class _ModulesStep extends StatelessWidget {
         ),
         VitCard(
           padding: AppSpacing.onboardingCardPadding,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           child: Column(
             children: [
               for (final feature in module.features) ...[
@@ -396,7 +396,7 @@ class _BoundariesStep extends StatelessWidget {
           ),
         VitCard(
           padding: AppSpacing.onboardingCardPadding,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           borderColor: AppColors.warningBorder,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -455,7 +455,7 @@ class _TrustStep extends StatelessWidget {
         for (final pillar in pillars) _TrustCard(pillar: pillar),
         VitCard(
           padding: AppSpacing.onboardingCardPadding,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           borderColor: AppColors.buy20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

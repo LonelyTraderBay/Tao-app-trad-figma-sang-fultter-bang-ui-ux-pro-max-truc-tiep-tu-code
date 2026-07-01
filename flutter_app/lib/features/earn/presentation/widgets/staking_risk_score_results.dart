@@ -17,7 +17,7 @@ class _RiskScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingRiskScoreCalculatorPage.scoreKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         children: [

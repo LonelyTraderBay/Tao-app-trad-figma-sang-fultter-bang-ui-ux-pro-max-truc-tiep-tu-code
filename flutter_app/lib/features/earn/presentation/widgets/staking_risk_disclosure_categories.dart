@@ -46,13 +46,13 @@ class _RiskCategoryCard extends StatelessWidget {
     final color = _riskColor(category.level);
     return VitCard(
       key: StakingRiskDisclosurePage.categoryKey(category.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       clip: true,
       child: Column(
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: _stakingRiskCardPadding,
             onTap: onTap,
             child: Row(

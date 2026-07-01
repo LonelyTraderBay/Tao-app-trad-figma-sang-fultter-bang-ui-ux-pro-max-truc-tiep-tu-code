@@ -81,7 +81,7 @@ class VitSectionHeader extends StatelessWidget {
             type: MaterialType.transparency,
             child: InkWell(
               onTap: onAction,
-              borderRadius: AppRadii.smRadius,
+              borderRadius: AppRadii.inputRadius,
               child: Padding(
                 padding: const EdgeInsetsDirectional.symmetric(
                   horizontal: AppSpacing.x3,

@@ -148,7 +148,7 @@ class _AdminSettingsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.adminRowPadding,
       onTap: onTap,
       child: Row(

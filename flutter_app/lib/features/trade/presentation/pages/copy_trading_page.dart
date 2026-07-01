@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/copy_trading_hero.dart';
 part '../widgets/copy_trading_list.dart';
@@ -24,12 +25,10 @@ part '../widgets/copy_trading_metrics_common.dart';
 
 const _copyPrimary = AppColors.primary;
 const _copySpace = AppSpacing.x2;
-const _copyCardSpace = AppSpacing.x3;
-const _copyVisualScrollClearance = 112.0;
-const _copyNativeScrollClearance = 72.0;
-const _copyWeeklyChartHeight = 36.0;
-const _copyBadgeSize = 18.0;
-const _copyButtonHeight = 44.0;
+const _copyCardSpace = AppSpacing.tradePageContentGap;
+const _copyWeeklyChartHeight = AppSpacing.copyTradingWeeklyChartHeight;
+const _copyBadgeSize = AppSpacing.ctaLoadingIcon;
+const _copyButtonHeight = AppSpacing.homeHeroActionHeight;
 const _copyTextLineHeight = 1.24;
 
 class CopyTradingPage extends ConsumerStatefulWidget {
@@ -53,11 +52,10 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeCopyTradingProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _copyVisualScrollClearance
-            : _copyNativeScrollClearance);
+    final scrollEndClearance = copyTradingScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
     final traders = _sortedTraders(snapshot.traders);
 
     return VitPageLayout(
@@ -80,16 +78,17 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: VitInsetScrollView(
                   key: CopyTradingPage.contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
+                  bottomInset: scrollEndClearance,
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
-                      _CopyHeroCard(snapshot: snapshot),
+                      VitTradeSection(
+                        title: 'Tổng quan',
+                        child: _CopyHeroCard(snapshot: snapshot),
+                      ),
                       _RiskWarningCard(
                         title: snapshot.riskWarningTitle,
                         message: snapshot.riskWarningText,
@@ -102,27 +101,34 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
                         contractId: 'Providers available: ${traders.length}',
                         density: VitDensity.compact,
                       ),
-                      _SortChips(
-                        options: snapshot.sortOptions,
-                        selected: _sortBy,
-                        onChanged: (value) => setState(() => _sortBy = value),
-                      ),
-                      if (traders.isEmpty)
-                        const VitEmptyState(
-                          title: 'No copy providers',
-                          message:
-                              'Providers matching this sort will appear here when available.',
-                          icon: Icons.groups_outlined,
-                        )
-                      else
-                        for (final trader in traders) ...[
-                          _TraderCard(
-                            trader: trader,
-                            onOpen: () => context.go(
-                              AppRoutePaths.tradeCopyProvider(trader.id),
+                      VitTradeSection(
+                        title: 'Nhà cung cấp',
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _SortChips(
+                              options: snapshot.sortOptions,
+                              selected: _sortBy,
+                              onChanged: (value) =>
+                                  setState(() => _sortBy = value),
                             ),
-                          ),
-                        ],
+                            if (traders.isEmpty)
+                              const VitEmptyState(
+                                title: 'No copy providers',
+                                message:
+                                    'Providers matching this sort will appear here when available.',
+                                icon: Icons.groups_outlined,
+                              )
+                            else
+                              _TraderList(
+                                traders: traders,
+                                onOpen: (trader) => context.go(
+                                  AppRoutePaths.tradeCopyProvider(trader.id),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
                       _Disclaimer(text: snapshot.disclaimer),
                     ],
                   ),

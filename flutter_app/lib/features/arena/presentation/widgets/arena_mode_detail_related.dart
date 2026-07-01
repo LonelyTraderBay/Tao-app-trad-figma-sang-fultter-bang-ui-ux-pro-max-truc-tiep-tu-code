@@ -77,7 +77,7 @@ class _RoomRow extends StatelessWidget {
         key: rowKey,
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: Padding(
           padding: AppSpacing.arenaPaddingX4,
           child: Row(

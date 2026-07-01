@@ -10,7 +10,7 @@ class _SummaryHero extends StatelessWidget {
     return VitCard(
       key: SavingsAnalyticsPage.summaryKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.cardPadding,
       child: Row(
         children: [

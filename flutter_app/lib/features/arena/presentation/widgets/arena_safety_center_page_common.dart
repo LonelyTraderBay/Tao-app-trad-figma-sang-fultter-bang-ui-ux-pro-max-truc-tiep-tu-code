@@ -47,36 +47,6 @@ class _QuickLinks extends StatelessWidget {
   }
 }
 
-class _SafetyFooter extends StatelessWidget {
-  const _SafetyFooter({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.menu_book_outlined,
-            color: AppColors.primary,
-            size: _safetyFooterIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.primary,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _ToneIcon extends StatelessWidget {
   const _ToneIcon({required this.icon, required this.color});
 

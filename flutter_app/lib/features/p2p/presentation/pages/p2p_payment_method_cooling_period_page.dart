@@ -23,12 +23,6 @@ const double _p2pPaymentCoolingNativeNavClearance =
     _p2pPaymentCoolingVisualNavClearance - AppSpacing.x4;
 const double _p2pPaymentCoolingVisualClearance = AppSpacing.x3;
 const double _p2pPaymentCoolingNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pPaymentCoolingScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
   const P2PPaymentMethodCoolingPeriodPage({super.key, this.shellRenderMode});
@@ -74,8 +68,8 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodCoolingPeriodPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pPaymentCoolingScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pPaymentCoolingScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
@@ -179,7 +173,7 @@ class _CoolingHero extends StatelessWidget {
               borderRadius: AppRadii.mdRadius,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.x3),
+              padding: AppSpacing.p2pPaymentCoolingHeroCountdownPadding,
               child: Column(
                 children: [
                   Text(
@@ -212,7 +206,7 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pPaymentCardPadding,
       child: Row(
         children: [
@@ -269,7 +263,7 @@ class _ReasonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pPaymentCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,7 +328,7 @@ class _WaitingNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: AppColors.primary20,
       child: Row(

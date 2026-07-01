@@ -43,7 +43,7 @@ class _NoticeCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: border,
       clip: true,
       background: ColoredBox(color: background),

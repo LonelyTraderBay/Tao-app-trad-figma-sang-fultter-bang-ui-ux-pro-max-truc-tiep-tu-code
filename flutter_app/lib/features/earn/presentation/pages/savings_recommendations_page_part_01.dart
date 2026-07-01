@@ -261,7 +261,7 @@ class _ProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = snapshot.profile;
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -397,7 +397,7 @@ class _AmountSimulator extends StatelessWidget {
     const amounts = [1000, 5000, 10000, 50000];
     final activeAmount = int.tryParse(amountText);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

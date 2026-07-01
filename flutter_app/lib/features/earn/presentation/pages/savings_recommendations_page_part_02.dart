@@ -15,7 +15,7 @@ class _StrategyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX3,
       borderColor: strategy.recommended ? AppColors.primary : null,
       onTap: onTap,
@@ -185,7 +185,7 @@ class _InsightCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _insightColor(insight.tone);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -147,7 +147,7 @@ class _NotificationCard extends StatelessWidget {
         : _notificationFill(notification.type);
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: onTap,
       clip: true,
       padding: AppSpacing.earnCardPaddingX4,

@@ -151,7 +151,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pDisputeCompactCardPadding,
       child: Column(
         mainAxisSize: MainAxisSize.min,

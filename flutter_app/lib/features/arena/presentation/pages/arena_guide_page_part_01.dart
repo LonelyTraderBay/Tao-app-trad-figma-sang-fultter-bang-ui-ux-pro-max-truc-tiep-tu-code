@@ -277,7 +277,7 @@ class _ModeSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.arenaGuideModeSwitchPadding,
       child: Row(
         children: [

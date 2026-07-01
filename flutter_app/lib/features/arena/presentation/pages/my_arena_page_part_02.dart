@@ -117,7 +117,7 @@ class _ChallengeRow extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: Column(
           children: [
             Padding(
@@ -227,7 +227,7 @@ class _SavedModesList extends StatelessWidget {
               child: VitCard(
                 onTap: () => onMode(modes[i].id),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 child: Column(
                   children: [
                     Padding(
@@ -315,7 +315,7 @@ class _DraftList extends StatelessWidget {
               child: VitCard(
                 onTap: onStudio,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 child: Column(
                   children: [
                     Padding(

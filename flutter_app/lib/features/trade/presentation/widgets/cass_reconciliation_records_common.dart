@@ -23,7 +23,7 @@ class _RecordCard extends StatelessWidget {
                 height: _recordIconTile,
                 variant: VitCardVariant.inner,
                 density: VitDensity.compact,
-                padding: EdgeInsets.zero,
+                padding: AppSpacing.zeroInsets,
                 borderColor: tone.color.withValues(alpha: .24),
                 alignment: Alignment.center,
                 child: Icon(tone.icon, color: tone.color, size: AppSpacing.x4),

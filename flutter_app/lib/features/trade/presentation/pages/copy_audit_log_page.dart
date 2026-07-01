@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/copy_audit_log_controls.dart';
 part '../widgets/copy_audit_log_events.dart';
@@ -25,8 +26,6 @@ const _auditPrimary = AppColors.primary;
 const _auditAmber = AppColors.caution;
 const _auditPurple = AppColors.accent;
 const _auditGreen = AppColors.buy;
-const double _auditVisualScrollClearance = 108;
-const double _auditNativeScrollClearance = 72;
 const double _auditSpace = AppSpacing.x2;
 const double _auditTinySpace = AppSpacing.x1;
 const double _auditEventIconExtent = 36;
@@ -79,11 +78,10 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
         .getCopyAuditLog(copyId: widget.copyId);
     final events = _filteredEvents(snapshot);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? _auditVisualScrollClearance
-            : _auditNativeScrollClearance) +
-        MediaQuery.paddingOf(context).bottom;
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

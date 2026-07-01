@@ -28,7 +28,7 @@ class _AnalyticsTabs extends StatelessWidget {
                       key: CrossModuleAnalytics.tabKey(tab.tab),
                       onTap: () => onChanged(tab.tab),
                       variant: VitCardVariant.ghost,
-                      radius: VitCardRadius.sm,
+                      radius: VitCardRadius.standard,
                       padding: EdgeInsets.zero,
                       borderColor: AppColors.transparent,
                       child: Column(

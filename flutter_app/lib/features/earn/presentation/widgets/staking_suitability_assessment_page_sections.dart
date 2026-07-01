@@ -76,7 +76,7 @@ class _QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingSuitabilityAssessmentPage.questionCardKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _stakingSuitabilityCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -138,7 +138,7 @@ class _OptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected ? AppColors.primary : null,
       padding: _stakingSuitabilityOptionPadding,
       onTap: onTap,
@@ -278,7 +278,7 @@ class _QuizOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: selected ? AppColors.primary : null,
       padding: _stakingSuitabilityOptionPadding,
       onTap: onTap,

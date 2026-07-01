@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
 const predictionPortfolioPrimary = AppColors.primary;
 
@@ -36,31 +33,4 @@ String formatPredictionPortfolioSignedMoney(double value, {int decimals = 2}) {
 String formatPredictionPortfolioShares(double value) {
   if (value == value.roundToDouble()) return value.toStringAsFixed(0);
   return value.toStringAsFixed(2);
-}
-
-class PredictionPortfolioTinyBadge extends StatelessWidget {
-  const PredictionPortfolioTinyBadge({
-    required this.label,
-    required this.color,
-    required this.background,
-    super.key,
-  });
-
-  final String label;
-  final Color color;
-  final Color background;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: background,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.predictionPortfolioTinyBadgePadding,
-        child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
-      ),
-    );
-  }
 }

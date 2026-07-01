@@ -52,7 +52,7 @@ class _TipCard extends StatelessWidget {
     final color = _toneColor(tip.tone);
     return VitCard(
       key: SavingsGoalPage.tipKey(tip.title),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [

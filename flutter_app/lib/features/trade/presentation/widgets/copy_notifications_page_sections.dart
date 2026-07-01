@@ -107,7 +107,7 @@ class _FilterPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       width: AppSpacing.buttonStandard - AppSpacing.hairlineStroke,
       height: AppSpacing.buttonStandard - AppSpacing.hairlineStroke,
       alignment: Alignment.center,

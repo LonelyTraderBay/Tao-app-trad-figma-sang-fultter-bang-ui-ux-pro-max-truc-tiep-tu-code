@@ -48,7 +48,7 @@ class _DynamicHero extends StatelessWidget {
                     VitCard(
                       onTap: onChangeStrategy,
                       variant: VitCardVariant.ghost,
-                      radius: VitCardRadius.sm,
+                      radius: VitCardRadius.standard,
                       padding: EdgeInsets.zero,
                       borderColor: AppColors.transparent,
                       clip: true,

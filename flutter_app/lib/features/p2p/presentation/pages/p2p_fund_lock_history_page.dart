@@ -20,12 +20,6 @@ const double _p2pFundLockNativeNavClearance =
     _p2pFundLockVisualNavClearance - AppSpacing.x4;
 const double _p2pFundLockVisualClearance = AppSpacing.x3;
 const double _p2pFundLockNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pFundLockScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PFundLockHistoryPage extends ConsumerWidget {
   const P2PFundLockHistoryPage({
@@ -76,8 +70,8 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pFundLockScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pFundLockScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -120,7 +114,7 @@ class _FundLockHero extends StatelessWidget {
     return VitCard(
       key: P2PFundLockHistoryPage.heroKey,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppModuleAccents.p2p,
       background: const ColoredBox(color: AppModuleAccents.p2p),
       padding: AppSpacing.p2pFinancialSafetyCardPadding,
@@ -131,7 +125,7 @@ class _FundLockHero extends StatelessWidget {
             width: AppSpacing.p2pFinancialSafetyIconBox,
             height: AppSpacing.p2pFinancialSafetyIconBox,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             background: ColoredBox(
               color: AppColors.onAccent.withValues(alpha: .20),
             ),
@@ -204,7 +198,7 @@ class _FundLockRecordCard extends StatelessWidget {
 
     return VitCard(
       key: P2PFundLockHistoryPage.recordKey(record.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pFinancialSafetyCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,7 +207,7 @@ class _FundLockRecordCard extends StatelessWidget {
             width: AppSpacing.p2pFinancialSafetyIconBox,
             height: AppSpacing.p2pFinancialSafetyIconBox,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             background: ColoredBox(color: color.withValues(alpha: .14)),
             clip: true,
             child: Icon(

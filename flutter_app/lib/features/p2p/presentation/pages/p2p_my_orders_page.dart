@@ -30,23 +30,6 @@ const double _p2pMyOrdersSectionGap = AppSpacing.x3;
 const double _p2pMyOrdersTightGap = AppSpacing.x2;
 const double _p2pMyOrdersSortHeight = AppSpacing.buttonCompact;
 const double _p2pMyOrdersDividerHeight = AppSpacing.dividerHairline;
-const EdgeInsets _p2pMyOrdersScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pMyOrdersStatPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _p2pMyOrdersCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pMyOrdersCompactPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pMyOrdersLargePadding = EdgeInsets.all(AppSpacing.x4);
-const EdgeInsets _p2pMyOrdersChipPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
 
 enum _OrdersSort { date, amount }
 
@@ -125,8 +108,8 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                   child: SingleChildScrollView(
                     key: P2PMyOrdersPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pMyOrdersScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pMyOrdersScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -170,7 +153,7 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                           ],
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pMyOrdersCompactPadding,
+                          padding: AppSpacing.p2pMyOrdersCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P order list review',

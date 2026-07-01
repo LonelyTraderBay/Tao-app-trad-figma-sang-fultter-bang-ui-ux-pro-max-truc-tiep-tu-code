@@ -53,7 +53,7 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
       padding: AppSpacing.dcaPaddingX4,
       child: Row(
@@ -85,7 +85,7 @@ class _SuccessCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
       padding: AppSpacing.dcaPaddingX4,
       child: Row(
@@ -199,7 +199,7 @@ class _DeleteButton extends StatelessWidget {
     return VitCard(
       onTap: onPressed,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,

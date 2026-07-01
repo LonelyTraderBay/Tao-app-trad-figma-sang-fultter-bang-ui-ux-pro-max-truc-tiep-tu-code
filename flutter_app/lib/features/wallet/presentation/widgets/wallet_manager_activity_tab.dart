@@ -48,7 +48,7 @@ class _ActivityRow extends StatelessWidget {
       height: AppSpacing.walletManagerActivityRowHeight,
       padding: AppSpacing.walletManagerActivityRowPadding,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: walletManagerBorder,
       background: const ColoredBox(color: walletManagerPanel),
       clip: true,

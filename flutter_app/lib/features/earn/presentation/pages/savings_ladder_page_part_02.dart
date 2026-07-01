@@ -19,7 +19,7 @@ class _RungTile extends StatelessWidget {
     return VitCard(
       key: SavingsLadderPage.rungKey(rung.id),
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       child: Row(
         children: [
@@ -121,7 +121,7 @@ class _AddRungButton extends StatelessWidget {
     return VitCard(
       key: SavingsLadderPage.addRungKey,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary30,
       density: VitDensity.compact,
       onTap: onTap,
@@ -244,7 +244,7 @@ class _TimelineChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final maxDays = rungs.map((rung) => rung.lockDays).reduce(math.max);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -364,7 +364,7 @@ class _MaturityTile extends StatelessWidget {
     final parts = rung.maturityDate.split('/');
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       child: Row(
         children: [
@@ -442,7 +442,7 @@ class _CashFlowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.buy20,
       density: VitDensity.compact,
       child: Column(

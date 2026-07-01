@@ -16,7 +16,7 @@ class _OrderTopTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.border,
       child: Row(
@@ -165,14 +165,30 @@ class _OrderHistoryTile extends StatelessWidget {
     required this.order,
     required this.onCancel,
     this.actionKey,
+    this.grouped = false,
   });
 
   final TradeHistoryOrder order;
   final VoidCallback onCancel;
   final Key? actionKey;
+  final bool grouped;
 
   @override
   Widget build(BuildContext context) {
+    return grouped
+        ? Padding(
+            padding: AppSpacing.tradeOrderRowPadding,
+            child: content,
+          )
+        : VitCard(
+            radius: VitCardRadius.standard,
+            padding: VitDensity.compact.cardPadding,
+            borderColor: AppColors.divider,
+            child: content,
+          );
+  }
+
+  Widget get content {
     final status = _statusPresentation(order.status);
     final isBuy = order.side == TradeOrderSide.buy;
     final fillPercent = order.amount == 0 ? 0.0 : order.filled / order.amount;
@@ -180,13 +196,9 @@ class _OrderHistoryTile extends StatelessWidget {
         order.status == TradeOrderStatus.open ||
         order.status == TradeOrderStatus.partial;
 
-    return VitCard(
-      radius: VitCardRadius.sm,
-      padding: VitDensity.compact.cardPadding,
-      borderColor: AppColors.divider,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
           Row(
             children: [
               Expanded(
@@ -305,7 +317,6 @@ class _OrderHistoryTile extends StatelessWidget {
             ),
           ],
         ],
-      ),
     );
   }
 }

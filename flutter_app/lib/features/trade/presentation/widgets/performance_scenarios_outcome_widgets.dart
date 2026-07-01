@@ -25,7 +25,7 @@ class _ScenarioCard extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             width: _scenarioIconTile,
             height: _scenarioIconTile,
             alignment: Alignment.center,

@@ -17,7 +17,7 @@ class StakingInsuranceFundStatusCard extends StatelessWidget {
     final progress = snapshot.currentRatio / snapshot.targetRatio;
     return VitCard(
       key: StakingInsuranceFundKeys.fundStatus,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [
@@ -183,7 +183,7 @@ class StakingInsuranceFundInlineStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: 0.16),
       padding: AppSpacing.earnCardPaddingX4,
       child: StakingInsuranceFundMetricBlock(

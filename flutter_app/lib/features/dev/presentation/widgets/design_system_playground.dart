@@ -61,7 +61,7 @@ class DesignSystemPlayground extends StatelessWidget {
       children: [
         VitCard(
           padding: AppSpacing.devCardPadding,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppColors.primary20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -125,7 +125,7 @@ class DesignSystemPlayground extends StatelessWidget {
         ),
         VitCard(
           padding: AppSpacing.devCardPadding,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

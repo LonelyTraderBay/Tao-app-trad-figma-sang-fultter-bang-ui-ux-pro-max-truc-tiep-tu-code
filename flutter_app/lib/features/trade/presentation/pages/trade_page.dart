@@ -12,11 +12,10 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_terminal_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 part 'trade_page_part_01.dart';
@@ -24,11 +23,14 @@ part 'trade_page_part_02.dart';
 part 'trade_page_part_03.dart';
 
 const _tradePrimary = AppColors.primary;
-const _tradeCompactChartHeight = AppSpacing.x7 + AppSpacing.x6 + AppSpacing.x4;
-const _tradeCompactQuickNavHeight = AppSpacing.x6 + AppSpacing.x5;
-const _tradeCompactQuickChipWidth = AppSpacing.x7 + AppSpacing.x6;
 
 enum TradeChartVariant { defaultRoute, pairRoute }
+
+VitTradeChartVariant _mapChartVariant(TradeChartVariant variant) {
+  return variant == TradeChartVariant.pairRoute
+      ? VitTradeChartVariant.pairRoute
+      : VitTradeChartVariant.defaultRoute;
+}
 
 class TradePage extends ConsumerStatefulWidget {
   const TradePage({
@@ -42,11 +44,15 @@ class TradePage extends ConsumerStatefulWidget {
   static const contentKey = Key('sc048_trade_scroll_content');
   static const backKey = Key('sc048_trade_back');
   static const chartTabKey = Key('sc048_trade_chart_tab');
+  static const viewModeChartsKey = Key('sc048_trade_view_charts');
+  static const viewModeTradeKey = Key('sc048_trade_view_trade');
   static const orderBookTabKey = Key('sc048_trade_orderbook_tab');
   static const tradesTabKey = Key('sc048_trade_trades_tab');
   static const orderTabKey = Key('sc048_trade_order_tab');
+  static const positionsTabKey = Key('sc048_trade_positions_tab');
   static const openOrdersTabKey = Key('sc048_trade_open_orders_tab');
   static const historyTabKey = Key('sc048_trade_history_tab');
+  static const portfolioExpandKey = Key('sc048_trade_portfolio_expand');
   static const buySideKey = Key('sc048_trade_buy_side');
   static const sellSideKey = Key('sc048_trade_sell_side');
   static const amountFieldKey = Key('sc048_trade_amount_field');

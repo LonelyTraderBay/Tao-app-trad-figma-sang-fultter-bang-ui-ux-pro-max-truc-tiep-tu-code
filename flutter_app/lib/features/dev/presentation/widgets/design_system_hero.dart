@@ -15,7 +15,7 @@ class DesignSystemHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.devCardPaddingLarge,
       child: Stack(
         children: [

@@ -50,7 +50,7 @@ class StakingTaxJurisdictionTab extends StatelessWidget {
           label: 'Tài liệu tham khảo',
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 children: [
@@ -107,7 +107,7 @@ class _JurisdictionDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

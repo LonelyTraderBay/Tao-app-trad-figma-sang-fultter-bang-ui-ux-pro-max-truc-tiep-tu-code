@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/ex_ante_costs_overview.dart';
 part '../widgets/ex_ante_costs_summary_breakdown.dart';
@@ -29,8 +30,6 @@ const _costAmber = AppColors.caution;
 const _costRed = AppColors.sell;
 const _costSpace = AppSpacing.x2;
 const _costTinySpace = AppSpacing.x1;
-const _costVisualScrollClearance = 112.0;
-const _costNativeScrollClearance = 72.0;
 const _costIconTile = 34.0;
 const _costButtonExtent = 44.0;
 const _costTabExtent = 44.0;
@@ -62,11 +61,10 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
         .watch(tradeReadModelControllerProvider)
         .getExAnteCosts();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _costVisualScrollClearance
-            : _costNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

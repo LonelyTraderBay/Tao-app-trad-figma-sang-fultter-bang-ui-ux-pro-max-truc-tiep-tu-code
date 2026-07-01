@@ -18,8 +18,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
+import '../widgets/trade_module_layout.dart';
 
 class ExecutionQualityDemoPage extends ConsumerStatefulWidget {
   const ExecutionQualityDemoPage({super.key, this.shellRenderMode});
@@ -63,15 +65,11 @@ class _ExecutionQualityDemoPageState
         .watch(tradeReadModelControllerProvider)
         .getExecutionQuality();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.tradeToolBottomInsetSlippageVisual
-            : AppSpacing.tradeToolBottomInsetSlippageNative);
+
+    final bottomInset = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

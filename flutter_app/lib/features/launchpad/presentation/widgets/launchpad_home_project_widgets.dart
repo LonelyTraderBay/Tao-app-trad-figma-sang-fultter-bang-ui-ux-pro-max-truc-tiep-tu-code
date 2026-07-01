@@ -38,14 +38,14 @@ class _ProjectCard extends StatelessWidget {
     final statusStyle = _statusStyle(project.status);
     return VitCard(
       key: LaunchpadPage.projectKey(project.id),
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       clip: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: VitDensity.compact.cardPadding,
             onTap: () => context.go(AppRoutePaths.launchpadSample),
             child: Column(
@@ -223,7 +223,7 @@ class _InfoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

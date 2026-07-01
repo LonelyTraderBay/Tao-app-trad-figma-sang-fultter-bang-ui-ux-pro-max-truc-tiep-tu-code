@@ -162,7 +162,7 @@ class _RiskTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitTabBar(
+    return VitSegmentedTabBar(
       activeKey: activeId,
       tabs: [
         for (final tab in tabs)
@@ -173,7 +173,6 @@ class _RiskTabs extends StatelessWidget {
           ),
       ],
       onChanged: onChanged,
-      variant: VitTabBarVariant.segment,
     );
   }
 }

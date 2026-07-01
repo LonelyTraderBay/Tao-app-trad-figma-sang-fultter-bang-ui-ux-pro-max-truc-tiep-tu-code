@@ -52,7 +52,7 @@ class _HowItWorksTab extends StatelessWidget {
         ],
         const SizedBox(height: AppSpacing.x2),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
           padding: AppSpacing.p2pGuideCardPadding,
           child: Column(
@@ -196,7 +196,7 @@ class _SafetyTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppColors.sell20,
           padding: AppSpacing.p2pGuideCardPadding,
           child: Column(
@@ -232,7 +232,7 @@ class _SafetyTab extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
         ],
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppColors.sell20,
           padding: AppSpacing.p2pGuideCardPadding,
           child: Column(
@@ -284,7 +284,7 @@ class _SafetyTipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(tip.toneKey);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pGuideSafetyTipPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

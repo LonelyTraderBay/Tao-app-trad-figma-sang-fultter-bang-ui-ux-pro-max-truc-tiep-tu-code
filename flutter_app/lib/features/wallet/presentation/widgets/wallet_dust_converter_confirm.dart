@@ -1,44 +1,5 @@
 part of '../pages/dust_converter_page.dart';
 
-class _ConvertFooter extends StatelessWidget {
-  const _ConvertFooter({
-    required this.bottomSpace,
-    required this.selectedCount,
-    required this.targetSymbol,
-    required this.enabled,
-    required this.onTap,
-    this.horizontalPadding = AppSpacing.contentPad,
-  });
-
-  final double bottomSpace;
-  final int selectedCount;
-  final String targetSymbol;
-  final bool enabled;
-  final VoidCallback onTap;
-  final double horizontalPadding;
-
-  @override
-  Widget build(BuildContext context) {
-    final basePadding = horizontalPadding == 0
-        ? AppSpacing.zeroInsets
-        : AppSpacing.contentInsets;
-    return Padding(
-      padding: basePadding.copyWith(
-        top: _dustFooterTopPad,
-        bottom: bottomSpace + _dustGap,
-      ),
-      child: _PrimaryButton(
-        key: DustConverterPage.ctaKey,
-        enabled: enabled,
-        label: enabled
-            ? 'Chuy\u1EC3n \u0111\u1ED5i $selectedCount t\u00E0i s\u1EA3n \u2192 $targetSymbol'
-            : 'Ch\u1ECDn t\u00E0i s\u1EA3n \u0111\u1EC3 chuy\u1EC3n \u0111\u1ED5i',
-        onTap: onTap,
-      ),
-    );
-  }
-}
-
 class _PrimaryButton extends StatelessWidget {
   const _PrimaryButton({
     super.key,
@@ -118,23 +79,6 @@ class _ConvertedBanner extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      icon: Icons.auto_awesome_rounded,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: AppColors.primary,
-      density: VitDensity.compact,
     );
   }
 }

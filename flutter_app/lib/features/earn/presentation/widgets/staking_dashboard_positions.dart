@@ -47,7 +47,7 @@ class _PositionCard extends StatelessWidget {
 
     return VitCard(
       key: cardKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

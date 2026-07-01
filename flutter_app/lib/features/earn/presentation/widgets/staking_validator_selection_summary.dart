@@ -76,7 +76,7 @@ class StakingValidatorSelectionStatsSummary extends StatelessWidget {
 
     return VitCard(
       key: StakingValidatorSelectionKeys.summary,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [

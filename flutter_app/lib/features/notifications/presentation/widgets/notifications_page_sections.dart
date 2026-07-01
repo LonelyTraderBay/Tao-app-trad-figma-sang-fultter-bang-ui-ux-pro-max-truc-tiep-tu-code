@@ -18,7 +18,7 @@ class _NotificationToolbar extends StatelessWidget {
     return VitCard(
       key: NotificationsPage.toolbarKey,
       width: double.infinity,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       variant: VitCardVariant.inner,
       borderColor: AppColors.divider,
       padding: AppSpacing.notificationsToolbarPadding,
@@ -108,7 +108,7 @@ class _NotificationRow extends StatelessWidget {
     return VitCard(
       key: NotificationsPage.notificationKey(notification.id),
       width: double.infinity,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       variant: highlighted ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: showDivider ? AppColors.divider : AppColors.transparent,
       padding: AppSpacing.notificationsRowPadding,

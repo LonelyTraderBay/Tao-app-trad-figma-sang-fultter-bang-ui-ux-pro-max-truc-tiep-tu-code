@@ -7,10 +7,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const double _marketCategoryCompactHeight = AppSpacing.buttonCompact;
 const double _marketCategoryCompactGap = AppSpacing.x2;
-const EdgeInsets _marketFilterCompactPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
+const EdgeInsets _marketFilterCompactPadding =
+    AppSpacing.marketListFilterCompactPadding;
 
 class MarketListSortSheet extends StatelessWidget {
   const MarketListSortSheet({

@@ -10,7 +10,7 @@ class _AnalysisHeader extends StatelessWidget {
     return VitCard(
       key: CopyTradingCardDemo.analysisKey,
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +42,7 @@ class _AnalysisHeader extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.tradeBotCopyDemoCardPadding,
             background: const ColoredBox(color: AppColors.bg),
             child: Column(
@@ -77,7 +77,7 @@ class _ComparisonMatrix extends StatelessWidget {
     return VitCard(
       key: CopyTradingCardDemo.matrixKey,
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -313,7 +313,7 @@ class _Guidelines extends StatelessWidget {
     return VitCard(
       key: CopyTradingCardDemo.guidelinesKey,
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

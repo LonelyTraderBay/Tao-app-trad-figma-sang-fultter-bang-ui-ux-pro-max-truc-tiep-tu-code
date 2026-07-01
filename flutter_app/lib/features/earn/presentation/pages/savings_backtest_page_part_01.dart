@@ -24,7 +24,7 @@ class _BacktestHero extends StatelessWidget {
     return VitCard(
       key: SavingsBacktestPage.summaryKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -369,7 +369,7 @@ class _PresetCard extends StatelessWidget {
     return VitCard(
       key: SavingsBacktestPage.presetKey(preset.id),
       variant: selected ? VitCardVariant.inner : VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected ? color : AppColors.cardBorder,
       onTap: onTap,
       padding: AppSpacing.earnPaddingX4,
@@ -429,7 +429,7 @@ class _AllocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsBacktestPage.allocationKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [

@@ -28,24 +28,6 @@ const double _p2pFraudSectionGap = AppSpacing.x2;
 const double _p2pFraudPatternIconBox = AppSpacing.searchBarCompactHeight;
 const double _p2pFraudBodyLineHeight = 1.35;
 const double _p2pFraudDisclosureLineHeight = 1.4;
-const EdgeInsets _p2pFraudCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pFraudInnerPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pFraudPatternPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pFraudCategoryTabPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _p2pFraudChecklistItemPadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x2,
-);
-
-EdgeInsets _p2pFraudScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PFraudPreventionPage extends ConsumerStatefulWidget {
   const P2PFraudPreventionPage({super.key, this.shellRenderMode});
@@ -118,7 +100,7 @@ class _P2PFraudPreventionPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pFraudScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pFraudScrollPadding(scrollEndPadding),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,

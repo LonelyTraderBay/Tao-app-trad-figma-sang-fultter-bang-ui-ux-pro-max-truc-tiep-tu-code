@@ -463,7 +463,7 @@ class _SwitchRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
       onTap: () {
         HapticFeedback.selectionClick();

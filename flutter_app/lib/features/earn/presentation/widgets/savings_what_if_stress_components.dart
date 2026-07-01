@@ -74,7 +74,7 @@ class _StressRankCard extends StatelessWidget {
     final result = entry.result;
     final color = result.difference >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       borderColor: color.withValues(alpha: .18),
       child: Column(

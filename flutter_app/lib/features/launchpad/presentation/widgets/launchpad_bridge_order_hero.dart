@@ -11,7 +11,7 @@ class _BridgeStatusHero extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeOrderPage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: order.accent.withValues(alpha: .22),
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(

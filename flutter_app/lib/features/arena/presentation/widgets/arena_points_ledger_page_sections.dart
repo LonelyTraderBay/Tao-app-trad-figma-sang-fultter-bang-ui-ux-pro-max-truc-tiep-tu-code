@@ -133,7 +133,7 @@ class _FilterButton extends StatelessWidget {
         key: ArenaPointsLedgerPage.filterKey(filter.id),
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             minHeight: AppSpacing.buttonCompact,
@@ -212,7 +212,7 @@ class _LedgerRow extends StatelessWidget {
           context.go(AppRoutePaths.arenaLedgerEntry(entry.id));
         },
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: Padding(
           padding: AppSpacing.arenaPointsLedgerRowPadding,
           child: Row(

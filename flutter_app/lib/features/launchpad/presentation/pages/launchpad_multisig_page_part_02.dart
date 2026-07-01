@@ -172,7 +172,7 @@ class _TxCard extends StatelessWidget {
                   child: VitCard(
                     key: LaunchpadMultisigPage.txToggleKey(tx.id),
                     variant: VitCardVariant.ghost,
-                    radius: VitCardRadius.sm,
+                    radius: VitCardRadius.standard,
                     padding: AppSpacing.launchpadPaddingX3,
                     onTap: onToggle,
                     child: Row(

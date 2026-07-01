@@ -10,7 +10,7 @@ class _ClaimableBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadClaimReceiptPage.claimableKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.buy.withValues(alpha: .30),
       padding: AppSpacing.launchpadPaddingX4,
       child: Row(
@@ -77,7 +77,7 @@ class _NextUnlockCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +157,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
 
     return VitCard(
       key: LaunchpadClaimReceiptPage.detailsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -197,7 +197,7 @@ class _VestingPreviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadClaimReceiptPage.vestingPreviewKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

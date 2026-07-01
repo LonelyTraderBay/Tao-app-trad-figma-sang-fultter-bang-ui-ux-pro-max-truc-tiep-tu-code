@@ -122,7 +122,7 @@ class _ExportHero extends StatelessWidget {
     return VitCard(
       key: StakingDataExportPage.heroKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
@@ -202,7 +202,7 @@ class _QuickExportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingDataExportPage.quickExportKey(item.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected ? AppColors.primary : null,
       padding: AppSpacing.earnCardPaddingX3,
       onTap: onTap,
@@ -255,7 +255,7 @@ class _CustomExport extends StatelessWidget {
       label: snapshot.customTitle,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -370,7 +370,7 @@ class _FormatSelect extends StatelessWidget {
     return VitCard(
       key: StakingDataExportPage.formatKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.borderSolid,
       height: AppSpacing.buttonStandard,
       padding: AppSpacing.earnHorizontalPaddingX3,
@@ -410,7 +410,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingDataExportPage.footerKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         note,

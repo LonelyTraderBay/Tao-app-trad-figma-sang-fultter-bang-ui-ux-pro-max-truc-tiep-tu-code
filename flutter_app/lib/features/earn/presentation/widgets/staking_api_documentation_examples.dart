@@ -53,7 +53,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
           accentColor: AppColors.primarySoft,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: EdgeInsetsDirectional.all(AppSpacing.zero),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -101,7 +101,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
           accentColor: AppColors.primarySoft,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

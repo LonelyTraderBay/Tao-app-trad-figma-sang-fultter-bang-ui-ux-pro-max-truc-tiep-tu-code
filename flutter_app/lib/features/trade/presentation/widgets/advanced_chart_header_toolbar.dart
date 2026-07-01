@@ -33,7 +33,7 @@ class _AdvancedHeader extends StatelessWidget {
                       key: AdvancedChartPage.pairSelectorKey,
                       onTap: () => context.go(AppRoutePaths.markets),
                       variant: VitCardVariant.ghost,
-                      radius: VitCardRadius.sm,
+                      radius: VitCardRadius.standard,
                       padding: AppSpacing.zeroInsets,
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -335,7 +335,7 @@ class _ChartToolbar extends StatelessWidget {
                         key: AdvancedChartPage.indicatorButtonKey,
                         onTap: onIndicators,
                         variant: VitCardVariant.ghost,
-                        radius: VitCardRadius.sm,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: VitStatusPill(
                           label: 'Chỉ báo',

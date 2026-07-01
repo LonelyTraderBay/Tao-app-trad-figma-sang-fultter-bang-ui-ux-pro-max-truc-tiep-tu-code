@@ -453,7 +453,7 @@ mixin _MockLaunchpadRepositoryMethodsPart01 on _MockLaunchpadRepositoryBase {
       actionDraft: 'POST /launchpad/subscribe|claim|bridge where applicable',
       title: 'Swap Aggregator',
       backRoute: '/launchpad',
-      tabs: ['So sanh', 'Lich su', 'Cai dat'],
+      tabs: ['So s\u00E1nh', 'L\u1ECBch s\u1EED', 'C\u00E0i \u0111\u1EB7t'],
       fromToken: 'USDT',
       toToken: 'ARB',
       amount: '1000',

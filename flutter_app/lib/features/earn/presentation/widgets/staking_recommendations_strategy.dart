@@ -23,7 +23,7 @@ class StakingRecommendationsStrategyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       borderColor: strategy.recommended ? AppColors.primary : null,
       onTap: onTap,
@@ -183,7 +183,7 @@ class StakingRecommendationsTipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = stakingRecommendationsTipColor(tip.tone);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

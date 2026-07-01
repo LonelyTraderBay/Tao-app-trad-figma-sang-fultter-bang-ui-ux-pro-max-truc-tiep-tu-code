@@ -77,7 +77,7 @@ class _FlowNodeRow extends StatelessWidget {
         key: ArenaFlowMapPage.nodeKey(node.label),
         onTap: route == null ? null : () => onRoute(route),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: Padding(
           padding: _flowMapCardPadding,
           child: Row(

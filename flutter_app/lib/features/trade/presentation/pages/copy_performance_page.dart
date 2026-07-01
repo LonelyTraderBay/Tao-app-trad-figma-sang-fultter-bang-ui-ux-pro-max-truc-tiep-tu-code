@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/copy_performance_summary_tabs.dart';
 part '../widgets/copy_performance_details.dart';
@@ -26,8 +27,6 @@ const _performanceGreen = AppColors.buy;
 const _performanceRed = AppColors.sell;
 const _performanceSpace = AppSpacing.x2;
 const _performanceCardSpace = AppSpacing.x3;
-const _performanceVisualScrollClearance = 108.0;
-const _performanceNativeScrollClearance = 72.0;
 const _performanceReturnCardHeight = 92.0;
 const _performanceTabsHeight = 48.0;
 const _performanceEquityChartHeight = 128.0;
@@ -62,11 +61,10 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
         .watch(tradeReadModelControllerProvider)
         .getCopyPerformance(copyId: widget.copyId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _performanceVisualScrollClearance
-            : _performanceNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       semanticLabel: 'SC-074 CopyPerformancePage',

@@ -210,7 +210,7 @@ class _FrequencyChoice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: choiceKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: active ? AppColors.primary : AppColors.cardBorder,
       padding: AppSpacing.launchpadPaddingX4,
       onTap: onTap,

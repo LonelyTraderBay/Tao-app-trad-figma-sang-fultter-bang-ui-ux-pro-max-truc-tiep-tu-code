@@ -112,7 +112,7 @@ class _CompleteStep extends StatelessWidget {
         ],
         VitCard(
           padding: AppSpacing.onboardingCardPadding,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           borderColor: AppColors.primary20,
           child: Text.rich(
             TextSpan(
@@ -321,7 +321,7 @@ class _BoundaryCard extends StatelessWidget {
     return VitCard(
       key: OnboardingFlow.boundaryKey(boundary.id),
       padding: AppSpacing.onboardingCardPadding,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: expanded ? accent : AppColors.cardBorder,
       onTap: onTap,
       child: Column(
@@ -394,7 +394,7 @@ class _TrustCard extends StatelessWidget {
 
     return VitCard(
       padding: AppSpacing.onboardingCardPadding,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

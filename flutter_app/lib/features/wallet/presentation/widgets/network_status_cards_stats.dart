@@ -61,7 +61,7 @@ class _NetworkCard extends StatelessWidget {
                   width: _networkActionIconBoxSize,
                   height: _networkActionIconBoxSize,
                   variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.md,
+                  radius: VitCardRadius.standard,
                   background: ColoredBox(
                     color: healthColor.withValues(alpha: .08),
                   ),
@@ -264,7 +264,7 @@ class _AvailabilityChip extends StatelessWidget {
     return VitCard(
       height: _networkAvailabilityHeight,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       alignment: Alignment.center,
       child: VitStatusPill(
         label: '$label ${enabled ? 'OK' : 'T\u1EA1m d\u1EEBng'}',
@@ -288,7 +288,7 @@ class _NetworkNote extends StatelessWidget {
     return VitCard(
       padding: AppSpacing.walletNetworkNotePadding,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       background: ColoredBox(color: _networkAmber.withValues(alpha: .06)),
       clip: true,
       child: Row(

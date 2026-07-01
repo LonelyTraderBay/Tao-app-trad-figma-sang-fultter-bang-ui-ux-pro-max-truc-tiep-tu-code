@@ -7,7 +7,6 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -16,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -46,9 +46,7 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
         .getTradePositions();
     final positions = _visiblePositions(snapshot.positions);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
+    
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -65,15 +63,16 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: bottomChrome + AppSpacing.x3,
-                  ),
+                child: VitInsetScrollView(
+                  bottomInset: tradeScrollBottomInset(context, shellRenderMode: mode),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      _SummaryCard(positions: snapshot.positions),
+                      VitTradeSection(
+                        title: 'Tổng quan',
+                        child: _SummaryCard(positions: snapshot.positions),
+                      ),
                       const VitCard(
                         variant: VitCardVariant.inner,
                         padding: AppSpacing.cardPaddingCompact,
@@ -94,11 +93,12 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
                         active: _sortBy,
                         onChanged: (sort) => setState(() => _sortBy = sort),
                       ),
-                      if (positions.isEmpty)
-                        const _EmptyPositions()
-                      else
-                        for (final position in positions)
-                          _PositionTile(position: position),
+                      VitTradeSection(
+                        title: 'Vị thế mở',
+                        child: positions.isEmpty
+                            ? const _EmptyPositions()
+                            : _PositionList(positions: positions),
+                      ),
                       const TradeBodyReviewSection(
                         title: 'Position body review',
                         message: 'Position dashboard body reviewed',

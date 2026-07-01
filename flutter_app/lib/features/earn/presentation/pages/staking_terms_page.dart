@@ -141,7 +141,7 @@ class _TermsHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingTermsPage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,7 +270,7 @@ class _WarningCallout extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       borderColor: AppColors.warn15,
       child: Row(
@@ -323,7 +323,7 @@ class _TermsSectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingTermsPage.sectionKey(section.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       clip: true,
       onTap: onTap,
       child: Column(
@@ -423,7 +423,7 @@ class _AcceptanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
@@ -485,7 +485,7 @@ class _FooterCard extends StatelessWidget {
     return VitCard(
       key: StakingTermsPage.footerKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Text(
         text,

@@ -111,8 +111,7 @@ class _TimeframeTabs extends StatelessWidget {
       (_AnalyticsTimeframe.allTime, 'all', 'All Time'),
     ];
 
-    return VitTabBar(
-      variant: VitTabBarVariant.segment,
+    return VitSegmentedTabBar(
       activeKey: active.name,
       onChanged: (key) =>
           onChanged(tabs.firstWhere((tab) => tab.$1.name == key).$1),

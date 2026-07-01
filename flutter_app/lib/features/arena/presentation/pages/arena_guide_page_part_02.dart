@@ -106,7 +106,7 @@ class _ConceptSection extends StatelessWidget {
         for (final concept in concepts)
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.arenaPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

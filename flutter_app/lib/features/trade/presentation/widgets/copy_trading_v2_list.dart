@@ -1,5 +1,37 @@
 part of '../pages/copy_trading_v2_page.dart';
 
+class _TraderList extends StatelessWidget {
+  const _TraderList({required this.traders, required this.onOpen});
+
+  final List<TradeCopyTrader> traders;
+  final ValueChanged<TradeCopyTrader> onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      clip: true,
+      density: VitDensity.compact,
+      child: Column(
+        children: [
+          for (var i = 0; i < traders.length; i++) ...[
+            _TraderCard(
+              trader: traders[i],
+              onOpen: () => onOpen(traders[i]),
+              grouped: true,
+            ),
+            if (i < traders.length - 1)
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class _RiskWarningCard extends StatelessWidget {
   const _RiskWarningCard({required this.title, required this.message});
 
@@ -95,14 +127,89 @@ class _SortChip extends StatelessWidget {
 }
 
 class _TraderCard extends StatelessWidget {
-  const _TraderCard({required this.trader, required this.onOpen});
+  const _TraderCard({
+    required this.trader,
+    required this.onOpen,
+    this.grouped = false,
+  });
 
   final TradeCopyTrader trader;
   final VoidCallback onOpen;
+  final bool grouped;
 
   @override
   Widget build(BuildContext context) {
     final tier = _tierFor(trader.copiers);
+    final content = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _AvatarBadge(trader: trader, tier: tier),
+            const SizedBox(width: _copyCardSpace),
+            Expanded(
+              child: Padding(
+                padding: AppSpacing.zeroInsets.copyWith(
+                  top: AppSpacing.dividerHairline,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            trader.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.text1,
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
+                        ),
+                        if (trader.isFollowing) ...[
+                          const SizedBox(width: _copySpace),
+                          const Icon(
+                            Icons.star_rounded,
+                            color: AppColors.warn,
+                            size: AppSpacing.iconSm,
+                          ),
+                        ],
+                      ],
+                    ),
+                    const SizedBox(height: _copySpace),
+                    Wrap(
+                      spacing: _copySpace,
+                      runSpacing: _copySpace,
+                      children: [
+                        _MiniBadge(label: tier.label, color: tier.color),
+                        for (final tag in trader.tags.take(2))
+                          _MiniBadge(label: tag, color: AppColors.text2),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: _copySpace),
+            _RoiBlock(trader: trader),
+          ],
+        ),
+        const SizedBox(height: _copyCardSpace),
+        _DetailsButton(traderId: trader.id, onOpen: onOpen),
+      ],
+    );
+
+    if (grouped) {
+      return Padding(
+        key: CopyTradingV2Page.traderKey(trader.id),
+        padding: AppSpacing.cardPaddingCompact,
+        child: content,
+      );
+    }
+
     return VitCard(
       key: CopyTradingV2Page.traderKey(trader.id),
       density: VitDensity.compact,
@@ -113,67 +220,7 @@ class _TraderCard extends StatelessWidget {
         bottom: _copyCardSpace,
       ),
       borderColor: AppColors.cardBorder,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _AvatarBadge(trader: trader, tier: tier),
-              const SizedBox(width: _copyCardSpace),
-              Expanded(
-                child: Padding(
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    top: AppSpacing.dividerHairline,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              trader.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ),
-                          if (trader.isFollowing) ...[
-                            const SizedBox(width: _copySpace),
-                            const Icon(
-                              Icons.star_rounded,
-                              color: AppColors.warn,
-                              size: AppSpacing.iconSm,
-                            ),
-                          ],
-                        ],
-                      ),
-                      const SizedBox(height: _copySpace),
-                      Wrap(
-                        spacing: _copySpace,
-                        runSpacing: _copySpace,
-                        children: [
-                          _MiniBadge(label: tier.label, color: tier.color),
-                          for (final tag in trader.tags.take(2))
-                            _MiniBadge(label: tag, color: AppColors.text2),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: _copySpace),
-              _RoiBlock(trader: trader),
-            ],
-          ),
-          const SizedBox(height: _copyCardSpace),
-          _DetailsButton(traderId: trader.id, onOpen: onOpen),
-        ],
-      ),
+      child: content,
     );
   }
 }
@@ -196,7 +243,7 @@ class _AvatarBadge extends StatelessWidget {
             width: _copyAvatarSize,
             height: _copyAvatarSize,
             alignment: Alignment.center,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             variant: VitCardVariant.ghost,
             borderColor: _copyPrimary.withValues(alpha: .27),
             background: ColoredBox(color: _copyPrimary.withValues(alpha: .13)),
@@ -216,7 +263,7 @@ class _AvatarBadge extends StatelessWidget {
               width: _copyTierBadgeSize,
               height: _copyTierBadgeSize,
               alignment: Alignment.center,
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               borderColor: tier.color,
               child: Icon(
                 tier.icon,

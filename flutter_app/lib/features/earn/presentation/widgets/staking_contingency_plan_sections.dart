@@ -52,7 +52,7 @@ class _RecoveryMetrics extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingContingencyPlanPage.metricsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -143,7 +143,7 @@ class _ScenarioCard extends StatelessWidget {
     final impactColor = _impactColor(scenario.impact);
     return VitCard(
       key: StakingContingencyPlanPage.scenarioKey(scenario.scenario),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

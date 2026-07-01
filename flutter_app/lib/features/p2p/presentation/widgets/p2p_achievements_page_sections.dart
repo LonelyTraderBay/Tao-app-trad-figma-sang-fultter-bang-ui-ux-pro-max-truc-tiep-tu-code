@@ -11,7 +11,7 @@ class _SummaryCard extends StatelessWidget {
 
     return VitCard(
       key: P2PAchievementsPage.summaryKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
       padding: AppSpacing.p2pTrustProgressHeroPadding,
       child: Column(
@@ -107,7 +107,7 @@ class _SummaryMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pTrustProgressSummaryMetricPadding,
       child: Column(
         children: [
@@ -191,7 +191,7 @@ class _AchievementCard extends StatelessWidget {
 
     return VitCard(
       key: P2PAchievementsPage.achievementKey(achievement.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,7 +301,7 @@ class _AchievementIconBubble extends StatelessWidget {
           width: size,
           height: size,
           variant: VitCardVariant.ghost,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           background: ColoredBox(
             color: color.withValues(alpha: locked ? .34 : .22),
           ),

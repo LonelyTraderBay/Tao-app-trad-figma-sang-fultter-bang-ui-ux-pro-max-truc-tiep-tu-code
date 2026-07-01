@@ -19,7 +19,7 @@ class _LayerButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: active ? color : AppColors.border,
       background: active
           ? ColoredBox(color: color.withValues(alpha: .08))

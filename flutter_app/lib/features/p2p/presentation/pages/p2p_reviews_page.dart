@@ -357,7 +357,7 @@ class _ReviewCard extends StatelessWidget {
 
     return VitCard(
       key: P2PReviewsPage.reviewKey(review.id),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

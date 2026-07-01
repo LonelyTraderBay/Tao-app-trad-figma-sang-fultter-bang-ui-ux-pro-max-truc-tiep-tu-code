@@ -118,7 +118,7 @@ class _EmptyTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       child: Column(
         children: [

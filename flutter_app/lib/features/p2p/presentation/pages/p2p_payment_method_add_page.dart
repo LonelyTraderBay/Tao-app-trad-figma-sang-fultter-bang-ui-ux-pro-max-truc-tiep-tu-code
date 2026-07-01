@@ -27,24 +27,11 @@ const double _p2pPaymentAddVisualNavClearance =
 const double _p2pPaymentAddNativeNavClearance =
     _p2pPaymentAddVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
 const double _p2pPaymentAddScrollEnd = AppSpacing.x3;
-const double _p2pPaymentAddMajorGap = AppSpacing.x3;
-const double _p2pPaymentAddSectionGap = AppSpacing.x2;
+const double _p2pPaymentAddMajorGap = AppSpacing.p2pPaymentSectionGap;
+const double _p2pPaymentAddSectionGap = AppSpacing.p2pPaymentCardGap;
 const double _p2pPaymentAddTypeExtent = AppSpacing.searchBarCompactHeight;
 const double _p2pPaymentAddIconBox = AppSpacing.buttonCompact;
 const double _p2pPaymentAddPreviewLabelWidth = 96;
-const EdgeInsets _p2pPaymentAddCardPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pPaymentAddOptionPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x2,
-);
-
-EdgeInsets _p2pPaymentAddScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PPaymentMethodAddPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodAddPage({
@@ -135,7 +122,7 @@ class _P2PPaymentMethodAddPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodAddPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pPaymentAddScrollPadding(
+                    padding: AppSpacing.p2pPaymentAddFormScrollPadding(
                       _p2pPaymentAddScrollEnd,
                     ),
                     child: Column(
@@ -299,7 +286,7 @@ class _P2PPaymentMethodAddPageState
             variant: VitCtaButtonVariant.secondary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            padding: AppSpacing.p2pPaymentDialogActionPadding,
             child: const Text('Hủy'),
           ),
           VitCtaButton(
@@ -308,7 +295,7 @@ class _P2PPaymentMethodAddPageState
             variant: VitCtaButtonVariant.primary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            padding: AppSpacing.p2pPaymentDialogActionPadding,
             child: const Text('Xác nhận'),
           ),
         ],

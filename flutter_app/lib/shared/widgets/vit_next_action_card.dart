@@ -44,7 +44,7 @@ class VitNextActionCard extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: accentColor.withValues(alpha: .14),
                 shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
+                  borderRadius: AppRadii.smRadius,
                 ),
               ),
               child: Center(

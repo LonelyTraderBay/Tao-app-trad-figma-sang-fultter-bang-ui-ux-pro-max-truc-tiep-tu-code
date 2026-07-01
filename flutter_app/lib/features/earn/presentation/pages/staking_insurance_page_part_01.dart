@@ -177,7 +177,7 @@ class _TabButton extends StatelessWidget {
     return VitCard(
       key: StakingInsurancePage.tabKey(tab.name),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnTopPaddingX4,
       onTap: onTap,
       child: Column(
@@ -231,7 +231,7 @@ class _OverviewTab extends StatelessWidget {
       children: [
         VitCard(
           key: StakingInsurancePage.overviewSummaryKey,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnPaddingX4,
           child: Column(
             children: [
@@ -316,7 +316,7 @@ class _SummaryMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -382,7 +382,7 @@ class _BenefitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

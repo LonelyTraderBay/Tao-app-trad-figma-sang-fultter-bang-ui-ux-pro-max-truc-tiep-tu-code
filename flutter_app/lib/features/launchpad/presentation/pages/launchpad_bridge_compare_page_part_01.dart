@@ -13,7 +13,7 @@ class _InputSummaryHero extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeComparePage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
@@ -137,7 +137,7 @@ class _QuickComparisonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadBridgeComparePage.quickCompareKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

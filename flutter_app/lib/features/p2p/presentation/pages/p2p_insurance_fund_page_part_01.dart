@@ -35,7 +35,7 @@ class _FundSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.warningBorder,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: VitPageContent(
@@ -112,7 +112,7 @@ class _EligibilityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
@@ -126,7 +126,7 @@ class _EligibilityCard extends StatelessWidget {
           for (final item in items) _EligibilityRow(item: item),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.p2pTrustProgressChipPadding,
             borderColor: AppColors.buy20,
             child: Text(
@@ -152,7 +152,7 @@ class _FundHealthCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
@@ -202,7 +202,7 @@ class _FundHealthCard extends StatelessWidget {
           VitCard(
             key: P2PInsuranceFundPage.certificateKey,
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.p2pTrustProgressCompactPadding,
             onTap: () => context.go(snapshot.certificateRoute),
             child: Row(
@@ -211,7 +211,7 @@ class _FundHealthCard extends StatelessWidget {
                   width: _p2pInsuranceIconBox,
                   height: _p2pInsuranceIconBox,
                   variant: VitCardVariant.inner,
-                  radius: VitCardRadius.sm,
+                  radius: VitCardRadius.standard,
                   alignment: Alignment.center,
                   child: Icon(
                     Icons.verified_user_outlined,
@@ -263,7 +263,7 @@ class _FundChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
@@ -331,7 +331,7 @@ class _CoverageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -363,7 +363,7 @@ class _CoverageCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.p2pTrustProgressCompactPadding,
             onTap: () => context.go(snapshot.contributionHistoryRoute),
             child: Row(
@@ -405,7 +405,7 @@ class _CoverageTierCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -431,7 +431,7 @@ class _NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final enabled = prefs.where((item) => item.enabled).length;
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -467,7 +467,7 @@ class _HowItWorksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

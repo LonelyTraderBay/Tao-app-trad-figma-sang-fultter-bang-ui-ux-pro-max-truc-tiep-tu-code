@@ -19,7 +19,7 @@ class _SuccessHero extends StatelessWidget {
             width: _receiptHeroExtent,
             height: _receiptHeroExtent,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             alignment: Alignment.center,
             borderColor: AppColors.buy.withValues(alpha: .22),
             child: const Icon(
@@ -203,7 +203,7 @@ class _StatusBadge extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x2,
         vertical: AppSpacing.x1,

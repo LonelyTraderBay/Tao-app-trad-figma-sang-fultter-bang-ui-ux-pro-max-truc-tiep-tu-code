@@ -103,7 +103,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                       dimension: AppSpacing.searchBarCompactHeight,
                       child: VitCard(
                         variant: VitCardVariant.inner,
-                        radius: VitCardRadius.sm,
+                        radius: VitCardRadius.standard,
                         borderColor: AppColors.sell20,
                         alignment: Alignment.center,
                         child: Icon(Icons.stop_rounded, color: AppColors.sell),
@@ -134,7 +134,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
                 const SizedBox(height: AppSpacing.rowPy),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  radius: VitCardRadius.sm,
+                  radius: VitCardRadius.standard,
                   padding: AppSpacing.cardPaddingCompact,
                   borderColor: AppColors.sell20,
                   child: Text(

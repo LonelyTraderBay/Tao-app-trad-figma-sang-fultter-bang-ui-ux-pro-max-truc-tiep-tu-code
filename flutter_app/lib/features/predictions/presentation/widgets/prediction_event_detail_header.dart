@@ -236,7 +236,7 @@ class _MultiOutcomeRow extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: selected
           ? outcome.color.withValues(alpha: .34)
           : AppColors.cardBorder,

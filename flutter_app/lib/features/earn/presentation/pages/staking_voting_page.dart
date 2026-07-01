@@ -113,7 +113,7 @@ class _ProposalSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingVotingPage.proposalKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,7 +140,7 @@ class _ProposalSummary extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.earnCardPaddingX3X4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,7 +177,7 @@ class _ResultsSection extends StatelessWidget {
       label: 'Current Results',
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnContentHorizontalPadding.copyWith(
             top: AppSpacing.x5,
             bottom: AppSpacing.x5,
@@ -300,7 +300,7 @@ class _VoteOptionCard extends StatelessWidget {
     final color = _toneColor(option.tone);
     return VitCard(
       key: StakingVotingPage.optionKey(option.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnContentHorizontalPadding.copyWith(
         top: AppSpacing.x5,
         bottom: AppSpacing.x5,
@@ -341,7 +341,7 @@ class _VotingPowerNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingVotingPage.noteKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

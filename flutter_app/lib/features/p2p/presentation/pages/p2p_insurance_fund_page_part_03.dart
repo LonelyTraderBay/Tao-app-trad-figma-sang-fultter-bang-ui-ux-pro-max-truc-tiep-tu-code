@@ -48,7 +48,7 @@ class _RangeChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: active ? AppColors.primary20 : AppColors.cardBorder,
       background: ColoredBox(
         color: active ? AppColors.primary12 : AppColors.surface2,
@@ -107,7 +107,7 @@ class _TierRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       background: ColoredBox(
         color: tier.highlight ? AppColors.primary12 : AppColors.transparent,
       ),
@@ -249,7 +249,7 @@ class _StatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
       child: Row(
         children: [

@@ -18,8 +18,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
+import '../widgets/trade_module_layout.dart';
 
 const _providerPrimary = AppColors.primary;
 const _providerGreen = AppColors.buy;
@@ -59,13 +61,11 @@ class CopyProviderDetailPage extends ConsumerWidget {
     }
 
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
+
+    final bottomInset = copyTradingScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -330,7 +330,7 @@ class _MetricGrid extends StatelessWidget {
         for (final metric in metrics)
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

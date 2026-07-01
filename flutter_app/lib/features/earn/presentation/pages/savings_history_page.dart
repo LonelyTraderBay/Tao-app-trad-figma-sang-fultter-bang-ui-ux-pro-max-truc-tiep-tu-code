@@ -79,7 +79,7 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
                     children: [
                       VitCard(
                         variant: VitCardVariant.standard,
-                        radius: VitCardRadius.md,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: _SummaryPills(snapshot: snapshot),
                       ),

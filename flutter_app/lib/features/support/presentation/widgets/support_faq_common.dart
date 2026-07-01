@@ -74,7 +74,7 @@ class _FaqCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SupportPage.faqKey(index),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.supportCardPadding,
       onTap: onTap,
       child: Column(

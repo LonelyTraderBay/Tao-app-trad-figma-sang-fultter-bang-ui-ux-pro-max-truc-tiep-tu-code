@@ -211,7 +211,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: AutoCompoundSettingsPage.summaryKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -327,7 +327,7 @@ class _PositionCard extends StatelessWidget {
 
     return VitCard(
       key: AutoCompoundSettingsPage.positionKey(position.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

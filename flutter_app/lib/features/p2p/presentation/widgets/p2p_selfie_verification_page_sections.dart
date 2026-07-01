@@ -53,9 +53,9 @@ class _SelfieHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PSelfieVerificationPage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: _p2pSelfieCardPadding,
+      padding: AppSpacing.p2pSelfieCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -111,7 +111,7 @@ class _SampleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PSelfieVerificationPage.sampleKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
       padding: AppSpacing.zeroInsets,
       child: AspectRatio(
@@ -158,8 +158,8 @@ class _GuidelinesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PSelfieVerificationPage.guidelinesKey,
-      radius: VitCardRadius.md,
-      padding: _p2pSelfieCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pSelfieCardPadding,
       child: Column(
         children: [
           for (final guide in snapshot.guidelines) ...[
@@ -182,8 +182,8 @@ class _TipsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PSelfieVerificationPage.tipsKey,
-      radius: VitCardRadius.md,
-      padding: _p2pSelfieCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pSelfieCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -213,10 +213,10 @@ class _CaptureStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PSelfieVerificationPage.captureKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary20,
-      padding: _p2pSelfieLargeCardPadding,
+      padding: AppSpacing.p2pSelfieLargeCardPadding,
       onTap: onCapture,
       child: AspectRatio(
         aspectRatio: AppSpacing.p2pSelfieCaptureAspectRatio,
@@ -283,8 +283,8 @@ class _LivenessStep extends StatelessWidget {
         ),
         const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
-          radius: VitCardRadius.lg,
-          padding: _p2pSelfieLargeCardPadding,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.p2pSelfieLargeCardPadding,
           child: Column(
             children: [
               Icon(

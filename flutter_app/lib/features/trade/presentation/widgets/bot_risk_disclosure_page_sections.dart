@@ -120,8 +120,8 @@ class _RiskCategoryCard extends StatelessWidget {
                 height: _riskIconTile,
                 variant: VitCardVariant.ghost,
                 density: VitDensity.compact,
-                padding: EdgeInsets.zero,
-                radius: VitCardRadius.lg,
+                padding: AppSpacing.zeroInsets,
+                radius: VitCardRadius.large,
                 borderColor: color.withValues(alpha: .24),
                 alignment: Alignment.center,
                 child: Icon(

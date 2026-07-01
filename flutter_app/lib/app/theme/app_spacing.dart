@@ -1139,6 +1139,9 @@ final class AppSpacing {
     horizontal: tradeHorizontalPadding,
   );
   static const EdgeInsets tradeRiskPanelPadding = tradeMarketPanelPadding;
+  /// Home-aligned section rhythm for L2 trade pages (8px).
+  static const double tradePageContentGap = x3;
+
   static const double tradeSectionGap = 20;
   static const double tradeHeaderLogo = 32;
   static const EdgeInsets tradeHeaderBodyPadding = EdgeInsets.symmetric(
@@ -1174,7 +1177,8 @@ final class AppSpacing {
     rowGap,
   );
   static const double tradeDataTabsHeight = 34;
-  static const EdgeInsets tradeSegmentedPadding = EdgeInsets.all(2);
+  static const double vitPresetChipRowGap = x1;
+  static const double vitPresetChipRowHeight = buttonCompact;
   static const double tradeChartHeight = 122;
   static const double tradeChartOverlayInset = 10;
   static const double tradeChartOverlayTop = 12;
@@ -1257,6 +1261,16 @@ final class AppSpacing {
   static const double convertPairSparklineWidth = 72;
   static const double convertPairSparklineHeight = 31;
   static const double convertSlippageCardHeight = 108;
+  static const double convertModeTabHeight = searchBarCompactHeight;
+  static const double convertControlHeight = buttonCompact + x1;
+  static const double convertChipHeight = buttonCompact - x3;
+  static const double convertFavoriteChipHeight = searchBarCompactHeight;
+  static const double convertHeroFlipSize = buttonCompact + x1;
+  static const double convertSubmitHeight = searchBarCompactHeight;
+  static const double convertStickyCtaClearance = ctaHeight + x5;
+  static const double dustStickyFooterClearance = ctaHeight + x6;
+  static const double launchpadSwapStickyCtaClearance =
+      convertStickyCtaClearance;
   static const double leverageControlButtonLineHeight = tradeBotLineHeightTight;
   static const double leverageImpactRowLineHeight = tradeBotLineHeightShort;
   static const double leverageHeroHeight = 178;
@@ -1813,12 +1827,29 @@ final class AppSpacing {
   static const double tradeBookRowTopGap = walletAssetSmallGap;
   static const double tradeBookDividerHeight = 16;
   static const double tradeTapeRowBottomGap = rowGap;
+  static const EdgeInsets tradeInstrumentHeroPadding = EdgeInsets.all(x4);
+  static const double tradeInstrumentHeroMetricGap = x3;
+  static const int tradeHubPrimaryCount = 6;
+  static const double tradeHubTileExtent = buttonCompact + x2;
+  static const EdgeInsets tradeOrderRowPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+    vertical: x2,
+  );
+  static const double tradeChartPanelHeight = x7 + x6 + x4;
   static const double tradeOrderTabsHeight = 44;
   static const EdgeInsets tradeOrderTabsInnerPadding = EdgeInsets.all(4);
   static const double tradeFormGap = 16;
   static const double tradeFormSmallGap = 14;
   static const double tradePctGap = 10;
   static const double tradeSideSwitchHeight = 46;
+  static const EdgeInsetsDirectional kidGeneratorPreviewPadding =
+      EdgeInsetsDirectional.all(x4);
+  static const EdgeInsetsDirectional kidGeneratorSectionCardPadding =
+      EdgeInsetsDirectional.symmetric(horizontal: x3, vertical: x2);
+  static const EdgeInsetsDirectional kidGeneratorMetricPadding =
+      EdgeInsetsDirectional.fromSTEB(x3, x1, x3, x1);
+  static EdgeInsets kidGeneratorScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
   static const double tradeOrderTypeSize = 39;
   static const double tradePctButtonHeight = 38;
   static const double tradeTpslHeight = 38;
@@ -3029,6 +3060,8 @@ final class AppSpacing {
   static const double p2pDashboardBottomInsetNative = x4;
   static EdgeInsets p2pDashboardScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(contentPad, x5, contentPad, bottomInset);
+  static EdgeInsets p2pDashboardPageScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
   static const double p2pDashboardContentGap = x4;
   static const EdgeInsets p2pDashboardFilterChipPadding = EdgeInsets.symmetric(
     horizontal: x4,
@@ -3128,6 +3161,9 @@ final class AppSpacing {
     horizontal: x3,
     vertical: x2,
   );
+  static const EdgeInsets p2pHomeClearFilterPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+  );
   static const EdgeInsets p2pHomePriceBaselinePadding = EdgeInsets.only(
     bottom: x1,
   );
@@ -3172,9 +3208,15 @@ final class AppSpacing {
   static const double p2pAddressProofBottomInsetVisual = x5;
   static const double p2pAddressProofBottomInsetNative = x4;
   static EdgeInsets p2pAddressProofScrollPadding(double bottomInset) =>
-      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
   static const double p2pAddressProofContentGap = 0;
-  static const EdgeInsets p2pAddressProofCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pAddressProofCardPadding = EdgeInsets.all(x2);
+  static const EdgeInsetsDirectional p2pAddressProofHeroIconPadding =
+      EdgeInsetsDirectional.all(x2);
+  static const EdgeInsetsDirectional p2pAddressProofUploadVerticalPadding =
+      EdgeInsetsDirectional.symmetric(vertical: x3);
+  static const EdgeInsets p2pAddressProofDocumentExamplePadding =
+      EdgeInsets.only(left: buttonCompact + x2);
   static const EdgeInsets p2pAddressProofExamplePadding = EdgeInsets.symmetric(
     horizontal: x3,
     vertical: x1,
@@ -3182,17 +3224,38 @@ final class AppSpacing {
   static const EdgeInsets p2pAddressProofChecklistIconPadding = EdgeInsets.only(
     top: dividerHairline,
   );
-  static const EdgeInsets p2pAddressProofDocumentExamplePadding =
-      EdgeInsets.only(left: buttonCompact + x3);
+  static const EdgeInsets p2pAddressProofActionHorizontalPadding =
+      EdgeInsets.symmetric(horizontal: x3);
+  static const EdgeInsetsDirectional p2pAddressProofExampleTilePadding =
+      EdgeInsetsDirectional.all(x2);
+  static const EdgeInsetsDirectional p2pAddressProofUploadIconPadding =
+      EdgeInsetsDirectional.all(x3);
   static const double p2pAddressProofReadableLineHeight = 1.35;
   static const double p2pAddressProofChecklistIcon = p2pHomeVerifiedIcon;
   static const double p2pKycBottomInsetVisual = x4;
   static const double p2pKycBottomInsetNative = x4;
   static EdgeInsets p2pKycScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static EdgeInsets p2pKycStatusScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
   static const double p2pKycContentGap = 0;
   static const EdgeInsets p2pKycCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pKycCompactCardPadding = EdgeInsets.all(x2);
   static const EdgeInsets p2pKycNoticePadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pKycCompactNoticePadding = EdgeInsets.all(x2);
+  static const EdgeInsetsDirectional p2pKycRequirementsCardPadding =
+      EdgeInsetsDirectional.all(x3);
+  static const EdgeInsetsDirectional p2pKycRequirementsNoticePadding =
+      EdgeInsetsDirectional.all(x3);
+  static const EdgeInsetsDirectional p2pKycRequirementsTierSectionPadding =
+      EdgeInsetsDirectional.all(x3);
+  static const EdgeInsetsDirectional p2pKycRequirementsTierActionPadding =
+      EdgeInsetsDirectional.fromSTEB(x3, zero, x3, x3);
+  static const EdgeInsetsDirectional p2pKycRequirementsChecklistIconPadding =
+      EdgeInsetsDirectional.only(top: x1);
+  static EdgeInsetsDirectional p2pKycRequirementsScrollPadding(
+    double bottomInset,
+  ) => EdgeInsetsDirectional.fromSTEB(contentPad, x3, contentPad, bottomInset);
   static const EdgeInsets p2pKycTierSectionPadding = EdgeInsets.symmetric(
     horizontal: x4,
     vertical: x3,
@@ -3212,6 +3275,9 @@ final class AppSpacing {
   );
   static const EdgeInsets p2pKycTimelineRowPadding = EdgeInsets.only(
     bottom: x3,
+  );
+  static const EdgeInsets p2pKycStatusTimelineRowPadding = EdgeInsets.only(
+    bottom: x2,
   );
   static const double p2pKycReadableLineHeight = 1.35;
   static const double p2pKycTitleLineHeight = 1.05;
@@ -3319,6 +3385,26 @@ final class AppSpacing {
   static const double p2pBlacklistAvatarBadgeIcon = 8;
   static const double p2pBlacklistActionHeight = 40;
   static const double p2pBlacklistNoteFieldHeight = 110;
+  static const EdgeInsetsDirectional p2pBlacklistListCardPadding =
+      EdgeInsetsDirectional.all(x2);
+  static const EdgeInsetsDirectional p2pBlacklistListTinyPadding =
+      EdgeInsetsDirectional.all(x2);
+  static const EdgeInsets p2pBlacklistListSummaryPadding = EdgeInsets.fromLTRB(
+    contentPad,
+    0,
+    contentPad,
+    x1,
+  );
+  static const EdgeInsets p2pBlacklistListResultPadding = EdgeInsets.fromLTRB(
+    contentPad,
+    x1,
+    contentPad,
+    0,
+  );
+  static const EdgeInsets p2pBlacklistListFilterChipPadding =
+      EdgeInsets.symmetric(horizontal: x2, vertical: x1);
+  static EdgeInsets p2pBlacklistAddScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
   static const double p2pMerchantApplyBottomInsetVisual = x5;
   static const double p2pMerchantApplyBottomInsetNative = x4;
   static EdgeInsets p2pMerchantApplyScrollPadding(double bottomInset) =>
@@ -3448,8 +3534,19 @@ final class AppSpacing {
   static const double p2pExpressAmountBorderWidth = 2;
   static const double p2pExpressAssetMarkSize = x5;
   static const double p2pExpressIconBoxSize = x6;
+  static const EdgeInsets p2pExpressTightCardPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pExpressChoiceChipPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+  );
+  static EdgeInsets p2pExpressConfirmScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pExpressConfirmCompactCardPadding = EdgeInsets.all(
+    x2,
+  );
   static EdgeInsets p2pAdDetailScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(contentPad, x4, contentPad, bottomInset);
+  static EdgeInsets p2pAdDetailFlushScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
   static EdgeInsets p2pAdDetailFooterPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
   static const EdgeInsets p2pAdDetailCardPadding = EdgeInsets.all(x4);
@@ -3489,6 +3586,33 @@ final class AppSpacing {
   static const double p2pSettingsSwitchHeight = 24;
   static const double p2pSettingsSwitchThumbSize = 18;
   static const double p2pSettingsAutoReplyLineHeight = 1.45;
+  static EdgeInsets p2pSettingsPageScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pSettingsPageCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pSettingsPageCompactCardPadding = EdgeInsets.all(
+    x2,
+  );
+  static const EdgeInsets p2pSettingsPageHorizontalCardPadding =
+      EdgeInsets.symmetric(horizontal: x2);
+  static const EdgeInsets p2pSettingsPageRowPadding = EdgeInsets.symmetric(
+    vertical: x2,
+  );
+  static EdgeInsets p2pTwoFactorScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pTwoFactorCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pTwoFactorInnerPadding = EdgeInsets.all(x2);
+  static EdgeInsets p2pDevicesScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pDevicesCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pDevicesInnerPadding = EdgeInsets.all(x2);
+  static EdgeInsets p2pNotificationsScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pNotificationsCardPadding = EdgeInsets.all(x2);
+  static const EdgeInsetsGeometry p2pNotificationsChannelPadding =
+      EdgeInsetsDirectional.symmetric(horizontal: x2, vertical: x3);
+  static EdgeInsets p2pTaxScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pTaxCardPadding = EdgeInsets.all(x3);
   static EdgeInsets p2pTradingLevelScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
   static const EdgeInsets p2pTradingLevelHeroHeaderPadding = EdgeInsets.all(x3);
@@ -3555,18 +3679,18 @@ final class AppSpacing {
   static const double p2pGuideThumbWidth = x6;
   static const double p2pGuideThumbHeight = buttonCompact;
   static EdgeInsets p2pSelfieScrollPadding(double bottomInset) =>
-      EdgeInsets.fromLTRB(contentPad, x4, contentPad, bottomInset);
-  static const EdgeInsets p2pSelfieReviewPadding = EdgeInsets.all(x3);
-  static const EdgeInsets p2pSelfieCardPadding = EdgeInsets.all(x4);
-  static const EdgeInsets p2pSelfieLargeCardPadding = EdgeInsets.all(x6);
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pSelfieReviewPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pSelfieCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pSelfieLargeCardPadding = EdgeInsets.all(x4);
   static const EdgeInsets p2pSelfieResultIconMargin = EdgeInsets.symmetric(
     vertical: x3,
   );
   static const EdgeInsets p2pSelfieScoreRowPadding = EdgeInsets.symmetric(
-    vertical: x3,
+    vertical: x2,
   );
   static const EdgeInsets p2pSelfieChecklistIconPadding = EdgeInsets.only(
-    top: 2,
+    top: x1,
   );
   static const double p2pSelfieBodyLineHeight = 1.45;
   static const double p2pSelfieSampleAspectRatio = 4 / 3;
@@ -3576,6 +3700,43 @@ final class AppSpacing {
   static const double p2pSelfieLivenessIconSize = 64;
   static const double p2pSelfieChecklistIconSize = iconSm;
   static const int p2pSelfieLivenessGridColumns = 2;
+  static EdgeInsets p2pVideoScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pVideoCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pVideoCompactCardPadding = EdgeInsets.all(x2);
+  static EdgeInsets p2pRiskAssessmentScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pRiskAssessmentHeroPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pRiskAssessmentCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pRiskAssessmentInnerPadding = EdgeInsets.all(x2);
+  static EdgeInsets p2pLimitTrackerScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pLimitTrackerCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pLimitTrackerCompactPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pLimitTrackerMetricPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+    vertical: x2,
+  );
+  static const EdgeInsets p2pLimitTrackerPeriodTabPadding =
+      EdgeInsets.symmetric(horizontal: x2, vertical: x2);
+  static EdgeInsets p2pAmlScreeningScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pAmlScreeningCardPadding = EdgeInsets.all(x2);
+  static EdgeInsets p2pComplianceOverviewScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pComplianceOverviewCompactPadding = EdgeInsets.all(
+    x2,
+  );
+  static const EdgeInsetsDirectional p2pComplianceOverviewHeroPadding =
+      EdgeInsetsDirectional.all(x3);
+  static const EdgeInsetsDirectional p2pComplianceOverviewItemPadding =
+      EdgeInsetsDirectional.symmetric(horizontal: x3, vertical: x2);
+  static EdgeInsets p2pSourceOfFundsScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
+  static EdgeInsets p2pSuspiciousActivityScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static EdgeInsets p2pLargeTransactionScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
   static EdgeInsets p2pInsuranceScoreScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
   static const EdgeInsets p2pInsuranceScoreLargeCardPadding = EdgeInsets.all(
@@ -3607,31 +3768,60 @@ final class AppSpacing {
   static const double p2pInsuranceScoreRecommendationIcon = 14;
   static const double p2pInsuranceScoreActionDot = x2;
   static EdgeInsets p2pEscrowDetailScrollPadding(double bottomInset) =>
-      EdgeInsets.fromLTRB(contentPad, x4, contentPad, bottomInset);
-  static const EdgeInsets p2pEscrowDetailHeroPadding = EdgeInsets.all(x5);
-  static const EdgeInsets p2pEscrowDetailCardPadding = EdgeInsets.all(x4);
-  static const EdgeInsets p2pEscrowDetailInnerPadding = EdgeInsets.all(x3);
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pEscrowDetailHeroPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pEscrowDetailCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pEscrowDetailInnerPadding = EdgeInsets.all(x2);
   static const EdgeInsets p2pEscrowDetailExplorerPadding = EdgeInsets.symmetric(
-    horizontal: x4,
-    vertical: x3,
+    horizontal: x3,
+    vertical: x2,
   );
   static const EdgeInsets p2pEscrowDetailInfoRowPadding = EdgeInsets.symmetric(
     vertical: x2,
   );
   static const EdgeInsets p2pEscrowDetailTimelineRowPadding = EdgeInsets.only(
-    bottom: x3,
+    bottom: x2,
   );
   static const double p2pEscrowDetailSignatureStroke = x1;
   static const double p2pEscrowDetailTimelineIcon = 14;
   static const double p2pEscrowDetailBodyLineHeight = 1.45;
+  static EdgeInsets p2pEscrowBalanceScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pEscrowBalanceLargePadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pEscrowBalanceCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pEscrowBalanceInnerPadding = EdgeInsets.all(x2);
+  static EdgeInsets p2pMyOrdersScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pMyOrdersStatPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+    vertical: x2,
+  );
+  static const EdgeInsets p2pMyOrdersCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pMyOrdersCompactPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pMyOrdersLargePadding = EdgeInsets.all(x4);
+  static const EdgeInsets p2pMyOrdersChipPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+    vertical: x1,
+  );
+  static const EdgeInsets p2pOrderBookCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pOrderBookCompactPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pOrderBookSelectorPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+    vertical: x2,
+  );
+  static const EdgeInsets p2pOrderBookRowPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+  );
+  static EdgeInsets p2pOrderBookScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
   static EdgeInsets p2pFraudScrollPadding(double bottomInset) =>
-      EdgeInsets.fromLTRB(contentPad, x4, contentPad, bottomInset);
-  static const EdgeInsets p2pFraudCardPadding = EdgeInsets.all(x5);
-  static const EdgeInsets p2pFraudInnerPadding = EdgeInsets.all(x3);
-  static const EdgeInsets p2pFraudPatternPadding = EdgeInsets.all(x4);
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pFraudCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pFraudInnerPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pFraudPatternPadding = EdgeInsets.all(x3);
   static const EdgeInsets p2pFraudCategoryTabPadding = EdgeInsets.symmetric(
     horizontal: x2,
-    vertical: x3,
+    vertical: x2,
   );
   static const EdgeInsets p2pFraudChecklistItemPadding = EdgeInsets.symmetric(
     vertical: x2,
@@ -3667,6 +3857,14 @@ final class AppSpacing {
   static const double p2pSecurityCenterNumberLineHeight = 1;
   static EdgeInsets p2pLoginHistoryScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(contentPad, x4, contentPad, bottomInset);
+  static EdgeInsets p2pLoginHistoryPageScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
+  static EdgeInsets p2pAchievementsPageScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static EdgeInsets p2pFundLockScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
+  static EdgeInsets p2pContributionScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
   static const EdgeInsets p2pLoginHistoryStatPadding = EdgeInsets.symmetric(
     horizontal: x2,
     vertical: x3,
@@ -3694,9 +3892,9 @@ final class AppSpacing {
   static const double p2pLoginHistoryRiskLineHeight = 1.45;
   static const double p2pLoginHistoryInfoLineHeight = 1.55;
   static EdgeInsets p2pTransactionLimitsScrollPadding(double bottomInset) =>
-      EdgeInsets.fromLTRB(contentPad, x4, contentPad, bottomInset);
-  static const EdgeInsets p2pTransactionLimitsCardPadding = EdgeInsets.all(x4);
-  static const EdgeInsets p2pTransactionLimitsInnerPadding = EdgeInsets.all(x3);
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pTransactionLimitsCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pTransactionLimitsInnerPadding = EdgeInsets.all(x2);
   static const EdgeInsets p2pTransactionLimitsBadgePadding =
       EdgeInsets.symmetric(horizontal: x3, vertical: x2);
   static const EdgeInsets p2pTransactionLimitsTrackerPadding =
@@ -3827,6 +4025,24 @@ final class AppSpacing {
   static const double p2pDocumentPrivacyLineHeight = 1.5;
   static const double p2pDocumentNoticeLineHeight = 1.55;
   static const double p2pDocumentPolicyLineHeight = 1.6;
+  static EdgeInsets p2pInsuranceCertificateScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pInsuranceCertificateLargePadding = EdgeInsets.all(
+    x3,
+  );
+  static const EdgeInsets p2pInsuranceCertificateCardPadding = EdgeInsets.all(
+    x2,
+  );
+  static const EdgeInsets p2pInsuranceCertificateHeroPadding = EdgeInsets.all(
+    x3,
+  );
+  static const EdgeInsets p2pInsuranceCertificateDividerPadding =
+      EdgeInsets.only(bottom: x2);
+  static const EdgeInsets p2pInsuranceCertificateBulletPadding =
+      EdgeInsets.only(top: x2);
+  static const double p2pInsuranceCertificateBodyLineHeight = 1.35;
+  static const EdgeInsets p2pInsuranceFundTourSkipPadding =
+      EdgeInsets.symmetric(horizontal: x4);
   static EdgeInsets p2pFinancialSafetyScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(contentPad, x4, contentPad, bottomInset);
   static EdgeInsets p2pFinancialSafetyBottomPadding(double bottomInset) =>
@@ -3915,6 +4131,13 @@ final class AppSpacing {
   static const double p2pMerchantCommerceTightLineHeight = 1;
   static const double p2pMerchantCommerceBodyLineHeight = 1.45;
   static const double p2pMerchantCommerceWarningLineHeight = 1.55;
+  static EdgeInsets p2pMerchantCommercePageScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pMerchantCommerceInnerPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pMerchantCommerceDialogButtonPadding =
+      EdgeInsets.symmetric(horizontal: x4);
+  static const EdgeInsets p2pMerchantCommerceWarningPadding =
+      EdgeInsets.symmetric(horizontal: x3, vertical: x2);
   static EdgeInsets p2pTrustProgressScrollPadding(double bottomInset) =>
       EdgeInsets.fromLTRB(contentPad, x4, contentPad, bottomInset);
   static EdgeInsets p2pTrustProgressRelaxedScrollPadding(double bottomInset) =>
@@ -4001,6 +4224,15 @@ final class AppSpacing {
   );
   static const EdgeInsets p2pWalletTransferAssetTilePadding =
       EdgeInsets.symmetric(horizontal: x2, vertical: x3);
+  static EdgeInsets p2pWalletTransferScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pWalletTransferCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pWalletTransferDirectionSwitchPadding =
+      EdgeInsets.symmetric(horizontal: x2);
+  static const EdgeInsets p2pWalletTransferConfirmSummaryPadding =
+      EdgeInsets.symmetric(horizontal: x4, vertical: x3);
+  static const EdgeInsets p2pWalletTransferAssetChipPadding =
+      EdgeInsets.symmetric(horizontal: x2, vertical: x2);
   static const EdgeInsets p2pWalletTransferConfirmHeroPadding =
       EdgeInsets.symmetric(vertical: x2);
   static const double p2pWalletInlineActionIcon = 14;
@@ -4015,7 +4247,7 @@ final class AppSpacing {
   static const double p2pOrderBottomInsetVisual = x6;
   static const double p2pOrderBottomInsetNative = x4;
   static EdgeInsets p2pOrderScrollPadding(double bottomInset) =>
-      EdgeInsets.only(left: contentPad, right: contentPad, bottom: bottomInset);
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
   static const double p2pOrderContentGap = x4;
   static const EdgeInsets p2pOrderStatusPadding = EdgeInsets.symmetric(
     horizontal: contentPad,
@@ -4029,7 +4261,7 @@ final class AppSpacing {
     top: x3 + hairlineStroke,
   );
   static const EdgeInsets p2pOrderCardPadding = EdgeInsets.all(x4);
-  static const EdgeInsets p2pOrderCompactCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pOrderCompactCardPadding = EdgeInsets.all(x2);
   static const EdgeInsets p2pOrderBulletPadding = EdgeInsets.only(bottom: x1);
   static const EdgeInsets p2pOrderEscrowActionPadding = EdgeInsets.symmetric(
     horizontal: x3,
@@ -4077,6 +4309,13 @@ final class AppSpacing {
   static const double p2pOrderRatingSuccessIconBox = x7 + x5;
   static EdgeInsets p2pOrderLifecycleScrollPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
+  static const EdgeInsets p2pOrderRateCardPadding = EdgeInsets.all(x3);
+  static const EdgeInsets p2pOrderRateStarChipPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+  );
+  static const EdgeInsets p2pOrderRateTagChipPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+  );
   static EdgeInsets p2pOrderTimelineRowPadding({required bool isLast}) =>
       EdgeInsets.only(bottom: isLast ? 0 : x6);
   static const EdgeInsets p2pOrderLifecycleHorizontalPadding =
@@ -4165,6 +4404,41 @@ final class AppSpacing {
   static const double p2pPaymentVerificationIntroIconBox = 64;
   static const double p2pPaymentVerificationIntroIcon = 32;
   static const double p2pPaymentVerificationStepDot = 24;
+  static const EdgeInsets p2pPaymentMethodsListCardPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pPaymentMethodsListButtonPadding =
+      EdgeInsets.symmetric(horizontal: x2, vertical: x2);
+  static const EdgeInsets p2pPaymentMethodsListDefaultPadding =
+      EdgeInsets.symmetric(horizontal: x2, vertical: x1);
+  static const EdgeInsets p2pPaymentMethodsListEmptyPadding =
+      EdgeInsets.symmetric(vertical: x4);
+  static const double p2pPaymentMethodsListSectionGap = x1;
+  static const double p2pPaymentMethodsListCardMinExtent = 80;
+  static const EdgeInsets p2pPaymentAddFormCardPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pPaymentAddFormOptionPadding = EdgeInsets.symmetric(
+    horizontal: x2,
+    vertical: x2,
+  );
+  static EdgeInsets p2pPaymentAddFormScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static const EdgeInsets p2pPaymentAddFormPreviewGap = EdgeInsets.only(
+    bottom: x2,
+  );
+  static const EdgeInsets p2pPaymentDialogActionPadding = EdgeInsets.symmetric(
+    horizontal: x4,
+  );
+  static const EdgeInsets p2pPaymentOwnershipCardPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pPaymentOwnershipOptionPadding =
+      EdgeInsets.symmetric(horizontal: x2, vertical: x2);
+  static EdgeInsets p2pPaymentOwnershipScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x3, contentPad, bottomInset);
+  static EdgeInsets p2pPaymentCoolingScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
+  static const EdgeInsets p2pPaymentCoolingHeroCountdownPadding =
+      EdgeInsets.symmetric(vertical: x3);
+  static EdgeInsets p2pPaymentHistoryScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
+  static EdgeInsets p2pPaymentVerificationScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
   static const double p2pDisputeBottomInsetVisual = x4;
   static const double p2pDisputeBottomInsetNative = x4;
   static EdgeInsets p2pDisputeScrollPadding(double bottomInset) =>
@@ -4247,6 +4521,15 @@ final class AppSpacing {
   static const EdgeInsets p2pDisputeAppealButtonPadding = EdgeInsets.symmetric(
     horizontal: x3,
   );
+  static EdgeInsets p2pDisputeResolutionScrollPadding(double bottomInset) =>
+      p2pDisputeScrollPadding(bottomInset);
+  static const EdgeInsets p2pDisputeResolutionCardPadding = EdgeInsets.all(x2);
+  static const EdgeInsets p2pDisputeResolutionCompactCardPadding =
+      EdgeInsets.all(x2);
+  static EdgeInsets p2pDisputeDetailScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
+  static EdgeInsets p2pDisputeEvidenceScrollPadding(double bottomInset) =>
+      EdgeInsets.fromLTRB(contentPad, x2, contentPad, bottomInset);
   static EdgeInsets marketScrollPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
   static const double marketNativeBottomExtra = 18;
@@ -4276,6 +4559,25 @@ final class AppSpacing {
     horizontal: 8,
     vertical: 5,
   );
+  static const EdgeInsets marketListPairCompactHeaderPadding =
+      EdgeInsets.symmetric(horizontal: contentPad - x3);
+  static const EdgeInsets marketListPairCompactRowPadding =
+      EdgeInsets.symmetric(horizontal: contentPad - x3, vertical: x4 - x1);
+  static const EdgeInsets marketListPairChangePillPadding =
+      EdgeInsets.symmetric(horizontal: x2, vertical: x1);
+  static const EdgeInsets marketListFilterCompactPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+    vertical: x2,
+  );
+  static const EdgeInsets marketListMoverCompactPadding = EdgeInsets.all(x3);
+  static const EdgeInsets marketListToolCompactPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+  );
+  static const EdgeInsets vitChoicePillCompactPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+  );
+  static const EdgeInsets vitChoicePillComfortablePadding =
+      EdgeInsets.symmetric(horizontal: x4);
   static const EdgeInsets marketFilterSheetPadding = EdgeInsets.all(12);
   static const double marketFilterGap = 8;
   static const double marketCategoryGap = 9;
@@ -6453,34 +6755,61 @@ final class AppSpacing {
   static const double predictionPortfolioBottomInsetNative = contentPad;
   static EdgeInsets predictionPortfolioScrollPadding(double bottomInset) =>
       EdgeInsets.only(bottom: bottomInset);
+  // PRED-PORTFOLIO-HOME-01: legacy hero/tabs/bridge tokens superseded by home* primitives.
+  @Deprecated('Superseded by home* tokens after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioContentGap = 16;
+  @Deprecated('Superseded by VitAccentPill after PRED-PORTFOLIO-HOME-01')
   static const EdgeInsets predictionPortfolioTinyBadgePadding =
       EdgeInsets.symmetric(horizontal: 7, vertical: x1);
+  @Deprecated(
+    'Superseded by homePortfolioCardPadding after PRED-PORTFOLIO-HOME-01',
+  )
   static const EdgeInsets predictionPortfolioSummaryPadding =
       EdgeInsets.fromLTRB(20, 15, 20, 20);
+  @Deprecated('Superseded by VitInlineIconAction after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioVisibilityButton = 32;
+  @Deprecated('Superseded by VitInlineIconAction after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioVisibilityIcon = 17;
   static const double predictionPortfolioValueGap = x3;
+  @Deprecated('Superseded by VitMetricDeltaPill after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioPnlGap = 6;
+  @Deprecated('Superseded by VitMetricDeltaPill after PRED-PORTFOLIO-HOME-01')
   static const EdgeInsets predictionPortfolioPnlPillPadding =
       EdgeInsets.symmetric(horizontal: x3, vertical: 6);
   static const double predictionPortfolioPnlIcon = 13;
   static const double predictionPortfolioPnlIconGap = 4;
+  @Deprecated('Superseded by VitCardStat after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioSummaryStatsGap = 18;
+  @Deprecated('Superseded by VitCardStat after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioSummaryStatGap = x3;
+  @Deprecated('Superseded by VitCardStat after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioSummaryStatHeight = 51;
+  @Deprecated('Superseded by VitCardStat after PRED-PORTFOLIO-HOME-01')
   static const EdgeInsets predictionPortfolioSummaryStatPadding =
       EdgeInsets.symmetric(horizontal: x3, vertical: 9);
+  @Deprecated(
+    'Superseded by VitAnnouncementBanner after PRED-PORTFOLIO-HOME-01',
+  )
   static const EdgeInsets predictionPortfolioSharesNotePadding =
       EdgeInsets.symmetric(horizontal: x4, vertical: 11);
   static const double predictionPortfolioSharesNoteIcon = 15;
   static const double predictionPortfolioSharesNoteGap = 9;
+  @Deprecated('Superseded by VitTabBar segment after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioTabsHeight = 43;
+  @Deprecated('Superseded by VitTabBar segment after PRED-PORTFOLIO-HOME-01')
   static const EdgeInsets predictionPortfolioTabsPadding = EdgeInsets.all(4);
+  @Deprecated('Superseded by VitTabBar segment after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioTabLabelGap = x2;
+  @Deprecated('Superseded by VitTabBar segment after PRED-PORTFOLIO-HOME-01')
   static const EdgeInsets predictionPortfolioCountBadgePadding =
       EdgeInsets.symmetric(horizontal: x2, vertical: 1);
+  @Deprecated(
+    'Superseded by grouped VitCard lists after PRED-PORTFOLIO-HOME-01',
+  )
   static const double predictionPortfolioListGap = 10;
+  @Deprecated(
+    'Superseded by cardPadding grouped rows after PRED-PORTFOLIO-HOME-01',
+  )
   static const EdgeInsets predictionPortfolioPositionCardPadding =
       EdgeInsets.fromLTRB(14, 14, 12, 26);
   static const double predictionPortfolioPositionIconBox = 38;
@@ -6498,9 +6827,15 @@ final class AppSpacing {
       EdgeInsets.only(top: 18);
   static const double predictionPortfolioTrailingIcon = 18;
   static const double predictionPortfolioMetricGap = 4;
+  @Deprecated('Superseded by VitSectionHeader after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioOrdersHeaderGap = x3;
+  @Deprecated('Superseded by VitSectionHeader after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioOrdersHelpGap = 6;
+  @Deprecated('Superseded by VitSectionHeader after PRED-PORTFOLIO-HOME-01')
   static const double predictionPortfolioOrdersHelpIcon = 13;
+  @Deprecated(
+    'Superseded by cardPadding grouped rows after PRED-PORTFOLIO-HOME-01',
+  )
   static const EdgeInsets predictionPortfolioOrderCardPadding = EdgeInsets.all(
     12,
   );
@@ -6518,6 +6853,9 @@ final class AppSpacing {
       EdgeInsets.symmetric(horizontal: 10);
   static const double predictionPortfolioOrderCancelIcon = 12;
   static const double predictionPortfolioOrderCancelIconGap = 4;
+  @Deprecated(
+    'Superseded by cardPadding grouped rows after PRED-PORTFOLIO-HOME-01',
+  )
   static const EdgeInsets predictionPortfolioReceiptCardPadding =
       EdgeInsets.all(13);
   static const double predictionPortfolioReceiptIconBox = 36;
@@ -6526,15 +6864,42 @@ final class AppSpacing {
   static const double predictionPortfolioReceiptTitleGap = x2;
   static const double predictionPortfolioReceiptMetaGap = 6;
   static const double predictionPortfolioReceiptChevron = 15;
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const EdgeInsets predictionPortfolioBridgePadding = EdgeInsets.all(14);
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const double predictionPortfolioBridgeIconBox = 36;
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const double predictionPortfolioBridgeIcon = 17;
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const double predictionPortfolioBridgeGap = 12;
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const double predictionPortfolioBridgeTextGap = x1;
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const double predictionPortfolioBridgeBadgeGap = x3;
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const EdgeInsets predictionPortfolioBridgeBadgePadding =
       EdgeInsets.symmetric(horizontal: 7, vertical: x1);
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const double predictionPortfolioBridgeChevronGap = 7;
+  @Deprecated(
+    'Superseded by VitDiscoveryActionCard after PRED-PORTFOLIO-HOME-01',
+  )
   static const double predictionPortfolioBridgeChevron = 17;
   static const double predictionRiskBottomInsetVisual = 54;
   static const double predictionRiskBottomInsetNative = contentPad;
@@ -7376,6 +7741,11 @@ final class AppSpacing {
   static const double arenaHomeFooterIcon = 16;
   static const double arenaHomeFooterShieldIcon = 17;
   static const double arenaHomeFooterLineHeight = 1.35;
+  static const double arenaCommunityRulesLinkLineHeight =
+      arenaHomeFooterLineHeight;
+  static const double arenaCommunityRulesLinkIcon = iconMd;
+  static const EdgeInsetsDirectional arenaCommunityRulesLinkPadding =
+      EdgeInsetsDirectional.symmetric(horizontal: x4, vertical: x3);
   static const double arenaHomeSearchChevron = 18;
   static const double arenaHomeActionIconBox = 32;
   static const double arenaHomeActionIcon = 17;
@@ -8742,6 +9112,11 @@ final class AppSpacing {
       savingsNotificationActionIcon;
   static const double stakingEarnHeroCaptionFontSize = stakingTaxDetailFontSize;
   static const double stakingEarnHeroTabLabelLineHeight = 1.2;
+  static const double stakingEarnPositionTitleLineHeight = 1.2;
+  static const double stakingEarnPositionCaptionLineHeight = 1.2;
+  static const double stakingEarnPositionMetricLabelLineHeight = 1.15;
+  static const double stakingEarnPositionMetricValueLineHeight = 1.2;
+  static const double stakingEarnPositionAssetBadgeLineHeight = 1;
   static const double stakingCustodyActionIconBox = 64;
   static const double stakingCustodyActionIcon = x6;
   static const double stakingCustodyActionBorderWidth = borderWidth;

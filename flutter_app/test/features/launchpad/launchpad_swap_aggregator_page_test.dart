@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpa
 import 'package:vit_trade_flutter/features/launchpad/presentation/pages/launchpad_swap_aggregator_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_next_action_card.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
@@ -43,7 +44,11 @@ void main() {
     );
     expect(snapshot.title, 'Swap Aggregator');
     expect(snapshot.backRoute, AppRoutePaths.launchpad);
-    expect(snapshot.tabs, ['So sanh', 'Lich su', 'Cai dat']);
+    expect(snapshot.tabs, [
+      'So s\u00E1nh',
+      'L\u1ECBch s\u1EED',
+      'C\u00E0i \u0111\u1EB7t',
+    ]);
     expect(snapshot.fromToken, 'USDT');
     expect(snapshot.toToken, 'ARB');
     expect(snapshot.dexQuotes, hasLength(5));
@@ -80,13 +85,14 @@ void main() {
     expect(find.byKey(LaunchpadSwapAggregatorPage.dexListKey), findsOneWidget);
     expect(find.byKey(LaunchpadSwapAggregatorPage.ctaKey), findsOneWidget);
     expect(find.text('Swap Aggregator'), findsOneWidget);
-    expect(find.text('Swap from'), findsOneWidget);
+    expect(find.text('T\u1EEB'), findsOneWidget);
     expect(find.text('USDT'), findsWidgets);
     expect(find.text('ARB'), findsWidgets);
-    expect(find.text('Best rate: Uniswap V3'), findsOneWidget);
+    expect(find.text('T\u1EF7 gi\u00E1 t\u1ED1t: Uniswap V3'), findsOneWidget);
     expect(find.text('Uniswap V3'), findsWidgets);
     expect(find.text('PancakeSwap'), findsOneWidget);
     expect(find.byType(VitHighRiskStatePanel), findsOneWidget);
+    expect(find.byType(VitNextActionCard), findsOneWidget);
     final panel = tester.widget<VitHighRiskStatePanel>(
       find.byType(VitHighRiskStatePanel),
     );
@@ -131,16 +137,19 @@ void main() {
   testWidgets('SC-314 switches history and settings tabs', (tester) async {
     await pumpSwapAggregator(tester);
 
-    await tester.tap(find.text('Lich su'));
+    await tester.tap(find.text('L\u1ECBch s\u1EED'));
     await tester.pumpAndSettle();
     expect(find.byKey(LaunchpadSwapAggregatorPage.historyKey), findsOneWidget);
-    expect(find.text('Giao dich gan day'), findsOneWidget);
-    expect(find.text('USDT -> ARB'), findsOneWidget);
+    expect(find.text('Giao d\u1ECBch g\u1EA7n \u0111\u00E2y'), findsOneWidget);
+    expect(find.text('USDT \u2192 ARB'), findsOneWidget);
 
-    await tester.tap(find.text('Cai dat'));
+    await tester.tap(find.text('C\u00E0i \u0111\u1EB7t'));
     await tester.pumpAndSettle();
     expect(find.byKey(LaunchpadSwapAggregatorPage.settingsKey), findsOneWidget);
-    expect(find.text('Slippage Tolerance (%)'), findsOneWidget);
+    expect(
+      find.text('\u0110\u1ED9 tr\u01B0\u1EE3t gi\u00E1 (%)'),
+      findsOneWidget,
+    );
 
     await tester.tap(
       find.byKey(LaunchpadSwapAggregatorPage.slippageKey('1.0')),
@@ -163,7 +172,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Swap 1000 USDT qua Uniswap V3'), findsOneWidget);
-    expect(find.text('Swap preview ready'), findsOneWidget);
+    expect(find.text('Preview swap s\u1EB5n s\u00E0ng'), findsOneWidget);
     expect(find.byType(VitHighRiskStatePanel), findsNWidgets(2));
   });
 

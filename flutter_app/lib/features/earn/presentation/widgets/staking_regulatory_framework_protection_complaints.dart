@@ -41,7 +41,7 @@ class _ProtectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -119,7 +119,7 @@ class _ComplaintsTab extends StatelessWidget {
           accentColor: AppColors.primarySoft,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnCardPaddingX3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -145,7 +145,7 @@ class _ComplaintsTab extends StatelessWidget {
           accentColor: AppColors.primarySoft,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnCardPaddingX3,
               child: Column(
                 children: [

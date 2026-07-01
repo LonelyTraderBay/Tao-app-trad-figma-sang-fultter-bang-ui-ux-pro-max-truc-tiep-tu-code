@@ -118,7 +118,7 @@ class _ClaimStep extends StatelessWidget {
             width: AppSpacing.x6,
             height: AppSpacing.x6,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             borderColor: _compPrimary.withValues(alpha: .24),
             alignment: Alignment.center,
             child: Text(

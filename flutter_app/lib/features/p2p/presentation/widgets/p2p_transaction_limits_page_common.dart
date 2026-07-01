@@ -10,7 +10,7 @@ class _LimitDetailRow extends StatelessWidget {
     final color = _toneColor(item.toneKey);
     return Padding(
       key: P2PTransactionLimitsPage.detailItemKey(item.id),
-      padding: _p2pLimitsCardPadding,
+      padding: AppSpacing.p2pTransactionLimitsCardPadding,
       child: Row(
         children: [
           SizedBox.square(
@@ -77,8 +77,8 @@ class _UpgradeCard extends StatelessWidget {
         ),
         const SizedBox(height: _p2pLimitsSectionGap),
         VitCard(
-          radius: VitCardRadius.lg,
-          padding: _p2pLimitsCardPadding,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.p2pTransactionLimitsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -165,7 +165,7 @@ class _UpgradeCard extends StatelessWidget {
                     context.go(snapshot.kycRequirementsRoute);
                   },
                   variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.sm,
+                  radius: VitCardRadius.standard,
                   padding: AppSpacing.zeroInsets,
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
@@ -225,7 +225,7 @@ class _LimitInfoNotice extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .28)),
       ),
       child: Padding(
-        padding: _p2pLimitsInnerPadding,
+        padding: AppSpacing.p2pTransactionLimitsInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

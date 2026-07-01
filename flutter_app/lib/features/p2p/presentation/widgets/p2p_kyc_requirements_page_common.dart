@@ -91,7 +91,7 @@ class _BenefitRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: _p2pKycChecklistIconPadding,
+          padding: AppSpacing.p2pKycRequirementsChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: color,
@@ -122,8 +122,8 @@ class _KycSupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PKycRequirementsPage.supportKey,
-      radius: VitCardRadius.md,
-      padding: _p2pKycCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pKycRequirementsCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

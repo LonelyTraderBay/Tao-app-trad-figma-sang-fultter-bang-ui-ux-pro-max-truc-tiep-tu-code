@@ -146,7 +146,7 @@ class AddressAgreementRow extends StatelessWidget {
               width: AppSpacing.walletAddressAddAgreementBox,
               height: AppSpacing.walletAddressAddAgreementBox,
               margin: AppSpacing.walletAddressAddAgreementBoxMargin,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               variant: VitCardVariant.ghost,
               borderColor: agreed ? addressAddGreen : AppColors.borderSolid,
               background: ColoredBox(

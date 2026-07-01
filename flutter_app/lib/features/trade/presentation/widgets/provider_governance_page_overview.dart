@@ -17,7 +17,7 @@ class _ProviderDashboard extends StatelessWidget {
             children: [
               const VitCard(
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.lg,
+                radius: VitCardRadius.large,
                 width: AppSpacing.inputHeight - AppSpacing.x3,
                 height: AppSpacing.inputHeight - AppSpacing.x3,
                 borderColor: _governancePrimary,

@@ -117,9 +117,7 @@ class VitIconButton extends StatelessWidget {
             border: AppColors.cardBorder,
           );
     final hasLabel = label != null && label!.isNotEmpty;
-    final radius = size == VitIconButtonSize.sm
-        ? AppRadii.smRadius
-        : AppRadii.headerActionRadius;
+    final radius = AppRadii.inputRadius;
 
     final child = Row(
       mainAxisSize: MainAxisSize.min,

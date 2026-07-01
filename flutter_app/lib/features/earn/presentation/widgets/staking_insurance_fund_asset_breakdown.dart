@@ -18,7 +18,7 @@ class StakingInsuranceFundAssetBreakdownCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
@@ -50,7 +50,7 @@ class StakingInsuranceFundAssetRow extends StatelessWidget {
     final color = stakingInsuranceFundAssetColor(asset.colorKey);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [

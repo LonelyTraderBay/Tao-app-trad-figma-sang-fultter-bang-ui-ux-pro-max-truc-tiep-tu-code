@@ -9,7 +9,7 @@ class _BridgeTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadBridgeOrderPage.timelineKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

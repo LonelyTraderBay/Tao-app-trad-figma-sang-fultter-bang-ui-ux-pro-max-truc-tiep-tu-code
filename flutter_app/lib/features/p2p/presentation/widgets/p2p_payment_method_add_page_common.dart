@@ -9,7 +9,7 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: _p2pPaymentAddSectionGap),
+      padding: AppSpacing.p2pPaymentAddFormPreviewGap,
       child: Row(
         children: [
           Expanded(

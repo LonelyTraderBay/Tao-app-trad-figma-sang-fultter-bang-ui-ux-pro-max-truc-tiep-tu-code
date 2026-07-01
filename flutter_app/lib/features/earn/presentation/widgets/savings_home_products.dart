@@ -115,7 +115,7 @@ class _SavingsProductCard extends StatelessWidget {
     final accent = _productAccent(product);
 
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

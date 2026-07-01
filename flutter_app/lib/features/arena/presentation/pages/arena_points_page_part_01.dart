@@ -234,7 +234,7 @@ class _RewardMetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.arenaPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,7 +343,7 @@ class _PendingClaimBanner extends StatelessWidget {
     return VitCard(
       key: ArenaPointsPage.claimAllKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: claimedAll ? AppColors.buy20 : AppColors.warningBorder,
       onTap: claimedAll ? null : onTap,
       padding: AppSpacing.arenaPaddingX3,
@@ -397,7 +397,7 @@ class _ExpiringBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.sell20,
       padding: AppSpacing.arenaPointsExpiringPadding,
       child: Row(

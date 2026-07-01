@@ -72,33 +72,7 @@ class _ArenaFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VitCard(
-          onTap: onRules,
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.menu_book_outlined,
-                color: AppColors.primary,
-                size: AppSpacing.arenaHomeFooterIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                'Quy tac cong dong',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
+        VitCommunityRulesLink(onTap: onRules),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
           density: VitDensity.compact,

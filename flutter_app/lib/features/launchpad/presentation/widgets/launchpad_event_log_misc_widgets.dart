@@ -53,7 +53,7 @@ class _SmallActionButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: active ? VitCardVariant.inner : VitCardVariant.standard,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: active ? AppColors.primary30 : AppColors.cardBorder,
       padding: compact
           ? AppSpacing.launchpadInlinePillPadding
@@ -102,7 +102,7 @@ class _SelectBox extends StatelessWidget {
       width: AppSpacing.launchpadBox18,
       height: AppSpacing.launchpadBox18,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: selected ? color : AppColors.borderSolid,
       onTap: onTap,
       background: selected ? ColoredBox(color: color) : null,

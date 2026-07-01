@@ -11,7 +11,7 @@ class _CalculatorPreview extends StatelessWidget {
       children: [
         VitCard(
           key: AutoCompoundSettingsPage.calculatorKey,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             children: [

@@ -222,7 +222,7 @@ class _CopyModeTile extends StatelessWidget {
     final color = Color(mode.colorHex);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.copyEducationModeMinHeight,
       ),

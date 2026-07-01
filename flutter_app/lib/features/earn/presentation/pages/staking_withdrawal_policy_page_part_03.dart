@@ -221,7 +221,7 @@ class _NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _stakingWithdrawalCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

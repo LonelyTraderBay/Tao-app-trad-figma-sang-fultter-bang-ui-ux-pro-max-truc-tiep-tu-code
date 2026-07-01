@@ -204,7 +204,7 @@ class _TabButton extends StatelessWidget {
     return VitCard(
       key: StakingLiquidStakingPage.tabKey(tab.name),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x4),
       onTap: onTap,
       child: Column(
@@ -284,7 +284,7 @@ class _LiquidTokenCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingLiquidStakingPage.tokenKey(token.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -423,7 +423,7 @@ class _TokenMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -36,7 +36,7 @@ class _SlashingEventCard extends StatelessWidget {
     final statusColor = stakingSlashingStatusColor(event.status);
     return VitCard(
       key: StakingSlashingHistoryKeys.event(event.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

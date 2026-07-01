@@ -9,9 +9,9 @@ class _EscrowHeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PEscrowBalancePage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.warningBorder,
-      padding: _p2pEscrowBalanceLargePadding,
+      padding: AppSpacing.p2pEscrowBalanceLargePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -22,7 +22,7 @@ class _EscrowHeroCard extends StatelessWidget {
                 width: _p2pEscrowBalanceIconBox,
                 height: _p2pEscrowBalanceIconBox,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.lg,
+                radius: VitCardRadius.large,
                 borderColor: AppColors.warningBorder,
                 background: const ColoredBox(color: AppColors.warn15),
                 clip: true,
@@ -65,8 +65,8 @@ class _EscrowHeroCard extends StatelessWidget {
           const SizedBox(height: _p2pEscrowBalanceTightGap),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
-            padding: _p2pEscrowBalanceInnerPadding,
+            radius: VitCardRadius.standard,
+            padding: AppSpacing.p2pEscrowBalanceInnerPadding,
             child: Row(
               children: [
                 const Icon(
@@ -174,8 +174,8 @@ class _EscrowOrderCard extends StatelessWidget {
         : AppColors.sell;
 
     return VitCard(
-      radius: VitCardRadius.md,
-      padding: _p2pEscrowBalanceCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pEscrowBalanceCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pOrder(order.canonicalOrderId));
@@ -292,9 +292,9 @@ class _EscrowOrderCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.x3),
             VitCard(
               variant: VitCardVariant.inner,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               borderColor: AppColors.sell20,
-              padding: _p2pEscrowBalanceInnerPadding,
+              padding: AppSpacing.p2pEscrowBalanceInnerPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -324,7 +324,7 @@ class _EscrowOrderCard extends StatelessWidget {
               width: _p2pEscrowBalanceAccentLineWidth,
               height: _p2pEscrowBalanceAccentLineHeight,
               variant: VitCardVariant.ghost,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               background: ColoredBox(color: typeColor),
               clip: true,
               child: const SizedBox.shrink(),

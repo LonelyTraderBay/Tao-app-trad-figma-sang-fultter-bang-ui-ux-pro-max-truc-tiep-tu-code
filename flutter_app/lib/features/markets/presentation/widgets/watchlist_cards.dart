@@ -33,7 +33,7 @@ class _WatchlistCard extends StatelessWidget {
                 key: WatchlistPage.pairLinkKey(pair.id),
                 onTap: onPairTap,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.md,
+                radius: VitCardRadius.standard,
                 padding: EdgeInsets.zero,
                 borderColor: AppColors.transparent,
                 clip: true,
@@ -44,7 +44,7 @@ class _WatchlistCard extends StatelessWidget {
                 child: VitCard(
                   onTap: onPairTap,
                   variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.sm,
+                  radius: VitCardRadius.standard,
                   padding: EdgeInsets.zero,
                   borderColor: AppColors.transparent,
                   child: Padding(
@@ -162,7 +162,7 @@ class _WatchlistCard extends StatelessWidget {
                 key: WatchlistPage.removeKey(entry.id),
                 onTap: onRemoveTap,
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 padding: EdgeInsets.zero,
                 width: AppSpacing.watchlistRemoveButton,
                 height: AppSpacing.watchlistRemoveButton,
@@ -302,7 +302,7 @@ class _ActionButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       borderColor: AppColors.transparent,
       clip: true,

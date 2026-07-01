@@ -66,7 +66,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingInsuranceFundKeys.claim(claim.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
@@ -97,7 +97,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.earnCardPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

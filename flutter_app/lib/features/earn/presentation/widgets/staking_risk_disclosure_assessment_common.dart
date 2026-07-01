@@ -12,7 +12,7 @@ class _AssessmentTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: _stakingRiskCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +86,7 @@ class _AssessmentTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         for (final faq in snapshot.faqs) ...[
           VitCard(
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: _stakingRiskCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

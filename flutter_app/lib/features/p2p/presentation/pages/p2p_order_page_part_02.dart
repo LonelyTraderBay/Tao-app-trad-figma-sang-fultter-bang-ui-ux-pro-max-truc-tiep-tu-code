@@ -27,7 +27,7 @@ class _PaymentInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: _p2pOrderCompactCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -61,7 +61,7 @@ class _PaymentInfoCard extends StatelessWidget {
             key: P2POrderPage.qrToggleKey,
             onTap: onToggleQr,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.zeroInsets,
             child: Padding(
               padding: AppSpacing.p2pOrderQrTogglePadding,
@@ -234,7 +234,7 @@ class _ProofCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _p2pOrderCompactCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -286,7 +286,7 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _p2pOrderCompactCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -361,7 +361,7 @@ class _TimelineItem extends StatelessWidget {
           child: Padding(
             padding: isLast
                 ? AppSpacing.zeroInsets
-                : _p2pOrderTimelineItemPadding,
+                : AppSpacing.p2pOrderTimelineItemPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -417,7 +417,7 @@ class _PaymentWarning extends StatelessWidget {
       messageColor: AppColors.sell,
       borderColor: AppColors.sell20,
       variant: VitCardVariant.standard,
-      padding: _p2pOrderCompactCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       messageStyle: AppTextStyles.micro.copyWith(
         color: AppColors.sell,
         height: 1.4,
@@ -477,7 +477,7 @@ class _QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _p2pOrderCompactCardPadding,
+      padding: AppSpacing.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

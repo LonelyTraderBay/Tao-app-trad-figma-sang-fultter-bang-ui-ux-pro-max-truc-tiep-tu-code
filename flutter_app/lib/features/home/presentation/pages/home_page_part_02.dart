@@ -171,7 +171,6 @@ class _TrendingSection extends StatelessWidget {
                             label: pair.baseAsset,
                             accentColor: pair.logoColor,
                             size: _assetAvatarExtent,
-                            radius: AppRadii.xsRadius,
                           ),
                           const SizedBox(width: AppSpacing.x3),
                           Expanded(

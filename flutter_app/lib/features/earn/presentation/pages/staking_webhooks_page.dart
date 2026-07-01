@@ -108,7 +108,7 @@ class _WebhooksHero extends StatelessWidget {
     return VitCard(
       key: StakingWebhooksPage.heroKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.accent30,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
@@ -159,7 +159,7 @@ class _WebhookCard extends StatelessWidget {
     final statusColor = webhook.active ? AppColors.buy : AppColors.sell;
     return VitCard(
       key: StakingWebhooksPage.webhookKey(webhook.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3X4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -248,7 +248,7 @@ class _AvailableEvents extends StatelessWidget {
       label: snapshot.eventsTitle,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4,
           child: Wrap(
             spacing: AppSpacing.x2,

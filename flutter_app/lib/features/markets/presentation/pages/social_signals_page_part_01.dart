@@ -221,7 +221,7 @@ class _UnderlinedTab extends StatelessWidget {
       child: VitCard(
         onTap: () => onChanged(value),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         borderColor: AppColors.transparent,
         child: Column(
@@ -410,7 +410,7 @@ class _FilterChipButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       borderColor: AppColors.transparent,
       clip: true,
@@ -463,7 +463,7 @@ class _CategoryChip extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       borderColor: AppColors.transparent,
       clip: true,

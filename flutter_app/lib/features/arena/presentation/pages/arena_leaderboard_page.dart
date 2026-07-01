@@ -46,7 +46,6 @@ const double _leaderboardRowIcon = AppSpacing.iconSm + AppSpacing.x2;
 const double _leaderboardFairPlayIcon = AppSpacing.x3 + AppSpacing.x1;
 const double _leaderboardRisingIcon = AppSpacing.iconSm;
 const double _leaderboardCompactIcon = AppSpacing.iconMd + AppSpacing.x2;
-const double _leaderboardFooterIcon = AppSpacing.iconSm + AppSpacing.x2;
 const double _leaderboardFooterShieldIcon = AppSpacing.iconSm + AppSpacing.x2;
 const double _leaderboardFooterLineHeight = 1.25;
 const EdgeInsetsDirectional _leaderboardFilterPadding =
@@ -58,11 +57,6 @@ const EdgeInsetsDirectional _leaderboardRowPadding =
     EdgeInsetsDirectional.symmetric(
       horizontal: AppSpacing.x4,
       vertical: AppSpacing.x3,
-    );
-const EdgeInsetsDirectional _leaderboardFooterActionPadding =
-    EdgeInsetsDirectional.symmetric(
-      horizontal: AppSpacing.x2,
-      vertical: AppSpacing.x2,
     );
 const EdgeInsetsDirectional _leaderboardPodiumPadding =
     EdgeInsetsDirectional.only(top: AppSpacing.x1, bottom: AppSpacing.x3);
@@ -161,7 +155,7 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
                         ),
                         _ArenaFooter(
                           disclaimer: snapshot.disclaimer,
-                          onRules: () => _go(AppRoutePaths.arenaGuide),
+                          onRules: () => _go(AppRoutePaths.arenaSafety),
                         ),
                       ],
                     ),

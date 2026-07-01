@@ -9,7 +9,7 @@ class _AllocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsPortfolioCardPadding,
       child: Column(
         children: [
@@ -149,7 +149,7 @@ class _IncomeProjectionCard extends StatelessWidget {
       _ => Icons.wb_sunny_outlined,
     };
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsPortfolioCardPadding,
       child: Column(
         children: [
@@ -197,7 +197,7 @@ class _MaturitySummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = events.length;
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsPortfolioCardPadding,
       child: Row(
         children: [
@@ -266,7 +266,7 @@ class _MaturityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _riskColor(event.tone);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: 0.45),
       padding: _savingsPortfolioCardPadding,
       child: Column(
@@ -457,7 +457,7 @@ class _PositionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _assetColor(position.asset);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsPortfolioCardPadding,
       child: Row(
         children: [

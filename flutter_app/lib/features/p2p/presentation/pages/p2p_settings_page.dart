@@ -30,20 +30,6 @@ const double _p2pSettingsAutoReplyLineHeight = 1.34;
 const double _p2pSettingsSwitchWidth = 40;
 const double _p2pSettingsSwitchHeight = 22;
 const double _p2pSettingsSwitchThumbSize = 16;
-const EdgeInsets _p2pSettingsScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pSettingsCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pSettingsCompactCardPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pSettingsHorizontalCardPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-);
-const EdgeInsets _p2pSettingsRowPadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x2,
-);
 
 class P2PSettingsPage extends ConsumerStatefulWidget {
   const P2PSettingsPage({super.key, this.shellRenderMode});
@@ -111,8 +97,8 @@ class _P2PSettingsPageState extends ConsumerState<P2PSettingsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pSettingsScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pSettingsPageScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

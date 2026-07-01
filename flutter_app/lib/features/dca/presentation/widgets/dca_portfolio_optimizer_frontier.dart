@@ -101,7 +101,7 @@ class _CompareHintCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.dcaPaddingX3,
       child: Row(
         children: [
@@ -302,7 +302,7 @@ class _SuggestionsCard extends StatelessWidget {
           VitCard(
             onTap: onToggle,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: EdgeInsets.zero,
             borderColor: AppColors.transparent,
             child: Row(

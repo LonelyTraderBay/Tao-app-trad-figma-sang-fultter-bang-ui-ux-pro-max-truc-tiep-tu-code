@@ -91,7 +91,7 @@ class _CategoryCard extends StatelessWidget {
     final enabled = state.enabled && masterEnabled;
     return VitCard(
       key: LaunchpadNotifSoundPage.categoryKey(category.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
@@ -260,7 +260,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                 key: LaunchpadNotifSoundPage.previewKey(category.id),
                 onTap: onPreview,
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 height: AppSpacing.buttonCompact,
                 padding: AppSpacing.launchpadPaddingX4,
                 child: Row(

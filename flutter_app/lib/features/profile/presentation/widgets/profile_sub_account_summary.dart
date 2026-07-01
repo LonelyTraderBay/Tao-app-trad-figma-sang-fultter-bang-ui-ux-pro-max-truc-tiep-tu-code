@@ -18,7 +18,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
     return VitCard(
       key: SubAccountPage.summaryKey,
       density: VitDensity.compact,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.hero,
       borderColor: AppColors.primary20,
       child: Column(

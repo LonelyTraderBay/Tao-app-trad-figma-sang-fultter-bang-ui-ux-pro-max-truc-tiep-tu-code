@@ -55,17 +55,20 @@ class VitTabBar extends StatelessWidget {
     if (variant == VitTabBarVariant.segment) {
       return Row(
         children: [
-          for (final tab in tabs)
+          for (var i = 0; i < tabs.length; i++) ...[
+            if (i > 0) const SizedBox(width: AppSpacing.x1),
             _PillTab(
-              tab: tab,
-              active: tab.key == activeKey,
+              tab: tabs[i],
+              active: tabs[i].key == activeKey,
               onChanged: onChanged,
               fillParent: true,
+              segmentStyle: true,
               padding: const EdgeInsetsDirectional.symmetric(
                 horizontal: AppSpacing.rowGapRegular,
                 vertical: AppSpacing.tabBarPillVertical,
               ),
             ),
+          ],
         ],
       );
     }
@@ -97,6 +100,7 @@ class _PillTab extends StatelessWidget {
     required this.onChanged,
     required this.fillParent,
     required this.padding,
+    this.segmentStyle = false,
   });
 
   final VitTabItem tab;
@@ -104,17 +108,27 @@ class _PillTab extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final bool fillParent;
   final EdgeInsetsGeometry padding;
+  final bool segmentStyle;
 
   @override
   Widget build(BuildContext context) {
+    final fill = active
+        ? AppColors.primary12
+        : segmentStyle
+        ? AppColors.transparent
+        : AppColors.surface2;
+    final border = active
+        ? AppColors.primary20
+        : segmentStyle
+        ? AppColors.portfolioBtnGhostBorder
+        : AppColors.cardBorder;
+
     final content = DecoratedBox(
       decoration: ShapeDecoration(
-        color: active ? AppColors.primary12 : AppColors.surface2,
+        color: fill,
         shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.smRadius,
-          side: BorderSide(
-            color: active ? AppColors.primary20 : AppColors.cardBorder,
-          ),
+          borderRadius: AppRadii.inputRadius,
+          side: BorderSide(color: border),
         ),
       ),
       child: Padding(
@@ -147,7 +161,7 @@ class _PillTab extends StatelessWidget {
       type: MaterialType.transparency,
       child: InkWell(
         onTap: () => onChanged(tab.key),
-        borderRadius: AppRadii.smRadius,
+        borderRadius: AppRadii.inputRadius,
         child: content,
       ),
     );

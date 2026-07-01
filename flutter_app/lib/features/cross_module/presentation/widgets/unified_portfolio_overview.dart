@@ -67,7 +67,7 @@ class _TotalValueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pnlPositive = snapshot.totalPnl >= 0;
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +135,7 @@ class _DistributionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final modules = snapshot.financialModules.toList();
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,7 +230,7 @@ class _ModuleCard extends StatelessWidget {
       label: 'Open ${module.name} module',
       child: VitCard(
         key: cardKey,
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         padding: AppSpacing.crossModuleCardPadding,
         clip: true,
         onTap: () => onOpenRoute(module.route),

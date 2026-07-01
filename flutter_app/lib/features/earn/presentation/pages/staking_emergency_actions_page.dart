@@ -256,7 +256,7 @@ class _EmergencyActionCard extends StatelessWidget {
     final color = _toneColor(action.tone);
     return VitCard(
       key: StakingEmergencyActionsPage.actionKey(action.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: action.id == 'rebalance' ? null : onTap,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
@@ -319,7 +319,7 @@ class _UseCasesSection extends StatelessWidget {
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             children: [
@@ -406,7 +406,7 @@ class _CurrentStatusSection extends StatelessWidget {
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX3,
           child: Row(
             children: [

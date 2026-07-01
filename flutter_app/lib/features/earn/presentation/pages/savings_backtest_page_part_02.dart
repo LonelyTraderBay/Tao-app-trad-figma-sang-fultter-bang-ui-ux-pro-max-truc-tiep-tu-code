@@ -72,7 +72,7 @@ class _ResultsTab extends StatelessWidget {
       key: SavingsBacktestPage.resultsKey,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
           padding: AppSpacing.earnPaddingX4,
           child: Column(
@@ -215,7 +215,7 @@ class _CompareTab extends StatelessWidget {
       key: SavingsBacktestPage.compareKey,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -309,7 +309,7 @@ class _CompareCard extends StatelessWidget {
     final projected = amountUsd * apy / 100;
     final color = _presetColor(preset.id);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: preset.id == SavingsBacktestPreset.aggressive
           ? AppColors.buy20
           : AppColors.cardBorder,
@@ -361,7 +361,7 @@ class _NoResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX6,
       child: Column(
         children: [
@@ -402,7 +402,7 @@ class _GrowthChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -455,7 +455,7 @@ class _ResultTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -493,7 +493,7 @@ class _SummaryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -41,7 +41,7 @@ class _ArmProviderCard extends StatelessWidget {
             children: [
               VitCard(
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.md,
+                radius: VitCardRadius.standard,
                 width: AppSpacing.inputHeight - AppSpacing.x3,
                 height: AppSpacing.inputHeight - AppSpacing.x3,
                 borderColor: style.color.withValues(alpha: .28),

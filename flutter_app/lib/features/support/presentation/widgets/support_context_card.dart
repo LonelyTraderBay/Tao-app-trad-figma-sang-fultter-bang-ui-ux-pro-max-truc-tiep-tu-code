@@ -9,7 +9,7 @@ class _SupportContextCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SupportPage.contextKey,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppModuleAccents.support.withValues(alpha: .28),
       padding: AppSpacing.supportCardPadding,
       child: Column(

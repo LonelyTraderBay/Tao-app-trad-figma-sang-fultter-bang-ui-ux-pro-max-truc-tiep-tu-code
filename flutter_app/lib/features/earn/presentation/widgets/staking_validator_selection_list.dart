@@ -58,7 +58,7 @@ class _ValidatorCard extends StatelessWidget {
     final accent = stakingValidatorAccent(validator);
 
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Column(

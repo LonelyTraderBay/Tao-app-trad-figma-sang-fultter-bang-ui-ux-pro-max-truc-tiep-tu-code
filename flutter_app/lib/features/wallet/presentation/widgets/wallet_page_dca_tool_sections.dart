@@ -16,7 +16,7 @@ class WalletDcaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: VitDensity.compact.cardPadding,
       borderColor: _walletPurple.withValues(alpha: .28),
       child: Column(
@@ -98,7 +98,7 @@ class WalletDcaCard extends StatelessWidget {
           const SizedBox(height: _walletDcaGap),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             padding: VitDensity.compact.cardPadding,
             borderColor: _walletAmber.withValues(alpha: .24),
             child: Row(
@@ -157,7 +157,7 @@ class _DcaStatCard extends StatelessWidget {
     return VitCard(
       padding: VitDensity.tool.cardPadding,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: iconColor.withValues(alpha: .18),
       child: Row(
         children: [

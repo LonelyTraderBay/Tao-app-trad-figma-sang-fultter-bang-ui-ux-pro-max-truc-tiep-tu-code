@@ -244,7 +244,7 @@ class _IndicatorOption extends StatelessWidget {
             height: AppSpacing.tradeReceiptStatusIcon,
             padding: AppSpacing.zeroInsets,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             clip: true,
             background: ColoredBox(color: color),
             child: const SizedBox.shrink(),
@@ -268,7 +268,7 @@ class _IndicatorOption extends StatelessWidget {
             padding: AppSpacing.zeroInsets,
             variant: VitCardVariant.ghost,
             borderColor: indicator.enabled ? color : AppColors.borderSolid,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             clip: true,
             background: ColoredBox(
               color: indicator.enabled ? color : AppColors.transparent,

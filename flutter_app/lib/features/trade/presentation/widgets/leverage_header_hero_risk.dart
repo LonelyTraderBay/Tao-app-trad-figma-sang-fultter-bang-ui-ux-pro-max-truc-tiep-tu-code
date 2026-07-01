@@ -39,7 +39,7 @@ class _LeverageHero extends StatelessWidget {
         right: AppSpacing.x4,
         bottom: AppSpacing.x4,
       ),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: riskColor.withValues(alpha: .32),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

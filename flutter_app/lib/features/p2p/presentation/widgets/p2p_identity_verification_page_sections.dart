@@ -9,7 +9,7 @@ class _IdentityHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PIdentityVerificationPage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
@@ -83,7 +83,7 @@ class _DocumentTypePicker extends StatelessWidget {
         for (final document in documents) ...[
           VitCard(
             key: P2PIdentityVerificationPage.documentTypeKey(document.id),
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
             onTap: () => onSelected(document),
             child: Row(
@@ -147,7 +147,7 @@ class _GuidelinesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PIdentityVerificationPage.guidelinesKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -260,7 +260,7 @@ class _UploadCard extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           variant: uploaded ? VitCardVariant.inner : VitCardVariant.ghost,
           borderColor: uploaded
               ? AppColors.buy20

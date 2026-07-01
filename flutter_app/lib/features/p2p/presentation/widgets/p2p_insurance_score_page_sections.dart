@@ -9,7 +9,7 @@ class _ScoreOverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PInsuranceScorePage.scoreCardKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         children: [
@@ -36,7 +36,7 @@ class _ScoreOverviewCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             borderColor: AppColors.buy20,
             padding: const EdgeInsetsDirectional.symmetric(
               horizontal: AppSpacing.x3,
@@ -135,7 +135,7 @@ class _FactorBreakdownCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PInsuranceScorePage.factorsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -285,7 +285,7 @@ class _ScoreFactorRow extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(start: AppSpacing.x6),
             child: VitCard(
               variant: VitCardVariant.inner,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               padding: const EdgeInsetsDirectional.symmetric(
                 horizontal: AppSpacing.x2,
                 vertical: AppSpacing.x1,
@@ -326,7 +326,7 @@ class _QuickActionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

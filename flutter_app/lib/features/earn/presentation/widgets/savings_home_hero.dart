@@ -9,7 +9,7 @@ class _SavingsHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -148,7 +148,7 @@ class _InsightList extends StatelessWidget {
         for (final insight in insights) ...[
           VitCard(
             key: _insightKey(insight.route),
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.earnCardPaddingX4,
             onTap: insight.route == null
                 ? null
@@ -221,7 +221,7 @@ class _ToolboxButton extends StatelessWidget {
     return VitCard(
       key: SavingsPage.guideButtonKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnVerticalPaddingX3,
       onTap: () {
         HapticFeedback.selectionClick();

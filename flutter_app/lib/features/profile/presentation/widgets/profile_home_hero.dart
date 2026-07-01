@@ -17,7 +17,7 @@ class _ProfileHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       density: VitDensity.compact,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.hero,
       child: Column(
         mainAxisSize: MainAxisSize.min,

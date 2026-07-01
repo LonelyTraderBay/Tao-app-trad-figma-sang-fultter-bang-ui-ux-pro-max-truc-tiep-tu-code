@@ -174,7 +174,7 @@ class _UnderlinedTab extends StatelessWidget {
     return Expanded(
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         onTap: () => onChanged(value),
         child: Column(
@@ -346,7 +346,7 @@ class _FilterChipButton extends StatelessWidget {
       label: label,
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         borderColor: active
             ? color.withValues(alpha: color == AppColors.text3 ? .18 : .32)
             : AppColors.transparent,

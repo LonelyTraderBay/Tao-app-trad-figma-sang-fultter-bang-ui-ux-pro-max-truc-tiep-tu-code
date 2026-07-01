@@ -30,7 +30,7 @@ class _PortfolioHero extends StatelessWidget {
     return VitCard(
       key: LaunchpadPortfolioPage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(

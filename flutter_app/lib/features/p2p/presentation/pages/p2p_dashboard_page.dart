@@ -31,12 +31,6 @@ const double _p2pDashboardNativeNavClearance =
 const double _p2pDashboardVisualClearance = AppSpacing.x3;
 const double _p2pDashboardNativeClearance = AppSpacing.x2;
 const double _p2pDashboardDividerHeight = AppSpacing.dividerHairline;
-const EdgeInsets _p2pDashboardScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PDashboardPage extends ConsumerStatefulWidget {
   const P2PDashboardPage({super.key, this.shellRenderMode});
@@ -104,8 +98,8 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pDashboardScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pDashboardPageScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,

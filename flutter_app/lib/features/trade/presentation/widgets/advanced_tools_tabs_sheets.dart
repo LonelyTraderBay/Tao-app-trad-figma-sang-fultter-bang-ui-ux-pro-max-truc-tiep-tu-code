@@ -195,7 +195,7 @@ class _LadderLevel extends StatelessWidget {
       height: _toolsMetricRowHeight,
       padding: AppSpacing.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .35),
       child: Row(
         children: [

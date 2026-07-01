@@ -24,7 +24,7 @@ class _BridgeDetails extends StatelessWidget {
 
     return VitCard(
       key: LaunchpadBridgeOrderPage.detailsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -160,7 +160,7 @@ class _BridgeSupportAction extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeOrderPage.supportKey,
       onTap: () => context.go(supportRoute),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
       padding: AppSpacing.launchpadPaddingX4,
       child: Row(

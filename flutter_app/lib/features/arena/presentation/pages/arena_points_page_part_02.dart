@@ -298,7 +298,7 @@ class _FilterButton extends StatelessWidget {
         key: ArenaPointsPage.filterKey(label),
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: DecoratedBox(
           key: active ? ArenaPointsPage.activeFilterKey(label) : null,
           decoration: ShapeDecoration(

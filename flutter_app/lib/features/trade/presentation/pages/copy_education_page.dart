@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/copy_education_page_sections.dart';
 part '../widgets/copy_education_page_common.dart';
@@ -50,13 +51,10 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
         .watch(tradeReadModelControllerProvider)
         .getCopyEducation();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final chromeReserve = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final scrollTailReserve =
-        chromeReserve +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.x3);
+    final scrollTailReserve = copyTradingScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

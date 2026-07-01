@@ -10,7 +10,7 @@ class _HeroCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadPage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: VitDensity.compact.cardPadding,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
       child: Column(

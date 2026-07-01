@@ -13,7 +13,7 @@ class _RewardHero extends StatelessWidget {
     return VitCard(
       key: LaunchpadClaimReceiptPage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: receipt.accent.withValues(alpha: .22),
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(

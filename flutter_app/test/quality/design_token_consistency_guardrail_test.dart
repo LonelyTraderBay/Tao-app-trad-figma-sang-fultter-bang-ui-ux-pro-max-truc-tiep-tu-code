@@ -19,6 +19,51 @@ void main() {
     );
   });
 
+  test('shared interactive widgets use canonical control radius', () {
+    const interactiveWidgetPaths = <String>[
+      'lib/shared/widgets/vit_choice_pill.dart',
+      'lib/shared/widgets/vit_tab_bar.dart',
+      'lib/shared/widgets/vit_segmented_choice.dart',
+      'lib/shared/widgets/vit_cta_button.dart',
+      'lib/shared/layout/vit_header_action_button.dart',
+      'lib/shared/widgets/vit_section_header.dart',
+      'lib/shared/widgets/vit_inline_icon_action.dart',
+    ];
+
+    final violations = <String>[];
+    for (final path in interactiveWidgetPaths) {
+      final file = File(path);
+      expect(file.existsSync(), isTrue, reason: 'Missing $path');
+      final content = file.readAsStringSync();
+      if (content.contains('borderRadius: AppRadii.smRadius') ||
+          content.contains('borderRadius = AppRadii.smRadius') ||
+          content.contains('AppRadii.headerActionRadius')) {
+        violations.add(
+          '$path: interactive control must use AppRadii.inputRadius',
+        );
+      }
+    }
+
+    expect(violations, isEmpty, reason: violations.join('\n'));
+  });
+
+  test('VitCard maps standard and large tiers only', () {
+    final cardFile = File('lib/shared/widgets/vit_card.dart');
+    final content = cardFile.readAsStringSync();
+
+    expect(content, contains('case VitCardRadius.standard:'));
+    expect(content, contains('return AppRadii.cardRadius;'));
+    expect(content, contains('case VitCardRadius.large:'));
+    expect(content, contains('return AppRadii.cardLargeRadius;'));
+    expect(content, isNot(contains('VitCardRadius.sm')));
+    expect(content, isNot(contains('VitCardRadius.md')));
+    expect(
+      RegExp(r'case VitCardRadius\.standard:[\s\S]*?AppRadii\.mdRadius'),
+      isNot(matches(content)),
+      reason: 'standard tier must not map to mdRadius',
+    );
+  });
+
   test('changed app files do not introduce new local design debt', () {
     final changedFiles = _collectChangedLibFiles();
     final violations = <String>[];

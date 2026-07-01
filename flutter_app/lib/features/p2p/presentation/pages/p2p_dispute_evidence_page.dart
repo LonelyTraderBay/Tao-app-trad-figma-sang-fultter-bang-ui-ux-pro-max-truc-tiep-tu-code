@@ -22,12 +22,6 @@ const double _p2pDisputeEvidenceNativeNavClearance =
     _p2pDisputeEvidenceVisualNavClearance - AppSpacing.x4;
 const double _p2pDisputeEvidenceVisualClearance = AppSpacing.x3;
 const double _p2pDisputeEvidenceNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pDisputeEvidenceScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PDisputeEvidencePage extends ConsumerStatefulWidget {
   const P2PDisputeEvidencePage({
@@ -93,8 +87,8 @@ class _P2PDisputeEvidencePageState
                   child: SingleChildScrollView(
                     key: P2PDisputeEvidencePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pDisputeEvidenceScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pDisputeEvidenceScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -211,7 +205,7 @@ class _MockActionNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pDisputeCompactCardPadding,
       borderColor: AppColors.warningBorder,
       child: Text(

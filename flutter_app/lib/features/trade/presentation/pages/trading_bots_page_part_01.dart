@@ -62,7 +62,7 @@ class _BotsHero extends StatelessWidget {
     final totalProfit = bots.fold(0.0, (sum, bot) => sum + bot.profit);
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
       padding: AppSpacing.tradeBotHeroPadding,
       child: Column(
@@ -73,7 +73,7 @@ class _BotsHero extends StatelessWidget {
                 width: AppSpacing.x7,
                 height: AppSpacing.x7,
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.md,
+                radius: VitCardRadius.standard,
                 borderColor: AppColors.primary20,
                 alignment: Alignment.center,
                 child: const Icon(
@@ -106,7 +106,7 @@ class _BotsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               _HeroStat(
@@ -192,13 +192,9 @@ class _BotsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return SizedBox(
       height: AppSpacing.tradeBotTabsHeight,
-      padding: AppSpacing.tradeBotTabShellPadding,
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
-      child: VitTabBar(
-        variant: VitTabBarVariant.segment,
+      child: VitSegmentedTabBar(
         activeKey: active.name,
         onChanged: (key) => onChanged(
           key == _TradingBotsTab.myBots.name
@@ -240,24 +236,31 @@ class _MyBotsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (bots.isEmpty) {
-      return _EmptyBots(onAdd: onAdd);
+      return VitTradeSection(
+        title: 'Bot của tôi',
+        child: _EmptyBots(onAdd: onAdd),
+      );
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        for (final bot in bots) ...[
-          _BotCard(bot: bot, onToggle: onToggle, onDelete: onDelete),
-          const SizedBox(height: AppSpacing.x4),
+    return VitTradeSection(
+      title: 'Bot của tôi',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (final bot in bots) ...[
+            _BotCard(bot: bot, onToggle: onToggle, onDelete: onDelete),
+            if (bot != bots.last) const SizedBox(height: AppSpacing.x3),
+          ],
+          const SizedBox(height: AppSpacing.x3),
+          VitCtaButton(
+            key: TradingBotsPage.addBotKey,
+            onPressed: onAdd,
+            height: AppSpacing.inputHeight,
+            variant: VitCtaButtonVariant.secondary,
+            leading: const Icon(Icons.add_rounded),
+            child: const Text('Thêm Bot mới'),
+          ),
         ],
-        VitCtaButton(
-          key: TradingBotsPage.addBotKey,
-          onPressed: onAdd,
-          height: AppSpacing.inputHeight,
-          variant: VitCtaButtonVariant.secondary,
-          leading: const Icon(Icons.add_rounded),
-          child: const Text('Thêm Bot mới'),
-        ),
-      ],
+      ),
     );
   }
 }

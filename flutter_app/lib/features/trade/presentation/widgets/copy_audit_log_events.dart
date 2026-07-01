@@ -16,7 +16,7 @@ class _AuditEventCard extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             width: _auditEventIconExtent,
             height: _auditEventIconExtent,
             alignment: Alignment.center,
@@ -129,7 +129,7 @@ class _EventMetadataPanel extends StatelessWidget {
     if (event.type == TradeCopyAuditEventType.config) {
       return VitCard(
         variant: VitCardVariant.inner,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         height: _auditMetadataConfigExtent,
         width: double.infinity,
         alignment: Alignment.centerLeft,
@@ -146,7 +146,7 @@ class _EventMetadataPanel extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       width: double.infinity,
       padding: AppSpacing.copyAuditMetadataPanelPadding,
       child: Column(

@@ -245,7 +245,7 @@ class _RewardHero extends StatelessWidget {
     return VitCard(
       key: ReferralRewardsPage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

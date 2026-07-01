@@ -54,7 +54,7 @@ class _PolicyLink extends StatelessWidget {
         key: ArenaCreatorPage.policyKey,
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: AppSpacing.arenaCreatorPolicyPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,

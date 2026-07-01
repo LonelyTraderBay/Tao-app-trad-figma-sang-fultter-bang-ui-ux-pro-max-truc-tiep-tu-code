@@ -48,14 +48,14 @@ class _BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PWalletPage.balanceKey(balance.asset),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           VitCard(
             onTap: onToggle,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.zeroInsets,
             child: Padding(
               padding: _p2pWalletCardPadding,

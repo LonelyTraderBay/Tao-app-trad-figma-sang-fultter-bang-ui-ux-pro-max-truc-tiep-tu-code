@@ -120,7 +120,8 @@ class _ArenaPointsLedgerPageState extends ConsumerState<ArenaPointsLedgerPage> {
                         else
                           _LedgerList(entries: entries),
                         _AuditNotice(disclaimer: snapshot.disclaimer),
-                        _CommunityRulesButton(
+                        VitCommunityRulesLink(
+                          key: ArenaPointsLedgerPage.communityRulesKey,
                           onTap: () {
                             HapticFeedback.selectionClick();
                             context.go(AppRoutePaths.arenaSafety);

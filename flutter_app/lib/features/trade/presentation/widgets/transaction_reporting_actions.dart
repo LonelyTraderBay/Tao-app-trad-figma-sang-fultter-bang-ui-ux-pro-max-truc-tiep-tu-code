@@ -66,7 +66,7 @@ class _QuickActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       height: AppSpacing.buttonHero,
       padding: AppSpacing.transactionReportingQuickActionCardPadding,
       borderColor: transactionReportBorder,

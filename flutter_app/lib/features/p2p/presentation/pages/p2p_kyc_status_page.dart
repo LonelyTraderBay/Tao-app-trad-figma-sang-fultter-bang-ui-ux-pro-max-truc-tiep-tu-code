@@ -25,19 +25,9 @@ const _p2pKycVisualNavClearance =
 const _p2pKycNativeNavClearance = _p2pKycVisualNavClearance - AppSpacing.x4;
 const _p2pKycVisualClearance = AppSpacing.x3;
 const _p2pKycNativeClearance = AppSpacing.x2;
-const _p2pKycCardPadding = EdgeInsets.all(AppSpacing.x2);
-const _p2pKycNoticePadding = EdgeInsets.all(AppSpacing.x2);
 const _p2pKycSectionGap = AppSpacing.x2;
 const _p2pKycTightGap = AppSpacing.x1;
-const _p2pKycTimelineRowPadding = EdgeInsets.only(bottom: AppSpacing.x2);
 const _p2pKycSupportIconGap = AppSpacing.x2;
-
-EdgeInsets _p2pKycScrollPadding(double scrollEndPadding) => EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  scrollEndPadding,
-);
 
 class P2PKycStatusPage extends ConsumerWidget {
   const P2PKycStatusPage({super.key, this.shellRenderMode});
@@ -94,7 +84,9 @@ class P2PKycStatusPage extends ConsumerWidget {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: _p2pKycScrollPadding(scrollEndPadding),
+                      padding: AppSpacing.p2pKycStatusScrollPadding(
+                        scrollEndPadding,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [

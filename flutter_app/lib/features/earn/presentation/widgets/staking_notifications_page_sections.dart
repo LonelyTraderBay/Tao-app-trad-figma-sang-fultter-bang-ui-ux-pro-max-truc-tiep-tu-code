@@ -85,7 +85,7 @@ class _SettingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _priorityColor(setting.priority);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       onTap: onToggle,
       child: Row(
@@ -146,7 +146,7 @@ class _ChannelsList extends StatelessWidget {
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
@@ -269,7 +269,7 @@ class _NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _notificationColor(notification.type);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: notification.read
           ? null
           : AppColors.primarySoft.withValues(alpha: 0.28),
@@ -337,7 +337,7 @@ class _DoNotDisturbCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingNotificationsPage.dndKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

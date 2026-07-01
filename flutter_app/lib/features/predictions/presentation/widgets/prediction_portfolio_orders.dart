@@ -8,7 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
@@ -25,10 +24,11 @@ class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageSection(
-      label: 'Open Orders',
-      accentColor: AppColors.warn,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const VitSectionHeader(title: 'Open Orders'),
+        const SizedBox(height: AppSpacing.x1),
         Row(
           children: [
             Expanded(
@@ -39,9 +39,6 @@ class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ),
-            const SizedBox(
-              width: AppSpacing.predictionPortfolioOrdersHeaderGap,
-            ),
             Text(
               '${orders.length}',
               style: AppTextStyles.micro.copyWith(
@@ -49,29 +46,38 @@ class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
                 fontWeight: AppTextStyles.bold,
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionPortfolioOrdersHelpGap),
-            const Icon(
-              Icons.help_outline_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.predictionPortfolioOrdersHelpIcon,
-            ),
           ],
         ),
-        for (var index = 0; index < orders.length; index += 1) ...[
-          PredictionPortfolioOpenOrderCard(
-            key: predictionPortfolioOpenOrderKey(orders[index].id),
-            order: orders[index],
-            event: snapshot.eventFor(orders[index].eventId),
-            onCancel: () => onCancel(orders[index].id),
+        const SizedBox(height: AppSpacing.x3),
+        VitCard(
+          clip: true,
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              for (var index = 0; index < orders.length; index += 1) ...[
+                _OrderRow(
+                  key: predictionPortfolioOpenOrderKey(orders[index].id),
+                  order: orders[index],
+                  event: snapshot.eventFor(orders[index].eventId),
+                  onCancel: () => onCancel(orders[index].id),
+                ),
+                if (index != orders.length - 1)
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
+              ],
+            ],
           ),
-        ],
+        ),
       ],
     );
   }
 }
 
-class PredictionPortfolioOpenOrderCard extends StatelessWidget {
-  const PredictionPortfolioOpenOrderCard({
+class _OrderRow extends StatelessWidget {
+  const _OrderRow({
     required this.order,
     required this.event,
     required this.onCancel,
@@ -88,135 +94,138 @@ class PredictionPortfolioOpenOrderCard extends StatelessWidget {
     final color = isBuy ? AppColors.buy : AppColors.sell;
     final fillPct = order.shares == 0 ? 0.0 : (order.filled / order.shares);
 
-    return VitCard(
+    return InkWell(
       onTap: () =>
           context.go(AppRoutePaths.marketsPredictionReceipt(order.receiptId)),
-      padding: AppSpacing.predictionPortfolioOrderCardPadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox.square(
-            dimension: AppSpacing.predictionPortfolioOrderIconBox,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: color.withValues(alpha: .12),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
-                ),
-              ),
-              child: Icon(
-                Icons.attach_money_rounded,
-                color: color,
-                size: AppSpacing.predictionPortfolioOrderIcon,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.predictionPortfolioOrderGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  event.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.badge.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.cardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox.square(
+              dimension: AppSpacing.predictionPortfolioOrderIconBox,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color.withValues(alpha: .12),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
                   ),
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionPortfolioOrderTitleGap,
+                child: Icon(
+                  Icons.attach_money_rounded,
+                  color: color,
+                  size: AppSpacing.predictionPortfolioOrderIcon,
                 ),
-                Wrap(
-                  spacing: AppSpacing.predictionPortfolioChipGap,
-                  runSpacing: AppSpacing.predictionPortfolioChipRunGap,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    PredictionPortfolioTinyBadge(
-                      label: '${order.side.toUpperCase()} ${order.outcome}',
-                      color: color,
-                      background: color.withValues(alpha: .12),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.predictionPortfolioOrderGap),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    event.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.badge.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
                     ),
-                    Text(
-                      '${formatPredictionPortfolioShares(order.shares)} @ '
-                      '\$${order.price.toStringAsFixed(2)}',
-                      style: AppTextStyles.numericMicro.copyWith(
-                        color: AppColors.text2,
-                        fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.predictionPortfolioOrderTitleGap,
+                  ),
+                  Wrap(
+                    spacing: AppSpacing.predictionPortfolioChipGap,
+                    runSpacing: AppSpacing.predictionPortfolioChipRunGap,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      VitAccentPill(
+                        label: '${order.side.toUpperCase()} ${order.outcome}',
+                        accentColor: color,
+                      ),
+                      Text(
+                        '${formatPredictionPortfolioShares(order.shares)} @ '
+                        '\$${order.price.toStringAsFixed(2)}',
+                        style: AppTextStyles.numericMicro.copyWith(
+                          color: AppColors.text2,
+                          fontFeatures: AppTextStyles.tabularFigures,
+                        ),
+                      ),
+                      Text(
+                        'Filled: ${(fillPct * 100).round()}%',
+                        style: AppTextStyles.numericMicro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.predictionPortfolioOrderProgressGap,
+                  ),
+                  ClipRRect(
+                    borderRadius: AppRadii.pillRadius,
+                    child: SizedBox(
+                      height: AppSpacing.predictionPortfolioOrderProgressHeight,
+                      child: LinearProgressIndicator(
+                        value: fillPct,
+                        backgroundColor: AppColors.surface3,
+                        valueColor: AlwaysStoppedAnimation<Color>(color),
                       ),
                     ),
-                    Text(
-                      'Filled: ${(fillPct * 100).round()}%',
-                      style: AppTextStyles.numericMicro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: AppSpacing.predictionPortfolioOrderTrailingGap,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.predictionPortfolioOrderChevron,
                 ),
                 const SizedBox(
-                  height: AppSpacing.predictionPortfolioOrderProgressGap,
+                  height: AppSpacing.predictionPortfolioOrderCancelGap,
                 ),
-                ClipRRect(
-                  borderRadius: AppRadii.pillRadius,
-                  child: SizedBox(
-                    height: AppSpacing.predictionPortfolioOrderProgressHeight,
-                    child: LinearProgressIndicator(
-                      value: fillPct,
-                      backgroundColor: AppColors.surface3,
-                      valueColor: AlwaysStoppedAnimation<Color>(color),
-                    ),
+                VitCard(
+                  key: predictionPortfolioCancelOrderKey(order.id),
+                  onTap: onCancel,
+                  variant: VitCardVariant.inner,
+                  radius: VitCardRadius.standard,
+                  borderColor: AppColors.sell20,
+                  background: const ColoredBox(color: AppColors.sell10),
+                  clip: true,
+                  height: AppSpacing.predictionPortfolioOrderCancelHeight,
+                  padding: AppSpacing.predictionPortfolioOrderCancelPadding,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.close_rounded,
+                        color: AppColors.sell,
+                        size: AppSpacing.predictionPortfolioOrderCancelIcon,
+                      ),
+                      const SizedBox(
+                        width: AppSpacing.predictionPortfolioOrderCancelIconGap,
+                      ),
+                      Text(
+                        'Cancel',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.sell,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-          const SizedBox(width: AppSpacing.predictionPortfolioOrderTrailingGap),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.text3,
-                size: AppSpacing.predictionPortfolioOrderChevron,
-              ),
-              const SizedBox(
-                height: AppSpacing.predictionPortfolioOrderCancelGap,
-              ),
-              VitCard(
-                key: predictionPortfolioCancelOrderKey(order.id),
-                onTap: onCancel,
-                variant: VitCardVariant.inner,
-                radius: VitCardRadius.sm,
-                borderColor: AppColors.sell20,
-                background: const ColoredBox(color: AppColors.sell10),
-                clip: true,
-                height: AppSpacing.predictionPortfolioOrderCancelHeight,
-                padding: AppSpacing.predictionPortfolioOrderCancelPadding,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.close_rounded,
-                      color: AppColors.sell,
-                      size: AppSpacing.predictionPortfolioOrderCancelIcon,
-                    ),
-                    const SizedBox(
-                      width: AppSpacing.predictionPortfolioOrderCancelIconGap,
-                    ),
-                    Text(
-                      'Cancel',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.sell,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

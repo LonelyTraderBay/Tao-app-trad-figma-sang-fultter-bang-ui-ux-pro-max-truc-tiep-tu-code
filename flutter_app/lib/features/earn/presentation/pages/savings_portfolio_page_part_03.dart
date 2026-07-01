@@ -12,7 +12,7 @@ class _EarningsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: _savingsPortfolioCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +62,7 @@ class _EarningsTab extends StatelessWidget {
         _SectionLabel(label: 'Lãi theo tài sản', color: AppColors.accent),
         const SizedBox(height: AppSpacing.x2),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: _savingsPortfolioCardPadding,
           child: Column(
             children: [
@@ -159,7 +159,7 @@ class _ToneBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: 0.2),
       padding: AppSpacing.earnPaddingX3,
       child: Row(

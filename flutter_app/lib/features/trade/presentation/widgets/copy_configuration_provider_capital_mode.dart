@@ -142,17 +142,19 @@ class _CapitalSection extends StatelessWidget {
             ],
           ),
         ),
-        Row(
-          children: [
-            for (final percent in const [5.0, 10.0, 15.0, 20.0]) ...[
-              Expanded(
-                child: _PresetButton(
-                  label: '${percent.toStringAsFixed(0)}%',
-                  onPressed: () => onPreset(percent),
-                ),
+        VitPresetChipRow<double>(
+          onTap: onPreset,
+          gap: _configurationSpace,
+          height: _configurationPresetHeight,
+          padding: AppSpacing.zeroInsets,
+          tone: VitChoicePillTone.neutral,
+          items: [
+            for (final percent in const [5.0, 10.0, 15.0, 20.0])
+              VitPresetChipItem(
+                value: percent,
+                label: '${percent.toStringAsFixed(0)}%',
+                semanticLabel: 'Dat von copy ${percent.toStringAsFixed(0)}%',
               ),
-              if (percent != 20) const SizedBox(width: _configurationSpace),
-            ],
           ],
         ),
       ],

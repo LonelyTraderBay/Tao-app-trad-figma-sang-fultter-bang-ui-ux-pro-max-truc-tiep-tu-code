@@ -15,7 +15,7 @@ class _StatusNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       constraints: const BoxConstraints(
         minHeight: AppSpacing.walletPendingNoticeMinHeight,
       ),
@@ -57,7 +57,7 @@ class _DepositDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       child: Column(
         children: [
           VitInfoRow(

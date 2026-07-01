@@ -9,10 +9,10 @@ class _SecurityRecommendation extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2P2FASettingsPage.recommendationKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary20,
-      padding: _p2pTwoFactorInnerPadding,
+      padding: AppSpacing.p2pTwoFactorInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

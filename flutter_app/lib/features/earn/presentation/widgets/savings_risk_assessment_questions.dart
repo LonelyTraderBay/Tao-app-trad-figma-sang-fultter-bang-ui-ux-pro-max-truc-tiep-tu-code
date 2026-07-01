@@ -82,7 +82,7 @@ class _QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsRiskAssessmentPage.questionCardKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -194,7 +194,7 @@ class _RiskOptionTile extends StatelessWidget {
     return VitCard(
       key: semanticKey,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: onTap,
       clip: true,
       padding: AppSpacing.earnCardPaddingX3,

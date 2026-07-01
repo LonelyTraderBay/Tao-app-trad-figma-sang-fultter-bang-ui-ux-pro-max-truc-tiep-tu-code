@@ -214,7 +214,7 @@ class _MoverListCard extends StatelessWidget {
             key: headerKey,
             onTap: () => context.go(AppRoutePaths.marketsMovers),
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: EdgeInsets.zero,
             borderColor: AppColors.transparent,
             child: Padding(
@@ -357,7 +357,7 @@ class _SectorPerformance extends StatelessWidget {
                 key: MarketOverviewPage.allSectorsKey,
                 onTap: () => context.go(AppRoutePaths.marketsSectors),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 padding: EdgeInsets.zero,
                 borderColor: AppColors.transparent,
                 child: Padding(
@@ -404,7 +404,7 @@ class _SectorRow extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       borderColor: AppColors.transparent,
       child: Column(

@@ -47,7 +47,7 @@ class _QuickAmountChip extends StatelessWidget {
       selected: selected,
       onTap: onPressed,
       height: AppSpacing.buttonCompact,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+      padding: AppSpacing.p2pExpressChoiceChipPadding,
       accentColor: color,
       semanticLabel: 'Quick amount ${_formatVnd(amount)} VND',
     );
@@ -73,7 +73,7 @@ class _PaymentChip extends StatelessWidget {
       selected: selected,
       onTap: onPressed,
       height: AppSpacing.buttonCompact,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+      padding: AppSpacing.p2pExpressChoiceChipPadding,
       accentColor: AppColors.primary,
       showSelectedIcon: selected,
       selectedIcon: Icons.check_circle_outline,
@@ -202,7 +202,7 @@ class _OfferMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: _p2pExpressCompactPadding,
+      padding: AppSpacing.p2pExpressTightCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

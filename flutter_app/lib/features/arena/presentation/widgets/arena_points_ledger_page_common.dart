@@ -1,40 +1,5 @@
 part of '../pages/arena_points_ledger_page.dart';
 
-class _CommunityRulesButton extends StatelessWidget {
-  const _CommunityRulesButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      key: ArenaPointsLedgerPage.communityRulesKey,
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      onTap: onTap,
-      padding: AppSpacing.arenaPointsLedgerRulesPadding,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.menu_book_outlined,
-            color: AppColors.primary,
-            size: AppSpacing.arenaPointsInlineIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            'Quy tắc cộng đồng',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.primary,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 Color _entryColor(String typeId) {
   return switch (typeId) {
     'earned' => AppColors.buy,

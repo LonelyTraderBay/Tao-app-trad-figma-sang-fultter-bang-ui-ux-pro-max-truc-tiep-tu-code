@@ -24,13 +24,6 @@ const double _p2pComplianceVisualClearance = AppSpacing.x3;
 const double _p2pComplianceNativeClearance = AppSpacing.x2;
 const double _p2pComplianceIconBox = AppSpacing.x6;
 const double _p2pComplianceDividerHeight = AppSpacing.dividerHairline;
-const EdgeInsets _p2pComplianceScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pComplianceCompactPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PComplianceOverviewPage extends ConsumerWidget {
   const P2PComplianceOverviewPage({super.key, this.shellRenderMode});
@@ -75,8 +68,8 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pComplianceScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pComplianceOverviewScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
@@ -99,7 +92,8 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                         _ComplianceChecklist(items: snapshot.items),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pComplianceCompactPadding,
+                          padding:
+                              AppSpacing.p2pComplianceOverviewCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Compliance checklist review',
@@ -136,7 +130,7 @@ class _ComplianceHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy),
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+        padding: AppSpacing.p2pComplianceOverviewHeroPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -198,7 +192,7 @@ class _ComplianceChecklist extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PComplianceOverviewPage.checklistKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
@@ -231,11 +225,8 @@ class _ComplianceRow extends StatelessWidget {
         context.go(item.route);
       },
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pComplianceOverviewItemPadding,
       child: Row(
         children: [
           Material(

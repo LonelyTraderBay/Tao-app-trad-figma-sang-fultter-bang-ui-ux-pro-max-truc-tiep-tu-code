@@ -212,7 +212,7 @@ class _ChecklistCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = item.enabled ? _healthGreen : _healthRed;
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       borderColor: _healthBorder,
       child: Row(
@@ -222,7 +222,7 @@ class _ChecklistCard extends StatelessWidget {
             width: 32,
             height: 32,
             alignment: Alignment.center,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             borderColor: color.withValues(alpha: .20),
             child: Icon(
               item.enabled
@@ -264,7 +264,7 @@ class _ActionRequiredCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       borderColor: _healthRed.withValues(alpha: .15),
       child: Row(
@@ -345,7 +345,7 @@ class _AssetDistributionCard extends StatelessWidget {
                       VitCard(
                         width: AppSpacing.walletHealthLegendSwatch,
                         height: _healthLegendSwatchHeight,
-                        radius: VitCardRadius.sm,
+                        radius: VitCardRadius.standard,
                         borderColor: Color(slice.colorHex),
                         background: ColoredBox(color: Color(slice.colorHex)),
                         clip: true,

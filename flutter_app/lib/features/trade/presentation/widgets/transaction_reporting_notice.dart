@@ -13,7 +13,7 @@ class TransactionReportingComplianceNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.transactionReportingComplianceNoticePadding,
       borderColor: transactionReportPrimary.withValues(alpha: .35),
       child: Row(
@@ -76,7 +76,7 @@ class TransactionReportingNoticePanel extends StatelessWidget {
         color: AppColors.transparent,
         child: VitCard(
           variant: VitCardVariant.inner,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           padding: AppSpacing.transactionReportingNoticePanelPadding,
           borderColor: AppColors.primary.withValues(alpha: .4),
           child: Row(

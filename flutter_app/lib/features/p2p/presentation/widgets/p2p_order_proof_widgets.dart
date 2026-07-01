@@ -8,7 +8,7 @@ class _OrderProofSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pFinancialSafetyInnerPadding,
       child: Column(
         children: [
@@ -151,7 +151,7 @@ class _UploadSourceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       height: AppSpacing.buttonHero + AppSpacing.x4,
       padding: AppSpacing.p2pFinancialSafetyCardPadding,
       borderColor: color.withValues(alpha: .45),
@@ -228,7 +228,7 @@ class _ProofThumb extends StatelessWidget {
           width: AppSpacing.p2pFinancialSafetyProofThumb,
           height: AppSpacing.p2pFinancialSafetyProofThumb,
           variant: VitCardVariant.ghost,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           borderColor: AppColors.buy20,
           background: const ColoredBox(color: AppColors.buy10),
           clip: true,
@@ -331,7 +331,7 @@ class _ProofWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
       background: const ColoredBox(color: AppColors.warningBg),
       padding: AppSpacing.p2pFinancialSafetyInnerPadding,

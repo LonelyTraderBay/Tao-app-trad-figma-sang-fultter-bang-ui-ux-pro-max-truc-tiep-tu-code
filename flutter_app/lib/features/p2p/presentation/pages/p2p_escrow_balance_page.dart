@@ -33,15 +33,6 @@ const double _p2pEscrowBalanceEmptyIconBox = AppSpacing.x7;
 const double _p2pEscrowBalanceBodyLineHeight = 1.35;
 const double _p2pEscrowBalanceAccentLineWidth = AppSpacing.x4;
 const double _p2pEscrowBalanceAccentLineHeight = AppSpacing.hairlineStroke * 2;
-const EdgeInsets _p2pEscrowBalanceScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pEscrowBalanceLargePadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pEscrowBalanceCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pEscrowBalanceInnerPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PEscrowBalancePage extends ConsumerStatefulWidget {
   const P2PEscrowBalancePage({
@@ -115,8 +106,8 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pEscrowBalanceScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pEscrowBalanceScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

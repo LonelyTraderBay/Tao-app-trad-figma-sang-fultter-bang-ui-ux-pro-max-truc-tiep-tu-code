@@ -194,7 +194,7 @@ class _DisputeHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.sell15,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
@@ -276,7 +276,7 @@ class _ReasonTile extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: selected ? AppColors.sell : AppColors.borderSolid,
       background: ColoredBox(
         color: selected ? AppColors.sell10 : AppColors.transparent,
@@ -328,7 +328,7 @@ class _EvidenceUploadBox extends StatelessWidget {
         key: P2PDisputePage.uploadKey,
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.md,
+        radius: VitCardRadius.standard,
         background: ColoredBox(color: AppColors.surface.withValues(alpha: .56)),
         clip: true,
         padding: const EdgeInsetsDirectional.symmetric(

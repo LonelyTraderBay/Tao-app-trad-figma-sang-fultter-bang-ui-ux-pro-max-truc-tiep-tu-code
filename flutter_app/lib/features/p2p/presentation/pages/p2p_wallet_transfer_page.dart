@@ -21,22 +21,9 @@ part '../widgets/p2p_wallet_transfer_form.dart';
 part '../widgets/p2p_wallet_transfer_amount.dart';
 part '../widgets/p2p_wallet_transfer_confirm.dart';
 
-const _p2pTransferScrollTopGap = AppSpacing.x3;
 const _p2pTransferMajorGap = AppSpacing.x3;
 const _p2pTransferTightGap = AppSpacing.x2;
 const _p2pTransferActionGap = AppSpacing.x3;
-const _p2pTransferCardPadding = EdgeInsets.all(AppSpacing.x3);
-const _p2pTransferAssetTilePadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x2,
-);
-const _p2pTransferConfirmRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x4,
-  vertical: AppSpacing.x3,
-);
-const _p2pTransferSwitchPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-);
 const _p2pTransferSwitchSize = AppSpacing.searchBarCompactHeight;
 const _p2pTransferAssetTileMinHeight = AppSpacing.x7 + AppSpacing.x3;
 const _p2pTransferAssetMarkSize = AppSpacing.searchBarCompactHeight;
@@ -50,14 +37,6 @@ const _p2pTransferNativeNavClearance =
     _p2pTransferVisualNavClearance - AppSpacing.x4;
 const _p2pTransferVisualClearance = AppSpacing.x3;
 const _p2pTransferNativeClearance = AppSpacing.x2;
-
-EdgeInsets _p2pTransferScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      _p2pTransferScrollTopGap,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PWalletTransferPage extends ConsumerStatefulWidget {
   const P2PWalletTransferPage({
@@ -165,7 +144,9 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pTransferScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pWalletTransferScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       children: [

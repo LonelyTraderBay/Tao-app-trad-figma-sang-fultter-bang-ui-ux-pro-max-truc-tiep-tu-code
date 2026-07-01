@@ -168,7 +168,7 @@ class _ClaimHeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PClaimDetailPage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
@@ -358,7 +358,7 @@ class _ClaimBenchmarksCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PClaimDetailPage.benchmarksKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -425,7 +425,7 @@ class _BenchmarkMetricCard extends StatelessWidget {
     final color = _toneColor(benchmark.toneKey);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -487,7 +487,7 @@ class _ReasonDistribution extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

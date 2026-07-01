@@ -8,7 +8,7 @@ class _PenaltyExampleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +98,7 @@ class _EmergencyTab extends StatelessWidget {
           label: snapshot.emergencyTitle,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: _stakingWithdrawalCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +165,7 @@ class _EmergencyTab extends StatelessWidget {
           label: 'Quy trình Rút khẩn cấp',
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: _stakingWithdrawalCardPadding,
               child: Column(
                 children: [
@@ -184,7 +184,7 @@ class _EmergencyTab extends StatelessWidget {
           label: 'Phí Rút khẩn cấp',
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: _stakingWithdrawalCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -341,7 +341,7 @@ class _SupportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _stakingWithdrawalCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

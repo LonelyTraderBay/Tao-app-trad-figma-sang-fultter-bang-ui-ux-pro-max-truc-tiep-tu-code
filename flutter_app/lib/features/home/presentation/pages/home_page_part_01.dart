@@ -316,7 +316,7 @@ class _PortfolioCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       clip: true,
       padding: AppSpacing.homePortfolioCardPadding,
       background: const VitHeroGlow(),
@@ -467,7 +467,6 @@ class _MarketTickerSection extends StatelessWidget {
               label: pair.baseAsset,
               accentColor: pair.logoColor,
               size: _assetAvatarExtent,
-              radius: AppRadii.xsRadius,
             ),
             title: pair.symbol,
             price: _formatUsd(pair.price),

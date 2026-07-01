@@ -36,8 +36,8 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
-      padding: _p2pMyOrdersStatPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pMyOrdersStatPadding,
       child: Column(
         children: [
           Text(
@@ -120,14 +120,14 @@ class _SearchSortRow extends StatelessWidget {
           child: VitCard(
             onTap: onSort,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.zeroInsets,
             child: VitCard(
               height: _p2pMyOrdersSortHeight,
               variant: VitCardVariant.ghost,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               borderColor: AppColors.borderSolid,
-              padding: _p2pMyOrdersChipPadding,
+              padding: AppSpacing.p2pMyOrdersChipPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -167,8 +167,8 @@ class _OrderCard extends StatelessWidget {
     final typeColor = isBuy ? AppColors.buy : AppColors.sell;
     return VitCard(
       key: P2PMyOrdersPage.orderKey(order.id),
-      radius: VitCardRadius.lg,
-      padding: _p2pMyOrdersCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pMyOrdersCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -330,8 +330,8 @@ class _EmptyOrders extends StatelessWidget {
     };
     return VitCard(
       key: P2PMyOrdersPage.emptyKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pMyOrdersLargePadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pMyOrdersLargePadding,
       child: Column(
         children: [
           const Icon(

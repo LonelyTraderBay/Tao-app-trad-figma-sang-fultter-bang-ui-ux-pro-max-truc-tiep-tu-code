@@ -177,7 +177,7 @@ class _IncludeRow extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       height: VitDensity.compact.controlHeight,
       child: Row(
         children: [

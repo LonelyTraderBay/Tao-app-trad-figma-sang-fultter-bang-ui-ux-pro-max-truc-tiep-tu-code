@@ -28,14 +28,6 @@ const double _p2pTaxMajorGap = AppSpacing.x3;
 const double _p2pTaxSectionGap = AppSpacing.x2;
 const double _p2pTaxIconBox = AppSpacing.searchBarCompactHeight;
 const double _p2pTaxNoticeLineHeight = 1.35;
-const EdgeInsets _p2pTaxCardPadding = EdgeInsets.all(AppSpacing.x3);
-
-EdgeInsets _p2pTaxScrollPadding(double scrollEndPadding) => EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  scrollEndPadding,
-);
 
 class P2PTaxReportingPage extends ConsumerStatefulWidget {
   const P2PTaxReportingPage({
@@ -112,7 +104,7 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pTaxScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pTaxScrollPadding(scrollEndPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

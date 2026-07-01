@@ -49,7 +49,7 @@ class _StatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingAdvancedOrdersPage.statsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
@@ -73,7 +73,7 @@ class _StatTile extends StatelessWidget {
     final isSuccess = stat.tone == 'success';
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX2X3,
       borderColor: isSuccess ? AppColors.buy20 : null,
       child: Column(
@@ -166,7 +166,7 @@ class _OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingAdvancedOrdersPage.orderKey(order.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [

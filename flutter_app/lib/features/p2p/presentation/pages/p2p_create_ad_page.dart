@@ -29,13 +29,6 @@ const double _p2pCreateGroupGap = AppSpacing.x3;
 const double _p2pCreateFieldGap = AppSpacing.x2;
 const double _p2pCreateColumnGap = AppSpacing.x2;
 const double _p2pCreateSegmentHeight = AppSpacing.buttonCompact;
-const EdgeInsets _p2pCreateScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pCreateCompactPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PCreateAdPage extends ConsumerStatefulWidget {
   const P2PCreateAdPage({super.key, this.shellRenderMode});
@@ -145,8 +138,8 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                   child: SingleChildScrollView(
                     key: P2PCreateAdPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pCreateScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pMerchantCommercePageScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -350,7 +343,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                         const SizedBox(height: _p2pCreateFieldGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pCreateCompactPadding,
+                          padding: AppSpacing.p2pMerchantCommerceInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P ad publish review',
@@ -498,7 +491,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
               variant: VitCtaButtonVariant.secondary,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Hủy'),
             ),
             VitCtaButton(
@@ -509,7 +502,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                   : VitCtaButtonVariant.danger,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Đăng'),
             ),
           ],

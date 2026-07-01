@@ -16,7 +16,7 @@ class _PositionsList extends StatelessWidget {
         ],
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4X3,
           borderColor: AppColors.buy20,
           child: Column(
@@ -67,7 +67,7 @@ class _PositionCard extends StatelessWidget {
     final accent = _productTypeColor(position.type);
 
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4X3,
       borderColor: accent.withValues(alpha: 0.28),
       child: Column(
@@ -86,7 +86,7 @@ class _PositionCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: 1.2,
+                        height: AppSpacing.stakingEarnPositionTitleLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -105,7 +105,8 @@ class _PositionCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.captionSm.copyWith(
                               color: AppColors.text2,
-                              height: 1.2,
+                              height: AppSpacing
+                                  .stakingEarnPositionCaptionLineHeight,
                             ),
                           ),
                         ),
@@ -128,7 +129,7 @@ class _PositionCard extends StatelessWidget {
                     'APY',
                     style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text3,
-                      height: 1.2,
+                      height: AppSpacing.stakingEarnPositionCaptionLineHeight,
                     ),
                   ),
                 ],
@@ -213,7 +214,7 @@ class _PositionMetric extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.text3,
-                height: 1.15,
+                height: AppSpacing.stakingEarnPositionMetricLabelLineHeight,
               ),
             ),
             Text(
@@ -223,7 +224,7 @@ class _PositionMetric extends StatelessWidget {
               style: AppTextStyles.body.copyWith(
                 color: valueColor,
                 fontWeight: AppTextStyles.bold,
-                height: 1.2,
+                height: AppSpacing.stakingEarnPositionMetricValueLineHeight,
               ),
             ),
           ],
@@ -256,7 +257,7 @@ class _IncomeEstimate extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.captionSm.copyWith(
                 color: AppColors.text3,
-                height: 1.15,
+                height: AppSpacing.stakingEarnPositionMetricLabelLineHeight,
               ),
             ),
             const SizedBox(height: AppSpacing.x1),
@@ -267,7 +268,7 @@ class _IncomeEstimate extends StatelessWidget {
               style: AppTextStyles.body.copyWith(
                 color: AppColors.buy,
                 fontWeight: AppTextStyles.bold,
-                height: 1.2,
+                height: AppSpacing.stakingEarnPositionMetricValueLineHeight,
               ),
             ),
           ],
@@ -302,7 +303,7 @@ class _AssetBadge extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: 1,
+              height: AppSpacing.stakingEarnPositionAssetBadgeLineHeight,
             ),
           ),
         ),

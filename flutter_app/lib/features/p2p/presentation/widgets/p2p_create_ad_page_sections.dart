@@ -25,32 +25,24 @@ class _TradeTypePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pMerchantCommerceSegmentPadding,
-      child: Row(
-        children: [
-          Expanded(
-            child: _SegmentButton(
-              key: P2PCreateAdPage.adTypeKey(P2PTradeType.buy),
-              label: 'Tôi muốn MUA',
-              selected: value == P2PTradeType.buy,
-              color: AppColors.buy,
-              onTap: () => onChanged(P2PTradeType.buy),
-            ),
-          ),
-          Expanded(
-            child: _SegmentButton(
-              key: P2PCreateAdPage.adTypeKey(P2PTradeType.sell),
-              label: 'Tôi muốn BÁN',
-              selected: value == P2PTradeType.sell,
-              color: AppColors.sell,
-              onTap: () => onChanged(P2PTradeType.sell),
-            ),
-          ),
-        ],
-      ),
+    return VitSegmentedChoice<P2PTradeType>(
+      selected: value,
+      onChanged: onChanged,
+      height: _p2pCreateSegmentHeight,
+      options: [
+        VitSegmentedChoiceOption(
+          key: P2PCreateAdPage.adTypeKey(P2PTradeType.buy),
+          value: P2PTradeType.buy,
+          label: 'Tôi muốn MUA',
+          accentColor: AppColors.buy,
+        ),
+        VitSegmentedChoiceOption(
+          key: P2PCreateAdPage.adTypeKey(P2PTradeType.sell),
+          value: P2PTradeType.sell,
+          label: 'Tôi muốn BÁN',
+          accentColor: AppColors.sell,
+        ),
+      ],
     );
   }
 }
@@ -63,59 +55,24 @@ class _PriceTypePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
-      padding: AppSpacing.p2pMerchantCommerceSegmentPadding,
-      child: Row(
-        children: [
-          Expanded(
-            child: _SegmentButton(
-              key: P2PCreateAdPage.priceTypeKey('fixed'),
-              label: 'Cố định',
-              selected: value == 'fixed',
-              color: AppColors.primary,
-              onTap: () => onChanged('fixed'),
-            ),
-          ),
-          Expanded(
-            child: _SegmentButton(
-              key: P2PCreateAdPage.priceTypeKey('floating'),
-              label: 'Thả nổi %',
-              selected: value == 'floating',
-              color: AppColors.accent,
-              onTap: () => onChanged('floating'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SegmentButton extends StatelessWidget {
-  const _SegmentButton({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
+    return VitSegmentedChoice<String>(
+      selected: value,
+      onChanged: onChanged,
       height: _p2pCreateSegmentHeight,
-      fullWidth: true,
-      label: label,
-      selected: selected,
-      accentColor: color,
-      onTap: onTap,
+      options: [
+        VitSegmentedChoiceOption(
+          key: P2PCreateAdPage.priceTypeKey('fixed'),
+          value: 'fixed',
+          label: 'Cố định',
+          accentColor: AppColors.primary,
+        ),
+        VitSegmentedChoiceOption(
+          key: P2PCreateAdPage.priceTypeKey('floating'),
+          value: 'floating',
+          label: 'Thả nổi %',
+          accentColor: AppColors.accent,
+        ),
+      ],
     );
   }
 }
@@ -135,13 +92,10 @@ class _PublishReadinessPanel extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
       background: const ColoredBox(color: AppColors.warn10),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.p2pMerchantCommerceWarningPadding,
       child: Row(
         children: [
           const Icon(

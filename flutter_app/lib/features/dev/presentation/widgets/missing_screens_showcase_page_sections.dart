@@ -97,7 +97,7 @@ class _V2ScreensSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           clip: true,
           child: Column(
             children: [
@@ -111,7 +111,7 @@ class _V2ScreensSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitCard(
           padding: AppSpacing.devCardPadding,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           borderColor: AppColors.primary20,
           child: Text(
             'Header back buttons giữ hành vi history và các dynamic preview dùng route mẫu an toàn.',
@@ -136,7 +136,7 @@ class _NewScreenCard extends StatelessWidget {
     return VitCard(
       key: MissingScreensShowcasePage.screenKey(screen.id),
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: _borderForId(screen.id),
       onTap: onTap,
       child: Column(
@@ -208,7 +208,7 @@ class _V2PageCard extends StatelessWidget {
     return VitCard(
       key: MissingScreensShowcasePage.v2PageKey(page.id),
       padding: AppSpacing.devCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

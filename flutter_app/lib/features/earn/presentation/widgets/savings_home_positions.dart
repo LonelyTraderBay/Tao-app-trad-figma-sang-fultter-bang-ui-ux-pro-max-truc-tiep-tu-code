@@ -11,7 +11,7 @@ class _SavingsPositions extends StatelessWidget {
       children: [
         for (final position in positions) ...[
           VitCard(
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.earnCardPaddingX4,
             child: Row(
               children: [

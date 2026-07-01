@@ -10,7 +10,7 @@ class _BatchSummaryHero extends StatelessWidget {
     return VitCard(
       key: LaunchpadBatchClaimPage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.buy.withValues(alpha: .18),
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(

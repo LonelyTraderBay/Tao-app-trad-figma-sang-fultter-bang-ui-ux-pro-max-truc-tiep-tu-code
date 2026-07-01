@@ -9,8 +9,8 @@ class _DepthChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2POrderBookPage.depthChartKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pOrderBookCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pOrderBookCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -120,10 +120,10 @@ class _BestPriceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.inner,
       borderColor: tone.withValues(alpha: .28),
-      padding: _p2pOrderBookCardPadding,
+      padding: AppSpacing.p2pOrderBookCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -247,8 +247,8 @@ class _OrderBookSide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
-      padding: _p2pOrderBookCompactPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pOrderBookCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -298,7 +298,7 @@ class _OrderBookRow extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: _p2pOrderBookRowPadding,
+            padding: AppSpacing.p2pOrderBookRowPadding,
             child: Row(
               children: [
                 Text(

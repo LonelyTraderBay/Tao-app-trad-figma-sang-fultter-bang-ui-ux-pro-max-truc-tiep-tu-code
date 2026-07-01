@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/risk_management_overview.dart';
 part '../widgets/risk_management_tabs.dart';
@@ -26,9 +27,6 @@ const _riskTinySpace = AppSpacing.x1;
 const _riskCardSpace = AppSpacing.x3;
 const _riskControlExtent = 44.0;
 const _riskTabExtent = 44.0;
-const _riskVisualScrollClearance = 108.0;
-const _riskNativeScrollClearance = 72.0;
-
 enum _RiskTab { oco, positions, calculator }
 
 class RiskManagementDemoPage extends ConsumerStatefulWidget {
@@ -63,11 +61,10 @@ class _RiskManagementDemoPageState
         .state
         .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _riskVisualScrollClearance
-            : _riskNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

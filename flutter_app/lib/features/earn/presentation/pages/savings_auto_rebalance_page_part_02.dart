@@ -17,7 +17,7 @@ class _StrategyCard extends StatelessWidget {
 
     return VitCard(
       key: SavingsAutoRebalancePage.strategyKey(strategy.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX3,
       borderColor: active ? color.withValues(alpha: .42) : null,
       onTap: onTap,
@@ -123,7 +123,7 @@ class _StrategyComparison extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
       child: VitPageContent(
         padding: VitContentPadding.none,
@@ -188,7 +188,7 @@ class _HistoryCard extends StatelessWidget {
     final color = _historyColor(event.status);
 
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX3,
       child: Row(
         children: [
@@ -260,7 +260,7 @@ class _SettingsPanel extends StatelessWidget {
           onChanged: onAutoChanged,
         ),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: _savingsRebalanceCardPadding,
           child: Column(
             children: [
@@ -319,7 +319,7 @@ class _PreviewSheet extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: VitCard(
           key: SavingsAutoRebalancePage.previewSheetKey,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: _savingsRebalanceCardPadding,
           child: SafeArea(
             top: false,
@@ -444,7 +444,7 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX3,
       child: Column(
         children: [

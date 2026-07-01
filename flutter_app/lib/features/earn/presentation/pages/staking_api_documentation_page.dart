@@ -102,7 +102,7 @@ class _StakingApiDocumentationPageState
                     children: [
                       VitCard(
                         variant: VitCardVariant.standard,
-                        radius: VitCardRadius.md,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: StakingApiDocumentationInfoBanner(
                           snapshot: snapshot,

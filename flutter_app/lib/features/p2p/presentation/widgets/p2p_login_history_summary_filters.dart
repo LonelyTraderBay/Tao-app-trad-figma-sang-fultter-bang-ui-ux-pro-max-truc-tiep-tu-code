@@ -57,7 +57,7 @@ class _StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x2,
         vertical: AppSpacing.x2,

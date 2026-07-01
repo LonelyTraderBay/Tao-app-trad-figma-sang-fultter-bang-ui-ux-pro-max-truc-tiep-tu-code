@@ -9,7 +9,7 @@ class _MarketCapHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       borderColor: _marketPrimary.withValues(alpha: 0.24),
       child: Column(

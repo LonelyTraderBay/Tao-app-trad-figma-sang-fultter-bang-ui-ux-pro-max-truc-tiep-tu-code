@@ -16,7 +16,7 @@ class _HeroBanner extends StatelessWidget {
         children: [
           const VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             width: AppSpacing.walletTokenHeroIcon,
             height: AppSpacing.walletTokenHeroIcon,
             borderColor: _safetyPrimary,
@@ -75,7 +75,7 @@ class _SafetyTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       height: _safetyTabsHeight,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,

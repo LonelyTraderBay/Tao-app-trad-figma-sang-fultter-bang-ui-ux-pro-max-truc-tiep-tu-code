@@ -8,21 +8,17 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
+    return KeyedSubtree(
       key: LaunchpadSwapAggregatorPage.tabsKey,
-      color: AppColors.surface,
-      child: Padding(
-        padding: AppSpacing.launchpadHorizontalContentPadding,
-        child: VitTabBar(
-          tabs: const [
-            VitTabItem(key: 'compare', label: 'So sanh'),
-            VitTabItem(key: 'history', label: 'Lich su'),
-            VitTabItem(key: 'settings', label: 'Cai dat'),
-          ],
-          activeKey: activeTab.name,
-          onChanged: (key) => onChanged(_SwapTab.values.byName(key)),
-          variant: VitTabBarVariant.underline,
-        ),
+      child: VitTabBar(
+        tabs: const [
+          VitTabItem(key: 'compare', label: 'So s\u00E1nh'),
+          VitTabItem(key: 'history', label: 'L\u1ECBch s\u1EED'),
+          VitTabItem(key: 'settings', label: 'C\u00E0i \u0111\u1EB7t'),
+        ],
+        activeKey: activeTab.name,
+        onChanged: (key) => onChanged(_SwapTab.values.byName(key)),
+        variant: VitTabBarVariant.underline,
       ),
     );
   }
@@ -51,15 +47,21 @@ class _SwapInputCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadSwapAggregatorPage.inputKey,
-      padding: AppSpacing.launchpadPaddingX4,
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
+      clip: true,
+      padding: AppSpacing.cardPadding,
+      background: const VitHeroGlow(),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Swap from',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            'T\u1EEB',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.onAccent.withValues(alpha: .72),
+            ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _TokenButton(token: fromToken, color: AppColors.buy),
@@ -73,8 +75,9 @@ class _SwapInputCard extends StatelessWidget {
                   semanticLabel: 'Launchpad swap amount',
                   hintText: '0.00',
                   textStyle: AppTextStyles.amountSm.copyWith(
-                    color: AppColors.text1,
+                    color: AppColors.onAccent,
                     fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
               ),
@@ -85,18 +88,20 @@ class _SwapInputCard extends StatelessWidget {
             child: VitIconButton(
               key: LaunchpadSwapAggregatorPage.flipKey,
               onPressed: onFlip,
-              icon: Icons.swap_horiz_rounded,
-              tooltip: 'Doi chieu swap',
+              icon: Icons.swap_vert_rounded,
+              tooltip: '\u0110\u1EA3o chi\u1EC1u swap',
               variant: VitIconButtonVariant.primary,
               size: VitIconButtonSize.md,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
           Text(
-            'Swap to',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            'SANG',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.onAccent.withValues(alpha: .72),
+            ),
           ),
-          const SizedBox(height: AppSpacing.x3),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               _TokenButton(token: toToken, color: AppColors.accent),
@@ -108,14 +113,16 @@ class _SwapInputCard extends StatelessWidget {
                     Text(
                       '~${output.toStringAsFixed(4)}',
                       style: AppTextStyles.amountSm.copyWith(
-                        color: AppColors.text1,
+                        color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                     Text(
                       '@${bestPrice.toStringAsFixed(2)} $fromToken',
                       style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
+                        color: AppColors.onAccent.withValues(alpha: .55),
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
@@ -137,105 +144,60 @@ class _TokenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: AppColors.bg,
-        shape: const RoundedRectangleBorder(
-          side: BorderSide(color: AppColors.cardBorder),
-          borderRadius: AppRadii.inputRadius,
-        ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      density: VitDensity.compact,
+      padding: AppSpacing.zeroInsets.copyWith(
+        left: AppSpacing.rowGapRegular,
+        right: AppSpacing.rowGapRegular,
       ),
-      child: Padding(
-        padding: AppSpacing.launchpadPillPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox.square(
-              dimension: AppSpacing.launchpadBox24,
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: color.withValues(alpha: .16),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.xsRadius,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    token.substring(0, 2),
-                    style: AppTextStyles.badge.copyWith(
-                      color: color,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-              ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          VitAssetAvatar(
+            label: token,
+            accentColor: color,
+            size: AppSpacing.buttonCompact - AppSpacing.x2,
+            radius: AppRadii.smRadius,
+            border: true,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Text(
+            token,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.onAccent,
+              fontWeight: AppTextStyles.bold,
             ),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              token,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              color: AppColors.text3,
-            ),
-          ],
-        ),
+          ),
+          Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: AppColors.onAccent.withValues(alpha: .72),
+            size: AppSpacing.iconSm,
+          ),
+        ],
       ),
     );
   }
 }
 
-class _BestRouteAlert extends StatelessWidget {
-  const _BestRouteAlert({required this.bestDex, required this.savings});
+class _BestRouteCard extends StatelessWidget {
+  const _BestRouteCard({required this.bestDex, required this.savings});
 
   final LaunchpadSwapDexQuoteDraft bestDex;
   final num savings;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return KeyedSubtree(
       key: LaunchpadSwapAggregatorPage.bestRouteKey,
-      decoration: const ShapeDecoration(
-        color: AppColors.buy10,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: AppColors.buy20),
-          borderRadius: AppRadii.cardRadius,
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadPaddingX4,
-        child: Row(
-          children: [
-            const Icon(
-              Icons.bolt_rounded,
-              color: AppColors.buy,
-              size: AppSpacing.launchpadIcon2xl + AppSpacing.hairlineStroke,
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Best rate: ${bestDex.name}',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  Text(
-                    'Saving ${savings.toStringAsFixed(2)}% vs worst route - Gas: \$${bestDex.gas.toStringAsFixed(0)}',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      child: VitNextActionCard(
+        icon: Icons.bolt_rounded,
+        title: 'T\u1EF7 gi\u00E1 t\u1ED1t: ${bestDex.name}',
+        subtitle:
+            'Ti\u1EBFt ki\u1EC7m ${savings.toStringAsFixed(2)}% so v\u1EDBi route k\u00E9m nh\u1EA5t \u00B7 Gas: \$${bestDex.gas.toStringAsFixed(0)}',
+        statusLabel: 'T\u1ED1t nh\u1EA5t',
+        ctaLabel: 'Xem',
+        accentColor: AppColors.buy,
       ),
     );
   }

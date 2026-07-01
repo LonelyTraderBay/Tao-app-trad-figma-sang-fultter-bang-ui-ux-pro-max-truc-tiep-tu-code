@@ -233,7 +233,7 @@ class _ProcessCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingWithdrawalPolicyPage.processKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _stakingWithdrawalCardPadding,
       child: Column(
         children: [
@@ -322,7 +322,7 @@ class _TimelineCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingWithdrawalPolicyPage.timelineKey(timeline.product),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       constraints: BoxConstraints(
         minHeight: timeline.penalty.contains('\n')
             ? _stakingWithdrawalTimelineMinHeightTall
@@ -432,7 +432,7 @@ class _PenaltiesTab extends StatelessWidget {
           density: VitDensity.compact,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: _stakingWithdrawalCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

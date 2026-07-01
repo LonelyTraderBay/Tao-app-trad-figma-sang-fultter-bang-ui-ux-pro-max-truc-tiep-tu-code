@@ -25,7 +25,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
           children: [
             VitCard(
               key: StakingTaxGuideKeys.overview,
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +54,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
           children: [
             VitCard(
               key: StakingTaxGuideKeys.summary,
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 children: [
@@ -73,7 +73,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
           label: snapshot.toolsTitle,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnCardPaddingX4,
               child: Column(
                 children: [
@@ -207,7 +207,7 @@ class _ToolRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       onTap: onTap,
       child: Row(

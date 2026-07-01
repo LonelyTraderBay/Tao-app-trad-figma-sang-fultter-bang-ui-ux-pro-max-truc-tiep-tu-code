@@ -21,7 +21,7 @@ class _HeroCard extends StatelessWidget {
                 width: _hubHeroIconTile,
                 height: _hubHeroIconTile,
                 density: VitDensity.compact,
-                padding: EdgeInsets.zero,
+                padding: AppSpacing.zeroInsets,
                 child: Icon(
                   Icons.trending_up_rounded,
                   color: AppColors.onAccent,
@@ -184,7 +184,7 @@ class _MenuItem extends StatelessWidget {
             width: _hubIconTile,
             height: _hubIconTile,
             density: VitDensity.compact,
-            padding: EdgeInsets.zero,
+            padding: AppSpacing.zeroInsets,
             borderColor: color.withValues(alpha: .18),
             child: Icon(_menuIcon(item.id), color: color, size: AppSpacing.x5),
           ),

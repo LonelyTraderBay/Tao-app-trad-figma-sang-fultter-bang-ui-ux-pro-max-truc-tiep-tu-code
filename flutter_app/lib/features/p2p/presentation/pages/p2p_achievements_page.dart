@@ -25,12 +25,6 @@ const double _p2pAchievementsNativeNavClearance =
     _p2pAchievementsVisualNavClearance - AppSpacing.x4;
 const double _p2pAchievementsVisualClearance = AppSpacing.x3;
 const double _p2pAchievementsNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pAchievementsScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PAchievementsPage extends ConsumerWidget {
   const P2PAchievementsPage({super.key, this.shellRenderMode});
@@ -79,8 +73,8 @@ class P2PAchievementsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pAchievementsScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pAchievementsPageScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

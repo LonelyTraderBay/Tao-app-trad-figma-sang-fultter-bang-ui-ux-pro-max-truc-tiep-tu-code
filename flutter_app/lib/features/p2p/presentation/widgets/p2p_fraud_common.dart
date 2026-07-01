@@ -10,9 +10,9 @@ class _Disclosure extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.disclosureKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.divider,
-      padding: _p2pFraudInnerPadding,
+      padding: AppSpacing.p2pFraudInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

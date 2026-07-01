@@ -9,7 +9,7 @@ class _NextPurchaseRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       child: Row(
         children: [
@@ -87,7 +87,7 @@ class _OverviewAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       onTap: onTap,
       density: VitDensity.compact,
       child: SizedBox(
@@ -185,7 +185,7 @@ class _ToolCard extends StatelessWidget {
     final color = _toolAccentColor(tool.accent);
     return VitCard(
       key: DCAPage.toolKey(tool.route),
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       onTap: onTap,
       density: VitDensity.compact,
       child: Column(
@@ -244,34 +244,22 @@ class _DcaTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: const BorderSide(color: AppColors.cardBorder),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active.name,
+      onChanged: (key) => onChanged(_DcaTab.values.byName(key)),
+      tabs: [
+        VitTabItem(
+          key: _DcaTab.plans.name,
+          label: 'Kế hoạch ($planCount)',
+          icon: Icons.trending_up_rounded,
         ),
-      ),
-      child: Padding(
-        padding: AppSpacing.dcaPaddingX2,
-        child: VitTabBar(
-          variant: VitTabBarVariant.segment,
-          activeKey: active.name,
-          onChanged: (key) => onChanged(_DcaTab.values.byName(key)),
-          tabs: [
-            VitTabItem(
-              key: _DcaTab.plans.name,
-              label: 'Kế hoạch ($planCount)',
-              icon: Icons.trending_up_rounded,
-            ),
-            VitTabItem(
-              key: _DcaTab.history.name,
-              label: 'Lịch sử',
-              icon: Icons.bar_chart_rounded,
-            ),
-          ],
+        VitTabItem(
+          key: _DcaTab.history.name,
+          label: 'Lịch sử',
+          icon: Icons.bar_chart_rounded,
         ),
-      ),
+      ],
     );
   }
 }
@@ -380,7 +368,7 @@ class _DcaPlanCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  radius: VitCardRadius.md,
+                  radius: VitCardRadius.standard,
                   density: VitDensity.compact,
                   child: Row(
                     children: [
@@ -425,7 +413,7 @@ class _DcaPlanCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  radius: VitCardRadius.sm,
+                  radius: VitCardRadius.standard,
                   density: VitDensity.compact,
                   borderColor: AppColors.primary20,
                   child: Row(

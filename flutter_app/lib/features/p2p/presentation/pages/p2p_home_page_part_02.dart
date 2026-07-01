@@ -21,7 +21,7 @@ class _FilterPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PHomePage.filterKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pHomeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +93,7 @@ class _FilterPanel extends StatelessWidget {
               variant: VitCtaButtonVariant.ghost,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x3),
+              padding: AppSpacing.p2pHomeClearFilterPadding,
               leading: const Icon(Icons.close_rounded),
               child: const Text('Xóa bộ lọc'),
             ),
@@ -148,7 +148,7 @@ class _OfferCard extends StatelessWidget {
     final badge = ad.merchantBadge;
     return VitCard(
       key: P2PHomePage.adKey(ad.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: onOpen,
       padding: AppSpacing.p2pHomeCardPadding,
       child: Column(

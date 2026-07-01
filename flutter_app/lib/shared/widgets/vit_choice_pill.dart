@@ -83,11 +83,9 @@ class VitChoicePill extends StatelessWidget {
     final resolvedHeight = height ?? density.controlHeight;
     final resolvedPadding =
         padding ??
-        EdgeInsets.symmetric(
-          horizontal: density == VitDensity.compact
-              ? AppSpacing.x3
-              : AppSpacing.x4,
-        );
+        (density == VitDensity.compact
+            ? AppSpacing.vitChoicePillCompactPadding
+            : AppSpacing.vitChoicePillComfortablePadding);
 
     final labelText = Text(
       label,
@@ -130,18 +128,18 @@ class VitChoicePill extends StatelessWidget {
           height: resolvedHeight,
           child: Material(
             color: AppColors.transparent,
-            borderRadius: AppRadii.smRadius,
+            borderRadius: AppRadii.inputRadius,
             child: Ink(
               decoration: ShapeDecoration(
                 color: fill,
                 shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.smRadius,
+                  borderRadius: AppRadii.inputRadius,
                   side: BorderSide(color: border),
                 ),
               ),
               child: InkWell(
                 onTap: _interactive ? onTap : null,
-                borderRadius: AppRadii.smRadius,
+                borderRadius: AppRadii.inputRadius,
                 child: Padding(padding: resolvedPadding, child: row),
               ),
             ),

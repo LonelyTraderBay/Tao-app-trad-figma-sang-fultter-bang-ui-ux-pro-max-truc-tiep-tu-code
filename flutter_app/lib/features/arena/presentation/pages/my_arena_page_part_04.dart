@@ -21,7 +21,7 @@ class _AccentPillButton extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: VitDensity.compact.controlHeight,
@@ -79,7 +79,7 @@ class _TextIconButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       child: Padding(
         padding: AppSpacing.arenaPresetPillPadding,
         child: Row(

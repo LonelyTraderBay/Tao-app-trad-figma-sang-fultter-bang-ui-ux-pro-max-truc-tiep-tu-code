@@ -129,7 +129,7 @@ class _FilterChip extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: SizedBox(
           height: _reportsFilterExtent,
           child: DecoratedBox(
@@ -285,7 +285,7 @@ class _ReportRow extends StatelessWidget {
               context.go(AppRoutePaths.arenaReportCase(report.id));
             },
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             child: Padding(
               padding: AppSpacing.myArenaReportsCardPadding,
               child: Row(

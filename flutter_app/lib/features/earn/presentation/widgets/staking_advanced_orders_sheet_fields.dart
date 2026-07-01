@@ -215,7 +215,7 @@ class _StaticField extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnStaticSelectPadding,
       child: Row(
         children: [
@@ -238,7 +238,7 @@ class _InputPreview extends StatelessWidget {
     final isMax = suffix == 'Max';
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnCardPaddingX4X3,
       child: Row(
         children: [

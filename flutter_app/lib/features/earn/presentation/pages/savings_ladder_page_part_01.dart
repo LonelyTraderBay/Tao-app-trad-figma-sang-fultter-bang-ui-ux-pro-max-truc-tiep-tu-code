@@ -22,7 +22,7 @@ class _LadderHero extends StatelessWidget {
     return VitCard(
       key: SavingsLadderPage.summaryKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -245,7 +245,7 @@ class _AmountSelector extends StatelessWidget {
       children: [
         VitCard(
           variant: VitCardVariant.inner,
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           borderColor: AppColors.primary30,
           density: VitDensity.compact,
           child: SizedBox(
@@ -354,7 +354,7 @@ class _TemplateCard extends StatelessWidget {
     return VitCard(
       key: SavingsLadderPage.presetKey(template.id),
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected ? color.withValues(alpha: .45) : null,
       density: VitDensity.compact,
       onTap: onTap,
@@ -421,7 +421,7 @@ class _RungList extends StatelessWidget {
     if (rungs.isEmpty) {
       return VitCard(
         key: SavingsLadderPage.rungsKey,
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         density: VitDensity.compact,
         child: Column(
           children: [

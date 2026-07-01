@@ -21,7 +21,7 @@ class _ExportSummary extends StatelessWidget {
     return VitCard(
       key: SavingsExportPage.summaryRowsKey,
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class _SummaryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +163,7 @@ class _PreviewReadyBanner extends StatelessWidget {
     return VitCard(
       key: SavingsExportPage.previewBannerKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
@@ -217,7 +217,7 @@ class _HistoryCard extends StatelessWidget {
     return VitCard(
       key: SavingsExportPage.historyKey(item.id),
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

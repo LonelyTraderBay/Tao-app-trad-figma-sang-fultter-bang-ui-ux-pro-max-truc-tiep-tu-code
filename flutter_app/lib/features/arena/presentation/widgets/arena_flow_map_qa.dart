@@ -58,7 +58,7 @@ class _QaChecklist extends StatelessWidget {
               VitCard(
                 key: ArenaFlowMapPage.checkAllKey,
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 onTap: onCheckAll,
                 padding: _flowMapInnerPadding,
                 child: Center(
@@ -157,7 +157,7 @@ class _QaRow extends StatelessWidget {
         key: ArenaFlowMapPage.qaKey(item.id),
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: Padding(
           padding: _flowMapCardPadding,
           child: Row(

@@ -19,37 +19,18 @@ class _HoursSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          radius: VitCardRadius.lg,
-          padding: _p2pSettingsCardPadding,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.p2pSettingsPageCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Material(
-                color: AppColors.surface2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                ),
-                child: Padding(
-                  padding: AppSpacing.p2pSettingsSegmentRailPadding,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _SegmentButton(
-                          label: '24/7',
-                          selected: mode == '247',
-                          onTap: () => onChanged('247'),
-                        ),
-                      ),
-                      Expanded(
-                        child: _SegmentButton(
-                          label: 'Tùy chỉnh',
-                          selected: mode == 'custom',
-                          onTap: () => onChanged('custom'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              VitSegmentedChoice<String>(
+                selected: mode,
+                onChanged: onChanged,
+                options: const [
+                  VitSegmentedChoiceOption(value: '247', label: '24/7'),
+                  VitSegmentedChoiceOption(value: 'custom', label: 'Tùy chỉnh'),
+                ],
               ),
               const SizedBox(height: AppSpacing.x3),
               Text(
@@ -90,8 +71,8 @@ class _AutoReplySection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          radius: VitCardRadius.lg,
-          padding: _p2pSettingsCardPadding,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.p2pSettingsPageCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -133,7 +114,7 @@ class _AutoReplySection extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  padding: _p2pSettingsCompactCardPadding,
+                  padding: AppSpacing.p2pSettingsPageCompactCardPadding,
                   child: Text(
                     autoReply.buyTemplate,
                     style: AppTextStyles.caption.copyWith(
@@ -216,7 +197,7 @@ class _SwitchButton extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: AppSpacing.zeroInsets,
         child: VitTogglePill(
           enabled: value,
@@ -227,30 +208,6 @@ class _SwitchButton extends StatelessWidget {
           activeColor: color,
         ),
       ),
-    );
-  }
-}
-
-class _SegmentButton extends StatelessWidget {
-  const _SegmentButton({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      fullWidth: true,
-      padding: AppSpacing.p2pSettingsSegmentButtonPadding,
-      semanticLabel: label,
     );
   }
 }

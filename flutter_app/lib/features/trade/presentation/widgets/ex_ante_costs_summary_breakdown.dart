@@ -90,7 +90,7 @@ class _CategoryCard extends StatelessWidget {
             children: [
               VitCard(
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 width: _costSwatchExtent,
                 height: _costSwatchExtent,
                 clip: true,
@@ -148,7 +148,7 @@ class _RiyCard extends StatelessWidget {
             children: [
               VitCard(
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 width: _costIconTile,
                 height: _costIconTile,
                 clip: true,

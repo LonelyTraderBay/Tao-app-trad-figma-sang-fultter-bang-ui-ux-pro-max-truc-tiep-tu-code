@@ -47,7 +47,7 @@ class _LoginEventCard extends StatelessWidget {
 
     return VitCard(
       key: P2PLoginHistoryPage.eventKey(event.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: event.status == 'suspicious' ? AppColors.warn : null,
       padding: AppSpacing.zeroInsets,
       onTap: onTap,

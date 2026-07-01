@@ -21,12 +21,6 @@ const double _p2pLargeTxNativeNavClearance =
     _p2pLargeTxVisualNavClearance - AppSpacing.x4;
 const double _p2pLargeTxVisualClearance = AppSpacing.x3;
 const double _p2pLargeTxNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pLargeTxScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PLargeTransactionJustificationPage extends ConsumerStatefulWidget {
   const P2PLargeTransactionJustificationPage({
@@ -108,8 +102,8 @@ class _P2PLargeTransactionJustificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pLargeTxScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pLargeTransactionScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -188,7 +182,7 @@ class _LargeTransactionHero extends StatelessWidget {
     return VitCard(
       key: P2PLargeTransactionJustificationPage.heroKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.warningBorder,
       padding: AppSpacing.p2pFinancialSafetyCardPadding,
       child: Row(
@@ -198,7 +192,7 @@ class _LargeTransactionHero extends StatelessWidget {
             width: AppSpacing.p2pFinancialSafetyIconBox,
             height: AppSpacing.p2pFinancialSafetyIconBox,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             background: const ColoredBox(color: AppColors.warn15),
             clip: true,
             child: const Icon(
@@ -288,7 +282,7 @@ class _PurposeTile extends StatelessWidget {
       key: P2PLargeTransactionJustificationPage.purposeKey(purpose),
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
       background: ColoredBox(
         color: selected

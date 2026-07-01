@@ -17,7 +17,7 @@ class SavingsSmartSummary extends StatelessWidget {
     return VitCard(
       key: SavingsSmartSuggestionsKeys.summary,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

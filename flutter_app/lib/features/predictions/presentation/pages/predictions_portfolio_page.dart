@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
@@ -11,14 +12,13 @@ import 'package:vit_trade_flutter/features/predictions/presentation/widgets/pred
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_orders.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_positions.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_summary.dart';
-import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_tabs.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/predictions_portfolio_bridge_card.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class PredictionsPortfolioPage extends ConsumerStatefulWidget {
   const PredictionsPortfolioPage({
@@ -103,7 +103,11 @@ class _PredictionsPortfolioPageState
                       gap: VitContentGap.tight,
                       children: [
                         VitCard(
-                          padding: EdgeInsets.zero,
+                          variant: VitCardVariant.hero,
+                          radius: VitCardRadius.large,
+                          clip: true,
+                          padding: AppSpacing.homePortfolioCardPadding,
+                          background: const VitHeroGlow(),
                           child: PredictionPortfolioSummaryCard(
                             snapshot: snapshot,
                             openOrderCount: openOrders.length,
@@ -113,21 +117,36 @@ class _PredictionsPortfolioPageState
                             }),
                           ),
                         ),
-                        const VitCard(
-                          padding: EdgeInsets.zero,
-                          child: PredictionPortfolioSharesNote(),
+                        VitAnnouncementBanner(
+                          message: predictionPortfolioSharesNoteMessage,
+                          icon: Icons.info_outline_rounded,
+                          accentColor: AppColors.primary,
+                          variant: VitAnnouncementBannerVariant.compact,
                         ),
-                        VitCard(
-                          padding: EdgeInsets.zero,
-                          child: PredictionPortfolioTabs(
-                            activeTab: _activeTab,
-                            activeCount: snapshot.activeCount,
-                            closedCount: snapshot.closedCount,
-                            historyCount: snapshot.historyCount,
-                            onChanged: (tab) => setState(() {
-                              _activeTab = tab;
-                            }),
-                          ),
+                        VitTabBar(
+                          variant: VitTabBarVariant.segment,
+                          activeKey: _activeTab.name,
+                          onChanged: (key) => setState(() {
+                            _activeTab = PredictionPortfolioTab.values
+                                .byName(key);
+                          }),
+                          tabs: [
+                            VitTabItem(
+                              key: PredictionPortfolioTab.active.name,
+                              label: 'Active',
+                              widgetKey: predictionPortfolioActiveTabKey,
+                            ),
+                            VitTabItem(
+                              key: PredictionPortfolioTab.closed.name,
+                              label: 'Closed',
+                              widgetKey: predictionPortfolioClosedTabKey,
+                            ),
+                            VitTabItem(
+                              key: PredictionPortfolioTab.history.name,
+                              label: 'History',
+                              widgetKey: predictionPortfolioHistoryTabKey,
+                            ),
+                          ],
                         ),
                         if (_activeTab == PredictionPortfolioTab.active)
                           PredictionPortfolioPositionsList(

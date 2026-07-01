@@ -33,22 +33,6 @@ const double _p2pEscrowTightGap = AppSpacing.x2;
 const double _p2pEscrowRingSize = AppSpacing.buttonCompact + AppSpacing.x2;
 const double _p2pEscrowTimelineConnectorHeight = AppSpacing.x4;
 const double _p2pEscrowBodyLineHeight = 1.35;
-const EdgeInsets _p2pEscrowScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pEscrowHeroPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pEscrowCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pEscrowInnerPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pEscrowExplorerPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _p2pEscrowTimelineRowPadding = EdgeInsets.only(
-  bottom: AppSpacing.x2,
-);
 
 class P2PEscrowDetailPage extends ConsumerStatefulWidget {
   const P2PEscrowDetailPage({
@@ -114,8 +98,8 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pEscrowScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pEscrowDetailScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -164,7 +148,7 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                         const SizedBox(height: _p2pEscrowTightGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pEscrowInnerPadding,
+                          padding: AppSpacing.p2pEscrowDetailInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Escrow detail review',

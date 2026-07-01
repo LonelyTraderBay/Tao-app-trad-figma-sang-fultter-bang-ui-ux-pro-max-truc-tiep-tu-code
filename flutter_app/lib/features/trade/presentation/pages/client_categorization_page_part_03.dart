@@ -99,8 +99,8 @@ class _CategoryIcon extends StatelessWidget {
       width: size,
       height: size,
       radius: size >= AppSpacing.tradeBotClientCategoryHeroIcon
-          ? VitCardRadius.lg
-          : VitCardRadius.md,
+          ? VitCardRadius.large
+          : VitCardRadius.standard,
       variant: VitCardVariant.inner,
       borderColor: style.color.withValues(alpha: .24),
       alignment: Alignment.center,

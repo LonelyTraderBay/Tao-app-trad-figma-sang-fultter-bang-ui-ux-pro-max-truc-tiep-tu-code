@@ -13,7 +13,7 @@ class _MessagePanel extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: VitCard(
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             density: VitDensity.compact,
             child: VitPageContent(
               padding: VitContentPadding.none,

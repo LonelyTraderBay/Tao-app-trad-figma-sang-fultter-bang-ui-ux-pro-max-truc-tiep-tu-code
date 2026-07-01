@@ -36,7 +36,7 @@ class _AbiEntryCard extends StatelessWidget {
               VitCard(
                 key: LaunchpadAbiDiffPage.expandKey(entry.name),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.md,
+                radius: VitCardRadius.standard,
                 padding: AppSpacing.launchpadPaddingX3,
                 onTap: onToggle,
                 child: Row(

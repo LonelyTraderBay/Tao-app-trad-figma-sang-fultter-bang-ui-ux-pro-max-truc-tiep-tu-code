@@ -8,7 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class PredictionPortfolioHistorySection extends StatelessWidget {
@@ -28,23 +27,38 @@ class PredictionPortfolioHistorySection extends StatelessWidget {
       );
     }
 
-    return VitPageSection(
-      label: 'L\u1ecbch s\u1eed l\u1ec7nh',
-      accentColor: AppColors.accent,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (var index = 0; index < receipts.length; index += 1) ...[
-          PredictionPortfolioReceiptCard(
-            key: predictionPortfolioReceiptKey(receipts[index].id),
-            receipt: receipts[index],
+        const VitSectionHeader(title: 'L\u1ecbch s\u1eed l\u1ec7nh'),
+        const SizedBox(height: AppSpacing.x3),
+        VitCard(
+          clip: true,
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              for (var index = 0; index < receipts.length; index += 1) ...[
+                _ReceiptRow(
+                  key: predictionPortfolioReceiptKey(receipts[index].id),
+                  receipt: receipts[index],
+                ),
+                if (index != receipts.length - 1)
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
+              ],
+            ],
           ),
-        ],
+        ),
       ],
     );
   }
 }
 
-class PredictionPortfolioReceiptCard extends StatelessWidget {
-  const PredictionPortfolioReceiptCard({required this.receipt, super.key});
+class _ReceiptRow extends StatelessWidget {
+  const _ReceiptRow({required this.receipt, super.key});
 
   final PredictionPortfolioReceiptDraft receipt;
 
@@ -58,87 +72,86 @@ class PredictionPortfolioReceiptCard extends StatelessWidget {
         ? AppColors.text3
         : AppColors.sell;
 
-    return VitCard(
+    return InkWell(
       onTap: () =>
           context.go(AppRoutePaths.marketsPredictionReceipt(receipt.id)),
-      padding: AppSpacing.predictionPortfolioReceiptCardPadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: AppSpacing.predictionPortfolioReceiptIconBox,
-            height: AppSpacing.predictionPortfolioReceiptIconBox,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: color.withValues(alpha: .12),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
-                ),
-              ),
-              child: Icon(
-                isFilled
-                    ? Icons.check_circle_outline_rounded
-                    : Icons.cancel_outlined,
-                color: color,
-                size: AppSpacing.predictionPortfolioReceiptIcon,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.predictionPortfolioReceiptGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  receipt.eventTitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.badge.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
+      child: Padding(
+        padding: AppSpacing.cardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: AppSpacing.predictionPortfolioReceiptIconBox,
+              height: AppSpacing.predictionPortfolioReceiptIconBox,
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: color.withValues(alpha: .12),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
                   ),
                 ),
-                const SizedBox(
-                  height: AppSpacing.predictionPortfolioReceiptTitleGap,
+                child: Icon(
+                  isFilled
+                      ? Icons.check_circle_outline_rounded
+                      : Icons.cancel_outlined,
+                  color: color,
+                  size: AppSpacing.predictionPortfolioReceiptIcon,
                 ),
-                Wrap(
-                  spacing: AppSpacing.predictionPortfolioChipGap,
-                  runSpacing: AppSpacing.predictionPortfolioChipRunGap,
-                  children: [
-                    PredictionPortfolioTinyBadge(
-                      label: '${isBuy ? 'Buy' : 'Sell'} ${receipt.outcome}',
-                      color: isBuy ? AppColors.buy : AppColors.sell,
-                      background: (isBuy ? AppColors.buy : AppColors.sell)
-                          .withValues(alpha: .12),
-                    ),
-                    PredictionPortfolioTinyBadge(
-                      label: isFilled ? 'Filled' : 'Canceled',
-                      color: color,
-                      background: color.withValues(alpha: .12),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: AppSpacing.predictionPortfolioReceiptMetaGap,
-                ),
-                Text(
-                  '${formatPredictionPortfolioShares(receipt.filledShares)}/'
-                  '${formatPredictionPortfolioShares(receipt.shares)} shares \u00b7 '
-                  '${formatPredictionPortfolioMoney(receipt.total)} \u00b7 ${receipt.createdAt}',
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: AppColors.text3,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.predictionPortfolioReceiptChevron,
-          ),
-        ],
+            const SizedBox(width: AppSpacing.predictionPortfolioReceiptGap),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    receipt.eventTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.badge.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.predictionPortfolioReceiptTitleGap,
+                  ),
+                  Wrap(
+                    spacing: AppSpacing.predictionPortfolioChipGap,
+                    runSpacing: AppSpacing.predictionPortfolioChipRunGap,
+                    children: [
+                      VitAccentPill(
+                        label: '${isBuy ? 'Buy' : 'Sell'} ${receipt.outcome}',
+                        accentColor: isBuy ? AppColors.buy : AppColors.sell,
+                      ),
+                      VitAccentPill(
+                        label: isFilled ? 'Filled' : 'Canceled',
+                        accentColor: color,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.predictionPortfolioReceiptMetaGap,
+                  ),
+                  Text(
+                    '${formatPredictionPortfolioShares(receipt.filledShares)}/'
+                    '${formatPredictionPortfolioShares(receipt.shares)} shares \u00b7 '
+                    '${formatPredictionPortfolioMoney(receipt.total)} \u00b7 ${receipt.createdAt}',
+                    style: AppTextStyles.numericMicro.copyWith(
+                      color: AppColors.text3,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.text3,
+              size: AppSpacing.predictionPortfolioReceiptChevron,
+            ),
+          ],
+        ),
       ),
     );
   }

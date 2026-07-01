@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/advanced_tools_overview.dart';
 part '../widgets/advanced_tools_tabs_sheets.dart';
@@ -23,8 +24,6 @@ part '../widgets/advanced_tools_common.dart';
 const _toolsPrimary = AppColors.primary;
 const _toolsSpace = AppSpacing.x2;
 const _toolsCardSpace = AppSpacing.x3;
-const _toolsVisualScrollClearance = 112.0;
-const _toolsNativeScrollClearance = 72.0;
 const _toolsButtonHeight = 44.0;
 const _toolsMetricRowHeight = 36.0;
 const _toolsBodyLineHeight = 1.24;
@@ -64,11 +63,10 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
         .state
         .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _toolsVisualScrollClearance
-            : _toolsNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

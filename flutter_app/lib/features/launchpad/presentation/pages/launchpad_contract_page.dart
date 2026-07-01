@@ -79,7 +79,7 @@ class _ContractProjectNotFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadContractPage.notFoundKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadEmptyStatePadding,
       child: Column(
         children: [
@@ -112,7 +112,7 @@ class _ContractProjectSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final project = snapshot.project!;
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

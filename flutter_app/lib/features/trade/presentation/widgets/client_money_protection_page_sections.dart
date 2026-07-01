@@ -137,22 +137,17 @@ class _Tabs extends StatelessWidget {
       ('reconciliation', 'Reconciliation'),
       ('documents', 'Documents'),
     ];
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeSegmentedPadding,
-      child: VitTabBar(
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.$1,
-              label: tab.$2,
-              widgetKey: ClientMoneyProtectionPage.tabKey(tab.$1),
-            ),
-        ],
-        activeKey: activeId,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
-      ),
+    return VitSegmentedTabBar(
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: ClientMoneyProtectionPage.tabKey(tab.$1),
+          ),
+      ],
+      activeKey: activeId,
+      onChanged: onChanged,
     );
   }
 }

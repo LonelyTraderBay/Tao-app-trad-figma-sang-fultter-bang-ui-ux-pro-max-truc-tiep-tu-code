@@ -183,7 +183,7 @@ class _ArenaBridgeSection extends StatelessWidget {
             key: PredictionEventDetailPage.arenaCreateKey,
             onTap: onCreate,
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             borderColor: AppColors.warningBorder,
             background: const ColoredBox(color: AppColors.warn08),
             clip: true,

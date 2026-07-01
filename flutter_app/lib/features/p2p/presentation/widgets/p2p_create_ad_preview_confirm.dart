@@ -21,7 +21,7 @@ class P2PCreateAdLivePreviewCard extends StatelessWidget {
           VitCard(
             onTap: onTap,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.zeroInsets,
             child: Row(
               children: [

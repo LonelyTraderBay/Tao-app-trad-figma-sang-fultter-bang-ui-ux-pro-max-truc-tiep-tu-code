@@ -1,5 +1,35 @@
 part of '../pages/position_dashboard_page.dart';
 
+class _PositionList extends StatelessWidget {
+  const _PositionList({required this.positions});
+
+  final List<TradeDashboardPosition> positions;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      clip: true,
+      density: VitDensity.compact,
+      child: Column(
+        children: [
+          for (var i = 0; i < positions.length; i++) ...[
+            Padding(
+              padding: VitDensity.compact.cardPadding,
+              child: _PositionTile(position: positions[i]),
+            ),
+            if (i < positions.length - 1)
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class _SummaryCard extends StatelessWidget {
   const _SummaryCard({required this.positions});
 
@@ -113,8 +143,7 @@ class _TypeTabs extends StatelessWidget {
       ('margin', 'Margin (${_count(TradePositionType.margin)})'),
     ];
 
-    return VitTabBar(
-      variant: VitTabBarVariant.segment,
+    return VitSegmentedTabBar(
       activeKey: active,
       onChanged: onChanged,
       tabs: [

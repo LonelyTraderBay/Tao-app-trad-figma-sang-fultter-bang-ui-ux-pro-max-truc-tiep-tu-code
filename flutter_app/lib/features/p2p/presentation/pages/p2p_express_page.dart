@@ -33,8 +33,6 @@ const double _p2pExpressToggleHeight = AppSpacing.buttonCompact + AppSpacing.x2;
 const double _p2pExpressAmountHeight = AppSpacing.inputHeight;
 const double _p2pExpressIconBox = AppSpacing.x5;
 const double _p2pExpressAssetMark = AppSpacing.x4;
-const EdgeInsets _p2pExpressCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pExpressCompactPadding = EdgeInsets.all(AppSpacing.x2);
 
 class P2PExpressPage extends ConsumerStatefulWidget {
   const P2PExpressPage({super.key, this.shellRenderMode});

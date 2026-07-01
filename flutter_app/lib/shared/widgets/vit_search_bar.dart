@@ -72,11 +72,7 @@ class _VitSearchBarState extends State<VitSearchBar> {
     }
   }
 
-  BorderRadius get _radius {
-    return widget.variant == VitSearchBarVariant.compact
-        ? AppRadii.smRadius
-        : AppRadii.inputRadius;
-  }
+  BorderRadius get _radius => AppRadii.inputRadius;
 
   @override
   void initState() {

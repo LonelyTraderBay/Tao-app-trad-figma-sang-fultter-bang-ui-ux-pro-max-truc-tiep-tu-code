@@ -8,69 +8,27 @@ class _SideToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      height: 55,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.hairlineStroke * 2,
-        top: AppSpacing.hairlineStroke * 2,
-        right: AppSpacing.hairlineStroke * 2,
-        bottom: AppSpacing.hairlineStroke * 2,
-      ),
-      variant: VitCardVariant.inner,
-      child: Row(
-        children: [
-          _SideButton(
-            id: 'long',
-            label: 'Long',
-            icon: Icons.trending_up_rounded,
-            active: side == 'long',
-            onTap: () => onChanged('long'),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          _SideButton(
-            id: 'short',
-            label: 'Short',
-            icon: Icons.trending_down_rounded,
-            active: side == 'short',
-            onTap: () => onChanged('short'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SideButton extends StatelessWidget {
-  const _SideButton({
-    required this.id,
-    required this.label,
-    required this.icon,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String id;
-  final String label;
-  final IconData icon;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitChoicePill(
-        key: MarginTradingPage.sideKey(id),
-        label: label,
-        selected: active,
-        onTap: onTap,
-        fullWidth: true,
-        height: AppSpacing.ctaHeight,
-        tone: id == 'long'
-            ? VitChoicePillTone.success
-            : VitChoicePillTone.danger,
-        leading: Icon(icon),
-        semanticLabel: 'Chon huong $label margin',
-      ),
+    return VitSegmentedChoice<String>(
+      selected: side,
+      onChanged: onChanged,
+      options: [
+        VitSegmentedChoiceOption(
+          key: MarginTradingPage.sideKey('long'),
+          value: 'long',
+          label: 'Long',
+          accentColor: AppColors.buy,
+          leading: const Icon(Icons.trending_up_rounded),
+          semanticLabel: 'Chon huong Long margin',
+        ),
+        VitSegmentedChoiceOption(
+          key: MarginTradingPage.sideKey('short'),
+          value: 'short',
+          label: 'Short',
+          accentColor: AppColors.sell,
+          leading: const Icon(Icons.trending_down_rounded),
+          semanticLabel: 'Chon huong Short margin',
+        ),
+      ],
     );
   }
 }

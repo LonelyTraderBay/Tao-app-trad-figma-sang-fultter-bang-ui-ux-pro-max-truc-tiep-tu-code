@@ -71,7 +71,7 @@ class _RewardPill extends StatelessWidget {
         maxWidth: AppSpacing.p2pTrustProgressRewardMaxWidth,
       ),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       background: ColoredBox(
         color: unlocked ? AppColors.buy10 : AppColors.surface2,
       ),
@@ -112,7 +112,7 @@ class _TradingLevelLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PAchievementsPage.tradingLevelKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pTrustProgressCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();

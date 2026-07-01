@@ -19,7 +19,7 @@ class _ReviewStep extends StatelessWidget {
       key: LaunchpadBatchClaimPage.reviewKey,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.launchpadPaddingX5,
           child: Column(
             children: [
@@ -143,7 +143,7 @@ class _SuccessStep extends StatelessWidget {
       key: LaunchpadBatchClaimPage.successKey,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.launchpadPaddingX5,
           child: Column(
             children: [

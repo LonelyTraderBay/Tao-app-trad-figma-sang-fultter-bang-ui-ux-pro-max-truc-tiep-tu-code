@@ -17,7 +17,7 @@ class _MetricGrid extends StatelessWidget {
       children: [
         for (final metric in metrics)
           VitCard(
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             density: VitDensity.compact,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class _AssetBreakdown extends StatelessWidget {
       byAsset[rung.asset] = current.add(rung);
     }
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       child: Column(
         children: [
@@ -162,7 +162,7 @@ class _DurationTile extends StatelessWidget {
         : AppColors.accent;
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       density: VitDensity.compact,
       child: Row(
         children: [
@@ -267,7 +267,7 @@ class _LiquidityCard extends StatelessWidget {
         ? 'Trung bình'
         : 'Thấp';
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: .25),
       density: VitDensity.compact,
       child: Column(
@@ -392,7 +392,7 @@ class _LiquidityMini extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

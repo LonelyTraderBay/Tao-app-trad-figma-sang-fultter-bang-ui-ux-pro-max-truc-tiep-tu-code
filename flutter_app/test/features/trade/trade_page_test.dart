@@ -81,7 +81,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(2));
     expect(find.text('24H'), findsOneWidget);
     expect(find.text('70821.46'), findsWidgets);
     expect(find.text('10,200.00 USDT'), findsOneWidget);
@@ -123,14 +123,15 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(2));
     expect(find.byKey(TradePage.quickNavKey('spot')), findsOneWidget);
     expect(find.byKey(TradePage.quickNavKey('convert')), findsOneWidget);
     expect(find.byKey(TradePage.quickNavKey('futures')), findsOneWidget);
     expect(find.text('67,543.21'), findsOneWidget);
-    expect(find.text('Chart'), findsOneWidget);
-    expect(find.text('Đặt lệnh'), findsOneWidget);
-    expect(find.text('MUA'), findsOneWidget);
+    expect(find.text('Charts'), findsOneWidget);
+    expect(find.text('Trade'), findsOneWidget);
+    expect(find.textContaining('Lệnh mở'), findsAtLeastNWidgets(1));
+    expect(find.byKey(TradePage.buySideKey), findsOneWidget);
     expect(find.text('BÁN'), findsOneWidget);
     expect(find.text('Giới hạn'), findsOneWidget);
     expect(find.text('TP/SL'), findsOneWidget);
@@ -159,7 +160,7 @@ void main() {
     await tester.tap(find.byKey(TradePage.orderBookTabKey));
     await tester.pumpAndSettle();
     expect(find.text('Giá'), findsOneWidget);
-    expect(find.text('67545.13'), findsOneWidget);
+    expect(find.text('67545.13'), findsWidgets);
 
     await tester.tap(find.byKey(TradePage.tradesTabKey));
     await tester.pumpAndSettle();
@@ -173,6 +174,11 @@ void main() {
   testWidgets('SC-048 amount shortcuts update the order draft', (tester) async {
     await pumpTrade(tester);
 
+    await tester.scrollUntilVisible(
+      find.byKey(TradePage.pctKey(25)),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.byKey(TradePage.pctKey(25)));
     await tester.pumpAndSettle();
 
@@ -183,11 +189,47 @@ void main() {
   testWidgets('SC-048 quick nav opens SC-056 ConvertPage', (tester) async {
     await pumpTrade(tester);
 
-    await tester.tap(find.byKey(TradePage.quickNavKey('convert')));
+    final convertNav = find.byKey(TradePage.quickNavKey('convert'));
+    await tester.ensureVisible(convertNav);
+    await tester.tap(convertNav);
     await tester.pumpAndSettle();
 
     expect(find.byType(ConvertPage), findsOneWidget);
     expect(find.text('Convert / Swap'), findsOneWidget);
+  });
+
+  testWidgets('SC-048 360px Charts and Trade view modes stay usable', (
+    tester,
+  ) async {
+    configureFirstViewport(tester, VitFirstViewport.minimumPhone);
+    await tester.pumpWidget(
+      ProviderScope(
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: AppRoutePaths.trade),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TradePage), findsOneWidget);
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TradePage.viewModeChartsKey),
+      routeName: 'TradePage',
+      actionLabel: 'Charts view mode toggle',
+    );
+    expect(find.byKey(TradePage.orderBookTabKey), findsOneWidget);
+
+    await tester.tap(find.byKey(TradePage.viewModeTradeKey));
+    await tester.pumpAndSettle();
+
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(TradePage.buySideKey),
+      routeName: 'TradePage',
+      actionLabel: 'buy side switch in Trade split mode',
+    );
+    expect(find.text('Giá'), findsOneWidget);
   });
 
   testWidgets('SC-048 product hub follows enterprise product order', (
@@ -195,13 +237,22 @@ void main() {
   ) async {
     await pumpTrade(tester);
 
-    expect(find.text('Core'), findsWidgets);
-
-    for (final id in const [
+    const primaryIds = [
       'spot',
       'convert',
       'futures',
       'margin',
+    ];
+    for (final id in primaryIds) {
+      expect(find.byKey(TradePage.quickNavKey(id)), findsOneWidget);
+    }
+
+    await tester.tap(find.text('Thêm'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Bot'), findsWidgets);
+
+    for (final id in const [
       'bots',
       'copy',
       'dca',
@@ -214,11 +265,6 @@ void main() {
       'rewards',
       'support',
     ]) {
-      await tester.scrollUntilVisible(
-        find.byKey(TradePage.quickNavKey(id)),
-        80,
-        scrollable: find.byType(Scrollable).first,
-      );
       expect(find.byKey(TradePage.quickNavKey(id)), findsOneWidget);
     }
 

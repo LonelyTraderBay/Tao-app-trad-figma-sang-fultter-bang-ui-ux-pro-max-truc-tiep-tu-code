@@ -208,7 +208,7 @@ class _NoticeSheet extends StatelessWidget {
               right: AppSpacing.contentPad,
               bottom: AppSpacing.contentPad,
             ),
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             child: VitPageContent(
               padding: VitContentPadding.none,
               density: VitDensity.compact,

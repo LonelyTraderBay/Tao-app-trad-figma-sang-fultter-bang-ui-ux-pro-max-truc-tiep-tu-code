@@ -17,7 +17,7 @@ class P2PNoticeCard extends StatelessWidget {
     this.messageColor = AppColors.text2,
     this.borderColor,
     this.variant = VitCardVariant.inner,
-    this.radius = VitCardRadius.md,
+    this.radius = VitCardRadius.standard,
     this.padding = AppSpacing.p2pDisputeCardPadding,
     this.iconSize = AppSpacing.iconSm,
     this.titleStyle,

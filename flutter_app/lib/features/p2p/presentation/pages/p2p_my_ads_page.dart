@@ -30,23 +30,6 @@ const double _p2pMyAdsTightGap = AppSpacing.x1;
 const double _p2pMyAdsStatExtent = AppSpacing.x7 + AppSpacing.x3;
 const double _p2pMyAdsActionExtent = AppSpacing.searchBarCompactHeight;
 const double _p2pMyAdsQuickIconBox = AppSpacing.searchBarCompactHeight;
-const EdgeInsets _p2pMyAdsCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pMyAdsCompactPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pMyAdsLargePadding = EdgeInsets.all(AppSpacing.x4);
-const EdgeInsets _p2pMyAdsQuickLinkPadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _p2pMyAdsDetailRightPadding = EdgeInsets.only(
-  right: AppSpacing.x2,
-);
-
-EdgeInsets _p2pMyAdsScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PMyAdsPage extends ConsumerStatefulWidget {
   const P2PMyAdsPage({super.key, this.shellRenderMode});
@@ -131,7 +114,9 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
                   child: SingleChildScrollView(
                     key: P2PMyAdsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pMyAdsScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pMerchantCommercePageScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -240,7 +225,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
               variant: VitCtaButtonVariant.secondary,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Hủy'),
             ),
             VitCtaButton(
@@ -248,7 +233,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
               variant: VitCtaButtonVariant.danger,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Xóa'),
             ),
           ],

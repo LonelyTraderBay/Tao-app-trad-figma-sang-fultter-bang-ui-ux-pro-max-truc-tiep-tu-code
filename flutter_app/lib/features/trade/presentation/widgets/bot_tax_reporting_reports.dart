@@ -190,7 +190,7 @@ class _TaxNotesCard extends StatelessWidget {
 
 class _GenerateFooter extends StatelessWidget {
   const _GenerateFooter({
-    required this.chromeInset,
+    required this.bottomInset,
     required this.disabled,
     required this.generating,
     required this.selectedCount,
@@ -198,7 +198,7 @@ class _GenerateFooter extends StatelessWidget {
     required this.onPressed,
   });
 
-  final double chromeInset;
+  final double bottomInset;
   final bool disabled;
   final bool generating;
   final int selectedCount;
@@ -236,7 +236,7 @@ class _GenerateFooter extends StatelessWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: chromeInset + MediaQuery.paddingOf(context).bottom,
+      bottom: bottomInset,
       child: child,
     );
   }

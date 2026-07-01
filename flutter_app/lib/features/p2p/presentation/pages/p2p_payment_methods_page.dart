@@ -26,30 +26,6 @@ const double _p2pMethodsNativeNavClearance =
     _p2pMethodsVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
 const double _p2pMethodsVisualClearance = AppSpacing.x3;
 const double _p2pMethodsNativeClearance = AppSpacing.x2;
-const double _p2pMethodsSectionGap = AppSpacing.x1;
-const double _p2pMethodsMajorGap = AppSpacing.x3;
-const double _p2pMethodsCardMinExtent = 80;
-const EdgeInsets _p2pMethodsCardPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pMethodsButtonPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _p2pMethodsDefaultPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
-const EdgeInsets _p2pMethodsEmptyPadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x4,
-);
-const EdgeInsets _p2pMethodsDialogPadding = EdgeInsets.all(AppSpacing.x4);
-
-EdgeInsets _p2pMethodsScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PPaymentMethodsPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodsPage({super.key, this.shellRenderMode});
@@ -128,7 +104,9 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                       child: SingleChildScrollView(
                         key: P2PPaymentMethodsPage.contentKey,
                         physics: const ClampingScrollPhysics(),
-                        padding: _p2pMethodsScrollPadding(scrollEndPadding),
+                        padding: AppSpacing.p2pPaymentScrollPadding(
+                          scrollEndPadding,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: _withP2PMethodsGaps([
@@ -231,7 +209,8 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
 List<Widget> _withP2PMethodsGaps(List<Widget> children) {
   return [
     for (var index = 0; index < children.length; index++) ...[
-      if (index > 0) const SizedBox(height: _p2pMethodsSectionGap),
+      if (index > 0)
+        const SizedBox(height: AppSpacing.p2pPaymentMethodsListSectionGap),
       children[index],
     ],
   ];

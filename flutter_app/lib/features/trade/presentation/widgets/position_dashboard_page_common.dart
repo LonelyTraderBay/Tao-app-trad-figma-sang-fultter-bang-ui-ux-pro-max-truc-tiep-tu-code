@@ -12,7 +12,7 @@ class _PositionTile extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: VitDensity.compact.cardPadding,
+      padding: AppSpacing.zeroInsets,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

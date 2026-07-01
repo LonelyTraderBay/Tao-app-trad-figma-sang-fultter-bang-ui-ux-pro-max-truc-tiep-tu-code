@@ -64,15 +64,11 @@ class _SortTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
+    return SizedBox(
       height: _leaderControlExtent,
-      padding: AppSpacing.zeroInsets,
-      density: VitDensity.compact,
-      child: VitTabBar(
+      child: VitSegmentedTabBar(
         activeKey: activeId,
         onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
         tabs: [
           for (final option in options)
             VitTabItem(

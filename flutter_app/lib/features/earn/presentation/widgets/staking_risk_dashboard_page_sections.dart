@@ -11,7 +11,7 @@ class _OverallRiskCard extends StatelessWidget {
     final label = _riskLabel(snapshot.overallScore);
     return VitCard(
       key: StakingRiskDashboardPage.scoreKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -115,7 +115,7 @@ class _RiskMetricCard extends StatelessWidget {
     final color = _riskColor(metric.score);
     return VitCard(
       key: StakingRiskDashboardPage.metricKey(metric.category),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       onTap: metric.actionRoute == null
           ? null
           : () => context.go(metric.actionRoute!),
@@ -200,7 +200,7 @@ class _ExposureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         children: [

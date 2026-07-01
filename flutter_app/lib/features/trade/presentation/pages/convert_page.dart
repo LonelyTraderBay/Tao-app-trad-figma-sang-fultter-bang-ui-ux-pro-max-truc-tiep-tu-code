@@ -1,11 +1,14 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -16,7 +19,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_terminal_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_pair_info_sheet.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_pair_route.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_page_widgets.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -26,19 +34,14 @@ part '../widgets/convert_page_header_widgets.dart';
 part '../widgets/convert_page_amount_widgets.dart';
 
 const _tradePrimary = AppColors.primary;
-const _convertSpace = AppSpacing.x2;
-const _convertVisualScrollClearance = 112.0;
-const _convertNativeScrollClearance = 72.0;
-const _convertModeHeight = 44.0;
-const _convertChipHeight = 34.0;
-const _convertControlHeight = 40.0;
-const _convertSwapSize = 40.0;
-const _convertFromCardHeight = 168.0;
-const _convertToCardHeight = 100.0;
-const _convertPairHeight = 44.0;
-const _convertSlippageHeight = 104.0;
-const _convertButtonHeight = 44.0;
-const _convertSparklineHeight = 20.0;
+
+bool _convertSnapshotIsOffline(TradeConvertSnapshot snapshot) {
+  return snapshot.lastUpdatedLabel.toLowerCase().contains('offline');
+}
+
+bool _convertSnapshotHasError(TradeConvertSnapshot snapshot) {
+  return snapshot.lastUpdatedLabel.toLowerCase().contains('error');
+}
 
 enum _ConvertMode { market, limit, schedule }
 
@@ -106,28 +109,32 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
         .watch(tradeReadModelControllerProvider)
         .previewConvert(request);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _convertVisualScrollClearance
-            : _convertNativeScrollClearance);
+    final scrollEndClearance = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
+    final isOffline = _convertSnapshotIsOffline(snapshot);
+    final hasError = _convertSnapshotHasError(snapshot);
+    final pairId = _resolvedSpotPairId(snapshot);
+    final alertBadgeCount = _activeAlertCountForPair(pairId);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-056 ConvertPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: VitAutoHideHeaderScaffold(
           header: _ConvertHeader(
             onBack: () => goBackOrFallback(
               context,
               fallbackPath: AppRoutePaths.trade,
               mode: BackNavigationMode.historyThenFallback,
             ),
+            onSettings: _openSettings,
           ),
-          child: SingleChildScrollView(
+          child: VitInsetScrollView(
             key: ConvertPage.contentKey,
-            padding: EdgeInsetsDirectional.only(bottom: scrollEndClearance),
+            bottomInset: scrollEndClearance,
             child: VitPageContent(
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
@@ -136,51 +143,66 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
                   mode: _mode,
                   onChanged: (value) => setState(() => _mode = value),
                 ),
-                _FavoriteHeader(),
-                _FavoritePairs(
-                  pairs: snapshot.favoritePairs,
+                const SizedBox(height: AppSpacing.x3),
+                VitTradeProductTabs(
+                  activeId: 'convert',
+                  tabs: [
+                    VitTradeProductTab(
+                      id: 'spot',
+                      label: 'Spot',
+                      tabKey: TradePage.quickNavKey('spot'),
+                      onTap: () => context.go(AppRoutePaths.trade),
+                    ),
+                    VitTradeProductTab(
+                      id: 'futures',
+                      label: 'Futures',
+                      tabKey: TradePage.quickNavKey('futures'),
+                      onTap: () => context.go(AppRoutePaths.tradeFutures('btcusdt')),
+                    ),
+                    VitTradeProductTab(
+                      id: 'margin',
+                      label: 'Margin',
+                      tabKey: TradePage.quickNavKey('margin'),
+                      onTap: () => context.go(AppRoutePaths.tradeMargin),
+                    ),
+                    VitTradeProductTab(
+                      id: 'convert',
+                      label: 'Convert',
+                      tabKey: TradePage.quickNavKey('convert'),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                if (isOffline)
+                  const VitOfflineBanner(
+                    message: 'Mất kết nối. Đang hiển thị tỷ giá đã lưu.',
+                    detail: 'Thử làm mới sau khi có mạng.',
+                  ),
+                if (!isOffline && hasError)
+                  const VitBanner(
+                    variant: VitBannerVariant.error,
+                    icon: Icons.error_outline_rounded,
+                    message: 'Không thể làm mới tỷ giá.',
+                    detail: 'Đang hiển thị báo giá gần nhất.',
+                  ),
+                _ConvertHeroCard(
+                  fromAsset: fromAsset,
+                  toAsset: toAsset,
+                  amountController: _amountController,
+                  quoteAmount: quote.toAmount,
+                  quoteLabel: quote.quoteLabel,
+                  countdown: '${quote.validSeconds}s',
+                  favoritePairs: snapshot.favoritePairs,
                   activeFrom: fromAsset.symbol,
                   activeTo: toAsset.symbol,
-                  onSelected: _selectFavoritePair,
-                ),
-                _RateBar(
-                  label: quote.quoteLabel,
-                  countdown: '${quote.validSeconds}s',
-                ),
-                _AmountCard(
-                  label: 'Từ',
-                  asset: fromAsset,
-                  amountController: _amountController,
-                  input: true,
-                  onChanged: () => setState(() => _receipt = null),
-                  onAssetTap: () => _showAssetPicker('from', snapshot.assets),
+                  onFromChanged: () => setState(() => _receipt = null),
+                  onFromAssetTap: () =>
+                      _showAssetPicker('from', snapshot.assets),
+                  onToAssetTap: () => _showAssetPicker('to', snapshot.assets),
                   onPercent: (pct) => _setPercentAmount(fromAsset, pct),
-                ),
-                Transform.translate(
-                  offset: const Offset(0, -2),
-                  child: Center(child: _SwapButton(onTap: _swapAssets)),
-                ),
-                Transform.translate(
-                  offset: const Offset(0, -2),
-                  child: _AmountCard(
-                    label: 'Sang',
-                    asset: toAsset,
-                    quoteAmount: quote.toAmount,
-                    onAssetTap: () => _showAssetPicker('to', snapshot.assets),
-                  ),
-                ),
-                const _ToolRow(),
-                _PairMiniCard(
-                  fromSymbol: fromAsset.symbol,
-                  toSymbol: toAsset.symbol,
-                ),
-                _SlippageCard(
-                  options: snapshot.slippageOptions,
-                  active: _slippage,
-                  onChanged: (value) => setState(() {
-                    _slippage = value;
-                    _receipt = null;
-                  }),
+                  onSwap: _swapAssets,
+                  onFavoriteSelected: _selectFavoritePair,
                 ),
                 _ConvertRiskReviewPanel(
                   quote: quote,
@@ -189,12 +211,35 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
                   slippage: _slippage,
                 ),
                 _SubmitButton(
-                  enabled: quote.canSubmit,
+                  enabled: quote.canSubmit && !isOffline,
                   receipt: _receipt,
                   onPressed: () => _submit(request),
                 ),
-                _HistoryHeader(),
-                _HistoryList(records: snapshot.history),
+                _ConvertToolGrid(
+                  alertBadgeCount: alertBadgeCount,
+                  onChart: () => _openChart(pairId),
+                  onDepth: () => _openDepth(pairId),
+                  onInfo: () => _openInfoSheet(
+                    snapshot: snapshot,
+                    quote: quote,
+                    pairId: pairId,
+                  ),
+                  onAlert: _openAlerts,
+                ),
+                _SlippageRow(
+                  options: snapshot.slippageOptions,
+                  active: _slippage,
+                  onChanged: (value) => setState(() {
+                    _slippage = value;
+                    _receipt = null;
+                  }),
+                ),
+                VitTradeSection(
+                  title: 'Giao dịch gần đây',
+                  actionLabel: 'Xem tất cả',
+                  onAction: () {},
+                  child: _HistoryList(records: snapshot.history),
+                ),
               ],
             ),
           ),
@@ -241,8 +286,9 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
   ) async {
     final selected = await showVitBottomSheet<String>(
       context: context,
-      backgroundColor: AppColors.transparent,
-      barrierColor: AppColors.dynamicIslandBg.withValues(alpha: .72),
+      isScrollControlled: true,
+      backgroundColor: AppColors.surface,
+      barrierColor: AppColors.modalScrim,
       builder: (_) => ConvertAssetSheet(
         side: side,
         assets: assets,
@@ -261,6 +307,94 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
       _receipt = null;
     });
   }
+
+  String? _resolvedSpotPairId(TradeConvertSnapshot snapshot) {
+    return resolveConvertSpotPairId(
+      fromSymbol: _fromSymbol,
+      toSymbol: _toSymbol,
+      knownPairs: snapshot.trade.pairs,
+    );
+  }
+
+  int _activeAlertCountForPair(String? pairId) {
+    if (pairId == null) return 0;
+    final alerts = ref
+        .read(marketControllerProvider)
+        .getPriceAlerts()
+        .priceAlerts;
+    return alerts
+        .where((alert) => alert.isActive && alert.pairId == pairId)
+        .length;
+  }
+
+  void _showUnsupportedPairSnackBar() {
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    if (messenger == null) return;
+    messenger.showSnackBar(
+      const SnackBar(content: Text('Chưa có biểu đồ spot cho cặp này')),
+    );
+  }
+
+  void _openChart(String? pairId) {
+    if (pairId == null) {
+      _showUnsupportedPairSnackBar();
+      return;
+    }
+    context.push(AppRoutePaths.tradeAdvancedChart(pairId));
+  }
+
+  void _openDepth(String? pairId) {
+    if (pairId == null) {
+      _showUnsupportedPairSnackBar();
+      return;
+    }
+    final returnTo = Uri.encodeComponent(AppRoutePaths.tradeConvert);
+    context.push('${AppRoutePaths.pairDepth(pairId)}?returnTo=$returnTo');
+  }
+
+  Future<void> _openInfoSheet({
+    required TradeConvertSnapshot snapshot,
+    required TradeConvertQuote quote,
+    required String? pairId,
+  }) async {
+    await showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.surface,
+      barrierColor: AppColors.modalScrim,
+      builder: (_) => ConvertPairInfoSheet(
+        fromSymbol: _fromSymbol,
+        toSymbol: _toSymbol,
+        modeLabel: _convertModeLabel(_mode),
+        quoteLabel: quote.quoteLabel,
+        countdownLabel: '${quote.validSeconds}s',
+        minUsd: snapshot.minUsd,
+        maxUsd: snapshot.maxUsd,
+        slippageLabel: '${_slippage.toStringAsFixed(1)}%',
+        pairId: pairId,
+        onViewTokenInfo: pairId == null
+            ? null
+            : () {
+                Navigator.of(context).pop();
+                context.push(AppRoutePaths.pairInfo(pairId));
+              },
+      ),
+    );
+  }
+
+  void _openAlerts() {
+    context.push(AppRoutePaths.marketsAlerts);
+  }
+
+  void _openSettings() {
+    context.push(AppRoutePaths.tradeSettings);
+  }
+
+  String _convertModeLabel(_ConvertMode mode) => switch (mode) {
+    _ConvertMode.market => 'Market',
+    _ConvertMode.limit => 'Limit',
+    _ConvertMode.schedule => 'Tự động',
+  };
 
   void _submit(TradeConvertRequest request) {
     if (request.amount <= 0) return;

@@ -20,20 +20,6 @@ const double _p2pNotificationsVisualClearance = AppSpacing.x3;
 const double _p2pNotificationsNativeClearance = AppSpacing.x2;
 const double _p2pNotificationsTitleLineHeight = 1.1;
 const double _p2pNotificationsDividerExtent = AppSpacing.dividerHairline;
-const EdgeInsets _p2pNotificationsCardPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsetsGeometry _p2pNotificationsChannelPadding =
-    EdgeInsetsDirectional.symmetric(
-      horizontal: AppSpacing.x2,
-      vertical: AppSpacing.x3,
-    );
-
-EdgeInsets _p2pNotificationsScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PNotificationsSettingsPage extends ConsumerStatefulWidget {
   const P2PNotificationsSettingsPage({super.key, this.shellRenderMode});
@@ -89,7 +75,9 @@ class _P2PNotificationsSettingsPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pNotificationsScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pNotificationsScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
@@ -145,9 +133,9 @@ class _Hero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PNotificationsSettingsPage.heroKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
-      padding: _p2pNotificationsCardPadding,
+      padding: AppSpacing.p2pNotificationsCardPadding,
       child: Row(
         children: [
           const Material(
@@ -207,7 +195,7 @@ class _SettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PNotificationsSettingsPage.settingsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
@@ -244,7 +232,7 @@ class _SettingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: _p2pNotificationsCardPadding,
+      padding: AppSpacing.p2pNotificationsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -306,7 +294,7 @@ class _ChannelButton extends StatelessWidget {
       onTap: onTap,
       tone: VitChoicePillTone.success,
       height: AppSpacing.buttonCompact + AppSpacing.x4,
-      padding: _p2pNotificationsChannelPadding,
+      padding: AppSpacing.p2pNotificationsChannelPadding,
       leading: Icon(channel.icon),
       semanticLabel: '${channel.label} notifications',
     );

@@ -85,7 +85,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       key: LaunchpadAddressBookPage.infoKey,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
       background: const ColoredBox(color: AppColors.primary08),
       padding: AppSpacing.launchpadPaddingX3,

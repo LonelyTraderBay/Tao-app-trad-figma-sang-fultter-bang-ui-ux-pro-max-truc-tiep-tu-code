@@ -11,7 +11,7 @@ class _SmartAlertCard extends StatelessWidget {
 
     return VitCard(
       padding: AppSpacing.crossModuleCardPadding,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

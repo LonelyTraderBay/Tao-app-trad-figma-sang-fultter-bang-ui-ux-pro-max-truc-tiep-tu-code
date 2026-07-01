@@ -92,7 +92,7 @@ class _BotCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               _BotMiniStat(
@@ -168,7 +168,7 @@ class _BotIcon extends StatelessWidget {
       width: AppSpacing.launchpadBox40,
       height: AppSpacing.launchpadBox40,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       alignment: Alignment.center,
       borderColor: color.withValues(alpha: .22),
       child: Icon(iconData, color: color, size: AppSpacing.tradeBotActionIcon),
@@ -240,12 +240,27 @@ class _StrategiesTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _PerformanceCard(strategies: strategies),
-        const SizedBox(height: AppSpacing.x4),
-        for (final strategy in strategies) ...[
-          _StrategyCard(strategy: strategy, onCreate: () => onCreate(strategy)),
-          const SizedBox(height: AppSpacing.x4),
-        ],
+        VitTradeSection(
+          title: 'Hiệu suất chiến lược',
+          child: _PerformanceCard(strategies: strategies),
+        ),
+        VitTradeSection(
+          title: 'Chiến lược',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final strategy in strategies) ...[
+                _StrategyCard(
+                  strategy: strategy,
+                  onCreate: () => onCreate(strategy),
+                ),
+                if (strategy != strategies.last)
+                  const SizedBox(height: AppSpacing.x3),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x3),
         _BotInfoCard(),
       ],
     );
@@ -262,84 +277,41 @@ class _PerformanceCard extends StatelessWidget {
     return VitCard(
       padding: AppSpacing.tradeBotCardPadding,
       borderColor: _botPrimary.withValues(alpha: .20),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.bar_chart_rounded,
-                color: _botPrimary,
-                size: AppSpacing.tradeBotMediumIcon,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  'Hiệu suất chiến lược (30 ngày gần đây)',
-                  style: AppTextStyles.caption.copyWith(
-                    color: _botPrimary,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Row(
-            children: [
-              _StrategyStat(
-                label: 'DCA Bot',
-                value: '+9.4%',
-                color: _botPrimary,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              _StrategyStat(
-                label: 'Grid Bot',
-                value: '+27.1%',
-                color: AppColors.warn,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              _StrategyStat(
-                label: 'Momentum',
-                value: '+18.3%',
-                color: AppColors.buy,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StrategyStat extends StatelessWidget {
-  const _StrategyStat({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        padding: AppSpacing.tradeBotInnerPanelPadding,
-        variant: VitCardVariant.inner,
-        child: Column(
-          children: [
-            Text(
-              value,
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
+      child: VitActionTileGrid(
+        density: VitDensity.compact,
+        crossAxisCount: 3,
+        childAspectRatio: 1.35,
+        itemCount: 3,
+        itemBuilder: (context, index, tileDensity) {
+          final tiles = [
+            (
+              label: 'DCA Bot',
+              badge: '+9.4%',
+              color: _botPrimary,
+              icon: Icons.calendar_month_rounded,
             ),
-            Text(label, style: AppTextStyles.micro),
-          ],
-        ),
+            (
+              label: 'Grid Bot',
+              badge: '+27.1%',
+              color: AppColors.warn,
+              icon: Icons.grid_view_rounded,
+            ),
+            (
+              label: 'Momentum',
+              badge: '+18.3%',
+              color: AppColors.buy,
+              icon: Icons.show_chart_rounded,
+            ),
+          ];
+          final tile = tiles[index];
+          return VitServiceTile(
+            density: tileDensity,
+            icon: tile.icon,
+            label: tile.label,
+            badgeLabel: tile.badge,
+            accentColor: tile.color,
+          );
+        },
       ),
     );
   }

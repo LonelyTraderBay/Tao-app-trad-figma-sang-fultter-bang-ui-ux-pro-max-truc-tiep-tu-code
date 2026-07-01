@@ -16,7 +16,7 @@ class _ProfileHero extends StatelessWidget {
     final risk = _riskPresentation(trader.riskLevel);
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: _profilePrimary.withValues(alpha: .25),
       density: VitDensity.compact,
       child: Column(

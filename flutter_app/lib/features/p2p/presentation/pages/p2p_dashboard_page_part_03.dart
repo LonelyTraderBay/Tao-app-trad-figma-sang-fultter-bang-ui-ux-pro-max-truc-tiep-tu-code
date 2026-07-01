@@ -16,7 +16,7 @@ class _CenteredStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pDashboardCompactCardPadding,
       child: Column(
         children: [
@@ -128,7 +128,7 @@ class _MerchantRow extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.merchantKey(merchant.id),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pDashboardMerchantPadding,
       onTap: onTap,
       child: Row(

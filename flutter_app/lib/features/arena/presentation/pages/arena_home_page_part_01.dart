@@ -272,7 +272,7 @@ class _QuickChip extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.inner,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         height: VitDensity.compact.controlHeight,
         padding: AppSpacing.arenaPresetChipPadding,
         child: Row(

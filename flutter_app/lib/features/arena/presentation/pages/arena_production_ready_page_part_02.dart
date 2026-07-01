@@ -111,7 +111,7 @@ class _FlowStepRow extends StatelessWidget {
             child: VitCard(
               key: ArenaProductionReadyPage.flowStepKey(flowId, step.label),
               variant: VitCardVariant.ghost,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               padding: AppSpacing.arenaProductionFlowStepPadding(last),
               onTap: () => onRoute(step.route),
               child: Column(

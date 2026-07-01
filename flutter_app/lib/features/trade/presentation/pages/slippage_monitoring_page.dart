@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/slippage_monitoring_overview.dart';
 part '../widgets/slippage_monitoring_events.dart';
@@ -56,15 +57,10 @@ class _SlippageMonitoringPageState
         .watch(tradeReadModelControllerProvider)
         .getSlippageMonitoring();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final chromeInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final scrollClearance =
-        chromeInset +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x6 + AppSpacing.x5
-            : AppSpacing.x5 + AppSpacing.x3);
+    final scrollClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

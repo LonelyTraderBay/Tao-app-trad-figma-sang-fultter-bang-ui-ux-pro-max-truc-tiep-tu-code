@@ -25,7 +25,7 @@ class _SummaryBanner extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             width: AppSpacing.walletPendingAssetIconBox,
             height: AppSpacing.walletPendingAssetIconBox,
             alignment: Alignment.center,
@@ -157,7 +157,7 @@ class _DepositCard extends StatelessWidget {
             children: [
               VitCard(
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 width: AppSpacing.walletPendingAssetIconBox,
                 height: AppSpacing.walletPendingAssetIconBox,
                 alignment: Alignment.center,

@@ -292,7 +292,7 @@ class _CountBadge extends StatelessWidget {
         child: DecoratedBox(
           decoration: const ShapeDecoration(
             color: AppColors.sell,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
             shadows: [
               BoxShadow(
                 color: AppColors.sell20,

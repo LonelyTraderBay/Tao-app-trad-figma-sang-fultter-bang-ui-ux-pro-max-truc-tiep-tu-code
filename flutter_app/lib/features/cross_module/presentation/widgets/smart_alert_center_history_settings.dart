@@ -77,7 +77,7 @@ class _AlertHistoryTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.sectionGap),
         VitCard(
           padding: AppSpacing.crossModuleCardPadding,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -229,7 +229,7 @@ class _ToggleSwitch extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       width: AppSpacing.inputHeight,
       height: AppSpacing.x6,
@@ -298,7 +298,7 @@ class _TemplateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.crossModulePanelPadding,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

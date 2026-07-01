@@ -86,7 +86,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                       if (_activeTab == 'tutorials')
                         VitCard(
                           variant: VitCardVariant.standard,
-                          radius: VitCardRadius.md,
+                          radius: VitCardRadius.standard,
                           padding: AppSpacing.zeroInsets,
                           child: SavingsGuideTutorialsTab(
                             snapshot: snapshot,
@@ -97,7 +97,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                       else
                         VitCard(
                           variant: VitCardVariant.standard,
-                          radius: VitCardRadius.md,
+                          radius: VitCardRadius.standard,
                           padding: AppSpacing.zeroInsets,
                           child: SavingsGuideGlossaryTab(snapshot: snapshot),
                         ),

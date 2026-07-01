@@ -21,20 +21,10 @@ const _p2pVideoVisualNavClearance =
 const _p2pVideoNativeNavClearance = _p2pVideoVisualNavClearance - AppSpacing.x4;
 const _p2pVideoVisualClearance = AppSpacing.x3;
 const _p2pVideoNativeClearance = AppSpacing.x2;
-const _p2pVideoCardPadding = EdgeInsets.all(AppSpacing.x3);
-const _p2pVideoCompactCardPadding = EdgeInsets.all(AppSpacing.x2);
 const _p2pVideoMajorGap = AppSpacing.x3;
 const _p2pVideoSectionGap = AppSpacing.x2;
 const _p2pVideoTightGap = AppSpacing.x1;
 const _p2pVideoIconBox = AppSpacing.searchBarCompactHeight;
-
-EdgeInsets _p2pVideoScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PVideoVerificationPage extends ConsumerStatefulWidget {
   const P2PVideoVerificationPage({super.key, this.shellRenderMode});
@@ -88,7 +78,7 @@ class _P2PVideoVerificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pVideoScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pVideoScrollPadding(scrollEndPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -120,7 +110,7 @@ class _P2PVideoVerificationPageState
                         const SizedBox(height: _p2pVideoSectionGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pVideoCompactCardPadding,
+                          padding: AppSpacing.p2pVideoCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Video verification review',
@@ -151,9 +141,9 @@ class _VideoHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PVideoVerificationPage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: _p2pVideoCardPadding,
+      padding: AppSpacing.p2pVideoCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -210,8 +200,8 @@ class _PreparationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PVideoVerificationPage.preparationKey,
-      radius: VitCardRadius.md,
-      padding: _p2pVideoCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pVideoCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -287,10 +277,10 @@ class _SlotCard extends StatelessWidget {
       opacity: slot.available ? 1 : .48,
       child: VitCard(
         key: P2PVideoVerificationPage.slotKey(slot.id),
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
         borderColor: selected ? AppColors.primary20 : AppColors.borderSolid,
-        padding: _p2pVideoCardPadding,
+        padding: AppSpacing.p2pVideoCardPadding,
         onTap: slot.available ? onTap : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

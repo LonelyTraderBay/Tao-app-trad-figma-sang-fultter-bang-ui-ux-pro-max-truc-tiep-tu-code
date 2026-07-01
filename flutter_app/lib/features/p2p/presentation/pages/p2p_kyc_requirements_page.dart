@@ -30,23 +30,6 @@ const double _p2pKycSmallIconExtent = AppSpacing.p2pHomeSmallIcon;
 const double _p2pKycChecklistIconExtent = AppSpacing.p2pHomeVerifiedIcon;
 const double _p2pKycDividerExtent = AppSpacing.dividerHairline;
 const double _p2pKycCtaHeight = AppSpacing.ctaHeight - AppSpacing.x1;
-const EdgeInsetsDirectional _p2pKycCardPadding = EdgeInsetsDirectional.all(
-  AppSpacing.x3,
-);
-const EdgeInsetsDirectional _p2pKycNoticePadding = EdgeInsetsDirectional.all(
-  AppSpacing.x3,
-);
-const EdgeInsetsDirectional _p2pKycTierSectionPadding =
-    EdgeInsetsDirectional.all(AppSpacing.x3);
-const EdgeInsetsDirectional _p2pKycTierActionPadding =
-    EdgeInsetsDirectional.fromSTEB(
-      AppSpacing.x3,
-      AppSpacing.zero,
-      AppSpacing.x3,
-      AppSpacing.x3,
-    );
-const EdgeInsetsDirectional _p2pKycChecklistIconPadding =
-    EdgeInsetsDirectional.only(top: AppSpacing.x1);
 
 class P2PKycRequirementsPage extends ConsumerWidget {
   const P2PKycRequirementsPage({super.key, this.shellRenderMode});
@@ -93,10 +76,7 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pKycRequirementsScrollPadding(
                       scrollEndPadding,
                     ),
                     child: Column(

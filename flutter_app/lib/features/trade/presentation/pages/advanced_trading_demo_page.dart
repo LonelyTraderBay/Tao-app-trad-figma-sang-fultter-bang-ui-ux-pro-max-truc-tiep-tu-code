@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/advanced_trading_demo_page_sections.dart';
 part '../widgets/advanced_trading_demo_page_common.dart';
@@ -22,8 +23,6 @@ part '../widgets/advanced_trading_demo_page_common.dart';
 const _advancedGreen = AppColors.buy;
 const _advancedRed = AppColors.sell;
 const _advancedPrimary = AppColors.primary;
-const double _advancedVisualScrollClearance = 108;
-const double _advancedNativeScrollClearance = 72;
 const double _advancedSheetClearance = 72;
 const double _advancedSpace = AppSpacing.x2;
 const double _advancedTinySpace = AppSpacing.x1;
@@ -59,11 +58,10 @@ class _AdvancedTradingDemoPageState
         .watch(tradeReadModelControllerProvider)
         .getAdvancedTradingDemo();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? _advancedVisualScrollClearance
-            : _advancedNativeScrollClearance) +
-        MediaQuery.paddingOf(context).bottom;
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

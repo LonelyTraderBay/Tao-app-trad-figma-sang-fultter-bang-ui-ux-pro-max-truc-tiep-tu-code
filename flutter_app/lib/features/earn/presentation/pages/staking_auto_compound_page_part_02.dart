@@ -16,7 +16,7 @@ class _FrequencyTile extends StatelessWidget {
     return VitCard(
       key: StakingAutoCompoundPage.frequencyKey(frequency.id),
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: selected ? AppColors.buy : AppColors.borderSolid,
       padding: AppSpacing.earnPaddingX4,
       onTap: onTap,
@@ -60,7 +60,7 @@ class _GasOptimizationTile extends StatelessWidget {
     return VitCard(
       key: StakingAutoCompoundPage.gasOptimizationKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnPaddingX4,
       onTap: onTap,
       child: Row(
@@ -100,7 +100,7 @@ class _PositionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingAutoCompoundPage.positionKey(position.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -183,7 +183,7 @@ class _SimulationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingAutoCompoundPage.simulationKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -292,7 +292,7 @@ class _SimulationCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.earnPaddingX4,
             child: Column(
               children: [
@@ -468,7 +468,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingAutoCompoundPage.footerKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX5,
       child: Text(
         snapshot.footerNote,

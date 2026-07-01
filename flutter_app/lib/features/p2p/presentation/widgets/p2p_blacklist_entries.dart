@@ -19,7 +19,7 @@ class _EntryList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (entries.isEmpty) {
       return VitCard(
-        padding: _p2pBlacklistCardPadding,
+        padding: AppSpacing.p2pBlacklistListCardPadding,
         child: Column(
           children: [
             const Icon(
@@ -77,7 +77,7 @@ class _EntryCard extends StatelessWidget {
     final color = _reasonColor(reason);
     return VitCard(
       key: P2PBlacklistPage.entryKey(entry.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: expanded ? color.withValues(alpha: .38) : null,
       clip: true,
       child: Column(
@@ -85,10 +85,10 @@ class _EntryCard extends StatelessWidget {
           VitCard(
             onTap: onToggle,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.zeroInsets,
             child: Padding(
-              padding: _p2pBlacklistCardPadding,
+              padding: AppSpacing.p2pBlacklistListCardPadding,
               child: Row(
                 children: [
                   _Avatar(entry: entry, reason: reason),
@@ -183,13 +183,13 @@ class _ExpandedEntry extends StatelessWidget {
           child: ColoredBox(color: AppColors.divider),
         ),
         Padding(
-          padding: _p2pBlacklistCardPadding,
+          padding: AppSpacing.p2pBlacklistListCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: _p2pBlacklistTinyPadding,
+                padding: AppSpacing.p2pBlacklistListTinyPadding,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -349,7 +349,7 @@ class _OrderLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: _p2pBlacklistTinyPadding,
+      padding: AppSpacing.p2pBlacklistListTinyPadding,
       child: Row(
         children: [
           const Icon(

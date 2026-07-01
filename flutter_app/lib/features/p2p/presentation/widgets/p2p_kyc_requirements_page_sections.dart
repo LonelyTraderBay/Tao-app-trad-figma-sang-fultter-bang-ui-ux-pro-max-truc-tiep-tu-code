@@ -9,9 +9,9 @@ class _KycHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PKycRequirementsPage.heroKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: _p2pKycCardPadding,
+      padding: AppSpacing.p2pKycRequirementsCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,9 +73,9 @@ class _KycNotice extends StatelessWidget {
     return VitCard(
       key: P2PKycRequirementsPage.noticeKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
-      padding: _p2pKycNoticePadding,
+      padding: AppSpacing.p2pKycRequirementsNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -124,7 +124,7 @@ class _KycTierCard extends StatelessWidget {
     final color = _tierColor(tier);
     return VitCard(
       key: P2PKycRequirementsPage.tierKey(tier.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: tier.status == P2PKycTierStatus.current
           ? color
           : AppColors.cardBorder,
@@ -135,7 +135,7 @@ class _KycTierCard extends StatelessWidget {
           ColoredBox(
             color: _tierHeaderBackground(tier),
             child: Padding(
-              padding: _p2pKycCardPadding,
+              padding: AppSpacing.p2pKycRequirementsCardPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -246,7 +246,7 @@ class _KycTierCard extends StatelessWidget {
           ),
           if (onUpgrade != null)
             Padding(
-              padding: _p2pKycTierActionPadding,
+              padding: AppSpacing.p2pKycRequirementsTierActionPadding,
               child: VitCtaButton(
                 key: P2PKycRequirementsPage.upgradeKey(tier.id),
                 variant: tier.status == P2PKycTierStatus.available
@@ -304,7 +304,7 @@ class _TierSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: _p2pKycTierSectionPadding,
+      padding: AppSpacing.p2pKycRequirementsTierSectionPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

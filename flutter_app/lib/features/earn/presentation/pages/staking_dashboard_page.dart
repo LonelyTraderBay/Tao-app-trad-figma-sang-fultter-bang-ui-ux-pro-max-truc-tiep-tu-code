@@ -79,7 +79,7 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
                     children: [
                       VitCard(
                         variant: VitCardVariant.standard,
-                        radius: VitCardRadius.md,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: StakingDashboardSummaryCard(
                           key: StakingDashboardPage.summaryKey,

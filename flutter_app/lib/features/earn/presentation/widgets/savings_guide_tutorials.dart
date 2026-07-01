@@ -224,7 +224,7 @@ class _TutorialCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = completed ? AppColors.buy : AppColors.primary;
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       onTap: onTap,
       child: Padding(
@@ -329,7 +329,7 @@ class _QuickTipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = savingsGuideRiskColor(tip.tone);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -372,7 +372,7 @@ class _StartSavingsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

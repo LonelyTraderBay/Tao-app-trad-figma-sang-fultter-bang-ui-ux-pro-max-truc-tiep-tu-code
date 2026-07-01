@@ -1,7 +1,10 @@
 # VitTrade Home UI Project-Wide Standardization Deep Plan
 
-Updated: 2026-06-27
-Status: Planning contract for the next UI synchronization pass
+Updated: 2026-07-01
+Status: **Phase 7 closure complete** — Phases 0–7 Done; `total_debt=0`
+Last sync: **2026-07-01** — §4.0, §4.3.1, §11, §12 aligned with
+[`VitTrade-Home-UI-Standardization-Batch-Log.md`](VitTrade-Home-UI-Standardization-Batch-Log.md)
+and regenerated `VitTrade-Design-Token-Consistency-Audit.csv` (P2P-HOME-03/04 Done).
 Scope: Flutter UI under `flutter_app/lib/features/`, shared UI primitives under
 `flutter_app/lib/shared/`, app theme tokens under `flutter_app/lib/app/theme/`,
 and verification artifacts under `docs/02_FLUTTER_MIGRATION/`.
@@ -22,19 +25,26 @@ styling, action census, GitNexus impact evidence, focused tests, analyzer, and
 audit evidence.
 
 That model should now become the project-wide UI process. The current app is
-already much cleaner than the older enterprise UI/UX plan snapshots, but the
-latest audits still show residual work:
+already much cleaner than the older enterprise UI/UX plan snapshots. **Live
+execution numbers are in §4.0** (do not use the pre-execution snapshot below
+for gates).
+
+Pre-execution snapshot (2026-06-27 plan baseline):
 
 - Wallet token debt is `0`, so Wallet is the reference implementation, not the
   main cleanup target.
 - Typography debt is `0` across all modules.
 - Route coverage is current.
 - Visual density has no P0/P1 normal-screen failures.
-- Residual token debt is concentrated in P2P, with one Earn root bundle and two
-  Trade root bundles still showing root-page bundle debt.
+- Residual token debt was concentrated in P2P (`p0_p2p_debt=173`), with one Earn
+  root bundle, two Trade root bundles, Markets feature-widget debt
+  (`p0_markets_debt=6`), and one shared-widget residual (`vit_choice_pill.dart`).
 - Five fullscreen tool screens still require explicit manual visual QA.
 - Five medium density review items remain, including four Wallet follow-ups and
   one Earn notifications surface.
+
+**After 2026-07-01 execution (see §4.0):** `total_debt=0`, `p0_p2p_debt=0`,
+`p0_trade_debt=0`, `p0_markets_debt=0`, Phases 0–7 complete.
 
 The goal is not to redesign the app again from scratch. The goal is to finish
 the remaining inconsistencies, preserve the Home/Wallet standard, and make the
@@ -57,6 +67,43 @@ Use this order when documents or code disagree:
 If visual consistency conflicts with financial safety, financial safety wins.
 If a historical plan conflicts with current Flutter source/tests/audits, inspect
 source/tests/audits and update stale docs when in scope.
+
+### 2.1 Document Scope Matrix
+
+This Deep Plan owns the **residual debt pass** after the broader Home rollout.
+Use it together with, not instead of, the documents below.
+
+| Document | Status | Owned by this plan | Owned elsewhere |
+| --- | --- | --- | --- |
+| [`VitTrade-Home-UI-Rollout-Execution-Plan.md`](../03_DESIGN_SYSTEM/VitTrade-Home-UI-Rollout-Execution-Plan.md) | Active; many batches Done | Residual token/density queues only | Screen-entry rollout tracking, §7 batch log rows for completed batches |
+| [`Wallet-UI-Home-Standardization-Plan.md`](Wallet-UI-Home-Standardization-Plan.md) | Reference implementation | Phase 3 Wallet medium-density follow-ups only | Wallet route manifest, per-page evidence, safety gates |
+| [`VitTrade-Top-Header-Visual-Consistency-Completion-Plan.md`](VitTrade-Top-Header-Visual-Consistency-Completion-Plan.md) | Code/audit done; Phase 8 emulator QA unconfirmed | Header fixes only when tool QA finds a header issue | Top-header audits, guardrail tests, archetype policy |
+| [`VitTrade-Whole-App-P2-P3-Assignment-Ledger.md`](../03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.md) | 256 rows = `monitor_when_touched` | Phase 5 prioritization via P2-A candidates | Row-level density policy and guardrails |
+| [`VitTrade-Whole-App-Visual-Density-Real-Audit-Report.md`](../03_DESIGN_SYSTEM/VitTrade-Whole-App-Visual-Density-Real-Audit-Report.md) | **Stale** (`total_debt=0` claim) | Do not use for gates | Deprecated; use `VitTrade-Visual-Density-Risk-Audit.md` |
+| [`Enterprise-PR-Review-Checklist.md`](Enterprise-PR-Review-Checklist.md) | Active merge gate | Per-batch and Phase 7 verification commands | PR review ownership |
+
+Rule: do not redo batches marked Done in the Execution Plan unless a
+regenerated audit shows new residual debt on that screen.
+
+### 2.2 Plan Sync Contract (mandatory)
+
+This Deep Plan is the **single progress source of truth** for the residual pass.
+After **every** batch (Done, Blocked, or partial handoff), update **in the same
+session**:
+
+| Location | What to update |
+| --- | --- |
+| **§4.0** | Phase status, debt delta, batch tracker, last-sync date |
+| **§4.2.2** | Regenerated audit totals when CSV changes |
+| **§4.3 / §4.3.1** | Remaining queue + per-bundle `Exec status` |
+| **§11** | Immediate next batch ID and targets |
+| **§12.2** | Per-page Done / In progress / Not started |
+| **§12.4** | Batch log row (or append to linked batch log file) |
+| [`VitTrade-Home-UI-Standardization-Batch-Log.md`](VitTrade-Home-UI-Standardization-Batch-Log.md) | Same row as §12.4 when residual pass is active |
+
+Do **not** mark a batch Done in code-only terms; require audit `--check` or
+regenerated CSV showing bundle pass/accepted exception, plus focused tests +
+`flutter analyze`.
 
 ## 3. Wallet Plan Analysis
 
@@ -112,7 +159,78 @@ The Wallet plan is feature-specific. A whole-app rollout needs extra structure:
 
 ## 4. Current Baseline Snapshot
 
-Captured on 2026-06-27 from the current workspace.
+### 4.0 Execution Progress (Live)
+
+Last updated: **2026-07-01** (synced with batch log + audit CSV; Phases 0–7 **Done**).
+Detailed batch rows:
+[`VitTrade-Home-UI-Standardization-Batch-Log.md`](VitTrade-Home-UI-Standardization-Batch-Log.md).
+
+**Summary:** Phase 0 complete. Phase 1 **Done** (7/7 batches). Phases 2, 2b, 3, 4, 5, 6, **7 Done**.
+`total_debt=0`; all P0 module gates pass. **No git commits** from execution session unless user
+requests.
+
+| Phase | Description | Status | Notes |
+| --- | --- | --- | --- |
+| **0** | Evidence freeze and graph refresh | **Done** | Audits regenerated 2026-07-01; route coverage current; GitNexus CLI detect_changes recorded |
+| **1** | P2P token residual cleanup (7 batches) | **Done** | 01–07 verified; `p0_p2p_debt=0` |
+| **2** | Earn and Trade token cleanup | **Done** | EARN-TRADE-01; `p0_trade_debt=0`; earn staking bundle pass |
+| **2b** | Markets + shared widget cleanup | **Done** | DEEP-MARKETS-SHARED-01; `p0_markets_debt=0`; `scope_shared_widget_debt=0` |
+| **3** | Wallet and Earn medium density review | **Done** | DEEP-DENSITY-WALLET-01; review-only (Wallet reference; tests pass; no spacing churn) |
+| **4** | Fullscreen tool visual QA | **Done** | DEEP-TOOL-QA-01; widget-test + layout evidence for 5 tool screens |
+| **5** | P3 low density triage | **Done** | P2-A ledger triaged; `monitor_when_touched`; no bulk P3 churn |
+| **6** | Product boundary and copy polish | **Done** | DEEP-COPY-01; copy + a11y guardrails pass |
+| **7** | Global visual QA and closure | **Done** | Full audit + quality tests + `flutter test` pass; GitNexus detect_changes recorded |
+
+**Debt delta (verified after Phase 7 closure):**
+
+| Metric | Plan baseline (2026-06-27) | Current (2026-07-01) | Delta |
+| --- | ---: | ---: | ---: |
+| `total_debt` | 374 | **0** | −374 |
+| `p0_p2p_debt` | 173 | 0 | −173 |
+| `p0_trade_debt` | 2 | 0 | −2 |
+| `p0_markets_debt` | 6 | 0 | −6 |
+| `scope_shared_widget_debt` | 1 | 0 | −1 |
+| `scope_root_page_bundle_summary_debt` | 176 | 0 | −176 |
+
+**P2P bundle progress (audit CSV):**
+
+| Metric | Count |
+| --- | ---: |
+| P2P root bundles tracked | 71 |
+| Cleared (pass/exception, 0 debt) after batches 01–07 | 57 page bundles |
+| Still warn/fail with debt | 0 |
+| Already pass before batch 03 (no work) | e.g. `p2p_kyc_requirements_page.dart` |
+
+**Code touched (verified batches):**
+
+- `flutter_app/lib/app/theme/app_spacing.dart` — `p2pPayment*`, `p2pEscrow*`,
+  `p2pMyOrders*`, `p2pOrderBook*`, `p2pOrder*`, `p2pSelfie*`, `p2pKyc*`,
+  `p2pVideo*`, `p2pAddressProof*`, `p2pFraud*`, `p2pRiskAssessment*`,
+  `p2pLimitTracker*`, `p2pTransactionLimits*`, `p2pAmlScreening*`,
+  `p2pComplianceOverview*`, `p2pSourceOfFunds*`, `p2pSuspiciousActivity*`,
+  `p2pLargeTransaction*`, `p2pMerchantCommerce*`, `p2pAdDetailFlush*`,
+  `p2pInsuranceCertificate*`, `p2pSettingsPage*`, `p2pTwoFactor*`, `p2pDevices*`,
+  `p2pBlacklistList*`, `p2pNotifications*`, `p2pTax*`, `p2pLoginHistoryPage*`,
+  `p2pAchievementsPage*`, `p2pFundLock*`, `p2pContribution*`, `p2pDispute*`,
+  `p2pExpress*`, `p2pWalletTransfer*`, `p2pHomeClearFilter*`,
+  `p2pDashboardPage*`, `p2pInsuranceFundTourSkip*` tokens
+- `flutter_app/lib/features/p2p/presentation/pages/` — 57 page roots (batches 01–07)
+- `flutter_app/lib/features/p2p/presentation/widgets/` — matching part/common files
+
+**Phase 1 batch tracker:**
+
+| Batch ID | Slice | Exec status | Verification | p0_p2p after |
+| --- | --- | --- | --- | ---: |
+| P2P-HOME-01 | Payment methods (6 pages) | **Done** | tests + analyze + audit pass | 149 |
+| P2P-HOME-02 | Escrow/orders (8 pages) | **Done** | tests + analyze + audit pass/exception | 119 |
+| P2P-HOME-03 | KYC/verification (5 pages) | **Done** | tests + analyze + audit pass | 97 |
+| P2P-HOME-04 | Risk/compliance (9 pages) | **Done** | tests + analyze + audit pass | 72 |
+| P2P-HOME-05 | Merchant/ads (5 pages) | **Done** | tests + analyze + audit pass | 45 |
+| P2P-HOME-06 | Account/security (11 pages) | **Done** | tests + analyze + audit pass | 19 |
+| P2P-HOME-07 | Dispute/express/misc (9 pages) | **Done** | tests + analyze + audit pass/exception | 0 |
+
+Captured on 2026-06-27 from the current workspace (original plan baseline).
+See §4.0 for post-execution numbers.
 
 ### 4.1 Inventory
 
@@ -166,6 +284,8 @@ Route group counts:
 
 ### 4.2 Audit Results
 
+#### 4.2.1 Original baseline (2026-06-27)
+
 Commands run from `flutter_app/`:
 
 ```bash
@@ -193,30 +313,116 @@ Results:
   `P2_MEDIUM_DENSITY_REVIEW=5`, `P3_LOW_DENSITY_REVIEW=168`,
   `PASS_MONITOR=236`.
 
+#### 4.2.2 Current baseline after Phase 7 closure (2026-07-01)
+
+Regenerated after EARN-TRADE-01, DEEP-MARKETS-SHARED-01, and Phase 7 audit refresh.
+
+- Route coverage artifact is current.
+- Design-token, visual-density, navigation-edge, back-navigation, and top-header artifacts regenerated.
+- `total_debt=0` (was 374).
+- `scope_root_page_bundle_summary_debt=0` (was 176).
+- `scope_shared_layout_debt=0`.
+- `scope_shared_widget_debt=0`.
+- `p0_wallet_debt=0`.
+- `p0_trade_debt=0`.
+- `p0_p2p_debt=0`.
+- `p0_markets_debt=0`.
+- `p0_profile_debt=0`.
+- Visual density: `P0=0`, `P1=0`, `P1_TOOL=5`, `P2=7`, `P3=166`.
+- GitNexus `detect_changes()` recorded at Phase 7 closure.
+
 ### 4.3 Residual Token Debt Queue
 
-Root-page bundle debt is concentrated here:
+**Cleared 2026-07-01.** All root-bundle, feature-widget, and shared-widget P0 debt
+resolved. Remaining audit exceptions are documented L3 (orderbook, custompainter,
+tool surfaces).
+
+Root-page bundle debt (current queue after Phase 2):
 
 | Feature | Root bundles with debt | Root bundle debt |
 | --- | ---: | ---: |
-| p2p | 51 | 166 |
-| earn | 1 | 8 |
-| trade | 2 | 2 |
+| earn | 0 | 0 |
+| trade | 0 | 0 |
+| p2p | 0 | 0 |
 
-Highest residual pages:
+Feature-widget and shared-widget residuals (cleared in Phase 2b):
+
+| Scope | Files with debt | Debt |
+| --- | ---: | ---: |
+| markets widgets | 0 | 0 |
+| shared widgets | 0 | 0 |
+
+Highest residual pages — **none** (all pass or accepted L3 exception):
 
 | Feature | Debt | Page bundle |
 | --- | ---: | --- |
-| p2p | 8 | `p2p_my_ads_page.dart` |
-| earn | 8 | `staking_earn_page.dart` |
-| p2p | 8 | `p2p_selfie_verification_page.dart` |
-| p2p | 7 | `p2p_insurance_certificate_page.dart` |
-| p2p | 6 | `p2p_blacklist_page.dart` |
-| p2p | 6 | `p2p_payment_methods_page.dart` |
-| p2p | 6 | `p2p_payment_method_add_page.dart` |
-| p2p | 6 | `p2p_fraud_prevention_page.dart` |
-| p2p | 6 | `p2p_escrow_detail_page.dart` |
-| p2p | 6 | `p2p_my_orders_page.dart` |
+| — | 0 | All root bundles pass or L3 exception |
+
+#### 4.3.1 P2P Root-Bundle Debt Manifest
+
+All 47 P2P root bundles with warn/fail debt from
+`VitTrade-Design-Token-Consistency-Audit.csv`, mapped to Phase 1 batches.
+Regenerate this table when the audit CSV changes.
+
+| Batch | Page bundle | Debt (plan) | Audit status (2026-07-01) | Exec status |
+| --- | --- | ---: | --- | --- |
+| 1 | `p2p_payment_methods_page.dart` | 6 | **pass** | Done (P2P-HOME-01) |
+| 1 | `p2p_payment_method_add_page.dart` | 6 | **pass** | Done (P2P-HOME-01) |
+| 1 | `p2p_payment_method_ownership_page.dart` | 5 | **pass** | Done (P2P-HOME-01) |
+| 1 | `p2p_payment_method_verification_page.dart` | 3 | **pass** | Done (P2P-HOME-01) |
+| 1 | `p2p_payment_method_cooling_period_page.dart` | 2 | **pass** | Done (P2P-HOME-01) |
+| 1 | `p2p_payment_method_history_page.dart` | 1 | **pass** | Done (P2P-HOME-01) |
+| 2 | `p2p_escrow_detail_page.dart` | 6 | **pass** | Done (P2P-HOME-02) |
+| 2 | `p2p_escrow_balance_page.dart` | 4 | **pass** | Done (P2P-HOME-02) |
+| 2 | `p2p_order_page.dart` | 3 | **exception** (custompainter) | Done (P2P-HOME-02; L3 spacing cleanup) |
+| 2 | `p2p_order_book_page.dart` | 5 | **exception** (orderbook) | Done (P2P-HOME-02; L3 spacing cleanup) |
+| 2 | `p2p_my_orders_page.dart` | 6 | **pass** | Done (P2P-HOME-02) |
+| 2 | `p2p_order_rate_page.dart` | 3 | **pass** | Done (P2P-HOME-02) |
+| 2 | `p2p_order_proof_page.dart` | 1 | **pass** | Done (P2P-HOME-02) |
+| 3 | `p2p_selfie_verification_page.dart` | 8 | **pass** | Done (P2P-HOME-03) |
+| 3 | `p2p_video_verification_page.dart` | 3 | **pass** | Done (P2P-HOME-03) |
+| 3 | `p2p_address_proof_page.dart` | 5 | **pass** | Done (P2P-HOME-03) |
+| 3 | `p2p_kyc_status_page.dart` | 4 | **pass** | Done (P2P-HOME-03) |
+| 3 | `p2p_kyc_requirements_page.dart` | 0 | **pass** | **Skip** (already pass at baseline) |
+| 4 | `p2p_fraud_prevention_page.dart` | 6 | **pass** | Done (P2P-HOME-04) |
+| 4 | `p2p_risk_assessment_page.dart` | 4 | **pass** | Done (P2P-HOME-04) |
+| 4 | `p2p_limit_tracker_page.dart` | 5 | **pass** | Done (P2P-HOME-04) |
+| 4 | `p2p_transaction_limits_page.dart` | 3 | **pass** | Done (P2P-HOME-04) |
+| 4 | `p2p_large_transaction_justification_page.dart` | 1 | **pass** | Done (P2P-HOME-04) |
+| 4 | `p2p_aml_screening_page.dart` | 2 | **pass** | Done (P2P-HOME-04) |
+| 4 | `p2p_compliance_overview_page.dart` | 2 | **pass** | Done (P2P-HOME-04) |
+| 4 | `p2p_source_of_funds_page.dart` | 1 | **pass** | Done (P2P-HOME-04) |
+| 4 | `p2p_suspicious_activity_page.dart` | 1 | **pass** | Done (P2P-HOME-04) |
+| 5 | `p2p_my_ads_page.dart` | 8 | **pass** | Done (P2P-HOME-05) |
+| 5 | `p2p_create_ad_page.dart` | 5 | **pass** | Done (P2P-HOME-05) |
+| 5 | `p2p_merchant_profile_page.dart` | 4 | **pass** | Done (P2P-HOME-05) |
+| 5 | `p2p_ad_detail_page.dart` | 1 | **pass** | Done (P2P-HOME-05) |
+| 5 | `p2p_insurance_certificate_page.dart` | 7 | **pass** | Done (P2P-HOME-05) |
+| 6 | `p2p_settings_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_2fa_settings_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_device_management_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_blacklist_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_blacklist_add_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_notifications_settings_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_tax_reporting_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_login_history_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_achievements_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_fund_lock_history_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 6 | `p2p_contribution_history_page.dart` | 0 | **pass** | Done (P2P-HOME-06) |
+| 7 | `p2p_dispute_resolution_page.dart` | 3 | **pass** | Done (P2P-HOME-07) |
+| 7 | `p2p_dispute_detail_page.dart` | 1 | **pass** | Done (P2P-HOME-07) |
+| 7 | `p2p_dispute_evidence_page.dart` | 1 | **pass** | Done (P2P-HOME-07) |
+| 7 | `p2p_express_page.dart` | 4 | **pass** | Done (P2P-HOME-07) |
+| 7 | `p2p_express_confirm_page.dart` | 2 | **pass** | Done (P2P-HOME-07) |
+| 7 | `p2p_wallet_transfer_page.dart` | 5 | **pass** | Done (P2P-HOME-07) |
+| 7 | `p2p_home_page.dart` | 1 | **pass** | Done (P2P-HOME-07) |
+| 7 | `p2p_dashboard_page.dart` | 1 | **exception** (custompainter) | Done (P2P-HOME-07; L3 spacing cleanup) |
+| 7 | `p2p_insurance_fund_page.dart` | 1 | **exception** (custompainter) | Done (P2P-HOME-07; L3 spacing cleanup) |
+
+L3 exception bundles (`p2p_order_page`, `p2p_order_book_page`,
+`p2p_dashboard_page`, `p2p_insurance_fund_page`, `p2p_ad_analytics_page`,
+`p2p_dispute_page`) may retain canvas/orderbook-local composition after
+spacing/token cleanup; document the L3 reason in batch evidence.
 
 ### 4.4 Visual Density Queue
 
@@ -288,6 +494,11 @@ Required component mapping:
 | Detail rows | `VitInfoRow` or an approved shared equivalent |
 | Market/data rows | `VitMarketTickerStrip`, `VitMarketPairRow`, `VitRankedAssetRow`, `VitAssetAvatar`, `VitSparkline` |
 | Discovery bridge | `VitDiscoveryActionCard` with explicit module-boundary copy |
+| Financial hero | `VitHeroGlow` plus one hero-weight value card with tabular numbers |
+| Next action | `VitNextActionCard` for the single most important resumable task |
+| Announcement | `VitAnnouncementBanner.compact` for operational/campaign/security notices |
+| Sheet surface | `VitSheetPanel`, `VitSheetHandle` instead of local bottom-sheet chrome |
+| Action grid policy | `VitActionTileGrid`: compact 6 / comfortable 9 primary actions; overflow to shared sheet |
 
 Token rules:
 
@@ -299,6 +510,34 @@ Token rules:
   percentages use tabular numeric styling.
 - Do not introduce local page-level color palettes, raw spacing systems, raw
   radius systems, local `TextStyle(fontSize: ...)`, or repeated local cards.
+
+### 5.1 Screen Taxonomy
+
+Map every screen to a taxonomy class before editing. Labels come from
+`VitTrade-Body-Component-Consistency-Audit.csv` and
+`VitTrade-Top-Header-Visual-Archetype-Audit.csv`.
+
+| Class | Examples | Required Home pattern |
+| --- | --- | --- |
+| `L1_primaryTabRoot` | Home, Markets, Wallet, Profile, P2P home | `VitTopChrome` + compact first viewport + bottom-nav-safe scroll |
+| `L2_moduleDetail` | Asset detail, order detail, product detail | `VitHeader` + dense rows/lists + section rhythm |
+| `L3_highRiskForm` | Withdraw, payment-method add, escrow release | Preview/confirm + `VitHighRiskStatePanel` + masked values |
+| `L3_fullscreenTool` | Futures, AdvancedChart, TradingBots, P2PChat | Tool exception; manual visual QA; no forced card density |
+| `L3_authOnboarding` | Login, OTP, register, onboarding | See §5.2; minimal chrome |
+| `L3_marketData` | Market list sections, pair rows, movers | `VitMarketPairRow`, `VitRankedAssetRow`, ticker strip |
+| `L3_pointsOnlyArena` | Arena home, challenge, ledger | Points-only copy; no wallet/payout language |
+
+Record the taxonomy class and any L3 exception reason in batch evidence.
+
+### 5.2 Auth And Onboarding Exception Policy
+
+Auth and onboarding screens are not forced into bottom-tab page rhythm:
+
+- Do not require `VitBottomNav` clearance or module-root `VitTopChrome`.
+- Use minimal header, branded shell, or fullscreen step layout as appropriate.
+- Token rules still apply: no raw colors, spacing, radii, or local typography.
+- Financial safety still applies on security, 2FA, and recovery flows.
+- Focused auth tests (`test/features/auth/`) must pass after every batch.
 
 ## 6. Product Safety Boundaries
 
@@ -353,12 +592,13 @@ Description: Lock the current baseline before touching UI code.
 
 Acceptance criteria:
 
-- [ ] Git worktree is reviewed and unrelated dirty changes are not modified.
+- [x] Git worktree is reviewed and unrelated dirty changes are not modified.
 - [ ] GitNexus index is refreshed or stale status is recorded before any code
-      edits.
-- [ ] Route coverage, design-token, and visual-density audits are current.
-- [ ] Residual debt queue is regenerated from CSV artifacts.
-- [ ] Screens selected for the first batch are small enough for one focused
+      edits. *(Recorded: MCP unavailable; continued with source/test inspection.)*
+- [x] Route coverage, design-token, visual-density, and body-component audits
+      are current or regenerated when baseline changes.
+- [x] Residual debt queue is regenerated from CSV artifacts.
+- [x] Screens selected for the first batch are small enough for one focused
       session.
 
 Verification:
@@ -369,8 +609,21 @@ cd flutter_app
 dart run tool/route_coverage_audit.dart --check
 dart run tool/design_token_consistency_audit.dart --check
 dart run tool/visual_density_risk_audit.dart --check
+dart run tool/body_component_consistency_audit.dart --check
 flutter analyze
 ```
+
+When baseline numbers change, regenerate committed artifacts (not only
+`--check`):
+
+```bash
+cd flutter_app
+dart run tool/design_token_consistency_audit.dart
+dart run tool/visual_density_risk_audit.dart
+dart run tool/body_component_consistency_audit.dart
+```
+
+Commit updated CSV/MD under `docs/02_FLUTTER_MIGRATION/` when debt queues shift.
 
 Dependencies: None.
 
@@ -409,7 +662,18 @@ Batch slicing:
 6. Account, security, settings, tax:
    `p2p_settings_page.dart`, `p2p_2fa_settings_page.dart`,
    `p2p_device_management_page.dart`, `p2p_blacklist_page.dart`,
-   `p2p_notifications_settings_page.dart`, `p2p_tax_reporting_page.dart`.
+   `p2p_blacklist_add_page.dart`, `p2p_notifications_settings_page.dart`,
+   `p2p_tax_reporting_page.dart`, `p2p_login_history_page.dart`,
+   `p2p_achievements_page.dart`, `p2p_fund_lock_history_page.dart`,
+   `p2p_contribution_history_page.dart`.
+7. Dispute, express, wallet transfer, and misc residuals:
+   `p2p_dispute_resolution_page.dart`, `p2p_dispute_detail_page.dart`,
+   `p2p_dispute_evidence_page.dart`, `p2p_express_page.dart`,
+   `p2p_express_confirm_page.dart`, `p2p_wallet_transfer_page.dart`,
+   `p2p_home_page.dart`, `p2p_dashboard_page.dart`,
+   `p2p_insurance_fund_page.dart`.
+
+See §4.3.1 for the full batch-to-bundle manifest.
 
 Acceptance criteria:
 
@@ -437,12 +701,26 @@ flutter analyze
 
 Dependencies: Phase 0.
 
-Estimated scope: 8 to 12 small batches, 3 to 6 screens per batch.
+Estimated scope: 9 to 12 small batches, 3 to 6 screens per batch.
+
+**Progress (2026-07-01):** 7/7 batches Done; `p0_p2p_debt` 173 → 0. Phase 1 complete. See §4.0.
 
 ### Phase 2 - Earn And Trade Residual Token Cleanup
 
-Description: Clear the last non-P2P root-bundle token residuals:
-`staking_earn_page.dart` and two Trade bundles.
+Description: Clear the last non-P2P root-bundle token residuals and document
+L3 exceptions where canvas/orderbook composition must remain local.
+
+Target bundles:
+
+| Feature | Page bundle | Debt | Notes |
+| --- | --- | ---: | --- |
+| earn | `staking_earn_page.dart` | 8 | APY/lockup/risk copy must stay compliant |
+| trade | `kid_generator_page.dart` | 1 | Spacing debt in regulatory tool surface |
+| trade | `trade_page.dart` | 1 | L3 orderbook exception; clear `repeated_card` debt only |
+
+L3 policy for `trade_page.dart`: orderbook/canvas rendering stays local; replace
+local spacing/card wrappers with shared primitives where they do not break
+orderbook behavior. Record L3 reason in batch evidence.
 
 Acceptance criteria:
 
@@ -466,6 +744,45 @@ flutter analyze
 Dependencies: Phase 0.
 
 Estimated scope: 1 to 2 small batches.
+
+### Phase 2b - Markets Widget And Shared Widget Token Cleanup
+
+Description: Clear residual token debt outside P2P/Earn/Trade root bundles:
+Markets list widgets (`p0_markets_debt=6`) and shared `vit_choice_pill.dart`
+(`scope_shared_widget_debt=1`).
+
+Target files:
+
+| Scope | File | Debt |
+| --- | --- | ---: |
+| markets widget | `market_list_pairs.dart` | 3 |
+| markets widget | `market_list_filters.dart` | 1 |
+| markets widget | `market_list_movers.dart` | 1 |
+| markets widget | `market_list_tools.dart` | 1 |
+| shared widget | `flutter_app/lib/shared/widgets/vit_choice_pill.dart` | 1 |
+
+Acceptance criteria:
+
+- [ ] `p0_markets_debt` reaches `0`.
+- [ ] `scope_shared_widget_debt` reaches `0`.
+- [ ] GitNexus impact is run before editing `vit_choice_pill.dart`; warn on
+      HIGH/CRITICAL and run broad shared-layout tests if needed.
+- [ ] Market list first viewport and pair-row behavior unchanged.
+
+Verification:
+
+```bash
+cd flutter_app
+dart format --output=none --set-exit-if-changed lib/features/markets lib/shared/widgets test/features/markets test/shared
+dart run tool/design_token_consistency_audit.dart --check
+flutter test test/features/markets --reporter=compact
+flutter test test/shared --reporter=compact
+flutter analyze
+```
+
+Dependencies: Phase 0. May run in parallel with Phase 2 after Phase 0.
+
+Estimated scope: 1 small batch (Markets widgets + shared pill).
 
 ### Phase 3 - Wallet And Earn Medium Density Review
 
@@ -538,7 +855,8 @@ flutter test test/features/enterprise_states --reporter=compact
 flutter analyze
 ```
 
-Manual or emulator screenshot evidence is required for this phase.
+Manual or emulator screenshot evidence is required for this phase. Use §8.1
+Visual QA Evidence Template.
 
 Dependencies: Phase 0.
 
@@ -550,7 +868,35 @@ safe-area or rendering problems.
 Description: Review the 168 `P3_LOW_DENSITY_REVIEW` screens by module, focusing
 on repeated root causes rather than micro-tuning every page.
 
-Priority order:
+**Cross-reference:**
+[`VitTrade-Whole-App-P2-P3-Assignment-Ledger.md`](../03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.md)
+and
+[`VitTrade-Whole-App-P2-P3-Assignment-Ledger.csv`](../03_DESIGN_SYSTEM/VitTrade-Whole-App-P2-P3-Assignment-Ledger.csv).
+Default policy for assigned rows is `monitor_when_touched`; do not churn P3
+screens that already pass safety and first-viewport unless QA or nearby work
+justifies it.
+
+**P2-A next-batch candidates (prioritize before bulk P3):**
+
+| Feature | Page | Route | Guardrail |
+| --- | --- | --- | --- |
+| earn | `StakingProofOfReservesPage` | `AppRoutePaths.earnProofOfReserves` | financial_safety_copy_preserve |
+| p2p | `P2PDashboardPage` | `AppRoutePaths.p2pDashboard` | financial_safety_copy_preserve |
+| referral | `ReferralRewardsPage` | `AppRoutePaths.referralRewards` | standard_ui_accessibility_preserve |
+| earn | `StakingRegulatoryFrameworkPage` | `AppRoutePaths.earnRegulatoryFramework` | financial_safety_copy_preserve |
+| launchpad | `LaunchpadGasTrackerPage` | `AppRoutePaths.launchpadGasTracker` | financial_safety_copy_preserve |
+| trade | `BotPortfolioDashboardPage` | `AppRoutePaths.tradeBotPortfolioDashboard` | financial_safety_copy_preserve |
+| arena | `ArenaStudioPage` | `AppRoutePaths.arenaStudio` | open_arena_points_boundary_preserve |
+| arena | `ArenaUniversalPresetLibraryPage` | `AppRoutePaths.arenaStudioPresets` | open_arena_points_boundary_preserve |
+| markets | `MarketMoversPage` | `AppRoutePaths.marketsMovers` | standard_ui_accessibility_preserve |
+| profile | `ProfilePage` | `AppRoutePaths.profile` | standard_ui_accessibility_preserve |
+| trade | `CopyProviderDetailPage` | `/trade/copy-provider/:providerId` | financial_safety_copy_preserve |
+| trade | `PositionDashboardPage` | `AppRoutePaths.tradePositions` | financial_safety_copy_preserve |
+
+Phase 3 medium-density items (`P2_MEDIUM_DENSITY_REVIEW=5` in visual-density
+audit) remain owned by Phase 3, not this ledger's 113 broader P2 rows.
+
+Priority order for systemic P3 fixes:
 
 1. Earn: 51 low-density screens.
 2. Trade: 21 low-density screens.
@@ -578,7 +924,7 @@ flutter analyze
 flutter test test/features/<module> --reporter=compact
 ```
 
-Dependencies: Phases 1 to 4.
+Dependencies: Phases 1 to 4 and Phase 2b.
 
 Estimated scope: Rolling cleanup, 4 to 6 screens per module batch.
 
@@ -632,6 +978,7 @@ Acceptance criteria:
 
 - [ ] Route coverage passes.
 - [ ] Design-token audit passes with no unexpected residual debt.
+- [ ] `p0_markets_debt=0` and `scope_shared_widget_debt=0`.
 - [ ] Visual-density audit has no P0/P1 normal-screen issues.
 - [ ] Tool QA evidence is recorded.
 - [ ] Full focused suites pass for touched modules.
@@ -650,11 +997,16 @@ dart run tool/visual_density_risk_audit.dart --check
 flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 flutter test test/quality/product_copy_guardrails_test.dart --reporter=compact
 flutter test test/quality/accessibility_semantics_critical_flows_test.dart --reporter=compact
+flutter test test/quality/architecture_baseline_guardrails_test.dart --reporter=compact
+flutter test test/quality/navigation_route_guardrails_test.dart --reporter=compact
 flutter analyze
 flutter test --reporter=compact
 ```
 
-Dependencies: Phases 1 to 6.
+Also satisfy merge gates in
+[`Enterprise-PR-Review-Checklist.md`](Enterprise-PR-Review-Checklist.md).
+
+Dependencies: Phases 1 to 6 and Phase 2b.
 
 Estimated scope: Final QA and docs update.
 
@@ -694,9 +1046,14 @@ After editing:
 - Run dart format on touched Dart files.
 - Run focused feature tests.
 - Run design-token and visual-density audits when layout/tokens/density change.
+- Run `dart run tool/navigation_edge_audit.dart --check` when navigation calls,
+  route builders, or screen links change.
 - Run flutter analyze.
 - Run GitNexus detect_changes.
-- Update the batch log or plan evidence with command results and residual risk.
+- Update the batch log (§12) with command results and residual risk.
+- For UI polish batches, apply `.codex/skills/vittrade-ui-checklists/SKILL.md`
+  accessibility or motion checklists when touching icon-only controls,
+  forms, dialogs, or animations.
 ```
 
 Scoped action census template:
@@ -704,6 +1061,39 @@ Scoped action census template:
 ```powershell
 rg -n "VitCtaButton|IconButton|VitInlineIconAction|VitServiceTile|VitActionTileGrid|onTap:|onPressed:|showModalBottomSheet|showDialog|GestureDetector|InkWell|tabKey|filterKey|searchKey|confirm|preview|revoke|copy|scan|refresh|submit" <target page/widget files>
 ```
+
+### 8.1 Visual QA Evidence Template
+
+Required for Phase 4 tool screens and any batch that changes first-viewport
+layout on root tabs.
+
+Tooling:
+
+```bash
+cd flutter_app
+flutter test tool/capture_route_screenshot_test.dart --reporter=compact
+```
+
+Output directory (gitignored): `flutter_app/run-artifacts/visual-qa/`
+
+Evidence block per screen:
+
+```text
+Screen:
+Route:
+Device width: 360 dp minimum (also capture 440 dp when regression suspected)
+Taxonomy class:
+Screenshot path:
+Pass checklist:
+- [ ] Nonblank primary content
+- [ ] Primary controls visible and reachable
+- [ ] Safe areas / bottom chrome do not hide controls or disclosures
+- [ ] Back or close behavior is clear
+- [ ] L3 tool exception documented when applicable
+```
+
+Attach emulator screenshots to PR descriptions for visible UI changes per
+[`Enterprise-PR-Review-Checklist.md`](Enterprise-PR-Review-Checklist.md).
 
 ## 9. Definition Of Done
 
@@ -739,6 +1129,7 @@ The whole project is Home-standard when:
 
 - [ ] Route coverage passes.
 - [ ] Design-token audit passes with no unexpected root-bundle residuals.
+- [ ] `p0_markets_debt=0`, `scope_shared_widget_debt=0`, and P0 module gates pass.
 - [ ] Typography residuals remain `0`.
 - [ ] Visual-density audit has no P0/P1 normal-screen issues and all tool QA
       exceptions are documented.
@@ -760,30 +1151,172 @@ The whole project is Home-standard when:
 | Churning Wallet after completion | Regression in proven reference module | Treat Wallet medium density as follow-up only, with focused tests |
 | Dirty worktree conflict | Accidental overwrite | Edit only scoped files and never revert unrelated changes |
 | Stale GitNexus index | Wrong blast-radius decisions | Refresh or record staleness before code edits |
+| Markets/shared widget debt skipped | Phase 7 closure fails P0 gates | Phase 2b before global closure |
+| P3 ledger vs Phase 5 churn conflict | Unnecessary regressions | Follow P2-P3 Assignment Ledger policy |
 
 ## 11. Immediate Next Step
 
-Start with Phase 0, then Phase 1 P2P residual cleanup.
+**Phase 7 closure complete (2026-07-01).** Residual pass finished; `total_debt=0`;
+all P0 module gates pass; full `flutter test` + quality guardrails pass.
 
-Recommended first implementation batch:
+No further implementation batches required unless audit regresses or new debt appears.
 
-```text
-Batch ID: P2P-HOME-01
-Target module: p2p
-Target screens:
-- p2p_payment_methods_page.dart
-- p2p_payment_method_add_page.dart
-- p2p_payment_method_ownership_page.dart
-- p2p_payment_method_verification_page.dart
+Completed batches (do not redo unless audit regresses):
 
-Reason:
-- P2P owns almost all remaining root-page bundle token debt.
-- Payment-method changes are high-risk and must inherit Wallet's safety
-  preview/confirm/masking discipline.
-- The batch is coherent, testable, and small enough to complete with focused
-  verification.
-```
+- **P2P-HOME-01..07** — Phase 1 P2P token cleanup → `p0_p2p_debt=0`.
+- **EARN-TRADE-01** — staking_earn, kid_generator, trade_page spacing → `p0_trade_debt=0`.
+- **DEEP-MARKETS-SHARED-01** — market list widgets + vit_choice_pill → `p0_markets_debt=0`.
+- **DEEP-DENSITY-WALLET-01** — 5 P2 medium-density screens reviewed (Wallet reference; no churn).
+- **DEEP-TOOL-QA-01** — 5 tool screens widget-test evidence recorded.
+- **DEEP-COPY-01** — copy + a11y guardrails verified.
+- **Phase 7** — global audit refresh + full test suite pass.
+
+Autonomous execution prompt (includes **Compaction-Safe Autonomous Mode**):
+[`AI-Home-UI-Project-Wide-Standardization-Deep-Autonomous-Execution-Prompt.md`](AI-Home-UI-Project-Wide-Standardization-Deep-Autonomous-Execution-Prompt.md)
+— after summarize or new thread, use **Compact Resume** in that file (2 lines);
+do not re-paste the full prompt block.
 
 Do not start by "fixing the whole app UI" in one pass. The enterprise-safe path
 is audit baseline -> one module batch -> focused tests -> audits -> evidence ->
 next batch.
+
+## 12. Batch Evidence Template And Progress Ledger
+
+### 12.1 Log Location
+
+Append completed batches to:
+
+- Primary: [`VitTrade-Home-UI-Rollout-Execution-Plan.md`](../03_DESIGN_SYSTEM/VitTrade-Home-UI-Rollout-Execution-Plan.md) §7 Batch Log Template
+- Residual-pass tracking (mandatory sync with this plan §4.0):
+  [`VitTrade-Home-UI-Standardization-Batch-Log.md`](VitTrade-Home-UI-Standardization-Batch-Log.md)
+  — **14 Done**, **0 In progress** as of 2026-07-01
+
+**Sync rule:** see §2.2. Every batch update must touch §4.0 + batch log + §12.2
+at minimum.
+
+Do not mark a batch Done without Home pattern, L3 reason, GitNexus evidence,
+first-viewport evidence, and tests/audit evidence.
+
+### 12.2 Per-Page Progress Ledger
+
+| Module | Page | Taxonomy | Batch ID | Status | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| p2p | `p2p_payment_methods_page.dart` | L3_highRiskForm | P2P-HOME-01 | **Done** | pass; AppSpacing.p2pPayment* |
+| p2p | `p2p_payment_method_add_page.dart` | L3_highRiskForm | P2P-HOME-01 | **Done** | pass |
+| p2p | `p2p_payment_method_ownership_page.dart` | L3_highRiskForm | P2P-HOME-01 | **Done** | pass |
+| p2p | `p2p_payment_method_verification_page.dart` | L3_highRiskForm | P2P-HOME-01 | **Done** | pass |
+| p2p | `p2p_payment_method_cooling_period_page.dart` | L3_highRiskForm | P2P-HOME-01 | **Done** | pass |
+| p2p | `p2p_payment_method_history_page.dart` | L3_highRiskForm | P2P-HOME-01 | **Done** | pass |
+| p2p | `p2p_escrow_detail_page.dart` | L3_highRiskForm | P2P-HOME-02 | **Done** | pass; AppSpacing.p2pEscrowDetail* |
+| p2p | `p2p_escrow_balance_page.dart` | L3_highRiskForm | P2P-HOME-02 | **Done** | pass |
+| p2p | `p2p_order_page.dart` | L3_orderFlow | P2P-HOME-02 | **Done** | exception/custompainter; spacing pass |
+| p2p | `p2p_order_book_page.dart` | L3_orderbook | P2P-HOME-02 | **Done** | exception/orderbook; spacing pass |
+| p2p | `p2p_my_orders_page.dart` | L3_list | P2P-HOME-02 | **Done** | pass |
+| p2p | `p2p_order_rate_page.dart` | L3_form | P2P-HOME-02 | **Done** | pass |
+| p2p | `p2p_order_proof_page.dart` | L3_highRiskForm | P2P-HOME-02 | **Done** | pass |
+| p2p | `p2p_selfie_verification_page.dart` | L3_KYC | P2P-HOME-03 | **Done** | pass; AppSpacing.p2pSelfie* |
+| p2p | `p2p_video_verification_page.dart` | L3_KYC | P2P-HOME-03 | **Done** | pass; AppSpacing.p2pVideo* |
+| p2p | `p2p_address_proof_page.dart` | L3_KYC | P2P-HOME-03 | **Done** | pass; AppSpacing.p2pAddressProof* |
+| p2p | `p2p_kyc_status_page.dart` | L3_status | P2P-HOME-03 | **Done** | pass; AppSpacing.p2pKyc* |
+| p2p | `p2p_kyc_requirements_page.dart` | L3_status | P2P-HOME-03 | **Skip** | already pass (0 debt) at baseline |
+| p2p | `p2p_fraud_prevention_page.dart` | L3_risk | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pFraud* |
+| p2p | `p2p_risk_assessment_page.dart` | L3_risk | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pRiskAssessment* |
+| p2p | `p2p_limit_tracker_page.dart` | L3_limits | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pLimitTracker* |
+| p2p | `p2p_transaction_limits_page.dart` | L3_limits | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pTransactionLimits* |
+| p2p | `p2p_large_transaction_justification_page.dart` | L3_risk | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pLargeTransaction* |
+| p2p | `p2p_aml_screening_page.dart` | L3_compliance | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pAmlScreening* |
+| p2p | `p2p_compliance_overview_page.dart` | L3_compliance | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pComplianceOverview* |
+| p2p | `p2p_source_of_funds_page.dart` | L3_compliance | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pSourceOfFunds* |
+| p2p | `p2p_suspicious_activity_page.dart` | L3_compliance | P2P-HOME-04 | **Done** | pass; AppSpacing.p2pSuspiciousActivity* |
+| p2p | `p2p_my_ads_page.dart` | L3_list | P2P-HOME-05 | **Done** | pass; AppSpacing.p2pMerchantCommerce* |
+| p2p | `p2p_create_ad_page.dart` | L3_form | P2P-HOME-05 | **Done** | pass; AppSpacing.p2pMerchantCommerce* |
+| p2p | `p2p_merchant_profile_page.dart` | L3_profile | P2P-HOME-05 | **Done** | pass; AppSpacing.p2pMerchantCommerce* |
+| p2p | `p2p_ad_detail_page.dart` | L3_orderFlow | P2P-HOME-05 | **Done** | pass; AppSpacing.p2pAdDetailFlush* |
+| p2p | `p2p_insurance_certificate_page.dart` | L3_document | P2P-HOME-05 | **Done** | pass; AppSpacing.p2pInsuranceCertificate* |
+| p2p | `p2p_settings_page.dart` | L3_settings | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pSettingsPage* |
+| p2p | `p2p_2fa_settings_page.dart` | L3_security | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pTwoFactor* |
+| p2p | `p2p_device_management_page.dart` | L3_security | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pDevices* |
+| p2p | `p2p_blacklist_page.dart` | L3_list | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pBlacklistList* |
+| p2p | `p2p_blacklist_add_page.dart` | L3_highRiskForm | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pBlacklistAdd* |
+| p2p | `p2p_notifications_settings_page.dart` | L3_settings | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pNotifications* |
+| p2p | `p2p_tax_reporting_page.dart` | L3_document | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pTax* |
+| p2p | `p2p_login_history_page.dart` | L3_audit | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pLoginHistoryPage* |
+| p2p | `p2p_achievements_page.dart` | L3_status | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pAchievementsPage* |
+| p2p | `p2p_fund_lock_history_page.dart` | L3_history | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pFundLock* |
+| p2p | `p2p_contribution_history_page.dart` | L3_history | P2P-HOME-06 | **Done** | pass; AppSpacing.p2pContribution* |
+| p2p | `p2p_dispute_resolution_page.dart` | L3_dispute | P2P-HOME-07 | **Done** | pass; AppSpacing.p2pDisputeResolution* |
+| p2p | `p2p_dispute_detail_page.dart` | L3_dispute | P2P-HOME-07 | **Done** | pass; AppSpacing.p2pDisputeDetail* |
+| p2p | `p2p_dispute_evidence_page.dart` | L3_highRiskForm | P2P-HOME-07 | **Done** | pass; AppSpacing.p2pDisputeEvidence* |
+| p2p | `p2p_express_page.dart` | L3_express | P2P-HOME-07 | **Done** | pass; AppSpacing.p2pExpress* |
+| p2p | `p2p_express_confirm_page.dart` | L3_highRiskForm | P2P-HOME-07 | **Done** | pass; AppSpacing.p2pExpressConfirm* |
+| p2p | `p2p_wallet_transfer_page.dart` | L3_highRiskForm | P2P-HOME-07 | **Done** | pass; AppSpacing.p2pWalletTransfer* |
+| p2p | `p2p_home_page.dart` | L3_marketplace | P2P-HOME-07 | **Done** | pass; AppSpacing.p2pHomeClearFilter* |
+| p2p | `p2p_dashboard_page.dart` | L3_analytics | P2P-HOME-07 | **Done** | exception/custompainter; spacing pass |
+| p2p | `p2p_insurance_fund_page.dart` | L3_document | P2P-HOME-07 | **Done** | exception/custompainter; spacing pass |
+| earn | `staking_earn_page.dart` | L2_moduleDetail | EARN-TRADE-01 | **Done** | pass; AppSpacing.stakingEarnPosition* line heights |
+| trade | `kid_generator_page.dart` | L3_regulatoryTool | EARN-TRADE-01 | **Done** | pass; AppSpacing.kidGenerator* padding |
+| trade | `trade_page.dart` | L3_orderbook | EARN-TRADE-01 | **Done** | exception/orderbook; BoxDecoration→ColoredBox |
+| markets | `market_list_pairs.dart` etc. | L3_marketData | DEEP-MARKETS-SHARED-01 | **Done** | pass; AppSpacing.marketList* |
+| shared | `vit_choice_pill.dart` | shared primitive | DEEP-MARKETS-SHARED-01 | **Done** | pass; AppSpacing.vitChoicePill* |
+| wallet | `AddressBookPage` etc. (4) | L2/L3 detail | DEEP-DENSITY-WALLET-01 | **Done** | review-only; wallet tests pass |
+| earn | `SavingsNotificationsPage` | L1_utilityHub | DEEP-DENSITY-WALLET-01 | **Done** | review-only; earn tests pass |
+| trade/p2p/enterprise | tool screens (5) | L3_fullscreenTool | DEEP-TOOL-QA-01 | **Done** | widget-test layout evidence |
+| all | P3 ledger rows | monitor | Phase 5 | **Done** | P2-A triage; no bulk churn |
+| all | copy boundaries | — | DEEP-COPY-01 | **Done** | copy + a11y guardrails pass |
+
+Update rows when a batch completes. Source routes from
+`Flutter-Route-Coverage-Truth-Table.md`.
+
+### 12.3 Batch Evidence Block
+
+Copy this block after each implementation batch (parity with Wallet plan):
+
+```text
+### <Batch ID> Batch Evidence - YYYY-MM-DD
+
+Status: In progress | Done | Blocked
+Module:
+Files changed:
+Home pattern applied:
+Taxonomy class:
+Shared primitives used:
+L3 local reason (if any):
+Action inventory summary:
+Financial safety preserved (yes/no + notes):
+First-viewport evidence (360 dp):
+Tool/visual QA evidence (if applicable):
+GitNexus evidence:
+- index status:
+- context targets:
+- impact summary:
+- detect_changes summary:
+
+Commands run:
+- dart format ...
+- flutter test ...
+- dart run tool/design_token_consistency_audit.dart --check
+- dart run tool/visual_density_risk_audit.dart --check
+- flutter analyze
+
+Residual risk:
+Next batch:
+```
+
+### 12.4 Batch Log Row Template
+
+| Date | Batch | Module | Screens | Home pattern applied | L3 local reason | GitNexus evidence | First viewport evidence | Tests/audit evidence | Status | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2026-07-01 | P2P-HOME-01 | p2p | payment-method pages (6) | L3 high-risk form / list + delete confirm | None | Blocked (MCP unavailable) | Preserved shell + first action row | analyze pass; p2p tests pass; bundles pass | **Done** | AppSpacing.p2pPayment*; p0_p2p 173→149 |
+| 2026-07-01 | P2P-HOME-02 | p2p | escrow/orders (8) | Escrow detail, balance, orders, order flow | order_book + order_page part_03 L3 | Blocked (MCP unavailable) | Preserved payment/escrow preview surfaces | analyze pass; p2p tests pass; bundles pass/exception | **Done** | AppSpacing.p2pEscrow*/p2pOrder*; p0_p2p 149→119 |
+| 2026-07-01 | P2P-HOME-03 | p2p | KYC/verification (5) | KYC capture + status surfaces | None | Blocked (MCP unavailable) | Preserved shell + first action row | analyze pass; p2p tests pass; bundles pass | **Done** | AppSpacing.p2pSelfie*/p2pKyc*/p2pVideo*/p2pAddressProof*; p0_p2p 119→97 |
+| 2026-07-01 | P2P-HOME-04 | p2p | risk/compliance (9) | Risk limits + compliance surfaces | None | Blocked (MCP unavailable) | Preserved high-risk preview panels | analyze pass; p2p tests pass; bundles pass | **Done** | AppSpacing.p2pFraud*/p2pRiskAssessment*/p2pLimitTracker* etc.; p0_p2p 97→72 |
+| 2026-07-01 | P2P-HOME-05 | p2p | merchant/ads (5) | Merchant profile + ad create/list/detail | None | Blocked (MCP unavailable) | Preserved ad publish + certificate surfaces | analyze pass; p2p tests pass; bundles pass | **Done** | AppSpacing.p2pMerchantCommerce*/p2pAdDetailFlush*/p2pInsuranceCertificate*; p0_p2p 72→45 |
+| 2026-07-01 | P2P-HOME-06 | p2p | account/security (11) | Settings, 2FA, devices, blacklist, notifications, tax, login history, achievements, fund/contribution history | None | Blocked (MCP unavailable) | Preserved security preview + blacklist confirm surfaces | analyze pass; p2p tests pass; copy guardrails pass; bundles pass | **Done** | AppSpacing.p2pSettingsPage*/p2pTwoFactor*/p2pDevices*/p2pBlacklistList*/p2pNotifications*/p2pTax*/p2pLoginHistoryPage*/p2pAchievementsPage*/p2pFundLock*/p2pContribution*; p0_p2p 45→19 |
+| 2026-07-01 | P2P-HOME-07 | p2p | dispute/express/misc (9) | Dispute resolution/detail/evidence, express, wallet transfer, home, dashboard, insurance fund | dashboard + insurance_fund: custompainter L3 | Blocked (MCP unavailable) | Preserved dispute/transfer preview surfaces | analyze pass; p2p tests pass; copy guardrails pass; bundles pass/exception | **Done** | AppSpacing.p2pDispute*/p2pExpress*/p2pWalletTransfer*/p2pHomeClearFilter*/p2pDashboardPage*/p2pInsuranceFundTourSkip*; p0_p2p 19→0 |
+| 2026-07-01 | EARN-TRADE-01 | earn, trade | staking_earn, kid_generator, trade_page | L2 earn + L3 regulatory/orderbook | trade_page orderbook L3 | Blocked (MCP unavailable) | APY/lockup copy preserved | earn+trade tests pass; total_debt 35→7 | **Done** | AppSpacing.stakingEarnPosition*; kidGenerator* |
+| 2026-07-01 | DEEP-MARKETS-SHARED-01 | markets, shared | market_list_* + vit_choice_pill | L3 market rows + shared pill | None | Blocked (MCP unavailable) | Pair row behavior unchanged | markets+shared tests pass; total_debt 7→0 | **Done** | AppSpacing.marketList*; vitChoicePill* |
+| 2026-07-01 | DEEP-DENSITY-WALLET-01 | wallet, earn | 5 P2 screens | Review-only density | structural inset | N/A | Tests confirm first actionable content | wallet+earn tests pass | **Done** | No spacing churn |
+| 2026-07-01 | DEEP-TOOL-QA-01 | trade, p2p, enterprise | 5 tool screens | L3_fullscreenTool | Tool exception | N/A | Widget + UI-05 layout evidence | module tests pass | **Done** | P1_TOOL documented |
+| 2026-07-01 | Phase 5 | all | P3 ledger | monitor_when_touched | N/A | N/A | P2-A triage only | No bulk edits | **Done** | — |
+| 2026-07-01 | DEEP-COPY-01 | all | copy boundaries | Product safety | N/A | N/A | Arena points-only | guardrails pass | **Done** | — |
+| 2026-07-01 | Phase 7 | all | global closure | Full gates | N/A | CLI detect_changes | All P0 pass | full flutter test pass | **Done** | Residual pass complete |

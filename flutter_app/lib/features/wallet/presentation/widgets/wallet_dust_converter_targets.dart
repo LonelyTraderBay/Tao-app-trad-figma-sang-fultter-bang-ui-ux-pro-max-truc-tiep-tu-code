@@ -13,91 +13,18 @@ class _TargetSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (final target in targets) ...[
-          Expanded(
-            child: _TargetCard(
-              target: target,
-              selected: target.symbol == selected,
-              onTap: () => onSelected(target.symbol),
-            ),
-          ),
-          if (target != targets.last) const SizedBox(width: _dustTinyGap),
-        ],
-      ],
-    );
-  }
-}
-
-class _TargetCard extends StatelessWidget {
-  const _TargetCard({
-    required this.target,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final WalletDustTarget target;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Color(target.colorHex);
-    return Semantics(
-      button: true,
+    return VitSegmentedChoice.withPrimaryAccent<String>(
       selected: selected,
-      label: '${target.symbol} conversion target',
-      child: VitCard(
-        key: DustConverterPage.targetKey(target.symbol),
-        onTap: onTap,
-        density: VitDensity.compact,
-        variant: VitCardVariant.ghost,
-        borderColor: selected ? color.withValues(alpha: .7) : _dustBorder,
-        background: ColoredBox(
-          color: selected ? color.withValues(alpha: .11) : _dustPanel2,
-        ),
-        clip: true,
-        child: Row(
-          children: [
-            _TokenLogo(
-              symbol: target.symbol,
-              color: color,
-              size: _dustTokenLogo,
-            ),
-            const SizedBox(width: _dustInlineGap),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    target.symbol,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(height: _dustTinyGap),
-                  Text(
-                    target.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: _dustMuted),
-                  ),
-                ],
-              ),
-            ),
-            if (selected)
-              const VitStatusPill(
-                label: 'Ch\u1ECDn',
-                icon: Icons.check_circle_outline,
-                status: VitStatusPillStatus.success,
-                size: VitStatusPillSize.sm,
-              ),
-          ],
-        ),
-      ),
+      onChanged: onSelected,
+      height: AppSpacing.buttonCompact,
+      options: [
+        for (final target in targets)
+          VitSegmentedChoiceOption<String>(
+            key: DustConverterPage.targetKey(target.symbol),
+            value: target.symbol,
+            label: target.symbol,
+          ),
+      ],
     );
   }
 }
@@ -157,6 +84,43 @@ class _SelectAllRow extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _DustAssetList extends StatelessWidget {
+  const _DustAssetList({
+    required this.assets,
+    required this.selectedIds,
+    required this.onToggle,
+  });
+
+  final List<WalletDustAsset> assets;
+  final Set<String> selectedIds;
+  final ValueChanged<String> onToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      clip: true,
+      padding: AppSpacing.zeroInsets,
+      child: Column(
+        children: [
+          for (var i = 0; i < assets.length; i++) ...[
+            _DustAssetRow(
+              asset: assets[i],
+              selected: selectedIds.contains(assets[i].id),
+              onTap: () => onToggle(assets[i].id),
+            ),
+            if (i < assets.length - 1)
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
+          ],
+        ],
       ),
     );
   }

@@ -23,7 +23,7 @@ class _GhostButton extends StatelessWidget {
       onTap: onTap,
       height: _launchpadActionHeight,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: border,
       background: ColoredBox(color: background),
       child: Row(

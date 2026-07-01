@@ -29,7 +29,7 @@ class _CalendarCard extends StatelessWidget {
 
     return VitCard(
       key: StakingEarningsCalendarPage.calendarCardKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         children: [
@@ -200,7 +200,7 @@ class _LegendCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingEarningsCalendarPage.legendKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

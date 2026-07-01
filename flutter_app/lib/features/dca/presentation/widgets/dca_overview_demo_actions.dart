@@ -62,7 +62,7 @@ class _ActionButton extends StatelessWidget {
       key: DCAOverviewDemo.actionKey(scenarioId, spec.id),
       onTap: HapticFeedback.selectionClick,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       borderColor: AppColors.transparent,
       clip: true,

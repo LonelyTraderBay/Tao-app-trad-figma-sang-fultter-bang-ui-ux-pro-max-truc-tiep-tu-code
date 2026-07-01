@@ -137,7 +137,7 @@ class _CreatorStatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: onTap == null ? null : color.withValues(alpha: .28),
       padding: AppSpacing.arenaCreatorStatPadding,
       onTap: onTap,
@@ -239,7 +239,7 @@ class _TrustHeader extends StatelessWidget {
             key: ArenaCreatorPage.trustDetailKey,
             onTap: onDetails,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             child: Padding(
               padding: AppSpacing.arenaCreatorTrustActionPadding,
               child: Row(
@@ -278,7 +278,7 @@ class _TrustMetricCard extends StatelessWidget {
     final color = _metricColor(metric.kind);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.arenaCreatorMetricPadding,
       child: Row(
         children: [

@@ -63,7 +63,7 @@ class _MiniOptionChip extends StatelessWidget {
     return VitCard(
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.warn : AppColors.borderSolid,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.arenaGovernanceOptionChipPadding,
       onTap: onTap,
       child: Row(

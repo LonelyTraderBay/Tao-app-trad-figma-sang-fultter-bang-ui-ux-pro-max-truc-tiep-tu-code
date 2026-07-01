@@ -7,7 +7,7 @@ class _RiskDisclosureTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [
@@ -48,7 +48,7 @@ class _HistoryEntry extends StatelessWidget {
       padding: AppSpacing.launchpadBottomPaddingX3,
       child: VitCard(
         key: LaunchpadClaimReceiptPage.historyKey(entry.id),
-        radius: VitCardRadius.md,
+        radius: VitCardRadius.standard,
         padding: AppSpacing.launchpadPaddingX4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

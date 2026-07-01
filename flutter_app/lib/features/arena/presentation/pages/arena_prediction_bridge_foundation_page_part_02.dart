@@ -357,7 +357,7 @@ class _ModuleStatButton extends StatelessWidget {
     final color = _toneColor(tone);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .20),
       density: VitDensity.compact,
       onTap: onTap,

@@ -89,7 +89,7 @@ class _StakingDeveloperConsolePageState
                       VitCard(
                         key: StakingDeveloperConsolePage.tabsKey,
                         variant: VitCardVariant.inner,
-                        radius: VitCardRadius.sm,
+                        radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: VitTabBar(
                           tabs: [
@@ -136,7 +136,7 @@ class _ConsoleHero extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.heroKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.accent30,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
@@ -169,7 +169,7 @@ class _StatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingDeveloperConsolePage.statsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
@@ -193,7 +193,7 @@ class _StatTile extends StatelessWidget {
     final color = _toneColor(stat.tone);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3X4,
       borderColor: stat.tone == 'success' ? AppColors.buy20 : null,
       child: Column(
@@ -262,7 +262,7 @@ class _ApiKeyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingDeveloperConsolePage.apiKeyCardKey(apiKey.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -357,7 +357,7 @@ class _RequestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingDeveloperConsolePage.requestKey(index),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [
@@ -419,7 +419,7 @@ class _DocCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingDeveloperConsolePage.docKey(doc.title),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       onTap: () {},
       child: Row(

@@ -49,7 +49,7 @@ class _TotalStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingMultiChainPage.totalStatsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,7 +174,7 @@ class _AllocationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingMultiChainPage.allocationKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

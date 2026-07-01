@@ -27,23 +27,9 @@ const double _p2pInsuranceVisualClearance = AppSpacing.x3;
 const double _p2pInsuranceNativeClearance = AppSpacing.x2;
 const double _p2pInsuranceSectionGap = AppSpacing.x3;
 const double _p2pInsuranceTightGap = AppSpacing.x2;
-const double _p2pInsuranceHeroIconBox = AppSpacing.x7;
-const double _p2pInsuranceBodyLineHeight = 1.35;
-const EdgeInsets _p2pInsuranceScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pInsuranceLargePadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pInsuranceCardPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pInsuranceHeroPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pInsuranceDividerBottomPadding = EdgeInsets.only(
-  bottom: AppSpacing.x2,
-);
-const EdgeInsets _p2pInsuranceBulletTopPadding = EdgeInsets.only(
-  top: AppSpacing.x2,
-);
+const double _p2pInsuranceHeroIconBox = AppSpacing.p2pDocumentHeroIconBox;
+const double _p2pInsuranceBodyLineHeight =
+    AppSpacing.p2pInsuranceCertificateBodyLineHeight;
 
 class P2PInsuranceCertificatePage extends ConsumerStatefulWidget {
   const P2PInsuranceCertificatePage({super.key, this.shellRenderMode});
@@ -95,8 +81,8 @@ class _P2PInsuranceCertificatePageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pInsuranceScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pInsuranceCertificateScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

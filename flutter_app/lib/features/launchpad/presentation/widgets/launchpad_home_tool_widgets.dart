@@ -9,7 +9,7 @@ class _StakingEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadPage.stakingKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
       onTap: () => context.go(route),
       padding: VitDensity.compact.cardPadding,
@@ -98,7 +98,7 @@ class _ToolTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: tool.accent.withValues(alpha: .18),
       onTap: () => context.go(tool.route),
       padding: VitDensity.compact.cardPadding,

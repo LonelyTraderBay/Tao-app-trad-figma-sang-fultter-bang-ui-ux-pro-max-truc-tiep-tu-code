@@ -14,11 +14,10 @@ class _ClientCategorizationPageState
       (item) => item.id == snapshot.currentCategoryId,
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
-        MediaQuery.paddingOf(context).bottom;
+    final scrollClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -137,11 +136,10 @@ class _ClientOptUpRequestPageState
       (item) => item.id == 'professional',
     );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
-        MediaQuery.paddingOf(context).bottom;
+    final scrollClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -507,22 +505,17 @@ class _Tabs extends StatelessWidget {
       ('requirements', 'Requirements'),
       ('history', 'History'),
     ];
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      child: VitTabBar(
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.$1,
-              label: tab.$2,
-              widgetKey: ClientCategorizationPage.tabKey(tab.$1),
-            ),
-        ],
-        activeKey: activeId,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
-      ),
+    return VitSegmentedTabBar(
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: ClientCategorizationPage.tabKey(tab.$1),
+          ),
+      ],
+      activeKey: activeId,
+      onChanged: onChanged,
     );
   }
 }

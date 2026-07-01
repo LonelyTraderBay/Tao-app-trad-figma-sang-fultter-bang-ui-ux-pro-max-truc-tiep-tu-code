@@ -9,7 +9,7 @@ class _VestingTimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -62,7 +62,7 @@ class _ClaimHistoryCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.launchpadPaddingX4,
           child: Row(
             children: [
@@ -188,7 +188,7 @@ class _VestingTimelineRow extends StatelessWidget {
       padding: AppSpacing.launchpadBottomPaddingX3,
       child: VitCard(
         variant: claimable ? VitCardVariant.inner : VitCardVariant.standard,
-        radius: VitCardRadius.md,
+        radius: VitCardRadius.standard,
         padding: AppSpacing.launchpadPaddingX3,
         child: Row(
           children: [

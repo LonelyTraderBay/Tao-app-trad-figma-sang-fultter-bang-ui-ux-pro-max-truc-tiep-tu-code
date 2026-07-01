@@ -27,12 +27,6 @@ const double _p2pLoginHistoryNativeNavClearance =
     _p2pLoginHistoryVisualNavClearance - AppSpacing.x4;
 const double _p2pLoginHistoryVisualClearance = AppSpacing.x3;
 const double _p2pLoginHistoryNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pLoginHistoryScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PLoginHistoryPage extends ConsumerStatefulWidget {
   const P2PLoginHistoryPage({super.key, this.shellRenderMode});
@@ -119,8 +113,8 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: _p2pLoginHistoryScrollPadding.copyWith(
-                        bottom: scrollEndPadding,
+                      padding: AppSpacing.p2pLoginHistoryPageScrollPadding(
+                        scrollEndPadding,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

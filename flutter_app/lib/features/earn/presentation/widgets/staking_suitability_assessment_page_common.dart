@@ -30,7 +30,7 @@ class _ResultView extends ConsumerWidget {
         ),
         VitCard(
           key: StakingSuitabilityAssessmentPage.resultCardKey,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: color.withValues(alpha: 0.6),
           padding: _stakingSuitabilityCardPadding,
           child: Column(

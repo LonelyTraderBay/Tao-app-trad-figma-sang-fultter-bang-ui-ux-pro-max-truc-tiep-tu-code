@@ -28,7 +28,7 @@ class WithdrawBalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       height: AppSpacing.inputHeight,
       density: VitDensity.tool,
       borderColor: AppColors.cardBorder,
@@ -81,7 +81,7 @@ class WithdrawNetworkSelector extends StatelessWidget {
             key: withdrawNetworkSelectorKey,
             onTap: onTap,
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             height: AppSpacing.inputHeight,
             density: VitDensity.tool,
             borderColor: withdrawPrimary.withValues(alpha: .34),

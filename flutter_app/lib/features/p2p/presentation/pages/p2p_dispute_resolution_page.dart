@@ -25,20 +25,6 @@ const double _p2pDisputeResolutionNativeNavClearance =
 const double _p2pDisputeResolutionMajorGap = AppSpacing.x3;
 const double _p2pDisputeResolutionSectionGap = AppSpacing.x2;
 const double _p2pDisputeResolutionIconBox = AppSpacing.buttonCompact;
-const EdgeInsets _p2pDisputeResolutionCardPadding = EdgeInsets.all(
-  AppSpacing.x2,
-);
-const EdgeInsets _p2pDisputeResolutionCompactPadding = EdgeInsets.all(
-  AppSpacing.x2,
-);
-
-EdgeInsets _p2pDisputeResolutionScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PDisputeResolutionPage extends ConsumerStatefulWidget {
   const P2PDisputeResolutionPage({
@@ -99,7 +85,7 @@ class _P2PDisputeResolutionPageState
                   child: SingleChildScrollView(
                     key: P2PDisputeResolutionPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pDisputeResolutionScrollPadding(
+                    padding: AppSpacing.p2pDisputeResolutionScrollPadding(
                       scrollEndPadding,
                     ),
                     child: Column(
@@ -124,7 +110,8 @@ class _P2PDisputeResolutionPageState
                         const SizedBox(height: _p2pDisputeResolutionSectionGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pDisputeResolutionCompactPadding,
+                          padding:
+                              AppSpacing.p2pDisputeResolutionCompactCardPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Dispute resolution review',
@@ -165,7 +152,7 @@ class _DecisionHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy15),
       ),
       child: Padding(
-        padding: _p2pDisputeResolutionCardPadding,
+        padding: AppSpacing.p2pDisputeResolutionCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -219,7 +206,7 @@ class _DecisionDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _p2pDisputeResolutionCardPadding,
+      padding: AppSpacing.p2pDisputeResolutionCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -311,7 +298,7 @@ class _AppealCard extends StatelessWidget {
         side: BorderSide(color: AppColors.warn15),
       ),
       child: Padding(
-        padding: _p2pDisputeResolutionCardPadding,
+        padding: AppSpacing.p2pDisputeResolutionCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -344,7 +331,7 @@ class _AppealCard extends StatelessWidget {
                     variant: VitCtaButtonVariant.warning,
                     fullWidth: false,
                     height: AppSpacing.buttonCompact,
-                    padding: _p2pDisputeResolutionCompactPadding,
+                    padding: AppSpacing.p2pDisputeResolutionCompactCardPadding,
                     child: Text(
                       appealOpened ? 'Đang mở kháng cáo' : 'Kháng cáo',
                     ),

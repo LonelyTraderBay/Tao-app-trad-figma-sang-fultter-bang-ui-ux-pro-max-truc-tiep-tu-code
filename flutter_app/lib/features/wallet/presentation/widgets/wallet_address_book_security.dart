@@ -23,7 +23,7 @@ class _WhitelistModeCard extends StatelessWidget {
               width: AppSpacing.buttonCompact,
               height: AppSpacing.buttonCompact,
               variant: VitCardVariant.inner,
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               borderColor: enabled ? AppColors.buy20 : AppColors.borderSolid,
               alignment: Alignment.center,
               child: Icon(

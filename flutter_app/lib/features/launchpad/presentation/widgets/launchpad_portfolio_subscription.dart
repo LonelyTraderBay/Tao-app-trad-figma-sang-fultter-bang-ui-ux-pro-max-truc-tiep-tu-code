@@ -18,7 +18,7 @@ class _SubscriptionCard extends StatelessWidget {
 
     return VitCard(
       key: LaunchpadPortfolioPage.subscriptionKey(subscription.id),
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.launchpadPaddingX4,
       onTap: () => context.go(receiptRoute),
       child: Column(
@@ -151,7 +151,7 @@ class _InfoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,7 +305,7 @@ class _ActionRow extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .20),
       background: ColoredBox(color: color.withValues(alpha: .10)),
       padding: AppSpacing.launchpadPaddingX4,

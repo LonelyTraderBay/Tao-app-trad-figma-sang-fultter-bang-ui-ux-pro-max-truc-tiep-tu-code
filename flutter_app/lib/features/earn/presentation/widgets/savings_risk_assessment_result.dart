@@ -64,7 +64,7 @@ class _ResultView extends StatelessWidget {
         ),
         VitCard(
           key: SavingsRiskAssessmentPage.resultCardKey,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: accent,
           padding: AppSpacing.earnCardPaddingX4,
           child: Column(

@@ -11,7 +11,7 @@ class _ChartTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           padding: _launchpadPerformanceCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -38,7 +38,7 @@ class _ChartTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(
-          radius: VitCardRadius.md,
+          radius: VitCardRadius.standard,
           padding: _launchpadPerformanceCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

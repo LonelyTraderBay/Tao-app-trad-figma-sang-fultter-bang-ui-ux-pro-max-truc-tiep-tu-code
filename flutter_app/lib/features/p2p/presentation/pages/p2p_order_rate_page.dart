@@ -102,7 +102,9 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
                         child: SingleChildScrollView(
                           key: P2POrderRatePage.contentKey,
                           physics: const ClampingScrollPhysics(),
-                          padding: EdgeInsets.only(bottom: scrollEndPadding),
+                          padding: AppSpacing.p2pOrderLifecycleScrollPadding(
+                            scrollEndPadding,
+                          ),
                           child: VitPageContent(
                             padding: VitContentPadding.compact,
                             customGap: AppSpacing.x2,

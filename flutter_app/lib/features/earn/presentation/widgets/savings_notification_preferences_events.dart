@@ -117,7 +117,7 @@ class _AlertCard extends StatelessWidget {
 
     return VitCard(
       key: SavingsNotificationPreferencesKeys.alert(alert.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         children: [

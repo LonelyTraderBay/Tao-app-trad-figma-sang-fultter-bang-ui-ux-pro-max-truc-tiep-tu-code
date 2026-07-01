@@ -14,7 +14,7 @@ class _HeroBanner extends StatelessWidget {
         children: [
           const VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             width: AppSpacing.tradeBotClientCategoryIcon,
             height: AppSpacing.tradeBotClientCategoryIcon,
             alignment: Alignment.center,
@@ -69,22 +69,17 @@ class _SafetyTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      child: VitTabBar(
-        variant: VitTabBarVariant.segment,
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.id,
-              label: tab.label,
-              widgetKey: SafetyEducationPage.tabKey(tab.id),
-            ),
-        ],
-        activeKey: activeId,
-        onChanged: onChanged,
-      ),
+    return VitSegmentedTabBar(
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: SafetyEducationPage.tabKey(tab.id),
+          ),
+      ],
+      activeKey: activeId,
+      onChanged: onChanged,
     );
   }
 }

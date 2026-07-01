@@ -79,7 +79,7 @@ class _UnifiedPortfolioDashboardState
                     children: [
                       if (_activeTab == UnifiedPortfolioTab.overview)
                         VitCard(
-                          radius: VitCardRadius.lg,
+                          radius: VitCardRadius.large,
                           padding: EdgeInsets.zero,
                           clip: true,
                           child: UnifiedPortfolioOverview(
@@ -92,14 +92,14 @@ class _UnifiedPortfolioDashboardState
                         )
                       else if (_activeTab == UnifiedPortfolioTab.analysis)
                         VitCard(
-                          radius: VitCardRadius.lg,
+                          radius: VitCardRadius.large,
                           padding: EdgeInsets.zero,
                           clip: true,
                           child: UnifiedPortfolioAnalysis(snapshot: snapshot),
                         )
                       else
                         VitCard(
-                          radius: VitCardRadius.lg,
+                          radius: VitCardRadius.large,
                           padding: EdgeInsets.zero,
                           clip: true,
                           child: UnifiedPortfolioHistory(snapshot: snapshot),

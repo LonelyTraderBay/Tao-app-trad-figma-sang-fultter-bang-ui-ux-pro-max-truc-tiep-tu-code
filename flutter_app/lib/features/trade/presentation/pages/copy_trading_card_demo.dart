@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/copy_trading_card_demo_widgets.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/copy_trading_card_demo_sections.dart';
 part '../widgets/copy_trading_card_demo_common.dart';
@@ -40,11 +41,10 @@ class CopyTradingCardDemo extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getCopyCardDemo();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
-        MediaQuery.paddingOf(context).bottom;
+    final bottomInset = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

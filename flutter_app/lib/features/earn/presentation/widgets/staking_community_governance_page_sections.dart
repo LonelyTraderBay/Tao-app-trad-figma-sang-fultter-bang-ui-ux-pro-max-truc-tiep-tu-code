@@ -53,7 +53,7 @@ class _OverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingCommunityGovernancePage.overviewKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,7 +91,7 @@ class _StatTile extends StatelessWidget {
     final icon = _statIcon(stat.label);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: _toneBorder(stat.tone),
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
@@ -131,7 +131,7 @@ class _ActiveProposal extends StatelessWidget {
       label: 'Active Proposals',
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX3,
           onTap: onTap,
           child: Column(
@@ -190,7 +190,7 @@ class _DecisionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +234,7 @@ class _GovernanceSteps extends StatelessWidget {
       label: 'How Governance Works',
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX3,
           child: Column(
             children: [

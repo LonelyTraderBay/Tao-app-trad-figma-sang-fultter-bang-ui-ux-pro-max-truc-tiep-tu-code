@@ -9,7 +9,7 @@ class _ReviewerNoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isSystem = note.role == 'Tự động';
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +83,7 @@ class _NotificationsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PClaimDetailPage.notificationsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +185,7 @@ class _ActionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimActionPadding,
       onTap: onTap,
       child: Row(
@@ -222,7 +222,7 @@ class _FeedbackBanner extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.feedbackKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Row(

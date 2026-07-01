@@ -66,7 +66,7 @@ class _CategoryTile extends StatelessWidget {
     final iconColor = _categoryColor(category.id);
     return VitCard(
       key: HelpCenterPage.categoryKey(category.id),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: selected ? AppColors.primary40 : null,
       padding: AppSpacing.supportCardPadding,
       onTap: onTap,
@@ -176,7 +176,7 @@ class _ArticleTile extends StatelessWidget {
     final iconColor = _categoryColor(category.id);
     return VitCard(
       key: HelpCenterPage.articleKey(article.id),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.supportQuickCardPadding,
       onTap: onTap,
       child: Row(

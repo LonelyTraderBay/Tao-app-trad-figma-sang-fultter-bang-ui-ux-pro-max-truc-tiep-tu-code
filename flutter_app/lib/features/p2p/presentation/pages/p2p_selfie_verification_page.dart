@@ -32,26 +32,6 @@ const double _p2pSelfieActionIconBox = AppSpacing.x7;
 const double _p2pSelfieSampleIconSize = AppSpacing.x7;
 const double _p2pSelfieLivenessIconSize = AppSpacing.x7;
 const double _p2pSelfieBodyLineHeight = 1.35;
-const EdgeInsets _p2pSelfieReviewPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pSelfieCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pSelfieLargeCardPadding = EdgeInsets.all(AppSpacing.x4);
-const EdgeInsets _p2pSelfieResultIconMargin = EdgeInsets.symmetric(
-  vertical: AppSpacing.x3,
-);
-const EdgeInsets _p2pSelfieScoreRowPadding = EdgeInsets.symmetric(
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _p2pSelfieChecklistIconPadding = EdgeInsets.only(
-  top: AppSpacing.x1,
-);
-
-EdgeInsets _p2pSelfieScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PSelfieVerificationPage extends ConsumerStatefulWidget {
   const P2PSelfieVerificationPage({super.key, this.shellRenderMode});
@@ -171,7 +151,7 @@ class _P2PSelfieVerificationPageState
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
-        padding: _p2pSelfieScrollPadding(scrollEndPadding),
+        padding: AppSpacing.p2pSelfieScrollPadding(scrollEndPadding),
         child: VitPageContent(
           padding: VitContentPadding.none,
           fullBleed: true,
@@ -180,7 +160,7 @@ class _P2PSelfieVerificationPageState
             stepBody,
             const VitCard(
               variant: VitCardVariant.inner,
-              padding: _p2pSelfieReviewPadding,
+              padding: AppSpacing.p2pSelfieReviewPadding,
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
                 title: 'Selfie verification review',

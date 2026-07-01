@@ -84,7 +84,7 @@ class LiveMarketCard extends StatelessWidget {
     this.height,
     this.constraints,
     this.variant = VitCardVariant.standard,
-    this.radius = VitCardRadius.md,
+    this.radius = VitCardRadius.standard,
     this.borderColor,
     this.background,
   });

@@ -7,11 +7,15 @@ class _RiskMetricsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageSection(
-      label: 'Risk Exposure',
-      accentColor: _predictionPrimary,
-      density: VitDensity.compact,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const VitSectionHeader(
+          title: 'Risk Exposure',
+          variant: VitSectionHeaderVariant.accentBar,
+          density: VitDensity.compact,
+        ),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           density: VitDensity.compact,
           child: Column(
@@ -57,9 +61,9 @@ class _CategoryRiskCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Risk by Category',
-            style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
+          const VitSectionHeader(
+            title: 'Risk by Category',
+            density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.x2),
           SizedBox(
@@ -151,26 +155,12 @@ class _RiskWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      borderColor: AppColors.warningBorder,
-      density: VitDensity.compact,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.predictionAnalyzerWarningIcon,
-          ),
-          const SizedBox(width: AppSpacing.predictionAnalyzerWarningGap),
-          Expanded(
-            child: Text(
-              'Phan tich rui ro dua tren du lieu lich su. Hieu suat qua khu khong dam bao ket qua tuong lai. Luon quan ly rui ro va phan tan dau tu.',
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ),
-        ],
-      ),
+    return const VitAnnouncementBanner(
+      message:
+          'Phan tich rui ro dua tren du lieu lich su. Hieu suat qua khu khong dam bao ket qua tuong lai. Luon quan ly rui ro va phan tan dau tu.',
+      icon: Icons.info_outline_rounded,
+      accentColor: AppColors.warn,
+      variant: VitAnnouncementBannerVariant.compact,
     );
   }
 }

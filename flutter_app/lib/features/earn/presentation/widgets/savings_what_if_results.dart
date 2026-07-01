@@ -29,7 +29,7 @@ class _ResultsTab extends StatelessWidget {
       children: [
         _SectionTitle(label: 'Kết quả mô phỏng'),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnPaddingX4,
           borderColor: impactColor.withValues(alpha: .35),
           child: Column(
@@ -145,7 +145,7 @@ class _EmptyResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX5,
       child: Column(
         children: [
@@ -185,7 +185,7 @@ class _ComparisonChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

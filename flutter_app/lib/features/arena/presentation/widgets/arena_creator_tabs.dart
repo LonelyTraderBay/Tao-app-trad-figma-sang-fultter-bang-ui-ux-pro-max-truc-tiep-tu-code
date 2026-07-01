@@ -109,7 +109,7 @@ class _ModeRow extends StatelessWidget {
       key: ArenaCreatorPage.modeKey(mode.id),
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.arenaCreatorModeRowPadding,
       child: Row(
         children: [

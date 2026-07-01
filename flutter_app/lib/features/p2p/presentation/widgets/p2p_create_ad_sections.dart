@@ -270,7 +270,7 @@ class P2PCreateAdMultilineBlock extends StatelessWidget {
           minHeight: AppSpacing.p2pMerchantCommerceTextAreaMinHeight,
         ),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         borderColor: AppColors.borderSolid,
         background: const ColoredBox(color: AppColors.surface2),
         padding: AppSpacing.p2pMerchantCommerceTextAreaPadding,
@@ -304,7 +304,7 @@ class P2PCreateAdWarningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
       background: const ColoredBox(color: AppColors.warn10),
       padding: AppSpacing.p2pMerchantCommerceCompactPadding,

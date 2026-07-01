@@ -10,9 +10,8 @@ const double _marketToolsCompactHeight = AppSpacing.buttonCompact;
 const double _marketToolCompactHeight =
     AppSpacing.buttonCompact - AppSpacing.x1;
 const double _marketToolCompactGap = AppSpacing.x2;
-const EdgeInsets _marketToolCompactPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x3,
-);
+const EdgeInsets _marketToolCompactPadding =
+    AppSpacing.marketListToolCompactPadding;
 const double _marketToolCompactIcon = AppSpacing.iconSm;
 
 class MarketListTools extends StatelessWidget {

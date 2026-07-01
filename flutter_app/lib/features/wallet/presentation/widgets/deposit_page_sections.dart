@@ -24,7 +24,7 @@ class _NetworkSelector extends StatelessWidget {
         VitCard(
           key: DepositPage.networkSelectorKey,
           variant: VitCardVariant.inner,
-          radius: VitCardRadius.sm,
+          radius: VitCardRadius.standard,
           height: _depositSelectorHeight,
           density: VitDensity.tool,
           borderColor: _depositPrimary,

@@ -20,22 +20,17 @@ class _SegmentTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      variant: VitCardVariant.inner,
-      child: VitTabBar(
-        activeKey: activeId,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.id,
-              label: tab.label,
-              widgetKey: TraderProfilePage.tabKey(tab.id),
-            ),
-        ],
-      ),
+    return VitSegmentedTabBar(
+      activeKey: activeId,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: TraderProfilePage.tabKey(tab.id),
+          ),
+      ],
     );
   }
 }

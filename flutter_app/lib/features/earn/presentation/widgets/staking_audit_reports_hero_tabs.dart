@@ -86,7 +86,7 @@ class _StatsSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingAuditReportsPage.statsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [

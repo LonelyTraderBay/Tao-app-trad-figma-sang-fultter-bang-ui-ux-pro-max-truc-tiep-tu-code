@@ -21,7 +21,7 @@ class UnifiedPortfolioHistory extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.crossModuleCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

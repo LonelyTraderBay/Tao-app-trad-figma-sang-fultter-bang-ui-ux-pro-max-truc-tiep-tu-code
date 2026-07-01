@@ -28,7 +28,7 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
         for (final demo in demos)
           VitCard(
             padding: AppSpacing.devCardPadding,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -81,7 +81,7 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
           ),
         VitCard(
           padding: AppSpacing.devCardPadding,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [

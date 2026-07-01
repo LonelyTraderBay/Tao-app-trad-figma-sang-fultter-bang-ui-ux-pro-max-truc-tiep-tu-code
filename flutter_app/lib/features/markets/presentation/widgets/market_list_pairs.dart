@@ -9,13 +9,10 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_l
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const double _marketColumnCompactHeaderHeight = AppSpacing.buttonCompact;
-const EdgeInsets _marketPairCompactHeaderPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.contentPad - AppSpacing.x3,
-);
-const EdgeInsets _marketPairCompactRowPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.contentPad - AppSpacing.x3,
-  vertical: AppSpacing.x4 - AppSpacing.x1,
-);
+const EdgeInsets _marketPairCompactHeaderPadding =
+    AppSpacing.marketListPairCompactHeaderPadding;
+const EdgeInsets _marketPairCompactRowPadding =
+    AppSpacing.marketListPairCompactRowPadding;
 const double _marketPairCompactGap = AppSpacing.x3;
 const double _marketPairCompactMicroGap = AppSpacing.x1;
 const double _marketPairCompactSparklineWidth = AppSpacing.x7;
@@ -27,10 +24,8 @@ const double _marketPairCompactFavoriteIcon = AppSpacing.iconMd - AppSpacing.x1;
 const double _marketPairCompactAvatar = AppSpacing.x6 - AppSpacing.x1;
 const double _marketPairChangePillMinHeight =
     AppSpacing.statusPillHeightSm - AppSpacing.x1;
-const EdgeInsets _marketPairChangePillPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x1,
-);
+const EdgeInsets _marketPairChangePillPadding =
+    AppSpacing.marketListPairChangePillPadding;
 
 class MarketListColumnHeader extends StatelessWidget {
   const MarketListColumnHeader({super.key, required this.lastUpdatedLabel});

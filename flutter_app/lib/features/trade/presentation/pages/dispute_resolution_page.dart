@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/dispute_resolution_form.dart';
 part '../widgets/dispute_resolution_cases.dart';
@@ -85,11 +86,10 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
         .watch(tradeReadModelControllerProvider)
         .getDisputeResolution();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final safeBottom = MediaQuery.paddingOf(context).bottom;
-    final navInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final scrollClearance = navInset + safeBottom + AppSpacing.x4;
+    final scrollClearance = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

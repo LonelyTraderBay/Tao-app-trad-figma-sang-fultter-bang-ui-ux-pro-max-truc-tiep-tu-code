@@ -63,7 +63,7 @@ class _TabButton extends StatelessWidget {
     return Expanded(
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         onTap: onTap,
         child: Column(

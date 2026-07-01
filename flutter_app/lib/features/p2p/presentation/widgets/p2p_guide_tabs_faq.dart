@@ -125,7 +125,7 @@ class _FaqCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PGuidePage.faqKey(faq.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       clip: true,
       onTap: onTap,
       child: Column(

@@ -117,7 +117,7 @@ class _GlassHero extends StatelessWidget {
         right: AppSpacing.x4,
         bottom: AppSpacing.x4,
       ),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.accent20,
       background: const VitHeroGlow(
         center: Alignment(0.94, -0.88),
@@ -195,7 +195,7 @@ class _BoldHero extends StatelessWidget {
         right: AppSpacing.x4,
         bottom: AppSpacing.x4,
       ),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       variant: VitCardVariant.hero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -294,7 +294,7 @@ class _GlassStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       height: _copyGlassStatHeight,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.x3,
@@ -310,7 +310,7 @@ class _GlassStatCard extends StatelessWidget {
             width: _copyGlassStatIconBox,
             height: _copyGlassStatIconBox,
             alignment: Alignment.center,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             variant: VitCardVariant.ghost,
             background: ColoredBox(color: color.withValues(alpha: .16)),
             clip: true,
@@ -359,7 +359,7 @@ class _BoldStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .88),
       height: _copyBoldStatHeight,
       padding: AppSpacing.zeroInsets.copyWith(

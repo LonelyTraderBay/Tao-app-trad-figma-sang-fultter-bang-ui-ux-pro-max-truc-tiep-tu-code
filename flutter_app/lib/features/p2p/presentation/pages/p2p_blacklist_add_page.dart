@@ -22,12 +22,6 @@ const double _p2pBlacklistAddNativeNavClearance =
     _p2pBlacklistAddVisualNavClearance - AppSpacing.x4;
 const double _p2pBlacklistAddVisualClearance = AppSpacing.x3;
 const double _p2pBlacklistAddNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pBlacklistAddScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PBlacklistAddPage extends ConsumerStatefulWidget {
   const P2PBlacklistAddPage({super.key, this.shellRenderMode});
@@ -105,8 +99,8 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pBlacklistAddScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pBlacklistAddScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
@@ -180,7 +174,7 @@ class _Hero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PBlacklistAddPage.heroKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.sell15,
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
@@ -281,7 +275,7 @@ class _ReasonTile extends StatelessWidget {
       key: P2PBlacklistAddPage.reasonKey(reason.id),
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: selected
           ? color.withValues(alpha: .46)
           : AppColors.borderSolid,

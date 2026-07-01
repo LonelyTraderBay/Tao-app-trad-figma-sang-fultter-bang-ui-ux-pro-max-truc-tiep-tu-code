@@ -23,12 +23,6 @@ const double _p2pSuspiciousNativeNavClearance =
 const double _p2pSuspiciousVisualClearance = AppSpacing.x3;
 const double _p2pSuspiciousNativeClearance = AppSpacing.x2;
 const double _p2pSuspiciousIconBox = AppSpacing.buttonCompact + AppSpacing.x1;
-const EdgeInsets _p2pSuspiciousScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PSuspiciousActivityPage extends ConsumerStatefulWidget {
   const P2PSuspiciousActivityPage({super.key, this.shellRenderMode});
@@ -103,8 +97,8 @@ class _P2PSuspiciousActivityPageState
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: _p2pSuspiciousScrollPadding.copyWith(
-                        bottom: scrollEndPadding,
+                      padding: AppSpacing.p2pSuspiciousActivityScrollPadding(
+                        scrollEndPadding,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -167,7 +161,7 @@ class _SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PSuspiciousActivityPage.summaryKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.warningBorder,
       padding: AppSpacing.p2pComplianceCardPadding,
       child: Row(
@@ -246,7 +240,7 @@ class _AlertCard extends StatelessWidget {
 
     return VitCard(
       key: P2PSuspiciousActivityPage.alertKey(alert.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: alert.reviewed ? null : color,
       padding: AppSpacing.p2pComplianceCardPadding,
       child: Row(
@@ -356,7 +350,7 @@ class _EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PSuspiciousActivityPage.emptyKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pComplianceCardPadding,
       child: Column(
         children: [

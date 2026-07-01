@@ -37,8 +37,8 @@ class _MerchantAdCard extends StatelessWidget {
     final actionColor = isSellAd ? AppColors.buy : AppColors.sell;
     return VitCard(
       key: P2PMerchantProfilePage.adKey(ad.id),
-      radius: VitCardRadius.sm,
-      padding: _p2pMerchantCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -135,7 +135,7 @@ class _OutlineActionButton extends StatelessWidget {
     return VitCard(
       height: _p2pMerchantActionHeight,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .25),
       background: ColoredBox(color: color.withValues(alpha: .10)),
       onTap: onTap,
@@ -196,8 +196,8 @@ class _ReviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
-      padding: _p2pMerchantCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

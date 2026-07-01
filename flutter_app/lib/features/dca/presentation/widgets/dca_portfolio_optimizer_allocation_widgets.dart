@@ -146,7 +146,7 @@ class _SuggestionRow extends StatelessWidget {
     final color = positive ? AppColors.buy : AppColors.sell;
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.dcaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

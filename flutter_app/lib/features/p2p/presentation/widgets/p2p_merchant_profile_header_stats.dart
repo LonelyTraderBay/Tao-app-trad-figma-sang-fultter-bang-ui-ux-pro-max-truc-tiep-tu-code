@@ -264,8 +264,8 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
-      padding: _p2pMerchantCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -307,8 +307,8 @@ class _ReputationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final merchant = snapshot.merchant;
     return VitCard(
-      radius: VitCardRadius.sm,
-      padding: _p2pMerchantCardPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
       child: Column(
         children: [
           Row(

@@ -12,11 +12,10 @@ class _RegulatoryReportsDashboardPageState
         .watch(tradeReadModelControllerProvider)
         .getRegulatoryReportsDashboard();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x7
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x6) +
-        MediaQuery.paddingOf(context).bottom;
+    final scrollClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

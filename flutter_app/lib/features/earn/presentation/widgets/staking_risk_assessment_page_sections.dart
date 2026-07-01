@@ -81,7 +81,7 @@ class _QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingRiskAssessmentPage.questionCardKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -196,7 +196,7 @@ class _RiskOptionTile extends StatelessWidget {
       key: semanticKey,
       child: VitCard(
         variant: VitCardVariant.inner,
-        radius: VitCardRadius.lg,
+        radius: VitCardRadius.large,
         borderColor: selected ? AppColors.primary : AppColors.borderSolid,
         padding: AppSpacing.earnCardPaddingX3,
         onTap: onTap,

@@ -82,7 +82,7 @@ class _CampaignBanner extends StatelessWidget {
             const SizedBox(height: AppSpacing.x3),
             VitCard(
               variant: VitCardVariant.ghost,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               borderColor: AppColors.primary30,
               clip: true,
               background: const ColoredBox(color: AppColors.primary12),
@@ -192,7 +192,7 @@ class _ReferralHero extends StatelessWidget {
     return VitCard(
       key: ReferralHomePage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

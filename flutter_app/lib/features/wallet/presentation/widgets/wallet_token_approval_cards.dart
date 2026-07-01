@@ -73,7 +73,7 @@ class WalletTokenApprovalCard extends StatelessWidget {
               VitCard(
                 density: VitDensity.compact,
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 borderColor: AppColors.sell20,
                 child: Row(
                   children: [
@@ -123,7 +123,7 @@ class WalletTokenCategoryIcon extends StatelessWidget {
       width: AppSpacing.walletTokenCategoryIcon,
       height: AppSpacing.walletTokenCategoryIcon,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .20),
       alignment: Alignment.center,
       child: Icon(

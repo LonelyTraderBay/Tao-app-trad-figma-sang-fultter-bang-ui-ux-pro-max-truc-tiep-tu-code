@@ -186,15 +186,10 @@ class _Tabs extends StatelessWidget {
         widgetKey: SlippageMonitoringPage.tabKey('alerts'),
       ),
     ];
-    return VitCard(
-      density: VitDensity.tool,
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
-      child: VitTabBar(
-        tabs: tabs,
-        activeKey: activeId,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
-      ),
+    return VitSegmentedTabBar(
+      tabs: tabs,
+      activeKey: activeId,
+      onChanged: onChanged,
     );
   }
 }

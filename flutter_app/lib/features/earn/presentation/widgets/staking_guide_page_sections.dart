@@ -84,7 +84,7 @@ class _TutorialCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingGuidePage.tutorialKey(tutorial.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       onTap: onTap,
       child: Padding(
@@ -174,7 +174,7 @@ class _QuickTipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(tip.tone);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +216,7 @@ class _CommonMistakes extends StatelessWidget {
       accentColor: AppColors.primarySoft,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4,
           child: Column(
             children: [
@@ -242,7 +242,7 @@ class _MistakeRow extends StatelessWidget {
     final color = _toneColor(mistake.tone);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,7 +289,7 @@ class _StartStakingCard extends StatelessWidget {
       key: StakingGuidePage.ctaKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

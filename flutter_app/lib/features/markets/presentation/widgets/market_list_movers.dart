@@ -8,7 +8,8 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_l
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const double _marketMoverCompactHeight = AppSpacing.x7 + AppSpacing.x6;
-const EdgeInsets _marketMoverCompactPadding = EdgeInsets.all(AppSpacing.x3);
+const EdgeInsets _marketMoverCompactPadding =
+    AppSpacing.marketListMoverCompactPadding;
 const double _marketMoverCompactGap = AppSpacing.x2;
 
 class MarketListTopMovers extends StatelessWidget {

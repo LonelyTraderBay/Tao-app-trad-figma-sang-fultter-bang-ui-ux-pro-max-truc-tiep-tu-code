@@ -88,7 +88,7 @@ class _TokenLogo extends StatelessWidget {
       height: _networkLogoSize,
       width: _networkLogoSize,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       background: ColoredBox(color: color.withValues(alpha: .1)),
       clip: true,
       alignment: Alignment.center,

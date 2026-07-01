@@ -120,7 +120,7 @@ class _RewardRow extends StatelessWidget {
     return VitCard(
       onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       child: SizedBox(
         height: VitDensity.compact.controlHeight + AppSpacing.x4,
         child: Stack(
@@ -133,7 +133,7 @@ class _RewardRow extends StatelessWidget {
                     key: PredictionsRewardsPage.favoriteKey(reward.id),
                     onTap: onFavoriteToggle,
                     variant: VitCardVariant.ghost,
-                    radius: VitCardRadius.sm,
+                    radius: VitCardRadius.standard,
                     width: AppSpacing.predictionRewardsFavoriteWidth,
                     height: VitDensity.compact.controlHeight - AppSpacing.x3,
                     padding: AppSpacing.zeroInsets,
@@ -279,7 +279,7 @@ class _RiskLink extends StatelessWidget {
       key: PredictionsRewardsPage.riskExplainerKey,
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       child: Padding(
         padding: AppSpacing.predictionRewardsRiskLinkPadding,
         child: Row(

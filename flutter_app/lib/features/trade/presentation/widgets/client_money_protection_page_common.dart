@@ -161,7 +161,7 @@ class _MetricBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,7 +203,7 @@ class _ReconciliationRow extends StatelessWidget {
     final color = success ? _moneyGreen : AppColors.text1;
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: success ? _moneyGreen.withValues(alpha: .35) : null,
       padding: AppSpacing.tradeBotClientMoneyRowPadding,
       child: Row(

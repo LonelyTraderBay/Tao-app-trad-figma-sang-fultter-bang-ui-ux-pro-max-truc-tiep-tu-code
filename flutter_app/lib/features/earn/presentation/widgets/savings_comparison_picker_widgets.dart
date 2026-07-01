@@ -120,7 +120,7 @@ class _EmptyComparisonState extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsComparisonPage.emptyStateKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         children: [

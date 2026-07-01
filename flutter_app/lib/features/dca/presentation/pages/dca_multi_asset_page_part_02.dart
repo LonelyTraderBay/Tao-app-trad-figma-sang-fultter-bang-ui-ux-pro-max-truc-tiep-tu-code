@@ -69,7 +69,7 @@ class _TokenSwitch extends StatelessWidget {
       key: DCAMultiAssetPage.rebalanceToggleKey,
       onTap: onToggle,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       width: AppSpacing.dcaMultiToggleWidth,
       height: AppSpacing.dcaMultiToggleHeight,
@@ -326,7 +326,7 @@ class _PerformanceRankRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.dcaPaddingX4,
       child: Row(
         children: [
@@ -413,7 +413,7 @@ class _InfoCallout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
       padding: AppSpacing.dcaPaddingX4,
       child: Row(

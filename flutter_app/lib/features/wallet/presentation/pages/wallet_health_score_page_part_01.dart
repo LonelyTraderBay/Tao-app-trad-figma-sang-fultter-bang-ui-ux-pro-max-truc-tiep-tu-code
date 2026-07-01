@@ -340,7 +340,7 @@ class _MetricCard extends StatelessWidget {
     final color = _statusColor(metric.status);
     return VitCard(
       key: WalletHealthScorePage.metricKey(metric.category),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       borderColor: _healthBorder,
       child: Column(

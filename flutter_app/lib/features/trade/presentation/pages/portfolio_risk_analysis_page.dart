@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/portfolio_risk_analysis_page_sections.dart';
 part '../widgets/portfolio_risk_analysis_page_common.dart';
@@ -24,8 +25,6 @@ part '../widgets/portfolio_risk_analysis_page_common.dart';
 const _riskPrimary = AppColors.primary;
 const _riskWarningBorder = AppColors.warningBorderStrong;
 const _riskWarningText = AppColors.caution;
-const double _riskVisualScrollClearance = 108;
-const double _riskNativeScrollClearance = 72;
 const double _riskSectionSpace = AppSpacing.x2;
 const double _riskTinySpace = AppSpacing.x1;
 const double _riskSummaryExtent = 82;
@@ -58,12 +57,10 @@ class _PortfolioRiskAnalysisPageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradePortfolioRiskAnalysisProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? _riskVisualScrollClearance
-            : _riskNativeScrollClearance) +
-        MediaQuery.paddingOf(context).bottom +
-        AppSpacing.x2;
+    final scrollEndClearance = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

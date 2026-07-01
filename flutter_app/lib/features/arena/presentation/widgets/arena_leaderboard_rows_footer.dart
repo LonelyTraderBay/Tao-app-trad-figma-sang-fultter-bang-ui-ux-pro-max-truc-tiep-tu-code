@@ -19,7 +19,7 @@ class _LeaderboardRow extends StatelessWidget {
           : ArenaLeaderboardPage.creatorRowKey,
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       child: Padding(
         padding: _leaderboardRowPadding,
         child: Row(
@@ -181,36 +181,9 @@ class _ArenaFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Material(
-          type: MaterialType.transparency,
-          child: VitCard(
-            key: ArenaLeaderboardPage.rulesKey,
-            onTap: onRules,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
-            child: Padding(
-              padding: _leaderboardFooterActionPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.menu_book_outlined,
-                    color: AppColors.primary,
-                    size: _leaderboardFooterIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    'Quy tắc cộng đồng',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: AppTextStyles.medium,
-                      height: _leaderboardLineHeight,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        VitCommunityRulesLink(
+          key: ArenaLeaderboardPage.rulesKey,
+          onTap: onRules,
         ),
         const SizedBox(height: AppSpacing.x3),
         VitCard(

@@ -9,7 +9,7 @@ class _ProjectReceiptCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .20),
       padding: AppSpacing.launchpadPaddingX4,
       child: Row(
@@ -92,7 +92,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
     ];
 
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -117,7 +117,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
               ),
               VitCard(
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 padding: AppSpacing.launchpadInlinePillPadding,
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: subscription.txHash));
@@ -209,7 +209,7 @@ class _ReceiptNextSteps extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

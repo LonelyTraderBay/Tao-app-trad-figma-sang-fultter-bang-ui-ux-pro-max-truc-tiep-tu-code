@@ -58,10 +58,10 @@ class _LivenessActionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       variant: completed ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: completed ? AppColors.buy20 : AppColors.cardBorder,
-      padding: _p2pSelfieReviewPadding,
+      padding: AppSpacing.p2pSelfieReviewPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -111,7 +111,7 @@ class _ResultStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Padding(
-          padding: _p2pSelfieResultIconMargin,
+          padding: AppSpacing.p2pSelfieResultIconMargin,
           child: SizedBox.square(
             dimension: _p2pSelfieActionIconBox,
             child: Material(
@@ -138,8 +138,8 @@ class _ResultStep extends StatelessWidget {
         ),
         const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
-          radius: VitCardRadius.lg,
-          padding: _p2pSelfieCardPadding,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.p2pSelfieCardPadding,
           child: Column(
             children: [
               _ScoreRow(label: 'Face Match Score', value: snapshot.matchScore),
@@ -153,8 +153,8 @@ class _ResultStep extends StatelessWidget {
         ),
         const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
-          radius: VitCardRadius.md,
-          padding: _p2pSelfieCardPadding,
+          radius: VitCardRadius.standard,
+          padding: AppSpacing.p2pSelfieCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -188,7 +188,7 @@ class _ResultStep extends StatelessWidget {
           onPressed: onSupport,
           variant: VitCtaButtonVariant.secondary,
           height: AppSpacing.buttonCompact,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+          padding: AppSpacing.p2pPaymentDialogActionPadding,
           child: const Text('Liên hệ hỗ trợ'),
         ),
       ],
@@ -205,7 +205,7 @@ class _ScoreRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: _p2pSelfieScoreRowPadding,
+      padding: AppSpacing.p2pSelfieScoreRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -269,7 +269,7 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: _p2pSelfieChecklistIconPadding,
+          padding: AppSpacing.p2pSelfieChecklistIconPadding,
           child: Icon(
             color == AppColors.warn
                 ? Icons.auto_awesome_rounded

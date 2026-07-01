@@ -9,8 +9,8 @@ class _MultiSigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PEscrowDetailPage.multisigKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pEscrowCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -99,9 +99,9 @@ class _SignerRow extends StatelessWidget {
         : VitStatusPillStatus.neutral;
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: signer.hasSigned ? AppColors.buy20 : AppColors.borderSolid,
-      padding: _p2pEscrowInnerPadding,
+      padding: AppSpacing.p2pEscrowDetailInnerPadding,
       child: Row(
         children: [
           SizedBox.square(
@@ -189,8 +189,8 @@ class _OrderInfoCard extends StatelessWidget {
 
     return VitCard(
       key: P2PEscrowDetailPage.orderInfoKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pEscrowCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pEscrowDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

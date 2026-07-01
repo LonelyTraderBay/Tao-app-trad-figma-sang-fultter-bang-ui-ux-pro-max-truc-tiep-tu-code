@@ -66,7 +66,7 @@ class _TopTab extends StatelessWidget {
         key: DCASmartRulesPage.tabKey(tab.name),
         onTap: () => onChanged(tab),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         borderColor: AppColors.transparent,
         child: Padding(

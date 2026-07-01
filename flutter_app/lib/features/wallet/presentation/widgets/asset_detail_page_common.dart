@@ -52,14 +52,14 @@ class _AssetTransactionRow extends StatelessWidget {
     return VitCard(
       key: AssetDetailPage.transactionKey(tx.id),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: VitDensity.compact.cardPadding,
       onTap: onTap,
       child: Row(
         children: [
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             width: AppSpacing.walletAssetTransactionIcon,
             height: AppSpacing.walletAssetTransactionIcon,
             alignment: Alignment.center,

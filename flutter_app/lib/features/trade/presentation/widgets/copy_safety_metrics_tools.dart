@@ -172,7 +172,7 @@ class _MetricInfo extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       density: VitDensity.compact,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       width: double.infinity,
       padding: AppSpacing.copySafetyMetricInfoPadding,
       borderColor: color,

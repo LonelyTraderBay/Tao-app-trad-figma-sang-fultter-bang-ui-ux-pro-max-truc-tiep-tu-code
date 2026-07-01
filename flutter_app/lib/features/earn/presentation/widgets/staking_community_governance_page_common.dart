@@ -9,7 +9,7 @@ class _VotingPower extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingCommunityGovernancePage.votingPowerKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,7 +55,7 @@ class _VotingPower extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.earnCardPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -122,7 +122,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingCommunityGovernancePage.footerKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         note,

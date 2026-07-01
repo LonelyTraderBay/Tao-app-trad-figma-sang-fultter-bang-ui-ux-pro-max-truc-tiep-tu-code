@@ -17,13 +17,13 @@ class _BridgeEventLog extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadBridgeOrderPage.eventLogKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.launchpadPaddingX4,
             onTap: onToggle,
             child: Row(

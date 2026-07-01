@@ -21,60 +21,27 @@ class _SegmentedToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      borderRadius: AppRadii.cardRadius,
-      child: Padding(
-        padding: AppSpacing.predictionDetailSegmentPadding,
-        child: Row(
-          children: [
-            Expanded(
-              child: _SegmentButton(
-                label: leftLabel,
-                active: leftActive,
-                color: leftColor,
-                onTap: onLeft,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.predictionDetailSegmentGap),
-            Expanded(
-              child: _SegmentButton(
-                label: rightLabel,
-                active: !leftActive,
-                color: rightColor,
-                onTap: onRight,
-              ),
-            ),
-          ],
+    return VitSegmentedChoice<bool>(
+      selected: leftActive,
+      onChanged: (selected) {
+        if (selected) {
+          onLeft();
+        } else {
+          onRight();
+        }
+      },
+      options: [
+        VitSegmentedChoiceOption(
+          value: true,
+          label: leftLabel,
+          accentColor: leftColor,
         ),
-      ),
-    );
-  }
-}
-
-class _SegmentButton extends StatelessWidget {
-  const _SegmentButton({
-    required this.label,
-    required this.active,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: color,
-      fullWidth: true,
-      height: VitDensity.compact.controlHeight,
-      padding: AppSpacing.zeroInsets,
+        VitSegmentedChoiceOption(
+          value: false,
+          label: rightLabel,
+          accentColor: rightColor,
+        ),
+      ],
     );
   }
 }
@@ -140,7 +107,7 @@ class _RiskLink extends StatelessWidget {
       key: PredictionEventDetailPage.riskLinkKey,
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       child: SizedBox(
         height: VitDensity.compact.controlHeight,
         child: Center(

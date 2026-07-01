@@ -40,7 +40,7 @@ class _StressTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class _StressTab extends StatelessWidget {
         ],
         const SizedBox(height: AppSpacing.x4),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.earnPaddingX4,
           borderColor: scoreColor.withValues(alpha: .35),
           child: Column(

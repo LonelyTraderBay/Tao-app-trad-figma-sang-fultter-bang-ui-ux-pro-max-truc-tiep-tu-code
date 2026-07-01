@@ -35,7 +35,7 @@ class _NewsCard extends StatelessWidget {
           VitCard(
             onTap: onToggleExpanded,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: EdgeInsets.zero,
             borderColor: AppColors.transparent,
             child: Padding(
@@ -75,7 +75,7 @@ class _NewsCard extends StatelessWidget {
                     key: MarketNewsPage.saveKey(news.id),
                     onTap: onToggleSaved,
                     variant: VitCardVariant.ghost,
-                    radius: VitCardRadius.sm,
+                    radius: VitCardRadius.standard,
                     padding: EdgeInsets.zero,
                     borderColor: AppColors.transparent,
                     child: Padding(
@@ -300,7 +300,7 @@ class _ExpandedNewsDetails extends StatelessWidget {
                       key: MarketNewsPage.tokenKey(token),
                       onTap: () => onTokenTap(token),
                       variant: VitCardVariant.ghost,
-                      radius: VitCardRadius.sm,
+                      radius: VitCardRadius.standard,
                       padding: EdgeInsets.zero,
                       borderColor: AppColors.transparent,
                       clip: true,
@@ -375,7 +375,7 @@ class _NewsEmptyState extends StatelessWidget {
           VitCard(
             onTap: onReset,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             padding: EdgeInsets.zero,
             borderColor: AppColors.transparent,
             clip: true,

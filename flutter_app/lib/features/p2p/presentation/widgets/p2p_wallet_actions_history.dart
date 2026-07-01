@@ -81,7 +81,7 @@ class _RecentTransactions extends StatelessWidget {
           ],
         ),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
           child: Column(
             children: [

@@ -25,15 +25,6 @@ const double _p2pExpressConfirmNativeClearance = AppSpacing.x2;
 const double _p2pExpressConfirmSectionGap = AppSpacing.x2;
 const double _p2pExpressConfirmMajorGap = AppSpacing.x3;
 const double _p2pExpressConfirmDividerHeight = AppSpacing.dividerHairline;
-const EdgeInsets _p2pExpressConfirmScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x3,
-  AppSpacing.contentPad,
-  0,
-);
-const EdgeInsets _p2pExpressConfirmCompactPadding = EdgeInsets.all(
-  AppSpacing.x2,
-);
 
 class P2PExpressConfirmPage extends ConsumerStatefulWidget {
   const P2PExpressConfirmPage({
@@ -115,8 +106,8 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                   child: SingleChildScrollView(
                     key: P2PExpressConfirmPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pExpressConfirmScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pExpressConfirmScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -277,7 +268,7 @@ class _SummaryCard extends StatelessWidget {
 
     return VitCard(
       borderColor: accent.withValues(alpha: .30),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       child: Column(
         children: [
@@ -364,7 +355,7 @@ class _MerchantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _p2pExpressConfirmCompactPadding,
+      padding: AppSpacing.p2pExpressConfirmCompactCardPadding,
       child: Row(
         children: [
           VitAssetAvatar(
@@ -456,7 +447,7 @@ class _NoticeCard extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: _p2pExpressConfirmCompactPadding,
+        padding: AppSpacing.p2pExpressConfirmCompactCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -70,7 +70,7 @@ class _StatCard extends StatelessWidget {
     return VitCard(
       height: AppSpacing.tradeToolMetricHeight,
       padding: AppSpacing.tradeToolMetricPadding,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: _auditBorder.withValues(alpha: .76),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

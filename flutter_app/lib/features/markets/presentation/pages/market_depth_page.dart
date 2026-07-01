@@ -58,7 +58,11 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
     final resolvedBackPath = resolveSafeBackPath(
       candidate: widget.backPath,
       fallbackPath: AppRoutePaths.pairDetail(widget.pairId),
-      allowedPrefixes: const [AppRoutePaths.markets, '/pair'],
+      allowedPrefixes: const [
+        AppRoutePaths.markets,
+        '/pair',
+        AppRoutePaths.trade,
+      ],
     );
 
     return VitPageLayout(

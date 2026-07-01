@@ -101,7 +101,7 @@ class _TicketCard extends StatelessWidget {
     final lastMessage = ticket.messages.last;
     return VitCard(
       key: SupportPage.ticketKey(ticket.id),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.supportCardPadding,
       onTap: HapticFeedback.selectionClick,
       child: Column(
@@ -153,7 +153,7 @@ class _TicketCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x4),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.supportCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

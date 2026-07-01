@@ -37,10 +37,9 @@ class UnifiedPortfolioTabs extends StatelessWidget {
       ),
       child: Padding(
         padding: AppSpacing.crossModuleTabBarPadding,
-        child: VitTabBar(
+        child: VitSegmentedTabBar(
           tabs: tabItems,
           activeKey: active.name,
-          variant: VitTabBarVariant.underline,
           onChanged: (key) {
             final selected = tabs.firstWhere((tab) => tab.tab.name == key);
             onChanged(selected.tab);

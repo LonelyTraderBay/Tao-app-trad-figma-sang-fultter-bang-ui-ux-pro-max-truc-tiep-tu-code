@@ -27,7 +27,7 @@ class _AmountCard extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return VitCard(
-      padding: _p2pExpressCardPadding,
+      padding: AppSpacing.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -136,7 +136,7 @@ class _PaymentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _p2pExpressCardPadding,
+      padding: AppSpacing.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -226,7 +226,7 @@ class _BestOfferCard extends StatelessWidget {
       children: [
         VitCard(
           borderColor: color.withValues(alpha: .35),
-          padding: _p2pExpressCardPadding,
+          padding: AppSpacing.p2pExpressCompactCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -308,7 +308,7 @@ class _BestOfferCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x3),
           VitCard(
             onTap: onMarketplace,
-            padding: _p2pExpressCompactPadding,
+            padding: AppSpacing.p2pExpressTightCardPadding,
             child: Row(
               children: [
                 const Icon(
@@ -404,7 +404,7 @@ class _HowItWorksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: _p2pExpressCardPadding,
+      padding: AppSpacing.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -474,7 +474,7 @@ class _NoOfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: _p2pExpressCompactPadding,
+      padding: AppSpacing.p2pExpressTightCardPadding,
       child: Row(
         children: [
           const Icon(

@@ -106,7 +106,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                     gap: VitContentGap.loose,
                     children: [
                       VitCard(
-                        radius: VitCardRadius.lg,
+                        radius: VitCardRadius.large,
                         padding: AppSpacing.zeroInsets,
                         clip: true,
                         child: DesignSystemHero(
@@ -115,7 +115,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                         ),
                       ),
                       VitCard(
-                        radius: VitCardRadius.lg,
+                        radius: VitCardRadius.large,
                         padding: AppSpacing.zeroInsets,
                         clip: true,
                         child: DesignSystemTokensSection(
@@ -124,7 +124,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                         ),
                       ),
                       VitCard(
-                        radius: VitCardRadius.lg,
+                        radius: VitCardRadius.large,
                         padding: AppSpacing.zeroInsets,
                         clip: true,
                         child: DesignSystemColorSection(

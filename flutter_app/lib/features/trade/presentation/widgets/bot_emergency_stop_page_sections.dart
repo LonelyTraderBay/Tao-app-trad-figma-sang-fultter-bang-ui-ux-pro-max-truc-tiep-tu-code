@@ -21,7 +21,7 @@ class _WarningBanner extends StatelessWidget {
             height: AppSpacing.x6,
             alignment: Alignment.center,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             borderColor: _stopRed,
             child: const Icon(Icons.priority_high_rounded, color: _stopRed),
           ),

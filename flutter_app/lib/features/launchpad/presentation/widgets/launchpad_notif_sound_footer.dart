@@ -56,7 +56,7 @@ class _InlineSaveActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadNotifSoundPage.footerKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -130,7 +130,7 @@ class _SoundSwitch extends StatelessWidget {
       child: VitCard(
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         width: width,
         height: height,
         padding: AppSpacing.zeroInsets,

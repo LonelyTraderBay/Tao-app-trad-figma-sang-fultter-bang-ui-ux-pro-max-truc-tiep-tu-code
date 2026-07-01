@@ -49,7 +49,7 @@ class _StatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingInstitutionalPage.statsKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Row(
         children: [
@@ -126,7 +126,7 @@ class _BatchTabs extends StatelessWidget {
               child: VitCard(
                 key: StakingInstitutionalPage.tabKey(tab.name),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 padding: AppSpacing.earnTopPaddingX4,
                 onTap: () => onChanged(tab),
                 child: Column(
@@ -175,7 +175,7 @@ class _BatchOperationCard extends StatelessWidget {
     final progress = batch.approvals / batch.requiredApprovals;
     return VitCard(
       key: StakingInstitutionalPage.batchKey(batch.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

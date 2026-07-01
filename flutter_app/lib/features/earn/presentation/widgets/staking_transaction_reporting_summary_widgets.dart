@@ -76,7 +76,7 @@ class _Selectors extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  radius: VitCardRadius.md,
+                  radius: VitCardRadius.standard,
                   padding: AppSpacing.zeroInsets.copyWith(
                     left: AppSpacing.x4,
                     right: AppSpacing.x4,
@@ -172,7 +172,7 @@ class _ReportingTabs extends StatelessWidget {
               child: VitCard(
                 key: StakingTransactionReportingPage.tabKey(tab.name),
                 variant: VitCardVariant.ghost,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 padding: AppSpacing.zeroInsets.copyWith(top: AppSpacing.x3),
                 onTap: () => onChanged(tab),
                 child: Column(
@@ -230,7 +230,7 @@ class _SummaryTab extends StatelessWidget {
           density: VitDensity.compact,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: _transactionReportingCardPadding,
               child: Column(
                 children: [
@@ -256,7 +256,7 @@ class _SummaryTab extends StatelessWidget {
           density: VitDensity.compact,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: _transactionReportingCardPadding,
               child: Column(
                 children: [
@@ -290,7 +290,7 @@ class _SummaryPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _transactionReportingCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -333,7 +333,7 @@ class _GainsPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _transactionReportingCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -398,7 +398,7 @@ class _CostBasisPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _transactionReportingCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

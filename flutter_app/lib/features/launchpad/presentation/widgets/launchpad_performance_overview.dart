@@ -8,34 +8,28 @@ class _PerformanceTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.surface,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            key: LaunchpadPerformancePage.tabsKey,
-            children: [
-              for (final tab in _PerformanceTab.values)
-                Expanded(
-                  child: VitChoicePill(
-                    key: LaunchpadPerformancePage.tabKey(tab.id),
-                    label: tab.label,
-                    selected: tab == activeTab,
-                    onTap: () => onChanged(tab),
-                    fullWidth: true,
-                    accentColor: AppColors.primary,
-                  ),
-                ),
-            ],
-          ),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            thickness: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        VitSegmentedChoice.withPrimaryAccent<_PerformanceTab>(
+          key: LaunchpadPerformancePage.tabsKey,
+          selected: activeTab,
+          onChanged: onChanged,
+          options: [
+            for (final tab in _PerformanceTab.values)
+              VitSegmentedChoiceOption(
+                key: LaunchpadPerformancePage.tabKey(tab.id),
+                value: tab,
+                label: tab.label,
+              ),
+          ],
+        ),
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          thickness: AppSpacing.dividerHairline,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -54,7 +48,7 @@ class _OverviewTab extends StatelessWidget {
         VitCard(
           key: LaunchpadPerformancePage.heroKey,
           variant: VitCardVariant.hero,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
           padding: _launchpadPerformanceHeroPadding,
           child: Column(
@@ -209,7 +203,7 @@ class _BestWorstCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: _launchpadPerformanceCardPadding,
       child: Column(
         children: [
@@ -252,7 +246,7 @@ class _RoiDistribution extends StatelessWidget {
 
     return VitCard(
       key: LaunchpadPerformancePage.distributionKey,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: _launchpadPerformanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

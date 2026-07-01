@@ -311,7 +311,7 @@ class _TitleField extends StatelessWidget {
               for (final suggestion in suggestions)
                 VitCard(
                   variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.sm,
+                  radius: VitCardRadius.standard,
                   padding: AppSpacing.zeroInsets,
                   onTap: () => onSuggestion(suggestion),
                   child: Text(
@@ -423,7 +423,7 @@ class _ChallengeTypeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.arenaSmartRuleTilePadding,
       onTap: () {
         HapticFeedback.selectionClick();

@@ -80,7 +80,7 @@ class _RangeButton extends StatelessWidget {
         key: AnalyticsDashboard.rangeKey(option.range),
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         borderColor: AppColors.transparent,
         background: ColoredBox(
           color: active ? AppColors.surface3 : AppColors.transparent,

@@ -165,7 +165,7 @@ class _PairCard extends StatelessWidget {
               VitCard(
                 width: AppSpacing.rowPy,
                 height: AppSpacing.x3,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 variant: VitCardVariant.ghost,
                 background: ColoredBox(
                   color: _marginRed.withValues(alpha: .06),

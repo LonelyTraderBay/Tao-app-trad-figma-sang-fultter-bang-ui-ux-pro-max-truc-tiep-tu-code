@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/bot_terms_of_service_page_sections.dart';
 part '../widgets/bot_terms_of_service_page_common.dart';
@@ -24,8 +25,6 @@ const _termsBackground = AppColors.bg;
 const _termsPrimary = AppColors.primary;
 const _termsAmber = AppColors.caution;
 const _termsRed = AppColors.sell;
-const double _termsVisualScrollClearance = 108;
-const double _termsNativeScrollClearance = 72;
 const double _termsSpace = AppSpacing.x2;
 const double _termsTinySpace = AppSpacing.x1;
 const double _termsInfoMinExtent = 82;
@@ -80,11 +79,10 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
         .watch(tradeReadModelControllerProvider)
         .getBotTermsOfService();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? _termsVisualScrollClearance
-            : _termsNativeScrollClearance) +
-        MediaQuery.paddingOf(context).bottom;
+    final scrollEndClearance = tradeScrollBottomInset(
+        context,
+        shellRenderMode: mode,
+      );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

@@ -208,9 +208,9 @@ class _TradeToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       clip: true,
-      padding: _p2pExpressCardPadding,
+      padding: AppSpacing.p2pExpressCompactCardPadding,
       background: const VitHeroGlow(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -263,60 +263,31 @@ class _TradeToggle extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              Expanded(
-                child: _TradeToggleButton(
-                  key: P2PExpressPage.buyToggleKey,
-                  label: 'MUA NHANH',
-                  active: tradeType == P2PTradeType.buy,
-                  color: AppColors.buy,
-                  onPressed: () => onChanged(P2PTradeType.buy),
-                ),
+          VitSegmentedChoice<P2PTradeType>(
+            selected: tradeType,
+            onChanged: onChanged,
+            height: _p2pExpressToggleHeight,
+            options: [
+              VitSegmentedChoiceOption(
+                key: P2PExpressPage.buyToggleKey,
+                value: P2PTradeType.buy,
+                label: 'MUA NHANH',
+                accentColor: AppColors.buy,
+                leading: const Icon(Icons.bolt_outlined),
+                semanticLabel: 'P2P express MUA NHANH',
               ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _TradeToggleButton(
-                  key: P2PExpressPage.sellToggleKey,
-                  label: 'BÁN NHANH',
-                  active: tradeType == P2PTradeType.sell,
-                  color: AppColors.sell,
-                  onPressed: () => onChanged(P2PTradeType.sell),
-                ),
+              VitSegmentedChoiceOption(
+                key: P2PExpressPage.sellToggleKey,
+                value: P2PTradeType.sell,
+                label: 'BÁN NHANH',
+                accentColor: AppColors.sell,
+                leading: const Icon(Icons.bolt_outlined),
+                semanticLabel: 'P2P express BÁN NHANH',
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _TradeToggleButton extends StatelessWidget {
-  const _TradeToggleButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.color,
-    required this.onPressed,
-  });
-
-  final String label;
-  final bool active;
-  final Color color;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onPressed,
-      fullWidth: true,
-      height: _p2pExpressToggleHeight,
-      accentColor: color,
-      leading: const Icon(Icons.bolt_outlined),
-      semanticLabel: 'P2P express $label',
     );
   }
 }
@@ -340,7 +311,7 @@ class _AssetCard extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return VitCard(
-      padding: _p2pExpressCardPadding,
+      padding: AppSpacing.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

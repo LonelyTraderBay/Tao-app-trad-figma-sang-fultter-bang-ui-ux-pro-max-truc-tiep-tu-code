@@ -179,7 +179,7 @@ class _FooterToolButton extends StatelessWidget {
         label: label,
         child: VitCard(
           variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
+          radius: VitCardRadius.standard,
           width: AppSpacing.arenaStudioFooterToolButton,
           height: AppSpacing.arenaStudioFooterToolButton,
           onTap: onTap,

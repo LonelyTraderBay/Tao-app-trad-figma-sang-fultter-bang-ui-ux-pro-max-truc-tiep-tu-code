@@ -135,7 +135,7 @@ class _MetricTab extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       height: _boardControlExtent,
       padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       borderColor: active

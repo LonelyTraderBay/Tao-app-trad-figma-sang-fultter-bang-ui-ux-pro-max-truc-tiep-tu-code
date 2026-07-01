@@ -19,7 +19,7 @@ class _SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingEarningsCalendarPage.summaryKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

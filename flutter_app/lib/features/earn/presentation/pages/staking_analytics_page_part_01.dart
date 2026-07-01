@@ -119,7 +119,7 @@ class _SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingAnalyticsPage.summaryKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _stakingAnalyticsCardPadding,
       child: Column(
         children: [
@@ -382,22 +382,15 @@ class _AnalyticsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface,
-        shape: Border(bottom: BorderSide(color: AppColors.divider)),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnHorizontalPaddingX2,
-        child: VitTabBar(
-          variant: VitTabBarVariant.underline,
+    return Padding(
+      padding: AppSpacing.earnHorizontalPaddingX2,
+        child: VitSegmentedTabBar(
           activeKey: activeTab,
           onChanged: onChanged,
           tabs: [
             for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
           ],
         ),
-      ),
     );
   }
 }

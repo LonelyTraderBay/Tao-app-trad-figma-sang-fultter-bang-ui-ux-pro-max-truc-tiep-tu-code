@@ -101,14 +101,14 @@ class _HeroCopyCard extends StatelessWidget {
     return VitCard(
       key: CopyTradingCardDemoUiKeys.cardKey('hero'),
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       borderColor: AppColors.borderSolid,
       child: Column(
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             padding: AppSpacing.tradeBotCopyDemoPanelPadding,
             borderColor: AppColors.cardBorder,
             background: const ColoredBox(color: AppColors.surface),
@@ -177,7 +177,7 @@ class _TabularCopyCard extends StatelessWidget {
     return VitCard(
       key: CopyTradingCardDemoUiKeys.cardKey('tabular'),
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         children: [
@@ -235,7 +235,7 @@ class _CompactCopyCard extends StatelessWidget {
     return VitCard(
       key: CopyTradingCardDemoUiKeys.cardKey('compact'),
       variant: VitCardVariant.standard,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.tradeBotCopyDemoPanelPadding,
       child: Column(
         children: [
@@ -279,7 +279,7 @@ class _CopyCardHeader extends StatelessWidget {
       children: [
         const VitCard(
           variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
+          radius: VitCardRadius.standard,
           padding: AppSpacing.tradeBotCopyDemoCardPadding,
           background: ColoredBox(color: AppColors.primary),
           child: Icon(
@@ -433,7 +433,7 @@ class _CompactMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.tradeBotCopyDemoCompactPadding,
       borderColor: emphasized ? AppColors.primary40 : null,
       background: const ColoredBox(color: AppColors.bg),

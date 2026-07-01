@@ -25,7 +25,7 @@ class _BenefitsGrid extends StatelessWidget {
           itemBuilder: (context, index) {
             final benefit = snapshot.benefits[index];
             return VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.cardPaddingCompact,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

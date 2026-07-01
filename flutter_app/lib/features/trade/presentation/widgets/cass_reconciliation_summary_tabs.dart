@@ -105,23 +105,17 @@ class _Tabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const tabs = [('recent', 'Recent (7 Days)'), ('history', 'History')];
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      padding: AppSpacing.cardPaddingCompact,
-      child: VitTabBar(
-        tabs: [
-          for (final tab in tabs)
-            VitTabItem(
-              key: tab.$1,
-              label: tab.$2,
-              widgetKey: CassReconciliationPage.tabKey(tab.$1),
-            ),
-        ],
-        activeKey: activeId,
-        onChanged: onChanged,
-        variant: VitTabBarVariant.segment,
-      ),
+    return VitSegmentedTabBar(
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.$1,
+            label: tab.$2,
+            widgetKey: CassReconciliationPage.tabKey(tab.$1),
+          ),
+      ],
+      activeKey: activeId,
+      onChanged: onChanged,
     );
   }
 }

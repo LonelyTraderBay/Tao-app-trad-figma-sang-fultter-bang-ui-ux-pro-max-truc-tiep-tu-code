@@ -54,7 +54,7 @@ class _VideoCard extends StatelessWidget {
     final color = _toneColor(video.toneKey);
     return VitCard(
       key: P2PGuidePage.videoKey(video.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pGuideVideoCardPadding,
       onTap: HapticFeedback.selectionClick,
       child: Row(

@@ -91,7 +91,7 @@ class _ActionTile extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .18),
       background: ColoredBox(color: color.withValues(alpha: .08)),
       clip: true,

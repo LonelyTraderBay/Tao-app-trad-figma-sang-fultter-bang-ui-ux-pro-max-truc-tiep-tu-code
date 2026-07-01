@@ -10,7 +10,7 @@ class _YieldChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsAnalyticsPage.yieldChartKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -137,7 +137,7 @@ class _MonthlyIncomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsAnalyticsPage.monthlyChartKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -226,7 +226,7 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.cardPaddingCompact,
       child: Column(
         children: [

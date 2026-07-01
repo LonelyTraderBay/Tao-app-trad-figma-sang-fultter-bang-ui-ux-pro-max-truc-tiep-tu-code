@@ -38,7 +38,7 @@ class WalletGroupsTab extends StatelessWidget {
           height: AppSpacing.walletManagerGroupCreateHeight,
           alignment: Alignment.center,
           variant: VitCardVariant.ghost,
-          radius: VitCardRadius.sm,
+          radius: VitCardRadius.standard,
           borderColor: walletManagerBorder,
           background: const ColoredBox(color: walletManagerPanel2),
           clip: true,
@@ -159,7 +159,7 @@ class _GroupWalletRow extends StatelessWidget {
       height: AppSpacing.walletManagerGroupWalletRowHeight,
       padding: AppSpacing.walletManagerGroupWalletRowPadding,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       background: const ColoredBox(color: walletManagerBackground),
       clip: true,
       child: Row(

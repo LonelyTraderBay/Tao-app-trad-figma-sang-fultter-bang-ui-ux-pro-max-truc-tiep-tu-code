@@ -28,7 +28,7 @@ class _UnlockCard extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             padding: AppSpacing.tokenUnlocksCardHeaderPadding,
             onTap: onToggle,
             child: Row(

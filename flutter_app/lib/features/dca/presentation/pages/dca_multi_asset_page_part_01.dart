@@ -278,7 +278,7 @@ class _TopTab extends StatelessWidget {
         key: DCAMultiAssetPage.tabKey(tab.name),
         onTap: () => onChanged(tab),
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         borderColor: AppColors.transparent,
         child: Padding(
@@ -482,7 +482,7 @@ class _DeleteButton extends StatelessWidget {
     return VitCard(
       onTap: onPressed,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,

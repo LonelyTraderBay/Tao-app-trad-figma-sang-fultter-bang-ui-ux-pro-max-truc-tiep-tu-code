@@ -233,7 +233,7 @@ class _QuickHub extends StatelessWidget {
     final stats = snapshot.platformStats;
     return VitCard(
       key: P2PHomePage.quickHubKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppModuleAccents.p2p.withValues(alpha: .22),
       padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
       child: Column(
@@ -363,7 +363,7 @@ class _QuickActionCard extends StatelessWidget {
     return VitCard(
       key: P2PHomePage.actionKey(action.id),
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .28),
       onTap: () => context.go(action.route),
       padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
@@ -413,58 +413,28 @@ class _TradeTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitSegmentedChoice<P2PTradeType>(
       key: P2PHomePage.tradeTabsKey,
-      radius: VitCardRadius.lg,
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
-      child: Row(
-        children: [
-          _TradeTab(
-            type: P2PTradeType.buy,
-            label: 'MUA',
-            active: active == P2PTradeType.buy,
-            onTap: () => onChanged(P2PTradeType.buy),
-          ),
-          _TradeTab(
-            type: P2PTradeType.sell,
-            label: 'BÁN',
-            active: active == P2PTradeType.sell,
-            onTap: () => onChanged(P2PTradeType.sell),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TradeTab extends StatelessWidget {
-  const _TradeTab({
-    required this.type,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final P2PTradeType type;
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = type == P2PTradeType.buy ? AppColors.buy : AppColors.sell;
-    return Expanded(
-      child: VitChoicePill(
-        key: P2PHomePage.tradeTabKey(type),
-        label: label,
-        selected: active,
-        onTap: onTap,
-        accentColor: color,
-        fullWidth: true,
-        height: AppSpacing.buttonCompact,
-        padding: const EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2),
-        semanticLabel: 'Chọn ${label.toLowerCase()} P2P',
-      ),
+      selected: active,
+      onChanged: onChanged,
+      height: AppSpacing.buttonCompact,
+      borderRadius: AppRadii.lgRadius,
+      options: [
+        VitSegmentedChoiceOption(
+          key: P2PHomePage.tradeTabKey(P2PTradeType.buy),
+          value: P2PTradeType.buy,
+          label: 'MUA',
+          accentColor: AppColors.buy,
+          semanticLabel: 'Chọn mua P2P',
+        ),
+        VitSegmentedChoiceOption(
+          key: P2PHomePage.tradeTabKey(P2PTradeType.sell),
+          value: P2PTradeType.sell,
+          label: 'BÁN',
+          accentColor: AppColors.sell,
+          semanticLabel: 'Chọn bán P2P',
+        ),
+      ],
     );
   }
 }

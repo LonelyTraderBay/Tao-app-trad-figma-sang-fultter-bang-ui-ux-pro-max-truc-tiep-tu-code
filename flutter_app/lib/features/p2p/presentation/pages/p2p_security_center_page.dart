@@ -124,7 +124,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
                         const SizedBox(height: AppSpacing.x3),
                         VitCard(
                           key: P2PSecurityCenterPage.viewAllKey,
-                          radius: VitCardRadius.lg,
+                          radius: VitCardRadius.large,
                           variant: VitCardVariant.inner,
                           padding: AppSpacing.zeroInsets,
                           onTap: () {
@@ -234,7 +234,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       VitCard(
-                        radius: VitCardRadius.lg,
+                        radius: VitCardRadius.large,
                         padding: _p2pSecurityCompactPadding,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

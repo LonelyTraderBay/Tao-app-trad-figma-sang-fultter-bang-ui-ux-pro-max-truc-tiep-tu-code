@@ -9,7 +9,7 @@ class _AssetImpactList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SavingsWhatIfPage.assetImpactKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [

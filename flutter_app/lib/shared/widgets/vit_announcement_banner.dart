@@ -49,7 +49,7 @@ class VitAnnouncementBanner extends StatelessWidget {
     final banner = Column(
       children: [
         VitCard(
-          radius: VitCardRadius.sm,
+          radius: VitCardRadius.standard,
           borderColor: accentColor.withValues(alpha: .18),
           padding: _padding,
           onTap: onTap,

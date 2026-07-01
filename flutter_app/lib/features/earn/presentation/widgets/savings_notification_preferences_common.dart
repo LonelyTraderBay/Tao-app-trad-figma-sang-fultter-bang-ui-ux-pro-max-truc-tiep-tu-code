@@ -74,7 +74,7 @@ class SavingsNotificationTokenSwitch extends StatelessWidget {
       enabled: !disabled,
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         padding: AppSpacing.zeroInsets,
         onTap: disabled ? null : () => onChanged(!value),
         child: AnimatedOpacity(

@@ -24,24 +24,6 @@ const double _p2pLimitNativeNavClearance =
     _p2pLimitVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
 const double _p2pLimitMajorGap = AppSpacing.x3;
 const double _p2pLimitSectionGap = AppSpacing.x2;
-const EdgeInsets _p2pLimitCardPadding = EdgeInsets.all(AppSpacing.x3);
-const EdgeInsets _p2pLimitCompactPadding = EdgeInsets.all(AppSpacing.x2);
-const EdgeInsets _p2pLimitMetricPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x2,
-);
-const EdgeInsets _p2pLimitPeriodTabPadding = EdgeInsets.symmetric(
-  horizontal: AppSpacing.x2,
-  vertical: AppSpacing.x2,
-);
-
-EdgeInsets _p2pLimitScrollPadding(double scrollEndPadding) =>
-    EdgeInsets.fromLTRB(
-      AppSpacing.contentPad,
-      AppSpacing.x3,
-      AppSpacing.contentPad,
-      scrollEndPadding,
-    );
 
 class P2PLimitTrackerPage extends ConsumerStatefulWidget {
   const P2PLimitTrackerPage({super.key, this.shellRenderMode});
@@ -98,7 +80,9 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pLimitScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pLimitTrackerScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -117,7 +101,7 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                         const SizedBox(height: _p2pLimitSectionGap),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: _p2pLimitCompactPadding,
+                          padding: AppSpacing.p2pLimitTrackerCompactPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'P2P limit review',
@@ -192,7 +176,7 @@ class _PeriodTab extends StatelessWidget {
       accentColor: AppModuleAccents.p2p,
       fullWidth: true,
       height: AppSpacing.buttonCompact,
-      padding: _p2pLimitPeriodTabPadding,
+      padding: AppSpacing.p2pLimitTrackerPeriodTabPadding,
     );
   }
 }
@@ -212,7 +196,7 @@ class _UsageHero extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
-        padding: _p2pLimitCardPadding,
+        padding: AppSpacing.p2pLimitTrackerCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -301,8 +285,8 @@ class _DayBreakdownCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PLimitTrackerPage.dayKey(item.date),
-      radius: VitCardRadius.lg,
-      padding: _p2pLimitCompactPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pLimitTrackerCompactPadding,
       child: Column(
         children: [
           Row(
@@ -371,7 +355,7 @@ class _TradeSideBox extends StatelessWidget {
       color: color.withValues(alpha: .12),
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: Padding(
-        padding: _p2pLimitMetricPadding,
+        padding: AppSpacing.p2pLimitTrackerMetricPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

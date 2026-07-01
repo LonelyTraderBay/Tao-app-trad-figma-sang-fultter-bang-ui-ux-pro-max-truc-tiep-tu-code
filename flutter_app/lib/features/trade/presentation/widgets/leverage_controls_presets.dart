@@ -15,91 +15,57 @@ class _LeverageSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: _leverageCardSpace,
-        top: _leverageCardSpace,
-        right: _leverageCardSpace,
-        bottom: _leverageCardSpace,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Kéo để điều chỉnh',
-            style: AppTextStyles.captionSm.copyWith(
-              fontWeight: AppTextStyles.bold,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Kéo để điều chỉnh',
+          style: AppTextStyles.captionSm.copyWith(
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+        const SizedBox(height: _leverageSpace),
+        SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            trackHeight: AppSpacing.hairlineStroke * 2,
+            activeTrackColor: riskColor,
+            inactiveTrackColor: AppColors.medalSilverMuted,
+            thumbColor: riskColor,
+            overlayColor: riskColor.withValues(alpha: .12),
+            thumbShape: const RoundSliderThumbShape(
+              enabledThumbRadius: AppSpacing.x3,
+            ),
+            overlayShape: const RoundSliderOverlayShape(
+              overlayRadius: AppSpacing.ctaLoadingIcon,
             ),
           ),
-          const SizedBox(height: _leverageSpace),
-          SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              trackHeight: AppSpacing.hairlineStroke * 2,
-              activeTrackColor: riskColor,
-              inactiveTrackColor: AppColors.medalSilverMuted,
-              thumbColor: riskColor,
-              overlayColor: riskColor.withValues(alpha: .12),
-              thumbShape: const RoundSliderThumbShape(
-                enabledThumbRadius: AppSpacing.x3,
+          child: Slider(
+            key: LeveragePage.sliderKey,
+            min: 1,
+            max: 100,
+            divisions: 99,
+            value: leverage.toDouble(),
+            onChanged: (value) => onChanged(value.round()),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        VitPresetChipRow<int>(
+          selectedValue: leverage,
+          onTap: onChanged,
+          gap: AppSpacing.transferCardGap,
+          height: _leverageControlHeight,
+          padding: AppSpacing.zeroInsets,
+          items: [
+            for (final stop in stops)
+              VitPresetChipItem(
+                key: LeveragePage.stopKey(stop),
+                value: stop,
+                label: '${stop}x',
+                semanticLabel: 'Chon muc don bay ${stop}x',
               ),
-              overlayShape: const RoundSliderOverlayShape(
-                overlayRadius: AppSpacing.ctaLoadingIcon,
-              ),
-            ),
-            child: Slider(
-              key: LeveragePage.sliderKey,
-              min: 1,
-              max: 100,
-              divisions: 99,
-              value: leverage.toDouble(),
-              onChanged: (value) => onChanged(value.round()),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              for (final stop in stops) ...[
-                Expanded(
-                  child: _StopButton(
-                    leverage: stop,
-                    active: leverage == stop,
-                    onTap: () => onChanged(stop),
-                  ),
-                ),
-                if (stop != stops.last)
-                  const SizedBox(width: AppSpacing.transferCardGap),
-              ],
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StopButton extends StatelessWidget {
-  const _StopButton({
-    required this.leverage,
-    required this.active,
-    required this.onTap,
-  });
-
-  final int leverage;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: LeveragePage.stopKey(leverage),
-      label: '${leverage}x',
-      selected: active,
-      onTap: onTap,
-      fullWidth: true,
-      height: _leverageControlHeight,
-      padding: AppSpacing.zeroInsets,
-      semanticLabel: 'Chon muc don bay ${leverage}x',
+          ],
+        ),
+      ],
     );
   }
 }
@@ -117,46 +83,37 @@ class _PresetGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      padding: AppSpacing.zeroInsets.copyWith(
-        left: _leverageCardSpace,
-        top: _leverageCardSpace,
-        right: _leverageCardSpace,
-        bottom: _leverageCardSpace,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Chọn nhanh',
-            style: AppTextStyles.captionSm.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Chọn nhanh',
+          style: AppTextStyles.captionSm.copyWith(
+            fontWeight: AppTextStyles.bold,
           ),
-          const SizedBox(height: _leverageSpace),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: AppSpacing.zeroInsets,
-            itemCount: presets.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: AppSpacing.leveragePresetGridColumns,
-              crossAxisSpacing: AppSpacing.transferCardGap,
-              mainAxisSpacing: _leverageSpace,
-              childAspectRatio: AppSpacing.leveragePresetGridAspectRatio,
-            ),
-            itemBuilder: (context, index) {
-              final leverage = presets[index];
-              return _PresetButton(
-                leverage: leverage,
-                active: leverage == active,
-                onTap: () => onChanged(leverage),
-              );
-            },
+        ),
+        const SizedBox(height: _leverageSpace),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: AppSpacing.zeroInsets,
+          itemCount: presets.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: AppSpacing.leveragePresetGridColumns,
+            crossAxisSpacing: AppSpacing.transferCardGap,
+            mainAxisSpacing: _leverageSpace,
+            childAspectRatio: AppSpacing.leveragePresetGridAspectRatio,
           ),
-        ],
-      ),
+          itemBuilder: (context, index) {
+            final leverage = presets[index];
+            return _PresetButton(
+              leverage: leverage,
+              active: leverage == active,
+              onTap: () => onChanged(leverage),
+            );
+          },
+        ),
+      ],
     );
   }
 }

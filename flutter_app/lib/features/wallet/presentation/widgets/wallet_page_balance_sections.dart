@@ -37,7 +37,7 @@ class WalletBalanceHero extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       clip: true,
       padding: VitDensity.compact.cardPadding,
       borderColor: _walletPrimary.withValues(alpha: .20),
@@ -235,7 +235,7 @@ class _BreakdownRow extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: VitDensity.compact.cardPadding,
       borderColor: AppColors.onAccent.withValues(alpha: .08),
       child: Row(

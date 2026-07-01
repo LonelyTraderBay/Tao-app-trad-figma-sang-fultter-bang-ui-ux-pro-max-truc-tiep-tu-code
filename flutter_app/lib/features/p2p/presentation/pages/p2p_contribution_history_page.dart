@@ -22,12 +22,6 @@ const double _p2pContributionNativeNavClearance =
     _p2pContributionVisualNavClearance - AppSpacing.x4;
 const double _p2pContributionVisualClearance = AppSpacing.x3;
 const double _p2pContributionNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pContributionScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PContributionHistoryPage extends ConsumerStatefulWidget {
   const P2PContributionHistoryPage({super.key, this.shellRenderMode});
@@ -82,8 +76,8 @@ class _P2PContributionHistoryPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pContributionScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pContributionScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -145,7 +139,7 @@ class _ContributionSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PContributionHistoryPage.summaryKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pTrustProgressHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,7 +277,7 @@ class _FeedbackBanner extends StatelessWidget {
     return VitCard(
       key: P2PContributionHistoryPage.feedbackKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
       padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Row(
@@ -394,7 +388,7 @@ class _ContributionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pTrustProgressCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

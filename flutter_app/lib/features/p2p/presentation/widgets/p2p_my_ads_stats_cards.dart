@@ -58,9 +58,9 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       height: _p2pMyAdsStatExtent,
-      padding: _p2pMyAdsCompactPadding,
+      padding: AppSpacing.p2pMerchantCommerceInnerPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -110,7 +110,7 @@ class _MyAdCard extends StatelessWidget {
     return Opacity(
       opacity: active ? 1 : .72,
       child: VitCard(
-        padding: _p2pMyAdsCardPadding,
+        padding: AppSpacing.p2pMerchantCommerceCompactPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -270,7 +270,7 @@ class _DetailColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: _p2pMyAdsDetailRightPadding,
+      padding: AppSpacing.p2pMerchantCommerceDetailRightPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -314,7 +314,7 @@ class _ActionButton extends StatelessWidget {
     return VitCard(
       height: _p2pMyAdsActionExtent,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .18),
       background: ColoredBox(color: color.withValues(alpha: .08)),
       onTap: onTap,

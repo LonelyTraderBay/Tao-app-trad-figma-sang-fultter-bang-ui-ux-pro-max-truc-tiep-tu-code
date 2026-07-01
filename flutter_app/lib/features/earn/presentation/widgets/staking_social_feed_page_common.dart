@@ -10,7 +10,7 @@ class _StatTile extends StatelessWidget {
     final color = _toneColor(stat.tone);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: stat.tone == 'success' ? AppColors.buy20 : null,
       padding: AppSpacing.earnCardPaddingX2X4,
       child: Column(
@@ -47,7 +47,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.footerKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Text(
         note,

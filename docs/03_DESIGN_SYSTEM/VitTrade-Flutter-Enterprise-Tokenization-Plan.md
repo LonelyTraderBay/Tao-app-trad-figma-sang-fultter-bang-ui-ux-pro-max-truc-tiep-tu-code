@@ -160,10 +160,21 @@ Token can them:
 
 ### Radius
 
+Canonical tiers (Hướng A — project-wide):
+
+| Vai trò | Token | px | Dùng cho |
+| --- | --- | --- | --- |
+| Control | `AppRadii.inputRadius` | 14 | CTA, input, tab, chip, segmented, preset row, header action |
+| Card chuẩn | `AppRadii.cardRadius` | 16 | `VitCardRadius.standard` (default) |
+| Card lớn | `AppRadii.cardLargeRadius` | 24 | Hero card, sheet top, `VitCardRadius.large` |
+| Micro | `AppRadii.smRadius` | 8 | Avatar, delta chip, icon background |
+| Pill trạng thái | `AppRadii.pillRadius` | 999 | `VitStatusPill`, `VitAccentPill` |
+
 Bat buoc:
 
-- Dung `AppRadii` hoac `VitCardRadius`.
-- Dung radius semantic cho pill/sheet/avatar/chart neu can.
+- Dung `AppRadii` hoac `VitCardRadius.standard` / `VitCardRadius.large`.
+- Interactive controls dung `inputRadius` (14px) only.
+- Khong dung `mdRadius` (13) hoac `headerActionRadius` (10) cho UI moi.
 
 Cam:
 
@@ -171,14 +182,14 @@ Cam:
 - Khong dung `999` truc tiep cho pill; phai co token `AppRadii.pillRadius`.
 - Khong tao radius local cho card neu `VitCard` da dap ung.
 
-Token can them:
+Legacy (deprecated, giu cho chart/chrome cu):
 
-| Token de xuat | Gia tri khoi diem | Dung cho |
+| Token | px | Ghi chu |
 | --- | --- | --- |
-| `AppRadii.pill` / `pillRadius` | 999 | Pills/badges |
-| `AppRadii.sheetTopRadius` | 22/24 | Bottom sheet |
-| `AppRadii.avatar` | 999 hoac semantic | Avatar/circle surface |
-| `AppRadii.chart` | 8/13 | Chart panels |
+| `AppRadii.xs` / `xsRadius` | 8 (alias `sm`) | Migrate sang `smRadius` |
+| `AppRadii.md` / `mdRadius` | 13 | Chart panels only |
+| `AppRadii.headerAction` | 10 | Khong dung cho control moi |
+| `AppRadii.sheetTopRadius` | 22 | Prefer `sheetTopLargeRadius` (24) |
 
 ### Sizing Va Density
 

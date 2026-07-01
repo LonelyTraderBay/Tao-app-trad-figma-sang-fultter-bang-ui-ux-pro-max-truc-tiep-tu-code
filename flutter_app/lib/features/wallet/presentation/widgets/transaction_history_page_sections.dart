@@ -190,7 +190,7 @@ class _TransactionIcon extends StatelessWidget {
     if (meta.isTrade) {
       return VitCard(
         variant: VitCardVariant.inner,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         width: AppSpacing.buttonCompact,
         height: AppSpacing.buttonCompact,
         alignment: Alignment.center,
@@ -205,7 +205,7 @@ class _TransactionIcon extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
       alignment: Alignment.center,

@@ -10,7 +10,7 @@ class _PlanCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingInsurancePage.planKey(plan.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       onTap: onTap,
       child: Column(
@@ -119,7 +119,7 @@ class _PlanMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +185,7 @@ class _PositionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingInsurancePage.positionKey(position.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -231,7 +231,7 @@ class _PositionCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.x4),
             VitCard(
               variant: VitCardVariant.inner,
-              radius: VitCardRadius.md,
+              radius: VitCardRadius.standard,
               padding: AppSpacing.earnPaddingX4,
               child: Column(
                 children: [
@@ -334,7 +334,7 @@ class _ClaimCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingInsurancePage.claimKey(claim.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnPaddingX4,
       child: Column(
         children: [
@@ -408,7 +408,7 @@ class _ClaimMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.md,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.earnPaddingX2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

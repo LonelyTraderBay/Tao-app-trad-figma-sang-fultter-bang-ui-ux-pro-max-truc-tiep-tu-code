@@ -25,7 +25,7 @@ Future<T?> showVitBottomSheet<T>({
     shape:
         shape ??
         const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: AppRadii.lgCorner),
+          borderRadius: AppRadii.sheetTopLargeRadius,
         ),
     constraints: constraints,
     enableDrag: enableDrag,

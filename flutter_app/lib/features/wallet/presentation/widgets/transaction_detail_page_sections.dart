@@ -51,7 +51,7 @@ class _SummaryCard extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             width: AppSpacing.walletTransactionSummaryIconSize,
             height: AppSpacing.walletTransactionSummaryIconSize,
             alignment: Alignment.center,

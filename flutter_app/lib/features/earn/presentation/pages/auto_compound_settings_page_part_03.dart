@@ -171,7 +171,7 @@ class _ToggleSwitch extends StatelessWidget {
       toggled: on,
       child: VitCard(
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.md,
+        radius: VitCardRadius.standard,
         padding: EdgeInsets.zero,
         onTap: onTap,
         child: VitTogglePill(

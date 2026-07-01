@@ -87,7 +87,7 @@ class _MiniStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +120,7 @@ class _DescriptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PClaimDetailPage.descriptionKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,7 +323,7 @@ class _UploadEvidenceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppColors.borderSolid,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Column(
@@ -369,7 +369,7 @@ class _EvidenceFileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isImage = file.type == 'image' || file.type == 'screenshot';
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pClaimCompactCardPadding,
       child: Row(
         children: [
@@ -438,7 +438,7 @@ class _NotesSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           variant: VitCardVariant.inner,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.p2pClaimCompactCardPadding,
           child: Row(
             children: [

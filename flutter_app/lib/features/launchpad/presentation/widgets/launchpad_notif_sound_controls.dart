@@ -38,7 +38,7 @@ class _MasterSoundHero extends StatelessWidget {
     return VitCard(
       key: LaunchpadNotifSoundPage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
@@ -148,7 +148,7 @@ class _QuickTogglesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadNotifSoundPage.quickTogglesKey,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       clip: true,
       child: Column(
@@ -260,7 +260,7 @@ class _DndScheduleCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadNotifSoundPage.dndKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

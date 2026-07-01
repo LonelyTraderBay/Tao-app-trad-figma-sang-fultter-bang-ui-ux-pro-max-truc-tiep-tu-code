@@ -10,7 +10,7 @@ class _SubmissionFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       height: _submissionFooterHeight,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.complaintSubmissionFooterPadding,
       borderColor: _submissionBorder.withValues(alpha: .35),
       child: VitCtaButton(

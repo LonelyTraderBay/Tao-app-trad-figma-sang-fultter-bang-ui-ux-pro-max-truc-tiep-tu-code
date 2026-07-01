@@ -88,7 +88,7 @@ class _ChipButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: active
           ? marketSectorPrimary.withValues(alpha: 0.38)
           : AppColors.borderSolid,

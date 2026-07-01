@@ -124,7 +124,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.x3),
         VitCard(
           variant: VitCardVariant.inner,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: _stakingRiskCardPadding,
           child: Text(
             snapshot.disclaimer,
@@ -148,7 +148,7 @@ class _RiskSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: _stakingRiskCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,7 +230,7 @@ class _RiskProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingRiskDisclosurePage.productKey(product.name),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       constraints: BoxConstraints(
         minHeight: product.risks.length > 3
             ? _stakingRiskProductMinHeightTall

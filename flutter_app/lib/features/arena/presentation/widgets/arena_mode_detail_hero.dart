@@ -164,7 +164,7 @@ class _CreatorRow extends StatelessWidget {
         key: creatorKey,
         onTap: onTap,
         variant: VitCardVariant.ghost,
-        radius: VitCardRadius.sm,
+        radius: VitCardRadius.standard,
         child: Padding(
           padding: AppSpacing.arenaVerticalPaddingX2,
           child: Row(
@@ -229,7 +229,7 @@ class _MiniStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.arenaModeMiniStatPadding,
       child: Column(
         children: [

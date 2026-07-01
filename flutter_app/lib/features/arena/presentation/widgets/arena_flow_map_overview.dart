@@ -65,7 +65,7 @@ class _StatTile extends StatelessWidget {
     final color = _flowColor(stat.kind);
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: _flowMapStatPadding,
       child: Column(
         children: [
@@ -121,7 +121,7 @@ class _CollapsibleSection extends StatelessWidget {
             key: ArenaFlowMapPage.sectionKey(id),
             onTap: onTap,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             child: Padding(
               padding: _flowMapSectionTogglePadding,
               child: Row(

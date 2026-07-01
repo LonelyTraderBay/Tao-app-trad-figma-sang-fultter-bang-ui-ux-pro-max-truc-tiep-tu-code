@@ -10,13 +10,13 @@ class _DocumentCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       padding: AppSpacing.cardPaddingCompact,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: _inspectionBorder.withValues(alpha: .76),
       child: Row(
         children: [
           const VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             width: AppSpacing.buttonCompact,
             height: AppSpacing.buttonCompact,
             borderColor: _inspectionGreen,
@@ -78,7 +78,7 @@ class _InspectorPortalCard extends StatelessWidget {
             children: [
               const VitCard(
                 variant: VitCardVariant.inner,
-                radius: VitCardRadius.sm,
+                radius: VitCardRadius.standard,
                 width: AppSpacing.buttonCompact,
                 height: AppSpacing.buttonCompact,
                 borderColor: _inspectionPrimary,

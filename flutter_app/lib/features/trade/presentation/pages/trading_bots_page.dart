@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part 'trading_bots_page_part_01.dart';
@@ -60,13 +65,10 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeBotsControllerProvider).state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomChrome = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final bottomInset =
-        bottomChrome +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? 34 : 20);
+    final bottomInset = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -75,62 +77,52 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
         children: [
           Material(
             type: MaterialType.transparency,
-            child: SingleChildScrollView(
-              key: TradingBotsPage.contentKey,
-              padding: AppSpacing.marketScrollPadding(bottomInset),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: AppSpacing.contentInsets,
-                    child: _TradingBotsHeader(
-                      onBack: () => goBackOrFallback(
-                        context,
-                        fallbackPath: AppRoutePaths.trade,
-                        mode: BackNavigationMode.historyThenFallback,
-                      ),
+            child: VitAutoHideHeaderScaffold(
+              header: VitHeader(
+                title: 'Trading Bots',
+                subtitle: 'Bot giao dịch · Trade',
+                showBack: true,
+                backKey: TradingBotsPage.backKey,
+                onBack: () => goBackOrFallback(
+                  context,
+                  fallbackPath: AppRoutePaths.trade,
+                  mode: BackNavigationMode.historyThenFallback,
+                ),
+              ),
+              child: VitInsetScrollView(
+                key: TradingBotsPage.contentKey,
+                bottomInset: bottomInset,
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  density: VitDensity.compact,
+                  children: [
+                    VitTradeSection(
+                      title: 'Tổng quan bot',
+                      child: _BotsHero(bots: _bots),
                     ),
+                  _BotsTabs(
+                    active: _tab,
+                    botCount: _bots.length,
+                    onChanged: (tab) => setState(() => _tab = tab),
                   ),
-                  const SizedBox(height: AppSpacing.x4),
-                  const Divider(
-                    height: AppSpacing.tradeBotHairline,
-                    thickness: AppSpacing.tradeBotHairline,
-                    color: AppColors.divider,
-                  ),
-                  Padding(
-                    padding: AppSpacing.tradeBotPageBodyPadding,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _BotsHero(bots: _bots),
-                        const SizedBox(height: AppSpacing.x4),
-                        _BotsTabs(
-                          active: _tab,
-                          botCount: _bots.length,
-                          onChanged: (tab) => setState(() => _tab = tab),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        if (_tab == _TradingBotsTab.myBots)
-                          _MyBotsTab(
-                            bots: _bots,
-                            onToggle: _toggleBot,
-                            onDelete: _deleteBot,
-                            onAdd: () => setState(
-                              () => _tab = _TradingBotsTab.strategies,
-                            ),
-                          )
-                        else
-                          _StrategiesTab(
-                            strategies: snapshot.strategies,
-                            onCreate: _openCreateSheet,
-                          ),
-                      ],
+                  if (_tab == _TradingBotsTab.myBots)
+                    _MyBotsTab(
+                      bots: _bots,
+                      onToggle: _toggleBot,
+                      onDelete: _deleteBot,
+                      onAdd: () =>
+                          setState(() => _tab = _TradingBotsTab.strategies),
+                    )
+                  else
+                    _StrategiesTab(
+                      strategies: snapshot.strategies,
+                      onCreate: _openCreateSheet,
                     ),
-                  ),
                 ],
               ),
             ),
           ),
+        ),
           if (_showSuccess)
             Positioned(
               left: AppSpacing.contentPad,

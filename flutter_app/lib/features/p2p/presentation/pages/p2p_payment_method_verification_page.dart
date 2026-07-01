@@ -27,12 +27,6 @@ const double _p2pPaymentVerificationNativeNavClearance =
     _p2pPaymentVerificationVisualNavClearance - AppSpacing.x4;
 const double _p2pPaymentVerificationVisualClearance = AppSpacing.x3;
 const double _p2pPaymentVerificationNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pPaymentVerificationScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PPaymentMethodVerificationPage extends ConsumerStatefulWidget {
   const P2PPaymentMethodVerificationPage({
@@ -112,8 +106,8 @@ class _P2PPaymentMethodVerificationPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodVerificationPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pPaymentVerificationScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pPaymentVerificationScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
@@ -195,7 +189,7 @@ class _P2PPaymentMethodVerificationPageState
             variant: VitCtaButtonVariant.secondary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            padding: AppSpacing.p2pPaymentDialogActionPadding,
             child: const Text('Hủy'),
           ),
           VitCtaButton(
@@ -204,7 +198,7 @@ class _P2PPaymentMethodVerificationPageState
             variant: VitCtaButtonVariant.primary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.x4),
+            padding: AppSpacing.p2pPaymentDialogActionPadding,
             child: const Text('Xác nhận'),
           ),
         ],

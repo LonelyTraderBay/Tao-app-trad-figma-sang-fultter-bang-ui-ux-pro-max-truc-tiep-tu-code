@@ -80,7 +80,7 @@ class TransactionReportingTabs extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       height: AppSpacing.x7 + AppSpacing.x2,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,

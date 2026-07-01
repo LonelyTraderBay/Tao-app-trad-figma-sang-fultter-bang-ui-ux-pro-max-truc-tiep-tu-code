@@ -265,6 +265,7 @@ class _TradeTab extends StatelessWidget {
     required this.orderType,
     required this.amount,
     required this.showLeverageSheet,
+    required this.compact,
     required this.onSideChanged,
     required this.onLeverageToggle,
     required this.onLeverageChanged,
@@ -279,6 +280,7 @@ class _TradeTab extends StatelessWidget {
   final String orderType;
   final String amount;
   final bool showLeverageSheet;
+  final bool compact;
   final ValueChanged<String> onSideChanged;
   final VoidCallback onLeverageToggle;
   final ValueChanged<int> onLeverageChanged;
@@ -313,22 +315,26 @@ class _TradeTab extends StatelessWidget {
           available: snapshot.account.availableMargin,
           liquidationPrice: snapshot.orderDraft.liquidationPriceLabel,
         ),
-        _PriceComparison(prices: snapshot.referencePrices),
-        _MarginOrderReviewCard(leverage: leverage),
+        if (!compact) ...[
+          _PriceComparison(prices: snapshot.referencePrices),
+          _MarginOrderReviewCard(leverage: leverage),
+        ],
         _SubmitButton(
           side: side,
           leverage: leverage,
           pairSymbol: snapshot.pair.symbol,
           disabled: amount == '0.00',
         ),
-        _RiskWarningCard(warning: snapshot.riskWarning),
-        _NegativeBalanceCard(disclosure: snapshot.negativeBalance),
-        _BestExecutionCard(
-          disclosure: snapshot.bestExecution,
-          onTap: () => onNotice(
-            'Best execution details use local read-model data only; no live venue order is submitted from this repo.',
+        if (!compact) ...[
+          _RiskWarningCard(warning: snapshot.riskWarning),
+          _NegativeBalanceCard(disclosure: snapshot.negativeBalance),
+          _BestExecutionCard(
+            disclosure: snapshot.bestExecution,
+            onTap: () => onNotice(
+              'Best execution details use local read-model data only; no live venue order is submitted from this repo.',
+            ),
           ),
-        ),
+        ],
       ],
     );
   }

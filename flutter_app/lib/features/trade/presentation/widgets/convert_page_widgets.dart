@@ -34,7 +34,7 @@ class ConvertHistoryRow extends StatelessWidget {
                   width: AppSpacing.buttonCompact,
                   height: AppSpacing.buttonCompact,
                   variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.lg,
+                  radius: VitCardRadius.large,
                   alignment: Alignment.center,
                   borderColor: AppColors.buy20,
                   child: Icon(
@@ -125,7 +125,7 @@ class ConvertAssetSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitSheetPanel(
-      title: 'Chọn tài sản',
+      title: side == 'from' ? 'Chọn tài sản gửi' : 'Chọn tài sản nhận',
       child: ListView.builder(
         itemCount: assets.length,
         itemBuilder: (context, index) {

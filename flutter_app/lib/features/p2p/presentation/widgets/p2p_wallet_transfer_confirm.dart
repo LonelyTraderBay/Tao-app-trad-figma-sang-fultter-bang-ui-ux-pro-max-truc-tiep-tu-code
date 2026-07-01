@@ -55,7 +55,7 @@ class _ConfirmTransferView extends StatelessWidget {
         ),
         const SizedBox(height: _p2pTransferMajorGap),
         VitCard(
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           padding: AppSpacing.zeroInsets,
           child: Column(
             children: [
@@ -131,7 +131,7 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: _p2pTransferConfirmRowPadding,
+      padding: AppSpacing.p2pWalletTransferConfirmSummaryPadding,
       child: Row(
         children: [
           Expanded(

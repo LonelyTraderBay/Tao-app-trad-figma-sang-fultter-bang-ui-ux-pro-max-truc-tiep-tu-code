@@ -63,7 +63,7 @@ class _RiskLevelCard extends StatelessWidget {
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             density: VitDensity.compact,
             alignment: Alignment.center,
             clip: true,

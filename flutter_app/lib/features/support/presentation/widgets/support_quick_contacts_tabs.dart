@@ -9,7 +9,7 @@ class _QuickContactGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: SupportPage.quickLinksKey,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.supportQuickLinksPadding,
       child: Column(
         children: [
@@ -89,7 +89,7 @@ class _QuickLinkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .28),
       padding: AppSpacing.supportQuickCardPadding,
       onTap: onTap,

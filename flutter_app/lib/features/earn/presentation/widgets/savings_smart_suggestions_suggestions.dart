@@ -65,7 +65,7 @@ class SavingsSmartSuggestionCard extends StatelessWidget {
 
     return VitCard(
       key: SavingsSmartSuggestionsKeys.suggestion(suggestion.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -331,7 +331,7 @@ class SavingsSmartSmallActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       width: AppSpacing.buttonCompact,
       height: AppSpacing.buttonCompact,
       clip: true,
@@ -351,7 +351,7 @@ class SavingsSmartDisclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       borderColor: AppColors.warn15,
       child: Row(

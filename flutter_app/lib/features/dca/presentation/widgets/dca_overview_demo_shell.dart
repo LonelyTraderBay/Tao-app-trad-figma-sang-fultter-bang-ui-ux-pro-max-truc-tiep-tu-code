@@ -55,7 +55,7 @@ class _DcaOverviewCardPreviewState extends State<_DcaOverviewCardPreview> {
     return VitCard(
       key: DCAOverviewDemo.cardKey(widget.scenario.id),
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: widget.compact
           ? AppSpacing.dcaPaddingX4
           : AppSpacing.dcaContentPadding,

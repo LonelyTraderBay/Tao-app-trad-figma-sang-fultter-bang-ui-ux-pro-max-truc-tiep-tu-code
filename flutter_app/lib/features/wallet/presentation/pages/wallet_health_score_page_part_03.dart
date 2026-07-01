@@ -41,7 +41,7 @@ class _TipCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       borderColor: _healthBorder,
       child: Row(
@@ -75,7 +75,7 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       density: VitDensity.compact,
       borderColor: _healthPrimary.withValues(alpha: .15),
       child: Row(

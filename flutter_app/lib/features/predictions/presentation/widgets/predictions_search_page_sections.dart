@@ -168,7 +168,7 @@ class _FilterPanel extends StatelessWidget {
               key: PredictionsSearchPage.clearFiltersKey,
               onTap: onClear,
               variant: VitCardVariant.ghost,
-              radius: VitCardRadius.sm,
+              radius: VitCardRadius.standard,
               height: VitDensity.compact.controlHeight,
               padding: AppSpacing.zeroInsets,
               clip: true,

@@ -115,7 +115,7 @@ class _CalendarDay extends StatelessWidget {
       variant: isToday || hasEvents
           ? VitCardVariant.inner
           : VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: isToday
           ? marketCalendarPrimary.withValues(alpha: .35)
           : AppColors.transparent,

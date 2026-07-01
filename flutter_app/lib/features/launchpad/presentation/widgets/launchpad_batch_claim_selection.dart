@@ -67,7 +67,7 @@ class _BatchPositionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadBatchClaimPage.positionKey(position.positionId),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected
           ? position.accent.withValues(alpha: .42)
           : AppColors.cardBorder,

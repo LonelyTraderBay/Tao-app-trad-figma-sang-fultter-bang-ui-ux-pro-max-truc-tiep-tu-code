@@ -15,7 +15,7 @@ class _TransactionCard extends StatelessWidget {
     final typeColor = _typeColor(tx.type);
     final amountColor = _amountColor(tx.type);
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
       onTap: () {
         HapticFeedback.selectionClick();

@@ -235,7 +235,7 @@ class _DomainFilterChip extends StatelessWidget {
     return VitCard(
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.warn : AppColors.borderSolid,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.arenaPresetChipPadding,
       onTap: onTap,
       child: Row(
@@ -276,7 +276,7 @@ class _SuggestionChip extends StatelessWidget {
     return VitCard(
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.warn : AppColors.borderSolid,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.arenaPresetChipPadding,
       onTap: onTap,
       child: Row(
@@ -460,7 +460,7 @@ class _DemoSelectorChip extends StatelessWidget {
     return VitCard(
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.buy : AppColors.borderSolid,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.arenaPresetChipPadding,
       onTap: onTap,
       child: Row(

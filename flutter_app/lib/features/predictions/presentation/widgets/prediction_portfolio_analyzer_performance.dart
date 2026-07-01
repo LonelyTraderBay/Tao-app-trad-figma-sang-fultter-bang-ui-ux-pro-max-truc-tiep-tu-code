@@ -12,9 +12,9 @@ class _PerformanceChartCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'P/L Over Time',
-            style: AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold),
+          const VitSectionHeader(
+            title: 'P/L Over Time',
+            density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.x2),
           SizedBox(
@@ -37,11 +37,15 @@ class _TradeStatsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageSection(
-      label: 'Trade Statistics',
-      accentColor: _predictionPrimary,
-      density: VitDensity.compact,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const VitSectionHeader(
+          title: 'Trade Statistics',
+          variant: VitSectionHeaderVariant.accentBar,
+          density: VitDensity.compact,
+        ),
+        const SizedBox(height: AppSpacing.x3),
         VitCard(
           density: VitDensity.compact,
           child: Column(
@@ -113,11 +117,15 @@ class _AttributionSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final closed = snapshot.closedPositions.toList()
       ..sort((a, b) => b.pnl.compareTo(a.pnl));
-    return VitPageSection(
-      label: 'Performance Attribution',
-      accentColor: _predictionPrimary,
-      density: VitDensity.compact,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const VitSectionHeader(
+          title: 'Performance Attribution',
+          variant: VitSectionHeaderVariant.accentBar,
+          density: VitDensity.compact,
+        ),
+        const SizedBox(height: AppSpacing.x3),
         for (final position in closed)
           VitCard(
             density: VitDensity.compact,

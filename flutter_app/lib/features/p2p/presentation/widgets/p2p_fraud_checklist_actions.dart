@@ -22,8 +22,8 @@ class _ChecklistCard extends StatelessWidget {
 
     return VitCard(
       key: P2PFraudPreventionPage.checklistKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pFraudCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -97,12 +97,12 @@ class _CategoryTab extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.tabKey(category),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       borderColor: selected ? AppModuleAccents.p2p : AppColors.cardBorder,
       background: ColoredBox(
         color: selected ? AppModuleAccents.p2p : AppColors.surface2,
       ),
-      padding: _p2pFraudCategoryTabPadding,
+      padding: AppSpacing.p2pFraudCategoryTabPadding,
       onTap: onTap,
       clip: true,
       child: Column(
@@ -142,8 +142,8 @@ class _ChecklistItem extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.checklistItemKey(item.id),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.sm,
-      padding: _p2pFraudChecklistItemPadding,
+      radius: VitCardRadius.standard,
+      padding: AppSpacing.p2pFraudChecklistItemPadding,
       onTap: () => onTap(item.id),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,8 +205,8 @@ class _EmergencyActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PFraudPreventionPage.emergencyKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pFraudCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -254,10 +254,10 @@ class _EmergencyButton extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.actionKey(action.id),
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: .22),
       background: ColoredBox(color: color.withValues(alpha: .08)),
-      padding: _p2pFraudInnerPadding,
+      padding: AppSpacing.p2pFraudInnerPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(action.route);

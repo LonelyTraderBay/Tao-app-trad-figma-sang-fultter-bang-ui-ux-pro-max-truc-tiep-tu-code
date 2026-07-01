@@ -77,33 +77,27 @@ class _StakingTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.surface,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            key: LaunchpadStakingPage.tabsKey,
-            children: [
-              for (final tab in _StakingTab.values)
-                Expanded(
-                  child: VitChoicePill(
-                    key: LaunchpadStakingPage.tabKey(tab.id),
-                    label: tab.label,
-                    selected: tab == activeTab,
-                    onTap: () => onChanged(tab),
-                    fullWidth: true,
-                    accentColor: AppColors.primary,
-                  ),
-                ),
-            ],
-          ),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        VitSegmentedChoice.withPrimaryAccent<_StakingTab>(
+          key: LaunchpadStakingPage.tabsKey,
+          selected: activeTab,
+          onChanged: onChanged,
+          options: [
+            for (final tab in _StakingTab.values)
+              VitSegmentedChoiceOption(
+                key: LaunchpadStakingPage.tabKey(tab.id),
+                value: tab,
+                label: tab.label,
+              ),
+          ],
+        ),
+        const Divider(
+          height: AppSpacing.dividerHairline,
+          color: AppColors.divider,
+        ),
+      ],
     );
   }
 }
@@ -118,7 +112,7 @@ class _StakingHero extends StatelessWidget {
     return VitCard(
       key: LaunchpadStakingPage.heroKey,
       variant: VitCardVariant.hero,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(
@@ -233,7 +227,7 @@ class _PoolCard extends StatelessWidget {
     final currentTier = _currentTier(pool.tiers, pool.userStaked);
     return VitCard(
       key: LaunchpadStakingPage.poolKey(pool.id),
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.launchpadPaddingX5,
       onTap: () => context.go(detailRoute),
       child: Column(
@@ -392,7 +386,7 @@ class _PositionsTab extends StatelessWidget {
       children: [
         VitCard(
           key: LaunchpadStakingPage.batchClaimKey,
-          radius: VitCardRadius.lg,
+          radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
           padding: AppSpacing.launchpadPaddingX4,
           onTap: () => context.go(snapshot.batchClaimRoute),

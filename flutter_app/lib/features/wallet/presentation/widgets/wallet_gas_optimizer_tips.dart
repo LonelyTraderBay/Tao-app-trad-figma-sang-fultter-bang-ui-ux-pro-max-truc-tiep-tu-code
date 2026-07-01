@@ -46,7 +46,7 @@ class _TipCard extends StatelessWidget {
             width: 32,
             height: 32,
             alignment: Alignment.center,
-            radius: VitCardRadius.sm,
+            radius: VitCardRadius.standard,
             borderColor: _gasAmber.withValues(alpha: .20),
             child: const Icon(
               Icons.lightbulb_outline_rounded,

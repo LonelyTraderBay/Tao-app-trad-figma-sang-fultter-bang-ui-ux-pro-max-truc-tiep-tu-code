@@ -10,7 +10,7 @@ class _AppInfoCard extends StatelessWidget {
     return VitCard(
       key: SettingsPage.appInfoKey,
       density: VitDensity.compact,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: _settingsBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

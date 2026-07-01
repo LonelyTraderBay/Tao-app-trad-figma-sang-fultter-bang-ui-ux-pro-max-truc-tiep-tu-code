@@ -9,8 +9,8 @@ class _OverallStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PKycStatusPage.statusCardKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pKycCardPadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pKycCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -91,9 +91,9 @@ class _OverallStatusCard extends StatelessWidget {
           const SizedBox(height: _p2pKycSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
-            radius: VitCardRadius.md,
+            radius: VitCardRadius.standard,
             borderColor: AppColors.primary20,
-            padding: _p2pKycNoticePadding,
+            padding: AppSpacing.p2pKycNoticePadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -170,8 +170,8 @@ class _StatusTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PKycStatusPage.timelineKey,
-      radius: VitCardRadius.lg,
-      padding: _p2pKycNoticePadding,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pKycNoticePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -239,7 +239,7 @@ class _StepTimelineRow extends StatelessWidget {
             child: Padding(
               padding: isLast
                   ? AppSpacing.zeroInsets
-                  : _p2pKycTimelineRowPadding,
+                  : AppSpacing.p2pKycStatusTimelineRowPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [

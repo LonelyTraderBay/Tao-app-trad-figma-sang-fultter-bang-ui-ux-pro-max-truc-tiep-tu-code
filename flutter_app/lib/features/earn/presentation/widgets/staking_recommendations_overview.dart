@@ -63,7 +63,7 @@ class StakingRecommendationsProfileCard extends StatelessWidget {
     final profile = snapshot.profile;
     return VitCard(
       key: StakingRecommendationsKeys.profile,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -192,7 +192,7 @@ class StakingRecommendationsAmountSimulator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

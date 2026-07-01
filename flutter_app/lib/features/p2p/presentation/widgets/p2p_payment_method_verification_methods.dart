@@ -90,7 +90,7 @@ class _VerificationMethodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PPaymentMethodVerificationPage.methodKey(method.id),
-      radius: VitCardRadius.sm,
+      radius: VitCardRadius.standard,
       padding: AppSpacing.p2pPaymentCardPadding,
       borderColor: method.recommended
           ? AppColors.primary30

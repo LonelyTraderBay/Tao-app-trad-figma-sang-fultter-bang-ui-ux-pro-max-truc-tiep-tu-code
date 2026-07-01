@@ -148,7 +148,7 @@ class _OverviewTab extends StatelessWidget {
           accentColor: AppColors.primarySoft,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               density: VitDensity.compact,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -213,7 +213,7 @@ class _OverviewTab extends StatelessWidget {
           accentColor: AppColors.primarySoft,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnPaddingX3,
               child: Column(
                 children: [
@@ -312,7 +312,7 @@ class _VerifyTab extends StatelessWidget {
           accentColor: AppColors.primarySoft,
           children: [
             VitCard(
-              radius: VitCardRadius.lg,
+              radius: VitCardRadius.large,
               padding: AppSpacing.earnPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

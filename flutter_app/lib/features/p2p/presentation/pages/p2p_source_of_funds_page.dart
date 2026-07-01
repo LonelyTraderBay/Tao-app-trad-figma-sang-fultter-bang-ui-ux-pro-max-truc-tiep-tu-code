@@ -21,12 +21,6 @@ const double _p2pSourceFundsNativeNavClearance =
     _p2pSourceFundsVisualNavClearance - AppSpacing.x4;
 const double _p2pSourceFundsVisualClearance = AppSpacing.x3;
 const double _p2pSourceFundsNativeClearance = AppSpacing.x2;
-const EdgeInsets _p2pSourceFundsScrollPadding = EdgeInsets.fromLTRB(
-  AppSpacing.contentPad,
-  AppSpacing.x2,
-  AppSpacing.contentPad,
-  0,
-);
 
 class P2PSourceOfFundsPage extends ConsumerStatefulWidget {
   const P2PSourceOfFundsPage({super.key, this.shellRenderMode});
@@ -90,8 +84,8 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: _p2pSourceFundsScrollPadding.copyWith(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pSourceOfFundsScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -157,7 +151,7 @@ class _SourceHero extends StatelessWidget {
     return VitCard(
       key: P2PSourceOfFundsPage.heroKey,
       variant: VitCardVariant.inner,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: AppModuleAccents.p2p.withValues(alpha: .24),
       padding: AppSpacing.p2pFinancialSafetyCardPadding,
       child: Row(
@@ -167,7 +161,7 @@ class _SourceHero extends StatelessWidget {
             width: AppSpacing.p2pFinancialSafetyIconBox,
             height: AppSpacing.p2pFinancialSafetyIconBox,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             background: const ColoredBox(color: AppModuleAccents.p2p),
             clip: true,
             child: const Icon(
@@ -258,7 +252,7 @@ class _FundSourceTile extends StatelessWidget {
       key: P2PSourceOfFundsPage.sourceKey(source.id),
       onTap: onTap,
       variant: VitCardVariant.ghost,
-      radius: VitCardRadius.lg,
+      radius: VitCardRadius.large,
       borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
       background: ColoredBox(
         color: selected
@@ -274,7 +268,7 @@ class _FundSourceTile extends StatelessWidget {
             width: AppSpacing.p2pFinancialSafetyCompactIconBox,
             height: AppSpacing.p2pFinancialSafetyCompactIconBox,
             variant: VitCardVariant.ghost,
-            radius: VitCardRadius.lg,
+            radius: VitCardRadius.large,
             background: ColoredBox(
               color: selected
                   ? AppModuleAccents.p2p.withValues(alpha: .16)

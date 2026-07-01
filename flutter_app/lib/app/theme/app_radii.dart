@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
 
+/// Canonical border-radius tokens for VitTrade.
+///
+/// Primary UI tiers:
+/// - [input] / [inputRadius] — 14px interactive controls (CTA, tab, chip, input)
+/// - [card] / [cardRadius] — 16px standard cards
+/// - [cardLarge] / [cardLargeRadius] — 24px hero/large cards and sheet tops
+/// - [sm] / [smRadius] — 8px micro surfaces (avatar, delta chip, icon bg)
+/// - [pill] / [pillRadius] — 999 status/accent pills
 final class AppRadii {
   const AppRadii._();
 
-  static const double xs = 5;
+  /// Micro tier alias — prefer [sm] for new code.
+  @Deprecated('Use AppRadii.sm (8px) for micro surfaces')
+  static const double xs = sm;
+
   static const double hairline = 2;
   static const double swatch = 3;
   static const double badge = 6;
   static const double sm = 8;
+
+  /// Legacy header chrome — prefer [input] for interactive controls.
+  @Deprecated('Use AppRadii.input for interactive controls')
   static const double headerAction = 10;
+
+  /// Legacy nested/chart panel — do not use for new cards or controls.
+  @Deprecated('Use AppRadii.card or AppRadii.sm for new UI')
   static const double md = 13;
+
   static const double input = 14;
   static const double card = 16;
   static const double lg = 21;
@@ -28,8 +46,10 @@ final class AppRadii {
   static const double disputeBubble = 16;
   static const double disputeBubbleTail = 4;
 
-  static const BorderRadius xsRadius = BorderRadius.all(Radius.circular(xs));
-  static const Radius xsCorner = Radius.circular(xs);
+  @Deprecated('Use AppRadii.smRadius for micro surfaces')
+  static const BorderRadius xsRadius = smRadius;
+  @Deprecated('Use AppRadii.smCorner for micro surfaces')
+  static const Radius xsCorner = smCorner;
   static const BorderRadius hairlineRadius = BorderRadius.all(
     Radius.circular(hairline),
   );
@@ -50,9 +70,11 @@ final class AppRadii {
   );
   static const BorderRadius smRadius = BorderRadius.all(Radius.circular(sm));
   static const Radius smCorner = Radius.circular(sm);
+  @Deprecated('Use AppRadii.inputRadius for interactive controls')
   static const BorderRadius headerActionRadius = BorderRadius.all(
     Radius.circular(headerAction),
   );
+  @Deprecated('Use AppRadii.cardRadius or AppRadii.smRadius for new UI')
   static const BorderRadius mdRadius = BorderRadius.all(Radius.circular(md));
   static const BorderRadius inputRadius = BorderRadius.all(
     Radius.circular(input),

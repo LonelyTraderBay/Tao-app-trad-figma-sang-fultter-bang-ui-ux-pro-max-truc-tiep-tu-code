@@ -8,7 +8,7 @@ class _EmptyPaymentMethods extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: _p2pMethodsEmptyPadding,
+      padding: AppSpacing.p2pPaymentMethodsListEmptyPadding,
       child: VitEmptyState(
         icon: Icons.credit_card_off_rounded,
         title: snapshot.emptyTitle,
@@ -42,12 +42,12 @@ class _DeleteConfirmation extends StatelessWidget {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: _p2pMethodsDialogPadding,
+              padding: AppSpacing.p2pPaymentDialogOuterPadding,
               child: VitCard(
                 key: P2PPaymentMethodsPage.deleteConfirmKey,
-                radius: VitCardRadius.lg,
+                radius: VitCardRadius.large,
                 borderColor: AppColors.sell20,
-                padding: _p2pMethodsCardPadding,
+                padding: AppSpacing.p2pPaymentMethodsListCardPadding,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,7 +95,7 @@ class _DeleteConfirmation extends StatelessWidget {
                         fontWeight: AppTextStyles.medium,
                       ),
                     ),
-                    const SizedBox(height: _p2pMethodsMajorGap),
+                    const SizedBox(height: AppSpacing.p2pPaymentSectionGap),
                     Row(
                       children: [
                         Expanded(

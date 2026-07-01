@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class PredictionsPortfolioArenaBridgeCard extends StatelessWidget {
@@ -13,87 +10,24 @@ class PredictionsPortfolioArenaBridgeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
+    return VitDiscoveryActionCard(
+      title: 'Khám phá Arena cùng chủ đề',
+      badgeLabel: 'Arena Points',
+      subtitle:
+          'Social points-only · Không liên quan ví hay vị thế Prediction',
+      actionLabel:
+          'Prediction positions and P/L stay separate from Arena Points.',
+      icon: Icons.sports_esports_rounded,
+      accentColor: AppColors.warn,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.predictionPortfolioBridgePadding,
-      child: Row(
-        children: [
-          SizedBox.square(
-            dimension: AppSpacing.predictionPortfolioBridgeIconBox,
-            child: const DecoratedBox(
-              decoration: ShapeDecoration(
-                color: AppColors.warn10,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-              ),
-              child: Icon(
-                Icons.sports_esports_rounded,
-                color: AppColors.warn,
-                size: AppSpacing.predictionPortfolioBridgeIcon,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.predictionPortfolioBridgeGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Khám phá Arena cùng chủ đề',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                Text(
-                  'Social points-only · Không liên quan ví hay vị thế Prediction',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: AppColors.text3,
-                  ),
-                ),
-                const SizedBox(
-                  height: AppSpacing.predictionPortfolioBridgeTextGap,
-                ),
-                Text(
-                  'Prediction positions and P/L stay separate from Arena Points.',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.numericMicro.copyWith(
-                    color: AppColors.text3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.predictionPortfolioBridgeBadgeGap),
-          DecoratedBox(
-            decoration: const ShapeDecoration(
-              color: AppColors.warn10,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.badgeRadius),
-            ),
-            child: Padding(
-              padding: AppSpacing.predictionPortfolioBridgeBadgePadding,
-              child: Text(
-                'Arena Points',
-                style: AppTextStyles.numericMicro.copyWith(
-                  color: AppColors.warn,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.predictionPortfolioBridgeChevronGap),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.predictionPortfolioBridgeChevron,
-          ),
-        ],
+      badgeStatus: VitStatusPillStatus.warning,
+      variant: VitDiscoveryActionCardVariant.compact,
+      background: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [AppColors.warn15, AppColors.warn10],
       ),
+      onTap: onTap,
     );
   }
 }
