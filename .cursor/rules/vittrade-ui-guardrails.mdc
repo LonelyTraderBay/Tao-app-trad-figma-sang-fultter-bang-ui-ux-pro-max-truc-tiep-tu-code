@@ -25,3 +25,5 @@ Use `AppColors`, `AppSpacing`, `AppRadii`, `AppTextStyles` from `flutter_app/lib
 ## UI polish
 
 For review/polish passes, read `.codex/skills/vittrade-ui-checklists/SKILL.md`.
+
+Minimal diff policy (how to write, not what to use): [vittrade-minimal-diff.mdc](../../.cursor/rules/vittrade-minimal-diff.mdc).

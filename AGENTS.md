@@ -139,9 +139,18 @@ Cursor subscription ($200) is the default agent surface. Optimize quota with:
 
 - Daily session: `.\scripts\Start-CursorSession.ps1` (Headroom proxy + GitNexus status).
 - MCP (project `.cursor/mcp.json`): `headroom` + `gitnexus` must be Connected.
-- Model: Sonnet default; Opus/thinking only for hard debug or architecture.
+- Model: Cursor **Auto** only — do not switch models manually or suggest tier changes.
+- When stuck: smaller scope, new chat, or GitNexus trace — not a different model.
 - Docs: load **one** execution prompt + **one** plan per task via `docs/INDEX.md`.
 - Batch 5–10 files per turn; new chat after each batch.
+
+### Minimal diff (Ponytail-lite)
+
+- Rule [`.cursor/rules/vittrade-minimal-diff.mdc`](.cursor/rules/vittrade-minimal-diff.mdc) auto-applies when editing `flutter_app/**`.
+- Reuse `Vit*` shared widgets and theme tokens; shortest diff that passes the plan gate.
+- No one-caller abstractions, no new pub deps unless explicitly requested.
+- Batch completion gate: self-check diff and trim bloat before marking batch done (see workflow rule).
+- AGENTS.md and the active execution prompt override YAGNI — do not skip required migration scope.
 
 Headroom details: `scripts/headroom/README.md`. Claude Code CLI is optional
 (Anthropic account only).
@@ -168,6 +177,7 @@ boundaries always take precedence over generic skill guidance.
 | UI review / screen polish | `.codex/skills/vittrade-ui-checklists/SKILL.md` |
 | Pre-merge review | `.codex/skills/code-review-and-quality/SKILL.md` |
 | GitNexus impact / refactor | `.codex/skills/gitnexus-impact-analysis/SKILL.md` |
+| Over-engineering / diff trim | `.codex/skills/vittrade-minimal-review/SKILL.md` |
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence

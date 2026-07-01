@@ -1,14 +1,14 @@
 ---
-description: Cursor subscription workflow — model choice, batching, doc loading
+description: Cursor subscription workflow — Auto model, batching, doc loading
 alwaysApply: true
 ---
 
 # VitTrade Cursor Workflow
 
-## Model strategy (Cursor $200 subscription)
+## Model policy (Auto only)
 
-- Default: **Claude Sonnet** (or Cursor "fast" tier) for UI migration, refactors, and routine fixes.
-- Escalate to **Opus / thinking** only for hard debugging, architecture decisions, or blocked issues.
+- Always use Cursor **Auto** — do not suggest switching to Sonnet, Opus, thinking, or any specific model tier.
+- When a task is hard or blocked: split into **smaller batches**, use GitNexus `impact`/`query`, or Plan mode — **do not** escalate model.
 - Use Tab/Apply for micro-edits; Agent for multi-file batches.
 
 ## Session discipline
@@ -17,6 +17,17 @@ alwaysApply: true
 - Start a **new chat** after each completed batch to limit context growth.
 - Load docs **on demand** only — see [docs/INDEX.md](../../docs/INDEX.md). Never load backlog + plan + prompt in one turn.
 - Read large files with line limits; do not paste full audit CSVs into chat.
+
+## Batch completion gate
+
+Before marking a batch complete (do not ask the user first):
+
+1. Scan the batch diff for local widgets duplicating `Vit*`, single-layer wrappers, one-caller helpers, and new pub imports not required by the plan.
+2. Trim inline when safe; keep items the plan, tests, or financial safety require.
+3. Run `flutter analyze` and focused tests for touched modules.
+4. Only then report batch complete. If bloat remains, fix in the same turn.
+
+Self-check format: [.codex/skills/vittrade-minimal-review/SKILL.md](../../.codex/skills/vittrade-minimal-review/SKILL.md).
 
 ## Daily startup
 

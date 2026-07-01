@@ -57,6 +57,8 @@ Prefer audit **tools** + Headroom compress over pasting CSV/audit markdown into 
 | [.cursor/rules/](../.cursor/rules/) | Cursor agent rules |
 | [scripts/headroom/README.md](../scripts/headroom/README.md) | Headroom daily start |
 | [scripts/Start-CursorSession.ps1](../scripts/Start-CursorSession.ps1) | Morning checklist |
+| [vittrade-minimal-diff.mdc](../.cursor/rules/vittrade-minimal-diff.mdc) | Auto when editing `flutter_app/**` — minimal diff, keep quality |
+| Policy | Luôn dùng **Cursor Auto**; tối ưu qua batch/GitNexus/Headroom, không chọn model thủ công |
 
 ## GitNexus index
 

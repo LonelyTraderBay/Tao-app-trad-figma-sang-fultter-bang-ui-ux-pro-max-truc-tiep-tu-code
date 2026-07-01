@@ -91,6 +91,18 @@ modules before marking a batch complete.
 - Load one execution prompt + one plan per task — see `docs/INDEX.md`.
 - Do not load backlog + full plan + full audit in one turn.
 
+## Minimal diff (Ponytail-lite)
+
+- Reuse `Vit*` shared widgets and theme tokens; shortest diff that passes the plan gate.
+- No one-caller abstractions or new pub deps unless explicitly requested.
+- **Batch completion gate:** before marking a batch done, self-check the diff (see `.codex/skills/vittrade-minimal-review/SKILL.md`), trim safe bloat, then verify.
+- `AGENTS.md` and the active execution prompt override YAGNI.
+
+## Model policy (Auto only)
+
+- Use Cursor **Auto** only — do not instruct the user to pick a model tier.
+- Do not assume thinking/Opus capabilities; hard tasks → smaller batches + `RESUME FROM:` handoff.
+
 ## Doc loading
 
 Pick artifacts via `docs/INDEX.md`. For files >1000 lines, read section headers
@@ -103,3 +115,4 @@ and checklists only unless a specific section is required.
 | UI review/polish | `.codex/skills/vittrade-ui-checklists/SKILL.md` |
 | Pre-merge review | `.codex/skills/code-review-and-quality/SKILL.md` |
 | GitNexus workflows | `.codex/skills/gitnexus-impact-analysis/SKILL.md` |
+| Diff trim / batch self-check | `.codex/skills/vittrade-minimal-review/SKILL.md` |

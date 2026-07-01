@@ -26,10 +26,11 @@ Mở Cursor → Settings → MCP → `headroom` phải **connected** (restart ID
 
 ## Cursor $200 — tối ưu quota
 
-- Model mặc định: **Sonnet** cho migration UI; Opus/thinking chỉ khi debug khó.
+- Model: **Cursor Auto** — không chọn Sonnet/Opus/thinking thủ công.
 - Batch **5–10 file**/turn; chat mới sau mỗi batch.
 - GitNexus `impact()` / `query()` trước khi sửa (xem [AGENTS.md](../../AGENTS.md)).
-- Agent gọi `headroom_compress` khi log test/analyze >500 dòng (rule: `.cursor/rules/headroom-vittrade.mdc`).
+- Agent gọi `headroom_compress` khi log test/analyze >500 dòng (rule: `.cursor/rules/vittrade-headroom.mdc`).
+- Diff ngắn hơn qua `.cursor/rules/vittrade-minimal-diff.mdc` (bổ sung Headroom, không thay thế).
 
 ## Giới hạn
 
