@@ -62,6 +62,7 @@ behavior changes.
 | Path | Purpose |
 | --- | --- |
 | `AGENTS.md` | Active coding constraints for agents. |
+| `docs/INDEX.md` | Doc picker — which file to load per task (on-demand). |
 | `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md` | Execution rules after Flutter-only cleanup. |
 | `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md` | Conflict resolution when docs disagree. |
 | `docs/02_FLUTTER_MIGRATION/` | Retained path for Flutter engineering, coverage, and QA docs. |

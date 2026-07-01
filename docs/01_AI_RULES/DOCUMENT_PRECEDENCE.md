@@ -6,16 +6,21 @@ Use this order when documents disagree.
 
 1. User instruction in the current conversation.
 2. Root `AGENTS.md` for coding and repository constraints.
-3. `docs/00_START_HERE.md` for the docs reading order.
-4. Flutter source under `flutter_app/lib/`.
-5. Flutter tests under `flutter_app/test/`.
-6. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md` for screen coverage
+3. `.cursor/rules/*.mdc` for Cursor agent workflow (does not override AGENTS.md
+   product, financial, or architecture rules).
+4. Active execution prompt for the current task scope only (does not override
+   AGENTS.md product boundaries).
+5. `docs/INDEX.md` for choosing which doc to load (picker only, not source of truth).
+6. `docs/00_START_HERE.md` for the docs reading order.
+7. Flutter source under `flutter_app/lib/`.
+8. Flutter tests under `flutter_app/test/`.
+9. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md` for screen coverage
    tracking.
-7. `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and
-   `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md` for UI rules.
-8. `docs/03_DESIGN_SYSTEM/Guidelines.md` for product and design rules.
-9. Screen-specific references under `docs/04_SCREEN_REFERENCES/`.
-10. Architecture reports under `docs/05_ARCHITECTURE/`.
+10. `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md` and
+    `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md` for UI rules.
+11. `docs/03_DESIGN_SYSTEM/Guidelines.md` for product and design rules.
+12. Screen-specific references under `docs/04_SCREEN_REFERENCES/`.
+13. Architecture reports under `docs/05_ARCHITECTURE/`.
 
 ## Conflict Rules
 

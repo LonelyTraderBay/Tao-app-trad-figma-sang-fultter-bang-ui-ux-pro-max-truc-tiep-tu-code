@@ -1,5 +1,7 @@
 # AI Button System Standardization Autonomous Execution Prompt
 
+> **Shared contract:** [`docs/01_AI_RULES/AI_PROMPT_SHELL.md`](../01_AI_RULES/AI_PROMPT_SHELL.md)
+
 Use this prompt in a fresh AI/Codex coding thread when the agent must execute
 the VitTrade button system standardization plan automatically, in order, without
 stopping midway, while using available skills, GitNexus MCP, focused Flutter
@@ -28,9 +30,10 @@ docs/03_DESIGN_SYSTEM/
 Copy the prompt below into AI/Codex:
 
 ````text
-You are working in the VitTrade Flutter enterprise mono-repo:
+You are working in the VitTrade Flutter enterprise mono-repo (repo root).
 
-C:\Users\C-PC\Documents\Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code
+Follow docs/01_AI_RULES/AI_PROMPT_SHELL.md for shared rules, GitNexus, Headroom,
+verification, and batch discipline.
 
 PRIMARY OBJECTIVE
 
@@ -112,21 +115,12 @@ Do not write anything after the `RESUME FROM:` line.
 
 MANDATORY READING BEFORE CODE EDITS
 
-Read enough of these files to obey the current project rules:
+Follow AI_PROMPT_SHELL.md, then read for the active batch only:
 
-1. `AGENTS.md`
-2. `docs/00_START_HERE.md`
-3. `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md`
-4. `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md`
-5. `docs/02_FLUTTER_MIGRATION/Flutter-App-Foundation.md`
-6. `docs/02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md`
-7. `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`
-8. `docs/03_DESIGN_SYSTEM/Guidelines.md`
-9. `docs/03_DESIGN_SYSTEM/VitTrade-Button-System-Standardization-Execution-Plan.md`
-10. Current source files and tests for the active batch only.
+1. `docs/03_DESIGN_SYSTEM/VitTrade-Button-System-Standardization-Execution-Plan.md`
+2. Current source files and tests for the active batch only.
 
-Do not load the entire repository into context. Use `rg`, GitNexus, targeted
-file reads, route/page filters, and Headroom.
+Do not load the entire repository into context. Use GitNexus, targeted reads, and Headroom.
 
 DOCUMENT PRECEDENCE
 

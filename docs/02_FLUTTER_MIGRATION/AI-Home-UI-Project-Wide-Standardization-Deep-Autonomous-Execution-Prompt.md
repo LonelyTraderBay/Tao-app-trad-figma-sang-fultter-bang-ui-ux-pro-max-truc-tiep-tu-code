@@ -1,5 +1,7 @@
 # AI Home UI Project-Wide Standardization Deep Autonomous Execution Prompt
 
+> **Shared contract:** [`docs/01_AI_RULES/AI_PROMPT_SHELL.md`](../01_AI_RULES/AI_PROMPT_SHELL.md)
+
 Copy the prompt block below into a fresh AI/Codex/Cursor agent thread when you
 want **non-stop execution** of the residual Home UI standardization pass until
 Phase 7 closure or a valid handoff.
@@ -78,9 +80,9 @@ Replace batch id with the value from Deep Plan §11.
 ## Copy-Paste Prompt
 
 ````text
-You are working in the VitTrade Flutter repository:
+You are working in the VitTrade Flutter repository (repo root).
 
-C:\Users\C-PC\Documents\Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code
+Follow docs/01_AI_RULES/AI_PROMPT_SHELL.md for all shared rules.
 
 PRIMARY OBJECTIVE:
 Execute the residual Home UI standardization pass until Phase 7 closure.

@@ -1,0 +1,27 @@
+---
+description: VitTrade UI and product guardrails for flutter_app changes
+globs: flutter_app/**/*
+alwaysApply: false
+---
+
+# VitTrade UI Guardrails
+
+Apply when editing under `flutter_app/`. Full rules: [AGENTS.md](../../AGENTS.md).
+
+## Shared primitives
+
+Use `VitAppShell`, `VitPageLayout`, `VitPageContent`, `VitHeader`, `VitBottomNav`, `VitCard`, `VitCtaButton`, `VitInput`, `VitTabBar`, `VitSegmentedChoice`, `VitPresetChipRow` before local scaffolds.
+
+## Theme tokens
+
+Use `AppColors`, `AppSpacing`, `AppRadii`, `AppTextStyles` from `flutter_app/lib/app/theme/`. No new `BorderRadius.circular()` outside `app_radii.dart`.
+
+## Product boundaries
+
+- **Open Arena:** points-only — no wallet, payout, profit, or stake-return language.
+- **Prediction Markets:** positions, probability, receipts, rewards, P/L allowed.
+- **Financial flows:** preview/confirm for withdrawals, escrow, security, P2P payment changes.
+
+## UI polish
+
+For review/polish passes, read `.codex/skills/vittrade-ui-checklists/SKILL.md`.

@@ -9,6 +9,13 @@ từ người dùng, AI phải đọc file này, chọn work packet đầu tiên
 hiện đến khi đạt acceptance, cập nhật trạng thái, rồi mới chuyển sang packet
 tiếp theo.
 
+## How to read this file (context-saving)
+
+- Read **only** the active work packet section (`[~]` or first `[ ]`) — not all 2000+ lines.
+- Do **not** load paired plans >500 lines wholesale; use GitNexus `query()` + plan section links.
+- Shared rules: `docs/01_AI_RULES/AI_PROMPT_SHELL.md` and `AGENTS.md`.
+- Doc picker: `docs/INDEX.md`.
+
 ## 1. Quy tắc thực thi bắt buộc
 
 1. Luôn đọc theo thứ tự:

@@ -1,0 +1,31 @@
+---
+description: Cursor subscription workflow — model choice, batching, doc loading
+alwaysApply: true
+---
+
+# VitTrade Cursor Workflow
+
+## Model strategy (Cursor $200 subscription)
+
+- Default: **Claude Sonnet** (or Cursor "fast" tier) for UI migration, refactors, and routine fixes.
+- Escalate to **Opus / thinking** only for hard debugging, architecture decisions, or blocked issues.
+- Use Tab/Apply for micro-edits; Agent for multi-file batches.
+
+## Session discipline
+
+- Batch at most **5–10 files** per turn for migration work.
+- Start a **new chat** after each completed batch to limit context growth.
+- Load docs **on demand** only — see [docs/INDEX.md](../../docs/INDEX.md). Never load backlog + plan + prompt in one turn.
+- Read large files with line limits; do not paste full audit CSVs into chat.
+
+## Daily startup
+
+```powershell
+.\scripts\Start-CursorSession.ps1
+```
+
+Or manually: `.\scripts\headroom\Start-VitTradeHeadroom.ps1` then verify MCP `headroom` + `gitnexus` connected in Cursor Settings.
+
+## Authority
+
+[AGENTS.md](../../AGENTS.md) wins over this file for product, financial, and architecture rules.

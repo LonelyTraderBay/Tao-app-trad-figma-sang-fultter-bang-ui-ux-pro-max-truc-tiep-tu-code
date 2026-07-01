@@ -1,5 +1,8 @@
 # AI A-Grade Body Component Upgrade Autonomous Execution Prompt
 
+> **Shared contract:** [`docs/01_AI_RULES/AI_PROMPT_SHELL.md`](../01_AI_RULES/AI_PROMPT_SHELL.md)
+> — non-stop rules, GitNexus, Headroom, verification, batch discipline.
+
 Use this prompt when an AI coding agent must execute the A-grade body component upgrade plan for VitTrade without stopping after a single batch. The agent must work step by step until the plan is complete, a real blocker is proven, or the environment forces a handoff.
 
 ## Mission
@@ -142,58 +145,20 @@ Both must pass.
 
 ## Required Context To Read First
 
-Before making edits, read these files:
+Follow [AI_PROMPT_SHELL.md](../01_AI_RULES/AI_PROMPT_SHELL.md), then read:
 
 ```text
-AGENTS.md
-docs/00_START_HERE.md
 docs/02_FLUTTER_MIGRATION/VitTrade-A-Grade-Body-Component-Upgrade-Plan.md
 docs/02_FLUTTER_MIGRATION/AI-Enterprise-UI-UX-Synchronization-Autonomous-Execution-Prompt.md
 ```
 
-Then inspect the current audit scripts and artifacts:
+Inspect audit tooling (do not paste full artifacts into chat):
 
 ```text
 flutter_app/tool/body_component_consistency_audit.dart
 flutter_app/tool/top_header_visual_archetype_audit.dart
-flutter_app/tool/route_coverage_audit.dart
 flutter_app/run-artifacts/body_component_consistency_audit/
-flutter_app/run-artifacts/top_header_visual_archetype_audit/
 ```
-
-If artifact paths differ, locate them with `rg --files flutter_app/run-artifacts`.
-
-## Source Of Truth
-
-Use this repo structure:
-
-```text
-flutter_app/lib/app/
-flutter_app/lib/core/
-flutter_app/lib/features/<feature>/
-flutter_app/lib/shared/
-flutter_app/test/
-```
-
-Screen widgets belong under:
-
-```text
-flutter_app/lib/features/<feature>/presentation/pages/
-```
-
-Shared UI belongs under:
-
-```text
-flutter_app/lib/shared/
-```
-
-Use package imports:
-
-```dart
-package:vit_trade_flutter/...
-```
-
-Do not recreate obsolete root web tooling. Do not depend on old React/Vite/Tailwind baselines.
 
 ## Mandatory Preflight
 
@@ -780,67 +745,16 @@ Keep the plan useful as a live tracker. Do not rewrite the entire document after
 
 ## Verification Commands
 
-Use these commands during execution.
-
-### Body Audit
+Use [AI_PROMPT_SHELL.md](../01_AI_RULES/AI_PROMPT_SHELL.md) default verification, plus these task-specific audits from `flutter_app/`:
 
 ```powershell
-cd flutter_app
 dart run tool\body_component_consistency_audit.dart
-```
-
-### Header Strict Audit
-
-```powershell
-cd flutter_app
 dart run tool\top_header_visual_archetype_audit.dart --check --strict
-```
-
-### Route Coverage
-
-```powershell
-cd flutter_app
 dart run tool\route_coverage_audit.dart --check
-```
-
-### Navigation Audits
-
-Run these if the repo has the scripts:
-
-```powershell
-cd flutter_app
-dart run tool\top_header_action_audit.dart
-dart run tool\top_header_global_access_policy_audit.dart
-dart run tool\back_navigation_behavior_audit.dart
-dart run tool\home_entry_back_navigation_audit.dart
-```
-
-If a script name differs, locate it with:
-
-```powershell
-rg --files tool | rg "header|navigation|back|route|audit"
-```
-
-### Focused Tests
-
-Run feature tests for touched modules:
-
-```powershell
-cd flutter_app
 flutter test test/features/<feature> --reporter=compact
 ```
 
-If there is no feature test directory, run the nearest page/widget/controller test. If no focused test exists, note the gap and run `flutter analyze`.
-
-### Full Verification
-
-Before final completion:
-
-```powershell
-cd flutter_app
-flutter analyze
-flutter test --reporter=compact
-```
+Optional if present: `top_header_action_audit`, `back_navigation_behavior_audit` (locate with `rg --files tool | rg audit`).
 
 ## Failure Handling
 

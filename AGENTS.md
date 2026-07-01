@@ -122,7 +122,9 @@ Run from `flutter_app/`:
 
 ```bash
 flutter pub get
-dart format .
+dart format --output=none --set-exit-if-changed .
+dart run tool/route_coverage_audit.dart --check
+dart run tool/navigation_edge_audit.dart --check
 flutter analyze
 flutter test --reporter=compact
 flutter run
@@ -130,6 +132,19 @@ flutter run
 
 Use focused tests for touched modules and full tests for router, shared layout,
 repository, or broad structural changes.
+
+## Cursor AI Workflow
+
+Cursor subscription ($200) is the default agent surface. Optimize quota with:
+
+- Daily session: `.\scripts\Start-CursorSession.ps1` (Headroom proxy + GitNexus status).
+- MCP (project `.cursor/mcp.json`): `headroom` + `gitnexus` must be Connected.
+- Model: Sonnet default; Opus/thinking only for hard debug or architecture.
+- Docs: load **one** execution prompt + **one** plan per task via `docs/INDEX.md`.
+- Batch 5–10 files per turn; new chat after each batch.
+
+Headroom details: `scripts/headroom/README.md`. Claude Code CLI is optional
+(Anthropic account only).
 
 ## Repo Hygiene
 
@@ -148,12 +163,18 @@ work. This AGENTS.md remains the higher-priority project contract; GitNexus,
 Flutter commands, financial safety, and Prediction Markets/Open Arena
 boundaries always take precedence over generic skill guidance.
 
+| Task | Skill |
+| --- | --- |
+| UI review / screen polish | `.codex/skills/vittrade-ui-checklists/SKILL.md` |
+| Pre-merge review | `.codex/skills/code-review-and-quality/SKILL.md` |
+| GitNexus impact / refactor | `.codex/skills/gitnexus-impact-analysis/SKILL.md` |
+
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
 This project is indexed by GitNexus as **Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code** (59889 symbols, 97348 relationships, 36 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
 
-> Index stale? Run `node .gitnexus/run.cjs analyze --skip-agents-md --skip-skills` from the project root — it refreshes the graph without generating `CLAUDE.md` or `.claude/skills`. No `.gitnexus/run.cjs` yet? `npx gitnexus analyze --skip-agents-md --skip-skills` (npm 11 crash → `npm i -g gitnexus`; #1939).
+> Index stale? Run `.\scripts\gitnexus\Refresh-Index.ps1` or `gitnexus analyze --skip-agents-md --skip-skills`. Local index lives in `.gitnexus/` (gitignored, ~730MB — refresh after clone).
 
 ## Always Do
 
@@ -179,15 +200,7 @@ This project is indexed by GitNexus as **Tao-app-trad-figma-sang-fultter-bang-ui
 | `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/processes` | All execution flows |
 | `gitnexus://repo/Tao-app-trad-figma-sang-fultter-bang-ui-ux-pro-max-truc-tiep-tu-code/process/{name}` | Step-by-step execution trace |
 
-## CLI
-
-| Task | Read this skill file |
-|------|---------------------|
-| Understand architecture / "How does X work?" | `.codex/skills/gitnexus-exploring/SKILL.md` |
-| Blast radius / "What breaks if I change X?" | `.codex/skills/gitnexus-impact-analysis/SKILL.md` |
-| Trace bugs / "Why is X failing?" | `.codex/skills/gitnexus-debugging/SKILL.md` |
-| Rename / extract / split / refactor | `.codex/skills/gitnexus-refactoring/SKILL.md` |
-| Tools, resources, schema reference | `.codex/skills/gitnexus-guide/SKILL.md` |
-| Index, status, clean, wiki CLI commands | `.codex/skills/gitnexus-cli/SKILL.md` |
+More GitNexus skills: `.codex/skills/gitnexus-exploring/`, `gitnexus-debugging/`,
+`gitnexus-refactoring/`, `gitnexus-guide/`, `gitnexus-cli/`.
 
 <!-- gitnexus:end -->

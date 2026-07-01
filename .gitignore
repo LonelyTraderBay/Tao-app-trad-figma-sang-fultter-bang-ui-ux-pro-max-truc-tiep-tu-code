@@ -20,6 +20,11 @@ Thumbs.db
 # Agent-specific generated files
 .claude/
 CLAUDE.md
+CLAUDE.local.md
+scripts/headroom/vittrade.headroom.local.env
+.headroom/
+.tokensave/
+.gitnexus/
 
 # Retired web tooling / generated artifacts
 node_modules/
