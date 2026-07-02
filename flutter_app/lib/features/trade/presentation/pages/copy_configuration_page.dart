@@ -11,7 +11,6 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -96,9 +95,9 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
     final provider = snapshot.provider!;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
+      context,
+      shellRenderMode: mode,
+    );
     final footerEndClearance =
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
@@ -116,84 +115,83 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
       semanticLabel: 'SC-072 CopyConfigurationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Cấu hình Copy',
-            showBack: true,
-            onBack: () =>
-                goBackOrFallback(context, fallbackPath: resolvedBackPath),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: CopyConfigurationPage.contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      _ProviderCard(provider: provider),
-                      _CapitalSection(
-                        controller: _capitalController,
-                        allocationPercent: allocationPercent,
-                        availableCapital: snapshot.availableCapital,
-                        totalPortfolio: snapshot.totalPortfolio,
-                        onChanged: _updateCapital,
-                        onPreset: _setCapitalPercent,
-                      ),
-                      _ModeSection(
-                        selected: draft.copyMode,
-                        copyRatio: draft.copyRatio,
-                        onModeChanged: _setMode,
-                        onRatioChanged: _setCopyRatio,
-                      ),
-                      _RiskSection(draft: draft, onDraftChanged: _setDraft),
-                      _FeeSection(preview: preview),
-                      if (preview.validations.isNotEmpty)
-                        _ValidationList(items: preview.validations),
-                      _SummaryCard(draft: draft),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Copy configuration state review',
-                        message:
-                            'Provider summary, capital allocation, copy mode, risk controls, fee preview, validation messages, and disabled confirmation state remain visible before copy-trading confirmation.',
-                        contractId: 'SC-072',
-                        density: VitDensity.compact,
-                      ),
-                    ],
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            VitHeader(
+              title: 'Cấu hình Copy',
+              showBack: true,
+              onBack: () =>
+                  goBackOrFallback(context, fallbackPath: resolvedBackPath),
+            ),
+            Expanded(
+              child: VitInsetScrollView(
+                key: CopyConfigurationPage.contentKey,
+                bottomInset: scrollEndClearance,
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  density: VitDensity.compact,
+                  children: [
+                    _CapitalSection(
+                      controller: _capitalController,
+                      allocationPercent: allocationPercent,
+                      availableCapital: snapshot.availableCapital,
+                      totalPortfolio: snapshot.totalPortfolio,
+                      onChanged: _updateCapital,
+                      onPreset: _setCapitalPercent,
+                    ),
+                    VitTradeSection(
+                      title: 'Provider',
+                      child: _ProviderCard(provider: provider),
+                    ),
+                    _ModeSection(
+                      selected: draft.copyMode,
+                      copyRatio: draft.copyRatio,
+                      onModeChanged: _setMode,
+                      onRatioChanged: _setCopyRatio,
+                    ),
+                    _RiskSection(draft: draft, onDraftChanged: _setDraft),
+                    _FeeSection(preview: preview),
+                    if (preview.validations.isNotEmpty)
+                      _ValidationList(items: preview.validations),
+                    _SummaryCard(draft: draft),
+                    const VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.riskReview,
+                      title: 'Copy configuration state review',
+                      message:
+                          'Provider summary, capital allocation, copy mode, risk controls, fee preview, validation messages, and disabled confirmation state remain visible before copy-trading confirmation.',
+                      contractId: 'SC-072',
+                      density: VitDensity.compact,
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                  AppSpacing.x4,
-                  AppSpacing.x2,
-                  AppSpacing.x4,
-                  footerEndClearance,
-                ),
-                child: VitStickyFooter(
-                  child: VitCtaButton(
-                    key: CopyConfigurationPage.confirmKey,
-                    onPressed: preview.hasBlockingErrors
-                        ? null
-                        : () => context.go(
-                            AppRoutePaths.tradeCopyProviderConfirmation(
-                              widget.providerId,
-                            ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(
+                AppSpacing.x4,
+                AppSpacing.x2,
+                AppSpacing.x4,
+                footerEndClearance,
+              ),
+              child: VitStickyFooter(
+                child: VitCtaButton(
+                  key: CopyConfigurationPage.confirmKey,
+                  onPressed: preview.hasBlockingErrors
+                      ? null
+                      : () => context.go(
+                          AppRoutePaths.tradeCopyProviderConfirmation(
+                            widget.providerId,
                           ),
-                    variant: VitCtaButtonVariant.auth,
-                    height: _configurationButtonHeight,
-                    trailing: const Icon(Icons.chevron_right_rounded),
-                    child: const Text('Xem xác nhận'),
-                  ),
+                        ),
+                  variant: VitCtaButtonVariant.auth,
+                  height: _configurationButtonHeight,
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  child: const Text('Xem xác nhận'),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

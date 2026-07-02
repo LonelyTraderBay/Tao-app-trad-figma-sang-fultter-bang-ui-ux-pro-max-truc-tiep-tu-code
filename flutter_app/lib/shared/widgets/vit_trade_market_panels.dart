@@ -79,7 +79,8 @@ class VitOrderBookPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final compact = density == VitOrderBookPanelDensity.compact;
-    final textStyle = compact ? AppTextStyles.micro : AppTextStyles.micro;
+    final textStyle =
+        compact ? AppTextStyles.caption : AppTextStyles.caption;
 
     return VitCard(
       density: VitDensity.compact,

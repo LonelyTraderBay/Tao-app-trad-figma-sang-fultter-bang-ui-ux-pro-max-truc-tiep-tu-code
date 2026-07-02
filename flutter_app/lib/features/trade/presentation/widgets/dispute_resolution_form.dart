@@ -35,14 +35,6 @@ class _FileComplaintTab extends StatelessWidget {
       density: VitDensity.compact,
       children: [
         _NoticeCard(title: snapshot.noticeTitle, body: snapshot.noticeBody),
-        const VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          density: VitDensity.compact,
-          title: 'Review dispute complaint',
-          message:
-              'Confirm complaint type, provider, evidence, and issue details before submitting a formal dispute case.',
-          contractId: 'Copy trading dispute intake',
-        ),
         VitPageSection(
           key: DisputeResolutionPage.complaintTypeSectionKey,
           label: 'Complaint Type',

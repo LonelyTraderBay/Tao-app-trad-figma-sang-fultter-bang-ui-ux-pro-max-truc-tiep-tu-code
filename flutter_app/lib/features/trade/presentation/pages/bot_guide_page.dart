@@ -7,12 +7,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -24,7 +20,6 @@ part '../widgets/bot_guide_blocks.dart';
 part '../widgets/bot_guide_practices_videos.dart';
 part '../widgets/bot_guide_common.dart';
 
-const _guideBackground = AppColors.bg;
 const _guidePrimary = AppColors.primary;
 const _guideGreen = AppColors.buy;
 const _guideRed = AppColors.sell;
@@ -49,89 +44,65 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeReadModelControllerProvider).getBotGuide();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Trading Bots Guide',
       semanticLabel: 'SC-131 BotGuidePage',
-      child: Material(
-        color: _guideBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Trading Bots Guide',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotGuidePage.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.rowPy,
-                    right: AppSpacing.contentPad,
-                    bottom: scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    density: VitDensity.compact,
-                    children: [
-                      const _IntroBanner(),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.cardPaddingCompact,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          density: VitDensity.compact,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              density: VitDensity.compact,
-                              title: 'Bot education review',
-                              message:
-                                  'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
-                              contractId: 'bot-guide-review',
-                            ),
-                            VitStatusPill(
-                              label: 'Education before activation',
-                              status: VitStatusPillStatus.warning,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
-                      _Tabs(active: _view, onChanged: _setView),
-                      VitPageSection(
-                        density: VitDensity.compact,
-                        children: [
-                          if (_view == 'strategies')
-                            _StrategiesView(
-                              strategies: snapshot.strategies,
-                              expandedStrategyId: _expandedStrategyId,
-                              onToggle: _toggleStrategy,
-                            )
-                          else if (_view == 'best-practices')
-                            _BestPracticesView(items: snapshot.bestPractices)
-                          else
-                            _MistakesView(items: snapshot.mistakes),
-                        ],
-                      ),
-                      const _VideoTutorialsCard(),
-                    ],
-                  ),
+      contentKey: BotGuidePage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeBots),
+      children: [
+        VitTradeSection(title: 'Introduction', child: const _IntroBanner()),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.cardPaddingCompact,
+            child: VitPageContent(
+              padding: VitContentPadding.none,
+              density: VitDensity.compact,
+              children: [
+                VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  density: VitDensity.compact,
+                  title: 'Bot education review',
+                  message:
+                      'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
+                  contractId: 'bot-guide-review',
                 ),
-              ),
-            ],
+                VitStatusPill(
+                  label: 'Education before activation',
+                  status: VitStatusPillStatus.warning,
+                  size: VitStatusPillSize.sm,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Topics',
+          child: _Tabs(active: _view, onChanged: _setView),
+        ),
+        VitTradeSection(
+          title: _view == 'strategies'
+              ? 'Strategies'
+              : _view == 'best-practices'
+              ? 'Best practices'
+              : 'Common mistakes',
+          child: _view == 'strategies'
+              ? _StrategiesView(
+                  strategies: snapshot.strategies,
+                  expandedStrategyId: _expandedStrategyId,
+                  onToggle: _toggleStrategy,
+                )
+              : _view == 'best-practices'
+              ? _BestPracticesView(items: snapshot.bestPractices)
+              : _MistakesView(items: snapshot.mistakes),
+        ),
+        VitTradeSection(
+          title: 'Video tutorials',
+          child: const _VideoTutorialsCard(),
+        ),
+      ],
     );
   }
 

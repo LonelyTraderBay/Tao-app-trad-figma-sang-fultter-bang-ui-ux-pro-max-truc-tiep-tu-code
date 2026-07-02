@@ -4,30 +4,21 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
-const _ombudsmanBackground = AppColors.bg;
 const _ombudsmanBorder = AppColors.borderSolid;
 const _ombudsmanPrimary = AppColors.primary;
 const _ombudsmanGreen = AppColors.buy;
 const _ombudsmanAmber = AppColors.caution;
-const double _ombudsmanFramedScrollClearance =
-    AppSpacing.buttonStandard + AppSpacing.x7;
-const double _ombudsmanNativeScrollClearance =
-    AppSpacing.buttonStandard + AppSpacing.x5;
 const double _ombudsmanIntroIconExtent =
     AppSpacing.buttonCompact + AppSpacing.x4;
 const double _ombudsmanContactIconExtent =
@@ -47,75 +38,76 @@ class OmbudsmanReferralPage extends ConsumerWidget {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getOmbudsmanReferral();
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Financial Ombudsman',
+      subtitle: 'Independent Dispute Resolution',
       semanticLabel: 'SC-114 OmbudsmanReferralPage',
-      child: Material(
-        color: _ombudsmanBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Financial Ombudsman',
-            subtitle: 'Independent Dispute Resolution',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
-          ),
-          child: VitInsetScrollView(
-            key: contentKey,
-            bottomInset: scrollEndClearance,
-            child: VitPageContent(
-              padding: VitContentPadding.compact,
-              density: VitDensity.compact,
-              children: [
-                const VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Review ombudsman referral route',
-                  message:
-                      'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
-                ),
-                _IntroCard(snapshot: snapshot),
-                const VitSectionHeader(
-                  title: 'When Can You Refer?',
-                  variant: VitSectionHeaderVariant.accentBar,
-                  accentColor: _ombudsmanPrimary,
-                ),
-                _EligibilityCard(items: snapshot.eligibility),
-                const VitSectionHeader(
-                  title: 'Contact Information',
-                  variant: VitSectionHeaderVariant.accentBar,
-                  accentColor: _ombudsmanPrimary,
-                ),
-                _ContactCard(contacts: snapshot.contacts),
-                const VitSectionHeader(
-                  title: 'How It Works',
-                  variant: VitSectionHeaderVariant.accentBar,
-                  accentColor: _ombudsmanPrimary,
-                ),
-                for (final step in snapshot.processSteps)
-                  _ProcessStepCard(step: step),
-                _VisitButton(snapshot: snapshot),
-                const TradeBodyReviewSection(
-                  title: 'Ombudsman body review',
-                  message: 'Ombudsman referral body reviewed',
-                  detail:
-                      'Eligibility, contact, process, visit CTA, empty, and result states stay visible.',
-                  primary:
-                      'Eligibility remains above external referral actions.',
-                  secondary:
-                      'Contact and process steps stay separated for regulated escalation.',
-                  tertiary:
-                      'Visit CTA remains framed as external dispute resolution.',
-                ),
-              ],
-            ),
+      contentKey: contentKey,
+      shellRenderMode: shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
+      children: [
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Review ombudsman referral route',
+            message:
+                'Confirm complaint deadline, eligibility, evidence, and next steps before external escalation.',
           ),
         ),
-      ),
+        VitTradeComplianceSection(
+          title: 'Referral status',
+          statusPill: const VitStatusPill(
+            label: 'External referral',
+            status: VitStatusPillStatus.warning,
+            size: VitStatusPillSize.sm,
+          ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Eligibility',
+              value: '${snapshot.eligibility.length} criteria',
+            ),
+            VitTradeComplianceItem(
+              label: 'Contacts',
+              value: '${snapshot.contacts.length} routes',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Overview',
+          child: _IntroCard(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'When Can You Refer?',
+          child: _EligibilityCard(items: snapshot.eligibility),
+        ),
+        VitTradeSection(
+          title: 'Contact Information',
+          child: _ContactCard(contacts: snapshot.contacts),
+        ),
+        VitTradeSection(
+          title: 'How It Works',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final step in snapshot.processSteps)
+                _ProcessStepCard(step: step),
+              _VisitButton(snapshot: snapshot),
+              const TradeBodyReviewSection(
+                title: 'Ombudsman body review',
+                message: 'Ombudsman referral body reviewed',
+                detail:
+                    'Eligibility, contact, process, visit CTA, empty, and result states stay visible.',
+                primary: 'Eligibility remains above external referral actions.',
+                secondary:
+                    'Contact and process steps stay separated for regulated escalation.',
+                tertiary:
+                    'Visit CTA remains framed as external dispute resolution.',
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -8,12 +8,8 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -23,7 +19,6 @@ part '../widgets/bot_suitability_questions_info.dart';
 part '../widgets/bot_suitability_result_score.dart';
 part '../widgets/bot_suitability_breakdown_common.dart';
 
-const _assessmentBackground = AppColors.bg;
 const _assessmentPanel2 = AppColors.surface2;
 const _assessmentPrimary = AppColors.primary;
 const _assessmentOptionBorder = AppColors.borderSolid;
@@ -59,70 +54,50 @@ class _BotSuitabilityAssessmentPageState
   Widget build(BuildContext context) {
     final controller = ref.watch(tradeBotSuitabilityControllerProvider);
     final snapshot = controller.state.snapshot;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: _showResult ? 'Assessment Result' : 'Suitability Assessment',
       semanticLabel: 'SC-119 BotSuitabilityAssessmentPage',
-      child: Material(
-        color: _assessmentBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: _showResult ? 'Assessment Result' : 'Suitability Assessment',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: _showResult
-                      ? BotSuitabilityAssessmentPage.resultContentKey
-                      : BotSuitabilityAssessmentPage.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.rowPy,
-                    right: AppSpacing.contentPad,
-                    bottom: scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
-                        title: 'Review bot suitability risk',
-                        message:
-                            'Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.',
-                      ),
-                      _showResult
-                          ? _ResultView(
-                              snapshot: snapshot,
-                              score: _score(snapshot),
-                              answers: _answers,
-                              onComplete: _handleComplete,
-                            )
-                          : _QuestionView(
-                              snapshot: snapshot,
-                              currentQuestion: _currentQuestion,
-                              answers: _answers,
-                              onAnswer: _handleAnswer,
-                            ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      contentKey: _showResult
+          ? BotSuitabilityAssessmentPage.resultContentKey
+          : BotSuitabilityAssessmentPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeBots),
+      children: [
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.cardPaddingCompact,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              density: VitDensity.compact,
+              title: 'Review bot suitability risk',
+              message:
+                  'Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.',
+            ),
           ),
         ),
-      ),
+        if (_showResult)
+          VitTradeSection(
+            title: 'Kết quả',
+            child: _ResultView(
+              snapshot: snapshot,
+              score: _score(snapshot),
+              answers: _answers,
+              onComplete: _handleComplete,
+            ),
+          )
+        else
+          VitTradeSection(
+            title: 'Câu hỏi',
+            child: _QuestionView(
+              snapshot: snapshot,
+              currentQuestion: _currentQuestion,
+              answers: _answers,
+              onAnswer: _handleAnswer,
+            ),
+          ),
+      ],
     );
   }
 

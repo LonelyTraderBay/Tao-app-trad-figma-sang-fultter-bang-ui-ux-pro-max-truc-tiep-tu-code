@@ -5,13 +5,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
@@ -65,77 +60,58 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeBotsControllerProvider).state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-059 TradingBotsPage',
-      child: Stack(
-        children: [
-          Material(
-            type: MaterialType.transparency,
-            child: VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Trading Bots',
-                subtitle: 'Bot giao dịch · Trade',
-                showBack: true,
-                backKey: TradingBotsPage.backKey,
-                onBack: () => goBackOrFallback(
-                  context,
-                  fallbackPath: AppRoutePaths.trade,
-                  mode: BackNavigationMode.historyThenFallback,
-                ),
+    return Stack(
+      children: [
+        VitTradeHubScaffold(
+          title: 'Trading Bots',
+          subtitle: 'Bot giao dịch · Trade',
+          semanticLabel: 'SC-059 TradingBotsPage',
+          contentKey: TradingBotsPage.contentKey,
+          backKey: TradingBotsPage.backKey,
+          shellRenderMode: widget.shellRenderMode,
+          onBack: () => goBackOrFallback(
+            context,
+            fallbackPath: AppRoutePaths.trade,
+            mode: BackNavigationMode.historyThenFallback,
+          ),
+          children: [
+            VitTradeSection(
+              title: 'Tổng quan bot',
+              child: _BotsMetricsSummary(bots: _bots),
+            ),
+            VitTradeSection(
+              title: 'Danh mục',
+              child: _BotsTabs(
+                active: _tab,
+                botCount: _bots.length,
+                onChanged: (tab) => setState(() => _tab = tab),
               ),
-              child: VitInsetScrollView(
-                key: TradingBotsPage.contentKey,
-                bottomInset: bottomInset,
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  density: VitDensity.compact,
-                  children: [
-                    VitTradeSection(
-                      title: 'Tổng quan bot',
-                      child: _BotsHero(bots: _bots),
-                    ),
-                  _BotsTabs(
-                    active: _tab,
-                    botCount: _bots.length,
-                    onChanged: (tab) => setState(() => _tab = tab),
-                  ),
-                  if (_tab == _TradingBotsTab.myBots)
-                    _MyBotsTab(
-                      bots: _bots,
-                      onToggle: _toggleBot,
-                      onDelete: _deleteBot,
-                      onAdd: () =>
-                          setState(() => _tab = _TradingBotsTab.strategies),
-                    )
-                  else
-                    _StrategiesTab(
-                      strategies: snapshot.strategies,
-                      onCreate: _openCreateSheet,
-                    ),
-                ],
+            ),
+            if (_tab == _TradingBotsTab.myBots)
+              _MyBotsTab(
+                bots: _bots,
+                onToggle: _toggleBot,
+                onDelete: _deleteBot,
+                onAdd: () => setState(() => _tab = _TradingBotsTab.strategies),
+              )
+            else
+              _StrategiesTab(
+                strategies: snapshot.strategies,
+                onCreate: _openCreateSheet,
               ),
+          ],
+        ),
+        if (_showSuccess)
+          Positioned(
+            left: AppSpacing.contentPad,
+            right: AppSpacing.contentPad,
+            top: mode.usesVisualQaFrame ? AppSpacing.buttonHero : AppSpacing.x5,
+            child: _SuccessToast(
+              onClose: () => setState(() => _showSuccess = false),
             ),
           ),
-        ),
-          if (_showSuccess)
-            Positioned(
-              left: AppSpacing.contentPad,
-              right: AppSpacing.contentPad,
-              top: mode.usesVisualQaFrame
-                  ? AppSpacing.buttonHero
-                  : AppSpacing.x5,
-              child: _SuccessToast(
-                onClose: () => setState(() => _showSuccess = false),
-              ),
-            ),
-        ],
-      ),
+      ],
     );
   }
 

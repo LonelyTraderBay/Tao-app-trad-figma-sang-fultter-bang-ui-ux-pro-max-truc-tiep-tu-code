@@ -1,6 +1,8 @@
 # Performance Checklist
 
-Quick reference checklist for web application performance. Use alongside the `performance-optimization` skill.
+Quick reference for web application performance (Flutter work: use
+`references/flutter-performance-checklist.md` first). Use alongside the
+`performance-optimization` skill.
 
 ## Table of Contents
 

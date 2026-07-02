@@ -8,10 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -60,70 +56,55 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getCopyPerformance(copyId: widget.copyId);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
 
-    return VitPageLayout(
+    return VitTradeDetailScaffold(
+      title: 'Phân tích hiệu suất',
       semanticLabel: 'SC-074 CopyPerformancePage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Phân tích hiệu suất',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.trade),
+      contentKey: CopyPerformancePage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.trade),
+      children: [
+        VitTradeSection(
+          title: 'Tổng quan',
+          child: _PerformanceSummary(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: VitCard(
+            variant: VitCardVariant.inner,
+            density: VitDensity.compact,
+            padding: AppSpacing.cardPaddingCompact,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Copy performance review',
+              message:
+                  'PnL, fees, drawdown, trade history, risk metrics and next steps are reviewed before copy allocation changes.',
+              contractId: 'copy-performance-${widget.copyId}',
+              density: VitDensity.compact,
+            ),
           ),
+        ),
+        VitTradeSection(
+          title: 'Phân tích',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: CopyPerformancePage.contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      _PerformanceSummary(snapshot: snapshot),
-                      VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        padding: AppSpacing.cardPaddingCompact,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Copy performance review',
-                          message:
-                              'PnL, fees, drawdown, trade history, risk metrics and next steps are reviewed before copy allocation changes.',
-                          contractId: 'copy-performance-${widget.copyId}',
-                          density: VitDensity.compact,
-                        ),
-                      ),
-                      _PerformanceTabs(
-                        activeTab: _activeTab,
-                        onChanged: (value) =>
-                            setState(() => _activeTab = value),
-                      ),
-                      if (_activeTab == 'overview')
-                        _OverviewTab(snapshot: snapshot)
-                      else if (_activeTab == 'trades')
-                        _TradesTab(snapshot: snapshot)
-                      else if (_activeTab == 'costs')
-                        _CostsTab(snapshot: snapshot)
-                      else
-                        _MetricsTab(snapshot: snapshot),
-                    ],
-                  ),
-                ),
+              _PerformanceTabs(
+                activeTab: _activeTab,
+                onChanged: (value) => setState(() => _activeTab = value),
               ),
+              if (_activeTab == 'overview')
+                _OverviewTab(snapshot: snapshot)
+              else if (_activeTab == 'trades')
+                _TradesTab(snapshot: snapshot)
+              else if (_activeTab == 'costs')
+                _CostsTab(snapshot: snapshot)
+              else
+                _MetricsTab(snapshot: snapshot),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

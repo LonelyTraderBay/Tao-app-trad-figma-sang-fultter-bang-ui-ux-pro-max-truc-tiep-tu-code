@@ -10,10 +10,6 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -51,93 +47,71 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeCopyTradingProvider);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = copyTradingScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
     final traders = _sortedTraders(snapshot.traders);
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Copy Trading',
+      subtitle: 'Sao chép · Trade',
       semanticLabel: 'SC-063 CopyTradingPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Copy Trading',
-            subtitle: 'Sao chép · Trade',
-            showBack: true,
-            onBack: () => goBackOrFallback(
-              context,
-              fallbackPath: AppRoutePaths.trade,
-              mode: BackNavigationMode.historyThenFallback,
-            ),
+      contentKey: CopyTradingPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.trade,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      children: [
+        VitTradeSection(
+          title: 'Tổng quan',
+          child: _CopyHeroCard(snapshot: snapshot),
+        ),
+        _RiskWarningCard(
+          title: snapshot.riskWarningTitle,
+          message: snapshot.riskWarningText,
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Review copy trading risk',
+            message:
+                'Compare provider drawdown, copier concentration, fees, and stop rules before copying any strategy.',
+            contractId: 'Providers available: ${traders.length}',
+            density: VitDensity.compact,
           ),
+        ),
+        VitTradeSection(
+          title: 'Nhà cung cấp',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: CopyTradingPage.contentKey,
-                  bottomInset: scrollEndClearance,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      VitTradeSection(
-                        title: 'Tổng quan',
-                        child: _CopyHeroCard(snapshot: snapshot),
-                      ),
-                      _RiskWarningCard(
-                        title: snapshot.riskWarningTitle,
-                        message: snapshot.riskWarningText,
-                      ),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review copy trading risk',
-                        message:
-                            'Compare provider drawdown, copier concentration, fees, and stop rules before copying any strategy.',
-                        contractId: 'Providers available: ${traders.length}',
-                        density: VitDensity.compact,
-                      ),
-                      VitTradeSection(
-                        title: 'Nhà cung cấp',
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _SortChips(
-                              options: snapshot.sortOptions,
-                              selected: _sortBy,
-                              onChanged: (value) =>
-                                  setState(() => _sortBy = value),
-                            ),
-                            if (traders.isEmpty)
-                              const VitEmptyState(
-                                title: 'No copy providers',
-                                message:
-                                    'Providers matching this sort will appear here when available.',
-                                icon: Icons.groups_outlined,
-                              )
-                            else
-                              _TraderList(
-                                traders: traders,
-                                onOpen: (trader) => context.go(
-                                  AppRoutePaths.tradeCopyProvider(trader.id),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                      _Disclaimer(text: snapshot.disclaimer),
-                    ],
-                  ),
-                ),
+              _SortChips(
+                options: snapshot.sortOptions,
+                selected: _sortBy,
+                onChanged: (value) => setState(() => _sortBy = value),
               ),
+              if (traders.isEmpty)
+                const VitEmptyState(
+                  title: 'No copy providers',
+                  message:
+                      'Providers matching this sort will appear here when available.',
+                  icon: Icons.groups_outlined,
+                )
+              else
+                _TraderList(
+                  traders: traders,
+                  onOpen: (trader) =>
+                      context.go(AppRoutePaths.tradeCopyProvider(trader.id)),
+                ),
             ],
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Lưu ý',
+          child: _Disclaimer(text: snapshot.disclaimer),
+        ),
+      ],
     );
   }
 

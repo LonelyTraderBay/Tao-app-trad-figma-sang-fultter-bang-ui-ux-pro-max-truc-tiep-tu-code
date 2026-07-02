@@ -11,116 +11,98 @@ class _RegulatoryReportsDashboardPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getRegulatoryReportsDashboard();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-094 RegulatoryReportsDashboardPage',
-      child: Material(
-        color: _dashBackground,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Regulatory Reports',
-                subtitle: 'Dashboard - MiFID II - EMIR',
-                showBack: true,
-                onBack: () =>
-                    context.go(AppRoutePaths.tradeCopyTransactionReporting),
-                actions: [
-                  VitHeaderActionItem(
-                    type: VitHeaderActionType.export,
-                    onPressed: () => setState(() => _notice = 'Export queued'),
+    return Material(
+      color: _dashBackground,
+      child: Stack(
+        children: [
+          VitTradeHubScaffold(
+            title: 'Regulatory Reports',
+            subtitle: 'Dashboard - MiFID II - EMIR',
+            semanticLabel: 'SC-094 RegulatoryReportsDashboardPage',
+            contentKey: RegulatoryReportsDashboardPage.contentKey,
+            shellRenderMode: widget.shellRenderMode,
+            onBack: () =>
+                context.go(AppRoutePaths.tradeCopyTransactionReporting),
+            headerActions: [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
+                onPressed: () => setState(() => _notice = 'Export queued'),
+              ),
+            ],
+            children: [
+              VitTradeSection(
+                title: 'KPIs',
+                child: _KpiGrid(totals: snapshot.totals),
+              ),
+              VitTradeComplianceSection(
+                title: 'Report review',
+                statusPill: const VitStatusPill(
+                  label: 'SLA and failures visible',
+                  status: VitStatusPillStatus.warning,
+                  size: VitStatusPillSize.sm,
+                ),
+                items: [
+                  VitTradeComplianceItem(
+                    label: 'Success rate',
+                    value: '${snapshot.totals.successRate.toStringAsFixed(1)}%',
+                  ),
+                  VitTradeComplianceItem(
+                    label: 'Failed',
+                    value: '${snapshot.totals.failed}',
                   ),
                 ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      key: RegulatoryReportsDashboardPage.contentKey,
-                      padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                        scrollClearance,
+              VitTradeSection(
+                title: 'Dashboard',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _ComplianceAlert(totals: snapshot.totals),
+                    _RangeSelector(
+                      ranges: snapshot.timeRanges,
+                      activeId: _range,
+                      onChanged: (id) => setState(() => _range = id),
+                    ),
+                    _Tabs(
+                      activeId: _tab,
+                      onChanged: (id) => setState(() => _tab = id),
+                    ),
+                    if (_tab == 'overview')
+                      _OverviewTab(snapshot: snapshot)
+                    else if (_tab == 'queue')
+                      _QueueTab(snapshot: snapshot)
+                    else if (_tab == 'compliance')
+                      _ComplianceTab(totals: snapshot.totals)
+                    else
+                      _ExportsTab(
+                        onNotice: (text) => setState(() => _notice = text),
                       ),
-                      child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        fullBleed: true,
-                        density: VitDensity.compact,
-                        children: [
-                          VitPageSection(
-                            density: VitDensity.compact,
-                            children: [_KpiGrid(totals: snapshot.totals)],
-                          ),
-                          _ComplianceAlert(totals: snapshot.totals),
-                          _RangeSelector(
-                            ranges: snapshot.timeRanges,
-                            activeId: _range,
-                            onChanged: (id) => setState(() => _range = id),
-                          ),
-                          _Tabs(
-                            activeId: _tab,
-                            onChanged: (id) => setState(() => _tab = id),
-                          ),
-                          if (_tab == 'overview')
-                            _OverviewTab(snapshot: snapshot)
-                          else if (_tab == 'queue')
-                            _QueueTab(snapshot: snapshot)
-                          else if (_tab == 'compliance')
-                            _ComplianceTab(totals: snapshot.totals)
-                          else
-                            _ExportsTab(
-                              onNotice: (text) =>
-                                  setState(() => _notice = text),
-                            ),
-                          _QuickActions(
-                            onQueue: () => context.go(
-                              AppRoutePaths.tradeCopyTransactionReporting,
-                            ),
-                            onArmStatus: () => context.go(
-                              AppRoutePaths.tradeCopyArmIntegrationStatus,
-                            ),
-                          ),
-                          const VitCard(
-                            variant: VitCardVariant.inner,
-                            density: VitDensity.compact,
-                            child: VitPageContent(
-                              padding: VitContentPadding.none,
-                              density: VitDensity.compact,
-                              children: [
-                                VitHighRiskStatePanel(
-                                  state: VitHighRiskUiState.riskReview,
-                                  title: 'Regulatory report review',
-                                  message:
-                                      'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',
-                                  contractId: 'regulatory-reports-review',
-                                ),
-                                VitStatusPill(
-                                  label: 'SLA and failures visible',
-                                  status: VitStatusPillStatus.warning,
-                                  size: VitStatusPillSize.sm,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                    _QuickActions(
+                      onQueue: () => context.go(
+                        AppRoutePaths.tradeCopyTransactionReporting,
+                      ),
+                      onArmStatus: () => context.go(
+                        AppRoutePaths.tradeCopyArmIntegrationStatus,
                       ),
                     ),
-                  ),
-                ],
+                    const VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.riskReview,
+                      title: 'Regulatory report review',
+                      message:
+                          'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',
+                      contractId: 'regulatory-reports-review',
+                    ),
+                  ],
+                ),
               ),
+            ],
+          ),
+          if (_notice != null)
+            _NoticePanel(
+              text: _notice!,
+              onClose: () => setState(() => _notice = null),
             ),
-            if (_notice != null)
-              _NoticePanel(
-                text: _notice!,
-                onClose: () => setState(() => _notice = null),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }

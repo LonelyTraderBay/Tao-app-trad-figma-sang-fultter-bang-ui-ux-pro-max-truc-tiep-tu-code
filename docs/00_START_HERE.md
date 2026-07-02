@@ -14,9 +14,12 @@ web screenshot baseline were removed on 2026-05-26.
 7. `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`
 8. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`
 9. `docs/03_DESIGN_SYSTEM/Guidelines.md`
-10. `docs/02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md`
-11. `docs/02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md`
-12. Screen- or module-specific references only when working on that area.
+10. `DESIGN.md` (root — visual tokens and Vit* component ladder)
+11. `docs/02_FLUTTER_MIGRATION/ke-hoac-tong-the.md` (status dashboard)
+12. `docs/02_FLUTTER_MIGRATION/ke-hoach-san-sang-production.md` (production gaps)
+13. `docs/02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md`
+14. `docs/02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md`
+15. Screen- or module-specific references only when working on that area.
 
 ## Source Of Truth
 
@@ -63,9 +66,12 @@ behavior changes.
 | --- | --- |
 | `AGENTS.md` | Active coding constraints for agents. |
 | `docs/INDEX.md` | Doc picker — which file to load per task (on-demand). |
+| `DESIGN.md` | Visual token contract and component ladder for UI work. |
 | `docs/01_AI_RULES/AI_EXECUTION_CONTRACT.md` | Execution rules after Flutter-only cleanup. |
 | `docs/01_AI_RULES/DOCUMENT_PRECEDENCE.md` | Conflict resolution when docs disagree. |
-| `docs/02_FLUTTER_MIGRATION/` | Retained path for Flutter engineering, coverage, and QA docs. |
+| `docs/02_FLUTTER_MIGRATION/ke-hoac-tong-the.md` | Status dashboard; completed migrations summary. |
+| `docs/02_FLUTTER_MIGRATION/ke-hoach-san-sang-production.md` | Production readiness checklist. |
+| `docs/02_FLUTTER_MIGRATION/` | Flutter engineering standards, checklists, backend skeletons. |
 | `docs/02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md` | Required checklist before adding a feature, route, high-risk flow, or large test surface. |
 | `docs/02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md` | Pull request review gates for architecture, router, product safety, and tests. |
 | `docs/03_DESIGN_SYSTEM/Guidelines.md` | Product and design rules. |

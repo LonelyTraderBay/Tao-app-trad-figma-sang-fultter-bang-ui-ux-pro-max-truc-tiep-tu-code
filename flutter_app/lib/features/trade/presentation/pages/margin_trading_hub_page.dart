@@ -55,9 +55,9 @@ class MarginTradingHubPage extends ConsumerWidget {
         .getMarginTradingHub();
     final mode = shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

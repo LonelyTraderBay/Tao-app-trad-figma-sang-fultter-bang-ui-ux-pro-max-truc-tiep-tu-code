@@ -4,12 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -60,48 +59,63 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
         .state
         .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
+    const stickyActionsHeight = AppSpacing.inputHeight + AppSpacing.x4;
+    final scrollEndClearance =
+        tradeScrollBottomInset(context, shellRenderMode: mode) +
+        stickyActionsHeight;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-121 BotEmergencyStopPage',
       child: Material(
         color: _stopBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Emergency Stop',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotEmergencyStopPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _WarningBanner(snapshot: snapshot),
-                      _SectionLabel('Bots to Stop (${snapshot.bots.length})'),
-                      for (final bot in snapshot.bots) _BotCard(bot: bot),
-                      const _SectionLabel('Reason for Emergency Stop'),
-                      for (final reason in snapshot.reasons)
-                        _ReasonOption(
-                          reason: reason,
-                          selected: reason.id == _reasonId,
-                          onTap: () => setState(() => _reasonId = reason.id),
-                        ),
-                      const _SectionLabel('Additional Actions'),
-                      _CheckActionCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            VitHeader(
+              title: 'Emergency Stop',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.tradeBots),
+            ),
+            Expanded(
+              child: VitInsetScrollView(
+                key: BotEmergencyStopPage.contentKey,
+                bottomInset: scrollEndClearance,
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  density: VitDensity.compact,
+                  children: [
+                    VitTradeSection(
+                      title: 'Cảnh báo khẩn cấp',
+                      child: _WarningBanner(snapshot: snapshot),
+                    ),
+                    VitTradeSection(
+                      title: 'Bots to Stop (${snapshot.bots.length})',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          for (final bot in snapshot.bots) _BotCard(bot: bot),
+                        ],
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Reason for Emergency Stop',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          for (final reason in snapshot.reasons)
+                            _ReasonOption(
+                              reason: reason,
+                              selected: reason.id == _reasonId,
+                              onTap: () =>
+                                  setState(() => _reasonId = reason.id),
+                            ),
+                        ],
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Additional Actions',
+                      child: _CheckActionCard(
                         key: BotEmergencyStopPage.closePositionsKey,
                         selected: _closePositions,
                         title: snapshot.closePositionsTitle,
@@ -111,8 +125,10 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                           setState(() => _closePositions = !_closePositions);
                         },
                       ),
-                      const _SectionLabel('Confirmation'),
-                      _CheckActionCard(
+                    ),
+                    VitTradeSection(
+                      title: 'Confirmation',
+                      child: _CheckActionCard(
                         key: BotEmergencyStopPage.confirmationKey,
                         selected: _confirmed,
                         title: snapshot.confirmationTitle,
@@ -120,8 +136,14 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                         danger: true,
                         onTap: () => setState(() => _confirmed = !_confirmed),
                       ),
-                      _SupportNotice(snapshot: snapshot),
-                      const VitCard(
+                    ),
+                    VitTradeSection(
+                      title: 'Hỗ trợ',
+                      child: _SupportNotice(snapshot: snapshot),
+                    ),
+                    VitTradeSection(
+                      title: 'Đánh giá rủi ro',
+                      child: const VitCard(
                         variant: VitCardVariant.inner,
                         padding: AppSpacing.tradeBotInnerPanelPadding,
                         child: VitHighRiskStatePanel(
@@ -132,22 +154,20 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                           contractId: 'bot-emergency-stop-review',
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              _StickyActions(
-                bottomPadding: mode.usesVisualQaFrame
-                    ? DeviceMetrics.bottomChrome + AppSpacing.x2
-                    : AppSpacing.contentPad +
-                          MediaQuery.paddingOf(context).bottom,
-                canSubmit: _reasonId != null && _confirmed && !_stopping,
-                stopping: _stopping,
-                onCancel: () => context.go(AppRoutePaths.tradeBots),
-                onSubmit: () => _submit(snapshot),
-              ),
-            ],
-          ),
+            ),
+            _StickyActions(
+              bottomPadding:
+                  AppSpacing.contentPad + MediaQuery.paddingOf(context).bottom,
+              canSubmit: _reasonId != null && _confirmed && !_stopping,
+              stopping: _stopping,
+              onCancel: () => context.go(AppRoutePaths.tradeBots),
+              onSubmit: () => _submit(snapshot),
+            ),
+          ],
         ),
       ),
     );

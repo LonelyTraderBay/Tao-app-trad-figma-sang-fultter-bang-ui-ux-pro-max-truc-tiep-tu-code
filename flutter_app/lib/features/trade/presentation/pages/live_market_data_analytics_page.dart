@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -43,10 +42,7 @@ class _LiveMarketDataAnalyticsPageState
         .watch(tradeReadModelControllerProvider)
         .getLiveMarketDataAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
+    final bottomInset = tradeScrollBottomInset(context, shellRenderMode: mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

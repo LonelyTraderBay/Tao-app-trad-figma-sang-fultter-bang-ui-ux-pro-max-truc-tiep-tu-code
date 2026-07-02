@@ -6,19 +6,14 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
-import '../widgets/trade_module_layout.dart';
 
 part '../widgets/copy_notifications_page_sections.dart';
 part '../widgets/copy_notifications_page_common.dart';
@@ -60,100 +55,83 @@ class _CopyNotificationsPageState extends ConsumerState<CopyNotificationsPage> {
     final unreadCount = notifications.where((item) => !item.read).length;
     final tabs = _tabsFor(notifications, snapshot.tabs);
     final filteredNotifications = _filtered(notifications, activeTab);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    final bottomInset = copyTradingScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeDetailScaffold(
+      title: 'Thông báo',
       semanticLabel: 'SC-068 CopyNotificationsPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Thông báo',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            actions: [
-              VitHeaderActionItem(
-                key: CopyNotificationsPage.settingsKey,
-                type: VitHeaderActionType.settings,
-                onPressed: () => context.go(AppRoutePaths.tradeCopySettings),
-              ),
-            ],
+      contentKey: CopyNotificationsPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      headerActions: [
+        VitHeaderActionItem(
+          key: CopyNotificationsPage.settingsKey,
+          type: VitHeaderActionType.settings,
+          onPressed: () => context.go(AppRoutePaths.tradeCopySettings),
+        ),
+      ],
+      children: [
+        if (unreadCount > 0)
+          VitTradeSection(
+            title: 'Chưa đọc',
+            child: _UnreadSummary(
+              unreadCount: unreadCount,
+              onMarkAllRead: _markAllRead,
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: CopyNotificationsPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    gap: VitContentGap.tight,
-                    children: [
-                      if (unreadCount > 0)
-                        _UnreadSummary(
-                          unreadCount: unreadCount,
-                          onMarkAllRead: _markAllRead,
-                        ),
-                      _FilterTabs(
-                        tabs: tabs,
-                        activeTab: activeTab,
-                        onChanged: (id) => setState(() => _activeTab = id),
-                      ),
-                      if (filteredNotifications.isEmpty)
-                        _EmptyNotifications(activeTab: activeTab)
-                      else
-                        for (final notification in filteredNotifications) ...[
-                          _NotificationCard(
-                            key: CopyNotificationsPage.notificationKey(
-                              notification.id,
-                            ),
-                            notification: notification,
-                            onTap: () => _handleNotificationTap(notification),
-                          ),
-                          if (notification != filteredNotifications.last)
-                            const SizedBox(height: AppSpacing.x2),
-                        ],
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.cardPaddingCompact,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Notification risk review',
-                          message:
-                              'Unread risk alerts, action routes, copy-trading updates and next steps are reviewed before navigation or bulk read changes.',
-                          contractId: 'copy-notifications-review',
-                        ),
-                      ),
-                      const TradeBodyReviewSection(
-                        title: 'Notification body review',
-                        message: 'Copy notification body reviewed',
-                        detail:
-                            'Unread summary, filters, cards, empty, bulk read, and navigation states stay visible.',
-                        primary:
-                            'Unread risk alerts remain separated from general copy updates.',
-                        secondary:
-                            'Filter state stays visible before notification actions.',
-                        tertiary:
-                            'Navigation stays scoped to copy-trading review screens.',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+        VitTradeSection(
+          title: 'Bộ lọc',
+          child: _FilterTabs(
+            tabs: tabs,
+            activeTab: activeTab,
+            onChanged: (id) => setState(() => _activeTab = id),
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Danh sách',
+          child: filteredNotifications.isEmpty
+              ? _EmptyNotifications(activeTab: activeTab)
+              : Column(
+                  children: [
+                    for (final notification in filteredNotifications) ...[
+                      _NotificationCard(
+                        key: CopyNotificationsPage.notificationKey(
+                          notification.id,
+                        ),
+                        notification: notification,
+                        onTap: () => _handleNotificationTap(notification),
+                      ),
+                      if (notification != filteredNotifications.last)
+                        const SizedBox(height: AppSpacing.x2),
+                    ],
+                  ],
+                ),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.cardPaddingCompact,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Notification risk review',
+              message:
+                  'Unread risk alerts, action routes, copy-trading updates and next steps are reviewed before navigation or bulk read changes.',
+              contractId: 'copy-notifications-review',
+            ),
+          ),
+        ),
+        const TradeBodyReviewSection(
+          title: 'Notification body review',
+          message: 'Copy notification body reviewed',
+          detail:
+              'Unread summary, filters, cards, empty, bulk read, and navigation states stay visible.',
+          primary:
+              'Unread risk alerts remain separated from general copy updates.',
+          secondary: 'Filter state stays visible before notification actions.',
+          tertiary: 'Navigation stays scoped to copy-trading review screens.',
+        ),
+      ],
     );
   }
 

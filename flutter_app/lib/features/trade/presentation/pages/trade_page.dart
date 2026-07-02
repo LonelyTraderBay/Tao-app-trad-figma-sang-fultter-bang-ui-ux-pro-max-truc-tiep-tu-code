@@ -1,36 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_terminal_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_formatters.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_shell.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_hero.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_order_form.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_product_tabs.dart';
 
 part 'trade_page_part_01.dart';
-part 'trade_page_part_02.dart';
-part 'trade_page_part_03.dart';
-
-const _tradePrimary = AppColors.primary;
-
-enum TradeChartVariant { defaultRoute, pairRoute }
-
-VitTradeChartVariant _mapChartVariant(TradeChartVariant variant) {
-  return variant == TradeChartVariant.pairRoute
-      ? VitTradeChartVariant.pairRoute
-      : VitTradeChartVariant.defaultRoute;
-}
 
 class TradePage extends ConsumerStatefulWidget {
   const TradePage({
@@ -43,23 +32,13 @@ class TradePage extends ConsumerStatefulWidget {
 
   static const contentKey = Key('sc048_trade_scroll_content');
   static const backKey = Key('sc048_trade_back');
-  static const chartTabKey = Key('sc048_trade_chart_tab');
-  static const viewModeChartsKey = Key('sc048_trade_view_charts');
-  static const viewModeTradeKey = Key('sc048_trade_view_trade');
-  static const orderBookTabKey = Key('sc048_trade_orderbook_tab');
-  static const tradesTabKey = Key('sc048_trade_trades_tab');
-  static const orderTabKey = Key('sc048_trade_order_tab');
-  static const positionsTabKey = Key('sc048_trade_positions_tab');
-  static const openOrdersTabKey = Key('sc048_trade_open_orders_tab');
-  static const historyTabKey = Key('sc048_trade_history_tab');
-  static const portfolioExpandKey = Key('sc048_trade_portfolio_expand');
   static const buySideKey = Key('sc048_trade_buy_side');
   static const sellSideKey = Key('sc048_trade_sell_side');
   static const amountFieldKey = Key('sc048_trade_amount_field');
   static const submitKey = Key('sc048_trade_submit');
+  static const confirmSheetKey = Key('sc048_trade_confirm_sheet');
+  static const nextActionKey = Key('sc048_trade_next_action');
 
-  static Key orderTypeKey(TradeOrderType type) =>
-      Key('sc048_order_${type.name}');
   static Key quickNavKey(String id) => Key('sc048_quick_$id');
   static Key pctKey(int pct) => Key('sc048_pct_$pct');
 
@@ -71,3 +50,6 @@ class TradePage extends ConsumerStatefulWidget {
   @override
   ConsumerState<TradePage> createState() => _TradePageState();
 }
+
+/// Kept for route compatibility; chart UI lives on L2 advanced chart.
+enum TradeChartVariant { defaultRoute, pairRoute }

@@ -7,18 +7,14 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/bot_faq_search_tabs.dart';
 part '../widgets/bot_faq_cards_help.dart';
 
-const _faqBackground = AppColors.bg;
 const _faqPrimary = AppColors.primary;
 
 class BotFaqPage extends ConsumerStatefulWidget {
@@ -71,88 +67,66 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                     item.answer.toLowerCase().contains(query),
               )
               .toList();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x7 + AppSpacing.x6
-            : AppSpacing.x7) +
-        MediaQuery.paddingOf(context).bottom;
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Trading Bots FAQ',
       semanticLabel: 'SC-132 BotFAQPage',
-      child: Material(
-        color: _faqBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Trading Bots FAQ',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotFaqPage.contentKey,
-                  clipBehavior: Clip.none,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    gap: VitContentGap.tight,
-                    fullBleed: true,
-                    children: [
-                      _SearchField(
-                        controller: _searchController,
-                        onChanged: (value) => setState(() {
-                          _query = value;
-                          _expandedIndex = null;
-                        }),
-                      ),
-                      _CategoryTabs(
-                        categories: snapshot.categories,
-                        activeId: _categoryId,
-                        onChanged: (id) => setState(() {
-                          _categoryId = id;
-                          _expandedIndex = null;
-                        }),
-                      ),
-                      VitSectionHeader(
-                        title: '${category.label} (${items.length})',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _faqPrimary,
-                      ),
-                      if (items.isEmpty)
-                        const _EmptyFaqs()
-                      else
-                        for (var i = 0; i < items.length; i++) ...[
-                          _FaqCard(
-                            categoryId: category.id,
-                            index: i,
-                            item: items[i],
-                            expanded: _expandedIndex == i,
-                            onTap: () => setState(() {
-                              _expandedIndex = _expandedIndex == i ? null : i;
-                            }),
-                          ),
-                          if (i != items.length - 1)
-                            const SizedBox(height: AppSpacing.x2),
-                        ],
-                      _StatsRow(
-                        totalFaqs: snapshot.totalFaqs,
-                        categories: snapshot.categories.length,
-                      ),
-                      const _HelpCard(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      contentKey: BotFaqPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeBots),
+      children: [
+        VitTradeSection(
+          title: 'Search',
+          child: _SearchField(
+            controller: _searchController,
+            onChanged: (value) => setState(() {
+              _query = value;
+              _expandedIndex = null;
+            }),
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Categories',
+          child: _CategoryTabs(
+            categories: snapshot.categories,
+            activeId: _categoryId,
+            onChanged: (id) => setState(() {
+              _categoryId = id;
+              _expandedIndex = null;
+            }),
+          ),
+        ),
+        VitTradeSection(
+          title: '${category.label} (${items.length})',
+          child: items.isEmpty
+              ? const _EmptyFaqs()
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var i = 0; i < items.length; i++) ...[
+                      _FaqCard(
+                        categoryId: category.id,
+                        index: i,
+                        item: items[i],
+                        expanded: _expandedIndex == i,
+                        onTap: () => setState(() {
+                          _expandedIndex = _expandedIndex == i ? null : i;
+                        }),
+                      ),
+                      if (i != items.length - 1)
+                        const SizedBox(height: AppSpacing.x2),
+                    ],
+                  ],
+                ),
+        ),
+        VitTradeSection(
+          title: 'Stats',
+          child: _StatsRow(
+            totalFaqs: snapshot.totalFaqs,
+            categories: snapshot.categories.length,
+          ),
+        ),
+        VitTradeSection(title: 'Help', child: const _HelpCard()),
+      ],
     );
   }
 }

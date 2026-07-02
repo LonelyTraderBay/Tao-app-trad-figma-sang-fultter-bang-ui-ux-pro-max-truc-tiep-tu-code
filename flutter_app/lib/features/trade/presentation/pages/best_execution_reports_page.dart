@@ -8,16 +8,14 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/best_execution_overview.dart';
 part '../widgets/best_execution_current.dart';
@@ -57,84 +55,81 @@ class _BestExecutionReportsPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getBestExecutionReports();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-096 BestExecutionReportsPage',
-      child: Material(
-        color: _bestBackground,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Best Execution Reports',
-                subtitle: 'RTS 27 / RTS 28 Compliance',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-                actions: [
-                  VitHeaderActionItem(
-                    type: VitHeaderActionType.export,
-                    onPressed: () =>
-                        setState(() => _notice = 'PDF export queued'),
+    return Material(
+      color: _bestBackground,
+      child: Stack(
+        children: [
+          VitTradeHubScaffold(
+            title: 'Best Execution Reports',
+            subtitle: 'RTS 27 / RTS 28 Compliance',
+            semanticLabel: 'SC-096 BestExecutionReportsPage',
+            contentKey: BestExecutionReportsPage.contentKey,
+            shellRenderMode: widget.shellRenderMode,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+            headerActions: [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
+                onPressed: () => setState(() => _notice = 'PDF export queued'),
+              ),
+            ],
+            children: [
+              VitTradeSection(
+                title: 'Notice',
+                child: const _ComplianceNotice(),
+              ),
+              VitTradeComplianceSection(
+                title: 'Execution review',
+                statusPill: VitStatusPill(
+                  label: 'Updated ${snapshot.lastUpdatedLabel}',
+                  status: VitStatusPillStatus.info,
+                  size: VitStatusPillSize.sm,
+                ),
+                items: [
+                  VitTradeComplianceItem(
+                    label: 'Venues',
+                    value: '${snapshot.venues.length} tracked',
+                  ),
+                  VitTradeComplianceItem(
+                    label: 'Archive',
+                    value: '${snapshot.archive.length} reports',
                   ),
                 ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      key: BestExecutionReportsPage.contentKey,
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                        AppSpacing.contentPad,
-                        AppSpacing.tradeBotCardGap,
-                        AppSpacing.contentPad,
-                        scrollClearance,
+              VitTradeSection(
+                title: 'Reports',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _SummaryGrid(summary: snapshot.summary),
+                    _Tabs(activeId: _tab, onChanged: _setTab),
+                    if (_tab == 'current')
+                      _CurrentReport(
+                        venues: snapshot.venues,
+                        onAnalysis: () => context.go(
+                          AppRoutePaths.tradeCopyExecutionVenueAnalysis,
+                        ),
+                        onExport: () =>
+                            setState(() => _notice = 'PDF export queued'),
+                        onPublish: () =>
+                            setState(() => _notice = 'Report submitted'),
+                      )
+                    else
+                      _ArchiveReport(
+                        reports: snapshot.archive,
+                        onExport: (id) =>
+                            setState(() => _notice = '$id PDF queued'),
                       ),
-                      child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        fullBleed: true,
-                        density: VitDensity.compact,
-                        children: [
-                          const _ComplianceNotice(),
-                          _SummaryGrid(summary: snapshot.summary),
-                          _Tabs(activeId: _tab, onChanged: _setTab),
-                          if (_tab == 'current')
-                            _CurrentReport(
-                              venues: snapshot.venues,
-                              onAnalysis: () => context.go(
-                                AppRoutePaths.tradeCopyExecutionVenueAnalysis,
-                              ),
-                              onExport: () =>
-                                  setState(() => _notice = 'PDF export queued'),
-                              onPublish: () =>
-                                  setState(() => _notice = 'Report submitted'),
-                            )
-                          else
-                            _ArchiveReport(
-                              reports: snapshot.archive,
-                              onExport: (id) =>
-                                  setState(() => _notice = '$id PDF queued'),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+            ],
+          ),
+          if (_notice != null)
+            _NoticePanel(
+              text: _notice!,
+              onClose: () => setState(() => _notice = null),
             ),
-            if (_notice != null)
-              _NoticePanel(
-                text: _notice!,
-                onClose: () => setState(() => _notice = null),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }

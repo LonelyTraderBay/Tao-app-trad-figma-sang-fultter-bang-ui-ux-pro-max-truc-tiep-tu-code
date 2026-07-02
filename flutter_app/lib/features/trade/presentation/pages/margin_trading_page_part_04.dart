@@ -243,10 +243,6 @@ String _signedMoney(double value) {
   return '$sign${_formatMoney(value.abs())}';
 }
 
-String _formatPriceWithDollar(double value) => '\$${_formatPrice(value)}';
+String _formatPriceWithDollar(double value) => '\$${formatTradePrice(value)}';
 
-String _formatPrice(double value) {
-  return value
-      .toStringAsFixed(2)
-      .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
-}
+String _formatPrice(double value) => formatTradePrice(value);

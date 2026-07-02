@@ -59,9 +59,9 @@ class _AdvancedTradingDemoPageState
         .getAdvancedTradingDemo();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

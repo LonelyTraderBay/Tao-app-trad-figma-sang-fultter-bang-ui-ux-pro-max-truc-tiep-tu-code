@@ -1,4 +1,3 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
@@ -7,17 +6,18 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_terminal_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_formatters.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_product_tabs.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_shell.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_hero.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_confirm_sheet.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 
 part 'margin_trading_page_part_01.dart';
@@ -31,7 +31,6 @@ part '../widgets/margin_trading_order_summary.dart';
 part '../widgets/margin_trading_risk_cards.dart';
 part '../widgets/margin_trading_positions_orders.dart';
 
-const _marginBackground = AppColors.bg;
 const _marginCard = AppColors.surface;
 const _marginPanel = AppColors.surface2;
 const _marginHero = AppColors.surface;
@@ -57,7 +56,6 @@ class MarginTradingPage extends ConsumerStatefulWidget {
   static const leverageKey = Key('sc085_leverage');
   static const maxAmountKey = Key('sc085_max_amount');
   static const submitKey = Key('sc085_submit');
-  static const portfolioExpandKey = Key('sc085_portfolio_expand');
 
   final String pairId;
   final bool pairRouteVariant;
@@ -68,15 +66,117 @@ class MarginTradingPage extends ConsumerStatefulWidget {
 }
 
 class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
-  late String _mode = 'cross';
-  late String _dockTab = 'positions';
-  VitTradeViewMode _viewMode = VitTradeViewMode.charts;
+  final String _mode = 'cross';
   late String _side = 'long';
-  late int _leverage = 5;
-  late String _orderType = 'limit';
+  final int _leverage = 5;
   String _amount = '0.00';
-  bool _showLeverageSheet = false;
   String? _notice;
+
+  Widget _buildSimpleMarginView({
+    required TradeMarginTradingSnapshot snapshot,
+    required TradePair pair,
+    required TradeProductNavigation productNav,
+    required ShellRenderMode mode,
+    required TradeMarginController controller,
+    required List<TradeMarginPosition> modePositions,
+    required double totalPnl,
+  }) {
+    return Stack(
+      children: [
+        VitTradeSimpleShell(
+          title: pair.symbol,
+          subtitle: 'Giao dịch ký quỹ',
+          semanticLabel: widget.pairRouteVariant
+              ? 'SC-086 MarginTradingPage'
+              : 'SC-085 MarginTradingPage',
+          contentKey: MarginTradingPage.contentKey,
+          shellRenderMode: mode,
+          showBack: true,
+          onBack: () => goBackOrFallback(
+            context,
+            fallbackPath: AppRoutePaths.trade,
+            mode: BackNavigationMode.historyThenFallback,
+          ),
+          children: [
+            VitTradeProductTabs(
+              activeId: 'margin',
+              tabs: productNav.tabs,
+              overflowItems: productNav.overflow,
+            ),
+            VitTradeSimpleHero(
+              symbol: pair.symbol,
+              priceLabel: formatTradePrice(snapshot.referencePrices.lastPrice),
+              changePct: pair.changePct,
+              highLabel: formatTradePrice(snapshot.referencePrices.markPrice),
+              lowLabel: formatTradePrice(snapshot.referencePrices.indexPrice),
+              volumeLabel: snapshot.trade.pair.symbol,
+            ),
+            VitCard(
+              variant: VitCardVariant.inner,
+              density: VitDensity.compact,
+              padding: AppSpacing.cardPaddingCompact,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tổng vốn',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    formatTradeMoney(snapshot.account.totalEquity),
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x2),
+                  VitMetricDeltaPill(
+                    label:
+                        '${totalPnl >= 0 ? '+' : ''}${formatTradeMoney(totalPnl)}',
+                    tone: totalPnl >= 0
+                        ? VitMetricDeltaTone.positive
+                        : VitMetricDeltaTone.negative,
+                  ),
+                ],
+              ),
+            ),
+            const VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              density: VitDensity.compact,
+              title: 'Rủi ro ký quỹ',
+              message:
+                  'Đòn bẩy có thể làm bạn mất vốn nhanh hơn. Chỉ dùng số tiền bạn chấp nhận mất.',
+              contractId: 'margin-trading-review',
+            ),
+            VitTradeSection(
+              title: 'Giao dịch',
+              child: _MarginSimpleForm(
+                snapshot: snapshot,
+                side: _side,
+                leverage: _leverage,
+                amount: _amount,
+                onSideChanged: (side) => setState(() => _side = side),
+                onMaxAmount: () => setState(() {
+                  _amount = controller.maxAmountFor(leverage: _leverage);
+                }),
+                onAmountChanged: (value) => setState(() => _amount = value),
+              ),
+            ),
+            if (modePositions.isNotEmpty)
+              VitTradeSection(
+                title: 'Tài sản của bạn',
+                child: _PositionsTab(positions: modePositions),
+              ),
+          ],
+        ),
+        if (_notice != null)
+          _NoticeSheet(
+            text: _notice!,
+            onClose: () => setState(() => _notice = null),
+          ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,246 +187,25 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
       )),
     );
     final snapshot = controller.state.snapshot;
+    final pair = snapshot.pair;
     final modePositions = controller.positionsForMode(_mode);
     final totalPnl = controller.totalPnlForMode(_mode);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeTerminalScrollBottomInset(
-      context,
-      shellRenderMode: mode,
+    final productNav = buildTradeProductNavigation(
+      context: context,
+      pair: pair,
+      activeId: 'margin',
     );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: widget.pairRouteVariant
-          ? 'SC-086 MarginTradingPage'
-          : 'SC-085 MarginTradingPage',
-      child: Material(
-        color: _marginBackground,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Margin Trading',
-                subtitle: 'Ký quỹ · Giao dịch',
-                showBack: true,
-                onBack: () => goBackOrFallback(
-                  context,
-                  fallbackPath: AppRoutePaths.trade,
-                  mode: BackNavigationMode.historyThenFallback,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: VitInsetScrollView(
-                      key: MarginTradingPage.contentKey,
-                      bottomInset: scrollClearance,
-                      child: VitPageContent(
-                        padding: VitContentPadding.compact,
-                        density: VitDensity.compact,
-                        children: [
-                          _ClientCategoryCard(
-                            category: snapshot.clientCategory,
-                          ),
-                          const VitCard(
-                            variant: VitCardVariant.inner,
-                            padding: AppSpacing.cardPaddingCompact,
-                            child: VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              density: VitDensity.compact,
-                              title: 'Margin order review required',
-                              message:
-                                  'Leverage, liquidation risk, fee estimate, limit, preview and confirmation are reviewed before order submission.',
-                              contractId: 'margin-trading-review',
-                            ),
-                          ),
-                          _SegmentedTabs(
-                            tabs: snapshot.modeTabs,
-                            activeId: _mode,
-                            onChanged: (id) => setState(() => _mode = id),
-                            keyBuilder: MarginTradingPage.modeKey,
-                          ),
-                          VitTradeTickerStrip(
-                            symbol: snapshot.pair.symbol,
-                            priceLabel: snapshot.referencePrices.lastPrice
-                                .toStringAsFixed(2),
-                            changePct: snapshot.pair.changePct,
-                            highLabel: snapshot.referencePrices.markPrice
-                                .toStringAsFixed(2),
-                            lowLabel: snapshot.referencePrices.indexPrice
-                                .toStringAsFixed(2),
-                            volumeLabel: snapshot.trade.pair.symbol,
-                          ),
-                          const SizedBox(height: AppSpacing.x3),
-                          VitTradeProductTabs(
-                            activeId: 'margin',
-                            tabs: [
-                              VitTradeProductTab(
-                                id: 'spot',
-                                label: 'Spot',
-                                onTap: () => context.go(
-                                  AppRoutePaths.tradePair(widget.pairId),
-                                ),
-                              ),
-                              VitTradeProductTab(
-                                id: 'futures',
-                                label: 'Futures',
-                                onTap: () => context.go(
-                                  AppRoutePaths.tradeFutures(widget.pairId),
-                                ),
-                              ),
-                              VitTradeProductTab(
-                                id: 'margin',
-                                label: 'Margin',
-                                onTap: () {},
-                              ),
-                              VitTradeProductTab(
-                                id: 'convert',
-                                label: 'Convert',
-                                onTap: () =>
-                                    context.go(AppRoutePaths.tradeConvert),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: AppSpacing.x3),
-                          VitTradeViewModeToggle(
-                            mode: _viewMode,
-                            onChanged: (value) =>
-                                setState(() => _viewMode = value),
-                          ),
-                          const SizedBox(height: AppSpacing.x3),
-                          if (_viewMode == VitTradeViewMode.charts) ...[
-                            const VitTradeChartPanel(
-                              variant: VitTradeChartVariant.pairRoute,
-                            ),
-                            const SizedBox(height: AppSpacing.x3),
-                          ],
-                          if (_viewMode == VitTradeViewMode.trade)
-                            VitTradeSplitPanel(
-                              form: _TradeTab(
-                                snapshot: snapshot,
-                                side: _side,
-                                leverage: _leverage,
-                                orderType: _orderType,
-                                amount: _amount,
-                                showLeverageSheet: _showLeverageSheet,
-                                compact: true,
-                                onSideChanged: (side) =>
-                                    setState(() => _side = side),
-                                onLeverageToggle: () => setState(
-                                  () => _showLeverageSheet =
-                                      !_showLeverageSheet,
-                                ),
-                                onLeverageChanged: (leverage) => setState(() {
-                                  _leverage = leverage;
-                                  _showLeverageSheet = false;
-                                }),
-                                onOrderTypeChanged: (type) =>
-                                    setState(() => _orderType = type),
-                                onMaxAmount: () => setState(() {
-                                  _amount = controller.maxAmountFor(
-                                    leverage: _leverage,
-                                  );
-                                }),
-                                onNotice: (notice) =>
-                                    setState(() => _notice = notice),
-                              ),
-                              marketPanel: VitOrderBookPanel(
-                                density: VitOrderBookPanelDensity.compact,
-                                asks: [
-                                  for (final level
-                                      in snapshot.trade.orderBook.asks)
-                                    VitOrderBookLevel(
-                                      price: level.price,
-                                      amount: level.amount,
-                                      total: level.total,
-                                    ),
-                                ],
-                                bids: [
-                                  for (final level
-                                      in snapshot.trade.orderBook.bids)
-                                    VitOrderBookLevel(
-                                      price: level.price,
-                                      amount: level.amount,
-                                      total: level.total,
-                                    ),
-                                ],
-                              ),
-                            )
-                          else
-                            _TradeTab(
-                              snapshot: snapshot,
-                              side: _side,
-                              leverage: _leverage,
-                              orderType: _orderType,
-                              amount: _amount,
-                              showLeverageSheet: _showLeverageSheet,
-                              compact: false,
-                              onSideChanged: (side) =>
-                                  setState(() => _side = side),
-                              onLeverageToggle: () => setState(
-                                () =>
-                                    _showLeverageSheet = !_showLeverageSheet,
-                              ),
-                              onLeverageChanged: (leverage) => setState(() {
-                                _leverage = leverage;
-                                _showLeverageSheet = false;
-                              }),
-                              onOrderTypeChanged: (type) =>
-                                  setState(() => _orderType = type),
-                              onMaxAmount: () => setState(() {
-                                _amount = controller.maxAmountFor(
-                                  leverage: _leverage,
-                                );
-                              }),
-                              onNotice: (notice) =>
-                                  setState(() => _notice = notice),
-                            ),
-                          const SizedBox(height: AppSpacing.x3),
-                          VitTradePortfolioPanel(
-                            expandKey: MarginTradingPage.portfolioExpandKey,
-                            activeKey: _dockTab,
-                            onChanged: (id) => setState(() => _dockTab = id),
-                            tabs: [
-                              VitTabItem(
-                                key: 'positions',
-                                label:
-                                    'Vị thế (${modePositions.length})',
-                                widgetKey: MarginTradingPage.tabKey(
-                                  'positions',
-                                ),
-                              ),
-                              VitTabItem(
-                                key: 'orders',
-                                label: 'Lệnh',
-                                widgetKey: MarginTradingPage.tabKey('orders'),
-                              ),
-                            ],
-                            child: _dockTab == 'orders'
-                                ? const _OrdersTab()
-                                : _PositionsTab(positions: modePositions),
-                          ),
-                          _AccountHero(
-                            account: snapshot.account,
-                            totalPnl: totalPnl,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (_notice != null)
-              _NoticeSheet(
-                text: _notice!,
-                onClose: () => setState(() => _notice = null),
-              ),
-          ],
-        ),
-      ),
+    return _buildSimpleMarginView(
+      snapshot: snapshot,
+      pair: pair,
+      productNav: productNav,
+      mode: mode,
+      controller: controller,
+      modePositions: modePositions,
+      totalPnl: totalPnl,
     );
   }
 }

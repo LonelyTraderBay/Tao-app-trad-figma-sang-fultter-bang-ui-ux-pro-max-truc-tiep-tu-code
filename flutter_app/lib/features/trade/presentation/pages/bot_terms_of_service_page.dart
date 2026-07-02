@@ -9,10 +9,6 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -21,7 +17,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_modu
 part '../widgets/bot_terms_of_service_page_sections.dart';
 part '../widgets/bot_terms_of_service_page_common.dart';
 
-const _termsBackground = AppColors.bg;
 const _termsPrimary = AppColors.primary;
 const _termsAmber = AppColors.caution;
 const _termsRed = AppColors.sell;
@@ -78,76 +73,61 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getBotTermsOfService();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Trading Bots Terms',
       semanticLabel: 'SC-117 BotTermsOfServicePage',
-      child: Material(
-        color: _termsBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Trading Bots Terms',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
+      contentKey: BotTermsOfServicePage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeBots),
+      children: [
+        VitTradeSection(
+          title: 'Information',
+          child: _InfoBanner(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Terms',
+          child: _TermsCard(snapshot: snapshot, controller: _termsController),
+        ),
+        VitTradeSection(
+          title: snapshot.acceptSectionLabel,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotTermsOfServicePage.contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      _InfoBanner(snapshot: snapshot),
-                      _TermsCard(
-                        snapshot: snapshot,
-                        controller: _termsController,
-                      ),
-                      _SectionLabel(snapshot.acceptSectionLabel),
-                      if (!_readToEnd) ...[_ScrollWarning(snapshot: snapshot)],
-                      _AgreementCard(
-                        snapshot: snapshot,
-                        enabled: _readToEnd,
-                        agreed: _agreed,
-                        onTap: _toggleAgreement,
-                      ),
-                      _TermsCta(
-                        snapshot: snapshot,
-                        agreed: _agreed,
-                        onPressed: _acceptTerms,
-                      ),
-                      _ComplianceNote(snapshot: snapshot),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Terms acceptance review',
-                          message:
-                              'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
-                          contractId: 'bot-terms-acceptance-review',
-                          density: VitDensity.compact,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              if (!_readToEnd) _ScrollWarning(snapshot: snapshot),
+              _AgreementCard(
+                snapshot: snapshot,
+                enabled: _readToEnd,
+                agreed: _agreed,
+                onTap: _toggleAgreement,
+              ),
+              _TermsCta(
+                snapshot: snapshot,
+                agreed: _agreed,
+                onPressed: _acceptTerms,
               ),
             ],
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Compliance',
+          child: _ComplianceNote(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.tradeBotInnerPanelPadding,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Terms acceptance review',
+              message:
+                  'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
+              contractId: 'bot-terms-acceptance-review',
+              density: VitDensity.compact,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

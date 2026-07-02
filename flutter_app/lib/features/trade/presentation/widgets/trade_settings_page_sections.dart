@@ -1,27 +1,5 @@
 part of '../pages/trade_settings_page.dart';
 
-class _SettingsSection extends StatelessWidget {
-  const _SettingsSection({required this.title, required this.child});
-
-  final String title;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        VitSectionHeader(
-          title: title,
-          variant: VitSectionHeaderVariant.accentBar,
-        ),
-        const SizedBox(height: _settingsTinySpace),
-        child,
-      ],
-    );
-  }
-}
-
 class _SettingsCard extends StatelessWidget {
   const _SettingsCard({required this.children, this.gap = _settingsSpace});
 

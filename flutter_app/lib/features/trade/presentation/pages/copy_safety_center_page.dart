@@ -9,14 +9,11 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/copy_safety_overview.dart';
 part '../widgets/copy_safety_metrics_tools.dart';
@@ -62,78 +59,70 @@ class _CopySafetyCenterPageState extends ConsumerState<CopySafetyCenterPage> {
         .getCopySafetyCenter();
     _activeTabId ??= snapshot.defaultTabId;
 
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-083 CopySafetyCenterPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Safety Center',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+    return Material(
+      type: MaterialType.transparency,
+      child: Stack(
+        children: [
+          VitTradeHubScaffold(
+            title: 'Safety Center',
+            semanticLabel: 'SC-083 CopySafetyCenterPage',
+            contentKey: CopySafetyCenterPage.contentKey,
+            shellRenderMode: widget.shellRenderMode,
+            useCopyTradingInset: true,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+            children: [
+              VitTradeSection(
+                title: 'Overview',
+                child: _HeroBanner(snapshot: snapshot),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      key: CopySafetyCenterPage.contentKey,
-                      padding: EdgeInsetsDirectional.only(
-                        bottom: scrollEndClearance,
-                      ),
-                      child: VitPageContent(
-                        padding: VitContentPadding.compact,
-                        density: VitDensity.compact,
-                        children: [
-                          _HeroBanner(snapshot: snapshot),
-                          VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Review copy safety controls',
-                            message:
-                                'Check verification, trust metrics, reporting tools, and emergency stop before allowing copied trades.',
-                            contractId: 'Safety tab: ${_activeTabId!}',
-                            density: VitDensity.compact,
-                          ),
-                          _SafetyTabs(
-                            tabs: snapshot.tabs,
-                            activeId: _activeTabId!,
-                            onChanged: (id) =>
-                                setState(() => _activeTabId = id),
-                          ),
-                          _SafetyTabBody(
-                            activeTabId: _activeTabId!,
-                            snapshot: snapshot,
-                            expandedMetric: _expandedMetric,
-                            onMetricToggle: (name) => setState(() {
-                              _expandedMetric = _expandedMetric == name
-                                  ? null
-                                  : name;
-                            }),
-                            onEmergency: () =>
-                                setState(() => _showEmergencyPanel = true),
-                          ),
-                        ],
-                      ),
+              VitTradeSection(
+                title: 'Controls',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _SafetyTabs(
+                      tabs: snapshot.tabs,
+                      activeId: _activeTabId!,
+                      onChanged: (id) => setState(() => _activeTabId = id),
                     ),
+                    _SafetyTabBody(
+                      activeTabId: _activeTabId!,
+                      snapshot: snapshot,
+                      expandedMetric: _expandedMetric,
+                      onMetricToggle: (name) => setState(() {
+                        _expandedMetric = _expandedMetric == name ? null : name;
+                      }),
+                      onEmergency: () =>
+                          setState(() => _showEmergencyPanel = true),
+                    ),
+                  ],
+                ),
+              ),
+              VitTradeComplianceSection(
+                title: 'Safety review',
+                statusPill: VitStatusPill(
+                  label: 'Tab: ${_activeTabId!}',
+                  status: VitStatusPillStatus.warning,
+                  size: VitStatusPillSize.sm,
+                ),
+                items: const [
+                  VitTradeComplianceItem(
+                    label: 'Scope',
+                    value: 'Verification, trust metrics, reporting',
+                  ),
+                  VitTradeComplianceItem(
+                    label: 'Action',
+                    value: 'Review before allowing copied trades',
                   ),
                 ],
               ),
+            ],
+          ),
+          if (_showEmergencyPanel)
+            _EmergencyPanel(
+              onClose: () => setState(() => _showEmergencyPanel = false),
             ),
-            if (_showEmergencyPanel)
-              _EmergencyPanel(
-                onClose: () => setState(() => _showEmergencyPanel = false),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }

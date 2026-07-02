@@ -7,16 +7,13 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/provider_governance_page_overview.dart';
 part '../widgets/provider_governance_page_details.dart';
@@ -54,86 +51,86 @@ class _ProviderGovernancePageState
       _initialized = true;
     }
 
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-081 ProviderGovernancePage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Provider Governance',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+    return Material(
+      type: MaterialType.transparency,
+      child: Stack(
+        children: [
+          VitTradeHubScaffold(
+            title: 'Provider Governance',
+            semanticLabel: 'SC-081 ProviderGovernancePage',
+            contentKey: ProviderGovernancePage.contentKey,
+            shellRenderMode: widget.shellRenderMode,
+            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+            children: [
+              VitTradeSection(
+                title: 'Dashboard',
+                child: _ProviderDashboard(stats: snapshot.stats),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      key: ProviderGovernancePage.contentKey,
-                      padding: AppSpacing.zeroInsets.copyWith(
-                        left: AppSpacing.contentPad,
-                        top: AppSpacing.x2,
-                        right: AppSpacing.contentPad,
-                        bottom: scrollClearance,
-                      ),
-                      child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        density: VitDensity.compact,
-                        fullBleed: true,
-                        children: [
-                          _ProviderDashboard(stats: snapshot.stats),
-                          const VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Provider governance review',
-                            message:
-                                'Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.',
-                            contractId: 'SC-081 provider governance review',
-                            density: VitDensity.compact,
-                          ),
-                          _GovernanceTabs(
-                            tabs: snapshot.tabs,
-                            activeId: _activeTabId,
-                            onChanged: (id) =>
-                                setState(() => _activeTabId = id),
-                          ),
-                          if (_activeTabId == 'modifications')
-                            _ModificationsTab(
-                              snapshot: snapshot,
-                              onRequest: () =>
-                                  setState(() => _showMessagePanel = true),
-                            )
-                          else if (_activeTabId == 'communication')
-                            _CommunicationTab(
-                              snapshot: snapshot,
-                              onBroadcast: () =>
-                                  setState(() => _showMessagePanel = true),
-                            )
-                          else if (_activeTabId == 'fees')
-                            _FeesTab(snapshot: snapshot)
-                          else
-                            _ComplianceTab(snapshot: snapshot),
-                        ],
-                      ),
-                    ),
+              VitTradeSection(
+                title: 'Review',
+                child: const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Provider governance review',
+                  message:
+                      'Review strategy change notice, follower impact, fee waterfall, compliance score, limits, and next steps before broadcasting or modifying strategy.',
+                  contractId: 'SC-081 provider governance review',
+                  density: VitDensity.compact,
+                ),
+              ),
+              VitTradeComplianceSection(
+                title: 'Governance status',
+                statusPill: VitStatusPill(
+                  label: 'Score ${snapshot.stats.complianceScore}',
+                  status: VitStatusPillStatus.info,
+                  size: VitStatusPillSize.sm,
+                ),
+                items: [
+                  VitTradeComplianceItem(
+                    label: 'Followers',
+                    value: '${snapshot.stats.followers}',
+                  ),
+                  VitTradeComplianceItem(
+                    label: 'Last updated',
+                    value: snapshot.lastUpdatedLabel,
                   ),
                 ],
               ),
-            ),
-            if (_showMessagePanel)
-              _MessagePanel(
-                onClose: () => setState(() => _showMessagePanel = false),
+              VitTradeSection(
+                title: 'Details',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _GovernanceTabs(
+                      tabs: snapshot.tabs,
+                      activeId: _activeTabId,
+                      onChanged: (id) => setState(() => _activeTabId = id),
+                    ),
+                    if (_activeTabId == 'modifications')
+                      _ModificationsTab(
+                        snapshot: snapshot,
+                        onRequest: () =>
+                            setState(() => _showMessagePanel = true),
+                      )
+                    else if (_activeTabId == 'communication')
+                      _CommunicationTab(
+                        snapshot: snapshot,
+                        onBroadcast: () =>
+                            setState(() => _showMessagePanel = true),
+                      )
+                    else if (_activeTabId == 'fees')
+                      _FeesTab(snapshot: snapshot)
+                    else
+                      _ComplianceTab(snapshot: snapshot),
+                  ],
+                ),
               ),
-          ],
-        ),
+            ],
+          ),
+          if (_showMessagePanel)
+            _MessagePanel(
+              onClose: () => setState(() => _showMessagePanel = false),
+            ),
+        ],
       ),
     );
   }

@@ -8,10 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -73,93 +69,71 @@ class _TradeSettingsPageState extends ConsumerState<TradeSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Cài đặt giao dịch',
       semanticLabel: 'SC-052 TradeSettingsPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Cài đặt giao dịch',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.trade),
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.trade),
+      children: [
+        VitTradeSection(
+          title: 'An toàn giao dịch',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.cardPaddingCompact,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Trade settings safety review',
+              message:
+                  'Confirm order preview, small-order confirmation limits, slippage, chart defaults, and next steps before using these settings for live trading.',
+              contractId: 'SC-052 settings review',
+              density: VitDensity.compact,
+            ),
           ),
+        ),
+        VitTradeSection(
+          title: 'Mặc định lệnh',
+          child: _OrderDefaultsCard(
+            settings: _settings,
+            onChanged: _updateSettings,
+          ),
+        ),
+        VitTradeSection(
+          title: 'Xác nhận lệnh',
+          child: _ConfirmationCard(
+            settings: _settings,
+            onChanged: _updateSettings,
+          ),
+        ),
+        VitTradeSection(
+          title: 'Phản hồi',
+          child: _FeedbackCard(settings: _settings, onChanged: _updateSettings),
+        ),
+        VitTradeSection(
+          title: 'Hiển thị',
+          child: _DisplayCard(settings: _settings, onChanged: _updateSettings),
+        ),
+        VitTradeSection(
+          title: 'Khôi phục',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Trade settings safety review',
-                        message:
-                            'Confirm order preview, small-order confirmation limits, slippage, chart defaults, and next steps before using these settings for live trading.',
-                        contractId: 'SC-052 settings review',
-                        density: VitDensity.compact,
-                      ),
-                      _SettingsSection(
-                        title: 'Mặc định lệnh',
-                        child: _OrderDefaultsCard(
-                          settings: _settings,
-                          onChanged: _updateSettings,
-                        ),
-                      ),
-                      _SettingsSection(
-                        title: 'Xác nhận lệnh',
-                        child: _ConfirmationCard(
-                          settings: _settings,
-                          onChanged: _updateSettings,
-                        ),
-                      ),
-                      _SettingsSection(
-                        title: 'Phản hồi',
-                        child: _FeedbackCard(
-                          settings: _settings,
-                          onChanged: _updateSettings,
-                        ),
-                      ),
-                      _SettingsSection(
-                        title: 'Hiển thị',
-                        child: _DisplayCard(
-                          settings: _settings,
-                          onChanged: _updateSettings,
-                        ),
-                      ),
-                      _ResetButton(onReset: _resetSettings),
-                      const _InfoNote(),
-                      const TradeBodyReviewSection(
-                        title: 'Settings body review',
-                        message: 'Trade settings body reviewed',
-                        detail:
-                            'Order defaults, confirmations, feedback, display, reset, and result states stay visible.',
-                        primary:
-                            'Safety review remains above settings mutations.',
-                        secondary:
-                            'Confirmation and slippage settings stay grouped by risk intent.',
-                        tertiary:
-                            'Reset remains separated from informational guidance.',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _ResetButton(onReset: _resetSettings),
+              const SizedBox(height: _settingsSpace),
+              const _InfoNote(),
             ],
           ),
         ),
-      ),
+        const TradeBodyReviewSection(
+          title: 'Settings body review',
+          message: 'Trade settings body reviewed',
+          detail:
+              'Order defaults, confirmations, feedback, display, reset, and result states stay visible.',
+          primary: 'Safety review remains above settings mutations.',
+          secondary:
+              'Confirmation and slippage settings stay grouped by risk intent.',
+          tertiary: 'Reset remains separated from informational guidance.',
+        ),
+      ],
     );
   }
 

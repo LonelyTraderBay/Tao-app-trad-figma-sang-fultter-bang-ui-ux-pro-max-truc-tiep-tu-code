@@ -8,12 +8,8 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -23,7 +19,6 @@ part '../widgets/bot_security_settings_cards.dart';
 part '../widgets/bot_security_settings_common.dart';
 part '../widgets/bot_security_settings_sheets.dart';
 
-const _securityBackground = AppColors.bg;
 const _securityPanel = AppColors.surface;
 const _securityPanel2 = AppColors.surface2;
 const _securityPrimary = AppColors.primary;
@@ -68,138 +63,88 @@ class _BotSecuritySettingsPageState
         .watch(tradeBotSecuritySettingsControllerProvider)
         .state
         .snapshot;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Security Settings',
       semanticLabel: 'SC-122 BotSecuritySettingsPage',
-      child: Material(
-        color: _securityBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Security Settings',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
+      contentKey: BotSecuritySettingsPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeBots),
+      children: [
+        VitTradeSection(
+          title: 'Two-Factor Authentication',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotSecuritySettingsPage.contentKey,
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.tradeBotCardGap,
-                    AppSpacing.contentPad,
-                    scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    density: VitDensity.compact,
-                    children: [
-                      VitPageSection(
-                        label: 'Two-Factor Authentication',
-                        density: VitDensity.compact,
-                        children: [
-                          _TwoFaCard(
-                            enabled: _twoFaEnabled,
-                            onTap: () => _toggleTwoFa(snapshot),
-                          ),
-                          const VitCard(
-                            variant: VitCardVariant.inner,
-                            density: VitDensity.compact,
-                            child: VitPageContent(
-                              padding: VitContentPadding.none,
-                              fullBleed: true,
-                              density: VitDensity.compact,
-                              children: [
-                                VitHighRiskStatePanel(
-                                  state: VitHighRiskUiState.riskReview,
-                                  density: VitDensity.compact,
-                                  title: 'Bot security review required',
-                                  message:
-                                      '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
-                                  contractId: 'bot-security-settings-review',
-                                ),
-                                VitStatusPill(
-                                  label: 'Sensitive settings',
-                                  status: VitStatusPillStatus.warning,
-                                  size: VitStatusPillSize.sm,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'API Keys',
-                        density: VitDensity.compact,
-                        children: [
-                          VitPageContent(
-                            padding: VitContentPadding.none,
-                            fullBleed: true,
-                            density: VitDensity.compact,
-                            children: [
-                              for (final key in snapshot.apiKeys)
-                                _ApiKeyCard(apiKey: key),
-                            ],
-                          ),
-                          _DashedActionButton(
-                            key: BotSecuritySettingsPage.createApiKeyKey,
-                            label: 'Create New API Key',
-                            icon: Icons.add_rounded,
-                            onTap: () => _showApiKeySheet(context, snapshot),
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'IP Whitelist',
-                        density: VitDensity.compact,
-                        children: [
-                          VitPageContent(
-                            padding: VitContentPadding.none,
-                            fullBleed: true,
-                            density: VitDensity.compact,
-                            children: [
-                              for (final entry in snapshot.ipWhitelist)
-                                _IpCard(entry: entry),
-                            ],
-                          ),
-                          _DashedActionButton(
-                            key: BotSecuritySettingsPage.addIpKey,
-                            label: 'Add IP Address',
-                            icon: Icons.add_rounded,
-                            onTap: () => _showIpSheet(context),
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Recent Activity',
-                        density: VitDensity.compact,
-                        children: [
-                          _ActivityCard(activities: snapshot.recentActivity),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Security Tips',
-                        density: VitDensity.compact,
-                        children: [
-                          _SecurityTipsCard(tips: snapshot.securityTips),
-                        ],
-                      ),
-                    ],
-                  ),
+              _TwoFaCard(
+                enabled: _twoFaEnabled,
+                onTap: () => _toggleTwoFa(snapshot),
+              ),
+              VitCard(
+                variant: VitCardVariant.inner,
+                density: VitDensity.compact,
+                child: VitPageContent(
+                  padding: VitContentPadding.none,
+                  fullBleed: true,
+                  density: VitDensity.compact,
+                  children: [
+                    VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.riskReview,
+                      density: VitDensity.compact,
+                      title: 'Bot security review required',
+                      message:
+                          '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
+                      contractId: 'bot-security-settings-review',
+                    ),
+                    VitStatusPill(
+                      label: 'Sensitive settings',
+                      status: VitStatusPillStatus.warning,
+                      size: VitStatusPillSize.sm,
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'API Keys',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final key in snapshot.apiKeys) _ApiKeyCard(apiKey: key),
+              _DashedActionButton(
+                key: BotSecuritySettingsPage.createApiKeyKey,
+                label: 'Create New API Key',
+                icon: Icons.add_rounded,
+                onTap: () => _showApiKeySheet(context, snapshot),
+              ),
+            ],
+          ),
+        ),
+        VitTradeSection(
+          title: 'IP Whitelist',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final entry in snapshot.ipWhitelist) _IpCard(entry: entry),
+              _DashedActionButton(
+                key: BotSecuritySettingsPage.addIpKey,
+                label: 'Add IP Address',
+                icon: Icons.add_rounded,
+                onTap: () => _showIpSheet(context),
+              ),
+            ],
+          ),
+        ),
+        VitTradeSection(
+          title: 'Recent Activity',
+          child: _ActivityCard(activities: snapshot.recentActivity),
+        ),
+        VitTradeSection(
+          title: 'Security Tips',
+          child: _SecurityTipsCard(tips: snapshot.securityTips),
+        ),
+      ],
     );
   }
 

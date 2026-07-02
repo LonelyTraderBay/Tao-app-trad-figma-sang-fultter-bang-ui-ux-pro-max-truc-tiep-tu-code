@@ -11,10 +11,6 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -24,7 +20,6 @@ part '../widgets/bot_performance_charts_strategy.dart';
 part '../widgets/bot_performance_metrics_summary.dart';
 part '../widgets/bot_performance_painters.dart';
 
-const _analyticsBackground = AppColors.bg;
 const _analyticsPrimary = AppColors.primary;
 const _analyticsGreen = AppColors.buy;
 const _analyticsAmber = AppColors.caution;
@@ -66,96 +61,78 @@ class _BotPerformanceAnalyticsPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getBotPerformanceAnalytics();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Performance Analytics',
       semanticLabel: 'SC-124 BotPerformanceAnalyticsPage',
-      child: Material(
-        color: _analyticsBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Performance Analytics',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotPerformanceAnalyticsPage.contentKey,
-                  clipBehavior: Clip.none,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      _KeyMetricsCard(metrics: snapshot.metrics),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotCardPadding,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Bot analytics review',
-                              message:
-                                  'PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.',
-                              contractId: 'bot-performance-analytics-review',
-                              density: VitDensity.compact,
-                            ),
-                            SizedBox(height: _analyticsSpace),
-                            VitStatusPill(
-                              label: 'Risk-aware analytics',
-                              status: VitStatusPillStatus.info,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
-                      _TimeframeTabs(
-                        active: _timeframe,
-                        onChanged: (timeframe) =>
-                            setState(() => _timeframe = timeframe),
-                      ),
-                      VitPageSection(
-                        density: VitDensity.compact,
-                        children: [
-                          const _SectionLabel('Cumulative PnL'),
-                          _PnlChartCard(points: snapshot.pnlPoints),
-                          const _SectionLabel('Win/Loss Distribution'),
-                          _WinLossChartCard(points: snapshot.winLossPoints),
-                        ],
-                      ),
-                      const _SectionLabel('Performance by Strategy'),
-                      _StrategyPerformanceCard(
-                        strategies: snapshot.strategyPerformance,
-                      ),
-                      const _SectionLabel('Advanced Metrics'),
-                      _AdvancedMetricsGrid(metrics: snapshot.metrics),
-                      const _SectionLabel('Trade Duration Distribution'),
-                      _DurationCard(
-                        distribution: snapshot.durationDistribution,
-                      ),
-                      _PerformanceSummaryCard(metrics: snapshot.metrics),
-                      const _RatingCard(),
-                    ],
-                  ),
+      contentKey: BotPerformanceAnalyticsPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeBots),
+      children: [
+        VitTradeSection(
+          title: 'Key metrics',
+          child: _KeyMetricsCard(metrics: snapshot.metrics),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.tradeBotCardPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Bot analytics review',
+                  message:
+                      'PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.',
+                  contractId: 'bot-performance-analytics-review',
+                  density: VitDensity.compact,
                 ),
-              ),
-            ],
+                SizedBox(height: _analyticsSpace),
+                VitStatusPill(
+                  label: 'Risk-aware analytics',
+                  status: VitStatusPillStatus.info,
+                  size: VitStatusPillSize.sm,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Timeframe',
+          child: _TimeframeTabs(
+            active: _timeframe,
+            onChanged: (timeframe) => setState(() => _timeframe = timeframe),
+          ),
+        ),
+        VitTradeSection(
+          title: 'Cumulative PnL',
+          child: _PnlChartCard(points: snapshot.pnlPoints),
+        ),
+        VitTradeSection(
+          title: 'Win/Loss Distribution',
+          child: _WinLossChartCard(points: snapshot.winLossPoints),
+        ),
+        VitTradeSection(
+          title: 'Performance by Strategy',
+          child: _StrategyPerformanceCard(
+            strategies: snapshot.strategyPerformance,
+          ),
+        ),
+        VitTradeSection(
+          title: 'Advanced Metrics',
+          child: _AdvancedMetricsGrid(metrics: snapshot.metrics),
+        ),
+        VitTradeSection(
+          title: 'Trade Duration Distribution',
+          child: _DurationCard(distribution: snapshot.durationDistribution),
+        ),
+        VitTradeSection(
+          title: 'Summary',
+          child: _PerformanceSummaryCard(metrics: snapshot.metrics),
+        ),
+        VitTradeSection(title: 'Rating', child: const _RatingCard()),
+      ],
     );
   }
 }

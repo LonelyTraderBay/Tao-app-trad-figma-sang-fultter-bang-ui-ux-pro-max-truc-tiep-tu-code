@@ -13,92 +13,69 @@ class _ClientCategorizationPageState
     final current = snapshot.categories.firstWhere(
       (item) => item.id == snapshot.currentCategoryId,
     );
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Client Categorization',
+      subtitle: 'MiFID II Classification',
       semanticLabel: 'SC-099 ClientCategorizationPage',
-      child: Material(
-        color: _clientBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Client Categorization',
-            subtitle: 'MiFID II Classification',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      contentKey: ClientCategorizationPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Current category',
+          child: _CurrentCategoryCard(category: current),
+        ),
+        VitTradeComplianceSection(
+          title: 'Classification review',
+          statusPill: const VitStatusPill(
+            label: 'Compliance gated',
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
           ),
+          items: [
+            VitTradeComplianceItem(label: 'Category', value: current.label),
+            VitTradeComplianceItem(
+              label: 'Options',
+              value: '${snapshot.categories.length} tiers',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Details',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: ClientCategorizationPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    density: VitDensity.compact,
-                    children: [
-                      _CurrentCategoryCard(category: current),
-                      const _InfoNotice(),
-                      _Tabs(
-                        activeId: _tab!,
-                        onChanged: (id) => setState(() => _tab = id),
-                      ),
-                      if (_tab == 'overview')
-                        _OverviewTab(
-                          categories: snapshot.categories,
-                          currentCategoryId: snapshot.currentCategoryId,
-                        )
-                      else if (_tab == 'protections')
-                        _ProtectionsTab(categories: snapshot.categories)
-                      else if (_tab == 'requirements')
-                        _RequirementsTab(categories: snapshot.categories)
-                      else
-                        _HistoryTab(
-                          categories: snapshot.categories,
-                          history: snapshot.history,
-                        ),
-                      const VitPageSection(
-                        density: VitDensity.compact,
-                        children: [_QuickLinks()],
-                      ),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Client classification review',
-                              message:
-                                  'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
-                              contractId: 'client-categorization-review',
-                            ),
-                            SizedBox(height: AppSpacing.x2),
-                            VitStatusPill(
-                              label: 'Compliance gated',
-                              status: VitStatusPillStatus.info,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+              const _InfoNotice(),
+              _Tabs(
+                activeId: _tab!,
+                onChanged: (id) => setState(() => _tab = id),
+              ),
+              if (_tab == 'overview')
+                _OverviewTab(
+                  categories: snapshot.categories,
+                  currentCategoryId: snapshot.currentCategoryId,
+                )
+              else if (_tab == 'protections')
+                _ProtectionsTab(categories: snapshot.categories)
+              else if (_tab == 'requirements')
+                _RequirementsTab(categories: snapshot.categories)
+              else
+                _HistoryTab(
+                  categories: snapshot.categories,
+                  history: snapshot.history,
                 ),
+              const _QuickLinks(),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Client classification review',
+                message:
+                    'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
+                contractId: 'client-categorization-review',
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -135,167 +112,145 @@ class _ClientOptUpRequestPageState
     final professional = snapshot.categories.firstWhere(
       (item) => item.id == 'professional',
     );
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeDetailScaffold(
+      title: 'Client Opt-Up Request',
+      subtitle: 'MiFID II Classification',
       semanticLabel: 'SC-099 ClientOptUpRequestPage',
-      child: Material(
-        color: _clientBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Client Opt-Up Request',
-            subtitle: 'MiFID II Classification',
-            showBack: true,
-            onBack: () =>
-                context.go(AppRoutePaths.tradeCopyClientCategorization),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: ClientOptUpRequestPage.contentKey,
-                  padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                    scrollClearance,
+      contentKey: ClientOptUpRequestPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyClientCategorization),
+      children: [
+        if (_submitted)
+          VitTradeSection(
+            title: 'Status',
+            child: VitCard(
+              key: ClientOptUpRequestPage.successKey,
+              density: VitDensity.compact,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.check_circle_outline,
+                    color: _clientGreen,
+                    size: 24,
                   ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    density: VitDensity.compact,
-                    children: [
-                      if (_submitted) ...[
-                        VitCard(
-                          key: ClientOptUpRequestPage.successKey,
-                          density: VitDensity.compact,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.check_circle_outline,
-                                color: _clientGreen,
-                                size: 24,
-                              ),
-                              const SizedBox(width: AppSpacing.x3),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Review request saved',
-                                      style: AppTextStyles.base.copyWith(
-                                        color: AppColors.text1,
-                                        fontWeight: AppTextStyles.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: AppSpacing.x2),
-                                    Text(
-                                      'Compliance review is required before any categorization change takes effect.',
-                                      style: AppTextStyles.micro.copyWith(
-                                        color: AppColors.text3,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Review request saved',
+                          style: AppTextStyles.base.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.x2),
+                        Text(
+                          'Compliance review is required before any categorization change takes effect.',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
                           ),
                         ),
                       ],
-                      VitCard(
-                        density: VitDensity.compact,
-                        child: VitPageSection(
-                          label: 'Professional Status Criteria',
-                          density: VitDensity.compact,
-                          children: [
-                            for (final requirement in professional.requirements)
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                    Icons.track_changes_outlined,
-                                    color: _clientPrimary,
-                                    size: 14,
-                                  ),
-                                  const SizedBox(width: AppSpacing.x2),
-                                  Expanded(
-                                    child: Text(
-                                      requirement,
-                                      style: AppTextStyles.micro.copyWith(
-                                        color: AppColors.text2,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                      ),
-                      VitPageSection(
-                        density: VitDensity.compact,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        VitTradeComplianceSection(
+          title: 'Opt-up review',
+          statusPill: const VitStatusPill(
+            label: 'No instant status change',
+            status: VitStatusPillStatus.warning,
+            size: VitStatusPillSize.sm,
+          ),
+          items: [
+            VitTradeComplianceItem(label: 'Target', value: professional.label),
+            VitTradeComplianceItem(
+              label: 'Criteria',
+              value: '${professional.requirements.length} requirements',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Request',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              VitCard(
+                density: VitDensity.compact,
+                child: VitPageSection(
+                  label: 'Professional Status Criteria',
+                  density: VitDensity.compact,
+                  children: [
+                    for (final requirement in professional.requirements)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _OptUpChecklistTile(
-                            key: ClientOptUpRequestPage.criteriaKey,
-                            value: _criteriaConfirmed,
-                            title: 'I meet the professional client criteria',
-                            subtitle:
-                                'Evidence must be reviewed before status can change.',
-                            onChanged: (value) =>
-                                setState(() => _criteriaConfirmed = value),
+                          const Icon(
+                            Icons.track_changes_outlined,
+                            color: _clientPrimary,
+                            size: 14,
                           ),
-                          _OptUpChecklistTile(
-                            key: ClientOptUpRequestPage.waiverKey,
-                            value: _waiverAcknowledged,
-                            title: 'I understand protection changes',
-                            subtitle:
-                                'Opting up can reduce retail investor protections.',
-                            onChanged: (value) =>
-                                setState(() => _waiverAcknowledged = value),
+                          const SizedBox(width: AppSpacing.x2),
+                          Expanded(
+                            child: Text(
+                              requirement,
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text2,
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      VitCtaButton(
-                        key: ClientOptUpRequestPage.submitKey,
-                        onPressed: _canSubmit
-                            ? () => setState(() => _submitted = true)
-                            : null,
-                        density: VitDensity.compact,
-                        child: const Text('Submit for Review'),
-                      ),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Opt-up request review',
-                              message:
-                                  'Criteria acknowledgement, protection waiver, compliance receipt and delayed-effect next step are reviewed before any category change.',
-                              contractId: 'client-opt-up-review',
-                            ),
-                            SizedBox(height: AppSpacing.x2),
-                            VitStatusPill(
-                              label: 'No instant status change',
-                              status: VitStatusPillStatus.warning,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
+              ),
+              VitPageSection(
+                density: VitDensity.compact,
+                children: [
+                  _OptUpChecklistTile(
+                    key: ClientOptUpRequestPage.criteriaKey,
+                    value: _criteriaConfirmed,
+                    title: 'I meet the professional client criteria',
+                    subtitle:
+                        'Evidence must be reviewed before status can change.',
+                    onChanged: (value) =>
+                        setState(() => _criteriaConfirmed = value),
+                  ),
+                  _OptUpChecklistTile(
+                    key: ClientOptUpRequestPage.waiverKey,
+                    value: _waiverAcknowledged,
+                    title: 'I understand protection changes',
+                    subtitle:
+                        'Opting up can reduce retail investor protections.',
+                    onChanged: (value) =>
+                        setState(() => _waiverAcknowledged = value),
+                  ),
+                ],
+              ),
+              VitCtaButton(
+                key: ClientOptUpRequestPage.submitKey,
+                onPressed: _canSubmit
+                    ? () => setState(() => _submitted = true)
+                    : null,
+                density: VitDensity.compact,
+                child: const Text('Submit for Review'),
+              ),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Opt-up request review',
+                message:
+                    'Criteria acknowledgement, protection waiver, compliance receipt and delayed-effect next step are reviewed before any category change.',
+                contractId: 'client-opt-up-review',
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

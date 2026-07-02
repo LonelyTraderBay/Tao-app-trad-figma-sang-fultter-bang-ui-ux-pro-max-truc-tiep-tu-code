@@ -8,21 +8,17 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
 part '../widgets/cass_reconciliation_summary_tabs.dart';
 part '../widgets/cass_reconciliation_records_common.dart';
 
-const _cassBackground = AppColors.bg;
 const _cassPanel2 = AppColors.surface2;
 const _cassBorder = AppColors.borderSolid;
 const _cassPrimary = AppColors.primary;
@@ -59,71 +55,68 @@ class _CassReconciliationPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getCassReconciliation();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'CASS Reconciliation',
+      subtitle: 'Daily Client Money Matching',
       semanticLabel: 'SC-103 CASSReconciliationPage',
-      child: Material(
-        color: _cassBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'CASS Reconciliation',
-            subtitle: 'Daily Client Money Matching',
-            showBack: true,
-            onBack: () =>
-                context.go(AppRoutePaths.tradeCopyClientMoneyProtection),
+      contentKey: CassReconciliationPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyClientMoneyProtection),
+      children: [
+        VitTradeComplianceSection(
+          title: 'CASS status',
+          statusPill: VitStatusPill(
+            label: '${snapshot.outstandingCount} outstanding',
+            status: snapshot.outstandingCount == 0
+                ? VitStatusPillStatus.success
+                : VitStatusPillStatus.warning,
+            size: VitStatusPillSize.sm,
           ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Reconciled',
+              value: '${snapshot.reconciledCount}',
+            ),
+            VitTradeComplianceItem(
+              label: 'Records',
+              value: '${snapshot.records.length}',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Reconciliation',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: CassReconciliationPage.contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review CASS reconciliation evidence',
-                        message:
-                            'Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.',
-                        density: VitDensity.compact,
-                      ),
-                      _SummaryGrid(snapshot: snapshot),
-                      _Tabs(activeId: _tab, onChanged: _setTab),
-                      const _SectionLabel('Reconciliation Records'),
-                      for (final record in snapshot.records)
-                        _RecordCard(record: record),
-                      const _ExportButton(),
-                      const TradeBodyReviewSection(
-                        title: 'CASS body review',
-                        message: 'CASS reconciliation body reviewed',
-                        detail:
-                            'Summary, tabs, records, export, discrepancy, empty, and result states stay visible.',
-                        primary:
-                            'Client-money evidence remains above reconciliation records.',
-                        secondary:
-                            'Record status and discrepancy context stay visible before export.',
-                        tertiary:
-                            'Export remains framed as compliance evidence, not execution.',
-                      ),
-                    ],
-                  ),
-                ),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Review CASS reconciliation evidence',
+                message:
+                    'Confirm client-money balances, discrepancy status, limits, and next steps before export or escalation.',
+                density: VitDensity.compact,
+              ),
+              _SummaryGrid(snapshot: snapshot),
+              _Tabs(activeId: _tab, onChanged: _setTab),
+              const _SectionLabel('Reconciliation Records'),
+              for (final record in snapshot.records)
+                _RecordCard(record: record),
+              const _ExportButton(),
+              const TradeBodyReviewSection(
+                title: 'CASS body review',
+                message: 'CASS reconciliation body reviewed',
+                detail:
+                    'Summary, tabs, records, export, discrepancy, empty, and result states stay visible.',
+                primary:
+                    'Client-money evidence remains above reconciliation records.',
+                secondary:
+                    'Record status and discrepancy context stay visible before export.',
+                tertiary:
+                    'Export remains framed as compliance evidence, not execution.',
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 

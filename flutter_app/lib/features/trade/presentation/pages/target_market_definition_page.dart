@@ -8,25 +8,17 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
-const _targetBackground = AppColors.bg;
 const _targetPrimary = AppColors.primary;
 const _targetGreen = AppColors.buy;
 const _targetRed = AppColors.sell;
-const double _targetFramedScrollClearance =
-    AppSpacing.buttonStandard + AppSpacing.x7;
-const double _targetNativeScrollClearance =
-    AppSpacing.buttonStandard + AppSpacing.x5;
 const double _targetSummaryIconExtent = AppSpacing.buttonCompact;
 
 class TargetMarketDefinitionPage extends ConsumerWidget {
@@ -47,74 +39,66 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getTargetMarketDefinition(productId: productId ?? 'prod-1');
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Target Market Definition',
+      subtitle: snapshot.product.name,
       semanticLabel: 'SC-101 TargetMarketDefinitionPage',
-      child: Material(
-        color: _targetBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Target Market Definition',
-            subtitle: snapshot.product.name,
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyProductGovernance),
+      contentKey: contentKey,
+      shellRenderMode: shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyProductGovernance),
+      children: [
+        VitTradeSection(
+          title: 'Product summary',
+          child: _SummaryCard(snapshot: snapshot),
+        ),
+        VitTradeComplianceSection(
+          title: 'Target market review',
+          statusPill: const VitStatusPill(
+            label: 'Review required',
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
           ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Product',
+              value: snapshot.product.name,
+            ),
+            VitTradeComplianceItem(
+              label: 'Criteria',
+              value: '${snapshot.dimensions.length} dimensions',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Target Market Criteria',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: contentKey,
-                  bottomInset: scrollEndClearance,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      _SummaryCard(snapshot: snapshot),
-                      const VitSectionHeader(
-                        title: 'Target Market Criteria',
-                        variant: VitSectionHeaderVariant.accentBar,
-                      ),
-                      for (final dimension in snapshot.dimensions)
-                        _DimensionCard(dimension: dimension),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Target market review',
-                          message:
-                              'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
-                          contractId: 'target-market-review',
-                          density: VitDensity.compact,
-                        ),
-                      ),
-                      const TradeBodyReviewSection(
-                        title: 'Target market body review',
-                        message: 'Target market definition body reviewed',
-                        detail:
-                            'Product summary, suitability criteria, exclusions, review, empty, and result states stay visible.',
-                        primary:
-                            'Product summary stays above target-market criteria.',
-                        secondary:
-                            'Suitable and unsuitable audience criteria remain visibly separated.',
-                        tertiary:
-                            'Distribution limits stay framed as governance review, not execution advice.',
-                      ),
-                    ],
-                  ),
-                ),
+              for (final dimension in snapshot.dimensions)
+                _DimensionCard(dimension: dimension),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Target market review',
+                message:
+                    'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
+                contractId: 'target-market-review',
+                density: VitDensity.compact,
+              ),
+              const TradeBodyReviewSection(
+                title: 'Target market body review',
+                message: 'Target market definition body reviewed',
+                detail:
+                    'Product summary, suitability criteria, exclusions, review, empty, and result states stay visible.',
+                primary: 'Product summary stays above target-market criteria.',
+                secondary:
+                    'Suitable and unsuitable audience criteria remain visibly separated.',
+                tertiary:
+                    'Distribution limits stay framed as governance review, not execution advice.',
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

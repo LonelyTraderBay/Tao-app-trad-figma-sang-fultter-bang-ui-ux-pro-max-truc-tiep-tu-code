@@ -7,16 +7,13 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/safety_education_page_sections.dart';
 part '../widgets/safety_education_page_common.dart';
@@ -52,82 +49,75 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
       _initialized = true;
     }
 
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'An toàn & Bảo mật',
       semanticLabel: 'SC-080 SafetyEducationPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'An toàn & Bảo mật',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      contentKey: SafetyEducationPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            density: VitDensity.compact,
+            title: 'Review copy-trading safety signals',
+            message:
+                'Confirm scam indicators, provider verification, reporting limits, and next steps before copying.',
           ),
+        ),
+        VitTradeComplianceSection(
+          title: 'Safety review',
+          statusPill: VitStatusPill(
+            label: 'Tab: $_activeTabId',
+            status: VitStatusPillStatus.warning,
+            size: VitStatusPillSize.sm,
+          ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Scams tracked',
+              value: '${snapshot.scams.length}',
+            ),
+            VitTradeComplianceItem(
+              label: 'Red flags',
+              value: '${snapshot.redFlags.length}',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Education',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: SafetyEducationPage.contentKey,
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.tradeBotCardGap,
-                    AppSpacing.contentPad,
-                    scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
-                        title: 'Review copy-trading safety signals',
-                        message:
-                            'Confirm scam indicators, provider verification, reporting limits, and next steps before copying.',
-                      ),
-                      _HeroBanner(snapshot: snapshot),
-                      _SafetyTabs(
-                        tabs: snapshot.tabs,
-                        activeId: _activeTabId,
-                        onChanged: (id) {
-                          setState(() {
-                            _activeTabId = id;
-                            _expandedScamId = null;
-                          });
-                        },
-                      ),
-                      if (_activeTabId == 'scams')
-                        _ScamsTab(
-                          scams: snapshot.scams,
-                          expandedId: _expandedScamId,
-                          onToggle: (id) => setState(
-                            () => _expandedScamId = _expandedScamId == id
-                                ? null
-                                : id,
-                          ),
-                        )
-                      else if (_activeTabId == 'redflags')
-                        _RedFlagsTab(flags: snapshot.redFlags)
-                      else if (_activeTabId == 'verification')
-                        _VerificationTab(tiers: snapshot.verificationTiers)
-                      else
-                        _ReportTab(reasons: snapshot.reportReasons),
-                    ],
-                  ),
-                ),
+              _HeroBanner(snapshot: snapshot),
+              _SafetyTabs(
+                tabs: snapshot.tabs,
+                activeId: _activeTabId,
+                onChanged: (id) {
+                  setState(() {
+                    _activeTabId = id;
+                    _expandedScamId = null;
+                  });
+                },
               ),
+              if (_activeTabId == 'scams')
+                _ScamsTab(
+                  scams: snapshot.scams,
+                  expandedId: _expandedScamId,
+                  onToggle: (id) => setState(
+                    () => _expandedScamId = _expandedScamId == id ? null : id,
+                  ),
+                )
+              else if (_activeTabId == 'redflags')
+                _RedFlagsTab(flags: snapshot.redFlags)
+              else if (_activeTabId == 'verification')
+                _VerificationTab(tiers: snapshot.verificationTiers)
+              else
+                _ReportTab(reasons: snapshot.reportReasons),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -8,10 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -45,80 +41,62 @@ class _PositionDashboardPageState extends ConsumerState<PositionDashboardPage> {
         .watch(tradeReadModelControllerProvider)
         .getTradePositions();
     final positions = _visiblePositions(snapshot.positions);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Vị thế đang mở',
       semanticLabel: 'SC-053 PositionDashboardPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Vị thế đang mở',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.trade),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  bottomInset: tradeScrollBottomInset(context, shellRenderMode: mode),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      VitTradeSection(
-                        title: 'Tổng quan',
-                        child: _SummaryCard(positions: snapshot.positions),
-                      ),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.cardPaddingCompact,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Open position risk review',
-                          message:
-                              'PnL, notional exposure, margin risk, close path, fees and next steps are reviewed before position actions.',
-                          contractId: 'position-dashboard-review',
-                        ),
-                      ),
-                      _TypeTabs(
-                        active: _activeTab,
-                        positions: snapshot.positions,
-                        onChanged: (tab) => setState(() => _activeTab = tab),
-                      ),
-                      _SortChips(
-                        active: _sortBy,
-                        onChanged: (sort) => setState(() => _sortBy = sort),
-                      ),
-                      VitTradeSection(
-                        title: 'Vị thế mở',
-                        child: positions.isEmpty
-                            ? const _EmptyPositions()
-                            : _PositionList(positions: positions),
-                      ),
-                      const TradeBodyReviewSection(
-                        title: 'Position body review',
-                        message: 'Position dashboard body reviewed',
-                        detail:
-                            'Summary, risk, tabs, sort, empty, position rows, and result states stay visible.',
-                        primary:
-                            'Risk review remains above open position actions.',
-                        secondary:
-                            'Tabs and sort chips keep exposure scanning explicit.',
-                        tertiary:
-                            'Position rows preserve PnL, notional, and margin context.',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.trade),
+      children: [
+        VitTradeSection(
+          title: 'Tổng quan',
+          child: _SummaryCard(positions: snapshot.positions),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.cardPaddingCompact,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Open position risk review',
+              message:
+                  'PnL, notional exposure, margin risk, close path, fees and next steps are reviewed before position actions.',
+              contractId: 'position-dashboard-review',
+            ),
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Loại vị thế',
+          child: _TypeTabs(
+            active: _activeTab,
+            positions: snapshot.positions,
+            onChanged: (tab) => setState(() => _activeTab = tab),
+          ),
+        ),
+        VitTradeSection(
+          title: 'Sắp xếp',
+          child: _SortChips(
+            active: _sortBy,
+            onChanged: (sort) => setState(() => _sortBy = sort),
+          ),
+        ),
+        VitTradeSection(
+          title: 'Vị thế mở',
+          child: positions.isEmpty
+              ? const _EmptyPositions()
+              : _PositionList(positions: positions),
+        ),
+        const TradeBodyReviewSection(
+          title: 'Position body review',
+          message: 'Position dashboard body reviewed',
+          detail:
+              'Summary, risk, tabs, sort, empty, position rows, and result states stay visible.',
+          primary: 'Risk review remains above open position actions.',
+          secondary: 'Tabs and sort chips keep exposure scanning explicit.',
+          tertiary: 'Position rows preserve PnL, notional, and margin context.',
+        ),
+      ],
     );
   }
 

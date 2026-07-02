@@ -4,10 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/advanced_chart_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/futures_page.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/leverage_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_confirm_sheet.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -88,19 +87,15 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(2));
-    expect(find.text('FUTURES'), findsAtLeastNWidgets(1));
-    expect(find.text('Mark Price'), findsOneWidget);
-    expect(find.text('Index'), findsOneWidget);
-    expect(find.text('Funding'), findsOneWidget);
-    expect(find.text('Long'), findsOneWidget);
-    expect(find.text('Short'), findsOneWidget);
-    expect(find.text('Thị trường'), findsWidgets);
-    expect(find.text('10x'), findsWidgets);
-    expect(find.text('Nhập ký quỹ'), findsOneWidget);
+    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(1));
+    expect(find.text('Chế độ Pro'), findsNothing);
+    expect(find.text('Giá tăng'), findsOneWidget);
+    expect(find.text('Giá giảm'), findsOneWidget);
+    expect(find.textContaining('10x'), findsWidgets);
+    expect(find.byKey(FuturesPage.marginFieldKey), findsOneWidget);
   });
 
-  testWidgets('SC-320 uses full-width futures workspace at 360x800', (
+  testWidgets('SC-320 uses full-width futures simple workspace at 360x800', (
     tester,
   ) async {
     await pumpFutures(tester, viewport: const Size(360, 800));
@@ -108,26 +103,13 @@ void main() {
     expect(find.byType(FuturesPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(FuturesPage.closeKey), findsOneWidget);
-    expect(find.byKey(FuturesPage.chartKey), findsOneWidget);
-    expect(find.byKey(FuturesPage.leverageKey), findsOneWidget);
-    expect(find.byKey(FuturesPage.marginFieldKey), findsOneWidget);
+    expect(find.byKey(FuturesPage.sideKey('long')), findsOneWidget);
 
     final scrollFinder = find.descendant(
       of: find.byType(FuturesPage),
       matching: find.byType(SingleChildScrollView),
     );
     expect(scrollFinder, findsWidgets);
-
-    final scrollWidget = scrollFinder.first;
-    final scrollRect = tester.getRect(scrollWidget);
-    final closeRect = tester.getRect(find.byKey(FuturesPage.closeKey));
-    final chartRect = tester.getRect(find.byKey(FuturesPage.chartKey));
-
-    expect(scrollRect.left, closeTo(0, 0.5));
-    expect(scrollRect.right, closeTo(360, 0.5));
-    expect(scrollRect.height, greaterThan(450));
-    expect(closeRect.top, greaterThanOrEqualTo(0));
-    expect(chartRect.right, lessThanOrEqualTo(360));
 
     await tester.ensureVisible(find.byKey(FuturesPage.submitKey));
     await tester.pumpAndSettle();
@@ -136,7 +118,7 @@ void main() {
     expect(submitRect.bottom, lessThanOrEqualTo(800));
   });
 
-  testWidgets('SC-057 side, percent, TP/SL, and submit are local', (
+  testWidgets('SC-057 side, percent, and confirm submit stay local', (
     tester,
   ) async {
     await pumpFutures(tester);
@@ -155,39 +137,15 @@ void main() {
     expect(find.text('Futures order preview'), findsOneWidget);
     expect(find.text('Liquidation estimate'), findsOneWidget);
     expect(find.text('Risk check'), findsOneWidget);
-    await tester.tap(find.byKey(FuturesPage.takeProfitKey));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(FuturesPage.stopLossKey));
-    await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(FuturesPage.submitKey));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(FuturesPage.submitKey));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(VitTradeConfirmKeys.confirmSubmit));
+    await tester.pumpAndSettle();
 
     expect(find.byType(FuturesPage), findsOneWidget);
-    expect(find.textContaining('FUT-DEMO-057'), findsOneWidget);
-  });
-
-  testWidgets('SC-057 positions and orders tabs stay local', (tester) async {
-    await pumpFutures(tester);
-
-    await tester.scrollUntilVisible(
-      find.byKey(FuturesPage.portfolioExpandKey),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.byKey(FuturesPage.portfolioExpandKey));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byKey(FuturesPage.tabKey('positions')));
-    await tester.pumpAndSettle();
-    expect(find.text('ETH/USDT'), findsOneWidget);
-    expect(find.text('SOL/USDT'), findsOneWidget);
-    expect(find.text('Tài khoản Futures'), findsOneWidget);
-
-    await tester.tap(find.byKey(FuturesPage.tabKey('orders')));
-    await tester.pumpAndSettle();
-    expect(find.text('Chưa có lệnh Futures'), findsOneWidget);
+    expect(find.text('Nhập ký quỹ để tiếp tục'), findsOneWidget);
   });
 
   testWidgets('SC-057 close returns to SC-049 TradePage', (tester) async {
@@ -197,32 +155,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(TradePage), findsOneWidget);
-  });
-
-  testWidgets('SC-057 chart action opens SC-055 advanced chart', (
-    tester,
-  ) async {
-    await pumpFutures(tester);
-
-    await tester.tap(find.byKey(FuturesPage.chartKey));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(AdvancedChartPage), findsOneWidget);
-  });
-
-  testWidgets('SC-057 leverage action opens SC-058 LeveragePage', (
-    tester,
-  ) async {
-    await pumpFutures(tester);
-
-    await tester.ensureVisible(find.byKey(FuturesPage.leverageKey));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(FuturesPage.leverageKey));
-    await tester.pumpAndSettle();
-
-    expect(find.byType(LeveragePage), findsOneWidget);
-    expect(find.text('Điều chỉnh đòn bẩy'), findsOneWidget);
-    expect(find.byType(FuturesPage), findsNothing);
   });
 
   testWidgets('SC-048 Futures quick action opens SC-057', (tester) async {

@@ -14,6 +14,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_formatters.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_terminal_header.dart';
 
 part '../widgets/advanced_chart_header_toolbar.dart';
 part '../widgets/advanced_chart_area_actions.dart';
@@ -82,7 +84,15 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
           children: [
             Column(
               children: [
-                _AdvancedHeader(pair: pair),
+                VitTradeTerminalHeader(
+                  symbol: pair.symbol,
+                  showBack: true,
+                  onBack: () => context.go(AppRoutePaths.tradePair(pair.id)),
+                  pairTapKey: AdvancedChartPage.pairSelectorKey,
+                  onPairTap: () => context.go(AppRoutePaths.markets),
+                  priceLabel: formatTradePrice(pair.price),
+                  changePct: pair.changePct,
+                ),
                 _OhlcvBar(ohlcv: snapshot.ohlcv),
                 _ChartToolbar(
                   timeframes: snapshot.timeframes,

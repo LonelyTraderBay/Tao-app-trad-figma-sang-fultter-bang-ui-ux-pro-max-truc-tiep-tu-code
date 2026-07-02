@@ -1,22 +1,20 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/bot_optimization_page_sections.dart';
 part '../widgets/bot_optimization_page_common.dart';
@@ -52,127 +50,110 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
         .watch(tradeReadModelControllerProvider)
         .getBotOptimization();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    const stickyFooterHeight =
+        AppSpacing.tradeBotSheetActionHeight + AppSpacing.x3;
+    final scrollEndClearance =
+        tradeScrollBottomInset(context, shellRenderMode: mode) +
+        stickyFooterHeight;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-127 BotOptimizationPage',
       child: Material(
         color: _optimizationBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Parameter Optimization',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final baseBodyHeight =
-                        DeviceMetrics.height - DeviceMetrics.safeTop;
-                    final visualExtra = mode.usesVisualQaFrame
-                        ? math.max(0.0, constraints.maxHeight - baseBodyHeight)
-                        : 0.0;
-                    final footerBottom =
-                        (mode.usesVisualQaFrame
-                            ? DeviceMetrics.bottomChrome -
-                                  14 +
-                                  visualExtra * .90
-                            : DeviceMetrics.nativeBottomChrome) +
-                        MediaQuery.paddingOf(context).bottom;
-
-                    return Stack(
-                      children: [
-                        Positioned.fill(
-                          child: SingleChildScrollView(
-                            key: BotOptimizationPage.contentKey,
-                            padding: AppSpacing.tradeBotScrollPaddingWithBottom(
-                              footerBottom +
-                                  AppSpacing.tradeBotSheetActionHeight +
-                                  AppSpacing.x3,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            VitHeader(
+              title: 'Parameter Optimization',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.tradeBots),
+            ),
+            if (_lastResult != null)
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                  AppSpacing.contentPad,
+                  AppSpacing.x2,
+                  AppSpacing.contentPad,
+                  0,
+                ),
+                child: _QueuedCard(result: _lastResult!),
+              ),
+            Expanded(
+              child: VitInsetScrollView(
+                key: BotOptimizationPage.contentKey,
+                bottomInset: scrollEndClearance,
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  density: VitDensity.compact,
+                  children: [
+                    VitTradeSection(
+                      title: 'Overview',
+                      child: const _IntroCard(),
+                    ),
+                    VitTradeSection(
+                      title: 'Đánh giá rủi ro',
+                      child: const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: AppSpacing.tradeBotInnerPanelPadding,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Optimization review required',
+                              message:
+                                  'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
+                              contractId: 'bot-optimization-review',
                             ),
-                            child: VitPageContent(
-                              padding: VitContentPadding.none,
-                              fullBleed: true,
-                              gap: VitContentGap.tight,
-                              children: [
-                                const _IntroCard(),
-                                const VitCard(
-                                  variant: VitCardVariant.inner,
-                                  padding: AppSpacing.tradeBotInnerPanelPadding,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      VitHighRiskStatePanel(
-                                        state: VitHighRiskUiState.riskReview,
-                                        title: 'Optimization review required',
-                                        message:
-                                            'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
-                                        contractId: 'bot-optimization-review',
-                                      ),
-                                      SizedBox(height: AppSpacing.x3),
-                                      VitStatusPill(
-                                        label: 'Queued before apply',
-                                        status: VitStatusPillStatus.info,
-                                        size: VitStatusPillSize.sm,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const VitSectionHeader(
-                                  title: 'Optimization Target',
-                                  variant: VitSectionHeaderVariant.accentBar,
-                                  accentColor: _optimizationPrimary,
-                                ),
-                                VitPageSection(
-                                  customGap: 0,
-                                  children: [
-                                    _TargetCard(
-                                      targets: snapshot.targets,
-                                      selectedId: _selectedTarget,
-                                      onChanged: (id) =>
-                                          setState(() => _selectedTarget = id),
-                                    ),
-                                  ],
-                                ),
-                                const VitSectionHeader(
-                                  title: 'Parameter Ranges',
-                                  variant: VitSectionHeaderVariant.accentBar,
-                                  accentColor: _optimizationPrimary,
-                                ),
-                                _RangeCard(
-                                  ranges: snapshot.parameterRanges,
-                                  gridCount: _gridCount,
-                                  gridRange: _gridRange,
-                                  onGridCountChanged: (value) =>
-                                      setState(() => _gridCount = value),
-                                  onGridRangeChanged: (value) =>
-                                      setState(() => _gridRange = value),
-                                ),
-                                _HowItWorksCard(steps: snapshot.steps),
-                                if (_lastResult != null) ...[
-                                  _QueuedCard(result: _lastResult!),
-                                ],
-                              ],
+                            SizedBox(height: AppSpacing.x3),
+                            VitStatusPill(
+                              label: 'Queued before apply',
+                              status: VitStatusPillStatus.info,
+                              size: VitStatusPillSize.sm,
                             ),
-                          ),
+                          ],
                         ),
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: footerBottom,
-                          child: _StartFooter(onStart: () => _handleStart()),
-                        ),
-                      ],
-                    );
-                  },
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Optimization Target',
+                      child: _TargetCard(
+                        targets: snapshot.targets,
+                        selectedId: _selectedTarget,
+                        onChanged: (id) => setState(() => _selectedTarget = id),
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Parameter Ranges',
+                      child: _RangeCard(
+                        ranges: snapshot.parameterRanges,
+                        gridCount: _gridCount,
+                        gridRange: _gridRange,
+                        onGridCountChanged: (value) =>
+                            setState(() => _gridCount = value),
+                        onGridRangeChanged: (value) =>
+                            setState(() => _gridRange = value),
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'How it works',
+                      child: _HowItWorksCard(steps: snapshot.steps),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.only(
+                bottom: tradeScrollBottomInset(
+                  context,
+                  shellRenderMode: widget.shellRenderMode,
+                ),
+              ),
+              child: _StartFooter(onStart: () => _handleStart()),
+            ),
+          ],
         ),
       ),
     );

@@ -8,14 +8,11 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/provider_leaderboard_controls.dart';
 part '../widgets/provider_leaderboard_cards.dart';
@@ -66,94 +63,88 @@ class _ProviderLeaderboardPageState
     }
 
     final providers = _filteredProviders(snapshot);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Leaderboard',
       semanticLabel: 'SC-079 ProviderLeaderboardPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Leaderboard',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      contentKey: ProviderLeaderboardPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Disclaimer',
+          child: _SurvivorshipWarning(snapshot: snapshot),
+        ),
+        VitTradeComplianceSection(
+          title: 'Compliance review',
+          statusPill: const VitStatusPill(
+            label: 'Review required',
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
           ),
+          items: const [
+            VitTradeComplianceItem(
+              label: 'Scope',
+              value: 'Ranking, verified status, risk, drawdown',
+            ),
+            VitTradeComplianceItem(
+              label: 'Action',
+              value: 'Review before copying',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Bộ lọc',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: ProviderLeaderboardPage.contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      _SurvivorshipWarning(snapshot: snapshot),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.providerLeaderboardReviewPadding,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Provider leaderboard review',
-                          message:
-                              'Ranking, verified status, risk level, drawdown, copier limits and provider details are reviewed before copying.',
-                          contractId: 'provider-leaderboard-review',
-                          density: VitDensity.compact,
-                        ),
-                      ),
-                      _SortTabs(
-                        options: snapshot.sortOptions,
-                        activeId: _sortId,
-                        onChanged: (id) => setState(() => _sortId = id),
-                      ),
-                      _RiskFilters(
-                        filters: snapshot.riskFilters,
-                        activeId: _riskFilterId,
-                        onChanged: (id) => setState(() => _riskFilterId = id),
-                      ),
-                      _VerifiedToggle(
-                        label: snapshot.verifiedOnlyLabel,
-                        checked: _verifiedOnly,
-                        onChanged: (value) =>
-                            setState(() => _verifiedOnly = value),
-                      ),
-                      Text(
-                        'Hiển thị ${providers.length} providers',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          height: _leaderLineFlat,
-                        ),
-                      ),
-                      for (final entry in providers.indexed) ...[
-                        _ProviderRankCard(
-                          rank: entry.$1 + 1,
-                          provider: entry.$2,
-                          onOpen: () => context.go(
-                            AppRoutePaths.tradeCopyProvider(
-                              entry.$2.id,
-                              backPath: AppRoutePaths.tradeCopyLeaderboard,
-                            ),
-                          ),
-                        ),
-                      ],
-                      _Disclaimer(text: snapshot.disclaimer),
-                    ],
-                  ),
-                ),
+              _SortTabs(
+                options: snapshot.sortOptions,
+                activeId: _sortId,
+                onChanged: (id) => setState(() => _sortId = id),
+              ),
+              _RiskFilters(
+                filters: snapshot.riskFilters,
+                activeId: _riskFilterId,
+                onChanged: (id) => setState(() => _riskFilterId = id),
+              ),
+              _VerifiedToggle(
+                label: snapshot.verifiedOnlyLabel,
+                checked: _verifiedOnly,
+                onChanged: (value) => setState(() => _verifiedOnly = value),
               ),
             ],
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Providers',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Hiển thị ${providers.length} providers',
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  height: _leaderLineFlat,
+                ),
+              ),
+              for (final entry in providers.indexed)
+                _ProviderRankCard(
+                  rank: entry.$1 + 1,
+                  provider: entry.$2,
+                  onOpen: () => context.go(
+                    AppRoutePaths.tradeCopyProvider(
+                      entry.$2.id,
+                      backPath: AppRoutePaths.tradeCopyLeaderboard,
+                    ),
+                  ),
+                ),
+              _Disclaimer(text: snapshot.disclaimer),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

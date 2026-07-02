@@ -8,18 +8,14 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
-const _trackingBackground = AppColors.bg;
 const _trackingBorder = AppColors.borderSolid;
 const _trackingPrimary = AppColors.primary;
 const _trackingGreen = AppColors.buy;
@@ -52,73 +48,67 @@ class ComplaintTrackingPage extends ConsumerWidget {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getComplaintTracking(complaintId: complaintId);
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Complaint ${snapshot.complaintId}',
       semanticLabel: 'SC-113 ComplaintTrackingPage',
-      child: Material(
-        color: _trackingBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Complaint ${snapshot.complaintId}',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
+      contentKey: contentKey,
+      shellRenderMode: shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
+      children: [
+        VitTradeSection(
+          title: 'Status',
+          child: _StatusCard(snapshot: snapshot),
+        ),
+        VitTradeComplianceSection(
+          title: 'Case review',
+          statusPill: VitStatusPill(
+            label: snapshot.statusLabel,
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
           ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Deadline',
+              value: snapshot.responseDueLabel,
+            ),
+            VitTradeComplianceItem(
+              label: 'Timeline',
+              value: '${snapshot.timeline.length} steps',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Investigation Timeline',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      _StatusCard(snapshot: snapshot),
-                      const VitSectionHeader(
-                        title: 'Investigation Timeline',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _trackingPrimary,
-                      ),
-                      _TimelineList(steps: snapshot.timeline),
-                      _DeadlineNotice(snapshot: snapshot),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review complaint case status',
-                        message:
-                            'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
-                        density: VitDensity.compact,
-                      ),
-                      for (final action in snapshot.actions)
-                        _TrackingActionButton(action: action),
-                      const TradeBodyReviewSection(
-                        title: 'Complaint status review',
-                        message: 'Complaint tracking body reviewed',
-                        detail:
-                            'Case status, deadline, timeline, action, empty, and result states stay visible for complaint follow-up.',
-                        primary:
-                            'Status and response deadline remain above the investigation timeline.',
-                        secondary:
-                            'Escalation actions stay after evidence and next-step context.',
-                        tertiary:
-                            'Review copy keeps the flow regulatory and avoids trading execution language.',
-                      ),
-                    ],
-                  ),
-                ),
+              _TimelineList(steps: snapshot.timeline),
+              _DeadlineNotice(snapshot: snapshot),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Review complaint case status',
+                message:
+                    'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
+                density: VitDensity.compact,
+              ),
+              for (final action in snapshot.actions)
+                _TrackingActionButton(action: action),
+              const TradeBodyReviewSection(
+                title: 'Complaint status review',
+                message: 'Complaint tracking body reviewed',
+                detail:
+                    'Case status, deadline, timeline, action, empty, and result states stay visible for complaint follow-up.',
+                primary:
+                    'Status and response deadline remain above the investigation timeline.',
+                secondary:
+                    'Escalation actions stay after evidence and next-step context.',
+                tertiary:
+                    'Review copy keeps the flow regulatory and avoids trading execution language.',
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -1,15 +1,31 @@
 # Kế hoạch tổng thể cho AI triển khai
 
-Updated: 2026-05-30
+Updated: 2026-07-02
 Scope: Flutter-only VitTrade app trong `flutter_app/`.
 
-Tài liệu này là hàng đợi triển khai và kiểm soát chất lượng cho các lượt AI tiếp
-theo. Mỗi lượt làm việc nên chọn một work packet nhỏ, hoàn tất code, test và
+Tài liệu này là dashboard trạng thái và hướng dẫn cho các lượt AI tiếp theo.
+Mỗi lượt làm việc nên chọn một work packet nhỏ, hoàn tất code, test và
 verification cho packet đó, rồi mới chuyển sang packet tiếp theo.
 
-File thực thi tuần tự chi tiết: `docs/02_FLUTTER_MIGRATION/AI-Sequential-Execution-Backlog.md`.
-Khi người dùng yêu cầu AI tự làm theo tiến độ, đọc file đó và chọn packet đầu
-tiên còn `[ ]`.
+Việc còn lại thực tế: [`ke-hoach-san-sang-production.md`](ke-hoach-san-sang-production.md).
+Doc picker: [`docs/INDEX.md`](../INDEX.md).
+
+## Completed migrations (removed 2026-07-02)
+
+Các kế hoạch/prompt execution lớn đã **đóng** và được xóa khỏi repo (chi tiết
+từng batch vẫn tra được qua git history):
+
+| Wave | Status | Summary |
+| --- | --- | --- |
+| AI Sequential Execution Backlog (S0–S8) | Closed 2026-05-30 | Frontend hardening queue done; 2 `[!]` packets (Address Add / P2P Payment Add emulator text-entry). Full local: 1841 tests pass. |
+| Enterprise UI/UX sync + body/header audits | Closed 2026-06 | Body audit 409 A / 5 Tool; header strict issues 0; back navigation clean. |
+| Whole-App UI Optimization + density | Closed 2026-06-20 | 100% complete; P0/P1 density backlog zero. |
+| Home UI Deep Standardization (Phases 0–7) | Closed 2026-07-01 | `total_debt=0`; P2P 173→0; Trade/Markets/Earn/Shared migrated; VitSegmentedTabBar/VitSegmentedChoice rollout. |
+| Shared components / typography / button / token plans | Absorbed | Rules live in `DESIGN.md`, `flutter_app/lib/app/theme/`, and `Guidelines.md`. |
+| E900 / Post-E900 file-size refactor waves | Closed | Large-file debt reduced; 4 files still >1200 lines (ongoing, not blocking UI). |
+
+Active sources thay thế: `AGENTS.md`, `DESIGN.md`, `ke-hoach-san-sang-production.md`,
+`AI_PROMPT_SHELL.md`, audit tools under `flutter_app/tool/`.
 
 ## 1. Kết luận hiện tại
 
@@ -154,6 +170,8 @@ lại đều là backend/release external hoặc manual QA text-entry completion
 7. `docs/02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md`
 8. `docs/02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md`
 9. `docs/03_DESIGN_SYSTEM/Guidelines.md`
+10. `DESIGN.md` (root)
+11. `docs/02_FLUTTER_MIGRATION/ke-hoach-san-sang-production.md` (remaining work)
 
 Khi tài liệu và code lệch nhau, source Flutter trong `flutter_app/lib/` và tests
 trong `flutter_app/test/` là nguồn kiểm chứng trước.

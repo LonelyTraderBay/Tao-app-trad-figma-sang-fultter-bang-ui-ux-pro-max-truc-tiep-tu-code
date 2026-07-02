@@ -65,6 +65,8 @@ search/discovery, and profile surfaces with clearly separated sections.
 
 ## UI Rules
 
+- Visual contract for agents: [`DESIGN.md`](DESIGN.md) at repo root (tokens +
+  component ladder); `AGENTS.md` wins on product/financial rules.
 - Use shared layout primitives before creating local scaffolds:
   `VitAppShell`, `VitPageLayout`, `VitPageContent`, `VitHeader`,
   `VitBottomNav`, `VitCard`, `VitCtaButton`, `VitInput`, and `VitTabBar`.
@@ -138,7 +140,9 @@ repository, or broad structural changes.
 Cursor subscription ($200) is the default agent surface. Optimize quota with:
 
 - Daily session: `.\scripts\Start-CursorSession.ps1` (Headroom proxy + GitNexus status).
-- MCP (project `.cursor/mcp.json`): `headroom` + `gitnexus` must be Connected.
+- MCP scope split (no duplicate server names):
+  - **Home** (`~/.cursor/mcp.json`): `gitnexus`, `dart` — must be Connected.
+  - **Workspace** (project `.cursor/mcp.json`): `headroom` only — must be Connected.
 - Model: Cursor **Auto** only — do not switch models manually or suggest tier changes.
 - When stuck: smaller scope, new chat, or GitNexus trace — not a different model.
 - Docs: load **one** execution prompt + **one** plan per task via `docs/INDEX.md`.
@@ -178,6 +182,9 @@ boundaries always take precedence over generic skill guidance.
 | Pre-merge review | `.codex/skills/code-review-and-quality/SKILL.md` |
 | GitNexus impact / refactor | `.codex/skills/gitnexus-impact-analysis/SKILL.md` |
 | Over-engineering / diff trim | `.codex/skills/vittrade-minimal-review/SKILL.md` |
+| Debug / test failure / blocked batch | `.codex/skills/debugging-and-error-recovery/SKILL.md` |
+| Performance / jank / profiling | `.codex/skills/performance-optimization/SKILL.md` |
+| Trade module debt scan (sprint) | `.codex/skills/ponytail-audit/SKILL.md` |
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence

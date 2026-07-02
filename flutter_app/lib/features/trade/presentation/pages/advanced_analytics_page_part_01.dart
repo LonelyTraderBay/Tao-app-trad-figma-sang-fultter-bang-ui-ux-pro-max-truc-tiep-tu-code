@@ -11,9 +11,9 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
         .getAdvancedAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

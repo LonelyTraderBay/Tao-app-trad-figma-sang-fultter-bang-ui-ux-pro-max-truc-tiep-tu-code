@@ -3,13 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pages/market_depth_page.dart';
-import 'package:vit_trade_flutter/features/markets/presentation/pages/price_alerts_page.dart';
 import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/pages/advanced_chart_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/convert_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_settings_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_confirm_sheet.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -33,21 +31,6 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-  }
-
-  Future<void> tapConvertTool(
-    WidgetTester tester,
-    String toolId, {
-    bool settle = true,
-  }) async {
-    final toolFinder = find.byKey(ConvertPage.toolKey(toolId));
-    await tester.ensureVisible(toolFinder);
-    await tester.tap(toolFinder);
-    if (settle) {
-      await tester.pumpAndSettle();
-    } else {
-      await tester.pump();
-    }
   }
 
   test('SC-056 mock repository exposes convert BE draft', () {
@@ -119,14 +102,13 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Convert / Swap'), findsOneWidget);
-    expect(find.text('Market'), findsOneWidget);
+    expect(find.text('Chế độ Pro'), findsNothing);
     expect(find.text('USDT/BTC'), findsWidgets);
     expect(find.text('1 USDT = 0.000015 BTC'), findsWidgets);
-    expect(find.text('Độ trượt giá'), findsOneWidget);
+    expect(find.text('Tuỳ chọn nâng cao'), findsNothing);
     expect(find.text('Xem lại báo giá'), findsOneWidget);
-    expect(find.text('Dự kiến nhận'), findsOneWidget);
-    expect(find.text('Kiểm tra rủi ro'), findsOneWidget);
     expect(find.text('Giao dịch gần đây'), findsOneWidget);
+    expect(find.text('Độ trượt giá'), findsNothing);
   });
 
   testWidgets('SC-056 first viewport reaches amount field', (tester) async {
@@ -174,20 +156,18 @@ void main() {
     expect(find.byType(ConvertPage), findsOneWidget);
   });
 
-  testWidgets('SC-056 percent, slippage, and submit use mock convert draft', (
+  testWidgets('SC-056 percent and submit use mock convert draft', (
     tester,
   ) async {
     await pumpConvert(tester);
 
     await tester.tap(find.byKey(ConvertPage.pctKey(25)));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(ConvertPage.slippageKey('1.0')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byKey(ConvertPage.slippageKey('1.0')));
-    await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(ConvertPage.submitKey));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ConvertPage.submitKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(VitTradeConfirmKeys.confirmSubmit));
     await tester.pump();
 
     expect(find.byType(ConvertPage), findsOneWidget);
@@ -203,67 +183,17 @@ void main() {
     expect(find.byType(TradePage), findsOneWidget);
   });
 
-  testWidgets('SC-056 tool row exposes navigation keys and targets', (
-    tester,
-  ) async {
-    await pumpConvert(tester);
-
-    expect(find.byKey(ConvertPage.toolKey('chart')), findsOneWidget);
-    expect(find.byKey(ConvertPage.toolKey('depth')), findsOneWidget);
-    expect(find.byKey(ConvertPage.toolKey('info')), findsOneWidget);
-    expect(find.byKey(ConvertPage.toolKey('alert')), findsOneWidget);
-    expect(find.byKey(ConvertPage.toolKey('settings')), findsNothing);
-
-    await tapConvertTool(tester, 'chart');
-    expect(find.byType(AdvancedChartPage), findsOneWidget);
-  });
-
-  testWidgets('SC-056 depth tool opens market depth page', (tester) async {
-    await pumpConvert(tester);
-
-    await tapConvertTool(tester, 'depth');
-    expect(find.byType(MarketDepthPage), findsOneWidget);
-  });
-
-  testWidgets('SC-056 info tool opens convert pair sheet', (tester) async {
-    await pumpConvert(tester);
-
-    await tapConvertTool(tester, 'info');
-    expect(find.text('Thông tin cặp'), findsOneWidget);
-    expect(find.text('1 USDT = 0.000015 BTC'), findsWidgets);
-  });
-
-  testWidgets('SC-056 alert tool opens price alerts page', (tester) async {
-    await pumpConvert(tester);
-
-    await tapConvertTool(tester, 'alert');
-    expect(find.byType(PriceAlertsPage), findsOneWidget);
-  });
-
   testWidgets('SC-056 settings header action opens trade settings page', (
     tester,
   ) async {
     await pumpConvert(tester);
 
+    await tester.ensureVisible(find.byTooltip('Cài đặt giao dịch'));
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Cài đặt giao dịch'));
     await tester.pumpAndSettle();
     expect(find.byType(TradeSettingsPage), findsOneWidget);
   });
-
-  testWidgets(
-    'SC-056 chart on unsupported pair shows snackbar and stays local',
-    (tester) async {
-      await pumpConvert(tester);
-
-      await tester.tap(find.byKey(ConvertPage.favoriteKey('BTC/ETH')));
-      await tester.pumpAndSettle();
-
-      await tapConvertTool(tester, 'chart', settle: false);
-      expect(find.text('Chưa có biểu đồ spot cho cặp này'), findsOneWidget);
-      expect(find.byType(ConvertPage), findsOneWidget);
-      expect(find.byType(AdvancedChartPage), findsNothing);
-    },
-  );
 
   testWidgets('SC-048 Convert quick action opens SC-056', (tester) async {
     tester.view.devicePixelRatio = 1;

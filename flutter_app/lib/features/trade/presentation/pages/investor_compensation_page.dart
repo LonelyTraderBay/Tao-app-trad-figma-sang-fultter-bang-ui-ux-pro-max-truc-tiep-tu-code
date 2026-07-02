@@ -7,21 +7,17 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/investor_compensation_page_sections.dart';
 part '../widgets/investor_compensation_page_common.dart';
 
-const _compBackground = AppColors.bg;
 const _compBorder = AppColors.borderSolid;
 const _compPrimary = AppColors.primary;
 const _compGreen = AppColors.buy;
@@ -52,83 +48,59 @@ class _InvestorCompensationPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getInvestorCompensation();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Investor Compensation',
+      subtitle: 'FSCS Protection',
       semanticLabel: 'SC-104 InvestorCompensationPage',
-      child: Material(
-        color: _compBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Investor Compensation',
-            subtitle: 'FSCS Protection',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-          ),
+      contentKey: InvestorCompensationPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Protection',
+          child: _ProtectionCard(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Details',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: InvestorCompensationPage.contentKey,
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.tradeBotCardGap,
-                    AppSpacing.contentPad,
-                    scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    density: VitDensity.compact,
-                    children: [
-                      _ProtectionCard(snapshot: snapshot),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          fullBleed: true,
-                          density: VitDensity.compact,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              density: VitDensity.compact,
-                              title: 'Compensation coverage review',
-                              message:
-                                  'Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.',
-                              contractId: 'investor-compensation-review',
-                            ),
-                            VitStatusPill(
-                              label: 'Coverage has limits',
-                              status: VitStatusPillStatus.info,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
-                      _InfoNotice(snapshot: snapshot),
-                      _Tabs(activeId: _tab, onChanged: _setTab),
-                      if (_tab == 'overview')
-                        _Overview(snapshot: snapshot)
-                      else if (_tab == 'eligibility')
-                        _Eligibility(snapshot: snapshot)
-                      else
-                        _ClaimGuide(snapshot: snapshot),
-                      const _FaqButton(),
-                    ],
-                  ),
-                ),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                density: VitDensity.compact,
+                title: 'Compensation coverage review',
+                message:
+                    'Eligibility, coverage limit, claim path, exclusions and next steps are reviewed before relying on protection.',
+                contractId: 'investor-compensation-review',
               ),
+              _InfoNotice(snapshot: snapshot),
+              _Tabs(activeId: _tab, onChanged: _setTab),
+              if (_tab == 'overview')
+                _Overview(snapshot: snapshot)
+              else if (_tab == 'eligibility')
+                _Eligibility(snapshot: snapshot)
+              else
+                _ClaimGuide(snapshot: snapshot),
+              const _FaqButton(),
             ],
           ),
         ),
-      ),
+        VitTradeComplianceSection(
+          title: 'Coverage review',
+          statusPill: const VitStatusPill(
+            label: 'Coverage has limits',
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
+          ),
+          items: const [
+            VitTradeComplianceItem(label: 'Scheme', value: 'FSCS protection'),
+            VitTradeComplianceItem(
+              label: 'Action',
+              value: 'Review eligibility before relying on coverage',
+            ),
+          ],
+        ),
+      ],
     );
   }
 

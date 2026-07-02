@@ -7,10 +7,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -73,137 +71,117 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
     final repository = ref.watch(tradeReadModelControllerProvider);
     final snapshot = repository.getBotTaxReporting();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
+    const generateFooterHeight = AppSpacing.inputHeight + AppSpacing.x4;
+    final scrollEndClearance =
+        tradeScrollBottomInset(context, shellRenderMode: mode) +
+        generateFooterHeight;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-133 BotTaxReportingPage',
       child: Material(
         color: _taxBackground,
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Tax Reporting',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.tradeBots),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      key: BotTaxReportingPage.contentKey,
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                        AppSpacing.contentPad,
-                        AppSpacing.tradeBotCardGap,
-                        AppSpacing.contentPad,
-                        scrollClearance,
+            VitHeader(
+              title: 'Tax Reporting',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.tradeBots),
+            ),
+            Expanded(
+              child: VitInsetScrollView(
+                key: BotTaxReportingPage.contentKey,
+                bottomInset: scrollEndClearance,
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  density: VitDensity.compact,
+                  children: [
+                    VitTradeSection(title: 'Notice', child: const _TaxNotice()),
+                    VitTradeSection(
+                      title: 'Select Tax Year',
+                      child: _YearPicker(
+                        years: snapshot.taxYears,
+                        selectedYear: _selectedYear,
+                        onChanged: (year) {
+                          setState(() => _selectedYear = year);
+                        },
                       ),
-                      child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        fullBleed: true,
-                        density: VitDensity.compact,
+                    ),
+                    VitTradeSection(
+                      title: 'Summary for $_selectedYear',
+                      child: _SummaryCard(summary: snapshot.summary),
+                    ),
+                    VitTradeSection(
+                      title: 'Cost Basis Method',
+                      child: _CostBasisPicker(
+                        selectedMethod: _costBasisMethod,
+                        onChanged: (method) {
+                          setState(() => _costBasisMethod = method);
+                        },
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Select Report Types',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const _TaxNotice(),
-                          VitPageSection(
-                            label: 'Select Tax Year',
-                            density: VitDensity.compact,
-                            children: [
-                              _YearPicker(
-                                years: snapshot.taxYears,
-                                selectedYear: _selectedYear,
-                                onChanged: (year) {
-                                  setState(() => _selectedYear = year);
-                                },
-                              ),
-                            ],
-                          ),
-                          VitPageSection(
-                            label: 'Summary for $_selectedYear',
-                            density: VitDensity.compact,
-                            children: [_SummaryCard(summary: snapshot.summary)],
-                          ),
-                          VitPageSection(
-                            label: 'Cost Basis Method',
-                            density: VitDensity.compact,
-                            children: [
-                              _CostBasisPicker(
-                                selectedMethod: _costBasisMethod,
-                                onChanged: (method) {
-                                  setState(() => _costBasisMethod = method);
-                                },
-                              ),
-                            ],
-                          ),
-                          VitPageSection(
-                            label: 'Select Report Types',
-                            density: VitDensity.compact,
-                            children: [
-                              VitPageContent(
-                                padding: VitContentPadding.none,
-                                fullBleed: true,
-                                density: VitDensity.compact,
-                                children: [
-                                  for (final report in snapshot.reportTypes)
-                                    _ReportTypeCard(
-                                      report: report,
-                                      selected: _selectedReportIds.contains(
-                                        report.id,
-                                      ),
-                                      onTap: () => _toggleReport(report.id),
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          VitPageSection(
-                            label: 'Capital Gains Breakdown',
-                            density: VitDensity.compact,
-                            children: [
-                              _BreakdownCard(
-                                summary: snapshot.summary,
-                                breakdown: snapshot.breakdown,
-                              ),
-                            ],
-                          ),
-                          _TaxNotesCard(notes: snapshot.taxNotes),
-                          const VitCard(
-                            variant: VitCardVariant.inner,
-                            density: VitDensity.compact,
-                            child: VitPageContent(
-                              padding: VitContentPadding.none,
-                              fullBleed: true,
-                              density: VitDensity.compact,
-                              children: [
-                                VitHighRiskStatePanel(
-                                  state: VitHighRiskUiState.riskReview,
-                                  density: VitDensity.compact,
-                                  title: 'Tax export review required',
-                                  message:
-                                      'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
-                                  contractId: 'bot-tax-reporting-review',
-                                ),
-                                VitStatusPill(
-                                  label: 'Report preview before export',
-                                  status: VitStatusPillStatus.info,
-                                  size: VitStatusPillSize.sm,
-                                ),
-                              ],
+                          for (final report in snapshot.reportTypes)
+                            _ReportTypeCard(
+                              report: report,
+                              selected: _selectedReportIds.contains(report.id),
+                              onTap: () => _toggleReport(report.id),
                             ),
-                          ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    VitTradeSection(
+                      title: 'Capital Gains Breakdown',
+                      child: _BreakdownCard(
+                        summary: snapshot.summary,
+                        breakdown: snapshot.breakdown,
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Tax notes',
+                      child: _TaxNotesCard(notes: snapshot.taxNotes),
+                    ),
+                    VitTradeSection(
+                      title: 'Đánh giá rủi ro',
+                      child: const VitCard(
+                        variant: VitCardVariant.inner,
+                        density: VitDensity.compact,
+                        child: VitPageContent(
+                          padding: VitContentPadding.none,
+                          fullBleed: true,
+                          density: VitDensity.compact,
+                          children: [
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              density: VitDensity.compact,
+                              title: 'Tax export review required',
+                              message:
+                                  'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
+                              contractId: 'bot-tax-reporting-review',
+                            ),
+                            VitStatusPill(
+                              label: 'Report preview before export',
+                              status: VitStatusPillStatus.info,
+                              size: VitStatusPillSize.sm,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             _GenerateFooter(
-              bottomInset: scrollClearance,
+              bottomInset: tradeScrollBottomInset(
+                context,
+                shellRenderMode: widget.shellRenderMode,
+              ),
               disabled: _selectedReportIds.isEmpty || _generating,
               generating: _generating,
               selectedCount: _selectedReportIds.length,

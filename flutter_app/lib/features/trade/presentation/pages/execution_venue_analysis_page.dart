@@ -8,16 +8,14 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/execution_venue_summary.dart';
 part '../widgets/execution_venue_comparison.dart';
@@ -58,90 +56,85 @@ class _ExecutionVenueAnalysisPageState
         .watch(tradeReadModelControllerProvider)
         .getExecutionVenueAnalysis();
     final venues = _sorted(snapshot.venues);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-097 ExecutionVenueAnalysisPage',
-      child: Material(
-        color: _venueBackground,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              header: VitHeader(
-                title: 'Execution Venue Analysis',
-                subtitle: 'Detailed Comparison',
-                showBack: true,
-                onBack: () =>
-                    context.go(AppRoutePaths.tradeCopyBestExecutionReports),
-                actions: [
-                  VitHeaderActionItem(
-                    type: VitHeaderActionType.export,
-                    onPressed: () =>
-                        setState(() => _notice = 'Analysis export queued'),
+    return Material(
+      color: _venueBackground,
+      child: Stack(
+        children: [
+          VitTradeHubScaffold(
+            title: 'Execution Venue Analysis',
+            subtitle: 'Detailed Comparison',
+            semanticLabel: 'SC-097 ExecutionVenueAnalysisPage',
+            contentKey: ExecutionVenueAnalysisPage.contentKey,
+            shellRenderMode: widget.shellRenderMode,
+            onBack: () =>
+                context.go(AppRoutePaths.tradeCopyBestExecutionReports),
+            headerActions: [
+              VitHeaderActionItem(
+                type: VitHeaderActionType.export,
+                onPressed: () =>
+                    setState(() => _notice = 'Analysis export queued'),
+              ),
+            ],
+            children: [
+              VitTradeSection(
+                title: 'Summary',
+                child: _SummaryGrid(summary: snapshot.summary),
+              ),
+              VitTradeComplianceSection(
+                title: 'Venue review',
+                statusPill: const VitStatusPill(
+                  label: 'Review required',
+                  status: VitStatusPillStatus.info,
+                  size: VitStatusPillSize.sm,
+                ),
+                items: [
+                  VitTradeComplianceItem(
+                    label: 'Venues',
+                    value: '${venues.length} compared',
                   ),
+                  VitTradeComplianceItem(label: 'Sort', value: _sort),
                 ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      key: ExecutionVenueAnalysisPage.contentKey,
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                        AppSpacing.contentPad,
-                        AppSpacing.tradeBotCardGap,
-                        AppSpacing.contentPad,
-                        scrollClearance,
-                      ),
-                      child: VitPageContent(
-                        padding: VitContentPadding.none,
-                        fullBleed: true,
-                        density: VitDensity.compact,
-                        children: [
-                          _SummaryGrid(summary: snapshot.summary),
-                          const VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            density: VitDensity.compact,
-                            title: 'Execution venue review',
-                            message:
-                                'Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.',
-                            contractId: 'SC-097 venue analysis review',
-                          ),
-                          _SortSelector(
-                            activeId: _sort,
-                            onChanged: (id) => setState(() => _sort = id),
-                          ),
-                          _Tabs(
-                            activeId: _tab,
-                            onChanged: (id) => setState(() => _tab = id),
-                          ),
-                          if (_tab == 'comparison')
-                            _ComparisonTab(venues: venues)
-                          else if (_tab == 'costs')
-                            _CostsTab(venues: venues)
-                          else if (_tab == 'speed')
-                            _SpeedTab(venues: venues)
-                          else
-                            _TrendsTab(trends: snapshot.costTrends),
-                        ],
-                      ),
+              VitTradeSection(
+                title: 'Analysis',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.riskReview,
+                      density: VitDensity.compact,
+                      title: 'Execution venue review',
+                      message:
+                          'Compare fill quality, total cost, speed, venue concentration, fee impact, and next-step export before changing routing decisions.',
+                      contractId: 'SC-097 venue analysis review',
                     ),
-                  ),
-                ],
+                    _SortSelector(
+                      activeId: _sort,
+                      onChanged: (id) => setState(() => _sort = id),
+                    ),
+                    _Tabs(
+                      activeId: _tab,
+                      onChanged: (id) => setState(() => _tab = id),
+                    ),
+                    if (_tab == 'comparison')
+                      _ComparisonTab(venues: venues)
+                    else if (_tab == 'costs')
+                      _CostsTab(venues: venues)
+                    else if (_tab == 'speed')
+                      _SpeedTab(venues: venues)
+                    else
+                      _TrendsTab(trends: snapshot.costTrends),
+                  ],
+                ),
               ),
+            ],
+          ),
+          if (_notice != null)
+            _NoticePanel(
+              text: _notice!,
+              onClose: () => setState(() => _notice = null),
             ),
-            if (_notice != null)
-              _NoticePanel(
-                text: _notice!,
-                onClose: () => setState(() => _notice = null),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }

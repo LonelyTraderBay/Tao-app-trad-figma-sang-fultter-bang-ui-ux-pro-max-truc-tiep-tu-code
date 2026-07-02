@@ -4,11 +4,6 @@
       "type": "stdio",
       "command": "C:\\Users\\C-PC\\.local\\bin\\headroom.exe",
       "args": ["mcp", "serve", "--proxy-url", "http://127.0.0.1:8787"]
-    },
-    "gitnexus": {
-      "type": "stdio",
-      "command": "C:\\Users\\C-PC\\AppData\\Roaming\\npm\\gitnexus.cmd",
-      "args": ["mcp"]
     }
   }
 }

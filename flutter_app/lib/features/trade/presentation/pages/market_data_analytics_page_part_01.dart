@@ -11,9 +11,9 @@ class _MarketDataAnalyticsPageState
         .getMarketDataAnalytics();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -42,9 +42,15 @@ class _MarketDataAnalyticsPageState
                         symbol: snapshot.selectedPair,
                         priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
                         changePct: snapshot.fundingRate.currentRatePct,
-                        highLabel: _formatCompactUsd(snapshot.openInterest.high24h),
-                        lowLabel: _formatCompactUsd(snapshot.openInterest.low24h),
-                        volumeLabel: _formatCompactUsd(snapshot.openInterest.current),
+                        highLabel: _formatCompactUsd(
+                          snapshot.openInterest.high24h,
+                        ),
+                        lowLabel: _formatCompactUsd(
+                          snapshot.openInterest.low24h,
+                        ),
+                        volumeLabel: _formatCompactUsd(
+                          snapshot.openInterest.current,
+                        ),
                       ),
                       _MarketAnalyticsRiskPanel(snapshot: snapshot),
                       _UnderlineTabs(

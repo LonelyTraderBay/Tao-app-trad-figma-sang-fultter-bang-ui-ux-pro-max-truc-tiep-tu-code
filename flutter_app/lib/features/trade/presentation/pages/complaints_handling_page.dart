@@ -7,22 +7,18 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/complaints_handling_overview_header_tabs.dart';
 part '../widgets/complaints_handling_overview_complaints.dart';
 part '../widgets/complaints_handling_process_common.dart';
 
-const _complaintsBackground = AppColors.bg;
 const _complaintsBorder = AppColors.borderSolid;
 const _complaintsPrimary = AppColors.primary;
 const _complaintsGreen = AppColors.buy;
@@ -55,92 +51,67 @@ class _ComplaintsHandlingPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getComplaintsHandling();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Complaints Handling',
+      subtitle: 'FCA Regulated Process',
       semanticLabel: 'SC-111 ComplaintsHandlingPage',
-      child: Material(
-        color: _complaintsBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Complaints Handling',
-            subtitle: 'FCA Regulated Process',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      contentKey: ComplaintsHandlingPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(title: 'Rights', child: const _RightsNotice()),
+        VitTradeComplianceSection(
+          title: 'Complaint process',
+          statusPill: const VitStatusPill(
+            label: 'Regulated process',
+            status: VitStatusPillStatus.warning,
+            size: VitStatusPillSize.sm,
           ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Open cases',
+              value: '${snapshot.complaints.length}',
+            ),
+            VitTradeComplianceItem(
+              label: 'Response SLA',
+              value: '${snapshot.averageResolutionDays} days avg',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Complaints',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: ComplaintsHandlingPage.contentKey,
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.tradeBotCardGap,
-                    AppSpacing.contentPad,
-                    scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    density: VitDensity.compact,
-                    children: [
-                      const _RightsNotice(),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              density: VitDensity.compact,
-                              title: 'Complaint process review',
-                              message:
-                                  'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
-                              contractId: 'complaints-handling-review',
-                            ),
-                            SizedBox(height: AppSpacing.x2),
-                            VitStatusPill(
-                              label: 'Regulated process',
-                              status: VitStatusPillStatus.warning,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
-                      _StatsRow(snapshot: snapshot),
-                      const _SubmitComplaintButton(),
-                      _Tabs(
-                        active: _tab,
-                        onChanged: (tab) => setState(() => _tab = tab),
-                      ),
-                      VitPageSection(
-                        density: VitDensity.compact,
-                        children: [
-                          if (_tab == _ComplaintsTab.overview)
-                            _OverviewContent(snapshot: snapshot),
-                          if (_tab == _ComplaintsTab.myComplaints)
-                            _MyComplaintsContent(
-                              complaints: snapshot.complaints,
-                            ),
-                          if (_tab == _ComplaintsTab.process)
-                            _ProcessContent(snapshot: snapshot),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                density: VitDensity.compact,
+                title: 'Complaint process review',
+                message:
+                    'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
+                contractId: 'complaints-handling-review',
+              ),
+              _StatsRow(snapshot: snapshot),
+              const _SubmitComplaintButton(),
+              _Tabs(
+                active: _tab,
+                onChanged: (tab) => setState(() => _tab = tab),
+              ),
+              VitPageSection(
+                density: VitDensity.compact,
+                children: [
+                  if (_tab == _ComplaintsTab.overview)
+                    _OverviewContent(snapshot: snapshot),
+                  if (_tab == _ComplaintsTab.myComplaints)
+                    _MyComplaintsContent(complaints: snapshot.complaints),
+                  if (_tab == _ComplaintsTab.process)
+                    _ProcessContent(snapshot: snapshot),
+                ],
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

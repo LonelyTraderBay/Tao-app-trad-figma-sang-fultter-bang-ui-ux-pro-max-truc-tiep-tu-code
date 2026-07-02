@@ -256,20 +256,3 @@ class _AdvancedTradeChartPainter extends CustomPainter {
 }
 
 String _formatRawPrice(double value) => value.toStringAsFixed(2);
-
-String _formatPercent(double value) {
-  final sign = value >= 0 ? '+' : '';
-  return '$sign${value.toStringAsFixed(2)}%';
-}
-
-String _formatPrice(double value) {
-  final raw = value.toStringAsFixed(2);
-  final parts = raw.split('.');
-  final whole = parts.first;
-  final buffer = StringBuffer();
-  for (var i = 0; i < whole.length; i++) {
-    if (i > 0 && (whole.length - i) % 3 == 0) buffer.write(',');
-    buffer.write(whole[i]);
-  }
-  return '${buffer.toString()}.${parts.last}';
-}

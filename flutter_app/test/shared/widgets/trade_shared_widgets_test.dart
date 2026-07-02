@@ -8,6 +8,25 @@ import 'package:vit_trade_flutter/shared/widgets/vit_trade_order_list.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_trade_product_hub.dart';
 
 void main() {
+  testWidgets('VitTradeInstrumentHero compact density renders', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: VitTradeInstrumentHero(
+            symbol: 'ETH/USDT',
+            priceLabel: '3,456.78',
+            changePct: -0.52,
+            density: VitTradeInstrumentHeroDensity.compact,
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('ETH/USDT'), findsOneWidget);
+    expect(find.text('3,456.78'), findsOneWidget);
+    expect(find.textContaining('-0.52%'), findsOneWidget);
+  });
+
   testWidgets('VitTradeInstrumentHero renders price and delta', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(

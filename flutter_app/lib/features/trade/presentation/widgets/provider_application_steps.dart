@@ -16,7 +16,6 @@ class _RequirementsStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _StepTitle(title: 'Kiểm tra điều kiện'),
         _TogglePanel(
           key: ProviderApplicationPage.kycKey,
           icon: Icons.shield_outlined,

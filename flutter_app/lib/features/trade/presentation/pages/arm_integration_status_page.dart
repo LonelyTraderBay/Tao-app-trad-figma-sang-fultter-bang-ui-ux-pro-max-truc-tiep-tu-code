@@ -10,22 +10,17 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/arm_integration_providers.dart';
 part '../widgets/arm_integration_sla_actions.dart';
 part '../widgets/arm_integration_common_painter.dart';
 
-const _armBackground = AppColors.bg;
 const _armPanel2 = AppColors.surface2;
 const _armBorder = AppColors.borderSolid;
 const _armGreen = AppColors.buy;
@@ -67,77 +62,78 @@ class _ArmIntegrationStatusPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getArmIntegrationStatus();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'ARM Integration',
+      subtitle: 'Connection Health · Monitoring',
       semanticLabel: 'SC-095 ARMIntegrationStatusPage',
-      child: Material(
-        color: _armBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'ARM Integration',
-            subtitle: 'Connection Health · Monitoring',
-            showBack: true,
-            onBack: () =>
-                context.go(AppRoutePaths.tradeCopyRegulatoryReportsDashboard),
+      contentKey: ArmIntegrationStatusPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () =>
+          context.go(AppRoutePaths.tradeCopyRegulatoryReportsDashboard),
+      children: [
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            density: VitDensity.compact,
+            title: 'Review ARM integration health',
+            message:
+                'Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.',
           ),
+        ),
+        VitTradeComplianceSection(
+          title: 'ARM status',
+          statusPill: VitStatusPill(
+            label: 'Uptime ${snapshot.sla.uptime.toStringAsFixed(1)}%',
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
+          ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Providers',
+              value: '${snapshot.connections.length} connected',
+            ),
+            VitTradeComplianceItem(
+              label: 'Avg latency',
+              value: '${snapshot.sla.latencyAvg}ms',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'ARM Providers',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: ArmIntegrationStatusPage.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.rowPy,
-                    right: AppSpacing.contentPad,
-                    bottom: scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
-                        title: 'Review ARM integration health',
-                        message:
-                            'Confirm provider failover, latency limits, reporting queue impact, and next steps before retrying submissions.',
-                      ),
-                      const _OperationalAlert(),
-                      const _SectionLabel('ARM Providers'),
-                      for (final connection in snapshot.connections)
-                        _ArmProviderCard(
-                          connection: connection,
-                          isTesting: _testingId == connection.id,
-                          onTest: () => _testConnection(connection.id),
-                        ),
-                      const _SectionLabel('Latency Monitoring (Last 15 min)'),
-                      _LatencyCard(points: snapshot.latencyHistory),
-                      const _SectionLabel('SLA Compliance'),
-                      _SlaCard(sla: snapshot.sla),
-                      _QuickActions(
-                        onQueue: () => context.go(
-                          AppRoutePaths.tradeCopyTransactionReporting,
-                        ),
-                        onDashboard: () => context.go(
-                          AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
-                        ),
-                      ),
-                    ],
-                  ),
+              const _OperationalAlert(),
+              for (final connection in snapshot.connections)
+                _ArmProviderCard(
+                  connection: connection,
+                  isTesting: _testingId == connection.id,
+                  onTest: () => _testConnection(connection.id),
+                ),
+            ],
+          ),
+        ),
+        VitTradeSection(
+          title: 'Monitoring',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const _SectionLabel('Latency Monitoring (Last 15 min)'),
+              _LatencyCard(points: snapshot.latencyHistory),
+              const _SectionLabel('SLA Compliance'),
+              _SlaCard(sla: snapshot.sla),
+              _QuickActions(
+                onQueue: () =>
+                    context.go(AppRoutePaths.tradeCopyTransactionReporting),
+                onDashboard: () => context.go(
+                  AppRoutePaths.tradeCopyRegulatoryReportsDashboard,
                 ),
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

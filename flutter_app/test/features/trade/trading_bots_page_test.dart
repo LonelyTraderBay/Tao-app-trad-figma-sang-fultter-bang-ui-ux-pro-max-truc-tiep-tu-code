@@ -79,8 +79,6 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Trading Bots'), findsOneWidget);
     expect(find.text('Bot giao dịch · Trade'), findsOneWidget);
-    expect(find.text('Giao dịch tự động 24/7'), findsOneWidget);
-    expect(find.text('Bot hoạt động ngay cả khi bạn ngủ'), findsOneWidget);
     expect(find.text('Bot đang chạy'), findsOneWidget);
     expect(find.text('\$2,000'), findsOneWidget);
     expect(find.text('+\$199.30'), findsOneWidget);

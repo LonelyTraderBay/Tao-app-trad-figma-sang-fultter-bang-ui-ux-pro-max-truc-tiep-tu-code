@@ -7,21 +7,17 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/client_money_protection_page_sections.dart';
 part '../widgets/client_money_protection_page_common.dart';
 
-const _moneyBackground = AppColors.bg;
 const _moneyBorder = AppColors.borderSolid;
 const _moneyPrimary = AppColors.primary;
 const _moneyGreen = AppColors.buy;
@@ -50,82 +46,55 @@ class _ClientMoneyProtectionPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getClientMoneyProtection();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Client Money Protection',
+      subtitle: 'CASS 7 Compliance',
       semanticLabel: 'SC-102 ClientMoneyProtectionPage',
-      child: Material(
-        color: _moneyBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Client Money Protection',
-            subtitle: 'CASS 7 Compliance',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-          ),
+      contentKey: ClientMoneyProtectionPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Protection notice',
+          child: const _ProtectionNotice(),
+        ),
+        VitTradeSection(
+          title: 'Segregated balance',
+          child: _BalanceCard(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Details',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: ClientMoneyProtectionPage.contentKey,
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.tradeBotCardGap,
-                    AppSpacing.contentPad,
-                    scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    density: VitDensity.compact,
-                    children: [
-                      const _ProtectionNotice(),
-                      _BalanceCard(snapshot: snapshot),
-                      _Tabs(activeId: _tab, onChanged: _setTab),
-                      if (_tab == 'overview')
-                        _Overview(snapshot: snapshot)
-                      else if (_tab == 'reconciliation')
-                        const _Reconciliation()
-                      else
-                        const _Documents(),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          fullBleed: true,
-                          density: VitDensity.compact,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              density: VitDensity.compact,
-                              title: 'Client money protection review',
-                              message:
-                                  'Segregation status, reconciliation, documents, limits and next steps are reviewed before client-money actions.',
-                              contractId: 'client-money-protection-review',
-                            ),
-                            VitStatusPill(
-                              label: 'CASS review',
-                              status: VitStatusPillStatus.info,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _Tabs(activeId: _tab, onChanged: _setTab),
+              if (_tab == 'overview')
+                _Overview(snapshot: snapshot)
+              else if (_tab == 'reconciliation')
+                const _Reconciliation()
+              else
+                const _Documents(),
             ],
           ),
         ),
-      ),
+        VitTradeComplianceSection(
+          title: 'CASS status',
+          statusPill: const VitStatusPill(
+            label: 'CASS review',
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
+          ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Trust account',
+              value: snapshot.trustAccount,
+            ),
+            VitTradeComplianceItem(label: 'Framework', value: 'FCA CASS 7'),
+          ],
+        ),
+      ],
     );
   }
 

@@ -9,10 +9,6 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -24,10 +20,6 @@ part '../widgets/orders_history_page_sections.dart';
 part '../widgets/orders_history_page_common.dart';
 
 const _tradePrimary = AppColors.primary;
-const double _ordersFramedScrollClearance =
-    AppSpacing.buttonStandard + AppSpacing.x7;
-const double _ordersNativeScrollClearance =
-    AppSpacing.buttonStandard + AppSpacing.x5;
 const double _ordersStatusExtent = AppSpacing.buttonStandard + AppSpacing.x5;
 
 class OrdersHistoryPage extends ConsumerStatefulWidget {
@@ -56,99 +48,75 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
         .state
         .snapshot;
     final orders = _visibleOrders(snapshot);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Lịch sử lệnh',
+      subtitle: 'Lệnh · Trade',
       semanticLabel: 'SC-050 OrdersHistoryPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Lịch sử lệnh',
-            subtitle: 'Lệnh · Trade',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.trade),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  bottomInset: scrollEndClearance,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      _OrderTopTabs(
-                        active: _activeTab,
-                        openCount: snapshot.openOrders.length,
-                        historyCount: snapshot.historyOrders.length,
-                        onChanged: (tab) => setState(() => _activeTab = tab),
-                      ),
-                      _FilterRow(
-                        active: _filter,
-                        onChanged: (filter) => setState(() => _filter = filter),
-                      ),
-                      if (orders.isEmpty)
-                        _EmptyState(activeTab: _activeTab)
-                      else
-                        VitTradeSection(
-                          title: _activeTab == 'open'
-                              ? 'Lệnh đang mở'
-                              : 'Lịch sử khớp',
-                          child: VitCard(
-                            clip: true,
-                            child: Column(
-                              children: [
-                                for (var i = 0; i < orders.length; i++) ...[
-                                  _OrderHistoryTile(
-                                    key: OrdersHistoryPage.orderKey(
-                                      orders[i].id,
-                                    ),
-                                    order: orders[i],
-                                    grouped: true,
-                                    actionKey: i == 0
-                                        ? OrdersHistoryPage.cancelFirstOrderKey
-                                        : null,
-                                    onCancel: () =>
-                                        _cancelOrder(orders[i].id),
-                                  ),
-                                  if (i < orders.length - 1)
-                                    const Divider(
-                                      height: AppSpacing.dividerHairline,
-                                      thickness: AppSpacing.dividerHairline,
-                                      color: AppColors.divider,
-                                    ),
-                                ],
-                              ],
-                            ),
-                          ),
-                        ),
-                      const TradeBodyReviewSection(
-                        title: 'Orders history body review',
-                        message: 'Orders history body reviewed',
-                        detail:
-                            'Open/history tabs, filters, empty, cancel, snackbar, and result states stay visible.',
-                        primary:
-                            'Tabs and filters stay above order rows for recovery from empty states.',
-                        secondary:
-                            'Cancel action keeps selected order context visible.',
-                        tertiary:
-                            'History rows remain separated from live position management.',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.trade),
+      children: [
+        VitTradeSection(
+          title: 'Phân loại',
+          child: _OrderTopTabs(
+            active: _activeTab,
+            openCount: snapshot.openOrders.length,
+            historyCount: snapshot.historyOrders.length,
+            onChanged: (tab) => setState(() => _activeTab = tab),
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Bộ lọc',
+          child: _FilterRow(
+            active: _filter,
+            onChanged: (filter) => setState(() => _filter = filter),
+          ),
+        ),
+        if (orders.isEmpty)
+          VitTradeSection(
+            title: _activeTab == 'open' ? 'Lệnh đang mở' : 'Lịch sử khớp',
+            child: _EmptyState(activeTab: _activeTab),
+          )
+        else
+          VitTradeSection(
+            title: _activeTab == 'open' ? 'Lệnh đang mở' : 'Lịch sử khớp',
+            child: VitCard(
+              clip: true,
+              child: Column(
+                children: [
+                  for (var i = 0; i < orders.length; i++) ...[
+                    _OrderHistoryTile(
+                      key: OrdersHistoryPage.orderKey(orders[i].id),
+                      order: orders[i],
+                      grouped: true,
+                      actionKey: i == 0
+                          ? OrdersHistoryPage.cancelFirstOrderKey
+                          : null,
+                      onCancel: () => _cancelOrder(orders[i].id),
+                    ),
+                    if (i < orders.length - 1)
+                      const Divider(
+                        height: AppSpacing.dividerHairline,
+                        thickness: AppSpacing.dividerHairline,
+                        color: AppColors.divider,
+                      ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        const TradeBodyReviewSection(
+          title: 'Orders history body review',
+          message: 'Orders history body reviewed',
+          detail:
+              'Open/history tabs, filters, empty, cancel, snackbar, and result states stay visible.',
+          primary:
+              'Tabs and filters stay above order rows for recovery from empty states.',
+          secondary: 'Cancel action keeps selected order context visible.',
+          tertiary:
+              'History rows remain separated from live position management.',
+        ),
+      ],
     );
   }
 

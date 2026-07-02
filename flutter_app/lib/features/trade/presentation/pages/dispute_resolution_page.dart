@@ -8,16 +8,13 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/dispute_resolution_form.dart';
 part '../widgets/dispute_resolution_cases.dart';
@@ -85,77 +82,67 @@ class _DisputeResolutionPageState extends ConsumerState<DisputeResolutionPage> {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getDisputeResolution();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Dispute Resolution',
       semanticLabel: 'SC-082 DisputeResolutionPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Dispute Resolution',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (_activeTabId != 'file')
+      contentKey: DisputeResolutionPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        if (_activeTabId == 'file')
+          _FileComplaintTab(
+            snapshot: snapshot,
+            selectedType: _selectedType,
+            selectedProviderId: _selectedProviderId,
+            subjectController: _subjectController,
+            descriptionController: _descriptionController,
+            evidenceAttached: _evidenceAttached,
+            canSubmit: _canSubmit,
+            onTypeChanged: (value) => setState(() => _selectedType = value),
+            onProviderChanged: (value) =>
+                setState(() => _selectedProviderId = value),
+            onUpload: () => setState(() => _evidenceAttached = true),
+            onSubmit: _handleSubmit,
+          )
+        else
+          VitTradeSection(
+            title: 'Cases',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
                 _DisputeTabs(
                   tabs: snapshot.tabs,
                   activeId: _activeTabId,
                   onChanged: (id) => setState(() => _activeTabId = id),
                 ),
-              Expanded(
-                child: SingleChildScrollView(
-                  key: DisputeResolutionPage.contentKey,
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    _activeTabId == 'file' ? AppSpacing.x3 : AppSpacing.x4,
-                    AppSpacing.contentPad,
-                    scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      if (_activeTabId == 'file')
-                        _FileComplaintTab(
-                          snapshot: snapshot,
-                          selectedType: _selectedType,
-                          selectedProviderId: _selectedProviderId,
-                          subjectController: _subjectController,
-                          descriptionController: _descriptionController,
-                          evidenceAttached: _evidenceAttached,
-                          canSubmit: _canSubmit,
-                          onTypeChanged: (value) =>
-                              setState(() => _selectedType = value),
-                          onProviderChanged: (value) =>
-                              setState(() => _selectedProviderId = value),
-                          onUpload: () =>
-                              setState(() => _evidenceAttached = true),
-                          onSubmit: _handleSubmit,
-                        )
-                      else
-                        _CasesTab(
-                          activeTabId: _activeTabId,
-                          snapshot: snapshot,
-                          lastResult: _lastResult,
-                        ),
-                    ],
-                  ),
+                _CasesTab(
+                  activeTabId: _activeTabId,
+                  snapshot: snapshot,
+                  lastResult: _lastResult,
                 ),
+              ],
+            ),
+          ),
+        if (_activeTabId != 'file')
+          VitTradeComplianceSection(
+            title: 'Dispute process',
+            statusPill: const VitStatusPill(
+              label: 'Regulated intake',
+              status: VitStatusPillStatus.info,
+              size: VitStatusPillSize.sm,
+            ),
+            items: [
+              VitTradeComplianceItem(
+                label: 'Providers',
+                value: '${snapshot.providers.length} available',
+              ),
+              const VitTradeComplianceItem(
+                label: 'Framework',
+                value: 'Copy-trading dispute intake',
               ),
             ],
           ),
-        ),
-      ),
+      ],
     );
   }
 

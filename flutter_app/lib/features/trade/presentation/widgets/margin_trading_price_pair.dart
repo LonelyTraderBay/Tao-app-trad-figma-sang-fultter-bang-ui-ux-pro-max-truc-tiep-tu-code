@@ -149,10 +149,13 @@ class _PairCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(
-                snapshot.pair.symbol,
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontWeight: AppTextStyles.bold,
+              Flexible(
+                child: Text(
+                  snapshot.pair.symbol,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),

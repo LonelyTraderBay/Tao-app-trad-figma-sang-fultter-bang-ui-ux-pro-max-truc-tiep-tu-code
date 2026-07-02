@@ -7,11 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
@@ -56,53 +52,28 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
       );
     }
 
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-
-    final bottomInset = copyTradingScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeDetailScaffold(
+      title: _started ? 'Câu hỏi đánh giá' : 'Đánh giá rủi ro',
       semanticLabel: 'SC-071 PreCopyAssessmentPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: _started ? 'Câu hỏi đánh giá' : 'Đánh giá rủi ro',
-            showBack: true,
-            onBack: () =>
-                context.go(AppRoutePaths.tradeCopyProvider(widget.providerId)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: PreCopyAssessmentPage.contentKey,
-                  padding: AppSpacing.preCopyAssessmentScrollPadding(
-                    bottomInset,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    gap: VitContentGap.tight,
-                    fullBleed: true,
-                    children: [
-                      _started
-                          ? _QuestionsSummary(snapshot: snapshot)
-                          : _WelcomeAssessment(
-                              snapshot: snapshot,
-                              onStart: () => setState(() => _started = true),
-                            ),
-                    ],
-                  ),
+      contentKey: PreCopyAssessmentPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () =>
+          context.go(AppRoutePaths.tradeCopyProvider(widget.providerId)),
+      children: [
+        _started
+            ? VitTradeSection(
+                title: 'Câu hỏi',
+                child: _QuestionsSummary(snapshot: snapshot),
+              )
+            : VitTradeSection(
+                title: 'Bắt đầu',
+                child: _WelcomeAssessment(
+                  snapshot: snapshot,
+                  onStart: () => setState(() => _started = true),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+      ],
     );
   }
 }

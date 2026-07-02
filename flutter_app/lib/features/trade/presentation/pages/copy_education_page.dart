@@ -7,12 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -50,69 +45,50 @@ class _CopyEducationPageState extends ConsumerState<CopyEducationPage> {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getCopyEducation();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve = copyTradingScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Hướng dẫn Copy Trading',
       semanticLabel: 'SC-065 CopyEducationPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Hướng dẫn Copy Trading',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: CopyEducationPage.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.x4,
-                    right: AppSpacing.contentPad,
-                    bottom: scrollTailReserve,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    gap: VitContentGap.tight,
-                    fullBleed: true,
-                    children: [
-                      _IntroBanner(snapshot: snapshot),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review copy trading education',
-                        message:
-                            'Understand fees, drawdown, slippage, provider risk, and copy modes before copying a provider.',
-                        contractId: 'Education module: copy trading',
-                      ),
-                      _EducationTabs(
-                        tabs: snapshot.tabs,
-                        active: _activeTab,
-                        onChanged: (value) =>
-                            setState(() => _activeTab = value),
-                      ),
-                      if (_activeTab == 'how-it-works')
-                        _HowItWorksContent(snapshot: snapshot)
-                      else
-                        _SupplementalTabContent(activeTab: _activeTab),
-                      _ProviderCta(
-                        onTap: () => context.go(AppRoutePaths.tradeCopyTrading),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      contentKey: CopyEducationPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Giới thiệu',
+          child: _IntroBanner(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Review copy trading education',
+            message:
+                'Understand fees, drawdown, slippage, provider risk, and copy modes before copying a provider.',
+            contractId: 'Education module: copy trading',
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Chủ đề',
+          child: _EducationTabs(
+            tabs: snapshot.tabs,
+            active: _activeTab,
+            onChanged: (value) => setState(() => _activeTab = value),
+          ),
+        ),
+        VitTradeSection(
+          title: _activeTab == 'how-it-works' ? 'Cách hoạt động' : 'Nội dung',
+          child: _activeTab == 'how-it-works'
+              ? _HowItWorksContent(snapshot: snapshot)
+              : _SupplementalTabContent(activeTab: _activeTab),
+        ),
+        VitTradeSection(
+          title: 'Tiếp theo',
+          child: _ProviderCta(
+            onTap: () => context.go(AppRoutePaths.tradeCopyTrading),
+          ),
+        ),
+      ],
     );
   }
 }

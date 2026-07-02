@@ -5,7 +5,7 @@ alwaysApply: true
 
 # GitNexus Workflow
 
-Use GitNexus MCP (project `.cursor/mcp.json`) instead of blind repo-wide greps when exploring or changing code.
+Use GitNexus MCP (Home `~/.cursor/mcp.json`) instead of blind repo-wide greps when exploring or changing code.
 
 ## Always do
 

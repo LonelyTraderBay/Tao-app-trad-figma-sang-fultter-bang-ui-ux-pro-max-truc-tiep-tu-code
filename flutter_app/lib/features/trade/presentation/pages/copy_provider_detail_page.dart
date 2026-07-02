@@ -8,20 +8,14 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
-import '../widgets/trade_module_layout.dart';
 
 const _providerPrimary = AppColors.primary;
 const _providerGreen = AppColors.buy;
@@ -54,152 +48,111 @@ class CopyProviderDetailPage extends ConsumerWidget {
     );
 
     if (provider == null) {
-      return _ProviderNotFound(
-        message: snapshot.notFoundMessage,
+      return VitTradeDetailScaffold(
+        title: 'Provider Not Found',
+        semanticLabel: 'SC-070 CopyProviderDetailPage not found',
+        shellRenderMode: shellRenderMode,
+        useCopyTradingInset: true,
         onBack: () => goBackOrFallback(context, fallbackPath: resolvedBackPath),
+        children: [
+          VitTradeSection(
+            title: 'Không tìm thấy',
+            child: Column(
+              key: CopyProviderDetailPage.notFoundKey,
+              children: [
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  color: AppColors.text3,
+                  size: AppSpacing.walletTokenHeroIcon,
+                ),
+                const SizedBox(height: AppSpacing.cardGap),
+                Text(
+                  snapshot.notFoundMessage,
+                  style: AppTextStyles.base.copyWith(color: AppColors.text2),
+                ),
+              ],
+            ),
+          ),
+        ],
       );
     }
 
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-
-    final bottomInset = copyTradingScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeDetailScaffold(
+      title: provider.name,
       semanticLabel: 'SC-070 CopyProviderDetailPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: provider.name,
-            showBack: true,
-            onBack: () =>
-                goBackOrFallback(context, fallbackPath: resolvedBackPath),
-          ),
+      contentKey: contentKey,
+      shellRenderMode: shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () => goBackOrFallback(context, fallbackPath: resolvedBackPath),
+      children: [
+        VitTradeSection(title: 'Cảnh báo rủi ro', child: const _RiskWarning()),
+        VitTradeSection(
+          title: 'Đánh giá phù hợp',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  padding: EdgeInsetsDirectional.only(bottom: bottomInset),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      const _RiskWarning(),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.cardPaddingCompact,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Provider detail review required',
-                          message:
-                              'Performance, max drawdown, copier limit, risk score, fees and suitability assessment are reviewed before copying.',
-                          contractId: 'copy-provider-detail-review',
-                        ),
-                      ),
-                      _ProviderCard(provider: provider),
-                      _MetricGrid(provider: provider),
-                      VitCtaButton(
-                        key: assessmentKey,
-                        onPressed: () => context.go(
-                          AppRoutePaths.tradeCopyProviderAssessment(providerId),
-                        ),
-                        height: VitDensity.compact.controlHeight,
-                        trailing: const Icon(Icons.chevron_right_rounded),
-                        child: Text(
-                          'ÄÃ¡nh giÃ¡ rá»§i ro',
-                          style: AppTextStyles.baseMedium.copyWith(
-                            color: AppColors.onAccent,
-                            fontWeight: AppTextStyles.extraBold,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Hiá»‡u suáº¥t quÃ¡ khá»© khÃ´ng Ä‘áº£m báº£o káº¿t quáº£ tÆ°Æ¡ng lai. Copy Trading cÃ³ rá»§i ro cao.',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          height:
-                              AppSpacing.copyProviderDetailDisclaimerLineHeight,
-                        ),
-                      ),
-                      const TradeBodyReviewSection(
-                        title: 'Provider detail body review',
-                        message: 'Copy provider detail body reviewed',
-                        detail:
-                            'Risk warning, provider profile, metrics, assessment CTA, not-found, and review states stay visible.',
-                        primary:
-                            'Risk warning and review panel remain above provider performance data.',
-                        secondary:
-                            'Assessment CTA stays after provider metrics and before follow-up review.',
-                        tertiary:
-                            'Not-found state remains routed through the same safe back behavior.',
-                      ),
-                    ],
+              VitCtaButton(
+                key: assessmentKey,
+                onPressed: () => context.go(
+                  AppRoutePaths.tradeCopyProviderAssessment(providerId),
+                ),
+                height: VitDensity.compact.controlHeight,
+                trailing: const Icon(Icons.chevron_right_rounded),
+                child: Text(
+                  'Đánh giá rủi ro',
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: AppColors.onAccent,
+                    fontWeight: AppTextStyles.extraBold,
                   ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x3),
+              Text(
+                'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Copy Trading có rủi ro cao.',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.text3,
+                  height: AppSpacing.copyProviderDetailDisclaimerLineHeight,
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _ProviderNotFound extends StatelessWidget {
-  const _ProviderNotFound({required this.message, required this.onBack});
-
-  final String message;
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-070 CopyProviderDetailPage not found',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Provider Not Found',
-            showBack: true,
-            onBack: onBack,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Padding(
-                  key: CopyProviderDetailPage.notFoundKey,
-                  padding: AppSpacing.copyProviderDetailNotFoundPadding,
-                  child: Column(
-                    children: [
-                      const Icon(
-                        Icons.warning_amber_rounded,
-                        color: AppColors.text3,
-                        size: AppSpacing.walletTokenHeroIcon,
-                      ),
-                      const SizedBox(height: AppSpacing.cardGap),
-                      Text(
-                        message,
-                        style: AppTextStyles.base.copyWith(
-                          color: AppColors.text2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+        VitTradeSection(
+          title: 'Hồ sơ provider',
+          child: _ProviderCard(provider: provider),
+        ),
+        VitTradeSection(
+          title: 'Chỉ số',
+          child: _MetricGrid(provider: provider),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.cardPaddingCompact,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Provider detail review required',
+              message:
+                  'Performance, max drawdown, copier limit, risk score, fees and suitability assessment are reviewed before copying.',
+              contractId: 'copy-provider-detail-review',
+            ),
           ),
         ),
-      ),
+        const TradeBodyReviewSection(
+          title: 'Provider detail body review',
+          message: 'Copy provider detail body reviewed',
+          detail:
+              'Risk warning, provider profile, metrics, assessment CTA, not-found, and review states stay visible.',
+          primary:
+              'Risk warning and review panel remain above provider performance data.',
+          secondary:
+              'Assessment CTA stays after provider metrics and before follow-up review.',
+          tertiary:
+              'Not-found state remains routed through the same safe back behavior.',
+        ),
+      ],
     );
   }
 }
@@ -224,7 +177,7 @@ class _RiskWarning extends StatelessWidget {
           const SizedBox(width: AppSpacing.walletAssetPillGap),
           Expanded(
             child: Text(
-              'Hiá»‡u suáº¥t quÃ¡ khá»© khÃ´ng Ä‘áº£m báº£o lá»£i nhuáº­n tÆ°Æ¡ng lai. Báº¡n cÃ³ thá»ƒ máº¥t toÃ n bá»™ vá»‘n Ä‘áº§u tÆ°.',
+              'Hiệu suất quá khứ không đảm bảo lợi nhuận tương lai. Bạn có thể mất toàn bộ vốn đầu tư.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.caution,
                 height: AppSpacing.copyProviderDetailRiskLineHeight,
@@ -281,7 +234,7 @@ class _ProviderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x3),
                 Text(
-                  '${provider.totalTrades} trades Â· ${provider.avgHoldingTime} avg hold',
+                  '${provider.totalTrades} trades · ${provider.avgHoldingTime} avg hold',
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
                   ),
@@ -376,8 +329,8 @@ Color _riskColor(TradeCopyRiskLevel level) {
 
 String _riskLabel(TradeCopyRiskLevel level) {
   return switch (level) {
-    TradeCopyRiskLevel.low => 'Rá»§i ro tháº¥p',
-    TradeCopyRiskLevel.medium => 'Rá»§i ro trung bÃ¬nh',
-    TradeCopyRiskLevel.high => 'Rá»§i ro cao',
+    TradeCopyRiskLevel.low => 'Rủi ro thấp',
+    TradeCopyRiskLevel.medium => 'Rủi ro trung bình',
+    TradeCopyRiskLevel.high => 'Rủi ro cao',
   };
 }

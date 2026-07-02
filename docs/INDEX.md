@@ -1,65 +1,92 @@
 # VitTrade Docs Index
 
-Pick **one** task prompt + **one** paired plan per session. Do not load multiple
-large files in one turn. Shared rules: [AI_PROMPT_SHELL.md](01_AI_RULES/AI_PROMPT_SHELL.md).
+Load docs **on demand** — do not paste large audit output into chat. Shared rules:
+[AI_PROMPT_SHELL.md](01_AI_RULES/AI_PROMPT_SHELL.md).
 
 ## Always-on (short)
 
-| File | Lines | When |
-| --- | ---: | --- |
-| [AGENTS.md](../AGENTS.md) | ~194 | Every session (workspace rule) |
-| [00_START_HERE.md](00_START_HERE.md) | 77 | First time / architecture work |
-| [AI_EXECUTION_CONTRACT.md](01_AI_RULES/AI_EXECUTION_CONTRACT.md) | 42 | Execution gate |
-| [DOCUMENT_PRECEDENCE.md](01_AI_RULES/DOCUMENT_PRECEDENCE.md) | 34 | Doc conflicts |
+| File | When |
+| --- | --- |
+| [AGENTS.md](../AGENTS.md) | Every session (workspace rule) |
+| [DESIGN.md](../DESIGN.md) | UI work — tokens + component ladder |
+| [00_START_HERE.md](00_START_HERE.md) | First time / architecture |
+| [AI_EXECUTION_CONTRACT.md](01_AI_RULES/AI_EXECUTION_CONTRACT.md) | Execution gate |
+| [DOCUMENT_PRECEDENCE.md](01_AI_RULES/DOCUMENT_PRECEDENCE.md) | Doc conflicts |
 
-## Orchestration
+## Status and remaining work
 
-| File | Lines | When |
-| --- | ---: | --- |
-| [AI-Sequential-Execution-Backlog.md](02_FLUTTER_MIGRATION/AI-Sequential-Execution-Backlog.md) | 2079 | No specific task — read **current packet only** |
-| [AI_PROMPT_SHELL.md](01_AI_RULES/AI_PROMPT_SHELL.md) | ~100 | Referenced by all autonomous prompts |
+| File | When |
+| --- | --- |
+| [ke-hoac-tong-the.md](02_FLUTTER_MIGRATION/ke-hoac-tong-the.md) | Project dashboard + completed migration summary |
+| [ke-hoach-san-sang-production.md](02_FLUTTER_MIGRATION/ke-hoach-san-sang-production.md) | Production readiness — what is done vs blocked |
 
-## Top execution prompts (load one)
+## Flutter standards
 
-| File | Lines | Paired plan |
-| --- | ---: | --- |
-| [AI-A-Grade-Body-Component-Upgrade-Autonomous-Execution-Prompt.md](02_FLUTTER_MIGRATION/AI-A-Grade-Body-Component-Upgrade-Autonomous-Execution-Prompt.md) | ~750 | VitTrade-A-Grade-Body-Component-Upgrade-Plan.md |
-| [AI-Button-System-Standardization-Autonomous-Execution-Prompt.md](03_DESIGN_SYSTEM/AI-Button-System-Standardization-Autonomous-Execution-Prompt.md) | ~700 | VitTrade-Button-System-Standardization-Execution-Plan.md |
-| [AI-Home-UI-Project-Wide-Standardization-Deep-Autonomous-Execution-Prompt.md](02_FLUTTER_MIGRATION/AI-Home-UI-Project-Wide-Standardization-Deep-Autonomous-Execution-Prompt.md) | ~350 | VitTrade-Home-UI-Project-Wide-Standardization-Deep-Plan.md |
-| [AI-Enterprise-UI-UX-Synchronization-Autonomous-Execution-Prompt.md](02_FLUTTER_MIGRATION/AI-Enterprise-UI-UX-Synchronization-Autonomous-Execution-Prompt.md) | 624 | Enterprise UI sync plan |
-| [AI-Whole-App-UI-Optimization-Autonomous-Execution-Prompt.md](03_DESIGN_SYSTEM/AI-Whole-App-UI-Optimization-Autonomous-Execution-Prompt.md) | 693 | Whole-App UI Optimization tracking plan |
+| File | When |
+| --- | --- |
+| [Flutter-App-Foundation.md](02_FLUTTER_MIGRATION/Flutter-App-Foundation.md) | App bootstrap, layers |
+| [Flutter-Native-Design-Standard.md](02_FLUTTER_MIGRATION/Flutter-Native-Design-Standard.md) | Native UI rules |
+| [Flutter-Module-Identity-Standard.md](02_FLUTTER_MIGRATION/Flutter-Module-Identity-Standard.md) | Module accents |
+| [Flutter-Port-Master-Plan.md](02_FLUTTER_MIGRATION/Flutter-Port-Master-Plan.md) | Screen coverage tracker |
+| [Flutter-Migration-Execution-Runbook.md](02_FLUTTER_MIGRATION/Flutter-Migration-Execution-Runbook.md) | Standard workflow |
+| [Flutter-Design-Tokens.md](02_FLUTTER_MIGRATION/Flutter-Design-Tokens.md) | Token file map |
+| [Flutter-Component-Mapping.md](02_FLUTTER_MIGRATION/Flutter-Component-Mapping.md) | Vit* widget ladder |
+| [Guidelines.md](03_DESIGN_SYSTEM/Guidelines.md) | Product + design rules |
 
-Full list: `rg --files docs -g 'AI-*Execution-Prompt.md' -g '*Autonomous*Prompt.md'`
+## Checklists
 
-## Large plans (section-read only)
+| File | When |
+| --- | --- |
+| [Future-Feature-Onboarding-Checklist.md](02_FLUTTER_MIGRATION/Future-Feature-Onboarding-Checklist.md) | New feature / route |
+| [Enterprise-PR-Review-Checklist.md](02_FLUTTER_MIGRATION/Enterprise-PR-Review-Checklist.md) | Pre-merge review |
+| [Flutter-Manual-Smoke-Checklist.md](02_FLUTTER_MIGRATION/Flutter-Manual-Smoke-Checklist.md) | Manual QA |
+| [Flutter-Visual-QA.md](02_FLUTTER_MIGRATION/Flutter-Visual-QA.md) | Visual QA notes |
 
-| File | Lines | Warning |
-| --- | ---: | --- |
-| VitTrade-Shared-Components-Home-Standard-Implementation-Plan.md | 12143 | Read checklist sections only |
-| VitTrade-Enterprise-Grade-UI-Standardization-Plan.md | 7007 | Section headers + active phase |
-| Wallet-UI-Home-Standardization-Plan.md | 3780 | Section headers + active phase |
-| Flutter-Enterprise-Clean-Codebase-Master-Plan.md | 1923 | Section headers + active phase |
+## Backend handoff
 
-## Audits (tool output, not chat dump)
+| File | When |
+| --- | --- |
+| `docs/02_FLUTTER_MIGRATION/*-Backend-Contract-Skeleton.md` | Remote API integration per module |
 
-| File | Lines | Use |
-| --- | ---: | --- |
-| VitTrade-Design-Token-Consistency-Audit.md | 2802 | `dart run tool/design_token_consistency_audit.dart --check` |
-| VitTrade-Body-Component-Consistency-Audit.md | varies | `dart run tool/body_component_consistency_audit.dart` |
+## Architecture
 
-Prefer audit **tools** + Headroom compress over pasting CSV/audit markdown into chat.
+| File | When |
+| --- | --- |
+| [VitTrade-Enterprise-Architecture-Report.md](05_ARCHITECTURE/VitTrade-Enterprise-Architecture-Report.md) | Architecture reference |
+
+## Screen references (on demand)
+
+| File | When |
+| --- | --- |
+| [HomePage-Flutter-Native-Standard.md](04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md) | Home module work |
+
+## Audit tools (run from `flutter_app/`)
+
+Prefer tools over static markdown dumps:
+
+```bash
+dart run tool/design_token_consistency_audit.dart --check
+dart run tool/body_component_consistency_audit.dart --check
+dart run tool/route_coverage_audit.dart --check
+dart run tool/navigation_edge_audit.dart --check
+```
+
+Generated CSV artifacts live under `docs/02_FLUTTER_MIGRATION/` when tools emit them.
 
 ## Cursor AI setup
 
 | Resource | Purpose |
 | --- | --- |
-| [.cursor/mcp.json](../.cursor/mcp.json) | headroom + gitnexus MCP |
+| `~/.cursor/mcp.json` (Home) | `gitnexus`, `dart` |
+| [.cursor/mcp.json](../.cursor/mcp.json) (Workspace) | `headroom` only |
 | [.cursor/rules/](../.cursor/rules/) | Cursor agent rules |
-| [scripts/headroom/README.md](../scripts/headroom/README.md) | Headroom daily start |
-| [scripts/Start-CursorSession.ps1](../scripts/Start-CursorSession.ps1) | Morning checklist |
-| [vittrade-minimal-diff.mdc](../.cursor/rules/vittrade-minimal-diff.mdc) | Auto when editing `flutter_app/**` — minimal diff, keep quality |
-| Policy | Luôn dùng **Cursor Auto**; tối ưu qua batch/GitNexus/Headroom, không chọn model thủ công |
+| [scripts/Start-CursorSession.ps1](../scripts/Start-CursorSession.ps1) | Daily startup |
 
-## GitNexus index
+Policy: use **Cursor Auto**; optimize via batch/GitNexus/Headroom.
 
-Local only (~730MB). Not committed. Refresh: `.\scripts\gitnexus\Refresh-Index.ps1`
+## Removed docs (2026-07-02)
+
+Completed migration plans, AI execution prompts, and audit markdown dumps were
+removed. Summary preserved in
+[ke-hoac-tong-the.md](02_FLUTTER_MIGRATION/ke-hoac-tong-the.md) § Completed
+migrations. Full history: git log on `docs/`.

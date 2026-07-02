@@ -27,6 +27,7 @@ const _riskTinySpace = AppSpacing.x1;
 const _riskCardSpace = AppSpacing.x3;
 const _riskControlExtent = 44.0;
 const _riskTabExtent = 44.0;
+
 enum _RiskTab { oco, positions, calculator }
 
 class RiskManagementDemoPage extends ConsumerStatefulWidget {
@@ -62,9 +63,9 @@ class _RiskManagementDemoPageState
         .snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
+      context,
+      shellRenderMode: mode,
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

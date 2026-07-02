@@ -95,27 +95,3 @@ class _SummaryMetric extends StatelessWidget {
     );
   }
 }
-
-class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.child});
-
-  final String title;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        VitSectionHeader(
-          title: title,
-          variant: VitSectionHeaderVariant.accentBar,
-          accentColor: _tradePrimary,
-          density: VitDensity.compact,
-        ),
-        const SizedBox(height: AppSpacing.x2),
-        child,
-      ],
-    );
-  }
-}

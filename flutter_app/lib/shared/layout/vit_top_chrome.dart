@@ -153,7 +153,12 @@ class VitTopChrome extends StatelessWidget {
           ),
           if (trailing != null) ...[
             const SizedBox(width: AppTopHeaderTokens.instrumentGap),
-            trailing!,
+            Flexible(
+              child: Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: trailing!,
+              ),
+            ),
           ] else if (actions.isNotEmpty) ...[
             const SizedBox(width: AppTopHeaderTokens.instrumentGap),
             _TopChromeActionRow(actions: actions),

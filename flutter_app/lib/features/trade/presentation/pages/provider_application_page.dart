@@ -8,15 +8,14 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/provider_application_progress_intro.dart';
 part '../widgets/provider_application_steps.dart';
@@ -82,39 +81,44 @@ class _ProviderApplicationPageState
 
     final step = _step!;
     final draft = _draft!;
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final scrollClearance = tradeScrollBottomInset(
+      context,
+      shellRenderMode: mode,
+    );
+    final footerPadding = scrollClearance;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-069 ProviderApplicationPage',
       child: Material(
         type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Đăng ký Provider',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: ProviderApplicationPage.contentKey,
-                  padding: AppSpacing.contentInsets.copyWith(
-                    top:
-                        AppSpacing.x4 +
-                        AppSpacing.x1 -
-                        AppSpacing.hairlineStroke,
-                    bottom: AppSpacing.x5 + AppSpacing.x1,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    fullBleed: true,
-                    gap: VitContentGap.tight,
-                    children: [
-                      _ProgressBars(steps: snapshot.steps, activeStep: step),
-                      const SizedBox(height: AppSpacing.x4),
-                      switch (step) {
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            VitHeader(
+              title: 'Đăng ký Provider',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+            ),
+            Expanded(
+              child: VitInsetScrollView(
+                key: ProviderApplicationPage.contentKey,
+                bottomInset: scrollClearance,
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  gap: VitContentGap.tight,
+                  children: [
+                    VitTradeSection(
+                      title: 'Tiến trình',
+                      child: _ProgressBars(
+                        steps: snapshot.steps,
+                        activeStep: step,
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: _stepTitle(step),
+                      child: switch (step) {
                         TradeProviderApplicationStep.intro => _IntroStep(
                           snapshot: snapshot,
                         ),
@@ -134,36 +138,100 @@ class _ProviderApplicationPageState
                           onChanged: _updateDraft,
                           strategyController: _strategyController,
                         ),
-                        TradeProviderApplicationStep.review => _ReviewStep(
-                          draft: draft,
-                          onChanged: _updateDraft,
+                        TradeProviderApplicationStep.review => Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _ReviewStep(draft: draft, onChanged: _updateDraft),
+                            const SizedBox(height: AppSpacing.x4),
+                            VitFinancialSafetySummary(
+                              title: 'Review provider application',
+                              contractId: 'SC-069 Provider application',
+                              footer:
+                                  'Confirm KYC, disclosure, fiduciary duty, fee limits, and terms before submitting your provider application.',
+                              items: [
+                                VitFinancialSafetyItem(
+                                  label: 'KYC verified',
+                                  value: draft.hasKyc ? 'Yes' : 'Pending',
+                                  leading: const Icon(
+                                    Icons.verified_user_outlined,
+                                  ),
+                                  valueColor: draft.hasKyc
+                                      ? AppColors.buy
+                                      : AppColors.warn,
+                                ),
+                                VitFinancialSafetyItem(
+                                  label: 'Disclosures accepted',
+                                  value:
+                                      draft.agreedToDisclosure &&
+                                          draft.agreedToFiduciary
+                                      ? 'Complete'
+                                      : 'Incomplete',
+                                  leading: const Icon(
+                                    Icons.description_outlined,
+                                  ),
+                                  valueColor:
+                                      draft.agreedToDisclosure &&
+                                          draft.agreedToFiduciary
+                                      ? AppColors.buy
+                                      : AppColors.warn,
+                                ),
+                                VitFinancialSafetyItem(
+                                  label: 'Performance fee',
+                                  value:
+                                      '${draft.performanceFee.toStringAsFixed(0)}%',
+                                  leading: const Icon(Icons.percent_rounded),
+                                  valueColor: AppColors.text2,
+                                ),
+                                VitFinancialSafetyItem(
+                                  label: 'Terms accepted',
+                                  value: draft.agreedToTerms
+                                      ? 'Yes'
+                                      : 'Required',
+                                  leading: const Icon(Icons.gavel_outlined),
+                                  valueColor: draft.agreedToTerms
+                                      ? AppColors.buy
+                                      : AppColors.sell,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       },
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: AppSpacing.providerApplicationFooterPadding(
-                    DeviceMetrics.nativeBottomChrome + AppSpacing.contentPad,
-                  ),
-                  child: VitStickyFooter(
-                    backgroundColor: AppColors.bg,
-                    child: _FooterButton(
-                      step: step,
-                      enabled: _canProceed(step, draft),
-                      onPressed: () => _handlePrimaryAction(controller),
                     ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: AppSpacing.providerApplicationFooterPadding(
+                  footerPadding,
+                ),
+                child: VitStickyFooter(
+                  backgroundColor: AppColors.bg,
+                  child: _FooterButton(
+                    step: step,
+                    enabled: _canProceed(step, draft),
+                    onPressed: () => _handlePrimaryAction(controller),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  String _stepTitle(TradeProviderApplicationStep step) {
+    return switch (step) {
+      TradeProviderApplicationStep.intro => 'Giới thiệu',
+      TradeProviderApplicationStep.requirements => 'Kiểm tra điều kiện',
+      TradeProviderApplicationStep.disclosure => 'Công bố',
+      TradeProviderApplicationStep.fees => 'Phí & chiến lược',
+      TradeProviderApplicationStep.review => 'Xem lại',
+    };
   }
 
   void _updateDraft(TradeProviderApplicationDraft draft) {

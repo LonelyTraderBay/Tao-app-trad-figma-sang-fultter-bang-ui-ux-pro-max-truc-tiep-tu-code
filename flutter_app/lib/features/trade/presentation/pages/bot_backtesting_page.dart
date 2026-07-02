@@ -5,12 +5,11 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -68,10 +67,10 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
         .watch(tradeReadModelControllerProvider)
         .getBotBacktesting();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomGap = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
+    const runFooterHeight = AppSpacing.inputHeight + AppSpacing.x4;
+    final scrollEndClearance =
+        tradeScrollBottomInset(context, shellRenderMode: mode) +
+        runFooterHeight;
     final range = snapshot.dateRanges.firstWhere(
       (item) => item.id == _selectedRange,
       orElse: () => snapshot.dateRanges.first,
@@ -82,91 +81,92 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
       semanticLabel: 'SC-125 BotBacktestingPage',
       child: Material(
         color: _backtestBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Backtest Strategy',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotBacktestingPage.contentKey,
-                  padding: AppSpacing.zeroInsets,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: AppSpacing.tradeBotScrollPadding,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          customGap: AppSpacing.tradeBotRowGap,
-                          fullBleed: true,
-                          children: [
-                            const VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Review backtest assumptions',
-                              message:
-                                  'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
-                            ),
-                            const _SectionLabel('Strategy Selection'),
-                            _StrategyGrid(
-                              strategies: snapshot.strategies,
-                              selectedId: _selectedStrategy,
-                              onChanged: (id) =>
-                                  setState(() => _selectedStrategy = id),
-                            ),
-                            const _SectionLabel('Trading Pair'),
-                            _PairGrid(
-                              pairs: snapshot.pairs,
-                              selectedPair: _selectedPair,
-                              onChanged: (pair) =>
-                                  setState(() => _selectedPair = pair),
-                            ),
-                            const _SectionLabel('Date Range'),
-                            _DateRangeGrid(
-                              ranges: snapshot.dateRanges,
-                              selectedId: _selectedRange,
-                              onChanged: (id) =>
-                                  setState(() => _selectedRange = id),
-                            ),
-                            const _SectionLabel('Initial Capital'),
-                            _CapitalInput(controller: _capitalController),
-                            _BacktestPeriodCard(
-                              strategyId: _selectedStrategy,
-                              pair: _selectedPair,
-                              range: range,
-                              capital: _capitalController.text,
-                            ),
-                          ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            VitHeader(
+              title: 'Backtest Strategy',
+              showBack: true,
+              onBack: () => context.go(AppRoutePaths.tradeBots),
+            ),
+            Expanded(
+              child: VitInsetScrollView(
+                key: BotBacktestingPage.contentKey,
+                bottomInset: scrollEndClearance,
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  density: VitDensity.compact,
+                  children: [
+                    VitTradeSection(
+                      title: 'Đánh giá rủi ro',
+                      child: const VitCard(
+                        variant: VitCardVariant.inner,
+                        padding: AppSpacing.cardPaddingCompact,
+                        child: VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Review backtest assumptions',
+                          message:
+                              'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotContentGap),
-                      _RunFooter(onRun: () => _handleRun(snapshot)),
-                      const Padding(
-                        padding: AppSpacing.tradeBotScrollPadding,
-                        child: TradeBodyReviewSection(
-                          title: 'Backtest body review',
-                          message: 'Bot backtesting body reviewed',
-                          detail:
-                              'Strategy, pair, range, capital, simulated period, submitting, and result states stay visible.',
-                          primary:
-                              'Assumption review remains above strategy and capital controls.',
-                          secondary:
-                              'Selected strategy, pair, and range stay visible before running.',
-                          tertiary:
-                              'Backtest output is framed as simulation, not guaranteed performance.',
-                        ),
+                    ),
+                    VitTradeSection(
+                      title: 'Strategy Selection',
+                      child: _StrategyGrid(
+                        strategies: snapshot.strategies,
+                        selectedId: _selectedStrategy,
+                        onChanged: (id) =>
+                            setState(() => _selectedStrategy = id),
                       ),
-                      SizedBox(height: bottomGap),
-                    ],
-                  ),
+                    ),
+                    VitTradeSection(
+                      title: 'Trading Pair',
+                      child: _PairGrid(
+                        pairs: snapshot.pairs,
+                        selectedPair: _selectedPair,
+                        onChanged: (pair) =>
+                            setState(() => _selectedPair = pair),
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Date Range',
+                      child: _DateRangeGrid(
+                        ranges: snapshot.dateRanges,
+                        selectedId: _selectedRange,
+                        onChanged: (id) => setState(() => _selectedRange = id),
+                      ),
+                    ),
+                    VitTradeSection(
+                      title: 'Initial Capital',
+                      child: _CapitalInput(controller: _capitalController),
+                    ),
+                    VitTradeSection(
+                      title: 'Backtest period',
+                      child: _BacktestPeriodCard(
+                        strategyId: _selectedStrategy,
+                        pair: _selectedPair,
+                        range: range,
+                        capital: _capitalController.text,
+                      ),
+                    ),
+                    _RunFooter(onRun: () => _handleRun(snapshot)),
+                    const TradeBodyReviewSection(
+                      title: 'Backtest body review',
+                      message: 'Bot backtesting body reviewed',
+                      detail:
+                          'Strategy, pair, range, capital, simulated period, submitting, and result states stay visible.',
+                      primary:
+                          'Assumption review remains above strategy and capital controls.',
+                      secondary:
+                          'Selected strategy, pair, and range stay visible before running.',
+                      tertiary:
+                          'Backtest output is framed as simulation, not guaranteed performance.',
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

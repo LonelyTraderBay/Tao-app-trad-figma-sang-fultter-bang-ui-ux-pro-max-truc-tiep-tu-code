@@ -8,21 +8,18 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
 part '../widgets/performance_scenarios_intro_widgets.dart';
 part '../widgets/performance_scenarios_outcome_widgets.dart';
 
-const _scenarioBackground = AppColors.bg;
 const _scenarioBorder = AppColors.borderSolid;
 const _scenarioPrimary = AppColors.primary;
 const _scenarioRed = AppColors.sell;
@@ -58,86 +55,84 @@ class _PerformanceScenariosPageState
         .watch(tradeReadModelControllerProvider)
         .getPerformanceScenarios();
     final selectedPeriod = _holdingPeriod ?? snapshot.defaultHoldingPeriod;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Performance Scenarios',
+      subtitle: 'Potential Outcomes',
       semanticLabel: 'SC-109 PerformanceScenariosPage',
-      child: Material(
-        color: _scenarioBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Performance Scenarios',
-            subtitle: 'Potential Outcomes',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      contentKey: PerformanceScenariosPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Review performance scenario risk',
+            message:
+                'Confirm fees, loss limits, assumptions, and next steps before relying on modeled copy-trading outcomes.',
+            density: VitDensity.compact,
           ),
+        ),
+        VitTradeComplianceSection(
+          title: 'Scenario status',
+          statusPill: VitStatusPill(
+            label: '$selectedPeriod year hold',
+            status: VitStatusPillStatus.info,
+            size: VitStatusPillSize.sm,
+          ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Investment',
+              value: '€${snapshot.investment.toStringAsFixed(0)}',
+            ),
+            VitTradeComplianceItem(
+              label: 'Scenarios',
+              value: '${snapshot.scenarios.length} modeled',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Outcomes',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: PerformanceScenariosPage.contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review performance scenario risk',
-                        message:
-                            'Confirm fees, loss limits, assumptions, and next steps before relying on modeled copy-trading outcomes.',
-                        density: VitDensity.compact,
-                      ),
-                      const _WarningNotice(),
-                      _InvestmentCard(investment: snapshot.investment),
-                      _HoldingPeriodSelector(
-                        periods: snapshot.holdingPeriods,
-                        selectedPeriod: selectedPeriod,
-                        onChanged: (value) =>
-                            setState(() => _holdingPeriod = value),
-                      ),
-                      VitPageSection(
-                        label: 'Potential Outcomes',
-                        accentColor: _scenarioPrimary,
-                        density: VitDensity.compact,
-                        children: [
-                          for (final scenario in snapshot.scenarios)
-                            _ScenarioCard(
-                              scenario: scenario,
-                              investment: snapshot.investment,
-                              holdingPeriod: selectedPeriod,
-                            ),
-                        ],
-                      ),
-                      const _InfoNote(),
-                      const TradeBodyReviewSection(
-                        title: 'Scenario body review',
-                        message: 'Performance scenario body reviewed',
-                        detail:
-                            'Holding period, modeled outcomes, warnings, assumptions, empty, and result states stay visible.',
-                        primary:
-                            'Risk warning and investment summary stay before modeled outcomes.',
-                        secondary:
-                            'Scenario cards remain assumptions, not return promises.',
-                        tertiary:
-                            'Holding-period controls stay tied to visible outcome calculations.',
-                      ),
-                    ],
-                  ),
-                ),
+              const _WarningNotice(),
+              _InvestmentCard(investment: snapshot.investment),
+              _HoldingPeriodSelector(
+                periods: snapshot.holdingPeriods,
+                selectedPeriod: selectedPeriod,
+                onChanged: (value) => setState(() => _holdingPeriod = value),
+              ),
+              VitPageSection(
+                label: 'Potential Outcomes',
+                accentColor: _scenarioPrimary,
+                density: VitDensity.compact,
+                children: [
+                  for (final scenario in snapshot.scenarios)
+                    _ScenarioCard(
+                      scenario: scenario,
+                      investment: snapshot.investment,
+                      holdingPeriod: selectedPeriod,
+                    ),
+                ],
+              ),
+              const _InfoNote(),
+              const TradeBodyReviewSection(
+                title: 'Scenario body review',
+                message: 'Performance scenario body reviewed',
+                detail:
+                    'Holding period, modeled outcomes, warnings, assumptions, empty, and result states stay visible.',
+                primary:
+                    'Risk warning and investment summary stay before modeled outcomes.',
+                secondary:
+                    'Scenario cards remain assumptions, not return promises.',
+                tertiary:
+                    'Holding-period controls stay tied to visible outcome calculations.',
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

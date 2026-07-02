@@ -71,7 +71,8 @@ For detailed security guidance, see `security-and-hardening`. Does the change in
 
 ### 5. Performance
 
-For detailed profiling and optimization, see `performance-optimization`. Does the change introduce performance problems?
+For detailed profiling and optimization, see `.codex/skills/performance-optimization/SKILL.md`.
+Does the change introduce performance problems?
 
 - Any N+1 query patterns?
 - Any unbounded loops or unconstrained data fetching?
@@ -310,6 +311,34 @@ Part of code review is dependency review:
 - [ ] **Approve** — Ready to merge
 - [ ] **Request changes** — Issues must be addressed
 ```
+
+## Receiving review feedback (author)
+
+When you are the author addressing PR or review comments:
+
+1. **READ** all items without implementing.
+2. **CLARIFY** anything unclear before touching code (partial understanding = wrong fix).
+3. **VERIFY** each suggestion against this codebase before implementing.
+4. **IMPLEMENT** one item at a time; run focused `flutter test` after each.
+5. **RESPOND** with what changed — actions over words.
+
+**Verify before implementing:**
+
+- Prefer existing `Vit*` shared widgets over new local duplicates.
+- Preserve Arena points-only and Prediction Markets financial boundaries (`AGENTS.md`).
+- Run GitNexus `context()` when a comment changes a shared symbol or route.
+- YAGNI: grep or `.codex/skills/vittrade-minimal-review/SKILL.md` before
+  "implementing properly" for unused or speculative features.
+
+**Forbidden:** performative agreement ("Great point!", "You're absolutely right!");
+batch-implementing all comments without per-item verification; thanks instead of fix.
+
+**Ack format:** `Fixed: <what> in <path>.` — not gratitude.
+
+**Push back** (with technical reasoning) when a suggestion breaks product boundaries,
+duplicates `Vit*`, adds unused abstraction, or conflicts with the active plan or
+`AGENTS.md`. Involve the user if the comment conflicts with prior architectural decisions.
+
 ## See Also
 
 - For detailed security review guidance, see `references/security-checklist.md`

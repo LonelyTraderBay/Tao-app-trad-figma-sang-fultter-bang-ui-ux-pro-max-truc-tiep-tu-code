@@ -8,21 +8,17 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/regulatory_inspection_ready_page_sections.dart';
 part '../widgets/regulatory_inspection_ready_page_common.dart';
 
-const _inspectionBackground = AppColors.bg;
 const _inspectionPanel2 = AppColors.surface2;
 const _inspectionBorder = AppColors.borderSolid;
 const _inspectionGreen = AppColors.buy;
@@ -43,73 +39,65 @@ class RegulatoryInspectionReadyPage extends ConsumerWidget {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getRegulatoryInspectionReady();
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Regulatory Compliance',
+      subtitle: 'Inspection Ready Dashboard',
       semanticLabel: 'SC-116 RegulatoryInspectionReadyPage',
-      child: Material(
-        color: _inspectionBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Regulatory Compliance',
-            subtitle: 'Inspection Ready Dashboard',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
-            actions: const [
-              VitHeaderActionItem(
-                type: VitHeaderActionType.export,
-                onPressed: null,
-              ),
-            ],
+      contentKey: contentKey,
+      shellRenderMode: shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      headerActions: [
+        VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
+      ],
+      children: [
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            density: VitDensity.compact,
+            title: 'Review inspection readiness evidence',
+            message:
+                'Confirm report scope, access limits, retained records, and next steps before sharing compliance material.',
           ),
+        ),
+        VitTradeComplianceSection(
+          title: 'Inspection status',
+          statusPill: VitStatusPill(
+            label: 'Score ${snapshot.complianceScore}',
+            status: VitStatusPillStatus.success,
+            size: VitStatusPillSize.sm,
+          ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Frameworks',
+              value: '${snapshot.frameworks.length} covered',
+            ),
+            VitTradeComplianceItem(
+              label: 'Documents',
+              value: '${snapshot.documents.length} retained',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'Readiness',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.rowPy,
-                    right: AppSpacing.contentPad,
-                    bottom: scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
-                        title: 'Review inspection readiness evidence',
-                        message:
-                            'Confirm report scope, access limits, retained records, and next steps before sharing compliance material.',
-                      ),
-                      _ComplianceScoreCard(snapshot: snapshot),
-                      _QuickStats(stats: snapshot.stats),
-                      const _SectionLabel('Regulatory Framework Coverage'),
-                      for (final framework in snapshot.frameworks)
-                        _FrameworkCard(framework: framework),
-                      const _SectionLabel('Document Repository'),
-                      for (final document in snapshot.documents)
-                        _DocumentCard(document: document),
-                      const _SectionLabel('Regulatory Inspector Access'),
-                      _InspectorPortalCard(snapshot: snapshot),
-                      _ReportButton(snapshot: snapshot),
-                    ],
-                  ),
-                ),
-              ),
+              _ComplianceScoreCard(snapshot: snapshot),
+              _QuickStats(stats: snapshot.stats),
+              const _SectionLabel('Regulatory Framework Coverage'),
+              for (final framework in snapshot.frameworks)
+                _FrameworkCard(framework: framework),
+              const _SectionLabel('Document Repository'),
+              for (final document in snapshot.documents)
+                _DocumentCard(document: document),
+              const _SectionLabel('Regulatory Inspector Access'),
+              _InspectorPortalCard(snapshot: snapshot),
+              _ReportButton(snapshot: snapshot),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

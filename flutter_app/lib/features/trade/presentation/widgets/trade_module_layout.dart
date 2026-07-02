@@ -58,22 +58,35 @@ class VitTradeSection extends StatelessWidget {
     required this.child,
     this.actionLabel,
     this.onAction,
+    this.headerTrailing,
   });
 
   final String title;
   final Widget child;
   final String? actionLabel;
   final VoidCallback? onAction;
+  final Widget? headerTrailing;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitSectionHeader(
-          title: title,
-          actionLabel: actionLabel,
-          onAction: onAction,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: VitSectionHeader(
+                title: title,
+                actionLabel: actionLabel,
+                onAction: onAction,
+              ),
+            ),
+            if (headerTrailing != null) ...[
+              const SizedBox(width: AppSpacing.x2),
+              headerTrailing!,
+            ],
+          ],
         ),
         const SizedBox(height: AppSpacing.tradePageContentGap),
         child,
@@ -93,6 +106,7 @@ class VitTradeDetailScaffold extends StatelessWidget {
     this.contentKey,
     this.showBack = true,
     this.onBack,
+    this.backKey,
     this.bottomInset,
     this.shellRenderMode,
     this.headerActions = const [],
@@ -107,6 +121,7 @@ class VitTradeDetailScaffold extends StatelessWidget {
   final Key? contentKey;
   final bool showBack;
   final VoidCallback? onBack;
+  final Key? backKey;
   final double? bottomInset;
   final ShellRenderMode? shellRenderMode;
   final List<VitHeaderActionItem> headerActions;
@@ -127,31 +142,35 @@ class VitTradeDetailScaffold extends StatelessWidget {
               ));
 
     return VitPageLayout(
-      variant: VitPageVariant.defaultPage,
+      variant: VitPageVariant.flush,
       semanticLabel: semanticLabel,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          VitHeader(
-            title: title,
-            subtitle: subtitle,
-            showBack: showBack,
-            onBack: onBack,
-            actions: headerActions,
-            trailing: trailing,
-          ),
-          Expanded(
-            child: VitInsetScrollView(
-              key: contentKey,
-              bottomInset: resolvedInset,
-              child: VitPageContent(
-                padding: VitContentPadding.compact,
-                density: VitDensity.compact,
-                children: children,
+      child: Material(
+        type: MaterialType.transparency,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            VitHeader(
+              title: title,
+              subtitle: subtitle,
+              showBack: showBack,
+              onBack: onBack,
+              backKey: backKey,
+              actions: headerActions,
+              trailing: trailing,
+            ),
+            Expanded(
+              child: VitInsetScrollView(
+                key: contentKey,
+                bottomInset: resolvedInset,
+                child: VitPageContent(
+                  padding: VitContentPadding.compact,
+                  density: VitDensity.compact,
+                  children: children,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -168,6 +187,7 @@ class VitTradeHubScaffold extends StatelessWidget {
     this.contentKey,
     this.showBack = true,
     this.onBack,
+    this.backKey,
     this.shellRenderMode,
     this.useCopyTradingInset = false,
     this.headerActions = const [],
@@ -181,6 +201,7 @@ class VitTradeHubScaffold extends StatelessWidget {
   final Key? contentKey;
   final bool showBack;
   final VoidCallback? onBack;
+  final Key? backKey;
   final ShellRenderMode? shellRenderMode;
   final bool useCopyTradingInset;
   final List<VitHeaderActionItem> headerActions;
@@ -209,6 +230,7 @@ class VitTradeHubScaffold extends StatelessWidget {
             subtitle: subtitle,
             showBack: showBack,
             onBack: onBack,
+            backKey: backKey,
             actions: headerActions,
             trailing: trailing,
           ),

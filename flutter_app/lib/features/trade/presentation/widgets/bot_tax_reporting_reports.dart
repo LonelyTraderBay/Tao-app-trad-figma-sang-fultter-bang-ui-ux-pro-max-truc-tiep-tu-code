@@ -233,10 +233,8 @@ class _GenerateFooter extends StatelessWidget {
       ),
     );
 
-    return Positioned(
-      left: 0,
-      right: 0,
-      bottom: bottomInset,
+    return Padding(
+      padding: EdgeInsetsDirectional.only(bottom: bottomInset),
       child: child,
     );
   }

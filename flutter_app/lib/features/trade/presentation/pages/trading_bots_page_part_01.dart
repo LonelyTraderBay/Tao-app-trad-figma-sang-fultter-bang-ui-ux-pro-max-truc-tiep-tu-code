@@ -1,55 +1,7 @@
 part of 'trading_bots_page.dart';
 
-class _TradingBotsHeader extends StatelessWidget {
-  const _TradingBotsHeader({required this.onBack});
-
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.inputHeight + AppSpacing.hairlineStroke,
-      child: Row(
-        children: [
-          VitIconButton(
-            key: TradingBotsPage.backKey,
-            icon: Icons.chevron_left_rounded,
-            tooltip: 'Back to Trade',
-            onPressed: onBack,
-            variant: VitIconButtonVariant.transparent,
-            size: VitIconButtonSize.md,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Trading Bots',
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    height: AppSpacing.tradeBotLineHeightShort,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Bot giao dịch · Trade',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.tradeBotLineHeightTight,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _BotsHero extends StatelessWidget {
-  const _BotsHero({required this.bots});
+class _BotsMetricsSummary extends StatelessWidget {
+  const _BotsMetricsSummary({required this.bots});
 
   final List<TradeBot> bots;
 
@@ -61,72 +13,30 @@ class _BotsHero extends StatelessWidget {
     final totalInvestment = bots.fold(0.0, (sum, bot) => sum + bot.investment);
     final totalProfit = bots.fold(0.0, (sum, bot) => sum + bot.profit);
     return VitCard(
-      variant: VitCardVariant.hero,
-      radius: VitCardRadius.large,
-      borderColor: AppColors.primary20,
-      padding: AppSpacing.tradeBotHeroPadding,
-      child: Column(
+      variant: VitCardVariant.inner,
+      padding: VitDensity.compact.cardPadding,
+      child: Row(
         children: [
-          Row(
-            children: [
-              VitCard(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
-                variant: VitCardVariant.inner,
-                radius: VitCardRadius.standard,
-                borderColor: AppColors.primary20,
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.smart_toy_outlined,
-                  color: AppColors.primarySoft,
-                  size: AppSpacing.iconMd,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x4),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Giao dịch tự động 24/7',
-                      style: AppTextStyles.sectionTitle.copyWith(
-                        color: AppColors.onAccent,
-                        height: AppSpacing.tradeBotLineHeightCaption,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x2),
-                    Text(
-                      'Bot hoạt động ngay cả khi bạn ngủ',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.onAccent.withValues(alpha: .65),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          Expanded(
+            child: _CompactStat(
+              value: '$running',
+              label: 'Bot đang chạy',
+              valueColor: AppColors.buy,
+            ),
           ),
-          const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              _HeroStat(
-                value: '$running',
-                label: 'Bot đang chạy',
-                valueColor: AppColors.buy,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              _HeroStat(
-                value: '\$${_formatWholeNumber(totalInvestment)}',
-                label: 'Tổng đầu tư',
-                valueColor: AppColors.onAccent,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              _HeroStat(
-                value: _formatSignedMoney(totalProfit),
-                label: 'Lãi nhuận',
-                valueColor: totalProfit >= 0 ? AppColors.buy : AppColors.sell,
-              ),
-            ],
+          Expanded(
+            child: _CompactStat(
+              value: '\$${_formatWholeNumber(totalInvestment)}',
+              label: 'Tổng đầu tư',
+              valueColor: AppColors.text1,
+            ),
+          ),
+          Expanded(
+            child: _CompactStat(
+              value: _formatSignedMoney(totalProfit),
+              label: 'Lãi nhuận',
+              valueColor: totalProfit >= 0 ? AppColors.buy : AppColors.sell,
+            ),
           ),
         ],
       ),
@@ -134,8 +44,8 @@ class _BotsHero extends StatelessWidget {
   }
 }
 
-class _HeroStat extends StatelessWidget {
-  const _HeroStat({
+class _CompactStat extends StatelessWidget {
+  const _CompactStat({
     required this.value,
     required this.label,
     required this.valueColor,
@@ -147,34 +57,23 @@ class _HeroStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        height: AppSpacing.launchpadBox64 + AppSpacing.x3,
-        alignment: Alignment.center,
-        variant: VitCardVariant.inner,
-        borderColor: AppColors.onAccent.withValues(alpha: .08),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              value,
-              style: AppTextStyles.numericCode.copyWith(
-                color: valueColor,
-                fontFeatures: AppTextStyles.tabularFigures,
-                height: AppSpacing.tradeBotLineHeightTight,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.onAccent.withValues(alpha: .45),
-              ),
-            ),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          value,
+          style: AppTextStyles.numericCode.copyWith(
+            color: valueColor,
+            fontFeatures: AppTextStyles.tabularFigures,
+            height: AppSpacing.tradeBotLineHeightTight,
+          ),
         ),
-      ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+        ),
+      ],
     );
   }
 }

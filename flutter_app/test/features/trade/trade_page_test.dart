@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/trade/data/trade_repository.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/convert_page.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_confirm_sheet.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -16,9 +17,10 @@ void main() {
   Future<void> pumpTrade(
     WidgetTester tester, {
     String initialLocation = AppRoutePaths.trade,
+    Size viewport = const Size(440, 956),
   }) async {
     tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(440, 956);
+    tester.view.physicalSize = viewport;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
@@ -81,10 +83,9 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(2));
-    expect(find.text('24H'), findsOneWidget);
-    expect(find.text('70821.46'), findsWidgets);
-    expect(find.text('10,200.00 USDT'), findsOneWidget);
+    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(1));
+    expect(find.text('67,543.21'), findsAtLeastNWidgets(1));
+    expect(find.text('Bước 1 · Chọn hướng'), findsOneWidget);
   });
 
   testWidgets('SC-049 side query preselects sell and invalid side falls back', (
@@ -123,20 +124,18 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(2));
+    expect(find.text('BTC/USDT'), findsAtLeastNWidgets(1));
     expect(find.byKey(TradePage.quickNavKey('spot')), findsOneWidget);
     expect(find.byKey(TradePage.quickNavKey('convert')), findsOneWidget);
     expect(find.byKey(TradePage.quickNavKey('futures')), findsOneWidget);
-    expect(find.text('67,543.21'), findsOneWidget);
-    expect(find.text('Charts'), findsOneWidget);
-    expect(find.text('Trade'), findsOneWidget);
-    expect(find.textContaining('Lệnh mở'), findsAtLeastNWidgets(1));
+    expect(find.text('67,543.21'), findsAtLeastNWidgets(1));
+    expect(find.text('Chế độ Pro'), findsNothing);
+    expect(find.text('Giao dịch'), findsAtLeastNWidgets(1));
+    expect(find.text('Bước 1 · Chọn hướng'), findsOneWidget);
+    expect(find.text('Charts'), findsNothing);
     expect(find.byKey(TradePage.buySideKey), findsOneWidget);
     expect(find.text('BÁN'), findsOneWidget);
-    expect(find.text('Giới hạn'), findsOneWidget);
-    expect(find.text('TP/SL'), findsOneWidget);
-    expect(find.text('Order preview'), findsOneWidget);
-    expect(find.text('Risk check'), findsOneWidget);
+    expect(find.text('Tiếp theo'), findsOneWidget);
   });
 
   testWidgets('SC-048 first viewport reaches order side switch', (
@@ -152,25 +151,6 @@ void main() {
     );
   });
 
-  testWidgets('SC-048 switches market data tabs and order side', (
-    tester,
-  ) async {
-    await pumpTrade(tester);
-
-    await tester.tap(find.byKey(TradePage.orderBookTabKey));
-    await tester.pumpAndSettle();
-    expect(find.text('Giá'), findsOneWidget);
-    expect(find.text('67545.13'), findsWidgets);
-
-    await tester.tap(find.byKey(TradePage.tradesTabKey));
-    await tester.pumpAndSettle();
-    expect(find.text('23:29:14'), findsOneWidget);
-
-    await tester.tap(find.byKey(TradePage.sellSideKey));
-    await tester.pumpAndSettle();
-    expect(find.text('Bán BTC'), findsNothing);
-  });
-
   testWidgets('SC-048 amount shortcuts update the order draft', (tester) async {
     await pumpTrade(tester);
 
@@ -183,7 +163,30 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('0.037'), findsWidgets);
-    expect(find.text('Mua BTC'), findsOneWidget);
+    expect(find.text('Xem lại & xác nhận'), findsOneWidget);
+  });
+
+  testWidgets('SC-048 confirm sheet gates order submission', (tester) async {
+    await pumpTrade(tester);
+
+    await tester.scrollUntilVisible(
+      find.byKey(TradePage.pctKey(25)),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(TradePage.pctKey(25)));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(TradePage.submitKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(TradePage.confirmSheetKey), findsOneWidget);
+    expect(find.text('Xác nhận gửi'), findsOneWidget);
+
+    await tester.tap(find.byKey(VitTradeConfirmKeys.confirmSubmit));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('ORD-'), findsWidgets);
   });
 
   testWidgets('SC-048 quick nav opens SC-056 ConvertPage', (tester) async {
@@ -198,9 +201,7 @@ void main() {
     expect(find.text('Convert / Swap'), findsOneWidget);
   });
 
-  testWidgets('SC-048 360px Charts and Trade view modes stay usable', (
-    tester,
-  ) async {
+  testWidgets('SC-048 360px simple layout stays usable', (tester) async {
     configureFirstViewport(tester, VitFirstViewport.minimumPhone);
     await tester.pumpWidget(
       ProviderScope(
@@ -214,22 +215,11 @@ void main() {
     expect(find.byType(TradePage), findsOneWidget);
     expectActionableInFirstViewport(
       tester,
-      find.byKey(TradePage.viewModeChartsKey),
-      routeName: 'TradePage',
-      actionLabel: 'Charts view mode toggle',
-    );
-    expect(find.byKey(TradePage.orderBookTabKey), findsOneWidget);
-
-    await tester.tap(find.byKey(TradePage.viewModeTradeKey));
-    await tester.pumpAndSettle();
-
-    expectActionableInFirstViewport(
-      tester,
       find.byKey(TradePage.buySideKey),
       routeName: 'TradePage',
-      actionLabel: 'buy side switch in Trade split mode',
+      actionLabel: 'buy side switch',
     );
-    expect(find.text('Giá'), findsOneWidget);
+    expect(find.text('Charts'), findsNothing);
   });
 
   testWidgets('SC-048 product hub follows enterprise product order', (
@@ -247,6 +237,11 @@ void main() {
       expect(find.byKey(TradePage.quickNavKey(id)), findsOneWidget);
     }
 
+    await tester.scrollUntilVisible(
+      find.text('Thêm'),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('Thêm'));
     await tester.pumpAndSettle();
 

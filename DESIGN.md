@@ -1,0 +1,250 @@
+---
+version: alpha
+name: VitTrade Dark Enterprise
+description: Dark-first crypto trading UI — phone-first 360px+, shared Vit* primitives, theme tokens in flutter_app/lib/app/theme/
+colors:
+  bg: "#07090D"
+  surface: "#10141B"
+  surface2: "#171C24"
+  surface3: "#222936"
+  borderSolid: "#2D3440"
+  primary: "#E58A00"
+  primaryDark: "#B96000"
+  primarySoft: "#F5A524"
+  buy: "#10B981"
+  buyDark: "#059669"
+  sell: "#EF4444"
+  sellDark: "#DC2626"
+  accent: "#8B5CF6"
+  info: "#3B82F6"
+  caution: "#F59E0B"
+  text1: "#F5F7FA"
+  text2: "#A7AFBF"
+  text3: "#667085"
+  textDisabled: "#566175"
+  cardBg: "#10141B"
+  cardBorder: "#12FFFFFF"
+  divider: "#0DFFFFFF"
+typography:
+  micro:
+    fontSize: 10px
+    fontWeight: 400
+    lineHeight: 1.5
+  caption:
+    fontSize: 13px
+    fontWeight: 400
+    lineHeight: 1.5
+  body:
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.5
+  base:
+    fontSize: 16px
+    fontWeight: 400
+    lineHeight: 1.5
+  control:
+    fontSize: 14px
+    fontWeight: 600
+    lineHeight: 1
+  sectionTitle:
+    fontSize: 21px
+    fontWeight: 700
+    lineHeight: 1.272
+  pageTitle:
+    fontSize: 26px
+    fontWeight: 700
+    lineHeight: 1.272
+  heroNumber:
+    fontSize: 34px
+    fontWeight: 700
+    lineHeight: 1.272
+  display:
+    fontSize: 43px
+    fontWeight: 700
+    lineHeight: 1.618
+rounded:
+  sm: 8px
+  input: 14px
+  card: 16px
+  cardLarge: 24px
+  pill: 999px
+spacing:
+  x1: 3px
+  x2: 5px
+  x3: 8px
+  x4: 13px
+  x5: 21px
+  x6: 34px
+  x7: 55px
+  contentPad: 20px
+  sectionGap: 20px
+  rowPy: 14px
+  inputHeight: 52px
+  ctaHeight: 52px
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.text1}"
+    rounded: "{rounded.input}"
+    height: "{spacing.ctaHeight}"
+  button-buy:
+    backgroundColor: "{colors.buy}"
+    textColor: "{colors.text1}"
+    rounded: "{rounded.input}"
+  button-sell:
+    backgroundColor: "{colors.sell}"
+    textColor: "{colors.text1}"
+    rounded: "{rounded.input}"
+  card-standard:
+    backgroundColor: "{colors.cardBg}"
+    rounded: "{rounded.card}"
+  card-large:
+    backgroundColor: "{colors.cardBg}"
+    rounded: "{rounded.cardLarge}"
+  input-field:
+    backgroundColor: "{colors.surface2}"
+    textColor: "{colors.text1}"
+    rounded: "{rounded.input}"
+    height: "{spacing.inputHeight}"
+  status-pill:
+    rounded: "{rounded.pill}"
+---
+
+# VitTrade Design System
+
+## Overview
+
+VitTrade is an enterprise crypto trading app with a **dark baseline** UI. The visual
+identity is dense but readable: deep ink backgrounds, warm amber primary actions,
+semantic green/red for buy/sell, and layered surfaces for cards and terminals.
+
+- **Baseline:** dark theme only for new work.
+- **Layout:** phone-first from **360px** width upward.
+- **Architecture:** reuse shared `Vit*` widgets before local scaffolds.
+- **Authority:** `AGENTS.md` overrides this file for product boundaries, financial
+  safety, and required migration scope.
+
+### Flutter token mapping
+
+| DESIGN.md | Dart |
+| --- | --- |
+| `colors.primary` | `AppColors.primary` |
+| `colors.buy` / `colors.sell` | `AppColors.buy` / `AppColors.sell` |
+| `colors.text1`–`text3` | `AppColors.text1`–`text3` |
+| `rounded.input` | `AppRadii.inputRadius` (14px) |
+| `rounded.card` | `AppRadii.cardRadius` (16px) |
+| `rounded.cardLarge` | `AppRadii.cardLargeRadius` (24px) |
+| `rounded.sm` | `AppRadii.smRadius` (8px) |
+| `rounded.pill` | `AppRadii.pillRadius` (999px) |
+| `spacing.contentPad` | `AppSpacing.contentPad` |
+| `spacing.sectionGap` | `AppSpacing.sectionGap` |
+| `typography.body` | `AppTextStyles.body` |
+| `typography.pageTitle` | `AppTextStyles.pageTitle` |
+
+Import from `package:vit_trade_flutter/app/theme/`.
+
+## Colors
+
+The palette uses layered dark surfaces with a single warm primary accent.
+
+- **Background (#07090D):** deepest canvas — `AppColors.bg`.
+- **Surface (#10141B–#222936):** cards, panels, elevated content — `surface`,
+  `surface2`, `surface3`.
+- **Primary (#E58A00):** main CTA, nav active, brand accent — not for body text.
+- **Buy (#10B981) / Sell (#EF4444):** semantic trade direction only.
+- **Text1 (#F5F7FA):** primary readable text.
+- **Text2 (#A7AFBF):** secondary labels, captions.
+- **Text3 (#667085):** tertiary, placeholders, inactive nav.
+
+Use alpha tints (`primary12`, `buy10`, `sell15`) for subtle fills — never invent
+new hex values when an existing tint token fits.
+
+## Typography
+
+System font stack via Flutter theme. Numeric displays use tabular figures
+(`AppTextStyles.tabularFigures` / `heroNumber`, `numericCode`).
+
+- **Display / hero:** large PnL, balances — `display`, `heroNumber`, `jumbo`.
+- **Page title:** screen headers — `pageTitle`, `sectionTitle`.
+- **Body:** default copy — `body`, `base`.
+- **Caption / micro:** metadata, timestamps — `caption`, `micro`.
+- **Control:** buttons, tabs, segmented labels — `control`.
+
+Do not introduce arbitrary font sizes outside `AppTextStyles`.
+
+## Layout
+
+Phone-first fluid layout with consistent horizontal padding.
+
+- **Content padding:** 20px (`AppSpacing.contentPad`).
+- **Section gap:** 20px between major blocks (`AppSpacing.sectionGap`).
+- **Scale:** Fibonacci-inspired steps x1–x7 (3, 5, 8, 13, 21, 34, 55).
+- **Controls:** CTA and input height 52px.
+- **Page content:** use `VitPageLayout` + `VitPageContent` — not raw `Scaffold` +
+  manual padding.
+
+## Elevation & Depth
+
+Depth is conveyed through **surface layering and borders**, not heavy shadows.
+
+- Cards sit on `surface` over `bg`.
+- Borders use `AppColors.cardBorder`, `borderSolid`, or semantic tinted borders.
+- Modals use `modalScrim` / `modalScrimStrong` scrims.
+- Do not add drop shadows unless an existing shared primitive already defines them.
+
+## Shapes
+
+Canonical radius tiers — **do not use `BorderRadius.circular()` outside
+`app_radii.dart`**.
+
+| Role | Token | px |
+| --- | --- | --- |
+| Interactive controls | `AppRadii.inputRadius` | 14 |
+| Standard cards | `AppRadii.cardRadius` | 16 |
+| Large / hero cards | `AppRadii.cardLargeRadius` | 24 |
+| Micro surfaces | `AppRadii.smRadius` | 8 |
+| Status pills | `AppRadii.pillRadius` | 999 |
+
+Legacy `mdRadius`, `headerActionRadius` are chart/chrome only — not for new UI.
+
+## Components
+
+Use shared primitives from `flutter_app/lib/shared/widgets/` before creating
+local widgets.
+
+| Primitive | Use for |
+| --- | --- |
+| `VitAppShell`, `VitPageLayout`, `VitPageContent` | Page scaffold |
+| `VitHeader`, `VitBottomNav` | Chrome |
+| `VitCard` | Standard (16) and large (24) card surfaces |
+| `VitCtaButton` | Primary/secondary CTAs |
+| `VitInput` | Text fields |
+| `VitTabBar`, `VitSegmentedTabBar` | Tab navigation — **no** wrapping in `VitCard` |
+| `VitSegmentedChoice` | MUA/BÁN, Long/Short, 2–4 option toggles |
+| `VitPresetChipRow` | Preset amount/% shortcuts — **no** card wrapper |
+| `VitStatusPill`, `VitAccentPill` | Status badges (pill radius) |
+| `VitEmptyState`, `VitErrorState`, `VitOfflineBanner` | Flow states |
+
+Segment tabs and segmented choices render their own pill outline — do not add
+extra bordered containers around them.
+
+## Do's and Don'ts
+
+**Do**
+
+- Read this file (relevant sections) before generating or editing UI.
+- Map every color, radius, spacing, and text style to existing theme tokens.
+- Include loading, empty, error, offline, submitting, and success states when
+  the flow requires them.
+- Preview and confirm before high-risk financial actions.
+- Keep Open Arena copy points-only; Prediction Markets may use positions/P/L.
+
+**Don't**
+
+- Invent new hex colors, radii, or font sizes outside theme files.
+- Wrap `VitTabBar` / `VitSegmentedTabBar` in bordered `VitCard`.
+- Use `VitCard` + `Row` + full-width pills for binary toggles — use
+  `VitSegmentedChoice`.
+- Duplicate local `_SegmentButton`, `_CommunityRules*`, or other widgets that
+  already exist as `Vit*`.
+- Use wallet/payout/profit language in Open Arena surfaces.

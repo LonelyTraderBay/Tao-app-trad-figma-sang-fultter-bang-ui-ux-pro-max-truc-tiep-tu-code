@@ -9,12 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -25,7 +20,6 @@ part '../widgets/bot_strategy_compare_metrics.dart';
 part '../widgets/bot_strategy_compare_recommendations_common.dart';
 part '../widgets/bot_strategy_compare_painters.dart';
 
-const _compareBackground = AppColors.bg;
 const _compareGreen = AppColors.buy;
 const _compareAxis = AppColors.chartAxisStrong;
 
@@ -60,104 +54,75 @@ class _BotStrategyComparePageState
           ? current
           : best,
     );
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Strategy Compare',
       semanticLabel: 'SC-126 BotStrategyComparePage',
-      child: Material(
-        color: _compareBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Strategy Compare',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
+      contentKey: BotStrategyComparePage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeBots),
+      children: [
+        VitTradeSection(
+          title: 'Select Strategies (2-4)',
+          child: _StrategySelectionGrid(
+            strategies: snapshot.strategies,
+            selectedIds: _selected,
+            onToggle: _toggleStrategy,
           ),
+        ),
+        VitTradeSection(
+          title: 'Best strategy',
+          child: _BestStrategyCard(strategy: best),
+        ),
+        VitTradeSection(
+          title: 'Equity Curves Comparison',
+          child: _EquityChartCard(
+            points: snapshot.equityPoints,
+            strategies: selectedStrategies,
+          ),
+        ),
+        VitTradeSection(
+          title: 'Performance Radar',
+          child: _RadarCard(strategies: selectedStrategies),
+        ),
+        VitTradeSection(
+          title: 'Detailed Metrics',
+          child: _MetricsTable(strategies: selectedStrategies),
+        ),
+        VitTradeSection(
+          title: 'Which Strategy to Choose?',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotStrategyComparePage.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.x2,
-                    right: AppSpacing.contentPad,
-                    bottom: bottomInset,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      VitPageSection(
-                        label: 'Select Strategies (2-4)',
-                        density: VitDensity.compact,
-                        children: [
-                          _StrategySelectionGrid(
-                            strategies: snapshot.strategies,
-                            selectedIds: _selected,
-                            onToggle: _toggleStrategy,
-                          ),
-                        ],
-                      ),
-                      _BestStrategyCard(strategy: best),
-                      VitPageSection(
-                        label: 'Equity Curves Comparison',
-                        density: VitDensity.compact,
-                        children: [
-                          _EquityChartCard(
-                            points: snapshot.equityPoints,
-                            strategies: selectedStrategies,
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Performance Radar',
-                        density: VitDensity.compact,
-                        children: [_RadarCard(strategies: selectedStrategies)],
-                      ),
-                      VitPageSection(
-                        label: 'Detailed Metrics',
-                        density: VitDensity.compact,
-                        children: [
-                          _MetricsTable(strategies: selectedStrategies),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Which Strategy to Choose?',
-                        density: VitDensity.compact,
-                        children: [
-                          for (final recommendation in snapshot.recommendations)
-                            _RecommendationCard(
-                              recommendation: recommendation,
-                              strategy: snapshot.strategies.firstWhere(
-                                (item) => item.id == recommendation.strategyId,
-                              ),
-                            ),
-                        ],
-                      ),
-                      _AnalysisPeriodCard(text: snapshot.analysisPeriod),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Strategy comparison review',
-                        message:
-                            'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
-                        contractId: 'bot-strategy-compare-review',
-                        density: VitDensity.compact,
-                      ),
-                    ],
+              for (final recommendation in snapshot.recommendations)
+                _RecommendationCard(
+                  recommendation: recommendation,
+                  strategy: snapshot.strategies.firstWhere(
+                    (item) => item.id == recommendation.strategyId,
                   ),
                 ),
-              ),
             ],
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Analysis period',
+          child: _AnalysisPeriodCard(text: snapshot.analysisPeriod),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.cardPaddingCompact,
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Strategy comparison review',
+              message:
+                  'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
+              contractId: 'bot-strategy-compare-review',
+              density: VitDensity.compact,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

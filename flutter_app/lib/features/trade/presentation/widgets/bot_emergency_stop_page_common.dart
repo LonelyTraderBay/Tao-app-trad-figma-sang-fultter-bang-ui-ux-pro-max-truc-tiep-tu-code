@@ -62,21 +62,6 @@ class _StickyActions extends StatelessWidget {
   }
 }
 
-class _SectionLabel extends StatelessWidget {
-  const _SectionLabel(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitSectionHeader(
-      title: label,
-      variant: VitSectionHeaderVariant.accentBar,
-      accentColor: _stopPrimary,
-    );
-  }
-}
-
 class _RadioMark extends StatelessWidget {
   const _RadioMark({required this.selected, required this.danger});
 

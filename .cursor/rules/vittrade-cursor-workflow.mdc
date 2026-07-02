@@ -24,7 +24,7 @@ Before marking a batch complete (do not ask the user first):
 
 1. Scan the batch diff for local widgets duplicating `Vit*`, single-layer wrappers, one-caller helpers, and new pub imports not required by the plan.
 2. Trim inline when safe; keep items the plan, tests, or financial safety require.
-3. Run `flutter analyze` and focused tests for touched modules.
+3. Run verification per [AI_PROMPT_SHELL.md](../../docs/01_AI_RULES/AI_PROMPT_SHELL.md) § Verification gate (`flutter analyze` + focused tests); cite evidence in the completion message.
 4. Only then report batch complete. If bloat remains, fix in the same turn.
 
 Self-check format: [.codex/skills/vittrade-minimal-review/SKILL.md](../../.codex/skills/vittrade-minimal-review/SKILL.md).
@@ -35,8 +35,24 @@ Self-check format: [.codex/skills/vittrade-minimal-review/SKILL.md](../../.codex
 .\scripts\Start-CursorSession.ps1
 ```
 
-Or manually: `.\scripts\headroom\Start-VitTradeHeadroom.ps1` then verify MCP `headroom` + `gitnexus` connected in Cursor Settings.
+Or manually: `.\scripts\headroom\Start-VitTradeHeadroom.ps1` then verify in **Cursor Settings → Tools & MCP**:
+- **Home MCP**: `gitnexus` + `dart` Connected
+- **Workspace MCP**: `headroom` Connected (project `.cursor/mcp.json` only)
 
 ## Authority
 
 [AGENTS.md](../../AGENTS.md) wins over this file for product, financial, and architecture rules.
+
+## Optional QA (gstack)
+
+Install once: `.\scripts\Setup-GStackBrowse.ps1` (global `~/.cursor/skills/gstack-*/`).
+
+| Skill | When |
+| --- | --- |
+| `/browse` | Visual QA after UI batch — run `flutter run -d chrome` first |
+| `/review` | Pre-merge supplement to `code-review-and-quality` |
+
+**Token rule:** use gstack in a **separate QA chat**, not migration batches.
+
+Do **not** invoke gstack plan/design skills (`plan-ceo-review`, `design-shotgun`) —
+they conflict with VitTrade execution prompts.

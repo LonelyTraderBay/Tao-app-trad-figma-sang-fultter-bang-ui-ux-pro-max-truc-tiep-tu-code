@@ -8,10 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -20,7 +16,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_modu
 part '../widgets/bot_risk_disclosure_page_sections.dart';
 part '../widgets/bot_risk_disclosure_page_common.dart';
 
-const _botRiskBackground = AppColors.bg;
 const _botRiskRed = AppColors.sell;
 const _botRiskAmber = AppColors.caution;
 const _botRiskPurple = AppColors.accent;
@@ -55,115 +50,89 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getBotRiskDisclosure();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Risk Disclosure',
       semanticLabel: 'SC-118 BotRiskDisclosurePage',
-      child: Material(
-        color: _botRiskBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Risk Disclosure',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeBots),
+      contentKey: BotRiskDisclosurePage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.tradeBots),
+      children: [
+        VitTradeSection(
+          title: 'High risk notice',
+          child: _HighRiskBanner(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitCard(
+            variant: VitCardVariant.inner,
+            density: VitDensity.compact,
+            padding: AppSpacing.cardPaddingCompact,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Bot risk disclosure review',
+                  message:
+                      'Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.',
+                  contractId: 'bot-risk-disclosure-review',
+                  density: VitDensity.compact,
+                ),
+                SizedBox(height: _riskSpace),
+                VitStatusPill(
+                  label: 'Acknowledgment required',
+                  status: VitStatusPillStatus.error,
+                  size: VitStatusPillSize.sm,
+                ),
+              ],
+            ),
           ),
+        ),
+        VitTradeSection(
+          title: 'Past performance',
+          child: _PastPerformanceCard(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: snapshot.riskSectionLabel,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: BotRiskDisclosurePage.contentKey,
-                  clipBehavior: Clip.none,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      _HighRiskBanner(snapshot: snapshot),
-                      const VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        padding: AppSpacing.cardPaddingCompact,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Bot risk disclosure review',
-                              message:
-                                  'Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.',
-                              contractId: 'bot-risk-disclosure-review',
-                              density: VitDensity.compact,
-                            ),
-                            SizedBox(height: _riskSpace),
-                            VitStatusPill(
-                              label: 'Acknowledgment required',
-                              status: VitStatusPillStatus.error,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
-                      _PastPerformanceCard(snapshot: snapshot),
-                      VitPageSection(
-                        label: snapshot.riskSectionLabel,
-                        accentColor: _botRiskPrimary,
-                        density: VitDensity.compact,
-                        children: [
-                          for (final category in snapshot.categories)
-                            _RiskCategoryCard(category: category),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: snapshot.additionalWarningsLabel,
-                        accentColor: _botRiskPrimary,
-                        density: VitDensity.compact,
-                        children: [
-                          _AdditionalWarningsCard(
-                            warnings: snapshot.additionalWarnings,
-                          ),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: snapshot.regulatoryNoticeLabel,
-                        accentColor: _botRiskPrimary,
-                        density: VitDensity.compact,
-                        children: [_RegulatoryNoticeCard(snapshot: snapshot)],
-                      ),
-                      VitPageSection(
-                        label: snapshot.acknowledgmentLabel,
-                        accentColor: _botRiskPrimary,
-                        density: VitDensity.compact,
-                        children: [
-                          _AcknowledgmentCard(
-                            snapshot: snapshot,
-                            acknowledged: _acknowledged,
-                            onTap: () =>
-                                setState(() => _acknowledged = !_acknowledged),
-                          ),
-                          _RiskCta(
-                            snapshot: snapshot,
-                            acknowledged: _acknowledged,
-                            onPressed: () => context.go(snapshot.nextPath),
-                          ),
-                        ],
-                      ),
-                      _HelpCard(snapshot: snapshot),
-                    ],
-                  ),
-                ),
+              for (final category in snapshot.categories)
+                _RiskCategoryCard(category: category),
+            ],
+          ),
+        ),
+        VitTradeSection(
+          title: snapshot.additionalWarningsLabel,
+          child: _AdditionalWarningsCard(warnings: snapshot.additionalWarnings),
+        ),
+        VitTradeSection(
+          title: snapshot.regulatoryNoticeLabel,
+          child: _RegulatoryNoticeCard(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: snapshot.acknowledgmentLabel,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _AcknowledgmentCard(
+                snapshot: snapshot,
+                acknowledged: _acknowledged,
+                onTap: () => setState(() => _acknowledged = !_acknowledged),
+              ),
+              _RiskCta(
+                snapshot: snapshot,
+                acknowledged: _acknowledged,
+                onPressed: () => context.go(snapshot.nextPath),
               ),
             ],
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Help',
+          child: _HelpCard(snapshot: snapshot),
+        ),
+      ],
     );
   }
 }

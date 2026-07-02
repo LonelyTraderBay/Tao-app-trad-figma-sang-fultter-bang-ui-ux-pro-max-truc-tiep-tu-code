@@ -95,8 +95,9 @@ dart run tool/design_token_consistency_audit.dart --check
 flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 ```
 
-CI uploads `VitTrade-Design-Token-Consistency-Audit.md` and `.csv` as the
-`design-token-consistency-audit` artifact so reviewers can compare debt trends.
+CI uploads the design-token audit `.csv` (and regenerated markdown when the
+tool emits it) as the `design-token-consistency-audit` artifact so reviewers
+can compare debt trends.
 
 ## Merge Criteria
 

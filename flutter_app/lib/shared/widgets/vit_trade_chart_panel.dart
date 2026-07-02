@@ -27,6 +27,7 @@ class VitTradeChartPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final pairRoute = variant == VitTradeChartVariant.pairRoute;
     return VitCard(
+      radius: VitCardRadius.standard,
       height: height,
       borderColor: (borderColor ?? _primary).withValues(alpha: .35),
       clip: true,

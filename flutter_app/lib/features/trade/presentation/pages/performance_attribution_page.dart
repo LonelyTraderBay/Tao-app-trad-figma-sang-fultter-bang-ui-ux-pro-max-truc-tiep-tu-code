@@ -10,12 +10,8 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -62,69 +58,50 @@ class _PerformanceAttributionPageState
     final snapshot = ref
         .watch(tradeReadModelControllerProvider)
         .getPerformanceAttribution(copyId: widget.copyId);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
 
-    return VitPageLayout(
+    return VitTradeDetailScaffold(
+      title: 'Phân tích hiệu suất',
       semanticLabel: 'SC-075 PerformanceAttributionPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Phân tích hiệu suất',
-            showBack: true,
-            onBack: () =>
-                context.go(AppRoutePaths.tradeCopyPerformance(widget.copyId)),
+      contentKey: PerformanceAttributionPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () =>
+          context.go(AppRoutePaths.tradeCopyPerformance(widget.copyId)),
+      children: [
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            density: VitDensity.compact,
+            title: 'Review performance attribution risk',
+            message:
+                'Confirm drawdown, exposure, limits, and next steps before adjusting copy-trading allocation.',
           ),
+        ),
+        VitTradeSection(
+          title: 'Tổng quan',
+          child: _SummaryGrid(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Phân tích',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: PerformanceAttributionPage.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.rowPy,
-                    right: AppSpacing.contentPad,
-                    bottom: scrollClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
-                        title: 'Review performance attribution risk',
-                        message:
-                            'Confirm drawdown, exposure, limits, and next steps before adjusting copy-trading allocation.',
-                      ),
-                      _SummaryGrid(snapshot: snapshot),
-                      _AttributionTabs(
-                        activeTab: _activeTab,
-                        onChanged: (value) =>
-                            setState(() => _activeTab = value),
-                      ),
-                      if (_activeTab == 'attribution')
-                        _AttributionTab(snapshot: snapshot)
-                      else if (_activeTab == 'drawdown')
-                        _DrawdownTab(snapshot: snapshot)
-                      else if (_activeTab == 'projection')
-                        _ProjectionTab(snapshot: snapshot)
-                      else
-                        _CorrelationTab(snapshot: snapshot),
-                    ],
-                  ),
-                ),
+              _AttributionTabs(
+                activeTab: _activeTab,
+                onChanged: (value) => setState(() => _activeTab = value),
               ),
+              if (_activeTab == 'attribution')
+                _AttributionTab(snapshot: snapshot)
+              else if (_activeTab == 'drawdown')
+                _DrawdownTab(snapshot: snapshot)
+              else if (_activeTab == 'projection')
+                _ProjectionTab(snapshot: snapshot)
+              else
+                _CorrelationTab(snapshot: snapshot),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

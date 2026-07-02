@@ -8,10 +8,6 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
@@ -66,87 +62,56 @@ class _CopyTradingV2PageState extends ConsumerState<CopyTradingV2Page> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeCopyTradingV2Provider);
     final copyTrading = snapshot.copyTrading;
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = copyTradingScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
     final traders = _sortedTraders(copyTrading.traders).take(3).toList();
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Copy Trading v2',
+      subtitle: 'With Variant Switcher',
       semanticLabel: 'SC-064 CopyTradingPageV2',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Copy Trading v2',
-            subtitle: 'With Variant Switcher',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      contentKey: CopyTradingV2Page.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Hero variant',
+          child: _VariantSwitcher(
+            variants: snapshot.heroVariants,
+            selected: _heroVariant,
+            onChanged: (value) => setState(() => _heroVariant = value),
           ),
+        ),
+        VitTradeSection(
+          title: 'Tổng quan',
+          child: _HeroCard(snapshot: copyTrading, variant: _heroVariant),
+        ),
+        _RiskWarningCard(
+          title: copyTrading.riskWarningTitle,
+          message: copyTrading.riskWarningText,
+        ),
+        VitTradeSection(
+          title: 'Nhà cung cấp',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: CopyTradingV2Page.contentKey,
-                  bottomInset: scrollEndClearance,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      VitTradeSection(
-                        title: 'Hero variant',
-                        child: _VariantSwitcher(
-                          variants: snapshot.heroVariants,
-                          selected: _heroVariant,
-                          onChanged: (value) =>
-                              setState(() => _heroVariant = value),
-                        ),
-                      ),
-                      VitTradeSection(
-                        title: 'Tổng quan',
-                        child: _HeroCard(
-                          snapshot: copyTrading,
-                          variant: _heroVariant,
-                        ),
-                      ),
-                      _RiskWarningCard(
-                        title: copyTrading.riskWarningTitle,
-                        message: copyTrading.riskWarningText,
-                      ),
-                      VitTradeSection(
-                        title: 'Nhà cung cấp',
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _SortChips(
-                              options: copyTrading.sortOptions,
-                              selected: _sortBy,
-                              onChanged: (value) =>
-                                  setState(() => _sortBy = value),
-                            ),
-                            _TraderList(
-                              traders: traders,
-                              onOpen: (trader) => context.go(
-                                AppRoutePaths.tradeCopyProvider(
-                                  trader.id,
-                                  backPath: AppRoutePaths.tradeCopyTradingV2,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+              _SortChips(
+                options: copyTrading.sortOptions,
+                selected: _sortBy,
+                onChanged: (value) => setState(() => _sortBy = value),
+              ),
+              _TraderList(
+                traders: traders,
+                onOpen: (trader) => context.go(
+                  AppRoutePaths.tradeCopyProvider(
+                    trader.id,
+                    backPath: AppRoutePaths.tradeCopyTradingV2,
                   ),
                 ),
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 

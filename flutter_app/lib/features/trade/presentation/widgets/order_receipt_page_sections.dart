@@ -60,115 +60,107 @@ class _ReceiptCard extends StatelessWidget {
     final isBuy = receipt.side == TradeOrderSide.buy;
     final sideColor = isBuy ? AppColors.buy : AppColors.sell;
 
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: VitDensity.compact.cardPadding,
-      borderColor: AppColors.cardBorder,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Execution summary',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              fontWeight: AppTextStyles.bold,
+    return VitTradeSection(
+      title: 'Execution summary',
+      headerTrailing: _StatusBadge(
+        key: OrderReceiptPage.openOrdersKey,
+        status: receipt.status,
+        onTap: () => context.go(AppRoutePaths.tradeOrdersHistory),
+      ),
+      child: VitCard(
+        clip: true,
+        density: VitDensity.compact,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: VitDensity.compact.cardPadding,
+              child: Row(
+                children: [
+                  _SideBadge(label: isBuy ? 'MUA' : 'BÁN', color: sideColor),
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: Text(
+                      receipt.symbol,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.baseMedium,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              _SideBadge(label: isBuy ? 'MUA' : 'BÁN', color: sideColor),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  receipt.symbol,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.baseMedium,
-                ),
-              ),
-              _StatusBadge(
-                key: OrderReceiptPage.openOrdersKey,
-                status: receipt.status,
-                onTap: () => context.go(AppRoutePaths.tradeOrdersHistory),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          _DetailRow(
-            label: 'Order ID',
-            value: receipt.orderId,
-            trailing: _CopyOrderIdButton(orderId: receipt.orderId),
-          ),
-          _DetailRow(label: 'Loại lệnh', value: receipt.orderType),
-          _DetailRow(label: 'Giá', value: '\$${_formatMoney(receipt.price)}'),
-          _DetailRow(
-            label: 'Khối lượng',
-            value: '${_formatAmount(receipt.amount)} ${receipt.baseAsset}',
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          _DetailRow(
-            label: 'Thành tiền',
-            value: '\$${_formatMoney(receipt.total)}',
-            highlight: true,
-          ),
-          _DetailRow(
-            label: 'Phí giao dịch',
-            value: '\$${receipt.fee.toStringAsFixed(4)} (${receipt.feeRate})',
-          ),
-          if (receipt.estimatedFill != null)
+            const Divider(height: 1, color: AppColors.divider),
             _DetailRow(
-              label: 'Thời gian ước tính',
-              value: receipt.estimatedFill!,
+              label: 'Order ID',
+              value: receipt.orderId,
+              trailing: _CopyOrderIdButton(orderId: receipt.orderId),
             ),
-          _DetailRow(label: 'Thời gian đặt', value: receipt.timestamp),
-          const SizedBox(height: AppSpacing.x1),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            'Risk controls',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.textMutedLight,
-              fontWeight: AppTextStyles.bold,
+            _DetailRow(label: 'Loại lệnh', value: receipt.orderType),
+            _DetailRow(label: 'Giá', value: '\$${_formatMoney(receipt.price)}'),
+            _DetailRow(
+              label: 'Khối lượng',
+              value: '${_formatAmount(receipt.amount)} ${receipt.baseAsset}',
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              if (receipt.tpPrice != null)
-                Expanded(
-                  child: _RiskBox(
-                    label: 'Take Profit',
-                    value: _formatPrice(receipt.tpPrice!),
-                    color: AppColors.buy,
-                  ),
+            const Divider(height: 1, color: AppColors.divider),
+            _DetailRow(
+              label: 'Thành tiền',
+              value: '\$${_formatMoney(receipt.total)}',
+              highlight: true,
+            ),
+            _DetailRow(
+              label: 'Phí giao dịch',
+              value: '\$${receipt.fee.toStringAsFixed(4)} (${receipt.feeRate})',
+            ),
+            if (receipt.estimatedFill != null)
+              _DetailRow(
+                label: 'Thời gian ước tính',
+                value: receipt.estimatedFill!,
+              ),
+            _DetailRow(label: 'Thời gian đặt', value: receipt.timestamp),
+            if (receipt.tpPrice != null || receipt.slPrice != null) ...[
+              const Divider(height: 1, color: AppColors.divider),
+              Padding(
+                padding: VitDensity.compact.cardPadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Risk controls',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.textMutedLight,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    Row(
+                      children: [
+                        if (receipt.tpPrice != null)
+                          Expanded(
+                            child: _RiskBox(
+                              label: 'Take Profit',
+                              value: _formatPrice(receipt.tpPrice!),
+                              color: AppColors.buy,
+                            ),
+                          ),
+                        if (receipt.tpPrice != null && receipt.slPrice != null)
+                          const SizedBox(width: AppSpacing.x2),
+                        if (receipt.slPrice != null)
+                          Expanded(
+                            child: _RiskBox(
+                              label: 'Stop Loss',
+                              value: _formatPrice(receipt.slPrice!),
+                              color: AppColors.sell,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
                 ),
-              if (receipt.tpPrice != null && receipt.slPrice != null)
-                const SizedBox(width: AppSpacing.x2),
-              if (receipt.slPrice != null)
-                Expanded(
-                  child: _RiskBox(
-                    label: 'Stop Loss',
-                    value: _formatPrice(receipt.slPrice!),
-                    color: AppColors.sell,
-                  ),
-                ),
+              ),
             ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

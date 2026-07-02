@@ -10,9 +10,6 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -77,84 +74,73 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
         .watch(tradeReadModelControllerProvider)
         .getCopyAuditLog(copyId: widget.copyId);
     final events = _filteredEvents(snapshot);
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-        context,
-        shellRenderMode: mode,
-      );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeDetailScaffold(
+      title: 'Audit Log',
       semanticLabel: 'SC-077 CopyAuditLogPage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Audit Log',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.trade),
-            actions: [
-              VitHeaderActionItem(
-                key: CopyAuditLogPage.exportActionKey,
-                type: VitHeaderActionType.export,
-                onPressed: () => _showExportSheet(snapshot),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: CopyAuditLogPage.contentKey,
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      _ComplianceNotice(snapshot: snapshot),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review copy audit evidence',
-                        message:
-                            'Search, filter, and export audit evidence with retention, risk, and config-change context preserved.',
-                        contractId: 'Copy ID: ${snapshot.copyId}',
-                        density: VitDensity.compact,
-                      ),
-                      _AuditSearchField(
-                        controller: _searchController,
-                        onChanged: (_) => setState(() {}),
-                      ),
-                      _AuditFilterTabs(
-                        tabs: snapshot.tabs,
-                        activeId: _activeFilter,
-                        onChanged: (id) => setState(() => _activeFilter = id),
-                      ),
-                      if (events.isEmpty)
-                        _EmptyAuditState(
-                          searching: _searchController.text.isNotEmpty,
-                        )
-                      else
-                        for (final event in events) ...[
-                          _AuditEventCard(
-                            key: CopyAuditLogPage.eventKey(event.id),
-                            event: event,
-                          ),
-                          if (event != events.last)
-                            const SizedBox(height: _auditSpace),
-                        ],
-                      _SummarySection(events: snapshot.events),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      contentKey: CopyAuditLogPage.contentKey,
+      shellRenderMode: widget.shellRenderMode,
+      onBack: () => context.go(AppRoutePaths.trade),
+      headerActions: [
+        VitHeaderActionItem(
+          key: CopyAuditLogPage.exportActionKey,
+          type: VitHeaderActionType.export,
+          onPressed: () => _showExportSheet(snapshot),
+        ),
+      ],
+      children: [
+        VitTradeSection(
+          title: 'Tuân thủ',
+          child: _ComplianceNotice(snapshot: snapshot),
+        ),
+        VitTradeSection(
+          title: 'Đánh giá rủi ro',
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Review copy audit evidence',
+            message:
+                'Search, filter, and export audit evidence with retention, risk, and config-change context preserved.',
+            contractId: 'Copy ID: ${snapshot.copyId}',
+            density: VitDensity.compact,
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Tìm kiếm',
+          child: _AuditSearchField(
+            controller: _searchController,
+            onChanged: (_) => setState(() {}),
+          ),
+        ),
+        VitTradeSection(
+          title: 'Bộ lọc',
+          child: _AuditFilterTabs(
+            tabs: snapshot.tabs,
+            activeId: _activeFilter,
+            onChanged: (id) => setState(() => _activeFilter = id),
+          ),
+        ),
+        VitTradeSection(
+          title: 'Sự kiện',
+          child: events.isEmpty
+              ? _EmptyAuditState(searching: _searchController.text.isNotEmpty)
+              : Column(
+                  children: [
+                    for (final event in events) ...[
+                      _AuditEventCard(
+                        key: CopyAuditLogPage.eventKey(event.id),
+                        event: event,
+                      ),
+                      if (event != events.last)
+                        const SizedBox(height: _auditSpace),
+                    ],
+                  ],
+                ),
+        ),
+        VitTradeSection(
+          title: 'Tóm tắt',
+          child: _SummarySection(events: snapshot.events),
+        ),
+      ],
     );
   }
 

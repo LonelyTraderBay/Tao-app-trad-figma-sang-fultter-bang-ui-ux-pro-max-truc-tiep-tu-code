@@ -39,12 +39,11 @@ class VitTradeTickerStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final deltaLabel =
         '${changePct >= 0 ? '+' : ''}${changePct.toStringAsFixed(2)}%';
-    final deltaColor =
-        changePct > 0
-            ? AppColors.buy
-            : changePct < 0
-            ? AppColors.sell
-            : AppColors.text2;
+    final deltaColor = changePct > 0
+        ? AppColors.buy
+        : changePct < 0
+        ? AppColors.sell
+        : AppColors.text2;
 
     return VitCard(
       density: VitDensity.compact,
@@ -61,7 +60,9 @@ class VitTradeTickerStrip extends StatelessWidget {
                   children: [
                     Text(
                       symbol,
-                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
                     Row(
@@ -91,7 +92,7 @@ class VitTradeTickerStrip extends StatelessWidget {
                   ],
                 ),
               ),
-              if (trailing != null) trailing!,
+              ?trailing,
             ],
           ),
           if (highLabel != null || lowLabel != null || volumeLabel != null) ...[
@@ -99,9 +100,13 @@ class VitTradeTickerStrip extends StatelessWidget {
             Row(
               children: [
                 if (highLabel != null)
-                  Expanded(child: _MetricCell(label: 'Cao', value: highLabel!)),
+                  Expanded(
+                    child: _MetricCell(label: 'Cao', value: highLabel!),
+                  ),
                 if (lowLabel != null)
-                  Expanded(child: _MetricCell(label: 'Thấp', value: lowLabel!)),
+                  Expanded(
+                    child: _MetricCell(label: 'Thấp', value: lowLabel!),
+                  ),
                 if (volumeLabel != null)
                   Expanded(
                     child: _MetricCell(label: 'KL 24h', value: volumeLabel!),
@@ -115,6 +120,8 @@ class VitTradeTickerStrip extends StatelessWidget {
   }
 }
 
+enum VitTradeInstrumentHeroDensity { standard, compact }
+
 class VitTradeInstrumentHero extends StatelessWidget {
   const VitTradeInstrumentHero({
     super.key,
@@ -124,6 +131,7 @@ class VitTradeInstrumentHero extends StatelessWidget {
     this.highLabel,
     this.lowLabel,
     this.volumeLabel,
+    this.density = VitTradeInstrumentHeroDensity.standard,
   });
 
   final String symbol;
@@ -132,6 +140,9 @@ class VitTradeInstrumentHero extends StatelessWidget {
   final String? highLabel;
   final String? lowLabel;
   final String? volumeLabel;
+  final VitTradeInstrumentHeroDensity density;
+
+  bool get _compact => density == VitTradeInstrumentHeroDensity.compact;
 
   VitMetricDeltaTone get _deltaTone {
     if (changePct > 0) return VitMetricDeltaTone.positive;
@@ -151,19 +162,23 @@ class VitTradeInstrumentHero extends StatelessWidget {
         '${changePct >= 0 ? '+' : ''}${changePct.toStringAsFixed(2)}%';
 
     return VitCard(
-      variant: VitCardVariant.hero,
-      radius: VitCardRadius.large,
+      variant: _compact ? VitCardVariant.standard : VitCardVariant.hero,
+      radius: _compact ? VitCardRadius.standard : VitCardRadius.large,
       clip: true,
-      padding: AppSpacing.tradeInstrumentHeroPadding,
-      background: const VitHeroGlow(),
+      density: _compact ? VitDensity.compact : VitDensity.standard,
+      padding: _compact
+          ? AppSpacing.cardPaddingCompact
+          : AppSpacing.tradeInstrumentHeroPadding,
+      background: _compact ? null : const VitHeroGlow(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             symbol,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            style: (_compact ? AppTextStyles.micro : AppTextStyles.caption)
+                .copyWith(color: AppColors.text2),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          SizedBox(height: _compact ? AppSpacing.x1 : AppSpacing.x2),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -172,10 +187,14 @@ class VitTradeInstrumentHero extends StatelessWidget {
                   priceLabel,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.heroNumber.copyWith(
-                    color: _priceColor,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
+                  style:
+                      (_compact
+                              ? AppTextStyles.sectionTitle
+                              : AppTextStyles.heroNumber)
+                          .copyWith(
+                            color: _priceColor,
+                            fontFeatures: AppTextStyles.tabularFigures,
+                          ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -183,13 +202,21 @@ class VitTradeInstrumentHero extends StatelessWidget {
             ],
           ),
           if (highLabel != null || lowLabel != null || volumeLabel != null) ...[
-            const SizedBox(height: AppSpacing.tradeInstrumentHeroMetricGap),
+            SizedBox(
+              height: _compact
+                  ? AppSpacing.x2
+                  : AppSpacing.tradeInstrumentHeroMetricGap,
+            ),
             Row(
               children: [
                 if (highLabel != null)
-                  Expanded(child: _MetricCell(label: 'Cao', value: highLabel!)),
+                  Expanded(
+                    child: _MetricCell(label: 'Cao', value: highLabel!),
+                  ),
                 if (lowLabel != null)
-                  Expanded(child: _MetricCell(label: 'Thấp', value: lowLabel!)),
+                  Expanded(
+                    child: _MetricCell(label: 'Thấp', value: lowLabel!),
+                  ),
                 if (volumeLabel != null)
                   Expanded(
                     child: _MetricCell(label: 'KL 24h', value: volumeLabel!),
@@ -229,6 +256,94 @@ class _MetricCell extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
+      ],
+    );
+  }
+}
+
+/// Compact price + 24h metrics row for fixed trade terminal headers.
+class VitTradeHeaderMetricsRow extends StatelessWidget {
+  const VitTradeHeaderMetricsRow({
+    super.key,
+    required this.priceLabel,
+    required this.changePct,
+    this.highLabel,
+    this.lowLabel,
+    this.volumeLabel,
+  });
+
+  final String priceLabel;
+  final double changePct;
+  final String? highLabel;
+  final String? lowLabel;
+  final String? volumeLabel;
+
+  Color get _priceColor {
+    if (changePct > 0) return AppColors.buy;
+    if (changePct < 0) return AppColors.sell;
+    return AppColors.text1;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final deltaLabel =
+        '${changePct >= 0 ? '+' : ''}${changePct.toStringAsFixed(2)}%';
+    final deltaColor = changePct > 0
+        ? AppColors.buy
+        : changePct < 0
+        ? AppColors.sell
+        : AppColors.text2;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 5,
+          child: Row(
+            children: [
+              Flexible(
+                child: Text(
+                  priceLabel,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    color: _priceColor,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Text(
+                deltaLabel,
+                style: AppTextStyles.caption.copyWith(
+                  color: deltaColor,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (highLabel != null || lowLabel != null || volumeLabel != null)
+          Expanded(
+            flex: 6,
+            child: Row(
+              children: [
+                if (highLabel != null)
+                  Expanded(
+                    child: _MetricCell(label: 'Cao', value: highLabel!),
+                  ),
+                if (lowLabel != null)
+                  Expanded(
+                    child: _MetricCell(label: 'Thấp', value: lowLabel!),
+                  ),
+                if (volumeLabel != null)
+                  Expanded(
+                    child: _MetricCell(label: 'KL 24h', value: volumeLabel!),
+                  ),
+              ],
+            ),
+          ),
       ],
     );
   }

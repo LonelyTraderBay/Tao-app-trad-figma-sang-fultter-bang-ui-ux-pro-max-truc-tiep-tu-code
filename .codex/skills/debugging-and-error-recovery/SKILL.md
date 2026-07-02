@@ -135,6 +135,35 @@ Root cause fix (good):
 
 Ask: "Why does this happen?" until you reach the actual cause, not just where it manifests.
 
+### Step 4b: After 3 Failed Fix Attempts — Stop Patching
+
+**Trigger:** 3+ distinct fix attempts and each failure appears in a different layer,
+file, or symbol.
+
+**STOP** before fix #4. This pattern suggests architectural coupling, not a bad line.
+
+1. Run GitNexus `impact()` / `context()` on the shared symbol, provider, or route involved.
+2. Report to the user: symptom, fixes tried, architectural hypothesis.
+3. Choose one path — scoped refactor, revert the batch, or handoff
+   (`RESUME FROM: <phase> - <batch>` per `docs/01_AI_RULES/AI_PROMPT_SHELL.md`) —
+   **do not guess again.**
+
+**Red flags:**
+
+- Patching a widget when the root cause is in a Riverpod provider or repository.
+- "While I'm here" refactors to make tests pass.
+- Each fix reveals a new problem in a different module.
+
+**Flutter example:**
+
+```
+Symptom fix (bad): wrap error UI in another local _ErrorCard widget
+Root cause fix (good): trace Riverpod provider → repository mock → fix at source
+```
+
+Aligns with Non-stop execution: ≥3 recovery attempts that still fail verification →
+handoff, not success claims.
+
 ### Step 5: Guard Against Recurrence
 
 Write a test that catches this specific failure:
@@ -298,3 +327,19 @@ After fixing a bug:
 - [ ] All existing tests pass
 - [ ] Build succeeds
 - [ ] The original bug scenario is verified end-to-end
+
+## Verification before completion
+
+Do not claim "fixed", "done", or "passes" until evidence exists **in this turn**.
+
+1. **Reproduce** — confirm the failure scenario still fails without the fix (or
+   document why revert is unsafe).
+2. **Apply fix** — minimal surgical change.
+3. **Prove** — run the regression test and focused module tests; cite exit code
+   and failure count.
+4. **Analyze** — `flutter analyze` clean when Dart changed.
+
+Align with `docs/01_AI_RULES/AI_PROMPT_SHELL.md` Verification gate. Forbidden:
+"should pass", "looks correct", trusting prior-turn output without re-running.
+
+For bug fixes use red-green: pass with fix → revert fix → must fail → restore → pass.

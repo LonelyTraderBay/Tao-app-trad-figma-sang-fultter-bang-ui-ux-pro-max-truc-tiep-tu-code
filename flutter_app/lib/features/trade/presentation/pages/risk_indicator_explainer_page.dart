@@ -7,21 +7,17 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
 part '../widgets/risk_indicator_scale_intro.dart';
 part '../widgets/risk_indicator_details_common.dart';
 
-const _riskBackground = AppColors.bg;
 const _riskPanel2 = AppColors.surface2;
 const _riskBorder = AppColors.borderSolid;
 const _riskPrimary = AppColors.primary;
@@ -42,88 +38,74 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(tradeRiskIndicatorExplainerProvider);
-    final mode = shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset = copyTradingScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Risk Indicator',
+      subtitle: 'Summary Risk Indicator (SRI)',
       semanticLabel: 'SC-110 RiskIndicatorExplainerPage',
-      child: Material(
-        color: _riskBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Risk Indicator',
-            subtitle: 'Summary Risk Indicator (SRI)',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      contentKey: RiskIndicatorExplainerPage.contentKey,
+      shellRenderMode: shellRenderMode,
+      useCopyTradingInset: true,
+      onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      children: [
+        VitTradeSection(
+          title: 'Product SRI',
+          child: _ProductSriCard(snapshot: snapshot),
+        ),
+        VitTradeComplianceSection(
+          title: 'Risk review',
+          statusPill: VitStatusPill(
+            label: 'SRI ${snapshot.productSri}/7',
+            status: VitStatusPillStatus.warning,
+            size: VitStatusPillSize.sm,
           ),
+          items: [
+            VitTradeComplianceItem(
+              label: 'Holding period',
+              value: '${snapshot.holdingPeriodYears} years',
+            ),
+            VitTradeComplianceItem(
+              label: 'Risk levels',
+              value: '${snapshot.levels.length} defined',
+            ),
+          ],
+        ),
+        VitTradeSection(
+          title: 'What is the Summary Risk Indicator?',
+          child: _SriExplanationCard(
+            holdingPeriodYears: snapshot.holdingPeriodYears,
+          ),
+        ),
+        VitTradeSection(
+          title: 'Understanding the 1-7 Scale',
+          child: VitPageSection(
+            density: VitDensity.compact,
+            children: [
+              for (final level in snapshot.levels)
+                _RiskLevelCard(
+                  level: level,
+                  isProductLevel: level.level == snapshot.productSri,
+                ),
+            ],
+          ),
+        ),
+        VitTradeSection(
+          title: 'Additional Risks Not Captured by SRI',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: RiskIndicatorExplainerPage.contentKey,
-                  padding: AppSpacing.zeroInsets.copyWith(
-                    left: AppSpacing.contentPad,
-                    top: AppSpacing.x2,
-                    right: AppSpacing.contentPad,
-                    bottom: bottomInset,
-                  ),
-                  child: VitPageContent(
-                    padding: VitContentPadding.none,
-                    density: VitDensity.compact,
-                    fullBleed: true,
-                    children: [
-                      _ProductSriCard(snapshot: snapshot),
-                      const VitSectionHeader(
-                        title: 'What is the Summary Risk Indicator?',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _riskPrimary,
-                      ),
-                      _SriExplanationCard(
-                        holdingPeriodYears: snapshot.holdingPeriodYears,
-                      ),
-                      const VitSectionHeader(
-                        title: 'Understanding the 1-7 Scale',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _riskPrimary,
-                      ),
-                      VitPageSection(
-                        density: VitDensity.compact,
-                        children: [
-                          for (final level in snapshot.levels)
-                            _RiskLevelCard(
-                              level: level,
-                              isProductLevel:
-                                  level.level == snapshot.productSri,
-                            ),
-                        ],
-                      ),
-                      const VitSectionHeader(
-                        title: 'Additional Risks Not Captured by SRI',
-                        variant: VitSectionHeaderVariant.accentBar,
-                        accentColor: _riskPrimary,
-                      ),
-                      _AdditionalRisksCard(risks: snapshot.additionalRisks),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Risk indicator review',
-                        message:
-                            'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
-                        contractId: 'risk-indicator-review',
-                        density: VitDensity.compact,
-                      ),
-                    ],
-                  ),
-                ),
+              _AdditionalRisksCard(risks: snapshot.additionalRisks),
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Risk indicator review',
+                message:
+                    'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
+                contractId: 'risk-indicator-review',
+                density: VitDensity.compact,
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

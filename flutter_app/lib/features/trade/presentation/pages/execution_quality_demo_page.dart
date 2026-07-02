@@ -6,7 +6,6 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_overview.dart';
@@ -21,7 +20,6 @@ import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
-import '../widgets/trade_module_layout.dart';
 
 class ExecutionQualityDemoPage extends ConsumerStatefulWidget {
   const ExecutionQualityDemoPage({super.key, this.shellRenderMode});
@@ -66,10 +64,7 @@ class _ExecutionQualityDemoPageState
         .getExecutionQuality();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
-    final bottomInset = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
+    final bottomInset = tradeScrollBottomInset(context, shellRenderMode: mode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
