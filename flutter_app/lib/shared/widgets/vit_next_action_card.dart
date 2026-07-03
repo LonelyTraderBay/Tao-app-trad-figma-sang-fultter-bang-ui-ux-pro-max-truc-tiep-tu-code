@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_inline_icon_action.dart';
 
 class VitNextActionCard extends StatelessWidget {
   const VitNextActionCard({
@@ -15,8 +16,9 @@ class VitNextActionCard extends StatelessWidget {
     required this.subtitle,
     required this.statusLabel,
     required this.ctaLabel,
-    required this.accentColor,
+    required     this.accentColor,
     this.onTap,
+    this.onDismiss,
   });
 
   final IconData icon;
@@ -26,6 +28,7 @@ class VitNextActionCard extends StatelessWidget {
   final String ctaLabel;
   final Color accentColor;
   final VoidCallback? onTap;
+  final VoidCallback? onDismiss;
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +92,15 @@ class VitNextActionCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
+          if (onDismiss != null) ...[
+            VitInlineIconAction(
+              icon: Icons.close_rounded,
+              tooltip: 'Ẩn gợi ý',
+              color: AppColors.text3,
+              onPressed: onDismiss!,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+          ],
           Text(
             ctaLabel,
             style: AppTextStyles.caption.copyWith(

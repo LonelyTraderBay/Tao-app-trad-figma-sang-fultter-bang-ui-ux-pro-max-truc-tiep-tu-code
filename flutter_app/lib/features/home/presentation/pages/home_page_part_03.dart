@@ -1,35 +1,5 @@
 part of 'home_page.dart';
 
-class _RankedRow extends StatelessWidget {
-  const _RankedRow({
-    required this.rank,
-    required this.pair,
-    required this.positive,
-    required this.onTap,
-  });
-
-  final int rank;
-  final HomeCryptoPair pair;
-  final bool positive;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitRankedAssetRow(
-      rank: rank,
-      leading: VitAssetAvatar(
-        label: pair.baseAsset,
-        accentColor: pair.logoColor,
-      ),
-      title: pair.symbol,
-      badgeLabel: _formatPct(pair.change24h),
-      trend: positive ? VitTrendDirection.positive : VitTrendDirection.negative,
-      highlightRank: rank == 1 && positive,
-      onTap: onTap,
-    );
-  }
-}
-
 String _formatUsd(double value, {bool forceTwoDecimals = false}) {
   final decimals = forceTwoDecimals || value >= 1 ? 2 : 4;
   final fixed = value.toStringAsFixed(decimals);

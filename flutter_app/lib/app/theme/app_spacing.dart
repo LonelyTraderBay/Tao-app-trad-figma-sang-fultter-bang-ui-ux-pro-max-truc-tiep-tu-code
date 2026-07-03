@@ -10216,9 +10216,6 @@ final class AppSpacing {
   static const double homeSectionHeaderTitleLineHeight = 1.272;
   static const double homeMarketRowPadding = 14;
   static const double homeMarketIconGap = 12;
-  static const double homeTrendingSectionHeight = 128;
-  static const double homeTrendingItemWidth = 148;
-  static const double homeTrendingIconSize = 28;
   static const double homeDiscoveryIconContainer = 44;
   static const double homeDiscoveryIconSize = 20;
   static const double homeDiscoveryCompactIconContainer = 34;

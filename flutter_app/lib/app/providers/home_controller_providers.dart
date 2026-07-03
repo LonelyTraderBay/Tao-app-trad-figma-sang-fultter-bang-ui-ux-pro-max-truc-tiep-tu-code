@@ -4,8 +4,11 @@ import 'package:vit_trade_flutter/features/home/presentation/controllers/home_co
 
 export 'package:vit_trade_flutter/features/home/presentation/controllers/home_controller.dart';
 
+final homeSnapshotProvider = FutureProvider<HomeSnapshot>((ref) {
+  return ref.watch(homeRepositoryProvider).fetchHome();
+});
+
 final homeControllerProvider = Provider<HomeController>((ref) {
-  return HomeController(
-    state: HomeViewState(snapshot: ref.watch(homeRepositoryProvider).getHome()),
-  );
+  final snapshot = ref.watch(homeSnapshotProvider).requireValue;
+  return HomeController(state: HomeViewState(snapshot: snapshot));
 });

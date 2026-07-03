@@ -7,15 +7,19 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/discovery/presentation/pages/unified_search_page.dart';
 import 'package:vit_trade_flutter/features/home/data/home_mock_data.dart';
+import 'package:vit_trade_flutter/app/providers/home_controller_providers.dart';
 import 'package:vit_trade_flutter/features/home/data/providers/home_repository_provider.dart';
+import 'package:vit_trade_flutter/features/home/data/repositories/mock_home_repository.dart';
 import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.dart';
 import 'package:vit_trade_flutter/features/home/domain/repositories/home_repository.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detail_page.dart';
 import 'package:vit_trade_flutter/features/notifications/presentation/pages/notifications_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/withdraw_page.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/pages/wallet_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sparkline.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 void main() {
   test('SC-007 Home keeps the shared component foundation contract', () {
@@ -38,7 +42,6 @@ void main() {
     expect(source, contains('VitSectionHeader'));
     expect(source, contains('VitActionTileGrid'));
     expect(source, contains('VitMarketPairRow'));
-    expect(source, contains('VitRankedAssetRow'));
     expect(source, contains('VitAnnouncementBanner'));
     expect(source, contains('VitMarketTickerStrip'));
     expect(source, contains('VitMetricDeltaPill'));
@@ -49,7 +52,10 @@ void main() {
     expect(source, contains('VitHeroGlow'));
     expect(source, contains('VitInsetScrollView'));
     expect(source, contains('HomeDensityVariant'));
-    expect(source, contains('HomeSurfaceOrder'));
+    expect(source, contains('_homeDiscoveryQuickActionRoutes'));
+    expect(source, contains('RefreshIndicator'));
+    expect(source, contains('VitSkeleton'));
+    expect(source, contains('VitErrorState'));
 
     for (final localPattern in const [
       'class _SectionHeader',
@@ -83,7 +89,11 @@ void main() {
     }
   });
 
-  Future<void> pumpHome(WidgetTester tester, {HomeSnapshot? snapshot}) async {
+  Future<void> pumpHome(
+    WidgetTester tester, {
+    HomeSnapshot? snapshot,
+    bool simulateError = false,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -92,10 +102,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          if (snapshot != null)
-            homeRepositoryProvider.overrideWithValue(
-              _StaticHomeRepository(snapshot),
-            ),
+          homeRepositoryProvider.overrideWithValue(
+            snapshot != null
+                ? _StaticHomeRepository(snapshot)
+                : MockHomeRepository(
+                    simulateError: simulateError,
+                    loadDelay: Duration.zero,
+                  ),
+          ),
         ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.home),
@@ -138,6 +152,8 @@ void main() {
     expect(find.text('Staking'), findsOneWidget);
     expect(find.text('Hỗ trợ'), findsNothing);
     expect(find.text('Margin'), findsNothing);
+    expect(find.text('Dự đoán'), findsNothing);
+    expect(find.text('Arena'), findsNothing);
     expect(find.text('Prediction Markets'), findsOneWidget);
     expect(find.text('Open Arena'), findsOneWidget);
     expect(find.text('Thị trường'), findsWidgets);
@@ -405,16 +421,168 @@ void main() {
     expect(find.byType(WithdrawPage), findsOneWidget);
   });
 
-  testWidgets('SC-007 full content scroll reaches lower market sections', (
+  testWidgets('SC-007 full content scroll reaches market section', (
     tester,
   ) async {
     await pumpHome(tester);
 
-    await tester.ensureVisible(find.text('Top giảm giá'));
+    await tester.ensureVisible(find.text('Thị trường').last);
     await tester.pump(const Duration(milliseconds: 100));
 
-    expect(find.text('Top giảm giá'), findsOneWidget);
+    expect(find.text('Thị trường'), findsWidgets);
     expect(find.byKey(HomePage.contentKey), findsOneWidget);
+  });
+
+  testWidgets('SC-007 security announcement is prioritized over campaign', (
+    tester,
+  ) async {
+    await pumpHome(
+      tester,
+      snapshot: _homeSnapshotWithAnnouncements(const [
+        HomeAnnouncement(
+          id: 'campaign-test',
+          text: 'Campaign test',
+          type: HomeAnnouncementType.campaign,
+        ),
+        HomeAnnouncement(
+          id: 'security-test',
+          text: 'Security test',
+          type: HomeAnnouncementType.security,
+        ),
+      ]),
+    );
+
+    expect(find.text('Security test'), findsOneWidget);
+    expect(find.text('Campaign test'), findsNothing);
+  });
+
+  testWidgets('SC-007 announcement cycles on tap', (tester) async {
+    await pumpHome(
+      tester,
+      snapshot: _homeSnapshotWithAnnouncements(const [
+        HomeAnnouncement(
+          id: 'security-test',
+          text: 'Security test',
+          type: HomeAnnouncementType.security,
+        ),
+        HomeAnnouncement(
+          id: 'campaign-test',
+          text: 'Campaign test',
+          type: HomeAnnouncementType.campaign,
+        ),
+      ]),
+    );
+
+    expect(find.text('Security test'), findsOneWidget);
+
+    await tester.tap(find.byKey(HomePage.announcementKey));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Campaign test'), findsOneWidget);
+  });
+
+  testWidgets('SC-007 hides next action after dismiss', (tester) async {
+    await pumpHome(tester);
+
+    expect(find.byKey(HomePage.nextActionKey), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Ẩn gợi ý'));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(HomePage.nextActionKey), findsNothing);
+  });
+
+  testWidgets('SC-007 hides next action when snapshot has none', (tester) async {
+    await pumpHome(tester, snapshot: _homeSnapshotWithoutNextAction());
+
+    expect(find.byKey(HomePage.nextActionKey), findsNothing);
+  });
+
+  testWidgets('SC-007 recent products empty state offers markets CTA', (
+    tester,
+  ) async {
+    await pumpHome(tester, snapshot: _homeSnapshotWithoutRecentProducts());
+
+    expect(find.text('Chưa có hoạt động gần đây'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(HomePage.recentProductsSectionKey),
+        matching: find.text('Khám phá thị trường'),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-007 portfolio breakdown opens wallet from spot pill', (
+    tester,
+  ) async {
+    await pumpHome(tester);
+
+    final spotPill = find.descendant(
+      of: find.byKey(HomePage.portfolioCardKey),
+      matching: find.text('Spot'),
+    );
+    await tester.tap(spotPill);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(WalletPage), findsOneWidget);
+  });
+
+  testWidgets('SC-007 shows loading skeleton before snapshot resolves', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          homeRepositoryProvider.overrideWithValue(
+            const MockHomeRepository(
+              loadDelay: Duration(milliseconds: 500),
+            ),
+          ),
+        ],
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: AppRoutePaths.home),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.byType(VitSkeleton), findsWidgets);
+
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets('SC-007 error state retries home fetch', (tester) async {
+    final flakyRepository = _FlakyHomeRepository();
+
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(440, 956);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          homeRepositoryProvider.overrideWithValue(flakyRepository),
+        ],
+        child: VitTradeApp(
+          routerConfig: createAppRouter(initialLocation: AppRoutePaths.home),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Không tải được dữ liệu'), findsOneWidget);
+
+    await tester.tap(find.text('Thử lại'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Tổng tài sản ước tính'), findsOneWidget);
   });
 
   testWidgets('SC-007 bottom content clears the bottom nav overlay', (
@@ -428,12 +596,25 @@ void main() {
     }
     await tester.pumpAndSettle(const Duration(milliseconds: 220));
 
-    final lastLoser = find.text('XRP/USDT').last;
+    final lastPair = find.text('SOL/USDT').last;
     final navTop = tester.getTopLeft(find.byType(VitBottomNav)).dy;
 
-    expect(lastLoser, findsOneWidget);
-    expect(tester.getBottomLeft(lastLoser).dy, lessThan(navTop - 8));
+    expect(lastPair, findsOneWidget);
+    expect(tester.getBottomLeft(lastPair).dy, lessThan(navTop - 8));
   });
+}
+
+final class _FlakyHomeRepository implements HomeRepository {
+  var _attempts = 0;
+
+  @override
+  Future<HomeSnapshot> fetchHome() async {
+    _attempts++;
+    if (_attempts == 1) {
+      throw StateError('home_fetch_failed');
+    }
+    return HomeMockData.snapshot;
+  }
 }
 
 final class _StaticHomeRepository implements HomeRepository {
@@ -442,7 +623,7 @@ final class _StaticHomeRepository implements HomeRepository {
   final HomeSnapshot snapshot;
 
   @override
-  HomeSnapshot getHome() => snapshot;
+  Future<HomeSnapshot> fetchHome() async => snapshot;
 }
 
 HomeSnapshot _homeSnapshotWithAnnouncements(
@@ -459,11 +640,50 @@ HomeSnapshot _homeSnapshotWithAnnouncements(
     dailyPct: snapshot.dailyPct,
     portfolioTrend7d: snapshot.portfolioTrend7d,
     notifications: snapshot.notifications,
-    homeBadge: snapshot.homeBadge,
     announcements: announcements,
     quickActions: snapshot.quickActions,
     nextAction: snapshot.nextAction,
     recentProducts: snapshot.recentProducts,
+    pairs: snapshot.pairs,
+  );
+}
+
+HomeSnapshot _homeSnapshotWithoutNextAction() {
+  final snapshot = HomeMockData.snapshot;
+  return HomeSnapshot(
+    totalBalance: snapshot.totalBalance,
+    totalBtc: snapshot.totalBtc,
+    spotBalance: snapshot.spotBalance,
+    earnBalance: snapshot.earnBalance,
+    fundingBalance: snapshot.fundingBalance,
+    dailyPnl: snapshot.dailyPnl,
+    dailyPct: snapshot.dailyPct,
+    portfolioTrend7d: snapshot.portfolioTrend7d,
+    notifications: snapshot.notifications,
+    announcements: snapshot.announcements,
+    quickActions: snapshot.quickActions,
+    nextAction: null,
+    recentProducts: snapshot.recentProducts,
+    pairs: snapshot.pairs,
+  );
+}
+
+HomeSnapshot _homeSnapshotWithoutRecentProducts() {
+  final snapshot = HomeMockData.snapshot;
+  return HomeSnapshot(
+    totalBalance: snapshot.totalBalance,
+    totalBtc: snapshot.totalBtc,
+    spotBalance: snapshot.spotBalance,
+    earnBalance: snapshot.earnBalance,
+    fundingBalance: snapshot.fundingBalance,
+    dailyPnl: snapshot.dailyPnl,
+    dailyPct: snapshot.dailyPct,
+    portfolioTrend7d: snapshot.portfolioTrend7d,
+    notifications: snapshot.notifications,
+    announcements: snapshot.announcements,
+    quickActions: snapshot.quickActions,
+    nextAction: snapshot.nextAction,
+    recentProducts: const [],
     pairs: snapshot.pairs,
   );
 }
@@ -480,7 +700,6 @@ HomeSnapshot _emptyHomeSnapshot() {
     dailyPct: 0,
     portfolioTrend7d: const [0, 0, 0, 0, 0, 0, 0],
     notifications: snapshot.notifications,
-    homeBadge: snapshot.homeBadge,
     announcements: snapshot.announcements,
     quickActions: snapshot.quickActions,
     nextAction: snapshot.nextAction,

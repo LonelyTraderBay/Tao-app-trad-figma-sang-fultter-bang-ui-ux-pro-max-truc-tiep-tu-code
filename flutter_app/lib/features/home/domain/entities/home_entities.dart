@@ -118,10 +118,9 @@ final class HomeSnapshot {
     required this.dailyPct,
     required this.portfolioTrend7d,
     required this.notifications,
-    required this.homeBadge,
     required this.announcements,
     required this.quickActions,
-    required this.nextAction,
+    this.nextAction,
     required this.recentProducts,
     required this.pairs,
   });
@@ -135,10 +134,9 @@ final class HomeSnapshot {
   final double dailyPct;
   final List<double> portfolioTrend7d;
   final int notifications;
-  final int homeBadge;
   final List<HomeAnnouncement> announcements;
   final List<HomeQuickAction> quickActions;
-  final HomeNextAction nextAction;
+  final HomeNextAction? nextAction;
   final List<HomeRecentProduct> recentProducts;
   final List<HomeCryptoPair> pairs;
 }

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/home_controller_providers.dart';
 import 'package:vit_trade_flutter/app/providers/notifications_controller_providers.dart';
+import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -48,7 +51,10 @@ class HomePage extends ConsumerStatefulWidget {
 
 enum HomeDensityVariant { compact, comfortable }
 
-enum HomeSurfaceOrder { productsBeforeRecent, recentBeforeProducts }
+const _homeDiscoveryQuickActionRoutes = {
+  '/markets/predictions',
+  '/arena',
+};
 
 const double _framedScrollClearance = AppSpacing.buttonStandard + AppSpacing.x7;
 const double _nativeScrollClearance = AppSpacing.buttonStandard + AppSpacing.x5;
@@ -57,7 +63,3 @@ const double _homePortfolioTrendHeight = AppSpacing.homeSparklineHeight;
 const double _assetAvatarExtent = AppSpacing.iconMd + AppSpacing.x1;
 const double _recentProductExtent = AppSpacing.buttonStandard + AppSpacing.x6;
 const double _recentProductWidth = AppSpacing.x7 * 2 + AppSpacing.x5;
-const double _trendCardExtent =
-    AppSpacing.buttonStandard + AppSpacing.x7 + AppSpacing.x5;
-const double _trendCardWidth =
-    AppSpacing.x7 * 2 + AppSpacing.x6 + AppSpacing.x1;

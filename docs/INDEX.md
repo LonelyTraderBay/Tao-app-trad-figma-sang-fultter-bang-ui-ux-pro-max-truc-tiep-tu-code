@@ -67,10 +67,13 @@ Load docs **on demand** — do not paste large audit output into chat. Shared ru
 | File | When |
 | --- | --- |
 | [HomePage-Flutter-Native-Standard.md](04_SCREEN_REFERENCES/home/HomePage-Flutter-Native-Standard.md) | Home module work |
-| [ke-hoach-redesign-theo-module.md](02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md) | **Redesign UI** — token-lite plan (~200 lines); load + 1 batch row |
-| [ke-hoach-redesign-batches.csv](02_FLUTTER_MIGRATION/ke-hoach-redesign-batches.csv) | 66 batch — `sc_ids` + paths; filter 1 row/batch |
-| [VitTrade-Screen-Redesign-Checklist.csv](02_FLUTTER_MIGRATION/VitTrade-Screen-Redesign-Checklist.csv) | 416 màn — lọc theo batch; **không** load `.md` checklist vào chat |
-| [prompt-redesign-trading-bots-hub-sc059.md](02_FLUTTER_MIGRATION/prompt-redesign-trading-bots-hub-sc059.md) | SC-059 — batch `RD-T02` only |
+| [ke-hoach-redesign-theo-module.md](02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md) | **Redesign v2.5** — routing; entry → EXECUTION-PLAYBOOK |
+| [prompt-redesign/EXECUTION-PLAYBOOK.md](02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PLAYBOOK.md) | **66 bước** copy-paste tuần tự |
+| [prompt-redesign/REDESIGN-CONTRACT.md](02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md) | Contract chung mọi batch |
+| [ke-hoach-redesign-batches.csv](02_FLUTTER_MIGRATION/ke-hoach-redesign-batches.csv) | 66 batch — `status` · `tier` · prompts |
+| [VitTrade-Screen-Redesign-Checklist.csv](02_FLUTTER_MIGRATION/VitTrade-Screen-Redesign-Checklist.csv) | 416 màn — lọc theo batch |
+| [prompt-redesign/README.md](02_FLUTTER_MIGRATION/prompt-redesign/README.md) | 11 hub Tier A + Trade sub-hubs |
+| [prompt-redesign/trading-bots-hub.md](02_FLUTTER_MIGRATION/prompt-redesign/trading-bots-hub.md) | SC-059 — batch `RD-T02` (Trade sub-hub) |
 
 ## Audit tools (run from `flutter_app/`)
 

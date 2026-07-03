@@ -435,26 +435,6 @@ const _homeMatrixSourceRules = [
     ],
     notes: 'Market section pair source is present.',
   ),
-  HomeEntryBackRule(
-    id: 'HEB-028',
-    area: 'Matrix source',
-    file: 'lib/features/home/presentation/pages/home_page_part_02.dart',
-    requiredSnippets: [
-      'class _TrendingSection',
-      "onNavigate('/pair/\${pair.id}')",
-    ],
-    notes: 'Trending pair source is present.',
-  ),
-  HomeEntryBackRule(
-    id: 'HEB-029',
-    area: 'Matrix source',
-    file: 'lib/features/home/presentation/pages/home_page_part_02.dart',
-    requiredSnippets: [
-      'class _RankedListSection',
-      "onNavigate('/pair/\${pairs[i].id}')",
-    ],
-    notes: 'Ranked pair source is present.',
-  ),
 ];
 
 const _homeEntryContractRules = [

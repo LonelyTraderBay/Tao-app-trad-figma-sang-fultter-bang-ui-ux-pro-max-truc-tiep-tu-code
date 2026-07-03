@@ -18,6 +18,7 @@ class VitAnnouncementBanner extends StatelessWidget {
     this.itemCount = 1,
     this.activeIndex = 0,
     this.variant = VitAnnouncementBannerVariant.standard,
+    this.showCompactDots = false,
     this.onTap,
     this.onDismiss,
   });
@@ -28,11 +29,13 @@ class VitAnnouncementBanner extends StatelessWidget {
   final int itemCount;
   final int activeIndex;
   final VitAnnouncementBannerVariant variant;
+  final bool showCompactDots;
   final VoidCallback? onTap;
   final VoidCallback? onDismiss;
 
   bool get _showDots {
-    return itemCount > 1 && variant == VitAnnouncementBannerVariant.standard;
+    return itemCount > 1 &&
+        (variant == VitAnnouncementBannerVariant.standard || showCompactDots);
   }
 
   EdgeInsetsGeometry get _padding {

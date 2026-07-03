@@ -19,6 +19,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   String _marketTab = 'hot';
   bool _balanceHidden = false;
   final Set<String> _sessionHiddenAnnouncementIds = <String>{};
+  final Set<String> _dismissedNextActionIds = <String>{};
 
   void _setTab(String key) {
     setState(() => _marketTab = key);
@@ -84,12 +85,35 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   List<HomeAnnouncement> _visibleAnnouncements(HomeSnapshot snapshot) {
-    return snapshot.announcements
+    final announcements = snapshot.announcements
         .where(
           (announcement) =>
               announcement.active &&
               announcement.type.surfacesOnHome &&
               !_sessionHiddenAnnouncementIds.contains(announcement.id),
+        )
+        .toList(growable: false);
+    announcements.sort(
+      (a, b) => _announcementSortKey(a.type).compareTo(
+        _announcementSortKey(b.type),
+      ),
+    );
+    return announcements;
+  }
+
+  int _announcementSortKey(HomeAnnouncementType type) {
+    return switch (type) {
+      HomeAnnouncementType.security => 0,
+      HomeAnnouncementType.risk => 1,
+      HomeAnnouncementType.campaign => 2,
+      HomeAnnouncementType.info => 3,
+    };
+  }
+
+  List<HomeQuickAction> _gridQuickActions(List<HomeQuickAction> actions) {
+    return actions
+        .where(
+          (action) => !_homeDiscoveryQuickActionRoutes.contains(action.routePath),
         )
         .toList(growable: false);
   }
@@ -106,6 +130,21 @@ class _HomePageState extends ConsumerState<HomePage> {
         : VitDensity.standard;
   }
 
+  void _dismissNextAction(HomeNextAction nextAction) {
+    setState(() => _dismissedNextActionIds.add(nextAction.routePath));
+  }
+
+  HomeNextAction? _visibleNextAction(HomeNextAction? nextAction) {
+    if (nextAction == null) return null;
+    if (_dismissedNextActionIds.contains(nextAction.routePath)) return null;
+    return nextAction;
+  }
+
+  Future<void> _refreshHome() async {
+    ref.invalidate(homeSnapshotProvider);
+    await ref.read(homeSnapshotProvider.future);
+  }
+
   int _primaryQuickActionCount(HomeDensityVariant variant) {
     return variant == HomeDensityVariant.compact
         ? AppSpacing.homeQuickActionCompactCount
@@ -114,16 +153,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ref.watch(homeControllerProvider);
-    final snapshot = controller.state.snapshot;
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final homeVariant = _homeDensityVariant(screenWidth);
-    final homeDensity = _tileDensity(homeVariant);
-    final homePrimaryQuickActionCount = _primaryQuickActionCount(homeVariant);
-    final visibleAnnouncements = _visibleAnnouncements(snapshot);
-    final moreQuickActions = snapshot.quickActions
-        .skip(homePrimaryQuickActionCount)
-        .toList(growable: false);
+    final homeAsync = ref.watch(homeSnapshotProvider);
     final notificationUnreadCount = ref.watch(notificationUnreadCountProvider);
     final shellRenderMode = widget.shellRenderMode ?? defaultShellRenderMode();
     final nativeShell = !shellRenderMode.usesVisualQaFrame;
@@ -143,81 +173,200 @@ class _HomePageState extends ConsumerState<HomePage> {
           notifications: notificationUnreadCount,
           onNavigate: _go,
         ),
-        child: NotificationListener<ScrollNotification>(
-          onNotification: (notification) =>
-              _handleHomeScrollNotification(notification, visibleAnnouncements),
-          child: VitInsetScrollView(
-            key: HomePage.contentKey,
-            bottomInset: scrollEndClearance,
-            child: VitPageContent(
-              padding: VitContentPadding.compact,
-              density: VitDensity.compact,
-              children: [
-                if (visibleAnnouncements.isNotEmpty)
-                  _AnnouncementBanner(
-                    announcements: visibleAnnouncements,
-                    onDismiss: _dismissAnnouncement,
-                  ),
-                _PortfolioCard(
-                  snapshot: snapshot,
-                  balanceHidden: _balanceHidden,
-                  onToggleBalance: _toggleBalanceHidden,
-                  onNavigate: _go,
-                ),
-                _NextActionSection(
-                  nextAction: snapshot.nextAction,
-                  onNavigate: _go,
-                ),
-                _MarketTickerSection(
-                  pairs: controller.hotPairs.take(3).toList(),
-                  onNavigate: _go,
-                ),
-                _ProductsSection(
-                  actions: snapshot.quickActions,
-                  maxVisibleItems: homePrimaryQuickActionCount,
-                  moreActions: moreQuickActions,
-                  onNavigate: _go,
-                  onMore: moreQuickActions.isEmpty
-                      ? null
-                      : () => _showMoreProducts(moreQuickActions, homeDensity),
-                  density: homeDensity,
-                ),
-                _RecentProductsSection(
-                  recentProducts: snapshot.recentProducts,
-                  onNavigate: _go,
-                ),
-                _HomeDiscoverySection(onNavigate: _go),
-                _MarketSection(
-                  activeTab: _marketTab,
-                  pairs: controller.tabPairs(_marketTab),
-                  onTabChanged: _setTab,
-                  onNavigate: _go,
-                ),
-                _TrendingSection(
-                  pairs: snapshot.pairs.take(5).toList(),
-                  onNavigate: _go,
-                ),
-                _RankedListSection(
-                  title: 'Top tăng giá',
-                  icon: Icons.trending_up_rounded,
-                  iconColor: AppColors.buy,
-                  pairs: controller.gainers.take(3).toList(),
-                  positive: true,
-                  onNavigate: _go,
-                ),
-                _RankedListSection(
-                  title: 'Top giảm giá',
-                  icon: Icons.trending_down_rounded,
-                  iconColor: AppColors.sell,
-                  pairs: controller.losers.take(3).toList(),
-                  positive: false,
-                  onNavigate: _go,
-                ),
-              ],
-            ),
+        child: homeAsync.when(
+          loading: () => _HomeScrollShell(
+            scrollEndClearance: scrollEndClearance,
+            onRefresh: _refreshHome,
+            visibleAnnouncements: const [],
+            child: const _HomeLoadingContent(),
           ),
+          error: (error, stackTrace) => _HomeErrorContent(onRetry: _refreshHome),
+          data: (snapshot) {
+            final controller = HomeController(
+              state: HomeViewState(snapshot: snapshot),
+            );
+            final screenWidth = MediaQuery.sizeOf(context).width;
+            final homeVariant = _homeDensityVariant(screenWidth);
+            final homeDensity = _tileDensity(homeVariant);
+            final homePrimaryQuickActionCount = _primaryQuickActionCount(
+              homeVariant,
+            );
+            final visibleAnnouncements = _visibleAnnouncements(snapshot);
+            final gridQuickActions = _gridQuickActions(snapshot.quickActions);
+            final moreQuickActions = gridQuickActions
+                .skip(homePrimaryQuickActionCount)
+                .toList(growable: false);
+            final visibleNextAction = _visibleNextAction(snapshot.nextAction);
+
+            return _HomeScrollShell(
+              scrollEndClearance: scrollEndClearance,
+              onRefresh: _refreshHome,
+              visibleAnnouncements: visibleAnnouncements,
+              child: VitPageContent(
+                padding: VitContentPadding.compact,
+                density: VitDensity.compact,
+                children: [
+                  if (visibleAnnouncements.isNotEmpty)
+                    _AnnouncementBanner(
+                      announcements: visibleAnnouncements,
+                      onDismiss: _dismissAnnouncement,
+                    ),
+                  _PortfolioCard(
+                    snapshot: snapshot,
+                    balanceHidden: _balanceHidden,
+                    onToggleBalance: _toggleBalanceHidden,
+                    onNavigate: _go,
+                  ),
+                  if (visibleNextAction != null)
+                    _NextActionSection(
+                      nextAction: visibleNextAction,
+                      onNavigate: _go,
+                      onDismiss: () => _dismissNextAction(visibleNextAction),
+                    ),
+                  _MarketTickerSection(
+                    pairs: controller.hotPairs.take(3).toList(),
+                    onNavigate: _go,
+                  ),
+                  _ProductsSection(
+                    actions: gridQuickActions,
+                    maxVisibleItems: homePrimaryQuickActionCount,
+                    moreActions: moreQuickActions,
+                    onNavigate: _go,
+                    onMore: moreQuickActions.isEmpty
+                        ? null
+                        : () =>
+                              _showMoreProducts(moreQuickActions, homeDensity),
+                    density: homeDensity,
+                  ),
+                  _RecentProductsSection(
+                    recentProducts: snapshot.recentProducts,
+                    onNavigate: _go,
+                  ),
+                  _HomeDiscoverySection(onNavigate: _go),
+                  _MarketSection(
+                    activeTab: _marketTab,
+                    pairs: controller.tabPairs(_marketTab),
+                    onTabChanged: _setTab,
+                    onNavigate: _go,
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
+    );
+  }
+}
+
+class _HomeScrollShell extends StatelessWidget {
+  const _HomeScrollShell({
+    required this.scrollEndClearance,
+    required this.onRefresh,
+    required this.visibleAnnouncements,
+    required this.child,
+  });
+
+  final double scrollEndClearance;
+  final Future<void> Function() onRefresh;
+  final List<HomeAnnouncement> visibleAnnouncements;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        final state = context.findAncestorStateOfType<_HomePageState>();
+        return state?._handleHomeScrollNotification(
+              notification,
+              visibleAnnouncements,
+            ) ??
+            false;
+      },
+      child: RefreshIndicator(
+        onRefresh: onRefresh,
+        child: VitInsetScrollView(
+          key: HomePage.contentKey,
+          bottomInset: scrollEndClearance,
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class _HomeLoadingContent extends StatelessWidget {
+  const _HomeLoadingContent();
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageContent(
+      padding: VitContentPadding.compact,
+      density: VitDensity.compact,
+      children: const [
+        _HomePortfolioSkeleton(),
+        SizedBox(height: AppSpacing.x3),
+        _HomeMarketSkeleton(),
+      ],
+    );
+  }
+}
+
+class _HomeErrorContent extends StatelessWidget {
+  const _HomeErrorContent({required this.onRetry});
+
+  final Future<void> Function() onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitInsetScrollView(
+      key: HomePage.contentKey,
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: VitErrorState(
+        title: 'Không tải được dữ liệu',
+        message: 'Vui lòng kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: () => onRetry(),
+      ),
+    );
+  }
+}
+
+class _HomePortfolioSkeleton extends StatelessWidget {
+  const _HomePortfolioSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.large,
+      padding: AppSpacing.homePortfolioCardPadding,
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          VitSkeleton(width: 160, height: AppSpacing.x3),
+          SizedBox(height: AppSpacing.x3),
+          VitSkeleton(width: double.infinity, height: AppSpacing.x6),
+          SizedBox(height: AppSpacing.x3),
+          VitSkeleton(width: 120, height: AppSpacing.x3),
+        ],
+      ),
+    );
+  }
+}
+
+class _HomeMarketSkeleton extends StatelessWidget {
+  const _HomeMarketSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitSkeleton(width: 120, height: AppSpacing.x4),
+        SizedBox(height: AppSpacing.x3),
+        VitSkeletonList(rows: 3),
+      ],
     );
   }
 }
@@ -250,7 +399,7 @@ class _HomeHeader extends StatelessWidget {
   }
 }
 
-class _AnnouncementBanner extends StatelessWidget {
+class _AnnouncementBanner extends StatefulWidget {
   const _AnnouncementBanner({
     required this.announcements,
     required this.onDismiss,
@@ -260,17 +409,72 @@ class _AnnouncementBanner extends StatelessWidget {
   final ValueChanged<HomeAnnouncement> onDismiss;
 
   @override
+  State<_AnnouncementBanner> createState() => _AnnouncementBannerState();
+}
+
+class _AnnouncementBannerState extends State<_AnnouncementBanner> {
+  static const _autoAdvanceInterval = Duration(seconds: 5);
+
+  int _activeIndex = 0;
+  Timer? _autoAdvanceTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoAdvance();
+  }
+
+  @override
+  void didUpdateWidget(covariant _AnnouncementBanner oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.announcements.length != widget.announcements.length) {
+      _activeIndex = 0;
+    } else if (_activeIndex >= widget.announcements.length) {
+      _activeIndex = 0;
+    }
+    _startAutoAdvance();
+  }
+
+  @override
+  void dispose() {
+    _autoAdvanceTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startAutoAdvance() {
+    _autoAdvanceTimer?.cancel();
+    if (widget.announcements.length <= 1) return;
+
+    _autoAdvanceTimer = Timer.periodic(_autoAdvanceInterval, (_) {
+      if (!mounted) return;
+      setState(() {
+        _activeIndex = (_activeIndex + 1) % widget.announcements.length;
+      });
+    });
+  }
+
+  void _showNextAnnouncement() {
+    if (widget.announcements.length <= 1) return;
+    setState(() {
+      _activeIndex = (_activeIndex + 1) % widget.announcements.length;
+    });
+    _startAutoAdvance();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final announcement = announcements.first;
+    final announcement = widget.announcements[_activeIndex];
     return VitAnnouncementBanner(
       key: HomePage.announcementKey,
       message: announcement.text,
-      itemCount: announcements.length,
-      activeIndex: 0,
+      itemCount: widget.announcements.length,
+      activeIndex: _activeIndex,
       variant: VitAnnouncementBannerVariant.compact,
+      showCompactDots: true,
       icon: _announcementIcon(announcement.type),
       accentColor: _announcementColor(announcement.type),
-      onDismiss: () => onDismiss(announcement),
+      onTap: _showNextAnnouncement,
+      onDismiss: () => widget.onDismiss(announcement),
     );
   }
 
@@ -425,6 +629,7 @@ class _PortfolioCardState extends State<_PortfolioCard> {
           _HomePortfolioBreakdown(
             snapshot: snapshot,
             balanceHidden: balanceHidden,
+            onNavigate: widget.onNavigate,
           ),
           const SizedBox(height: AppSpacing.x4),
           _buildActionRow(),
@@ -638,10 +843,12 @@ class _HomePortfolioBreakdown extends StatelessWidget {
   const _HomePortfolioBreakdown({
     required this.snapshot,
     required this.balanceHidden,
+    required this.onNavigate,
   });
 
   final HomeSnapshot snapshot;
   final bool balanceHidden;
+  final ValueChanged<String> onNavigate;
 
   @override
   Widget build(BuildContext context) {
@@ -651,18 +858,21 @@ class _HomePortfolioBreakdown extends StatelessWidget {
         snapshot.spotBalance,
         Icons.swap_horiz_rounded,
         'Ví spot — tiền dùng mua/bán coin ngay lập tức',
+        AppRoutePaths.wallet,
       ),
       (
         'Earn',
         snapshot.earnBalance,
         Icons.savings_outlined,
         'Tài sản stake hoặc savings — sinh lãi theo thời gian',
+        AppRoutePaths.earnStaking,
       ),
       (
         'Funding',
         snapshot.fundingBalance,
         Icons.account_balance_outlined,
         'Ví funding cho margin, futures và chuyển nội bộ',
+        AppRoutePaths.walletTransfer,
       ),
     ];
 
@@ -675,27 +885,35 @@ class _HomePortfolioBreakdown extends StatelessWidget {
         children: [
           for (var i = 0; i < items.length; i++) ...[
             Expanded(
-              child: Tooltip(
-                message: items[i].$4,
-                child: Column(
-                  children: [
-                    VitStatusPill(
-                      label: items[i].$1,
-                      status: VitStatusPillStatus.neutral,
-                      icon: items[i].$3,
-                      size: VitStatusPillSize.sm,
+              child: Semantics(
+                button: true,
+                label: '${items[i].$1}: mở ${items[i].$1}',
+                child: InkWell(
+                  onTap: () => onNavigate(items[i].$5),
+                  borderRadius: AppRadii.inputRadius,
+                  child: Tooltip(
+                    message: items[i].$4,
+                    child: Column(
+                      children: [
+                        VitStatusPill(
+                          label: items[i].$1,
+                          status: VitStatusPillStatus.neutral,
+                          icon: items[i].$3,
+                          size: VitStatusPillSize.sm,
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          balanceHidden ? '••••' : _formatUsd(items[i].$2),
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                            fontFeatures: AppTextStyles.tabularFigures,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      balanceHidden ? '••••' : _formatUsd(items[i].$2),
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                        fontFeatures: AppTextStyles.tabularFigures,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -711,10 +929,12 @@ class _NextActionSection extends StatelessWidget {
   const _NextActionSection({
     required this.nextAction,
     required this.onNavigate,
+    required this.onDismiss,
   });
 
   final HomeNextAction nextAction;
   final ValueChanged<String> onNavigate;
+  final VoidCallback onDismiss;
 
   @override
   Widget build(BuildContext context) {
@@ -732,6 +952,7 @@ class _NextActionSection extends StatelessWidget {
           ctaLabel: nextAction.ctaLabel,
           accentColor: nextAction.accentColor,
           onTap: () => onNavigate(nextAction.routePath),
+          onDismiss: onDismiss,
         ),
       ],
     );
@@ -826,23 +1047,32 @@ class _RecentProductsSection extends StatelessWidget {
       children: [
         const VitSectionHeader(title: 'G\u1EA7n \u0111\u00E2y'),
         const SizedBox(height: AppSpacing.x3),
-        SizedBox(
-          key: HomePage.recentProductsKey,
-          height: _recentProductExtent,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            clipBehavior: Clip.none,
-            itemCount: recentProducts.length,
-            separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x3),
-            itemBuilder: (context, index) {
-              final product = recentProducts[index];
-              return _RecentProductTile(
-                product: product,
-                onTap: () => onNavigate(product.routePath),
-              );
-            },
+        if (recentProducts.isEmpty)
+          VitEmptyState(
+            title: 'Chưa có hoạt động gần đây',
+            message: 'Các sản phẩm bạn vừa dùng sẽ hiện ở đây.',
+            icon: Icons.history_rounded,
+            actionLabel: 'Khám phá thị trường',
+            onAction: () => onNavigate('/markets'),
+          )
+        else
+          SizedBox(
+            key: HomePage.recentProductsKey,
+            height: _recentProductExtent,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              clipBehavior: Clip.none,
+              itemCount: recentProducts.length,
+              separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x3),
+              itemBuilder: (context, index) {
+                final product = recentProducts[index];
+                return _RecentProductTile(
+                  product: product,
+                  onTap: () => onNavigate(product.routePath),
+                );
+              },
+            ),
           ),
-        ),
       ],
     );
   }

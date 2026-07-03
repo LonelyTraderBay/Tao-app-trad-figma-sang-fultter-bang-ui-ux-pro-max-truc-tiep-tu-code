@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Generate token-efficient redesign plan (slim MD + batches CSV)."""
+"""Generate token-efficient redesign plan (slim MD + batches CSV).
+
+Regenerate (from repo root):
+  python flutter_app/tool/export_screen_checklist.py
+  python flutter_app/tool/gen_redesign_plan.py
+
+Progress: edit `status` in ke-hoach-redesign-batches.csv only — regenerate preserves it.
+"""
 
 from __future__ import annotations
 
@@ -13,6 +20,8 @@ REPO = Path(__file__).resolve().parent.parent.parent
 CSV_PATH = REPO / "docs/02_FLUTTER_MIGRATION/VitTrade-Screen-Redesign-Checklist.csv"
 OUT_MD = REPO / "docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md"
 OUT_BATCHES = REPO / "docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-batches.csv"
+OUT_PLAYBOOK = REPO / "docs/02_FLUTTER_MIGRATION/prompt-redesign/EXECUTION-PLAYBOOK.md"
+TRADING_BOTS_PROMPT = "prompt-redesign/trading-bots-hub.md"
 
 SKIP_REDESIGN_MODULES = {"home"}
 
@@ -126,9 +135,213 @@ CUSTOM_BATCHES: dict[str, list[tuple[str, str, list[str]]]] = {
     ],
 }
 
-SPECIAL_PROMPTS = {
-    "sc059TradingBots": "prompt-redesign-trading-bots-hub-sc059.md",
+HUB_BATCH_PROMPTS: dict[str, str] = {
+    "RD-M02-B01": "prompt-redesign/auth-hub.md",
+    "RD-K01": "prompt-redesign/markets-hub.md",
+    "RD-T01": "prompt-redesign/trade-core-hub.md",
+    "RD-T02": TRADING_BOTS_PROMPT,
+    "RD-T05": "prompt-redesign/copy-trading-hub.md",
+    "RD-W01": "prompt-redesign/wallet-hub.md",
+    "RD-P01": "prompt-redesign/p2p-hub.md",
+    "RD-E01": "prompt-redesign/earn-staking-hub.md",
+    "RD-R01": "prompt-redesign/predictions-hub.md",
+    "RD-A01": "prompt-redesign/arena-hub.md",
+    "RD-L01": "prompt-redesign/launchpad-hub.md",
 }
+
+MODULE_HUB_PROMPT: dict[str, str] = {
+    "auth": "prompt-redesign/auth-hub.md",
+    "markets": "prompt-redesign/markets-hub.md",
+    "trade": "prompt-redesign/trade-core-hub.md",
+    "wallet": "prompt-redesign/wallet-hub.md",
+    "p2p": "prompt-redesign/p2p-hub.md",
+    "earn": "prompt-redesign/earn-staking-hub.md",
+    "predictions": "prompt-redesign/predictions-hub.md",
+    "arena": "prompt-redesign/arena-hub.md",
+    "launchpad": "prompt-redesign/launchpad-hub.md",
+}
+
+BATCH_MODULE_PROMPT_OVERRIDE: dict[str, str] = {
+    "RD-T02": TRADING_BOTS_PROMPT,
+    "RD-T03": TRADING_BOTS_PROMPT,
+    "RD-T04": TRADING_BOTS_PROMPT,
+    "RD-T05": "prompt-redesign/copy-trading-hub.md",
+    "RD-T06": "prompt-redesign/copy-trading-hub.md",
+}
+
+SPECIAL_PROMPTS = {
+    "sc059TradingBots": TRADING_BOTS_PROMPT,
+}
+
+
+def batch_tier(special_prompt: str, module_prompt: str) -> str:
+    if special_prompt:
+        return "A_hub"
+    if module_prompt:
+        return "B_child"
+    return "B_simple"
+
+
+def completion_line(batch_id: str, module_id: str, special_prompt: str) -> str:
+    if batch_id == "RD-T02":
+        return "TRADING BOTS HUB UI REDESIGN DONE — SC-059 v2"
+    return f"MODULE UI REDESIGN DONE — {module_id} — {batch_id}"
+
+
+def load_lines_for_batch(special_prompt: str, module_prompt: str) -> list[str]:
+    lines = [
+        "- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4",
+        "- docs/02_FLUTTER_MIGRATION/prompt-redesign/REDESIGN-CONTRACT.md",
+        "- ke-hoach-redesign-batches.csv row <batch_id>",
+        "- VitTrade-Screen-Redesign-Checklist.csv rows (sc_ids only)",
+    ]
+    if special_prompt:
+        lines.append(f"- docs/02_FLUTTER_MIGRATION/{special_prompt} (FULL hub prompt)")
+    elif module_prompt:
+        lines.append(
+            f"- docs/02_FLUTTER_MIGRATION/{module_prompt} "
+            "(North Star · Copy · Financial ONLY)"
+        )
+        lines.append("- docs/02_FLUTTER_MIGRATION/prompt-redesign/_template-tier-b-batch.md")
+    else:
+        lines.append("- docs/02_FLUTTER_MIGRATION/prompt-redesign/_template-tier-b-batch.md")
+    lines.append("- docs/01_AI_RULES/AI_PROMPT_SHELL.md (verify gate)")
+    return lines
+
+
+def render_execution_playbook(batch_rows: list[dict[str, str]], today: str) -> str:
+    total = len(batch_rows)
+    lines = [
+        "# VitTrade UI Redesign — Execution Playbook",
+        "",
+        f"**Generated:** {today} · **Batches:** {total} · **Screens:** 415",
+        "",
+        "> **Cách dùng:** Mỗi bước = **1 chat mới**. Copy block **Prompt** bên dưới. "
+        "Pass gate → `status=done` trong CSV → regenerate plan.",
+        "",
+        "**Bộ đồng bộ:**",
+        "",
+        "| File | Vai trò |",
+        "| --- | --- |",
+        "| [REDESIGN-CONTRACT.md](REDESIGN-CONTRACT.md) | Chuẩn chung — load 1 lần đầu session |",
+        "| [ke-hoach-redesign-theo-module.md](../ke-hoach-redesign-theo-module.md) | Routing §1–4 mỗi chat |",
+        "| [README.md](README.md) | 11 hub Tier A + SC-059 |",
+        "| Hub prompts trong folder này | Tier A full / parent Tier B |",
+        "",
+        "---",
+        "",
+        "## Quy trình tổng thể",
+        "",
+        "1. Hub batch (**Tier A**) trước — thiết lập North Star module.",
+        "2. Batch con (**Tier B_child**) — inherit partial `module_prompt`.",
+        "3. Module nhỏ (**Tier B_simple**) — plan + template.",
+        "4. **Module gate** sau batch cuối của module (test cả module).",
+        "5. **Final gate** sau bước 66 — không cần soát từng màn lẻ.",
+        "",
+        "### Module gate (sau batch cuối mỗi module)",
+        "",
+        "```bash",
+        "cd flutter_app",
+        "flutter test test/features/<module>/ --reporter=compact",
+        "flutter analyze",
+        "```",
+        "",
+        "Completion: `MODULE REDESIGN GATE PASS — <module_id>`",
+        "",
+        "### Final gate (sau bước 66)",
+        "",
+        "```bash",
+        "cd flutter_app",
+        "flutter analyze",
+        "flutter test --reporter=compact",
+        "dart run tool/design_token_consistency_audit.dart --check",
+        "dart run tool/route_coverage_audit.dart --check",
+        "dart run tool/navigation_edge_audit.dart --check",
+        "```",
+        "",
+        "Completion: `VITTRADE UI REDESIGN COMPLETE — 415 screens`",
+        "",
+        "---",
+        "",
+        "## Bảng thứ tự (master)",
+        "",
+        "| Step | batch_id | module | tier | sc# | prompt | status |",
+        "| ---: | --- | --- | --- | ---: | --- | --- |",
+    ]
+    for row in batch_rows:
+        sp = row["special_prompt"] or "—"
+        if len(sp) > 40:
+            sp = sp.split("/")[-1]
+        st = row["status"] if is_done_status(row["status"]) else row["status"]
+        tier = batch_tier(row["special_prompt"], row["module_prompt"])
+        lines.append(
+            f"| {row['order']} | `{row['batch_id']}` | {row['module']} | {tier} | "
+            f"{row['sc_count']} | {sp} | {st} |"
+        )
+
+    lines.extend(["", "---", "", "## Prompt từng bước (copy-paste)", ""])
+
+    for i, row in enumerate(batch_rows):
+        order = row["order"]
+        batch_id = row["batch_id"]
+        module_id = row["module_id"]
+        tier = batch_tier(row["special_prompt"], row["module_prompt"])
+        next_id = batch_rows[i + 1]["batch_id"] if i + 1 < len(batch_rows) else "FINAL GATE"
+        next_mod = batch_rows[i + 1]["module_id"] if i + 1 < len(batch_rows) else ""
+        module_gate = ""
+        if i + 1 < len(batch_rows) and batch_rows[i + 1]["module_id"] != module_id:
+            module_gate = (
+                f"\nSau completion: chạy MODULE GATE test/features/{row['module']}/ "
+                f"→ `MODULE REDESIGN GATE PASS — {module_id}`\n"
+            )
+        load_lines = load_lines_for_batch(row["special_prompt"], row["module_prompt"])
+        comp = completion_line(batch_id, module_id, row["special_prompt"])
+        lines.extend(
+            [
+                f"### Step {order}/{total} — `{batch_id}` ({row['batch_title']})",
+                "",
+                f"**Tier:** {tier} · **Module:** `{module_id}` · **Next:** `{next_id}`",
+                "",
+                "```text",
+                f"EXECUTION {order}/{total} — batch {batch_id} module {module_id}",
+                "",
+                *load_lines,
+                "",
+                "GitNexus impact() trước mọi edit. Mirror SC-007 Home (read-only).",
+                "STEP 0→5. Max 5-10 files. New chat next batch.",
+                f"Completion: {comp}",
+                "```",
+                module_gate,
+                "",
+            ]
+        )
+
+    return "\n".join(lines)
+
+
+def resolve_special_prompt(batch_id: str, sc_ids: list[str]) -> str:
+    if batch_id in HUB_BATCH_PROMPTS:
+        return HUB_BATCH_PROMPTS[batch_id]
+    for sc in sc_ids:
+        if sc in SPECIAL_PROMPTS:
+            return SPECIAL_PROMPTS[sc]
+    return ""
+
+
+def resolve_module_prompt(batch_id: str, module: str) -> str:
+    if batch_id in HUB_BATCH_PROMPTS:
+        return HUB_BATCH_PROMPTS[batch_id]
+    override = BATCH_MODULE_PROMPT_OVERRIDE.get(batch_id)
+    if override:
+        return override
+    return MODULE_HUB_PROMPT.get(module, "")
+
+
+def special_prompt_for(sc_ids: list[str]) -> str:
+    for sc in sc_ids:
+        if sc in SPECIAL_PROMPTS:
+            return SPECIAL_PROMPTS[sc]
+    return ""
 
 
 def sc_sort_key(sc_id: str) -> int:
@@ -148,16 +361,49 @@ def default_batches(
     ]
 
 
-def special_prompt_for(sc_ids: list[str]) -> str:
-    for sc in sc_ids:
-        if sc in SPECIAL_PROMPTS:
-            return SPECIAL_PROMPTS[sc]
-    return ""
+def load_existing_batch_statuses() -> dict[str, str]:
+    """Preserve manual progress edits across regenerate."""
+    if not OUT_BATCHES.exists():
+        return {}
+    return {
+        row["batch_id"]: row.get("status", "pending")
+        for row in csv.DictReader(OUT_BATCHES.open(encoding="utf-8-sig"))
+        if row.get("batch_id")
+    }
+
+
+def is_done_status(status: str) -> bool:
+    normalized = status.strip().lower()
+    return normalized in {"done", "complete", "completed", "✅"}
+
+
+def batch_count_label(count: int) -> str:
+    return f"{count} batch" if count == 1 else f"{count} batches"
+
+
+def module_status_summary(batch_rows: list[dict[str, str]], module_id: str) -> str:
+    batches = [b for b in batch_rows if b["module_id"] == module_id]
+    if not batches:
+        return "—"
+    total = len(batches)
+    done = sum(1 for b in batches if is_done_status(b["status"]))
+    next_batch = next((b["batch_id"] for b in batches if not is_done_status(b["status"])), None)
+    if done == total:
+        return f"✅ {done}/{total}"
+    if next_batch:
+        prefix = (
+            f"{done}/{total} done · "
+            if done
+            else f"⬜ {batch_count_label(total)} · "
+        )
+        return f"{prefix}next `{next_batch}`"
+    return f"⬜ {batch_count_label(total)}"
 
 
 def collect_batch_rows(
     by_mod: dict[str, list[dict[str, str]]],
     by_sc: dict[str, dict[str, str]],
+    existing_statuses: dict[str, str],
 ) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     order = 0
@@ -185,8 +431,13 @@ def collect_batch_rows(
                     "sc_count": str(len(sc_ids)),
                     "sc_ids": ";".join(sc_ids),
                     "page_files": ";".join(pages),
-                    "special_prompt": special_prompt_for(sc_ids),
-                    "status": "pending",
+                    "special_prompt": resolve_special_prompt(batch_id, sc_ids),
+                    "module_prompt": resolve_module_prompt(batch_id, module),
+                    "tier": batch_tier(
+                        resolve_special_prompt(batch_id, sc_ids),
+                        resolve_module_prompt(batch_id, module),
+                    ),
+                    "status": existing_statuses.get(batch_id, "pending"),
                 }
             )
     return rows
@@ -197,40 +448,44 @@ def render_slim_markdown(
     redesign_screen_count: int,
     today: str,
 ) -> str:
+    line_target = "~170"
     lines = [
         "# Kế hoạch Redesign UI theo Module — VitTrade (token-lite)",
         "",
-        f"**Version:** 2.1 | **Updated:** {today}",
+        f"**Version:** 2.5 | **Updated:** {today}",
         "",
-        "> **Mục tiêu file này:** ~200 dòng — đủ cho AI biết module/batch. Chi tiết màn hình **không** nhúng ở đây.",
+        f"> **Entry point:** [prompt-redesign/EXECUTION-PLAYBOOK.md](prompt-redesign/EXECUTION-PLAYBOOK.md) — **66 bước** copy-paste.",
+        f"> **Contract:** [REDESIGN-CONTRACT.md](prompt-redesign/REDESIGN-CONTRACT.md) · Hub → [README.md](prompt-redesign/README.md).",
+        "> **Tiến độ:** cột `status` trong CSV — regenerate **giữ** status.",
         "",
         "| Artifact | Khi nào load |",
         "| --- | --- |",
-        "| **File này** (sections 1–4) | Mỗi chat redesign — **1 lần** |",
-        "| [ke-hoach-redesign-batches.csv](ke-hoach-redesign-batches.csv) | **1 dòng** = batch đang làm |",
-        "| [VitTrade-Screen-Redesign-Checklist.csv](VitTrade-Screen-Redesign-Checklist.csv) | Lọc theo `sc_id` của batch — **không** load cả file vào chat |",
-        "| [AI_PROMPT_SHELL.md](../01_AI_RULES/AI_PROMPT_SHELL.md) | Workspace rule — không paste lại |",
-        "| [DESIGN.md](../../DESIGN.md) | Workspace rule — không paste lại |",
-        "| Headroom MCP (`headroom_compress` / `headroom_retrieve`) | **STEP 4** — log test/analyze/audit >500 dòng |",
+        "| **File này** (§1–4) | Mỗi chat redesign — **1 lần** |",
+        "| [ke-hoach-redesign-batches.csv](ke-hoach-redesign-batches.csv) | **1 row** / batch |",
+        "| [prompt-redesign/EXECUTION-PLAYBOOK.md](prompt-redesign/EXECUTION-PLAYBOOK.md) | **66 bước** — chạy tuần tự |",
+        "| [prompt-redesign/REDESIGN-CONTRACT.md](prompt-redesign/REDESIGN-CONTRACT.md) | Chuẩn chung mọi batch |",
+        "| [prompt-redesign/README.md](prompt-redesign/README.md) | 11 hub Tier A |",
+        "| `special_prompt` (hub batch) | **Full** hub file (~150–220 dòng) |",
+        "| `module_prompt` (batch con) | Partial: North Star · Copy · Financial only |",
+        "| [prompt-redesign/_template-tier-b-batch.md](prompt-redesign/_template-tier-b-batch.md) | Batch con / module nhỏ |",
         "",
-        "**Không load vào chat redesign:**",
-        "",
-        "- `VitTrade-Screen-Redesign-Checklist.md` (551 dòng — trùng CSV)",
-        "- Phiên bản plan cũ section 6 (1950+ dòng)",
-        "- `ke-hoach-redesign-batches.csv` toàn bộ — chỉ 1 row",
-        "- Full `home_page.dart` — đọc section hero/layout qua GitNexus `context()`",
+        "**Không load:** checklist `.md` · batches CSV toàn bộ · §4.2 (đã bỏ — dùng CSV) · full `home_page.dart`.",
         "",
         "---",
         "",
         "## 1. Quy tắc token (Cursor AI)",
         "",
         "1. User chỉ định **`batch_id`** (vd. `RD-M02-B01`, `RD-T02`).",
-        "2. Load **section 1–4** file này + **1 row** `ke-hoach-redesign-batches.csv`.",
-        "3. Resolve path: lọc checklist CSV theo `sc_ids` (split `;`) — tối đa ~10 dòng/batch.",
-        "4. Nếu `special_prompt` có giá trị → load **chỉ file đó** (vd. SC-059).",
-        "5. Mirror **SC-007 Home** — **không sửa** `home_page.dart`.",
-        "6. **Chat mới** sau mỗi batch. Max **5–10 file** code/batch.",
-        "7. Verify (STEP 4): gate theo `AI_PROMPT_SHELL.md` — không lặp lại checklist verify trong chat.",
+        "2. Load **§1–4** + **1 row** `ke-hoach-redesign-batches.csv`.",
+        "3. Lọc checklist CSV theo `sc_ids` (split `;`) — ~6–18 dòng/batch.",
+        "4. **Tier A hub** (`special_prompt` set): load **full** hub prompt.",
+        "5. **Tier B batch con** (`module_prompt` set, `special_prompt` empty): plan + "
+        "[_template-tier-b-batch.md](prompt-redesign/_template-tier-b-batch.md) + parent sections only.",
+        "6. Mirror **SC-007 Home** — **không sửa** `home_page.dart`.",
+        "7. **Chat mới**/batch · max **5–10** file code.",
+        "8. **Tiến độ:** chỉ đổi `status` trong batches CSV — không sửa bảng §4 tay.",
+        "9. Verify STEP 4: `AI_PROMPT_SHELL.md` · Headroom nếu log >500 dòng.",
+        "10. **STEP 0:** GitNexus `impact()` + `context()` trên symbol/page trước mọi edit.",
         "",
         "### STEP 4 — Headroom (log tool dài)",
         "",
@@ -273,7 +528,12 @@ def render_slim_markdown(
         "",
         "**North Star:** Tin cậy trước · đơn giản trước · chuyên nghiệp luôn.",
         "",
-        "**Vit* bắt buộc:** `VitPageLayout`, `VitCard`, `VitHeader`, `VitTabBar`, `VitSegmentedChoice`, `VitCtaButton`, `VitStatusPill`.",
+        "**Vit* bắt buộc:** `VitPageLayout`, `VitPageContent`, `VitCard`, `VitHeader`, `VitTabBar`, "
+        "`VitSegmentedChoice`, `VitCtaButton`, `VitInput`, `VitPresetChipRow`, `VitStatusPill`.",
+        "",
+        "**States (khi flow cần):** loading · empty · error · offline · submitting · success.",
+        "",
+        "**Financial:** preview + confirm trước withdraw · escrow · P2P payment · security changes.",
         "",
         "**Cấm:** card-in-card · tab trong `VitCard` border · local duplicate Vit* · magic radius · hype/casino · sửa Home.",
         "",
@@ -285,85 +545,59 @@ def render_slim_markdown(
         "",
         "---",
         "",
-        "## 4. Module & batch index",
+        "## 4. Module index (tóm tắt — chi tiết batch → CSV)",
         "",
-        "### 4.1 Module progress (22 redesign + 1 reference)",
+        "Bảng dưới **tự sinh** từ `ke-hoach-redesign-batches.csv`. Tra batch: filter `batch_id` hoặc `module_id`.",
         "",
-        "| module_id | module | hub_sc | màn | accent | status |",
-        "| --- | --- | --- | ---: | --- | --- |",
+        "| module_id | module | hub_sc | màn | accent | batches | progress |",
+        "| --- | --- | --- | ---: | --- | ---: | --- |",
     ]
-
-    mod_id_to_batches: dict[str, list[str]] = defaultdict(list)
-    for br in batch_rows:
-        mod_id_to_batches[br["module_id"]].append(br["batch_id"])
 
     for mod_id, module, _desc, hub_sc, accent in MODULE_SEQUENCE:
         if module in SKIP_REDESIGN_MODULES:
             lines.append(
-                f"| `{mod_id}` | **{module}** | `{hub_sc}` | 1 | {accent} | 🔒 reference |"
+                f"| `{mod_id}` | **{module}** | `{hub_sc}` | 1 | {accent} | 0 | 🔒 reference |"
             )
         else:
-            n_screens = sum(
-                int(b["sc_count"]) for b in batch_rows if b["module_id"] == mod_id
-            )
-            batch_ids = ", ".join(f"`{x}`" for x in mod_id_to_batches[mod_id])
+            mod_batches = [b for b in batch_rows if b["module_id"] == mod_id]
+            n_screens = sum(int(b["sc_count"]) for b in mod_batches)
+            n_batches = len(mod_batches)
+            progress = module_status_summary(batch_rows, mod_id)
             lines.append(
-                f"| `{mod_id}` | **{module}** | `{hub_sc}` | {n_screens} | {accent} | ⬜ ({batch_ids}) |"
+                f"| `{mod_id}` | **{module}** | `{hub_sc}` | {n_screens} | {accent} | "
+                f"{n_batches} | {progress} |"
             )
 
+    done_batches = sum(1 for b in batch_rows if is_done_status(b["status"]))
     lines.extend(
         [
             "",
-            f"Inventory **416** · redesign scope **{redesign_screen_count}** · batches **{len(batch_rows)}**.",
-            "",
-            "### 4.2 Batch table (chi tiết sc_id → `ke-hoach-redesign-batches.csv`)",
-            "",
-            "| batch_id | module_id | title | sc# | special_prompt | status |",
-            "| --- | --- | --- | ---: | --- | --- |",
-        ]
-    )
-
-    for br in batch_rows:
-        sp = br["special_prompt"] or "-"
-        lines.append(
-            f"| `{br['batch_id']}` | `{br['module_id']}` | {br['batch_title']} | "
-            f"{br['sc_count']} | {sp} | ⬜ |"
-        )
-
-    lines.extend(
-        [
+            f"Inventory **416** · redesign **{redesign_screen_count}** màn · **{len(batch_rows)}** batches · "
+            f"done **{done_batches}/{len(batch_rows)}**.",
             "",
             "---",
             "",
-            "## 5. Prompt mẫu (1 template — thay placeholder)",
+            "## 5. Prompt mẫu",
             "",
             "```text",
             "Batch: <batch_id>  Module: <module_id>",
             "",
-            "Load:",
-            "- docs/01_AI_RULES/AI_PROMPT_SHELL.md (rule)",
-            "- docs/02_FLUTTER_MIGRATION/ke-hoach-redesign-theo-module.md §1-4",
+            "Load (batch scope only):",
+            "- ke-hoach-redesign-theo-module.md §1-4",
             "- ke-hoach-redesign-batches.csv row <batch_id>",
-            "- VitTrade-Screen-Redesign-Checklist.csv rows matching sc_ids (batch only)",
-            "- <special_prompt file if any>",
+            "- VitTrade-Screen-Redesign-Checklist.csv rows matching sc_ids",
+            "- <special_prompt full file if hub batch>",
+            "- <module_prompt partial sections if child batch>",
+            "- prompt-redesign/_template-tier-b-batch.md if Tier B",
+            "- docs/01_AI_RULES/AI_PROMPT_SHELL.md (verify gate)",
             "",
-            "Mirror SC-007 Home (read-only). Không sửa home_page.dart.",
+            "GitNexus impact() trước mọi edit. Mirror SC-007 Home (read-only).",
             "STEP 0→5. Max 5-10 files. New chat next batch.",
-            "",
             "Completion: MODULE UI REDESIGN DONE — <module_id> — <batch_id>",
             "```",
             "",
-            "**SC-059:** batch `RD-T02` → load `prompt-redesign-trading-bots-hub-sc059.md`.",
-            "Completion: `TRADING BOTS HUB UI REDESIGN DONE — SC-059 v2`.",
-            "",
-            "---",
-            "",
-            "## Regenerate",
-            "",
-            "```bash",
-            "python flutter_app/tool/gen_redesign_plan.py",
-            "python flutter_app/tool/export_screen_checklist.py",
-            "```",
+            "**Playbook:** [EXECUTION-PLAYBOOK.md](prompt-redesign/EXECUTION-PLAYBOOK.md) · "
+            "SC-059: `RD-T02` → `TRADING BOTS HUB UI REDESIGN DONE — SC-059 v2`.",
             "",
         ]
     )
@@ -378,7 +612,8 @@ def main() -> None:
     for r in screen_rows:
         by_mod[r["module"]].append(r)
 
-    batch_rows = collect_batch_rows(by_mod, by_sc)
+    existing_statuses = load_existing_batch_statuses()
+    batch_rows = collect_batch_rows(by_mod, by_sc, existing_statuses)
     unique_redesign_screens = len({sc for r in batch_rows for sc in r["sc_ids"].split(";")})
     today = date.today().isoformat()
 
@@ -395,6 +630,8 @@ def main() -> None:
         "sc_ids",
         "page_files",
         "special_prompt",
+        "module_prompt",
+        "tier",
         "status",
     ]
     with OUT_BATCHES.open("w", newline="", encoding="utf-8-sig") as handle:
@@ -405,8 +642,13 @@ def main() -> None:
     md = render_slim_markdown(batch_rows, unique_redesign_screens, today)
     OUT_MD.write_text(md, encoding="utf-8")
 
+    playbook = render_execution_playbook(batch_rows, today)
+    OUT_PLAYBOOK.write_text(playbook, encoding="utf-8")
+
+    preserved = sum(1 for b in batch_rows if b["batch_id"] in existing_statuses)
     print(f"Wrote {OUT_MD} ({len(md.splitlines())} lines)")
-    print(f"Wrote {OUT_BATCHES} ({len(batch_rows)} batches)")
+    print(f"Wrote {OUT_PLAYBOOK} ({len(playbook.splitlines())} lines)")
+    print(f"Wrote {OUT_BATCHES} ({len(batch_rows)} batches, preserved status: {preserved})")
 
 
 if __name__ == "__main__":

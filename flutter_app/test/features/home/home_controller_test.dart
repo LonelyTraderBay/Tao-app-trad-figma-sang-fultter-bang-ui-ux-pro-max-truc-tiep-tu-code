@@ -1,21 +1,30 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/providers/home_controller_providers.dart';
+import 'package:vit_trade_flutter/features/home/data/providers/home_repository_provider.dart';
+import 'package:vit_trade_flutter/features/home/data/repositories/mock_home_repository.dart';
 
 void main() {
   test(
     'Home controller exposes dashboard snapshot and sorted market views',
-    () {
-      final container = ProviderContainer();
+    () async {
+      final container = ProviderContainer(
+        overrides: [
+          homeRepositoryProvider.overrideWithValue(
+            const MockHomeRepository(loadDelay: Duration.zero),
+          ),
+        ],
+      );
       addTearDown(container.dispose);
 
+      await container.read(homeSnapshotProvider.future);
       final controller = container.read(homeControllerProvider);
       final snapshot = controller.state.snapshot;
       final quickActions = snapshot.quickActions;
 
       expect(quickActions, isNotEmpty);
-      expect(snapshot.nextAction.routePath, '/wallet/withdraw/USDT');
-      expect(snapshot.nextAction.stateLabel, 'Next');
+      expect(snapshot.nextAction?.routePath, '/wallet/withdraw/USDT');
+      expect(snapshot.nextAction?.stateLabel, 'Next');
       expect(
         snapshot.recentProducts.map((product) => product.routePath),
         equals([

@@ -3,8 +3,20 @@ import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.da
 import 'package:vit_trade_flutter/features/home/domain/repositories/home_repository.dart';
 
 final class MockHomeRepository implements HomeRepository {
-  const MockHomeRepository();
+  const MockHomeRepository({
+    this.simulateError = false,
+    this.loadDelay = const Duration(milliseconds: 300),
+  });
+
+  final bool simulateError;
+  final Duration loadDelay;
 
   @override
-  HomeSnapshot getHome() => HomeMockData.snapshot;
+  Future<HomeSnapshot> fetchHome() async {
+    await Future<void>.delayed(loadDelay);
+    if (simulateError) {
+      throw StateError('home_fetch_failed');
+    }
+    return HomeMockData.snapshot;
+  }
 }

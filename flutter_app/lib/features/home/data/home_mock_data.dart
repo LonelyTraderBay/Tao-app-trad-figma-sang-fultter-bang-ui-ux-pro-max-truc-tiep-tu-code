@@ -25,7 +25,6 @@ class HomeMockData {
     totalBalance,
   ];
   static const int notifications = 3;
-  static const int homeBadge = 2;
 
   static const snapshot = HomeSnapshot(
     totalBalance: totalBalance,
@@ -37,7 +36,6 @@ class HomeMockData {
     dailyPct: dailyPct,
     portfolioTrend7d: portfolioTrend7d,
     notifications: notifications,
-    homeBadge: homeBadge,
     announcements: announcements,
     quickActions: quickActions,
     nextAction: nextAction,
@@ -200,7 +198,7 @@ class HomeMockData {
       id: 'spot-btc',
       icon: Icons.bolt_rounded,
       label: 'BTC/USDT',
-      contextLabel: 'Spot order',
+      contextLabel: 'Lệnh spot',
       routePath: '/trade/btcusdt',
       accentColor: AppModuleAccents.trade,
       stateLabel: 'Spot',
@@ -209,7 +207,7 @@ class HomeMockData {
       id: 'p2p-usdt',
       icon: Icons.groups_rounded,
       label: 'P2P USDT/VND',
-      contextLabel: 'Escrow',
+      contextLabel: 'Ký quỹ',
       routePath: '/p2p',
       accentColor: AppModuleAccents.p2p,
       stateLabel: 'P2P',
@@ -227,7 +225,7 @@ class HomeMockData {
       id: 'copy-alpha',
       icon: Icons.content_copy_rounded,
       label: 'Alpha Copy',
-      contextLabel: 'Provider',
+      contextLabel: 'Nhà cung cấp',
       routePath: '/trade/copy-trading',
       accentColor: AppModuleAccents.trade,
       stateLabel: 'Copy',
