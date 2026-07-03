@@ -77,12 +77,6 @@ class _TradePageState extends ConsumerState<TradePage> {
     final canSubmit = orderController.canSubmit;
     final showBack =
         widget.chartVariant == TradeChartVariant.pairRoute || context.canPop();
-    final productNav = buildTradeProductNavigation(
-      context: context,
-      pair: pair,
-      activeId: 'spot',
-      quickNavKey: TradePage.quickNavKey,
-    );
     final marketPrice = formatTradePrice(pair.price);
     final nextAction = _resolveNextAction(snapshot);
 
@@ -101,12 +95,10 @@ class _TradePageState extends ConsumerState<TradePage> {
               mode: BackNavigationMode.historyThenFallback,
             )
           : null,
+      activeProductId: 'spot',
+      productPair: pair,
+      quickNavKey: TradePage.quickNavKey,
       children: [
-        VitTradeProductTabs(
-          activeId: 'spot',
-          tabs: productNav.tabs,
-          overflowItems: productNav.overflow,
-        ),
         VitTradeSimpleHero(
           symbol: pair.symbol,
           priceLabel: marketPrice,
@@ -132,6 +124,18 @@ class _TradePageState extends ConsumerState<TradePage> {
             ),
           ],
         ),
+        if (snapshot.highRiskContractId != null)
+          VitTradeSection(
+            title: 'Đánh giá rủi ro',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Review spot order risk',
+              message:
+                  'Preview fees, slippage, and available balance before submitting a market order.',
+              contractId: snapshot.highRiskContractId,
+              density: VitDensity.compact,
+            ),
+          ),
         VitTradeSection(
           title: 'Giao dịch',
           child: VitTradeSimpleOrderForm(

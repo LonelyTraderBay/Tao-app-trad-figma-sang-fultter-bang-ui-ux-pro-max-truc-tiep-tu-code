@@ -33,12 +33,12 @@ class _CurrencyCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       radius: VitCardRadius.large,
-      borderColor: _settingsBorder,
+      borderColor: AppColors.cardBorder,
       child: Row(
         children: [
           const Icon(
             Icons.language_rounded,
-            color: _settingsPrimary,
+            color: AppColors.primary,
             size: AppSpacing.settingsCurrencyIcon,
           ),
           const SizedBox(width: AppSpacing.settingsCurrencyIconGap),
@@ -54,74 +54,23 @@ class _CurrencyCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x2),
-                Row(
-                  children: [
-                    for (final currency in currencies) ...[
-                      _CurrencyChip(
-                        currency: currency,
-                        selected: currency == selectedCurrency,
-                        onTap: () => onChanged(currency),
+                VitPresetChipRow<String>(
+                  gap: AppSpacing.settingsCurrencyChipGap,
+                  selectedValue: selectedCurrency,
+                  onTap: onChanged,
+                  items: [
+                    for (final currency in currencies)
+                      VitPresetChipItem<String>(
+                        key: SettingsPage.currencyKey(currency),
+                        value: currency,
+                        label: currency,
                       ),
-                      if (currency != currencies.last)
-                        const SizedBox(
-                          width: AppSpacing.settingsCurrencyChipGap,
-                        ),
-                    ],
                   ],
                 ),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _CurrencyChip extends StatelessWidget {
-  const _CurrencyChip({
-    required this.currency,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String currency;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      padding: EdgeInsets.zero,
-      child: ConstrainedBox(
-        key: SettingsPage.currencyKey(currency),
-        constraints: const BoxConstraints(
-          minWidth: AppSpacing.settingsCurrencyChipMinWidth,
-        ),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: VitDensity.compact.controlHeight,
-          ),
-          child: Material(
-            color: selected ? _settingsPrimary : AppColors.surface2,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-            child: Padding(
-              padding: AppSpacing.settingsCurrencyChipPadding,
-              child: Center(
-                child: Text(
-                  currency,
-                  style: AppTextStyles.micro.copyWith(
-                    color: selected ? AppColors.onAccent : AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -142,7 +91,7 @@ class _LanguageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      borderColor: _settingsBorder,
+      borderColor: AppColors.cardBorder,
       clip: true,
       child: Column(
         children: [
@@ -155,7 +104,7 @@ class _LanguageCard extends StatelessWidget {
             if (language != languages.last)
               const Divider(
                 height: AppSpacing.dividerHairline,
-                color: _settingsDivider,
+                color: AppColors.divider,
               ),
           ],
         ],
@@ -184,7 +133,7 @@ class _LanguageRow extends StatelessWidget {
       borderColor: AppColors.transparent,
       padding: EdgeInsets.zero,
       child: Material(
-        color: selected ? _settingsSelected : AppColors.transparent,
+        color: selected ? AppColors.surface2 : AppColors.transparent,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: VitDensity.compact.controlHeight + AppSpacing.x2,
@@ -207,7 +156,7 @@ class _LanguageRow extends StatelessWidget {
                     width: AppSpacing.settingsLanguageSelectedDot,
                     height: AppSpacing.settingsLanguageSelectedDot,
                     child: Material(
-                      color: _settingsPrimary,
+                      color: AppColors.primary,
                       shape: CircleBorder(),
                     ),
                   ),
@@ -235,7 +184,7 @@ class _SettingsListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      borderColor: _settingsBorder,
+      borderColor: AppColors.cardBorder,
       clip: true,
       child: Column(
         children: [
@@ -248,7 +197,7 @@ class _SettingsListCard extends StatelessWidget {
             if (row != rows.last)
               const Divider(
                 height: AppSpacing.dividerHairline,
-                color: _settingsDivider,
+                color: AppColors.divider,
               ),
           ],
         ],
@@ -285,7 +234,7 @@ class _SettingsRow extends StatelessWidget {
             if (hasIcon) ...[
               Icon(
                 _iconFor(row.iconKey),
-                color: _settingsPrimary,
+                color: AppColors.primary,
                 size: AppSpacing.settingsRowIcon,
               ),
               const SizedBox(width: AppSpacing.settingsRowIconGap),
@@ -310,7 +259,7 @@ class _SettingsRow extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
-                      color: _settingsMuted,
+                      color: AppColors.text3,
                       fontWeight: AppTextStyles.medium,
                     ),
                   ),
@@ -350,18 +299,16 @@ class _SettingsSwitch extends StatelessWidget {
     return Semantics(
       label: label,
       toggled: value,
-      child: VitCard(
+      button: true,
+      child: GestureDetector(
         onTap: () => onChanged(!value),
-        variant: VitCardVariant.ghost,
-        borderColor: AppColors.transparent,
-        padding: EdgeInsets.zero,
         child: VitTogglePill(
           enabled: value,
           width: AppSpacing.settingsSwitchWidth,
           height: AppSpacing.settingsSwitchHeight,
           knobSize: AppSpacing.settingsSwitchKnob,
           knobMargin: AppSpacing.settingsSwitchKnobMargin,
-          activeColor: _settingsGreen,
+          activeColor: AppColors.buy,
           inactiveColor: AppColors.toggleTrackOff,
         ),
       ),

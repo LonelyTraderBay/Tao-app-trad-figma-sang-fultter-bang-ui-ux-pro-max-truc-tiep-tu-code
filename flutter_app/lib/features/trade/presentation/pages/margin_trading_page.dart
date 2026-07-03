@@ -13,8 +13,6 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_formatters.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_product_navigation.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_product_tabs.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_shell.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_hero.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_confirm_sheet.dart';
@@ -75,7 +73,6 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
   Widget _buildSimpleMarginView({
     required TradeMarginTradingSnapshot snapshot,
     required TradePair pair,
-    required TradeProductNavigation productNav,
     required ShellRenderMode mode,
     required TradeMarginController controller,
     required List<TradeMarginPosition> modePositions,
@@ -97,12 +94,9 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
             fallbackPath: AppRoutePaths.trade,
             mode: BackNavigationMode.historyThenFallback,
           ),
+          activeProductId: 'margin',
+          productPair: pair,
           children: [
-            VitTradeProductTabs(
-              activeId: 'margin',
-              tabs: productNav.tabs,
-              overflowItems: productNav.overflow,
-            ),
             VitTradeSimpleHero(
               symbol: pair.symbol,
               priceLabel: formatTradePrice(snapshot.referencePrices.lastPrice),
@@ -192,16 +186,10 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
     final totalPnl = controller.totalPnlForMode(_mode);
 
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final productNav = buildTradeProductNavigation(
-      context: context,
-      pair: pair,
-      activeId: 'margin',
-    );
 
     return _buildSimpleMarginView(
       snapshot: snapshot,
       pair: pair,
-      productNav: productNav,
       mode: mode,
       controller: controller,
       modePositions: modePositions,

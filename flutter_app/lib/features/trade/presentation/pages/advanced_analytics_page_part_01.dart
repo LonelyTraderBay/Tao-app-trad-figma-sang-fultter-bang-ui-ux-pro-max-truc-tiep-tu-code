@@ -37,9 +37,11 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    children: [
-                      VitTradeSection(
-                        title: 'Tổng quan',
+                    children: tradeShellWithProductTabs(
+                      context: context,
+                      children: [
+                        VitTradeSection(
+                          title: 'Tổng quan',
                         child: _HeroCard(stats: snapshot.stats),
                       ),
                       _UnderlineTabs(
@@ -74,7 +76,8 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                         title: 'Features',
                         child: _FeaturesCard(features: snapshot.features),
                       ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

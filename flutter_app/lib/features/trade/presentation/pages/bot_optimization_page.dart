@@ -86,9 +86,12 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                 child: VitPageContent(
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
-                  children: [
-                    VitTradeSection(
-                      title: 'Overview',
+                  children: tradeShellWithProductTabs(
+                    context: context,
+                    activeProductId: 'bots',
+                    children: [
+                      VitTradeSection(
+                        title: 'Overview',
                       child: const _IntroCard(),
                     ),
                     VitTradeSection(
@@ -140,7 +143,8 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                       title: 'How it works',
                       child: _HowItWorksCard(steps: snapshot.steps),
                     ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

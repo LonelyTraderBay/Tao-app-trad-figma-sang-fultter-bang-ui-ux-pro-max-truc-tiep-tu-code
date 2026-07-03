@@ -96,8 +96,11 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
                 child: VitPageContent(
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
-                  children: [
-                    VitTradeSection(
+                  children: tradeShellWithProductTabs(
+                    context: context,
+                    activeProductId: 'bots',
+                    children: [
+                      VitTradeSection(
                       title: 'Đánh giá rủi ro',
                       child: const VitCard(
                         variant: VitCardVariant.inner,
@@ -162,7 +165,8 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
                       tertiary:
                           'Backtest output is framed as simulation, not guaranteed performance.',
                     ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

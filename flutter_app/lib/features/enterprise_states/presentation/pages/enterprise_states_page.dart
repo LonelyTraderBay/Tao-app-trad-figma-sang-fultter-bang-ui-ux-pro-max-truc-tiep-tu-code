@@ -78,30 +78,36 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
                 ),
                 Padding(
                   padding: AppSpacing.enterpriseStatesContentPadding,
-                  child: _SectionTabs(
-                    tabs: snapshot.tabs,
-                    active: _section,
-                    onChanged: (section) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _section = section);
-                    },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _SectionTabs(
+                        tabs: snapshot.tabs,
+                        active: _section,
+                        onChanged: (section) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _section = section);
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.x5),
+                      if (_section == EnterpriseStateSection.stateKit)
+                        _StateKitSection(
+                          snapshot: snapshot,
+                          activeState: _preview,
+                          onStateChanged: (state) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _preview = state);
+                          },
+                          onMarkets: () => context.go(snapshot.marketRoute),
+                          onKyc: () => context.go(snapshot.kycRoute),
+                        )
+                      else if (_section == EnterpriseStateSection.applied)
+                        _AppliedSection(snapshot: snapshot)
+                      else
+                        _SecuritySection(snapshot: snapshot),
+                    ],
                   ),
                 ),
-                if (_section == EnterpriseStateSection.stateKit)
-                  _StateKitSection(
-                    snapshot: snapshot,
-                    activeState: _preview,
-                    onStateChanged: (state) {
-                      HapticFeedback.selectionClick();
-                      setState(() => _preview = state);
-                    },
-                    onMarkets: () => context.go(snapshot.marketRoute),
-                    onKyc: () => context.go(snapshot.kycRoute),
-                  )
-                else if (_section == EnterpriseStateSection.applied)
-                  _AppliedSection(snapshot: snapshot)
-                else
-                  _SecuritySection(snapshot: snapshot),
               ],
             ),
           ),

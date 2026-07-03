@@ -96,8 +96,11 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                 child: VitPageContent(
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
-                  children: [
-                    VitTradeSection(title: 'Notice', child: const _TaxNotice()),
+                  children: tradeShellWithProductTabs(
+                    context: context,
+                    activeProductId: 'bots',
+                    children: [
+                      VitTradeSection(title: 'Notice', child: const _TaxNotice()),
                     VitTradeSection(
                       title: 'Select Tax Year',
                       child: _YearPicker(
@@ -173,7 +176,8 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                         ),
                       ),
                     ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

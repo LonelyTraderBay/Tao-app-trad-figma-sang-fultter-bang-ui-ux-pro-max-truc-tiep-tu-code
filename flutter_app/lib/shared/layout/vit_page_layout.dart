@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 
-enum VitPageVariant { defaultPage, surface, flush, immersive }
+enum VitPageVariant { defaultPage, flush }
 
 class VitPageLayout extends StatelessWidget {
   const VitPageLayout({
@@ -17,15 +17,11 @@ class VitPageLayout extends StatelessWidget {
   final VitPageVariant variant;
   final String? semanticLabel;
 
-  Color? get _background {
+  Color get _background {
     switch (variant) {
       case VitPageVariant.defaultPage:
       case VitPageVariant.flush:
         return AppColors.bg;
-      case VitPageVariant.surface:
-        return AppColors.surface;
-      case VitPageVariant.immersive:
-        return null;
     }
   }
 
@@ -34,8 +30,6 @@ class VitPageLayout extends StatelessWidget {
       case VitPageVariant.flush:
         return AppSpacing.zero;
       case VitPageVariant.defaultPage:
-      case VitPageVariant.surface:
-      case VitPageVariant.immersive:
         return AppSpacing.pageContentGapLoose;
     }
   }
@@ -46,7 +40,7 @@ class VitPageLayout extends StatelessWidget {
       container: true,
       label: semanticLabel,
       child: ColoredBox(
-        color: _background ?? AppColors.transparent,
+        color: _background,
         child: SizedBox.expand(
           child: Padding(
             padding: EdgeInsetsDirectional.only(bottom: _bottomPadding),

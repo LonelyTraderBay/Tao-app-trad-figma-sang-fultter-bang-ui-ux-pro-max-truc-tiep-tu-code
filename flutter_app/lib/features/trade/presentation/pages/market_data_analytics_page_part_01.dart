@@ -37,8 +37,10 @@ class _MarketDataAnalyticsPageState
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
-                    children: [
-                      VitTradeInstrumentHero(
+                    children: tradeShellWithProductTabs(
+                      context: context,
+                      children: [
+                        VitTradeInstrumentHero(
                         symbol: snapshot.selectedPair,
                         priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
                         changePct: snapshot.fundingRate.currentRatePct,
@@ -63,7 +65,8 @@ class _MarketDataAnalyticsPageState
                         _LiquidationsTab(snapshot: snapshot)
                       else
                         _SentimentTab(snapshot: snapshot),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

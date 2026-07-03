@@ -10,9 +10,9 @@ void main() {
           path: 'lib/features/p2p/presentation/pages/p2p_order_page.dart',
           paths: [
             'lib/features/p2p/presentation/pages/p2p_order_page.dart',
-            'lib/features/p2p/presentation/pages/p2p_order_page_part_01.dart',
-            'lib/features/p2p/presentation/pages/p2p_order_page_part_02.dart',
-            'lib/features/p2p/presentation/pages/p2p_order_page_part_03.dart',
+            'lib/features/p2p/presentation/widgets/p2p_order_page_part_01.dart',
+            'lib/features/p2p/presentation/widgets/p2p_order_page_part_02.dart',
+            'lib/features/p2p/presentation/widgets/p2p_order_page_part_03.dart',
           ],
           roles: {
             'escrow': [RegExp(r'escrow', caseSensitive: false)],

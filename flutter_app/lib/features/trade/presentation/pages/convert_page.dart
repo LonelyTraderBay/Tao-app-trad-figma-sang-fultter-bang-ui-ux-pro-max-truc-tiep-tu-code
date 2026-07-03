@@ -16,8 +16,7 @@ import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.d
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_confirm_sheet.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_product_navigation.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_product_tabs.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_shell.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_page_widgets.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -100,40 +99,31 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final isOffline = _convertSnapshotIsOffline(snapshot);
     final hasError = _convertSnapshotHasError(snapshot);
-    final productNav = buildTradeProductNavigation(
-      context: context,
-      pair: snapshot.trade.pair,
-      activeId: 'convert',
-      quickNavKey: TradePage.quickNavKey,
-    );
 
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: VitTradeHubScaffold(
-        title: 'Convert / Swap',
-        semanticLabel: 'SC-056 ConvertPage',
-        contentKey: ConvertPage.contentKey,
-        shellRenderMode: mode,
-        backKey: ConvertPage.backKey,
-        onBack: () => goBackOrFallback(
-          context,
-          fallbackPath: AppRoutePaths.trade,
-          mode: BackNavigationMode.historyThenFallback,
+    return VitTradeSimpleShell(
+      title: 'Convert / Swap',
+      semanticLabel: 'SC-056 ConvertPage',
+      contentKey: ConvertPage.contentKey,
+      shellRenderMode: mode,
+      showBack: true,
+      backKey: ConvertPage.backKey,
+      onBack: () => goBackOrFallback(
+        context,
+        fallbackPath: AppRoutePaths.trade,
+        mode: BackNavigationMode.historyThenFallback,
+      ),
+      activeProductId: 'convert',
+      productPair: snapshot.trade.pair,
+      quickNavKey: TradePage.quickNavKey,
+      headerActions: [
+        VitHeaderActionItem(
+          type: VitHeaderActionType.settings,
+          tooltip: 'Cài đặt giao dịch',
+          onPressed: _openSettings,
         ),
-        trailing: VitHeaderActionButton.fromItem(
-          VitHeaderActionItem(
-            type: VitHeaderActionType.settings,
-            tooltip: 'Cài đặt giao dịch',
-            onPressed: _openSettings,
-          ),
-        ),
-        children: [
-          VitTradeProductTabs(
-            activeId: 'convert',
-            tabs: productNav.tabs,
-            overflowItems: productNav.overflow,
-          ),
-          if (isOffline)
+      ],
+      children: [
+        if (isOffline)
             const VitOfflineBanner(
               message: 'Mất kết nối. Đang hiển thị tỷ giá đã lưu.',
               detail: 'Thử làm mới sau khi có mạng.',
@@ -184,7 +174,6 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
             child: _HistoryList(records: snapshot.history),
           ),
         ],
-      ),
     );
   }
 

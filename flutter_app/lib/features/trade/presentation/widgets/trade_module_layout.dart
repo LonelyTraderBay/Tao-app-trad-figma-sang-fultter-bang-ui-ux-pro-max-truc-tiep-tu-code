@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_product_navigation.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_product_tabs.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
@@ -10,6 +13,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
+
+export 'copy_trading_list.dart';
 
 /// Home-aligned bottom scroll clearance for L2 trade detail/hub pages.
 double tradeScrollBottomInset(
@@ -48,6 +53,35 @@ double tradeTerminalScrollBottomInset(
       ? AppSpacing.tradeBottomInsetVisual
       : AppSpacing.tradeBottomInsetNative;
   return chromeInset + MediaQuery.paddingOf(context).bottom + extra;
+}
+
+/// Prepends [VitTradeProductTabs] when [showProductTabs] is true.
+List<Widget> tradeShellWithProductTabs({
+  required BuildContext context,
+  required List<Widget> children,
+  bool showProductTabs = true,
+  String? activeProductId,
+  TradePair? productPair,
+  Key Function(String id)? quickNavKey,
+}) {
+  if (!showProductTabs) {
+    return children;
+  }
+  final pair = productPair ?? kTradeShellDefaultPair;
+  final nav = buildTradeProductNavigation(
+    context: context,
+    pair: pair,
+    activeId: activeProductId ?? '',
+    quickNavKey: quickNavKey,
+  );
+  return [
+    VitTradeProductTabs(
+      activeId: activeProductId ?? '',
+      tabs: nav.tabs,
+      overflowItems: nav.overflow,
+    ),
+    ...children,
+  ];
 }
 
 /// Section rhythm wrapper: VitSectionHeader + x3 gap + child.
@@ -110,8 +144,11 @@ class VitTradeDetailScaffold extends StatelessWidget {
     this.bottomInset,
     this.shellRenderMode,
     this.headerActions = const [],
-    this.trailing,
     this.useCopyTradingInset = false,
+    this.showProductTabs = true,
+    this.activeProductId,
+    this.productPair,
+    this.quickNavKey,
   });
 
   final String title;
@@ -125,8 +162,11 @@ class VitTradeDetailScaffold extends StatelessWidget {
   final double? bottomInset;
   final ShellRenderMode? shellRenderMode;
   final List<VitHeaderActionItem> headerActions;
-  final Widget? trailing;
   final bool useCopyTradingInset;
+  final bool showProductTabs;
+  final String? activeProductId;
+  final TradePair? productPair;
+  final Key Function(String id)? quickNavKey;
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +196,6 @@ class VitTradeDetailScaffold extends StatelessWidget {
               onBack: onBack,
               backKey: backKey,
               actions: headerActions,
-              trailing: trailing,
             ),
             Expanded(
               child: VitInsetScrollView(
@@ -165,7 +204,14 @@ class VitTradeDetailScaffold extends StatelessWidget {
                 child: VitPageContent(
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
-                  children: children,
+                  children: tradeShellWithProductTabs(
+                    context: context,
+                    children: children,
+                    showProductTabs: showProductTabs,
+                    activeProductId: activeProductId,
+                    productPair: productPair,
+                    quickNavKey: quickNavKey,
+                  ),
                 ),
               ),
             ),
@@ -191,7 +237,10 @@ class VitTradeHubScaffold extends StatelessWidget {
     this.shellRenderMode,
     this.useCopyTradingInset = false,
     this.headerActions = const [],
-    this.trailing,
+    this.showProductTabs = true,
+    this.activeProductId,
+    this.productPair,
+    this.quickNavKey,
   });
 
   final String title;
@@ -205,7 +254,10 @@ class VitTradeHubScaffold extends StatelessWidget {
   final ShellRenderMode? shellRenderMode;
   final bool useCopyTradingInset;
   final List<VitHeaderActionItem> headerActions;
-  final Widget? trailing;
+  final bool showProductTabs;
+  final String? activeProductId;
+  final TradePair? productPair;
+  final Key Function(String id)? quickNavKey;
 
   @override
   Widget build(BuildContext context) {
@@ -232,7 +284,6 @@ class VitTradeHubScaffold extends StatelessWidget {
             onBack: onBack,
             backKey: backKey,
             actions: headerActions,
-            trailing: trailing,
           ),
           child: VitInsetScrollView(
             key: contentKey,
@@ -240,7 +291,14 @@ class VitTradeHubScaffold extends StatelessWidget {
             child: VitPageContent(
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
-              children: children,
+              children: tradeShellWithProductTabs(
+                context: context,
+                children: children,
+                showProductTabs: showProductTabs,
+                activeProductId: activeProductId,
+                productPair: productPair,
+                quickNavKey: quickNavKey,
+              ),
             ),
           ),
         ),

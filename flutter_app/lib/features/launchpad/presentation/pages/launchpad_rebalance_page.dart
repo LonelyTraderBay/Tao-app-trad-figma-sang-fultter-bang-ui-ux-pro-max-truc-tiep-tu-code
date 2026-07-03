@@ -1,10 +1,14 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -14,13 +18,14 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import '../widgets/launchpad_rebalance_allocation.dart';
-import '../widgets/launchpad_rebalance_calculations.dart';
-import '../widgets/launchpad_rebalance_confirm_sheet.dart';
 import '../widgets/launchpad_rebalance_deviation.dart';
-import '../widgets/launchpad_rebalance_hero.dart';
 import '../widgets/launchpad_rebalance_strategy.dart';
-import '../widgets/launchpad_rebalance_suggestions.dart';
-import '../widgets/launchpad_rebalance_summary.dart';
+
+part '../widgets/launchpad_rebalance_calculations.dart';
+part '../widgets/launchpad_rebalance_confirm_sheet.dart';
+part '../widgets/launchpad_rebalance_hero.dart';
+part '../widgets/launchpad_rebalance_suggestions.dart';
+part '../widgets/launchpad_rebalance_summary.dart';
 
 class LaunchpadRebalancePage extends ConsumerStatefulWidget {
   const LaunchpadRebalancePage({super.key, this.shellRenderMode});

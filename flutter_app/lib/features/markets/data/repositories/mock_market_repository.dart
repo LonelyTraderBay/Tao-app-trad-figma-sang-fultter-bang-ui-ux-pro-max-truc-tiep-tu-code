@@ -16,12 +16,11 @@ part '../fixtures/mock_market_repository_fixtures_part_06.dart';
 part '../fixtures/mock_market_repository_fixtures_part_07.dart';
 part '../fixtures/mock_market_repository_fixtures_part_08.dart';
 
-abstract class _MockMarketRepositoryBase implements MarketRepository {
-  const _MockMarketRepositoryBase();
-}
+mixin _MockMarketRepositoryBase implements MarketRepository {}
 
-final class MockMarketRepository extends _MockMarketRepositoryBase
+final class MockMarketRepository
     with
+        _MockMarketRepositoryBase,
         _MockMarketRepositoryMethodsPart01,
         _MockMarketRepositoryMethodsPart02,
         _MockMarketRepositoryMethodsPart03 {

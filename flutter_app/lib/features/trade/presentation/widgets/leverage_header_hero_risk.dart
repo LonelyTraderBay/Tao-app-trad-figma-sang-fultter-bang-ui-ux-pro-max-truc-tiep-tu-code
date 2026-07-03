@@ -1,27 +1,5 @@
 part of '../pages/leverage_page.dart';
 
-class _LeverageTopChromeHeader extends StatelessWidget {
-  const _LeverageTopChromeHeader({
-    required this.currentLeverage,
-    required this.onBack,
-  });
-
-  final int currentLeverage;
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitTopChrome(
-      type: VitTopChromeType.detail,
-      title: '\u0110i\u1EC1u ch\u1EC9nh \u0111\u00F2n b\u1EA9y',
-      subtitle: 'Hi\u1EC7n t\u1EA1i: ${currentLeverage}x',
-      showBack: true,
-      backKey: LeveragePage.backKey,
-      onBack: onBack,
-    );
-  }
-}
-
 class _LeverageHero extends StatelessWidget {
   const _LeverageHero({required this.preview, required this.riskColor});
 
@@ -53,7 +31,7 @@ class _LeverageHero extends StatelessWidget {
                 size: AppSpacing.iconMd,
               ),
               const SizedBox(width: AppSpacing.x3),
-              Text('\u0110\u00F2n b\u1EA9y', style: AppTextStyles.captionSm),
+              Text('Đòn bẩy', style: AppTextStyles.captionSm),
             ],
           ),
           const SizedBox(height: _leverageSpace),
@@ -68,7 +46,7 @@ class _LeverageHero extends StatelessWidget {
           ),
           const SizedBox(height: _leverageSpace),
           VitAccentPill(
-            label: 'R\u1EE7i ro: ${preview.riskLabel}',
+            label: 'Rủi ro: ${preview.riskLabel}',
             accentColor: riskColor,
             size: VitStatusPillSize.md,
           ),
@@ -101,7 +79,7 @@ class _RiskMeter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'M\u1EE9c r\u1EE7i ro',
+                'Mức rủi ro',
                 style: AppTextStyles.captionSm.copyWith(color: AppColors.text3),
               ),
               Text(

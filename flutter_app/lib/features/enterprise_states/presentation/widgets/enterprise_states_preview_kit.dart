@@ -17,11 +17,9 @@ class _StateKitSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.enterpriseStatesContentPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
           Text(
             '5 state pattern chuẩn enterprise, match 100% visual style hiện tại. Chọn state để xem preview.',
             style: AppTextStyles.body.copyWith(
@@ -68,7 +66,6 @@ class _StateKitSection extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
           ],
         ],
-      ),
     );
   }
 }

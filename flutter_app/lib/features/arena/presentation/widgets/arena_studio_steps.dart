@@ -17,14 +17,150 @@ class _StepBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (step == 1) {
-      return _TemplateStep(
-        templates: snapshot.templates,
-        selectedTemplateId: selectedTemplateId,
-        onTemplateSelected: onTemplateSelected,
-      );
-    }
+    final (title, description) = step == 1 ? ('', '') : _stepCopy(step);
 
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (step == 1)
+          _TemplateStep(
+            templates: snapshot.templates,
+            selectedTemplateId: selectedTemplateId,
+            onTemplateSelected: onTemplateSelected,
+          )
+        else ...[
+          VitModuleSectionHeader(title: title, accentColor: _arenaAccent),
+          const SizedBox(height: AppSpacing.x3),
+          VitCard(
+            padding: AppSpacing.arenaStudioCardPadding,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: AppSpacing.arenaStudioStepIconBox,
+                  height: AppSpacing.arenaStudioStepIconBox,
+                  child: DecoratedBox(
+                    decoration: const ShapeDecoration(
+                      color: AppColors.warn10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadii.mdRadius,
+                      ),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        _stepIcon(step),
+                        color: _arenaAccent,
+                        size: AppSpacing.iconMd,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: AppTextStyles.base.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        description,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text2,
+                          height: _studioDescriptionLineRatio,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x3),
+                      Wrap(
+                        spacing: AppSpacing.x2,
+                        runSpacing: AppSpacing.x2,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          const VitStatusPill(
+                            label: 'Mock data',
+                            status: VitStatusPillStatus.neutral,
+                            size: VitStatusPillSize.sm,
+                          ),
+                          if (step == 3)
+                            VitStatusPill(
+                              label: 'Smart Builder',
+                              status: VitStatusPillStatus.orange,
+                              icon: Icons.rule_folder_outlined,
+                              size: VitStatusPillSize.sm,
+                              onTap: onOpenSmartRules,
+                            ),
+                        ],
+                      ),
+                      if (step == 3) ...[
+                        const SizedBox(height: AppSpacing.x3),
+                        VitCtaButton(
+                          key: ArenaStudioPage.smartRuleBuilderKey,
+                          onPressed: onOpenSmartRules,
+                          variant: VitCtaButtonVariant.secondary,
+                          leading: const Icon(Icons.rule_folder_outlined),
+                          child: const Text('Mở Smart Rule Builder'),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+        const SizedBox(height: AppSpacing.x3),
+        VitCommunityRulesLink(
+          onTap: () => context.go(AppRoutePaths.arenaSafety),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        VitCard(
+          variant: VitCardVariant.inner,
+          padding: AppSpacing.arenaPaddingX3,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.shield_outlined,
+                color: _arenaAccent,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính. Không thỏa thuận giao dịch ngoài nền tàng.',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text3,
+                    height: _studioTemplateLineRatio,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        Wrap(
+          spacing: AppSpacing.x2,
+          runSpacing: AppSpacing.x1,
+          alignment: WrapAlignment.start,
+          children: [
+            for (final signal in snapshot.trustSignals)
+              VitStatusPill(
+                label: signal.value,
+                status: VitStatusPillStatus.neutral,
+                size: VitStatusPillSize.sm,
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  (String, String) _stepCopy(int step) {
     final title = switch (step) {
       2 => 'Cấu trúc trận đấu',
       3 => 'Luật chơi',
@@ -39,95 +175,7 @@ class _StepBody extends StatelessWidget {
       5 => 'Thiết lập entry points, bonus pool và cách chia thưởng.',
       _ => 'Kiểm tra lại phí, luật chơi và boundary Points-only trước khi gửi.',
     };
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        VitModuleSectionHeader(title: title, accentColor: _arenaAccent),
-        const SizedBox(height: AppSpacing.x3),
-        VitCard(
-          padding: AppSpacing.arenaStudioCardPadding,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: AppSpacing.arenaStudioStepIconBox,
-                height: AppSpacing.arenaStudioStepIconBox,
-                child: DecoratedBox(
-                  decoration: const ShapeDecoration(
-                    color: AppColors.warn10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      _stepIcon(step),
-                      color: _arenaAccent,
-                      size: AppSpacing.iconMd,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.base.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      description,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        height: _studioDescriptionLineRatio,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x3),
-                    Wrap(
-                      spacing: AppSpacing.x2,
-                      runSpacing: AppSpacing.x2,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        const VitStatusPill(
-                          label: 'Mock data',
-                          status: VitStatusPillStatus.neutral,
-                          size: VitStatusPillSize.sm,
-                        ),
-                        if (step == 3)
-                          VitStatusPill(
-                            label: 'Smart Builder',
-                            status: VitStatusPillStatus.orange,
-                            icon: Icons.rule_folder_outlined,
-                            size: VitStatusPillSize.sm,
-                            onTap: onOpenSmartRules,
-                          ),
-                      ],
-                    ),
-                    if (step == 3) ...[
-                      const SizedBox(height: AppSpacing.x3),
-                      VitCtaButton(
-                        key: ArenaStudioPage.smartRuleBuilderKey,
-                        onPressed: onOpenSmartRules,
-                        variant: VitCtaButtonVariant.secondary,
-                        leading: const Icon(Icons.rule_folder_outlined),
-                        child: const Text('Mở Smart Rule Builder'),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+    return (title, description);
   }
 
   IconData _stepIcon(int step) {
@@ -318,63 +366,5 @@ class _TemplateCard extends StatelessWidget {
       ArenaTemplateKind.vote => AppColors.buy,
       ArenaTemplateKind.proof => AppColors.primary,
     };
-  }
-}
-
-class _CommunityRulesFooter extends StatelessWidget {
-  const _CommunityRulesFooter({
-    required this.trustSignals,
-    required this.onTapRules,
-  });
-
-  final List<ArenaTrustSignalDraft> trustSignals;
-  final VoidCallback onTapRules;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        VitCommunityRulesLink(onTap: onTapRules),
-        const SizedBox(height: AppSpacing.x1),
-        VitCard(
-          variant: VitCardVariant.inner,
-          padding: AppSpacing.arenaPaddingX3,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.shield_outlined,
-                color: _arenaAccent,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  'Arena Points chỉ dùng trong Open Arena, không phải tài sản tài chính. Không thỏa thuận giao dịch ngoài nền tảng.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: _studioTemplateLineRatio,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: AppSpacing.x2),
-        Wrap(
-          spacing: AppSpacing.x2,
-          runSpacing: AppSpacing.x1,
-          alignment: WrapAlignment.start,
-          children: [
-            for (final signal in trustSignals)
-              VitStatusPill(
-                label: signal.value,
-                status: VitStatusPillStatus.neutral,
-                size: VitStatusPillSize.sm,
-              ),
-          ],
-        ),
-      ],
-    );
   }
 }

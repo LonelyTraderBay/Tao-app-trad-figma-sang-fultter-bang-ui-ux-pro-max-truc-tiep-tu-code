@@ -68,18 +68,21 @@ class TransferConfirmSheet extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _SheetButton(
-                  label: 'Hu\u1ef7',
-                  onTap: () => Navigator.of(context).pop(),
+                child: VitCtaButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  variant: VitCtaButtonVariant.secondary,
+                  height: AppSpacing.inputHeight,
+                  child: const Text('Hu\u1ef7'),
                 ),
               ),
               const SizedBox(width: _transferInlineGap),
               Expanded(
-                child: _SheetButton(
-                  buttonKey: const Key('sc146_transfer_confirm'),
-                  label: 'X\u00e1c nh\u1eadn',
-                  primary: true,
-                  onTap: onConfirm,
+                child: VitCtaButton(
+                  key: const Key('sc146_transfer_confirm'),
+                  onPressed: onConfirm,
+                  variant: VitCtaButtonVariant.primary,
+                  height: AppSpacing.inputHeight,
+                  child: const Text('X\u00e1c nh\u1eadn'),
                 ),
               ),
             ],
@@ -116,33 +119,6 @@ class _ConfirmNote extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _SheetButton extends StatelessWidget {
-  const _SheetButton({
-    this.buttonKey,
-    required this.label,
-    this.primary = false,
-    required this.onTap,
-  });
-
-  final Key? buttonKey;
-  final String label;
-  final bool primary;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCtaButton(
-      key: buttonKey,
-      onPressed: onTap,
-      variant: primary
-          ? VitCtaButtonVariant.primary
-          : VitCtaButtonVariant.secondary,
-      height: AppSpacing.inputHeight,
-      child: Text(label),
     );
   }
 }

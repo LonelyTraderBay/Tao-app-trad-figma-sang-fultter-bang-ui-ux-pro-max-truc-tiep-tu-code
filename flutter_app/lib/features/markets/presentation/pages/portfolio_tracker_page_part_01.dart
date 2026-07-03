@@ -153,90 +153,37 @@ class _PortfolioTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.surface,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: _portfolioTabsHeight,
-            child: Row(
-              children: [
-                _UnderlinedTab(
-                  key: PortfolioTrackerPage.overviewTabKey,
-                  label: 'Tổng quan',
-                  value: 'overview',
-                  active: activeTab == 'overview',
-                  onChanged: onChanged,
-                ),
-                _UnderlinedTab(
-                  key: PortfolioTrackerPage.assetsTabKey,
-                  label: 'Tài sản',
-                  value: 'assets',
-                  active: activeTab == 'assets',
-                  onChanged: onChanged,
-                ),
-                _UnderlinedTab(
-                  key: PortfolioTrackerPage.performanceTabKey,
-                  label: 'Hiệu suất',
-                  value: 'performance',
-                  active: activeTab == 'performance',
-                  onChanged: onChanged,
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            thickness: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _UnderlinedTab extends StatelessWidget {
-  const _UnderlinedTab({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final String value;
-  final bool active;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        onTap: () => onChanged(value),
+      child: SizedBox(
+        height: AppSpacing.marketDepthTabsHeight,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(
-              child: Center(
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketPrimary : AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
+              child: VitTabBar(
+                activeKey: activeTab,
+                variant: VitTabBarVariant.underline,
+                onChanged: onChanged,
+                tabs: const [
+                  VitTabItem(
+                    key: 'overview',
+                    label: 'Tổng quan',
+                    widgetKey: PortfolioTrackerPage.overviewTabKey,
                   ),
-                ),
+                  VitTabItem(
+                    key: 'assets',
+                    label: 'Tài sản',
+                    widgetKey: PortfolioTrackerPage.assetsTabKey,
+                  ),
+                  VitTabItem(
+                    key: 'performance',
+                    label: 'Hiệu suất',
+                    widgetKey: PortfolioTrackerPage.performanceTabKey,
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: _portfolioTabIndicatorHeight,
-              child: FractionallySizedBox(
-                widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketPrimary),
-              ),
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: AppColors.divider,
             ),
           ],
         ),

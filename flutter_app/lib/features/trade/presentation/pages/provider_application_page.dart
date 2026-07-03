@@ -108,9 +108,12 @@ class _ProviderApplicationPageState
                 child: VitPageContent(
                   padding: VitContentPadding.compact,
                   gap: VitContentGap.tight,
-                  children: [
-                    VitTradeSection(
-                      title: 'Tiến trình',
+                  children: tradeShellWithProductTabs(
+                    context: context,
+                    activeProductId: 'copy',
+                    children: [
+                      VitTradeSection(
+                        title: 'Tiến trình',
                       child: _ProgressBars(
                         steps: snapshot.steps,
                         activeStep: step,
@@ -198,7 +201,8 @@ class _ProviderApplicationPageState
                         ),
                       },
                     ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

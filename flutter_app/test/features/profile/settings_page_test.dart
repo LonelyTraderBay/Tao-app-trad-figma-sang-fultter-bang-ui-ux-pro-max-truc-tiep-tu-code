@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/profile/presentation/pages/settings_p
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
@@ -131,15 +132,10 @@ void main() {
 
     expect(find.byType(SettingsPage), findsOneWidget);
 
-    final vndChip = tester.widget<Material>(
-      find
-          .descendant(
-            of: find.byKey(SettingsPage.currencyKey('VND')),
-            matching: find.byType(Material),
-          )
-          .first,
+    final vndChip = tester.widget<VitChoicePill>(
+      find.byKey(SettingsPage.currencyKey('VND')),
     );
-    expect(vndChip.color, AppColors.primary);
+    expect(vndChip.selected, isTrue);
 
     final biometricTrack = tester.widget<VitTogglePill>(
       find.descendant(

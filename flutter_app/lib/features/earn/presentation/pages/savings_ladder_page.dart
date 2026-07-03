@@ -17,11 +17,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 
-part 'savings_ladder_page_part_01.dart';
-part 'savings_ladder_page_part_02.dart';
-part 'savings_ladder_page_part_03.dart';
-part 'savings_ladder_page_part_04.dart';
+part 'earn_ladder_page.dart';
 
 const _today = '09/03/2026';
 const _visualNavClearance = 90.0;
@@ -223,7 +221,10 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
           leading: const Icon(Icons.layers_rounded),
           child: Text('Xác nhận Ladder · ${rungs.length} bậc'),
         ),
-      _Disclaimer(text: snapshot.disclaimer),
+      EarnDisclaimerBanner(
+        text: snapshot.disclaimer,
+        lineHeight: _disclaimerLineHeight,
+      ),
     ];
   }
 
@@ -346,7 +347,10 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                     color: AppColors.buy,
                   ),
                   const SizedBox(height: AppSpacing.x4),
-                  _Disclaimer(text: snapshot.disclaimer),
+                  EarnDisclaimerBanner(
+        text: snapshot.disclaimer,
+        lineHeight: _disclaimerLineHeight,
+      ),
                   const SizedBox(height: AppSpacing.x4),
                   VitCtaButton(
                     onPressed: () {

@@ -49,11 +49,124 @@ final class AppSpacing {
   static const double pageContentGapRelaxed = 24;
   static const double pageContentGapLoose = 32;
   static const double pageSectionAccentWidth = x1 + dividerHairline;
+  static const double rowGap = 8;
   static const double pageSectionAccentHeight = rowPy;
   static const double pageSectionLabelGap = formFieldLabelGap;
   static const double pageSectionLabelBottomGap = rowGap;
 
-  static const double rowGap = 8;
+  // Cross-app layout tokens (Vit* primitives, shared chrome).
+  static const double sectionGapCompact = 13;
+  static const double cardGap = sectionGapCompact;
+  static const double sectionGapRegular = 21;
+  static const double sectionGapRelaxed = 34;
+
+  static const EdgeInsets cardPaddingCompact = EdgeInsets.all(12);
+  static const EdgeInsets cardPadding = EdgeInsets.all(16);
+  static const EdgeInsets cardPaddingHero = EdgeInsets.fromLTRB(20, 24, 20, 20);
+  static const double pageHorizontalPadding = contentPad;
+  static const EdgeInsets pageHorizontal = EdgeInsets.symmetric(
+    horizontal: pageHorizontalPadding,
+  );
+  static const double gridGap = 8;
+  static const double rowGapCompact = rowGap;
+  static const double rowGapRegular = 11;
+  static const double rowGapRelaxed = 13;
+  static const double bottomContentInset = 88;
+  static const EdgeInsets bottomContentPadding = EdgeInsets.only(
+    bottom: bottomContentInset,
+  );
+  static const double homeNativeShellCustomGap = 12;
+  static const double searchBarCompactHeight = 44;
+  static const double searchBarCompactFont = 13;
+  static const double searchBarFont = 14;
+  static const double searchBarHorizontalPadding = 12;
+  static const double searchBarHorizontalTrailingPadding = 8;
+  static const double searchBarFocusBorder = 1.5;
+  static const double searchBarNormalBorder = 1;
+  static const double searchBarIcon = 18;
+  static const double tabBarPillVertical = 7;
+  static const double tabBarPillRadius = 1;
+  static const double tabBarUnderlineHeight = 2;
+  static const double tabBarUnderlineWidth = 28;
+  static const double statusPillHeightSm = 20;
+  static const double statusPillHeightMd = 26;
+  static const double statusPillHeightLg = 32;
+  static const double statusPillGapSm = 3;
+  static const double statusPillGapMd = 4;
+  static const double statusPillGapLg = 5;
+  static const double statusPillHorizontalPaddingSm = 6;
+  static const double statusPillHorizontalPaddingMd = 10;
+  static const double statusPillHorizontalPaddingLg = 12;
+  static const double statusPillIconSizeSm = 10;
+  static const double statusPillIconSizeMd = 12;
+  static const double statusPillIconSizeLg = 14;
+  static const double statusPillBadgeOffset = 3;
+  static const double statusPillBadgeBlur = 4;
+  static const double statusPillCountPadding = 3;
+  static const double statusPillCountMinWidthFactor = 0.65;
+
+  static const double serviceTileTopStripeHeight = 2;
+  static const double serviceTileContentPadding = 8;
+  static const double serviceTileContentPaddingCompact = 6;
+  static const double serviceTileBadgeOffset = 2;
+  static const double serviceTileBadgeMaxWidth = 52;
+  static const double serviceTileBadgePaddingHorizontal = 5;
+  static const double serviceTileBadgePaddingVertical = 2;
+  static const double serviceTileBadgeFont = 8;
+  static const double serviceTileIconContainer = 26;
+  static const double serviceTileIconContainerCompact = 22;
+  static const double serviceTileIconSize = 20;
+  static const double serviceTileIconSizeCompact = 16;
+  static const double serviceTileGridAspectStandard = 1.68;
+  static const double serviceTileGridAspectCompact = 1.88;
+  static const double serviceTileLabelGap = 3;
+  static const double serviceTileLabelGapCompact = 2;
+  static const int serviceTileCrossAxisCount = 3;
+  static const double serviceTileAccentBarThickness = 4;
+  static const double serviceTileAccentBarHeight = 28;
+  static const double serviceTileSectionBarHeight = 18;
+  static const double serviceTileMinHeight = 54;
+  static const double serviceTileCompactLabelHeight = 28;
+  static const double bottomNavHorizontalInset = contentPad;
+  static const double bottomNavCapsuleHeightNative = 56;
+  static const double bottomNavCapsuleHeightVisual = 58;
+  static const double bottomNavBottomGapNative = 8;
+  static const double bottomNavBottomGapVisual = 20;
+  static const double bottomNavHorizontalPadCompact = 3;
+  static const double bottomNavHorizontalPad = 6;
+  static const double bottomNavCenterButtonSizeNative = 50;
+  static const double bottomNavCenterButtonSizeVisual = 54;
+  static const double bottomNavCenterButtonTopNative = -18;
+  static const double bottomNavCenterButtonTopVisual = -22;
+  static const double bottomNavCenterLabelBottomOffsetNative = 4;
+  static const double bottomNavCenterLabelBottomOffsetVisual = 2;
+  static const double bottomNavCenterIconSize = 22;
+  static const double bottomNavItemHeight = 52;
+  static const double bottomNavActiveDotOffset = -5;
+  static const double bottomNavActiveDotSize = 4;
+  static const double bottomNavLabelGap = 2;
+  static const double bottomNavBadgeMinWidth = 16;
+  static const double bottomNavBadgeHeight = 16;
+  static const double bottomNavBadgeHorizontalPadding = 4;
+  static const double bottomNavBadgeFontSize = 9;
+  static const double bottomNavBadgeTopOffset = -6;
+  static const double bottomNavBadgeRightOffset = -10;
+  static const double bottomNavBottomOffsetCompact = 2;
+  static const double bottomNavBottomOffsetRegular = 4;
+  static const double bottomNavSurfaceShadowBlur = 22;
+  static const double bottomNavSurfaceShadowOffsetY = 10;
+  static const double bottomNavPrimaryShadowBlur = 28;
+  static const double bottomNavPrimaryShadowOffsetY = -1;
+  static const double bottomNavCenterGlowBlur = 16;
+  static const double bottomNavCenterGlowOffsetY = 4;
+  static const double bottomNavCenterGlowWeakBlur = 32;
+  static const double bottomNavActiveDotBlur = 8;
+
+  static const double statusPillCountHeightFactor = 0.65;
+
+  // Module-prefixed screen tokens — migrate to features/<module>/ (finding #15).
+
+
   static const double walletHorizontalPadding = 20;
   static const double walletAssetHeroHeight = 238;
   static const double walletAssetHeroPaddingTop = 16;
@@ -271,14 +384,6 @@ final class AppSpacing {
     bottom: walletBuyPaymentCardGap,
   );
   static const EdgeInsets walletBuyOptionRowPadding = EdgeInsets.all(12);
-  static const double cardGap = 13;
-  static const double sectionGapCompact = 13;
-  static const double sectionGapRegular = 21;
-  static const double sectionGapRelaxed = 34;
-
-  static const EdgeInsets cardPaddingCompact = EdgeInsets.all(12);
-  static const EdgeInsets cardPadding = EdgeInsets.all(16);
-  static const EdgeInsets cardPaddingHero = EdgeInsets.fromLTRB(20, 24, 20, 20);
   static const EdgeInsets walletNetworkStatusPageScrollPadding =
       EdgeInsets.fromLTRB(contentPad, rowPy, contentPad, 0);
   static const EdgeInsets walletMultiManagerPageScrollPadding =
@@ -10043,70 +10148,6 @@ final class AppSpacing {
   static const EdgeInsets enterpriseStatesPreviewLargePadding = EdgeInsets.all(
     x6,
   );
-  static const double pageHorizontalPadding = 20;
-  static const EdgeInsets pageHorizontal = EdgeInsets.symmetric(
-    horizontal: pageHorizontalPadding,
-  );
-  static const double gridGap = 8;
-  static const double rowGapCompact = 8;
-  static const double rowGapRegular = 11;
-  static const double rowGapRelaxed = 13;
-  static const double bottomContentInset = 88;
-  static const EdgeInsets bottomContentPadding = EdgeInsets.only(
-    bottom: bottomContentInset,
-  );
-  static const double homeNativeShellCustomGap = 12;
-  static const double searchBarCompactHeight = 44;
-  static const double searchBarCompactFont = 13;
-  static const double searchBarFont = 14;
-  static const double searchBarHorizontalPadding = 12;
-  static const double searchBarHorizontalTrailingPadding = 8;
-  static const double searchBarFocusBorder = 1.5;
-  static const double searchBarNormalBorder = 1;
-  static const double searchBarIcon = 18;
-  static const double tabBarPillVertical = 7;
-  static const double tabBarPillRadius = 1;
-  static const double tabBarUnderlineHeight = 2;
-  static const double tabBarUnderlineWidth = 28;
-  static const double statusPillHeightSm = 20;
-  static const double statusPillHeightMd = 26;
-  static const double statusPillHeightLg = 32;
-  static const double statusPillGapSm = 3;
-  static const double statusPillGapMd = 4;
-  static const double statusPillGapLg = 5;
-  static const double statusPillHorizontalPaddingSm = 6;
-  static const double statusPillHorizontalPaddingMd = 10;
-  static const double statusPillHorizontalPaddingLg = 12;
-  static const double statusPillIconSizeSm = 10;
-  static const double statusPillIconSizeMd = 12;
-  static const double statusPillIconSizeLg = 14;
-  static const double statusPillBadgeOffset = 3;
-  static const double statusPillBadgeBlur = 4;
-  static const double statusPillCountPadding = 3;
-  static const double statusPillCountMinWidthFactor = 0.65;
-
-  static const double serviceTileTopStripeHeight = 2;
-  static const double serviceTileContentPadding = 8;
-  static const double serviceTileContentPaddingCompact = 6;
-  static const double serviceTileBadgeOffset = 2;
-  static const double serviceTileBadgeMaxWidth = 52;
-  static const double serviceTileBadgePaddingHorizontal = 5;
-  static const double serviceTileBadgePaddingVertical = 2;
-  static const double serviceTileBadgeFont = 8;
-  static const double serviceTileIconContainer = 26;
-  static const double serviceTileIconContainerCompact = 22;
-  static const double serviceTileIconSize = 20;
-  static const double serviceTileIconSizeCompact = 16;
-  static const double serviceTileGridAspectStandard = 1.68;
-  static const double serviceTileGridAspectCompact = 1.88;
-  static const double serviceTileLabelGap = 3;
-  static const double serviceTileLabelGapCompact = 2;
-  static const int serviceTileCrossAxisCount = 3;
-  static const double serviceTileAccentBarThickness = 4;
-  static const double serviceTileAccentBarHeight = 28;
-  static const double serviceTileSectionBarHeight = 18;
-  static const double serviceTileMinHeight = 54;
-  static const double serviceTileCompactLabelHeight = 28;
 
   static const int homeQuickActionCompactCount = 6;
   static const int homeQuickActionStandardCount = 9;
@@ -10135,11 +10176,9 @@ final class AppSpacing {
   static const double homePortfolioBadgeHorizontalPadding = 10;
   static const double homePortfolioBadgeVerticalPadding = 4;
   static const double homePortfolioBadgeIcon = 12;
-  static const EdgeInsets homePortfolioCardPadding = EdgeInsets.fromLTRB(
-    homeAnnouncementCardHorizontalPadding,
-    homePortfolioBadgeVerticalPadding + x1,
-    homeAnnouncementCardHorizontalPadding,
-    homePortfolioBadgeVerticalPadding,
+  static const EdgeInsets homePortfolioCardPadding = EdgeInsets.symmetric(
+    horizontal: homeAnnouncementCardHorizontalPadding,
+    vertical: homeAnnouncementCardVerticalPadding,
   );
   static const double homePortfolioActionSpacing = 10;
   static const double homeRecentProductWidth = 146;
@@ -10506,41 +10545,4 @@ final class AppSpacing {
   static const double authTwoFaHiddenInputSize = dividerHairline;
   static const double authTwoFaCodeDigitWidth = 44;
   static const double authTwoFaCodeDigitHeight = 56;
-
-  static const double bottomNavHorizontalInset = 20;
-  static const double bottomNavCapsuleHeightNative = 56;
-  static const double bottomNavCapsuleHeightVisual = 58;
-  static const double bottomNavBottomGapNative = 8;
-  static const double bottomNavBottomGapVisual = 20;
-  static const double bottomNavHorizontalPadCompact = 3;
-  static const double bottomNavHorizontalPad = 6;
-  static const double bottomNavCenterButtonSizeNative = 50;
-  static const double bottomNavCenterButtonSizeVisual = 54;
-  static const double bottomNavCenterButtonTopNative = -18;
-  static const double bottomNavCenterButtonTopVisual = -22;
-  static const double bottomNavCenterLabelBottomOffsetNative = 4;
-  static const double bottomNavCenterLabelBottomOffsetVisual = 2;
-  static const double bottomNavCenterIconSize = 22;
-  static const double bottomNavItemHeight = 52;
-  static const double bottomNavActiveDotOffset = -5;
-  static const double bottomNavActiveDotSize = 4;
-  static const double bottomNavLabelGap = 2;
-  static const double bottomNavBadgeMinWidth = 16;
-  static const double bottomNavBadgeHeight = 16;
-  static const double bottomNavBadgeHorizontalPadding = 4;
-  static const double bottomNavBadgeFontSize = 9;
-  static const double bottomNavBadgeTopOffset = -6;
-  static const double bottomNavBadgeRightOffset = -10;
-  static const double bottomNavBottomOffsetCompact = 2;
-  static const double bottomNavBottomOffsetRegular = 4;
-  static const double bottomNavSurfaceShadowBlur = 22;
-  static const double bottomNavSurfaceShadowOffsetY = 10;
-  static const double bottomNavPrimaryShadowBlur = 28;
-  static const double bottomNavPrimaryShadowOffsetY = -1;
-  static const double bottomNavCenterGlowBlur = 16;
-  static const double bottomNavCenterGlowOffsetY = 4;
-  static const double bottomNavCenterGlowWeakBlur = 32;
-  static const double bottomNavActiveDotBlur = 8;
-
-  static const double statusPillCountHeightFactor = 0.65;
 }

@@ -17,10 +17,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 
-part 'savings_backtest_page_part_01.dart';
-part 'savings_backtest_page_part_02.dart';
-part 'savings_backtest_page_part_03.dart';
+part 'earn_backtest_page.dart';
 
 TextStyle get _captionBold =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold);
@@ -216,7 +215,10 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
         weightedApy: weightedApy,
         amountUsd: _amountUsd,
       ),
-      _Disclaimer(text: snapshot.disclaimer),
+      EarnWarningBanner(
+        text: snapshot.disclaimer,
+        lineHeight: AppSpacing.savingsBacktestWarningLineHeight,
+      ),
       VitCtaButton(
         key: SavingsBacktestPage.runKey,
         onPressed: () {

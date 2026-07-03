@@ -191,39 +191,30 @@ class _Tabs extends StatelessWidget {
   final _ChallengeTab active;
   final ValueChanged<_ChallengeTab> onChanged;
 
+  static const _entries = [
+    (_ChallengeTab.rules, 'Luật chơi', Icons.menu_book_outlined),
+    (_ChallengeTab.evidence, 'Bằng chứng', Icons.camera_alt_outlined),
+    (_ChallengeTab.participants, 'Thành viên', Icons.groups_2_outlined),
+    (_ChallengeTab.activity, 'Hoạt động', Icons.timeline_outlined),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final entries = [
-      (_ChallengeTab.rules, 'Luật chơi', Icons.menu_book_outlined),
-      (_ChallengeTab.evidence, 'Bằng chứng', Icons.camera_alt_outlined),
-      (_ChallengeTab.participants, 'Thành viên', Icons.groups_2_outlined),
-      (_ChallengeTab.activity, 'Hoạt động', Icons.timeline_outlined),
-    ];
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      physics: const ClampingScrollPhysics(),
-      child: Row(
-        children: [
-          for (var index = 0; index < entries.length; index++) ...[
-            VitStatusPill(
-              key: ArenaChallengeDetailPage.tabKey(entries[index].$1.name),
-              label: entries[index].$2,
-              icon: entries[index].$3,
-              status: active == entries[index].$1
-                  ? VitStatusPillStatus.info
-                  : VitStatusPillStatus.neutral,
-              size: VitStatusPillSize.md,
-              onTap: () {
-                HapticFeedback.selectionClick();
-                onChanged(entries[index].$1);
-              },
-            ),
-            if (index != entries.length - 1)
-              const SizedBox(width: _challengeTinyGap),
-          ],
-        ],
-      ),
+    return VitSegmentedTabBar(
+      tabs: [
+        for (final entry in _entries)
+          VitTabItem(
+            key: entry.$1.name,
+            label: entry.$2,
+            icon: entry.$3,
+            widgetKey: ArenaChallengeDetailPage.tabKey(entry.$1.name),
+          ),
+      ],
+      activeKey: active.name,
+      onChanged: (key) {
+        HapticFeedback.selectionClick();
+        onChanged(_ChallengeTab.values.byName(key));
+      },
     );
   }
 }

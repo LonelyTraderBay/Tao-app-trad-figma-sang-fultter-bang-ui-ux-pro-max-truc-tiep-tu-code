@@ -105,8 +105,10 @@ class _TradeHistoryExportPageState
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
-                      children: [
-                        VitTradeSection(
+                      children: tradeShellWithProductTabs(
+                        context: context,
+                        children: [
+                          VitTradeSection(
                           title: 'Tổng quan',
                           child: _SummaryCard(stats: snapshot.stats),
                         ),
@@ -174,7 +176,8 @@ class _TradeHistoryExportPageState
                           tertiary:
                               'Download/new-export actions remain in the sticky footer.',
                         ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

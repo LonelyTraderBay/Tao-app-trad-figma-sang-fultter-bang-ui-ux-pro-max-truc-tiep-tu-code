@@ -9,15 +9,33 @@ class HomeMockData {
   const HomeMockData._();
 
   static const double totalBalance = 54276.79;
+  static const double totalBtc = 0.57133463;
+  static const double spotBalance = 37993.75;
+  static const double earnBalance = 10855.36;
+  static const double fundingBalance = 5427.68;
   static const double dailyPnl = 1842.31;
   static const double dailyPct = 3.52;
+  static const portfolioTrend7d = <double>[
+    52400.0,
+    52850.0,
+    53100.0,
+    52900.0,
+    53500.0,
+    53800.0,
+    totalBalance,
+  ];
   static const int notifications = 3;
   static const int homeBadge = 2;
 
   static const snapshot = HomeSnapshot(
     totalBalance: totalBalance,
+    totalBtc: totalBtc,
+    spotBalance: spotBalance,
+    earnBalance: earnBalance,
+    fundingBalance: fundingBalance,
     dailyPnl: dailyPnl,
     dailyPct: dailyPct,
+    portfolioTrend7d: portfolioTrend7d,
     notifications: notifications,
     homeBadge: homeBadge,
     announcements: announcements,

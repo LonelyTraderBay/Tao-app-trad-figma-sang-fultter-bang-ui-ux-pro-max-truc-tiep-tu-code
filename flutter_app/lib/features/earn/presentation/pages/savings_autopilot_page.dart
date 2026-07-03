@@ -16,9 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
-part 'savings_autopilot_page_part_01.dart';
-part 'savings_autopilot_page_part_02.dart';
-part 'savings_autopilot_page_part_03.dart';
+part 'earn_autopilot_page.dart';
 
 TextStyle get _captionBold =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold);

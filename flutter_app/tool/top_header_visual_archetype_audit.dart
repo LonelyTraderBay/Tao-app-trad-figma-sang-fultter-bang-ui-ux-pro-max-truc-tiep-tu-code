@@ -103,9 +103,7 @@ const _productModuleHubPages = <String>{
 
 const _fullscreenToolPages = <String>{
   'AdvancedChartPage',
-  'FuturesPage',
   'P2PChatPage',
-  'TradingBotsPage',
   'EnterpriseStatesPage',
 };
 
@@ -119,8 +117,8 @@ const _noHeaderDecisions = <String, _NoHeaderDecision>{
     'Fullscreen chart workspace; navigation must be provided in the tool UI.',
   ),
   'FuturesPage': _NoHeaderDecision(
-    'fullscreenTool',
-    'Trading terminal workspace; navigation must be provided in the tool UI.',
+    'instrument',
+    'Futures beginner shell uses instrument workspace chrome via VitTradeSimpleShell.',
   ),
   'P2PChatPage': _NoHeaderDecision(
     'fullscreenTool',
@@ -143,16 +141,6 @@ const _noHeaderDecisions = <String, _NoHeaderDecision>{
   'EnterpriseStatesPage': _NoHeaderDecision(
     'fullscreenTool',
     'Dev/showcase exception; not a normal financial route.',
-  ),
-  'LeveragePage': _NoHeaderDecision(
-    'detail',
-    'Needs migration decision: leverage form should use detail chrome unless proven fullscreen.',
-    issue: 'no_header_needs_migration_decision',
-  ),
-  'ConvertPage': _NoHeaderDecision(
-    'detail',
-    'Needs migration decision: convert flow should use detail/rootModule chrome unless proven fullscreen.',
-    issue: 'no_header_needs_migration_decision',
   ),
   'WalletPage': _NoHeaderDecision(
     'rootModule',
@@ -431,12 +419,21 @@ String _detectArchetype({
   if (pageClass == 'HomePage' || source.contains('_HomeHeader')) {
     return 'rootBrand';
   }
+  if (pageClass == 'TradePage' || pageClass == 'MarginTradingPage') {
+    return 'instrument';
+  }
+  if (pageClass == 'FuturesPage' && source.contains('VitTradeSimpleShell(')) {
+    return 'instrument';
+  }
   if (_rootModulePages.contains(pageClass) ||
       source.contains('MarketListHeader')) {
     return 'rootModule';
   }
   if (source.contains('_TradeHeader') || source.contains('_PairHeader')) {
     return 'instrument';
+  }
+  if (behavior == 'fixed_vit_header') {
+    return 'detail';
   }
   if (behavior == 'auto_hide_header' && source.contains('VitHeader(')) {
     return 'detail';
@@ -473,6 +470,10 @@ String _screenLevelFor({
     return 'L1_productModuleHub';
   }
   if (pageClass == 'TradePage') return 'L1_instrumentWorkspace';
+  if (pageClass == 'MarginTradingPage') return 'L1_instrumentWorkspace';
+  if (pageClass == 'FuturesPage' && source.contains('VitTradeSimpleShell(')) {
+    return 'L1_instrumentWorkspace';
+  }
   if (pageClass == 'PairDetailPage') return 'L2_instrumentDetail';
   if (_fullscreenToolPages.contains(pageClass) ||
       archetype == 'fullscreenTool') {
@@ -801,9 +802,10 @@ final class _PageIndex {
     }
 
     for (final entry in sourceByGroup.entries) {
+      final baseSource = entry.value.map((file) => file.readAsStringSync()).join('\n');
       final source = [
-        ...entry.value.map((file) => file.readAsStringSync()),
-        ..._extraSourceForPageGroup(appRoot, entry.key),
+        baseSource,
+        ..._extraSourceForPageGroup(appRoot, entry.key, baseSource),
       ].join('\n');
       final pageGroup = PageGroup(
         file: entry.key,
@@ -829,17 +831,47 @@ String _featureFromFeaturePath(String path) {
   return parts[featuresIndex + 1];
 }
 
-List<String> _extraSourceForPageGroup(Directory appRoot, String relativeGroup) {
-  final extraFiles = switch (relativeGroup) {
-    'flutter_app/lib/features/markets/presentation/pages/market_list_page.dart' =>
-      const [
-        'lib/features/markets/presentation/widgets/market_list_header.dart',
-      ],
-    _ => const <String>[],
+List<String> _extraSourceForPageGroup(
+  Directory appRoot,
+  String relativeGroup,
+  String baseSource,
+) {
+  final extraPaths = <String>[];
+
+  if (relativeGroup ==
+      'flutter_app/lib/features/markets/presentation/pages/market_list_page.dart') {
+    extraPaths.add(
+      'lib/features/markets/presentation/widgets/market_list_header.dart',
+    );
+  }
+
+  const shellSources = <String, List<String>>{
+    'VitTradeHubScaffold(': [
+      'lib/features/trade/presentation/widgets/trade_module_layout.dart',
+    ],
+    'VitTradeDetailScaffold(': [
+      'lib/features/trade/presentation/widgets/trade_module_layout.dart',
+    ],
+    'VitTradeSimpleShell(': [
+      'lib/features/trade/presentation/widgets/vit_trade_simple_shell.dart',
+      'lib/features/trade/presentation/widgets/trade_module_layout.dart',
+    ],
+    'VitTradeWorkspaceScaffold(': [
+      'lib/features/trade/presentation/widgets/trade_module_layout.dart',
+    ],
+    'VitWalletDetailScaffold(': [
+      'lib/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
+    ],
   };
 
+  for (final binding in shellSources.entries) {
+    if (baseSource.contains(binding.key)) {
+      extraPaths.addAll(binding.value);
+    }
+  }
+
   return [
-    for (final path in extraFiles)
+    for (final path in extraPaths)
       if (File('${appRoot.path}/$path').existsSync())
         File('${appRoot.path}/$path').readAsStringSync(),
   ];

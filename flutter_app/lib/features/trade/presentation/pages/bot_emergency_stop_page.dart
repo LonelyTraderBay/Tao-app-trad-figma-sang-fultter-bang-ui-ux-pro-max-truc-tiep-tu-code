@@ -84,9 +84,12 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                 child: VitPageContent(
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
-                  children: [
-                    VitTradeSection(
-                      title: 'Cảnh báo khẩn cấp',
+                  children: tradeShellWithProductTabs(
+                    context: context,
+                    activeProductId: 'bots',
+                    children: [
+                      VitTradeSection(
+                        title: 'Cảnh báo khẩn cấp',
                       child: _WarningBanner(snapshot: snapshot),
                     ),
                     VitTradeSection(
@@ -155,7 +158,8 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                         ),
                       ),
                     ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

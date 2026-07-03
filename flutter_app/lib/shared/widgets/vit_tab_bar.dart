@@ -5,6 +5,13 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 
+TextStyle _vitTabBarLabelStyle({required bool active}) {
+  return AppTextStyles.control.copyWith(
+    color: active ? AppColors.primary : AppColors.text2,
+    fontWeight: active ? AppTextStyles.medium : AppTextStyles.normal,
+  );
+}
+
 enum VitTabBarVariant { pill, segment, underline }
 
 class VitTabItem {
@@ -183,10 +190,7 @@ class _PillTabLabel extends StatelessWidget {
       tab.label,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: AppTextStyles.control.copyWith(
-        color: active ? AppColors.primary : AppColors.text2,
-        fontWeight: active ? AppTextStyles.medium : AppTextStyles.normal,
-      ),
+      style: _vitTabBarLabelStyle(active: active),
     );
   }
 }
@@ -218,12 +222,7 @@ class _UnderlineTab extends StatelessWidget {
               ),
               child: Text(
                 tab.label,
-                style: AppTextStyles.control.copyWith(
-                  color: active ? AppColors.primary : AppColors.text2,
-                  fontWeight: active
-                      ? AppTextStyles.medium
-                      : AppTextStyles.normal,
-                ),
+                style: _vitTabBarLabelStyle(active: active),
               ),
             ),
             AnimatedSize(

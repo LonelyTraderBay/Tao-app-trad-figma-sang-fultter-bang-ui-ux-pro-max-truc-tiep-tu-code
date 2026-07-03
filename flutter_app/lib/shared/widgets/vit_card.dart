@@ -81,19 +81,16 @@ class VitCard extends StatelessWidget {
           ],
         );
       case VitCardVariant.inner:
-        return ShapeDecoration(
-          color: AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            borderRadius: _borderRadius,
-            side: _borderSide(resolvedBorder),
-          ),
-        );
       case VitCardVariant.ghost:
         return ShapeDecoration(
-          color: AppColors.transparent,
+          color: variant == VitCardVariant.inner
+              ? AppColors.surface2
+              : AppColors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: _borderRadius,
-            side: _borderSide(resolvedBorder),
+            side: resolvedBorder == null
+                ? BorderSide.none
+                : BorderSide(color: resolvedBorder),
           ),
         );
       case VitCardVariant.standard:
@@ -105,11 +102,6 @@ class VitCard extends StatelessWidget {
           ),
         );
     }
-  }
-
-  BorderSide _borderSide(Color? resolvedBorder) {
-    if (resolvedBorder == null) return BorderSide.none;
-    return BorderSide(color: resolvedBorder);
   }
 
   @override

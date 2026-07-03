@@ -128,6 +128,16 @@ void main() {
 
     await tester.tap(find.byKey(ComplaintsHandlingPage.tabKey('myComplaints')));
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byKey(ComplaintsHandlingPage.complaintKey('COMP-2026-001')),
+      120,
+      scrollable: find
+          .descendant(
+            of: find.byType(ComplaintsHandlingPage),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
     await tester.tap(
       find.byKey(ComplaintsHandlingPage.complaintKey('COMP-2026-001')),
     );

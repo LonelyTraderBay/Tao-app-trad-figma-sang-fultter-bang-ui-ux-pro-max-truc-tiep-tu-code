@@ -8,13 +8,8 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/margin_trading_hub_widgets.dart';
@@ -23,7 +18,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_modu
 part '../widgets/margin_trading_hub_hero_nav.dart';
 part '../widgets/margin_trading_hub_cards.dart';
 
-const _hubBackground = AppColors.bg;
 const _hubHeroBorder = AppColors.primary20;
 const _hubBorder = AppColors.borderSolid;
 const _hubPrimary = AppColors.primary;
@@ -54,75 +48,50 @@ class MarginTradingHubPage extends ConsumerWidget {
         .watch(tradeReadModelControllerProvider)
         .getMarginTradingHub();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: mode,
-    );
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: 'Margin Trading Hub',
+      subtitle: 'Enterprise Features',
       semanticLabel: 'SC-090 MarginTradingHubPage',
-      child: Material(
-        color: _hubBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Margin Trading Hub',
-            subtitle: 'Enterprise Features',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.tradeMargin),
-          ),
+      contentKey: contentKey,
+      shellRenderMode: mode,
+      onBack: () => context.go(AppRoutePaths.tradeMargin),
+      activeProductId: 'margin',
+      children: [
+        VitTradeSection(
+          title: 'Margin suite',
+          child: _HeroCard(stats: snapshot.stats),
+        ),
+        VitTradeSection(
+          title: 'Điều hướng',
+          child: _NavigationCard(items: snapshot.menuItems),
+        ),
+        const VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Margin suite risk review',
+          message:
+              'Review leverage limits, liquidation risk, fees, available margin, and next steps before opening any margin workflow.',
+          contractId: 'SC-090 margin hub review',
+          density: VitDensity.compact,
+        ),
+        VitTradeSection(
+          title: 'Tính năng',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: contentKey,
-                  bottomInset: scrollEndClearance,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      VitTradeSection(
-                        title: 'Margin suite',
-                        child: _HeroCard(stats: snapshot.stats),
-                      ),
-                      VitTradeSection(
-                        title: 'Điều hướng',
-                        child: _NavigationCard(items: snapshot.menuItems),
-                      ),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Margin suite risk review',
-                        message:
-                            'Review leverage limits, liquidation risk, fees, available margin, and next steps before opening any margin workflow.',
-                        contractId: 'SC-090 margin hub review',
-                        density: VitDensity.compact,
-                      ),
-                      VitTradeSection(
-                        title: 'Tính năng',
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            for (final feature in snapshot.features) ...[
-                              _FeatureCard(feature: feature),
-                              if (feature != snapshot.features.last)
-                                const SizedBox(height: AppSpacing.x3),
-                            ],
-                          ],
-                        ),
-                      ),
-                      VitTradeSection(
-                        title: 'Tuân thủ',
-                        child: _ComplianceCard(compliance: snapshot.compliance),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              for (final feature in snapshot.features) ...[
+                _FeatureCard(feature: feature),
+                if (feature != snapshot.features.last)
+                  const SizedBox(height: AppSpacing.x3),
+              ],
             ],
           ),
         ),
-      ),
+        VitTradeSection(
+          title: 'Tuân thủ',
+          child: _ComplianceCard(compliance: snapshot.compliance),
+        ),
+      ],
     );
   }
 }

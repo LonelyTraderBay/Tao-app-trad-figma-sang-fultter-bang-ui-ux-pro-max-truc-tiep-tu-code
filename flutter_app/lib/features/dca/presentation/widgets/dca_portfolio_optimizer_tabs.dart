@@ -8,84 +8,19 @@ class _OptimizerTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.dcaPaddingX2,
-      child: Row(
-        children: [
-          for (final tab in _OptimizerTab.values)
-            Expanded(
-              child: _OptimizerTabButton(
-                key: DCAPortfolioOptimizer.tabKey(tab.name),
-                tab: tab,
-                active: tab == activeTab,
-                onTap: () => onChanged(tab),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _OptimizerTabButton extends StatelessWidget {
-  const _OptimizerTabButton({
-    super.key,
-    required this.tab,
-    required this.active,
-    required this.onTap,
-  });
-
-  final _OptimizerTab tab;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: EdgeInsets.zero,
-      borderColor: AppColors.transparent,
-      clip: true,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: active ? AppColors.surface : AppColors.transparent,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-        ),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x1,
-            vertical: AppSpacing.x2,
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: activeTab.name,
+      onChanged: (key) => onChanged(_OptimizerTab.values.byName(key)),
+      tabs: [
+        for (final tab in _OptimizerTab.values)
+          VitTabItem(
+            key: tab.name,
+            label: _tabLabel(tab),
+            icon: _tabIcon(tab),
+            widgetKey: DCAPortfolioOptimizer.tabKey(tab.name),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                _tabIcon(tab),
-                color: active ? AppColors.accent : AppColors.text3,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Flexible(
-                child: Text(
-                  _tabLabel(tab),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: active ? AppColors.text1 : AppColors.text3,
-                    fontWeight: active
-                        ? AppTextStyles.bold
-                        : AppTextStyles.medium,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      ],
     );
   }
 }

@@ -50,12 +50,6 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
     final snapshot = ref.watch(tradeFuturesProvider(widget.pairId));
     final pair = snapshot.pair;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final productNav = buildTradeProductNavigation(
-      context: context,
-      pair: pair,
-      activeId: 'futures',
-      quickNavKey: FuturesPage.quickNavKey,
-    );
 
     return VitTradeSimpleShell(
       title: pair.symbol,
@@ -66,12 +60,10 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
       showBack: true,
       backKey: FuturesPage.closeKey,
       onBack: () => context.go(AppRoutePaths.tradePair(widget.pairId)),
+      activeProductId: 'futures',
+      productPair: pair,
+      quickNavKey: FuturesPage.quickNavKey,
       children: [
-        VitTradeProductTabs(
-          activeId: 'futures',
-          tabs: productNav.tabs,
-          overflowItems: productNav.overflow,
-        ),
         VitTradeSimpleHero(
           symbol: pair.symbol,
           priceLabel: formatTradePrice(pair.price),

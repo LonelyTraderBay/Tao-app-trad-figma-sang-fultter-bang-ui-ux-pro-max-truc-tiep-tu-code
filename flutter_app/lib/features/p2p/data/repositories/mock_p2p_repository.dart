@@ -18,12 +18,11 @@ part '../fixtures/mock_p2p_repository_fixtures_part_07.dart';
 part '../fixtures/mock_p2p_repository_fixtures_part_08.dart';
 part '../fixtures/mock_p2p_repository_fixtures_part_09.dart';
 
-abstract class _MockP2PRepositoryBase implements P2PRepository {
-  const _MockP2PRepositoryBase();
-}
+mixin _MockP2PRepositoryBase implements P2PRepository {}
 
-final class MockP2PRepository extends _MockP2PRepositoryBase
+final class MockP2PRepository
     with
+        _MockP2PRepositoryBase,
         _MockP2PRepositoryMethodsPart01,
         _MockP2PRepositoryMethodsPart02,
         _MockP2PRepositoryMethodsPart03,

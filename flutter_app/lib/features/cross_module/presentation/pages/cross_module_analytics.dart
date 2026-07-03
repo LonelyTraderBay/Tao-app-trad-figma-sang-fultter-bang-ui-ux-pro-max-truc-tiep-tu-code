@@ -50,46 +50,80 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
+    return CrossModuleTabbedPageShell(
+      semanticLabel: 'SC-322 CrossModuleAnalytics',
+      contentKey: CrossModuleAnalytics.contentKey,
+      title: snapshot.title,
+      onBack: () => context.go(snapshot.backRoute),
+      scrollEndClearance: scrollEndClearance,
+      tabs: _AnalyticsTabs(
+        tabs: snapshot.tabs,
+        active: _activeTab,
+        onChanged: (tab) {
+          HapticFeedback.selectionClick();
+          setState(() => _activeTab = tab);
+        },
+      ),
+      body: VitPageContent(
+        gap: VitContentGap.tight,
+        children: [
+          if (_activeTab == CrossModuleAnalyticsTab.performance)
+            _PerformanceTab(snapshot: snapshot)
+          else if (_activeTab == CrossModuleAnalyticsTab.metrics)
+            _MetricsTab(snapshot: snapshot)
+          else
+            _ComparisonTab(snapshot: snapshot),
+        ],
+      ),
+    );
+  }
+}
+
+class CrossModuleTabbedPageShell extends StatelessWidget {
+  const CrossModuleTabbedPageShell({
+    super.key,
+    required this.semanticLabel,
+    required this.contentKey,
+    required this.title,
+    required this.onBack,
+    required this.scrollEndClearance,
+    required this.tabs,
+    required this.body,
+  });
+
+  final String semanticLabel;
+  final Key contentKey;
+  final String title;
+  final VoidCallback onBack;
+  final double scrollEndClearance;
+  final Widget tabs;
+  final Widget body;
+
+  @override
+  Widget build(BuildContext context) {
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-322 CrossModuleAnalytics',
+      semanticLabel: semanticLabel,
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: snapshot.title,
+            title: title,
             showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
+            onBack: onBack,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _AnalyticsTabs(
-                tabs: snapshot.tabs,
-                active: _activeTab,
-                onChanged: (tab) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _activeTab = tab);
-                },
-              ),
+              tabs,
               Expanded(
                 child: SingleChildScrollView(
-                  key: CrossModuleAnalytics.contentKey,
+                  key: contentKey,
                   physics: const ClampingScrollPhysics(),
                   padding: AppSpacing.crossModuleScrollPadding(
                     scrollEndClearance,
                   ),
-                  child: VitPageContent(
-                    gap: VitContentGap.tight,
-                    children: [
-                      if (_activeTab == CrossModuleAnalyticsTab.performance)
-                        _PerformanceTab(snapshot: snapshot)
-                      else if (_activeTab == CrossModuleAnalyticsTab.metrics)
-                        _MetricsTab(snapshot: snapshot)
-                      else
-                        _ComparisonTab(snapshot: snapshot),
-                    ],
-                  ),
+                  child: body,
                 ),
               ),
             ],

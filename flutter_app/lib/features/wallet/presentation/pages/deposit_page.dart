@@ -12,17 +12,13 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/deposit_page_sections.dart';
 part '../widgets/deposit_page_common.dart';
 
-const _depositBackground = AppColors.bg;
 const _depositPrimary = AppColors.primary;
 const _depositGreen = AppColors.buy;
 const _depositRed = AppColors.sell;
@@ -82,80 +78,58 @@ class _DepositPageState extends ConsumerState<DepositPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset = _depositScrollBottomInset(context, mode);
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitWalletDetailScaffold(
+      title: 'Nạp ${snapshot.asset}',
+      subtitle: 'Nạp tiền · Wallet',
       semanticLabel: widget.assetScoped
           ? 'SC-138 DepositPage Asset'
           : 'SC-137 DepositPage',
-      child: Material(
-        color: _depositBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Nạp ${snapshot.asset}',
-            subtitle: 'Nạp tiền · Wallet',
-            showBack: true,
-            onBack: () => context.go(AppRoutePaths.wallet),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: DepositPage.contentKey,
-                  bottomInset: bottomInset,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    density: VitDensity.compact,
-                    children: [
-                      const VitSectionHeader(
-                        title: 'M\u1EA1ng n\u1EA1p',
-                        icon: Icons.hub_outlined,
-                        iconColor: _depositPrimary,
-                        accentColor: _depositPrimary,
-                      ),
-                      _NetworkSelector(
-                        asset: snapshot.asset,
-                        selected: selected,
-                        onTap: () => _openNetworkPicker(snapshot.networks),
-                      ),
-                      const VitSectionHeader(
-                        title: '\u0110\u1ECBa ch\u1EC9 n\u1EA1p',
-                        icon: Icons.qr_code_2_rounded,
-                        iconColor: _depositPrimary,
-                        accentColor: _depositPrimary,
-                      ),
-                      _QrAddressCard(
-                        asset: snapshot.asset,
-                        network: selected,
-                        copied: _copied,
-                        onCopy: () => _copyAddress(selected.address),
-                      ),
-                      const VitSectionHeader(
-                        title: 'An to\u00E0n',
-                        icon: Icons.shield_outlined,
-                        iconColor: _depositRed,
-                        accentColor: _depositRed,
-                      ),
-                      _WarningCard(asset: snapshot.asset, network: selected),
-                      const VitSectionHeader(
-                        title: 'Chi ti\u1EBFt n\u1EA1p',
-                        icon: Icons.receipt_long_outlined,
-                        iconColor: _depositPrimary,
-                        accentColor: _depositPrimary,
-                      ),
-                      _DepositInfoCard(
-                        asset: snapshot.asset,
-                        network: selected,
-                      ),
-                      _RefreshButton(onTap: _refreshDepositIntent),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+      contentKey: DepositPage.contentKey,
+      bottomInset: bottomInset,
+      onBack: () => context.go(AppRoutePaths.wallet),
+      children: [
+        const VitSectionHeader(
+          title: 'M\u1EA1ng n\u1EA1p',
+          icon: Icons.hub_outlined,
+          iconColor: _depositPrimary,
+          accentColor: _depositPrimary,
         ),
-      ),
+        _NetworkSelector(
+          asset: snapshot.asset,
+          selected: selected,
+          onTap: () => _openNetworkPicker(snapshot.networks),
+        ),
+        const VitSectionHeader(
+          title: '\u0110\u1ECBa ch\u1EC9 n\u1EA1p',
+          icon: Icons.qr_code_2_rounded,
+          iconColor: _depositPrimary,
+          accentColor: _depositPrimary,
+        ),
+        _QrAddressCard(
+          asset: snapshot.asset,
+          network: selected,
+          copied: _copied,
+          onCopy: () => _copyAddress(selected.address),
+        ),
+        const VitSectionHeader(
+          title: 'An to\u00E0n',
+          icon: Icons.shield_outlined,
+          iconColor: _depositRed,
+          accentColor: _depositRed,
+        ),
+        _WarningCard(asset: snapshot.asset, network: selected),
+        const VitSectionHeader(
+          title: 'Chi ti\u1EBFt n\u1EA1p',
+          icon: Icons.receipt_long_outlined,
+          iconColor: _depositPrimary,
+          accentColor: _depositPrimary,
+        ),
+        _DepositInfoCard(
+          asset: snapshot.asset,
+          network: selected,
+        ),
+        _RefreshButton(onTap: _refreshDepositIntent),
+      ],
     );
   }
 

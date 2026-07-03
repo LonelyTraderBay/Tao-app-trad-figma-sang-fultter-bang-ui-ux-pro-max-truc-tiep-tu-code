@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
+part of '../pages/launchpad_rebalance_page.dart';
 
 final class RebalanceSuggestion {
   const RebalanceSuggestion({

@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_governance_gate_stepper_title.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_state_cards.dart';
 
 part 'arena_governance_gate_page_part_01.dart';
@@ -26,7 +27,6 @@ part 'arena_governance_gate_page_part_02.dart';
 part 'arena_governance_gate_page_part_03.dart';
 part 'arena_governance_gate_page_part_04.dart';
 part '../widgets/arena_governance_gate_models.dart';
-part '../widgets/arena_governance_gate_stepper_title.dart';
 part '../widgets/arena_governance_gate_privacy_clarity.dart';
 part '../widgets/arena_governance_gate_setup_fields.dart';
 part '../widgets/arena_governance_gate_resolution_timing.dart';
@@ -40,9 +40,6 @@ const _arenaAccent = AppModuleAccents.arena;
 final double _governanceActionExtent = VitDensity.compact.controlHeight;
 const _governanceBodyLineRatio = AppSpacing.arenaGovernanceBodyLineHeight;
 const _governanceNoticeLineRatio = AppSpacing.arenaGovernanceNoticeLineHeight;
-const _governanceStepperLineRatio = AppSpacing.arenaGovernanceStepperLineHeight;
-const _governanceSubtitleLineRatio =
-    AppSpacing.arenaGovernanceSubtitleLineHeight;
 
 class ArenaGovernanceGatePage extends ConsumerStatefulWidget {
   const ArenaGovernanceGatePage({super.key, this.shellRenderMode});
@@ -142,8 +139,12 @@ class _ArenaGovernanceGatePageState
                           padding: VitContentPadding.compact,
                           gap: VitContentGap.tight,
                           children: [
-                            _GovernanceStepper(steps: snapshot.steps, step: 3),
-                            const _GovernanceTitle(),
+                            ArenaWizardStepper(
+                              steps: snapshot.steps,
+                              activeStep: 3,
+                              style: ArenaWizardStepperStyle.governance,
+                            ),
+                            const ArenaGovernanceGateHeader(),
                             ArenaGovernanceStateBanner(state: actionState),
                             _PrivacyCard(
                               options: snapshot.privacyOptions,

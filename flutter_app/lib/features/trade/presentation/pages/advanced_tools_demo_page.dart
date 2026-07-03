@@ -93,8 +93,10 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,
-                        children: [
-                          const _IntroCard(),
+                        children: tradeShellWithProductTabs(
+                          context: context,
+                          children: [
+                            const _IntroCard(),
                           for (final feature in snapshot.features)
                             _FeatureCard(
                               feature: feature,
@@ -168,7 +170,8 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                               ],
                             ),
                           ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

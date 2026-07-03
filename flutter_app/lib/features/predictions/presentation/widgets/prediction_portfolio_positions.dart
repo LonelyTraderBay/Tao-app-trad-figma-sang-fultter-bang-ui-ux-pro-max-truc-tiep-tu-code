@@ -149,9 +149,14 @@ class _PositionRow extends StatelessWidget {
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
-                      VitAccentPill(
+                      VitStatusPill(
                         label: statusLabel,
-                        accentColor: statusColor,
+                        status: isWon
+                            ? VitStatusPillStatus.success
+                            : isOpen
+                            ? VitStatusPillStatus.warning
+                            : VitStatusPillStatus.error,
+                        size: VitStatusPillSize.sm,
                       ),
                     ],
                   ),

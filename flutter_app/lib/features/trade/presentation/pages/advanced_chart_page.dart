@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_formatters.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_terminal_header.dart';
 
 part '../widgets/advanced_chart_header_toolbar.dart';
@@ -74,6 +75,12 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
     final enabledIndicators = _indicators
         .where((indicator) => indicator.enabled)
         .toList(growable: false);
+    final productTabs = tradeShellWithProductTabs(
+      context: context,
+      activeProductId: 'spot',
+      productPair: pair,
+      children: const [],
+    );
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -93,6 +100,7 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                   priceLabel: formatTradePrice(pair.price),
                   changePct: pair.changePct,
                 ),
+                ...productTabs,
                 _OhlcvBar(ohlcv: snapshot.ohlcv),
                 _ChartToolbar(
                   timeframes: snapshot.timeframes,

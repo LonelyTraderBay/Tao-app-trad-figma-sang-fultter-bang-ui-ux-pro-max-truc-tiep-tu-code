@@ -13,25 +13,25 @@ class _TopTabs extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              _TopTab(
+          VitTabBar(
+            variant: VitTabBarVariant.underline,
+            activeKey: activeTab.name,
+            onChanged: (key) => onChanged(_RulesTab.values.byName(key)),
+            tabs: [
+              VitTabItem(
+                key: _RulesTab.mine.name,
                 label: 'Luat cua toi',
-                tab: _RulesTab.mine,
-                active: activeTab == _RulesTab.mine,
-                onChanged: onChanged,
+                widgetKey: DCASmartRulesPage.tabKey(_RulesTab.mine.name),
               ),
-              _TopTab(
+              VitTabItem(
+                key: _RulesTab.templates.name,
                 label: 'Mau',
-                tab: _RulesTab.templates,
-                active: activeTab == _RulesTab.templates,
-                onChanged: onChanged,
+                widgetKey: DCASmartRulesPage.tabKey(_RulesTab.templates.name),
               ),
-              _TopTab(
+              VitTabItem(
+                key: _RulesTab.history.name,
                 label: 'Lich su',
-                tab: _RulesTab.history,
-                active: activeTab == _RulesTab.history,
-                onChanged: onChanged,
+                widgetKey: DCASmartRulesPage.tabKey(_RulesTab.history.name),
               ),
             ],
           ),
@@ -41,64 +41,6 @@ class _TopTabs extends StatelessWidget {
             color: AppColors.border,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TopTab extends StatelessWidget {
-  const _TopTab({
-    required this.label,
-    required this.tab,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final _RulesTab tab;
-  final bool active;
-  final ValueChanged<_RulesTab> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        key: DCASmartRulesPage.tabKey(tab.name),
-        onTap: () => onChanged(tab),
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        borderColor: AppColors.transparent,
-        child: Padding(
-          padding: AppSpacing.dcaTopPaddingX4,
-          child: Column(
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? AppColors.primary : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x4),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 160),
-                child: SizedBox(
-                  height: AppSpacing.dcaSmartTabIndicatorHeight,
-                  width: active ? AppSpacing.dcaSmartTabIndicatorWidth : 0,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: active ? AppColors.primary : AppColors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: AppRadii.xsRadius,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

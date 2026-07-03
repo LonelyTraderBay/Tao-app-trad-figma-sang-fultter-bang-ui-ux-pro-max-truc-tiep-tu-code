@@ -18,16 +18,16 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_governance_gate_stepper_title.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
-part 'arena_smart_rule_builder_page_part_01.dart';
-part 'arena_smart_rule_builder_page_part_02.dart';
+part '../widgets/arena_smart_rule_builder_page_part_01.dart';
+part '../widgets/arena_smart_rule_builder_page_part_02.dart';
 part 'arena_smart_rule_builder_page_part_03.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 final double _smartRuleActionExtent = VitDensity.compact.controlHeight;
 const _smartRuleBodyLineRatio = AppSpacing.arenaSmartRuleBodyLineHeight;
-const _smartRuleStepperLineRatio = AppSpacing.arenaSmartRuleStepperLineHeight;
 const _smartRuleSubtitleLineRatio = AppSpacing.arenaSmartRuleSubtitleLineHeight;
 
 String _formatArenaRuleDateInput(String isoDate) {
@@ -173,7 +173,11 @@ class _ArenaSmartRuleBuilderPageState
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      _SmartStepper(steps: snapshot.steps, step: 3),
+                      ArenaWizardStepper(
+                        steps: snapshot.steps,
+                        activeStep: 3,
+                        style: ArenaWizardStepperStyle.smartRule,
+                      ),
                       _TitleField(
                         controller: _titleController,
                         suggestions: snapshot.titleSuggestions,

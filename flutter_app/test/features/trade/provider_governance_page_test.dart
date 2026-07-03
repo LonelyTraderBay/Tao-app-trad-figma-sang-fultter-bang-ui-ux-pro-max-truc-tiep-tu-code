@@ -104,7 +104,12 @@ void main() {
     await tester.scrollUntilVisible(
       find.byKey(ProviderGovernancePage.requestActionKey),
       120,
-      scrollable: find.byType(Scrollable),
+      scrollable: find
+          .descendant(
+            of: find.byType(ProviderGovernancePage),
+            matching: find.byType(Scrollable),
+          )
+          .first,
     );
     await tester.tap(find.byKey(ProviderGovernancePage.requestActionKey));
     await tester.pumpAndSettle();

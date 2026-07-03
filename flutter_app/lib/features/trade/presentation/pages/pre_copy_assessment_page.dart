@@ -58,6 +58,7 @@ class _PreCopyAssessmentPageState extends ConsumerState<PreCopyAssessmentPage> {
       contentKey: PreCopyAssessmentPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,
+      showProductTabs: false,
       onBack: () =>
           context.go(AppRoutePaths.tradeCopyProvider(widget.providerId)),
       children: [

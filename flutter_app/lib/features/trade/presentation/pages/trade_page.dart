@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -16,8 +17,6 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_shell.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_hero.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_order_form.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_product_navigation.dart';
-import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_product_tabs.dart';
 
 part 'trade_page_part_01.dart';
 

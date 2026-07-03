@@ -148,6 +148,16 @@ void main() {
   ) async {
     await pumpCopyTradingV2(tester);
 
+    await tester.scrollUntilVisible(
+      find.byKey(CopyTradingV2Page.detailKey('ct003')),
+      120,
+      scrollable: find
+          .descendant(
+            of: find.byType(CopyTradingV2Page),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
     await tester.tap(find.byKey(CopyTradingV2Page.detailKey('ct003')));
     await tester.pumpAndSettle();
 

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -16,15 +15,18 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
 part '../widgets/copy_trading_hero.dart';
-part '../widgets/copy_trading_list.dart';
 part '../widgets/copy_trading_metrics_common.dart';
+
+CopyTradingListKeys get _copyListKeys => CopyTradingListKeys(
+      traderKey: CopyTradingPage.traderKey,
+      detailKey: CopyTradingPage.detailKey,
+      sortKey: CopyTradingPage.sortKey,
+    );
 
 const _copyPrimary = AppColors.primary;
 const _copySpace = AppSpacing.x2;
 const _copyCardSpace = AppSpacing.tradePageContentGap;
 const _copyWeeklyChartHeight = AppSpacing.copyTradingWeeklyChartHeight;
-const _copyBadgeSize = AppSpacing.ctaLoadingIcon;
-const _copyButtonHeight = AppSpacing.homeHeroActionHeight;
 const _copyTextLineHeight = 1.24;
 
 class CopyTradingPage extends ConsumerStatefulWidget {
@@ -47,7 +49,7 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(tradeCopyTradingProvider);
-    final traders = _sortedTraders(snapshot.traders);
+    final traders = sortCopyTraders(snapshot.traders, _sortBy);
 
     return VitTradeHubScaffold(
       title: 'Copy Trading',
@@ -56,6 +58,7 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
       contentKey: CopyTradingPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       useCopyTradingInset: true,
+      activeProductId: 'copy',
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.trade,
@@ -66,7 +69,7 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
           title: 'Tổng quan',
           child: _CopyHeroCard(snapshot: snapshot),
         ),
-        _RiskWarningCard(
+        CopyTradingRiskWarningCard(
           title: snapshot.riskWarningTitle,
           message: snapshot.riskWarningText,
         ),
@@ -86,10 +89,11 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _SortChips(
+              CopyTradingSortChips(
                 options: snapshot.sortOptions,
                 selected: _sortBy,
                 onChanged: (value) => setState(() => _sortBy = value),
+                keys: _copyListKeys,
               ),
               if (traders.isEmpty)
                 const VitEmptyState(
@@ -99,10 +103,11 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
                   icon: Icons.groups_outlined,
                 )
               else
-                _TraderList(
+                CopyTradingTraderList(
                   traders: traders,
                   onOpen: (trader) =>
                       context.go(AppRoutePaths.tradeCopyProvider(trader.id)),
+                  keys: _copyListKeys,
                 ),
             ],
           ),
@@ -113,19 +118,5 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
         ),
       ],
     );
-  }
-
-  List<TradeCopyTrader> _sortedTraders(List<TradeCopyTrader> traders) {
-    final sorted = [...traders];
-    if (_sortBy == 'Ổn định nhất') {
-      sorted.sort((a, b) => b.sharpeRatio.compareTo(a.sharpeRatio));
-    } else if (_sortBy == 'Nhiều copier') {
-      sorted.sort((a, b) => b.copiers.compareTo(a.copiers));
-    } else if (_sortBy == 'AUM cao') {
-      sorted.sort((a, b) => b.aum.compareTo(a.aum));
-    } else {
-      sorted.sort((a, b) => b.totalPnlPct.compareTo(a.totalPnlPct));
-    }
-    return sorted;
   }
 }

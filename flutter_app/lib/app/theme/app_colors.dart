@@ -154,7 +154,7 @@ final class AppColors {
   static const Color sell20 = Color(0x33EF4444);
   static const Color sell33 = Color(0x55EF4444);
 
-  static const Color warn08 = Color(0x14F5A524);
+  static const Color warn08 = warningBg;
   static const Color warn10 = Color(0x1AF5A524);
   static const Color warn15 = Color(0x26F5A524);
   static const Color caution10 = Color(0x1AF59E0B);

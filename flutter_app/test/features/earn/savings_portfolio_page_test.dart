@@ -38,7 +38,7 @@ void main() {
 
   test('SC-333 keeps the Home-standard page foundation contract', () {
     final pageSource = File(
-      'lib/features/earn/presentation/pages/savings_portfolio_page_part_01.dart',
+      'lib/features/earn/presentation/pages/earn_portfolio_page.dart',
     ).readAsStringSync();
 
     expect(pageSource, contains('VitInsetScrollView'));

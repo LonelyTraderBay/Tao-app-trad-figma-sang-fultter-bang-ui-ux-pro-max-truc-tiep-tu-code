@@ -237,32 +237,6 @@ void main() {
       expect(find.byKey(TradePage.quickNavKey(id)), findsOneWidget);
     }
 
-    await tester.scrollUntilVisible(
-      find.text('Thêm'),
-      120,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await tester.tap(find.text('Thêm'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Bot'), findsWidgets);
-
-    for (final id in const [
-      'bots',
-      'copy',
-      'dca',
-      'wallet',
-      'p2p',
-      'earn',
-      'launchpad',
-      'predictions',
-      'arena',
-      'rewards',
-      'support',
-    ]) {
-      expect(find.byKey(TradePage.quickNavKey(id)), findsOneWidget);
-    }
-
-    expect(find.text('Help'), findsOneWidget);
+    expect(find.text('Thêm'), findsNothing);
   });
 }

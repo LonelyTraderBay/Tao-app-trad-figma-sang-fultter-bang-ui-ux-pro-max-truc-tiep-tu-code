@@ -13,25 +13,31 @@ class _TopTabs extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              _TopTab(
+          VitTabBar(
+            variant: VitTabBarVariant.underline,
+            activeKey: activeTab.name,
+            onChanged: (key) => onChanged(_CompareTab.values.byName(key)),
+            tabs: [
+              VitTabItem(
+                key: _CompareTab.compare.name,
                 label: 'So sanh',
-                tab: _CompareTab.compare,
-                active: activeTab == _CompareTab.compare,
-                onChanged: onChanged,
+                widgetKey: DCAPerformanceComparePage.tabKey(
+                  _CompareTab.compare.name,
+                ),
               ),
-              _TopTab(
+              VitTabItem(
+                key: _CompareTab.scenarios.name,
                 label: 'Kich ban',
-                tab: _CompareTab.scenarios,
-                active: activeTab == _CompareTab.scenarios,
-                onChanged: onChanged,
+                widgetKey: DCAPerformanceComparePage.tabKey(
+                  _CompareTab.scenarios.name,
+                ),
               ),
-              _TopTab(
+              VitTabItem(
+                key: _CompareTab.analysis.name,
                 label: 'Phan tich',
-                tab: _CompareTab.analysis,
-                active: activeTab == _CompareTab.analysis,
-                onChanged: onChanged,
+                widgetKey: DCAPerformanceComparePage.tabKey(
+                  _CompareTab.analysis.name,
+                ),
               ),
             ],
           ),
@@ -41,63 +47,6 @@ class _TopTabs extends StatelessWidget {
             color: AppColors.border,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TopTab extends StatelessWidget {
-  const _TopTab({
-    required this.label,
-    required this.tab,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final _CompareTab tab;
-  final bool active;
-  final ValueChanged<_CompareTab> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        key: DCAPerformanceComparePage.tabKey(tab.name),
-        onTap: () => onChanged(tab),
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        borderColor: AppColors.transparent,
-        child: Padding(
-          padding: AppSpacing.dcaTopPaddingX4,
-          child: Column(
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? AppColors.primary : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x4),
-              SizedBox(
-                height: AppSpacing.dcaPerformanceCompareTabIndicatorHeight,
-                width: active
-                    ? AppSpacing.dcaPerformanceCompareTabIndicatorWidth
-                    : 0,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: active ? AppColors.primary : AppColors.transparent,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: AppRadii.xsRadius,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

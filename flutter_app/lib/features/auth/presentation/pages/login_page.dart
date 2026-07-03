@@ -125,14 +125,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     customGap: AppSpacing.zero,
                     fullBleed: true,
                     children: [
-                      const VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: _LoginHero(),
-                      ),
+                      const _LoginHero(),
                       const Padding(padding: AppSpacing.authHeroFormTopPadding),
-                      VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: _LoginForm(
+                      _LoginForm(
                           identifierController: _identifierController,
                           passwordController: _passwordController,
                           showPassword: _showPassword,
@@ -147,14 +142,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           onLogin: _handleLogin,
                           onDemoLogin: _handleDemoLogin,
                         ),
-                      ),
                       const Padding(
                         padding: AppSpacing.authFormFooterTopPadding,
                       ),
-                      const VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: _LegalFooter(),
-                      ),
+                      const _LegalFooter(),
                     ],
                   ),
                 ),
@@ -268,7 +259,7 @@ class _LoginForm extends StatelessWidget {
           ),
           if (error.isNotEmpty) ...[
             const Padding(padding: AppSpacing.authTopGapX4),
-            _LoginErrorBanner(error: error),
+            _authInlineErrorBanner(error),
           ],
           const Padding(padding: AppSpacing.authTopGapX3),
           Align(
@@ -334,42 +325,6 @@ class _LoginForm extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _LoginErrorBanner extends StatelessWidget {
-  const _LoginErrorBanner({required this.error});
-
-  final String error;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.sell10,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
-        side: BorderSide(color: AppColors.sell20),
-      ),
-      child: Padding(
-        padding: AppSpacing.authErrorBannerPaddingSm,
-        child: Row(
-          children: [
-            const Icon(
-              Icons.error_outline_rounded,
-              color: AppColors.sell,
-              size: AppSpacing.authErrorIcon,
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                error,
-                style: AppTextStyles.caption.copyWith(color: AppColors.sell),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -481,4 +436,33 @@ class _VitTradeLogoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+Widget _authInlineErrorBanner(String error) {
+  return Material(
+    color: AppColors.sell10,
+    shape: const RoundedRectangleBorder(
+      borderRadius: AppRadii.inputRadius,
+      side: BorderSide(color: AppColors.sell20),
+    ),
+    child: Padding(
+      padding: AppSpacing.authErrorBannerPaddingSm,
+      child: Row(
+        children: [
+          const Icon(
+            Icons.error_outline_rounded,
+            color: AppColors.sell,
+            size: AppSpacing.authErrorIcon,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              error,
+              style: AppTextStyles.caption.copyWith(color: AppColors.sell),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

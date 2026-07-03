@@ -110,8 +110,13 @@ final class HomeCryptoPair {
 final class HomeSnapshot {
   const HomeSnapshot({
     required this.totalBalance,
+    required this.totalBtc,
+    required this.spotBalance,
+    required this.earnBalance,
+    required this.fundingBalance,
     required this.dailyPnl,
     required this.dailyPct,
+    required this.portfolioTrend7d,
     required this.notifications,
     required this.homeBadge,
     required this.announcements,
@@ -122,8 +127,13 @@ final class HomeSnapshot {
   });
 
   final double totalBalance;
+  final double totalBtc;
+  final double spotBalance;
+  final double earnBalance;
+  final double fundingBalance;
   final double dailyPnl;
   final double dailyPct;
+  final List<double> portfolioTrend7d;
   final int notifications;
   final int homeBadge;
   final List<HomeAnnouncement> announcements;

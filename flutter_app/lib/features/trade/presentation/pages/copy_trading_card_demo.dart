@@ -65,8 +65,11 @@ class CopyTradingCardDemo extends ConsumerWidget {
                   ),
                   child: VitPageContent(
                     gap: VitContentGap.loose,
-                    children: [
-                      _AnalysisHeader(snapshot: snapshot),
+                    children: tradeShellWithProductTabs(
+                      context: context,
+                      showProductTabs: false,
+                      children: [
+                        _AnalysisHeader(snapshot: snapshot),
                       for (final variant in snapshot.variants)
                         CopyTradingVariantSection(
                           key: CopyTradingCardDemo.variantKey(variant.id),
@@ -77,7 +80,8 @@ class CopyTradingCardDemo extends ConsumerWidget {
                       _OriginalIssues(issues: snapshot.originalIssues),
                       _Recommendation(snapshot: snapshot),
                       _Guidelines(guidelines: snapshot.guidelines),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

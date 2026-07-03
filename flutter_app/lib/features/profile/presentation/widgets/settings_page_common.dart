@@ -11,7 +11,7 @@ class _AppInfoCard extends StatelessWidget {
       key: SettingsPage.appInfoKey,
       density: VitDensity.compact,
       radius: VitCardRadius.large,
-      borderColor: _settingsBorder,
+      borderColor: AppColors.cardBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

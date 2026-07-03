@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/markets/data/market_repository.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/market_list_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detail_page.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/pages/watchlist_page.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/pages/trade_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
@@ -153,13 +154,32 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(PairDetailPage), findsOneWidget);
-    expect(find.text('BTC/USDT'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(PairDetailPage),
+        matching: find.text('BTC/USDT'),
+      ),
+      findsOneWidget,
+    );
 
     await pumpWatchlist(tester);
     await tester.tap(find.byKey(WatchlistPage.tradeKey('btcusdt')));
     await tester.pumpAndSettle();
 
-    expect(find.text('BTC/USDT'), findsOneWidget);
-    expect(find.text('24H'), findsOneWidget);
+    expect(find.byType(TradePage), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(TradePage),
+        matching: find.text('Giao dịch Spot'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byType(TradePage),
+        matching: find.text('KL 24h'),
+      ),
+      findsOneWidget,
+    );
   });
 }

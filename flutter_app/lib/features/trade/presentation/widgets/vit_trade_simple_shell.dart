@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 
 /// Home-like scroll shell for beginner trade experience.
 class VitTradeSimpleShell extends StatelessWidget {
@@ -25,7 +21,11 @@ class VitTradeSimpleShell extends StatelessWidget {
     this.onBack,
     this.backKey,
     this.shellRenderMode,
-    this.trailing,
+    this.headerActions = const [],
+    this.showProductTabs = true,
+    this.activeProductId,
+    this.productPair,
+    this.quickNavKey,
   });
 
   final String title;
@@ -37,48 +37,37 @@ class VitTradeSimpleShell extends StatelessWidget {
   final VoidCallback? onBack;
   final Key? backKey;
   final ShellRenderMode? shellRenderMode;
-  final Widget? trailing;
+  final List<VitHeaderActionItem> headerActions;
+  final bool showProductTabs;
+  final String? activeProductId;
+  final TradePair? productPair;
+  final Key Function(String id)? quickNavKey;
 
   @override
   Widget build(BuildContext context) {
-    final scrollEndClearance = tradeScrollBottomInset(
-      context,
-      shellRenderMode: shellRenderMode,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitTradeHubScaffold(
+      title: title,
+      subtitle: subtitle,
       semanticLabel: semanticLabel,
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: title,
-            subtitle: subtitle,
-            showBack: showBack,
-            onBack: onBack,
-            backKey: backKey,
-            trailing: trailing,
-          ),
-          child: VitInsetScrollView(
-            key: contentKey,
-            bottomInset: scrollEndClearance,
-            child: VitPageContent(
-              padding: VitContentPadding.compact,
-              density: VitDensity.compact,
-              children: [
-                ...children,
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  'Giao dịch tiền mã hoá có rủi ro. Chỉ dùng số tiền bạn chấp nhận mất.',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ),
+      contentKey: contentKey,
+      showBack: showBack,
+      onBack: onBack,
+      backKey: backKey,
+      shellRenderMode: shellRenderMode,
+      headerActions: headerActions,
+      showProductTabs: showProductTabs,
+      activeProductId: activeProductId,
+      productPair: productPair,
+      quickNavKey: quickNavKey,
+      children: [
+        ...children,
+        const SizedBox(height: AppSpacing.x2),
+        Text(
+          'Giao dịch tiền mã hoá có rủi ro. Chỉ dùng số tiền bạn chấp nhận mất.',
+          textAlign: TextAlign.center,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-      ),
+      ],
     );
   }
 }

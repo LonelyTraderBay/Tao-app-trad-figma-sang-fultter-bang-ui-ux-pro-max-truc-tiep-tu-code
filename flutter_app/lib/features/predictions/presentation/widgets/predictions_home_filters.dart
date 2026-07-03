@@ -31,89 +31,46 @@ class _FilterTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      _FilterTabMeta(
-        PredictionFilterTab.trending,
-        'Trending',
-        Icons.local_fire_department_outlined,
-        PredictionsHomePage.trendingFilterKey,
-      ),
-      _FilterTabMeta(
-        PredictionFilterTab.newEvents,
-        'New',
-        Icons.auto_awesome_rounded,
-        PredictionsHomePage.newFilterKey,
-      ),
-      _FilterTabMeta(
-        PredictionFilterTab.popular,
-        'Popular',
-        Icons.group_outlined,
-        const Key('sc027_filter_popular'),
-      ),
-      _FilterTabMeta(
-        PredictionFilterTab.liquid,
-        'Liquid',
-        Icons.bar_chart_rounded,
-        const Key('sc027_filter_liquid'),
-      ),
-      _FilterTabMeta(
-        PredictionFilterTab.ending,
-        'Ending Soon',
-        Icons.schedule_rounded,
-        const Key('sc027_filter_ending'),
-      ),
-    ];
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          for (var index = 0; index < tabs.length; index += 1) ...[
-            _FilterTabButton(
-              key: tabs[index].key,
-              meta: tabs[index],
-              active: active == tabs[index].filter,
-              onTap: () => onSelected(tabs[index].filter),
-            ),
-            if (index != tabs.length - 1) const SizedBox(width: AppSpacing.x2),
-          ],
+      child: VitTabBar(
+        variant: VitTabBarVariant.pill,
+        activeKey: active.name,
+        onChanged: (key) =>
+            onSelected(PredictionFilterTab.values.byName(key)),
+        tabs: const [
+          VitTabItem(
+            key: 'trending',
+            label: 'Trending',
+            icon: Icons.local_fire_department_outlined,
+            widgetKey: PredictionsHomePage.trendingFilterKey,
+          ),
+          VitTabItem(
+            key: 'newEvents',
+            label: 'New',
+            icon: Icons.auto_awesome_rounded,
+            widgetKey: PredictionsHomePage.newFilterKey,
+          ),
+          VitTabItem(
+            key: 'popular',
+            label: 'Popular',
+            icon: Icons.group_outlined,
+            widgetKey: Key('sc027_filter_popular'),
+          ),
+          VitTabItem(
+            key: 'liquid',
+            label: 'Liquid',
+            icon: Icons.bar_chart_rounded,
+            widgetKey: Key('sc027_filter_liquid'),
+          ),
+          VitTabItem(
+            key: 'ending',
+            label: 'Ending Soon',
+            icon: Icons.schedule_rounded,
+            widgetKey: Key('sc027_filter_ending'),
+          ),
         ],
       ),
-    );
-  }
-}
-
-final class _FilterTabMeta {
-  const _FilterTabMeta(this.filter, this.label, this.icon, this.key);
-
-  final PredictionFilterTab filter;
-  final String label;
-  final IconData icon;
-  final Key key;
-}
-
-class _FilterTabButton extends StatelessWidget {
-  const _FilterTabButton({
-    super.key,
-    required this.meta,
-    required this.active,
-    required this.onTap,
-  });
-
-  final _FilterTabMeta meta;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: meta.label,
-      selected: active,
-      onTap: onTap,
-      accentColor: _marketPrimary,
-      height: VitDensity.compact.controlHeight - AppSpacing.x2,
-      padding: AppSpacing.predictionHomeFilterPadding,
-      leading: Icon(meta.icon, size: AppSpacing.predictionHomeFilterIcon),
     );
   }
 }

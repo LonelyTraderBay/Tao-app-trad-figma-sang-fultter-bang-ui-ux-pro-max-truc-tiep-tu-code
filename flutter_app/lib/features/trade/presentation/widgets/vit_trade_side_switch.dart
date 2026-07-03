@@ -64,9 +64,6 @@ class VitTradeFuturesSideSwitch extends StatelessWidget {
   final Key? longKey;
   final Key? shortKey;
 
-  static const _futuresGreen = Color(0xFF0ECB81);
-  static const _futuresRed = Color(0xFFF6465D);
-
   @override
   Widget build(BuildContext context) {
     return VitSegmentedChoice<TradeFuturesSide>(
@@ -78,7 +75,7 @@ class VitTradeFuturesSideSwitch extends StatelessWidget {
           key: longKey,
           value: TradeFuturesSide.long,
           label: 'Long',
-          accentColor: _futuresGreen,
+          accentColor: AppColors.buy,
           leading: const Icon(Icons.trending_up_rounded),
           semanticLabel: 'Chon huong Long futures',
         ),
@@ -86,7 +83,7 @@ class VitTradeFuturesSideSwitch extends StatelessWidget {
           key: shortKey,
           value: TradeFuturesSide.short,
           label: 'Short',
-          accentColor: _futuresRed,
+          accentColor: AppColors.sell,
           leading: const Icon(Icons.trending_down_rounded),
           semanticLabel: 'Chon huong Short futures',
         ),

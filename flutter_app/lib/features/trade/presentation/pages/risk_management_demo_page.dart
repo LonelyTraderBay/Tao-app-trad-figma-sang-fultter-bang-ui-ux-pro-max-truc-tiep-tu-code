@@ -93,8 +93,10 @@ class _RiskManagementDemoPageState
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,
                         fullBleed: true,
-                        children: [
-                          const _IntroCard(),
+                        children: tradeShellWithProductTabs(
+                          context: context,
+                          children: [
+                            const _IntroCard(),
                           const VitCard(
                             variant: VitCardVariant.inner,
                             padding: AppSpacing.tradeToolRiskReviewPadding,
@@ -141,7 +143,8 @@ class _RiskManagementDemoPageState
                                 _CalculatorTab(onOpen: _openCalculatorSheet),
                             ],
                           ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

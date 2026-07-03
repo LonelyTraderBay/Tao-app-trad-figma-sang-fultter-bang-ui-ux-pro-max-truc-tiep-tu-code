@@ -131,8 +131,11 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                 child: VitPageContent(
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
-                  children: [
-                    _CapitalSection(
+                  children: tradeShellWithProductTabs(
+                    context: context,
+                    activeProductId: 'copy',
+                    children: [
+                      _CapitalSection(
                       controller: _capitalController,
                       allocationPercent: allocationPercent,
                       availableCapital: snapshot.availableCapital,
@@ -163,7 +166,8 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                       contractId: 'SC-072',
                       density: VitDensity.compact,
                     ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

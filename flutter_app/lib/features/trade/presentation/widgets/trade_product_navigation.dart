@@ -8,6 +8,17 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_product_tabs.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_trade_product_hub.dart';
 
+/// Default instrument context for product tabs on hub/detail pages.
+const TradePair kTradeShellDefaultPair = TradePair(
+  id: 'btcusdt',
+  symbol: 'BTC/USDT',
+  baseAsset: 'BTC',
+  quoteAsset: 'USDT',
+  price: 67543.21,
+  changePct: 2.5,
+  logoColorHex: 0xFFF7931A,
+);
+
 /// Product tab + overflow navigation shared by Spot, Futures, and Margin L1.
 final class TradeProductNavigation {
   const TradeProductNavigation({required this.tabs, required this.overflow});
@@ -62,6 +73,8 @@ List<VitTradeHubItem> _tradeHubItems(
 }) {
   Key navKey(String id) => quickNavKey?.call(id) ?? Key('trade_nav_$id');
 
+  // L1 trade modes only. Overflow tiles (Bot, Copy, Wallet, …) live on Home
+  // quick actions and Wallet bottom nav — no duplicate "Thêm" sheet entries.
   return [
     VitTradeHubItem(
       id: 'spot',
@@ -98,105 +111,6 @@ List<VitTradeHubItem> _tradeHubItems(
       accentColor: AppModuleAccents.trade,
       tileKey: navKey('margin'),
       onTap: () => context.go(AppRoutePaths.tradeMargin),
-    ),
-    VitTradeHubItem(
-      id: 'bots',
-      label: 'Bot',
-      badge: 'Auto',
-      icon: Icons.smart_toy_rounded,
-      accentColor: AppModuleAccents.trade,
-      tileKey: navKey('bots'),
-      onTap: () => context.go(AppRoutePaths.tradeBots),
-    ),
-    VitTradeHubItem(
-      id: 'copy',
-      label: 'Copy',
-      badge: 'Social',
-      icon: Icons.content_copy_rounded,
-      accentColor: AppModuleAccents.trade,
-      tileKey: navKey('copy'),
-      onTap: () => context.go(AppRoutePaths.tradeCopyTrading),
-    ),
-    VitTradeHubItem(
-      id: 'dca',
-      label: 'DCA',
-      badge: 'Plan',
-      icon: Icons.repeat_rounded,
-      accentColor: AppModuleAccents.dca,
-      tileKey: navKey('dca'),
-      onTap: () => context.go(AppRoutePaths.dca),
-    ),
-    VitTradeHubItem(
-      id: 'wallet',
-      label: 'Wallet',
-      badge: 'Funds',
-      icon: Icons.account_balance_wallet_rounded,
-      accentColor: AppModuleAccents.wallet,
-      tileKey: navKey('wallet'),
-      onTap: () => context.go(AppRoutePaths.wallet),
-    ),
-    VitTradeHubItem(
-      id: 'p2p',
-      label: 'P2P',
-      badge: 'Escrow',
-      icon: Icons.groups_rounded,
-      accentColor: AppModuleAccents.p2p,
-      tileKey: navKey('p2p'),
-      onTap: () => context.go(AppRoutePaths.p2p),
-    ),
-    VitTradeHubItem(
-      id: 'earn',
-      label: 'Earn',
-      badge: 'Yield',
-      icon: Icons.account_balance_rounded,
-      accentColor: AppModuleAccents.earn,
-      tileKey: navKey('earn'),
-      onTap: () => context.go(AppRoutePaths.earnStaking),
-    ),
-    VitTradeHubItem(
-      id: 'launchpad',
-      label: 'Launchpad',
-      badge: 'Token',
-      icon: Icons.rocket_launch_rounded,
-      accentColor: AppModuleAccents.launchpad,
-      tileKey: navKey('launchpad'),
-      onTap: () => context.go(AppRoutePaths.launchpad),
-    ),
-    VitTradeHubItem(
-      id: 'predictions',
-      label: 'Dự đoán',
-      badge: 'Market',
-      icon: Icons.adjust_rounded,
-      accentColor: AppModuleAccents.predictions,
-      tileKey: navKey('predictions'),
-      onTap: () => context.go(AppRoutePaths.marketsPredictions),
-    ),
-    VitTradeHubItem(
-      id: 'arena',
-      label: 'Arena',
-      badge: 'Points',
-      icon: Icons.sports_esports_outlined,
-      accentColor: AppModuleAccents.arena,
-      tileKey: navKey('arena'),
-      onTap: () => context.go(AppRoutePaths.arena),
-    ),
-    VitTradeHubItem(
-      id: 'rewards',
-      label: 'Rewards',
-      badge: 'Growth',
-      icon: Icons.card_giftcard_rounded,
-      accentColor: AppModuleAccents.rewards,
-      tileKey: navKey('rewards'),
-      onTap: () => context.go(AppRoutePaths.rewards),
-    ),
-    VitTradeHubItem(
-      id: 'support',
-      label: 'Hỗ trợ',
-      badge: 'Help',
-      icon: Icons.support_agent_rounded,
-      accentColor: AppModuleAccents.support,
-      tileKey: navKey('support'),
-      onTap: () => context.go(AppRoutePaths.support),
     ),
   ];
 }

@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
+import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_product_tabs.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
@@ -74,6 +76,7 @@ void main() {
         home: VitTradeDetailScaffold(
           title: 'Compliance detail',
           showBack: false,
+          showProductTabs: false,
           children: const [Text('Body')],
         ),
       ),
@@ -118,5 +121,31 @@ void main() {
     expect(find.text('Last review'), findsOneWidget);
     expect(find.byType(VitInfoRow), findsNWidgets(2));
     expect(find.byType(Divider), findsOneWidget);
+  });
+
+  testWidgets('VitTradeHubScaffold renders product tabs as first scroll child',
+      (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: VitTradeHubScaffold(
+          title: 'Orders',
+          showBack: false,
+          children: const [Text('Order body')],
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byType(VitTradeProductTabs), findsOneWidget);
+    expect(find.text('Spot'), findsOneWidget);
+    expect(find.text('Order body'), findsOneWidget);
+
+    final pageContent = tester.widget<VitPageContent>(
+      find.descendant(
+        of: find.byType(VitTradeHubScaffold),
+        matching: find.byType(VitPageContent),
+      ),
+    );
+    expect(pageContent.children.first, isA<VitTradeProductTabs>());
   });
 }

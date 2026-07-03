@@ -18,13 +18,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-part 'wallet_health_score_page_part_01.dart';
-part 'wallet_health_score_page_part_02.dart';
-part 'wallet_health_score_page_part_03.dart';
+part '../widgets/wallet_health_score_page_shell.dart';
+part '../widgets/wallet_health_score_cards.dart';
+part '../widgets/wallet_health_score_charts.dart';
 
 const _healthBackground = AppColors.bg;
 const _healthPanel = AppColors.surface;
-const _healthBorder = AppColors.overlayStroke;
 const _healthPrimary = AppColors.primary;
 const _healthGreen = AppColors.buy;
 const _healthAmber = AppColors.caution;

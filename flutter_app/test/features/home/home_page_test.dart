@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/pages/pair_detai
 import 'package:vit_trade_flutter/features/notifications/presentation/pages/notifications_page.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/pages/withdraw_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_sparkline.dart';
 
 void main() {
   test('SC-007 Home keeps the shared component foundation contract', () {
@@ -41,6 +42,7 @@ void main() {
     expect(source, contains('VitAnnouncementBanner'));
     expect(source, contains('VitMarketTickerStrip'));
     expect(source, contains('VitMetricDeltaPill'));
+    expect(source, contains('VitSparkline'));
     expect(source, contains('VitNextActionCard'));
     expect(source, contains('VitDiscoveryActionCard'));
     expect(source, contains('VitSheetPanel'));
@@ -114,7 +116,24 @@ void main() {
     expect(find.text('Hoàn tất rút USDT'), findsOneWidget);
     expect(find.byKey(HomePage.recentProductsKey), findsOneWidget);
     expect(find.byKey(HomePage.recentProductKey('spot-btc')), findsOneWidget);
-    expect(find.text('Tổng tài sản (USDT)'), findsOneWidget);
+    expect(find.byKey(HomePage.portfolioCardKey), findsOneWidget);
+    expect(find.text('Tổng tài sản ước tính'), findsOneWidget);
+    expect(find.text('PnL hôm nay'), findsOneWidget);
+    expect(find.text('Biến động 7 ngày'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(HomePage.portfolioCardKey),
+        matching: find.byType(VitSparkline),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(HomePage.portfolioCardKey),
+        matching: find.text('Earn'),
+      ),
+      findsOneWidget,
+    );
     expect(find.text('Sản phẩm'), findsOneWidget);
     expect(find.text('Staking'), findsOneWidget);
     expect(find.text('Hỗ trợ'), findsNothing);
@@ -246,6 +265,32 @@ void main() {
       lessThan(navTop),
     );
     expect(tester.getBottomLeft(firstProduct).dy, lessThan(navTop - 8));
+  });
+
+  testWidgets('SC-007 portfolio card toggles USD and BTC display', (
+    tester,
+  ) async {
+    await pumpHome(tester);
+
+    expect(find.text('≈ 0.57133463 BTC'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Chạm để đổi hiển thị USD/BTC'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('0.57133463 BTC'), findsOneWidget);
+    expect(find.text('\$54,276.79'), findsOneWidget);
+  });
+
+  testWidgets('SC-007 portfolio card shows onboarding empty state', (
+    tester,
+  ) async {
+    await pumpHome(tester, snapshot: _emptyHomeSnapshot());
+
+    expect(find.text('Chưa có tài sản'), findsOneWidget);
+    expect(find.byKey(HomePage.portfolioDepositKey), findsOneWidget);
+    expect(find.text('Nạp ngay'), findsOneWidget);
+    expect(find.text('Xem thị trường'), findsOneWidget);
+    expect(find.text('PnL hôm nay'), findsNothing);
   });
 
   testWidgets('SC-007 supports balance toggle and market tabs', (tester) async {
@@ -406,11 +451,37 @@ HomeSnapshot _homeSnapshotWithAnnouncements(
   final snapshot = HomeMockData.snapshot;
   return HomeSnapshot(
     totalBalance: snapshot.totalBalance,
+    totalBtc: snapshot.totalBtc,
+    spotBalance: snapshot.spotBalance,
+    earnBalance: snapshot.earnBalance,
+    fundingBalance: snapshot.fundingBalance,
     dailyPnl: snapshot.dailyPnl,
     dailyPct: snapshot.dailyPct,
+    portfolioTrend7d: snapshot.portfolioTrend7d,
     notifications: snapshot.notifications,
     homeBadge: snapshot.homeBadge,
     announcements: announcements,
+    quickActions: snapshot.quickActions,
+    nextAction: snapshot.nextAction,
+    recentProducts: snapshot.recentProducts,
+    pairs: snapshot.pairs,
+  );
+}
+
+HomeSnapshot _emptyHomeSnapshot() {
+  final snapshot = HomeMockData.snapshot;
+  return HomeSnapshot(
+    totalBalance: 0,
+    totalBtc: 0,
+    spotBalance: 0,
+    earnBalance: 0,
+    fundingBalance: 0,
+    dailyPnl: 0,
+    dailyPct: 0,
+    portfolioTrend7d: const [0, 0, 0, 0, 0, 0, 0],
+    notifications: snapshot.notifications,
+    homeBadge: snapshot.homeBadge,
+    announcements: snapshot.announcements,
     quickActions: snapshot.quickActions,
     nextAction: snapshot.nextAction,
     recentProducts: snapshot.recentProducts,

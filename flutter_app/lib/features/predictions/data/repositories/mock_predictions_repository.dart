@@ -11,12 +11,11 @@ part '../fixtures/mock_predictions_repository_fixtures_part_03.dart';
 part '../fixtures/mock_predictions_repository_fixtures_part_04.dart';
 part '../fixtures/mock_predictions_repository_fixtures_part_05.dart';
 
-abstract class _MockPredictionsRepositoryBase implements PredictionsRepository {
-  const _MockPredictionsRepositoryBase();
-}
+mixin _MockPredictionsRepositoryBase implements PredictionsRepository {}
 
-final class MockPredictionsRepository extends _MockPredictionsRepositoryBase
+final class MockPredictionsRepository
     with
+        _MockPredictionsRepositoryBase,
         _MockPredictionsRepositoryMethodsPart01,
         _MockPredictionsRepositoryMethodsPart02 {
   const MockPredictionsRepository();

@@ -225,25 +225,27 @@ class _TopTabs extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              _TopTab(
+          VitTabBar(
+            variant: VitTabBarVariant.underline,
+            activeKey: activeTab.name,
+            onChanged: (key) => onChanged(_MultiAssetTab.values.byName(key)),
+            tabs: [
+              VitTabItem(
+                key: _MultiAssetTab.setup.name,
                 label: 'Cai dat',
-                tab: _MultiAssetTab.setup,
-                active: activeTab == _MultiAssetTab.setup,
-                onChanged: onChanged,
+                widgetKey: DCAMultiAssetPage.tabKey(_MultiAssetTab.setup.name),
               ),
-              _TopTab(
+              VitTabItem(
+                key: _MultiAssetTab.assets.name,
                 label: 'Tai san',
-                tab: _MultiAssetTab.assets,
-                active: activeTab == _MultiAssetTab.assets,
-                onChanged: onChanged,
+                widgetKey: DCAMultiAssetPage.tabKey(_MultiAssetTab.assets.name),
               ),
-              _TopTab(
+              VitTabItem(
+                key: _MultiAssetTab.performance.name,
                 label: 'Hieu suat',
-                tab: _MultiAssetTab.performance,
-                active: activeTab == _MultiAssetTab.performance,
-                onChanged: onChanged,
+                widgetKey: DCAMultiAssetPage.tabKey(
+                  _MultiAssetTab.performance.name,
+                ),
               ),
             ],
           ),
@@ -253,61 +255,6 @@ class _TopTabs extends StatelessWidget {
             color: AppColors.border,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TopTab extends StatelessWidget {
-  const _TopTab({
-    required this.label,
-    required this.tab,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final _MultiAssetTab tab;
-  final bool active;
-  final ValueChanged<_MultiAssetTab> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        key: DCAMultiAssetPage.tabKey(tab.name),
-        onTap: () => onChanged(tab),
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        borderColor: AppColors.transparent,
-        child: Padding(
-          padding: AppSpacing.dcaTopPaddingX4,
-          child: Column(
-            children: [
-              Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? AppColors.primary : AppColors.text3,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x4),
-              SizedBox(
-                height: AppSpacing.dcaMultiTabIndicatorHeight,
-                width: active ? AppSpacing.dcaMultiTabIndicatorWidth : 0,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: active ? AppColors.primary : AppColors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.xsRadius,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

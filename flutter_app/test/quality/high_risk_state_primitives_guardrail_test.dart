@@ -7,7 +7,7 @@ void main() {
     const targets = {
       'lib/features/trade/presentation/pages/trade_page_part_01.dart',
       'lib/features/wallet/presentation/pages/withdraw_page.dart',
-      'lib/features/p2p/presentation/pages/p2p_home_page_part_01.dart',
+      'lib/features/p2p/presentation/widgets/p2p_home_page_part_01.dart',
       'lib/features/earn/presentation/pages/staking_earn_page.dart',
       'lib/features/launchpad/presentation/pages/launchpad_bridge_order_page.dart',
       'lib/features/predictions/presentation/pages/predictions_home_page.dart',

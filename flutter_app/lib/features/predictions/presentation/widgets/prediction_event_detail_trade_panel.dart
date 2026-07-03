@@ -42,14 +42,21 @@ class _TradeSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _SegmentedToggle(
-                leftLabel: 'Buy',
-                rightLabel: 'Sell',
-                leftActive: isBuy,
-                leftColor: AppColors.buy,
-                rightColor: AppColors.sell,
-                onLeft: () => onSideChanged(true),
-                onRight: () => onSideChanged(false),
+              VitSegmentedChoice<bool>(
+                selected: isBuy,
+                onChanged: onSideChanged,
+                options: const [
+                  VitSegmentedChoiceOption(
+                    value: true,
+                    label: 'Buy',
+                    accentColor: AppColors.buy,
+                  ),
+                  VitSegmentedChoiceOption(
+                    value: false,
+                    label: 'Sell',
+                    accentColor: AppColors.sell,
+                  ),
+                ],
               ),
               if (event.outcomes.length > 2) ...[
                 const SizedBox(height: AppSpacing.x3),
@@ -66,11 +73,13 @@ class _TradeSection extends StatelessWidget {
                         Padding(
                           padding: AppSpacing
                               .predictionDetailTradeOutcomeChipPadding,
-                          child: _SmallToggleChip(
+                          child: VitChoicePill(
                             label: option.label,
-                            color: option.color,
-                            active: option.label == selectedOutcome,
+                            selected: option.label == selectedOutcome,
                             onTap: () => onOutcomeChanged(option.label),
+                            accentColor: option.color,
+                            padding:
+                                AppSpacing.predictionDetailToggleChipPadding,
                           ),
                         ),
                     ],
@@ -83,14 +92,21 @@ class _TradeSection extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
               const SizedBox(height: AppSpacing.x1),
-              _SegmentedToggle(
-                leftLabel: 'Market',
-                rightLabel: 'Limit',
-                leftActive: isMarket,
-                leftColor: _predictionPrimary,
-                rightColor: _predictionPrimary,
-                onLeft: () => onOrderTypeChanged(true),
-                onRight: () => onOrderTypeChanged(false),
+              VitSegmentedChoice<bool>(
+                selected: isMarket,
+                onChanged: onOrderTypeChanged,
+                options: const [
+                  VitSegmentedChoiceOption(
+                    value: true,
+                    label: 'Market',
+                    accentColor: _predictionPrimary,
+                  ),
+                  VitSegmentedChoiceOption(
+                    value: false,
+                    label: 'Limit',
+                    accentColor: _predictionPrimary,
+                  ),
+                ],
               ),
               const SizedBox(height: AppSpacing.x1),
               Text(
@@ -107,21 +123,18 @@ class _TradeSection extends StatelessWidget {
               const SizedBox(height: AppSpacing.x1),
               _TradeAmountInput(amount: amount, onChanged: onAmountChanged),
               const SizedBox(height: AppSpacing.x2),
-              Row(
-                children: [
-                  for (final preset in const ['10', '25', '50', '100']) ...[
-                    Expanded(
-                      child: _AmountChip(
-                        amount: preset,
-                        active: amount == preset,
-                        onTap: () => onAmountChanged(preset),
-                      ),
-                    ),
-                    if (preset != '100')
-                      const SizedBox(
-                        width: AppSpacing.predictionDetailTradePresetGap,
-                      ),
-                  ],
+              VitPresetChipRow<String>(
+                selectedValue: amount,
+                onTap: onAmountChanged,
+                accentColor: _predictionPrimary,
+                height: VitDensity.compact.controlHeight,
+                padding: AppSpacing.zeroInsets,
+                gap: AppSpacing.predictionDetailTradePresetGap,
+                items: const [
+                  VitPresetChipItem(value: '10', label: r'$10'),
+                  VitPresetChipItem(value: '25', label: r'$25'),
+                  VitPresetChipItem(value: '50', label: r'$50'),
+                  VitPresetChipItem(value: '100', label: r'$100'),
                 ],
               ),
               const SizedBox(height: AppSpacing.x3),

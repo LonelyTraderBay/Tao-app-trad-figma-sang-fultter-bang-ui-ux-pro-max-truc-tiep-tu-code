@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -20,14 +19,6 @@ import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dar
 
 part '../widgets/settings_page_sections.dart';
 part '../widgets/settings_page_common.dart';
-
-const _settingsBackground = AppColors.bg;
-const _settingsSelected = AppColors.surface2;
-const _settingsBorder = AppColors.cardBorder;
-const _settingsDivider = AppColors.divider;
-const _settingsPrimary = AppColors.primary;
-const _settingsGreen = AppColors.buy;
-const _settingsMuted = AppColors.text3;
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key, this.shellRenderMode});
@@ -70,7 +61,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-160 SettingsPage',
       child: Material(
-        color: _settingsBackground,
+        color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'C\u00E0i \u0111\u1EB7t',

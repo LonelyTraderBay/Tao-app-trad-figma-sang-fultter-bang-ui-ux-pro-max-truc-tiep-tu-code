@@ -73,8 +73,10 @@ class _LiveMarketDataAnalyticsPageState
                     padding: VitContentPadding.none,
                     customGap: AppSpacing.x4 + AppSpacing.x1,
                     fullBleed: true,
-                    children: [
-                      const VitHighRiskStatePanel(
+                    children: tradeShellWithProductTabs(
+                      context: context,
+                      children: [
+                        const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
                         title: 'Review real-time market risk',
                         message:
@@ -99,7 +101,8 @@ class _LiveMarketDataAnalyticsPageState
                         tertiary:
                             'Disconnected or delayed data remains separated from order placement.',
                       ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

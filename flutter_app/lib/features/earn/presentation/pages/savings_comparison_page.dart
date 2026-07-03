@@ -15,10 +15,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 
-part '../widgets/savings_comparison_table_widgets.dart';
-part '../widgets/savings_comparison_metric_widgets.dart';
-part '../widgets/savings_comparison_picker_widgets.dart';
+part '../widgets/earn_comparison_summary.dart';
+part '../widgets/earn_comparison_table.dart';
+part '../widgets/earn_comparison_chart.dart';
 
 class SavingsComparisonPage extends ConsumerStatefulWidget {
   const SavingsComparisonPage({super.key, this.shellRenderMode});
@@ -132,7 +133,7 @@ class _SavingsComparisonPageState extends ConsumerState<SavingsComparisonPage> {
                             selectedIds.length,
                           ),
                         ),
-                      _Disclaimer(text: snapshot.disclaimer),
+                      _ComparisonDisclaimer(text: snapshot.disclaimer),
                     ],
                   ),
                 ),

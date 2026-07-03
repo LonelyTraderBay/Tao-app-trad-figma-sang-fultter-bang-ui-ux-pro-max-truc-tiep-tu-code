@@ -7,17 +7,11 @@ import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_actions_card.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_escalation_card.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_evidence_card.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_status_banner.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_support_chat.dart';
-import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_timeline_card.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_widgets.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 const double _p2pDisputeDetailVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -117,36 +111,20 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        VitCard(
-                          variant: VitCardVariant.ghost,
-                          padding: EdgeInsets.zero,
-                          child: P2PDisputeStatusBanner(
-                            dispute: snapshot.dispute,
-                          ),
+                        P2PDisputeStatusBanner(dispute: snapshot.dispute),
+                        const SizedBox(height: AppSpacing.x3),
+                        P2PDisputeEscalationCard(
+                          escalateKey: P2PDisputeDetailPage.escalateKey,
+                          levels: snapshot.levels,
+                          currentLevel: level,
+                          currentLevelData: currentLevel,
+                          nextLevelData: nextLevel,
+                          onEscalate: nextLevel == null
+                              ? null
+                              : () => _escalate(nextLevel),
                         ),
                         const SizedBox(height: AppSpacing.x3),
-                        VitCard(
-                          variant: VitCardVariant.ghost,
-                          padding: EdgeInsets.zero,
-                          child: P2PDisputeEscalationCard(
-                            escalateKey: P2PDisputeDetailPage.escalateKey,
-                            levels: snapshot.levels,
-                            currentLevel: level,
-                            currentLevelData: currentLevel,
-                            nextLevelData: nextLevel,
-                            onEscalate: nextLevel == null
-                                ? null
-                                : () => _escalate(nextLevel),
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x3),
-                        VitCard(
-                          variant: VitCardVariant.ghost,
-                          padding: EdgeInsets.zero,
-                          child: P2PDisputeReasonCard(
-                            dispute: snapshot.dispute,
-                          ),
-                        ),
+                        P2PDisputeReasonCard(dispute: snapshot.dispute),
                         const SizedBox(height: AppSpacing.x3),
                         P2PDisputeEvidenceCard(
                           addEvidenceKey: P2PDisputeDetailPage.addEvidenceKey,

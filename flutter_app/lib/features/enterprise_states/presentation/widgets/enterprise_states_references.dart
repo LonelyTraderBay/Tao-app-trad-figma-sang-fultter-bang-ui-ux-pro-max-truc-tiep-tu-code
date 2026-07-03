@@ -23,11 +23,9 @@ class _AppliedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.enterpriseStatesContentPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
           Text(
             '6 màn dữ liệu × 4–5 states. Chọn page và state để preview.',
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
@@ -48,7 +46,6 @@ class _AppliedSection extends StatelessWidget {
             actionLabel: 'Preview only',
           ),
         ],
-      ),
     );
   }
 }
@@ -60,11 +57,9 @@ class _SecuritySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.enterpriseStatesContentPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
           Text(
             '4 security overlay chuẩn enterprise. Các CTA đi tới route đã migrate hoặc auth shell.',
             style: AppTextStyles.body.copyWith(color: AppColors.text2),
@@ -95,7 +90,6 @@ class _SecuritySection extends StatelessWidget {
             onTap: () => context.go(snapshot.securityRoute),
           ),
         ],
-      ),
     );
   }
 }

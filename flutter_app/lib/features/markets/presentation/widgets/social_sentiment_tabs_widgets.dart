@@ -11,79 +11,26 @@ class _SentimentTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: _sentimentTabsHeight,
-        child: Row(
-          children: [
-            _UnderlinedTab(
-              key: SocialSentimentPage.overviewTabKey,
+        height: AppSpacing.marketDepthTabsHeight,
+        child: VitTabBar(
+          activeKey: activeTab,
+          variant: VitTabBarVariant.underline,
+          onChanged: onChanged,
+          tabs: const [
+            VitTabItem(
+              key: 'overview',
               label: 'Tổng quan',
-              value: 'overview',
-              active: activeTab == 'overview',
-              onChanged: onChanged,
+              widgetKey: SocialSentimentPage.overviewTabKey,
             ),
-            _UnderlinedTab(
-              key: SocialSentimentPage.tokenTabKey,
+            VitTabItem(
+              key: 'token',
               label: 'Theo token',
-              value: 'token',
-              active: activeTab == 'token',
-              onChanged: onChanged,
+              widgetKey: SocialSentimentPage.tokenTabKey,
             ),
-            _UnderlinedTab(
-              key: SocialSentimentPage.trendsTabKey,
+            VitTabItem(
+              key: 'trends',
               label: 'Xu hướng',
-              value: 'trends',
-              active: activeTab == 'trends',
-              onChanged: onChanged,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _UnderlinedTab extends StatelessWidget {
-  const _UnderlinedTab({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final String value;
-  final bool active;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        onTap: () => onChanged(value),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-              child: Center(
-                child: Text(
-                  label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketPrimary : AppColors.text3,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: _sentimentTabIndicatorHeight,
-              child: FractionallySizedBox(
-                widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketPrimary),
-              ),
+              widgetKey: SocialSentimentPage.trendsTabKey,
             ),
           ],
         ),

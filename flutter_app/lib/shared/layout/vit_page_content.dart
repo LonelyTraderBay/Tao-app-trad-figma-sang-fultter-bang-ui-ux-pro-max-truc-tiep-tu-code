@@ -2,13 +2,31 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 
 enum VitContentPadding { compact, defaultPadding, relaxed, none }
 
 enum VitContentGap { tight, defaultGap, relaxed, loose }
+
+double _resolveContentGap({
+  required VitContentGap gap,
+  VitDensity? density,
+  double? customGap,
+}) {
+  if (customGap != null) return customGap;
+  if (density != null) return density.pageContentGap;
+  switch (gap) {
+    case VitContentGap.tight:
+      return AppSpacing.pageContentGapTight;
+    case VitContentGap.defaultGap:
+      return AppSpacing.pageContentGapDefault;
+    case VitContentGap.relaxed:
+      return AppSpacing.pageContentGapRelaxed;
+    case VitContentGap.loose:
+      return AppSpacing.pageContentGapLoose;
+  }
+}
 
 class VitPageContent extends StatelessWidget {
   const VitPageContent({
@@ -44,21 +62,6 @@ class VitPageContent extends StatelessWidget {
     }
   }
 
-  double get _gap {
-    if (customGap != null) return customGap!;
-    if (density != null) return density!.pageContentGap;
-    switch (gap) {
-      case VitContentGap.tight:
-        return AppSpacing.pageContentGapTight;
-      case VitContentGap.defaultGap:
-        return AppSpacing.pageContentGapDefault;
-      case VitContentGap.relaxed:
-        return AppSpacing.pageContentGapRelaxed;
-      case VitContentGap.loose:
-        return AppSpacing.pageContentGapLoose;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final content = Padding(
@@ -69,7 +72,10 @@ class VitPageContent extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _withGaps(children, _gap),
+        children: _withGaps(
+          children,
+          _resolveContentGap(gap: gap, density: density, customGap: customGap),
+        ),
       ),
     );
 
@@ -96,21 +102,6 @@ class VitPageSection extends StatelessWidget {
   final VitDensity? density;
   final double? customGap;
 
-  double get _gap {
-    if (customGap != null) return customGap!;
-    if (density != null) return density!.pageContentGap;
-    switch (gap) {
-      case VitContentGap.tight:
-        return AppSpacing.pageContentGapTight;
-      case VitContentGap.defaultGap:
-        return AppSpacing.pageContentGapDefault;
-      case VitContentGap.relaxed:
-        return AppSpacing.pageContentGapRelaxed;
-      case VitContentGap.loose:
-        return AppSpacing.pageContentGapLoose;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -121,39 +112,18 @@ class VitPageSection extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(
               bottom: AppSpacing.pageSectionLabelBottomGap,
             ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                    end: AppSpacing.pageSectionLabelGap,
-                  ),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints.tightFor(
-                      width: AppSpacing.pageSectionAccentWidth,
-                      height: AppSpacing.pageSectionAccentHeight,
-                    ),
-                    child: DecoratedBox(
-                      decoration: ShapeDecoration(
-                        color: accentColor,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: AppRadii.hairlineRadius,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Text(
-                  label!,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ],
+            child: VitSectionHeader(
+              title: label!,
+              variant: VitSectionHeaderVariant.accentBar,
+              accentColor: accentColor,
+              density: VitDensity.compact,
             ),
           ),
         ],
-        ..._withGaps(children, _gap),
+        ..._withGaps(
+          children,
+          _resolveContentGap(gap: gap, density: density, customGap: customGap),
+        ),
       ],
     );
   }

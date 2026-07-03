@@ -88,8 +88,11 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
               child: VitPageContent(
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
-                children: [
-                  _SuccessHero(receipt: receipt),
+                children: tradeShellWithProductTabs(
+                  context: context,
+                  showProductTabs: false,
+                  children: [
+                    _SuccessHero(receipt: receipt),
                   VitTradeSection(
                     title: 'Xác nhận thực thi',
                     child: const VitCard(
@@ -128,7 +131,8 @@ class _OrderReceiptPageState extends ConsumerState<OrderReceiptPage> {
                     tertiary:
                         'Continue-trading CTA remains separated from receipt verification.',
                   ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

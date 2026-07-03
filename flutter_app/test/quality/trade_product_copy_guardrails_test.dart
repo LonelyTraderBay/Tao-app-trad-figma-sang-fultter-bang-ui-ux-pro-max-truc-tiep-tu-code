@@ -56,7 +56,6 @@ void main() {
             'lib/features/trade/presentation/pages/futures_page.dart',
             'lib/features/trade/presentation/pages/futures_page_part_01.dart',
             'lib/features/trade/presentation/pages/futures_page_part_02.dart',
-            'lib/features/trade/presentation/pages/futures_page_part_03.dart',
           ],
           roles: {
             'risk': [RegExp(r'\brisk\b|rui ro', caseSensitive: false)],

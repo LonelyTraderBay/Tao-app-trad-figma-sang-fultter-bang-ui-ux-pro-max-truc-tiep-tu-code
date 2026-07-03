@@ -8,71 +8,39 @@ class _DetailTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (_DetailTab.rules, 'Rules', PredictionEventDetailPage.rulesTabKey),
-      (
-        _DetailTab.comments,
-        'Comments',
-        PredictionEventDetailPage.commentsTabKey,
-      ),
-      (
-        _DetailTab.holders,
-        'Top Holders',
-        PredictionEventDetailPage.holdersTabKey,
-      ),
-      (
-        _DetailTab.activity,
-        'Activity',
-        PredictionEventDetailPage.activityTabKey,
-      ),
-    ];
     return Material(
       color: AppColors.surface2,
       borderRadius: AppRadii.cardRadius,
       child: Padding(
         padding: AppSpacing.predictionDetailTabsPadding,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              for (var index = 0; index < tabs.length; index += 1) ...[
-                if (index > 0)
-                  const SizedBox(width: AppSpacing.predictionDetailTabsGap),
-                _DetailTabButton(
-                  tab: tabs[index],
-                  active: activeTab == tabs[index].$1,
-                  onChanged: onChanged,
-                ),
-              ],
-            ],
-          ),
+        child: VitTabBar(
+          variant: VitTabBarVariant.segment,
+          activeKey: activeTab.name,
+          onChanged: (key) => onChanged(_DetailTab.values.byName(key)),
+          tabs: const [
+            VitTabItem(
+              key: 'rules',
+              label: 'Rules',
+              widgetKey: PredictionEventDetailPage.rulesTabKey,
+            ),
+            VitTabItem(
+              key: 'comments',
+              label: 'Comments',
+              widgetKey: PredictionEventDetailPage.commentsTabKey,
+            ),
+            VitTabItem(
+              key: 'holders',
+              label: 'Top Holders',
+              widgetKey: PredictionEventDetailPage.holdersTabKey,
+            ),
+            VitTabItem(
+              key: 'activity',
+              label: 'Activity',
+              widgetKey: PredictionEventDetailPage.activityTabKey,
+            ),
+          ],
         ),
       ),
-    );
-  }
-}
-
-class _DetailTabButton extends StatelessWidget {
-  const _DetailTabButton({
-    required this.tab,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final (_DetailTab, String, Key) tab;
-  final bool active;
-  final ValueChanged<_DetailTab> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: tab.$3,
-      label: tab.$2,
-      selected: active,
-      onTap: () => onChanged(tab.$1),
-      tone: VitChoicePillTone.neutral,
-      height: VitDensity.compact.controlHeight,
-      padding: AppSpacing.predictionDetailTabPadding,
     );
   }
 }

@@ -52,49 +52,76 @@ class _AdminHomeState extends ConsumerState<AdminHome> {
         AppSpacing.x6 +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
+    return AdminDashboardPageShell(
       semanticLabel: 'SC-180 AdminHome',
+      scrollKey: AdminHome.contentKey,
+      scrollBottom: scrollBottom,
+      header: VitHeader(
+        title: 'Admin Dashboard',
+        subtitle: 'DCA Analytics & Monitoring',
+        actions: [
+          VitHeaderActionItem(
+            key: AdminHome.settingsKey,
+            type: VitHeaderActionType.settings,
+            onPressed: () => context.go(AppRoutePaths.adminSettings),
+          ),
+        ],
+      ),
+      child: VitPageContent(
+        customGap: AppSpacing.x5,
+        children: [
+          AdminDashboardStateContent(
+            status: controller.state.status,
+            title: 'Admin dashboard',
+            message: controller.state.message,
+            children: [
+              _MetricGrid(metrics: snapshot.quickStats),
+              _RealTimeMetricsSection(
+                snapshot: snapshot,
+                isLive: _isLive,
+                onToggleLive: () => setState(() => _isLive = !_isLive),
+              ),
+              _DashboardsSection(dashboards: snapshot.dashboards),
+              _FooterCard(snapshot: snapshot),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AdminDashboardPageShell extends StatelessWidget {
+  const AdminDashboardPageShell({
+    super.key,
+    required this.semanticLabel,
+    required this.scrollKey,
+    required this.scrollBottom,
+    required this.header,
+    required this.child,
+  });
+
+  final String semanticLabel;
+  final Key scrollKey;
+  final double scrollBottom;
+  final VitHeader header;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitPageLayout(
+      semanticLabel: semanticLabel,
       child: VitAutoHideHeaderScaffold(
-        header: VitHeader(
-          title: 'Admin Dashboard',
-          subtitle: 'DCA Analytics & Monitoring',
-          actions: [
-            VitHeaderActionItem(
-              key: AdminHome.settingsKey,
-              type: VitHeaderActionType.settings,
-              onPressed: () => context.go(AppRoutePaths.adminSettings),
-            ),
-          ],
-        ),
+        header: header,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               child: SingleChildScrollView(
-                key: AdminHome.contentKey,
+                key: scrollKey,
                 physics: const ClampingScrollPhysics(),
                 padding: AppSpacing.adminScrollPadding(scrollBottom),
-                child: VitPageContent(
-                  customGap: AppSpacing.x5,
-                  children: [
-                    AdminDashboardStateContent(
-                      status: controller.state.status,
-                      title: 'Admin dashboard',
-                      message: controller.state.message,
-                      children: [
-                        _MetricGrid(metrics: snapshot.quickStats),
-                        _RealTimeMetricsSection(
-                          snapshot: snapshot,
-                          isLive: _isLive,
-                          onToggleLive: () =>
-                              setState(() => _isLive = !_isLive),
-                        ),
-                        _DashboardsSection(dashboards: snapshot.dashboards),
-                        _FooterCard(snapshot: snapshot),
-                      ],
-                    ),
-                  ],
-                ),
+                child: child,
               ),
             ),
           ],

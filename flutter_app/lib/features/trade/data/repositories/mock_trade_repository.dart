@@ -25,12 +25,11 @@ part '../fixtures/mock_trade_repository_fixtures_part_13.dart';
 part '../fixtures/mock_trade_repository_fixtures_part_14.dart';
 part '../fixtures/mock_trade_repository_fixtures_part_15.dart';
 
-abstract class _MockTradeRepositoryBase implements TradeRepository {
-  const _MockTradeRepositoryBase();
-}
+mixin _MockTradeRepositoryBase implements TradeRepository {}
 
-final class MockTradeRepository extends _MockTradeRepositoryBase
+final class MockTradeRepository
     with
+        _MockTradeRepositoryBase,
         _MockTradeRepositoryMethodsPart01,
         _MockTradeRepositoryMethodsPart02,
         _MockTradeRepositoryMethodsPart03,

@@ -84,6 +84,17 @@ void main() {
   ) async {
     await pumpRiskIndicator(tester);
 
+    await tester.scrollUntilVisible(
+      find.byKey(RiskIndicatorExplainerPage.levelKey(1)),
+      120,
+      scrollable: find
+          .descendant(
+            of: find.byType(RiskIndicatorExplainerPage),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+
     expectFirstViewportVisible(
       tester,
       find.byKey(RiskIndicatorExplainerPage.levelKey(1)),

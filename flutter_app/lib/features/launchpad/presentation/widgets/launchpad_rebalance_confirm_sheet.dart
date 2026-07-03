@@ -1,14 +1,4 @@
-import 'package:flutter/material.dart';
-
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
-import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
-import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_rebalance_calculations.dart';
-import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_rebalance_summary.dart';
-import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+part of '../pages/launchpad_rebalance_page.dart';
 
 class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
   const LaunchpadRebalanceConfirmSheet({

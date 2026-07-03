@@ -90,8 +90,10 @@ class _ExecutionQualityDemoPageState
                         padding: VitContentPadding.none,
                         fullBleed: true,
                         customGap: AppSpacing.tradeToolCardGap,
-                        children: [
-                          const ExecutionQualityIntroCard(),
+                        children: tradeShellWithProductTabs(
+                          context: context,
+                          children: [
+                            const ExecutionQualityIntroCard(),
                           for (final feature in snapshot.features)
                             ExecutionQualityFeatureCard(
                               feature: feature,
@@ -131,7 +133,8 @@ class _ExecutionQualityDemoPageState
                             tertiary:
                                 'Success toast remains separate from the underlying settings state.',
                           ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -4,21 +4,15 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_buy_crypto_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
-
-const _buyBackground = AppColors.bg;
 
 class BuyCryptoPage extends ConsumerStatefulWidget {
   const BuyCryptoPage({super.key, this.shellRenderMode});
@@ -84,76 +78,52 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
       );
     }
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitWalletDetailScaffold(
+      title: _confirming ? 'Xác nhận mua' : 'Mua Crypto',
+      subtitle: 'Giao dịch · Wallet',
       semanticLabel: 'SC-145 BuyCryptoPage',
-      child: Material(
-        color: _buyBackground,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: _confirming ? 'Xác nhận mua' : 'Mua Crypto',
-            subtitle: 'Giao dịch · Wallet',
-            showBack: true,
-            onBack: () => _confirming
-                ? setState(() => _confirming = false)
-                : context.go(AppRoutePaths.wallet),
+      contentKey: BuyCryptoPage.contentKey,
+      bottomInset: bottomInset,
+      contentGap: VitContentGap.tight,
+      onBack: () => _confirming
+          ? setState(() => _confirming = false)
+          : context.go(AppRoutePaths.wallet),
+      children: [
+        if (_confirming) ...[
+          VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Review buy order',
+            message:
+                'Confirm amount, received asset, payment method, fee, and next step before submitting.',
+            contractId: '${crypto.symbol} / ${payment.name}',
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: VitInsetScrollView(
-                  key: BuyCryptoPage.contentKey,
-                  bottomInset: bottomInset,
-                  child: VitPageContent(
-                    padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
-                    children: [
-                      if (_confirming) ...[
-                        VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Review buy order',
-                          message:
-                              'Confirm amount, received asset, payment method, fee, and next step before submitting.',
-                          contractId: '${crypto.symbol} / ${payment.name}',
-                        ),
-                        BuyConfirmContent(
-                          crypto: crypto,
-                          payment: payment,
-                          amountVnd: _amountVnd,
-                          receiveAmount: receiveAmount,
-                          submitting: _submitting,
-                          onConfirm: _submitBuyOrder,
-                          onBack: () => setState(() => _confirming = false),
-                        ),
-                      ] else
-                        BuyInputContent(
-                          snapshot: snapshot,
-                          selectedCrypto: crypto,
-                          selectedPaymentId: _selectedPayment,
-                          amountController: _amountController,
-                          amountVnd: _amountVnd,
-                          receiveAmount: receiveAmount,
-                          onAmountChanged: () => setState(() {}),
-                          onPreset: (amount) {
-                            _amountController.text = amount.toString();
-                            setState(() {});
-                          },
-                          onCryptoTap: () => _showCryptoPicker(snapshot),
-                          onPaymentChanged: (id) =>
-                              setState(() => _selectedPayment = id),
-                          onBuy: _canBuy(crypto)
-                              ? () => setState(() => _confirming = true)
-                              : null,
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          BuyConfirmContent(
+            crypto: crypto,
+            payment: payment,
+            amountVnd: _amountVnd,
+            receiveAmount: receiveAmount,
+            submitting: _submitting,
+            onConfirm: _submitBuyOrder,
+            onBack: () => setState(() => _confirming = false),
           ),
-        ),
-      ),
+        ] else
+          BuyInputContent(
+            snapshot: snapshot,
+            selectedCrypto: crypto,
+            selectedPaymentId: _selectedPayment,
+            amountController: _amountController,
+            amountVnd: _amountVnd,
+            receiveAmount: receiveAmount,
+            onAmountChanged: () => setState(() {}),
+            onPreset: (amount) {
+              _amountController.text = amount.toString();
+              setState(() {});
+            },
+            onCryptoTap: () => _showCryptoPicker(snapshot),
+            onPaymentChanged: (id) => setState(() => _selectedPayment = id),
+            onBuy: _canBuy(crypto) ? () => setState(() => _confirming = true) : null,
+          ),
+      ],
     );
   }
 

@@ -89,8 +89,10 @@ class _AdvancedTradingDemoPageState
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,
-                        children: [
-                          _PositionModeCard(
+                        children: tradeShellWithProductTabs(
+                          context: context,
+                          children: [
+                            _PositionModeCard(
                             activeMode: _positionMode,
                             onChanged: (mode) =>
                                 setState(() => _positionMode = mode),
@@ -118,7 +120,8 @@ class _AdvancedTradingDemoPageState
                             contractId: 'SC-088',
                             density: VitDensity.compact,
                           ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

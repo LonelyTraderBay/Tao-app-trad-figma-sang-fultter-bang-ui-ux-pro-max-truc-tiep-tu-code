@@ -110,7 +110,7 @@ void main() {
 
     expect(find.text('SHORT 5x'), findsOneWidget);
     expect(find.text('LONG 10x'), findsOneWidget);
-    expect(find.text('Margin'), findsNothing);
+    expect(find.text('LONG 3x'), findsNothing);
 
     await tester.tap(find.byKey(PositionDashboardPage.sortKey('size')));
     await tester.pumpAndSettle();
