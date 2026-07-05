@@ -34,6 +34,7 @@ const _guideAccordionBodyLineRatio =
 const _guideChecklistLineRatio = AppSpacing.arenaGuideChecklistLineHeight;
 const _guideSmallBadgeLineRatio = AppSpacing.arenaGuideSmallBadgeLineHeight;
 const _guideStepBodyLineRatio = AppSpacing.arenaGuideStepBodyLineHeight;
+const _arenaAccent = AppModuleAccents.arena;
 
 class ArenaGuidePage extends ConsumerStatefulWidget {
   const ArenaGuidePage({super.key, this.shellRenderMode});
@@ -53,4 +54,168 @@ class ArenaGuidePage extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ArenaGuidePage> createState() => _ArenaGuidePageState();
+}
+
+class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
+  _GuideTab _tab = _GuideTab.guide;
+  _GuideMode _mode = _GuideMode.create;
+  int? _expandedTip;
+  int? _expandedFaq;
+  bool _showAllTips = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final snapshot = ref
+        .watch(arenaReadModelControllerProvider)
+        .getArenaGuide();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final footerPadding = arenaFooterPadding(
+      context,
+      mode,
+      visualExtra: AppSpacing.x3,
+      nativeExtra: AppSpacing.x2,
+    );
+
+    return VitPageLayout(
+      variant: VitPageVariant.flush,
+      semanticLabel: 'SC-209 ArenaGuidePage',
+      child: Material(
+        color: AppColors.bg,
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: 'Hướng dẫn Arena',
+            subtitle: 'Completion · Fair play',
+            showBack: true,
+            onBack: _close,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _GuideTabs(active: _tab, onChanged: _setTab),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: ArenaGuidePage.contentKey,
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
+                      density: VitDensity.compact,
+                      children: _tabChildren(context, snapshot),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _tabChildren(BuildContext context, ArenaGuideSnapshot snapshot) {
+    return switch (_tab) {
+      _GuideTab.guide => [
+        _GuideHero(snapshot: snapshot),
+        _ModeSwitch(mode: _mode, onChanged: _setMode),
+        _StepsTimeline(
+          steps: _mode == _GuideMode.create
+              ? snapshot.createSteps
+              : snapshot.joinSteps,
+        ),
+        _StartCard(mode: _mode, onPressed: () => _openPrimary(context)),
+        if (_mode == _GuideMode.create)
+          _ExampleSection(examples: snapshot.examples),
+        _ConceptSection(concepts: snapshot.keyConcepts),
+        _GuideFooter(onRules: () => context.go(AppRoutePaths.arenaSafety)),
+      ],
+      _GuideTab.tips => [
+        _TipsHeader(total: snapshot.proTips.length),
+        _ImpactLegend(),
+        _TipsList(
+          tips: _showAllTips
+              ? snapshot.proTips
+              : snapshot.proTips.take(5).toList(),
+          expandedIndex: _expandedTip,
+          onToggle: _toggleTip,
+        ),
+        if (!_showAllTips && snapshot.proTips.length > 5)
+          _ShowMoreTipsButton(
+            remaining: snapshot.proTips.length - 5,
+            onPressed: () {
+              HapticFeedback.selectionClick();
+              setState(() => _showAllTips = true);
+            },
+          ),
+        _ChecklistCard(items: snapshot.checklist),
+        VitCtaButton(
+          onPressed: () => context.go(AppRoutePaths.arenaStudio),
+          leading: const Icon(
+            Icons.auto_awesome,
+            size: AppSpacing.arenaGuideCtaIcon,
+          ),
+          child: const Text('Áp dụng ngay - Tạo Challenge'),
+        ),
+      ],
+      _GuideTab.safety => [
+        _SafetyHero(),
+        _PointsOnlyBanner(),
+        _SafetyTipList(items: snapshot.safetyTips),
+        _SafetyCenterCard(
+          onPressed: () => context.go(AppRoutePaths.arenaSafety),
+        ),
+      ],
+      _GuideTab.faq => [
+        _FaqHeader(total: snapshot.faqs.length),
+        _FaqList(
+          items: snapshot.faqs,
+          expandedIndex: _expandedFaq,
+          onToggle: _toggleFaq,
+        ),
+        _SupportCard(onPressed: () => context.go(AppRoutePaths.support)),
+      ],
+    };
+  }
+
+  void _setTab(_GuideTab tab) {
+    HapticFeedback.selectionClick();
+    setState(() => _tab = tab);
+  }
+
+  void _setMode(_GuideMode mode) {
+    HapticFeedback.selectionClick();
+    setState(() => _mode = mode);
+  }
+
+  void _toggleTip(int index) {
+    HapticFeedback.selectionClick();
+    setState(() => _expandedTip = _expandedTip == index ? null : index);
+  }
+
+  void _toggleFaq(int index) {
+    HapticFeedback.selectionClick();
+    setState(() => _expandedFaq = _expandedFaq == index ? null : index);
+  }
+
+  void _openPrimary(BuildContext context) {
+    HapticFeedback.mediumImpact();
+    context.go(
+      _mode == _GuideMode.create
+          ? AppRoutePaths.arenaStudio
+          : AppRoutePaths.arena,
+    );
+  }
+
+  void _close() {
+    HapticFeedback.selectionClick();
+    if (context.canPop()) {
+      context.pop();
+      return;
+    }
+    context.go(AppRoutePaths.arena);
+  }
 }

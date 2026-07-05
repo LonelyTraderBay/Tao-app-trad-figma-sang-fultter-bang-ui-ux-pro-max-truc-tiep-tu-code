@@ -59,8 +59,8 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Live Market Analytics'), findsOneWidget);
-    expect(find.text('Real-Time Data'), findsOneWidget);
+    expect(find.text('Phân tích trực tiếp'), findsOneWidget);
+    expect(find.text('Dữ liệu realtime'), findsOneWidget);
     expect(find.text('LIVE'), findsOneWidget);
     expect(find.text('WebSocket Active'), findsOneWidget);
     expect(find.text('Open Interest'), findsOneWidget);

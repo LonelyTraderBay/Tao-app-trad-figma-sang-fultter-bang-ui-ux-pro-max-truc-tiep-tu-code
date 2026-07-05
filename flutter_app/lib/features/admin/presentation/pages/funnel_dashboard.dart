@@ -97,7 +97,12 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
                         _DropoutChartCard(funnel: selectedFunnel),
                         _StepDetailsCard(funnel: selectedFunnel),
                         if (snapshot.totalSessions == 0)
-                          const _EmptyFunnelCard(),
+                          const AdminInlineEmptyState(
+                            icon: Icons.filter_alt_outlined,
+                            title: 'Chưa có dữ liệu funnel',
+                            message:
+                                'Dữ liệu sẽ xuất hiện khi có người dùng đi qua funnel',
+                          ),
                       ],
                     ),
                   ],

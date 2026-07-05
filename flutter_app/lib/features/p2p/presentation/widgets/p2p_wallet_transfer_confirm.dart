@@ -82,13 +82,18 @@ class _ConfirmTransferView extends StatelessWidget {
               ),
               const _ConfirmRow(
                 label: 'Loại giao dịch',
-                value: 'Internal Transfer',
+                value: 'Chuyển nội bộ',
               ),
             ],
           ),
         ),
         const SizedBox(height: _p2pTransferMajorGap),
-        _EscrowNotice(text: snapshot.confirmationNote),
+        P2PNoticeCard(
+          icon: Icons.info_outline_rounded,
+          message: snapshot.confirmationNote,
+          borderColor: AppModuleAccents.p2p.withValues(alpha: .32),
+          padding: AppSpacing.p2pWalletCompactCardPadding,
+        ),
         const SizedBox(height: _p2pTransferMajorGap),
         Row(
           children: [

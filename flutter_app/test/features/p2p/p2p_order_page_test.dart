@@ -88,6 +88,7 @@ void main() {
     expect(find.text('Nhắn tin'), findsOneWidget);
     expect(find.text('Đã thanh toán'), findsOneWidget);
     expect(find.text('Hủy đơn hàng'), findsOneWidget);
+    expect(find.text('Mở khiếu nại'), findsOneWidget);
     expect(find.text('HÀNH ĐỘNG NHANH'), findsOneWidget);
   });
 

@@ -38,14 +38,14 @@ class _EmailCta extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Subscribed!',
+                    'Đã đăng ký',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.buy,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
                   Text(
-                    "You'll receive daily prediction updates",
+                    'Nhận cập nhật biến động hàng ngày',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
@@ -82,14 +82,14 @@ class _EmailCta extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Get daily updates',
+                      'Nhận cập nhật hàng ngày',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
                     Text(
-                      'Top movers & trending markets in your inbox',
+                      'Biến động và thị trường xu hướng qua email',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
@@ -123,7 +123,7 @@ class _EmailCta extends StatelessWidget {
                 padding: const EdgeInsetsDirectional.symmetric(
                   horizontal: AppSpacing.x3,
                 ),
-                child: const Text('Subscribe'),
+                child: const Text('Đăng ký'),
               ),
             ],
           ),
@@ -134,24 +134,25 @@ class _EmailCta extends StatelessWidget {
 }
 
 class _BreakingEmptyState extends StatelessWidget {
-  const _BreakingEmptyState();
+  const _BreakingEmptyState({required this.onShowAll});
+
+  final VoidCallback onShowAll;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      padding: AppSpacing.cardPaddingCompact,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            Icons.bolt_rounded,
-            color: AppColors.text3.withValues(alpha: .42),
-            size: _breakingIconBox,
+            Icons.bolt_outlined,
+            color: AppColors.text3.withValues(alpha: .40),
+            size: AppSpacing.predictionHomeEmptyIcon,
           ),
           const SizedBox(height: _breakingSpace),
           Text(
-            'No movers in this category',
+            'Không có biến động trong danh mục này',
             style: AppTextStyles.body.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
@@ -159,8 +160,15 @@ class _BreakingEmptyState extends StatelessWidget {
           ),
           const SizedBox(height: _breakingTinySpace),
           Text(
-            'Try selecting a different category',
+            'Thử chọn danh mục khác hoặc xem tất cả sự kiện',
+            textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          VitCtaButton(
+            onPressed: onShowAll,
+            variant: VitCtaButtonVariant.secondary,
+            child: const Text('Xem tất cả'),
           ),
         ],
       ),
@@ -182,9 +190,9 @@ String _formatPercent(double value) {
 String _timeRemaining(DateTime endDate) {
   final now = DateTime.utc(2026, 2, 27, 12);
   final diff = endDate.difference(now);
-  if (diff.isNegative) return 'Ended';
+  if (diff.isNegative) return 'Đã đóng';
   final days = diff.inDays;
-  if (days > 30) return '${days ~/ 30} tháng';
-  if (days > 0) return '$days ngày';
-  return '${diff.inHours}h';
+  if (days > 30) return 'Đóng ${days ~/ 30} tháng';
+  if (days > 0) return 'Đóng $days ngày';
+  return 'Đóng ${diff.inHours}h';
 }

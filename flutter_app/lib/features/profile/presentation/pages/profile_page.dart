@@ -36,6 +36,10 @@ class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc156_profile_content');
+  static const loadingKey = Key('sc156_profile_loading');
+  static const errorKey = Key('sc156_profile_error');
+  static const offlineKey = Key('sc156_profile_offline');
+  static const emptyKey = Key('sc156_profile_empty');
   static const copyReferralKey = Key('sc156_profile_copy_referral');
   static const editProfileKey = Key('sc156_profile_edit');
   static const logoutKey = Key('sc156_profile_logout');
@@ -82,8 +86,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               density: VitDensity.compact,
               fullBleed: true,
               children: [
-                _ProfileHero(
-                  user: snapshot.user,
+                _ProfileBody(
+                  snapshot: snapshot,
                   copiedReferral: _copiedReferral,
                   onEdit: () => context.go(AppRoutePaths.profileEdit),
                   onCopyReferral: () {
@@ -92,56 +96,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     );
                     setState(() => _copiedReferral = true);
                   },
-                ),
-                _VipCard(vip: snapshot.vip),
-                const _SectionLabel(
-                  label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
-                  accent: _profilePurple,
-                ),
-                _PredictionCard(
-                  prediction: snapshot.prediction,
-                  onTap: () => context.go(AppRoutePaths.profilePredictions),
-                ),
-                _ArenaCard(
-                  arena: snapshot.arena,
-                  onTap: () => context.go(AppRoutePaths.profileArena),
-                ),
-                const _SectionLabel(
-                  label: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
-                  accent: _profileAmber,
-                ),
-                if (snapshot.productShortcuts.isEmpty)
-                  const VitEmptyState(
-                    title: 'Ch\u01B0a c\u00F3 s\u1EA3n ph\u1EA9m',
-                    message:
-                        'C\u00E1c shortcut s\u1EA3n ph\u1EA9m s\u1EBD hi\u1EC3n th\u1ECB khi kh\u1EA3 d\u1EE5ng.',
-                    icon: Icons.explore_outlined,
-                  )
-                else
-                  _ProfileProductHub(shortcuts: snapshot.productShortcuts),
-                if (snapshot.sections.isEmpty)
-                  const VitEmptyState(
-                    title: 'Ch\u01B0a c\u00F3 m\u1EE5c t\u00E0i kho\u1EA3n',
-                    message:
-                        'C\u00E1c c\u00E0i \u0111\u1EB7t profile s\u1EBD hi\u1EC3n th\u1ECB sau khi t\u1EA3i xong.',
-                    icon: Icons.account_circle_outlined,
-                  )
-                else
-                  for (final section in snapshot.sections) ...[
-                    _SectionLabel(
-                      label: section.label,
-                      accent: Color(section.accentHex),
-                    ),
-                    _MenuSection(section: section),
-                  ],
-                _ActivityButton(
-                  onTap: () => context.go(AppRoutePaths.profileActivity),
-                ),
-                _LogoutButton(onTap: () => context.go(AppRoutePaths.authLogin)),
-                Text(
-                  'VitTrade v2.4.1 \u2022 Tham gia t\u1EEB ${snapshot.user.joinDate}',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.micro.copyWith(color: _profileMuted),
+                  onOpenVip: () => context.go(AppRoutePaths.profileVip),
+                  onOpenPredictions: () =>
+                      context.go(AppRoutePaths.profilePredictions),
+                  onOpenArena: () => context.go(AppRoutePaths.profileArena),
+                  onOpenActivity: () =>
+                      context.go(AppRoutePaths.profileActivity),
+                  onLogout: () => context.go(AppRoutePaths.authLogin),
                 ),
               ],
             ),

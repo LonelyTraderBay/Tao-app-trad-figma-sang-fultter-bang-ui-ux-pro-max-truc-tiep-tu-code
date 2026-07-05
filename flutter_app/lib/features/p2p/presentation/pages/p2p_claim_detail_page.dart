@@ -9,10 +9,10 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -23,8 +23,14 @@ part 'p2p_claim_detail_page_part_03.dart';
 
 enum _ClaimDetailSection { timeline, evidence, notes }
 
-const double _p2pClaimVisualNavClearance = 112;
-const double _p2pClaimNativeNavClearance = 88;
+const double _p2pClaimVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pClaimNativeNavClearance =
+    _p2pClaimVisualNavClearance - AppSpacing.x4;
+const double _p2pClaimVisualClearance = AppSpacing.x3;
+const double _p2pClaimNativeClearance = AppSpacing.x2;
+const double _p2pClaimSectionGap = AppSpacing.x3;
+const double _p2pClaimTightGap = AppSpacing.x2;
 const double _p2pClaimDividerExtent = AppSpacing.dividerHairline;
 const double _p2pClaimProgressLineExtent =
     AppSpacing.p2pClaimProgressLineHeight;

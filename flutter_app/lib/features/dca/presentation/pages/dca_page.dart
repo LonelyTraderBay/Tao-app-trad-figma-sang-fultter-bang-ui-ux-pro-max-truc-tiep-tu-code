@@ -10,7 +10,6 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -25,6 +24,9 @@ part 'dca_page_part_02.dart';
 part 'dca_page_part_03.dart';
 part 'dca_page_part_04.dart';
 
+const double _dcaVisualNavClearance = 112;
+const double _dcaNativeNavClearance = 88;
+
 enum _DcaTab { plans, history }
 
 class DCAPage extends ConsumerStatefulWidget {
@@ -37,6 +39,10 @@ class DCAPage extends ConsumerStatefulWidget {
   static const chartKey = Key('sc169_chart');
   static const historyKey = Key('sc169_history');
   static const createSheetKey = Key('sc169_create_sheet');
+  static const loadingKey = Key('sc169_dca_loading');
+  static const errorKey = Key('sc169_dca_error');
+  static const offlineKey = Key('sc169_dca_offline');
+  static const emptyKey = Key('sc169_dca_empty');
 
   static Key toolKey(String route) => Key('sc169_tool_$route');
   static Key tabKey(String id) => Key('sc169_tab_$id');

@@ -218,16 +218,13 @@ class _PauseButton extends StatelessWidget {
     return Semantics(
       button: true,
       label: isLive ? 'Pause live admin updates' : 'Resume live admin updates',
-      child: DecoratedBox(
-        decoration: const ShapeDecoration(
-          color: AppColors.surface3,
-          shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-        ),
-        child: VitCard(
-          key: AdminHome.pauseKey,
+      child: Material(
+        key: AdminHome.pauseKey,
+        color: AppColors.surface3,
+        borderRadius: AppRadii.inputRadius,
+        child: InkWell(
           onTap: onPressed,
-          variant: VitCardVariant.ghost,
-          borderColor: AppColors.transparent,
+          borderRadius: AppRadii.inputRadius,
           child: Padding(
             padding: AppSpacing.adminSegmentButtonPadding,
             child: Text(

@@ -68,7 +68,7 @@ const List<P2PSecurityFeatureDraft> _p2pSecurityFeatures = [
   ),
   P2PSecurityFeatureDraft(
     id: 'anti_phishing',
-    label: 'Anti-Phishing Code',
+    label: 'Mã chống phishing',
     iconKey: 'anti_phishing',
     status: P2PSecurityStatus.enabled,
     scoreDelta: 20,
@@ -76,7 +76,7 @@ const List<P2PSecurityFeatureDraft> _p2pSecurityFeatures = [
   ),
   P2PSecurityFeatureDraft(
     id: 'trusted_devices',
-    label: 'Trusted Devices',
+    label: 'Thiết bị tin cậy',
     iconKey: 'devices',
     status: P2PSecurityStatus.warning,
     scoreDelta: 15,
@@ -84,7 +84,7 @@ const List<P2PSecurityFeatureDraft> _p2pSecurityFeatures = [
   ),
   P2PSecurityFeatureDraft(
     id: 'whitelist',
-    label: 'Whitelist Mode',
+    label: 'Chế độ whitelist',
     iconKey: 'whitelist',
     status: P2PSecurityStatus.disabled,
     scoreDelta: 0,
@@ -92,7 +92,7 @@ const List<P2PSecurityFeatureDraft> _p2pSecurityFeatures = [
   ),
   P2PSecurityFeatureDraft(
     id: 'biometric',
-    label: 'Biometric Lock',
+    label: 'Khóa sinh trắc học',
     iconKey: 'biometric',
     status: P2PSecurityStatus.enabled,
     scoreDelta: 25,

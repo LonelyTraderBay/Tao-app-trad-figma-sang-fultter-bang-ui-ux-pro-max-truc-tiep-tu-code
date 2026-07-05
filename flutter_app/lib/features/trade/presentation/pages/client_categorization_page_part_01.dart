@@ -20,7 +20,18 @@ class _ClientCategorizationPageState
       contentKey: ClientCategorizationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
+      useCopyTradingInset: true,
       children: [
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Client classification review',
+            message:
+                'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
+            contractId: 'client-categorization-review',
+          ),
+        ),
         VitTradeSection(
           title: 'Current category',
           child: _CurrentCategoryCard(category: current),
@@ -65,13 +76,6 @@ class _ClientCategorizationPageState
                   history: snapshot.history,
                 ),
               const _QuickLinks(),
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'Client classification review',
-                message:
-                    'Current category, protection changes, eligibility evidence, disclosure links and compliance next step are reviewed before status changes.',
-                contractId: 'client-categorization-review',
-              ),
             ],
           ),
         ),

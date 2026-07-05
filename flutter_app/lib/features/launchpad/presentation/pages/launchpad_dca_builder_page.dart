@@ -105,6 +105,7 @@ class _LaunchpadDcaBuilderPageState
               semanticLabel: 'SC-316 LaunchpadDcaBuilderPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'Chiến lược DCA · Không cam kết lợi nhuận',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
                 actions: [

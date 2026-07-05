@@ -19,26 +19,20 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_state_cards.dart';
+import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
 
 part 'arena_challenge_detail_page_part_01.dart';
 part 'arena_challenge_detail_page_part_02.dart';
 part 'arena_challenge_detail_page_part_03.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
-const _challengeNativeBottomClearance = 88.0;
-const _challengeVisualBottomClearance = 112.0;
-const _challengeGap = 8.0;
-const _challengeTinyGap = 4.0;
+const _challengeGap = AppSpacing.x2;
+const _challengeTinyGap = AppSpacing.x1;
 const _challengeInlineGap = 8.0;
 const EdgeInsetsGeometry _challengeCardPadding =
     EdgeInsetsDirectional.symmetric(
       horizontal: _challengeGap + _challengeTinyGap,
       vertical: _challengeGap + _challengeTinyGap,
-    );
-const EdgeInsetsGeometry _challengeCardPaddingTight =
-    EdgeInsetsDirectional.symmetric(
-      horizontal: _challengeGap + _challengeTinyGap,
-      vertical: _challengeGap + (_challengeTinyGap / 2),
     );
 const EdgeInsetsGeometry _challengeSheetPadding =
     EdgeInsetsDirectional.fromSTEB(
@@ -50,22 +44,22 @@ const EdgeInsetsGeometry _challengeSheetPadding =
 const _challengeSmallIcon = 16.0;
 const _challengeMdIcon = 20.0;
 const _challengeLgIcon = 22.0;
-const _challengeCountdownHeight = 42.0;
 const _challengeProgressHeight = 5.0;
 const _challengeShareSize = 42.0;
 const _challengeSummaryLabelWidth = 110.0;
 const _challengeIconBubble = 34.0;
 const _challengeIconBubbleIcon = 18.0;
 const _challengeInitialBadge = 22.0;
-const _challengeLiveDot = 7.0;
 const _challengeTeamDot = 8.0;
 const _challengeRuleNumberWidth = 24.0;
 
 double _challengeScrollBottomInset(BuildContext context, ShellRenderMode mode) {
-  return (mode.usesVisualQaFrame
-          ? _challengeVisualBottomClearance
-          : _challengeNativeBottomClearance) +
-      MediaQuery.paddingOf(context).bottom;
+  return arenaFooterPadding(
+    context,
+    mode,
+    visualExtra: AppSpacing.x3,
+    nativeExtra: AppSpacing.x2,
+  );
 }
 
 enum _ChallengeTab { rules, evidence, participants, activity }
@@ -133,12 +127,10 @@ class _ArenaChallengeDetailPageState
                   child: SingleChildScrollView(
                     key: ArenaChallengeDetailPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.contentInsets.copyWith(
-                      top: 0,
-                      bottom: bottomInset,
-                    ),
+                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
                     child: VitPageContent(
-                      padding: VitContentPadding.none,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       density: VitDensity.compact,
                       children: [
                         _ChallengeIntro(

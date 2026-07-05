@@ -70,10 +70,8 @@ void main() {
     expect(find.text('Launchpad'), findsWidgets);
     expect(find.text('Dự án mới · Token Launch'), findsOneWidget);
     expect(find.byKey(LaunchpadPage.heroKey), findsOneWidget);
-    expect(find.text('VitLaunch'), findsOneWidget);
-    expect(find.text('Ra mắt token an toàn & uy tín'), findsOneWidget);
-    expect(find.text('47'), findsOneWidget);
-    expect(find.text('280K+'), findsOneWidget);
+    expect(find.text('Khám phá dự án token mới'), findsOneWidget);
+    expect(find.textContaining('dự án đang diễn ra'), findsOneWidget);
     expect(find.byKey(LaunchpadPage.tabsKey), findsOneWidget);
     expect(find.text('Tất cả'), findsOneWidget);
     expect(find.text('Đang mở'), findsOneWidget);
@@ -170,6 +168,16 @@ void main() {
     await tester.tap(find.byKey(LaunchpadPage.stakingKey));
     await tester.pumpAndSettle();
     expect(find.text('Launchpool Staking'), findsOneWidget);
+  });
+
+  testWidgets('SC-295 safety section remains visible', (tester) async {
+    await pumpLaunchpad(tester);
+
+    await tester.ensureVisible(find.byKey(LaunchpadPage.safetyKey));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(LaunchpadPage.safetyKey), findsOneWidget);
+    expect(find.text('Cảnh báo an toàn'), findsOneWidget);
   });
 
   testWidgets('SC-295 header back returns to home', (tester) async {

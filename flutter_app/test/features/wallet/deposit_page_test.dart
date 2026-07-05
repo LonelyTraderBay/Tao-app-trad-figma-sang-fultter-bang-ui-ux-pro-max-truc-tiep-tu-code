@@ -72,7 +72,7 @@ void main() {
     );
     expect(find.text('Nạp USDT'), findsOneWidget);
     expect(find.text('Nạp tiền · Wallet'), findsOneWidget);
-    expect(find.text('Chọn mạng lưới'), findsOneWidget);
+    expect(find.text('Mạng nạp'), findsOneWidget);
     expect(find.text('TRC20 (TRON)'), findsOneWidget);
     expect(find.text('Quan trọng — Đọc trước khi nạp'), findsOneWidget);
     expect(find.text('Sao chép địa chỉ'), findsOneWidget);

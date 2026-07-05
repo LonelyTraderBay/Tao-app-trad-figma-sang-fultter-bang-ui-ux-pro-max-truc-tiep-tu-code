@@ -46,42 +46,17 @@ class _AssetChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tone = market.changePct >= 0 ? AppColors.buy : AppColors.sell;
-    return VitCard(
+    return SizedBox(
       key: P2POrderBookPage.assetKey(market.asset),
-      variant: VitCardVariant.ghost,
-      borderColor: selected ? AppModuleAccents.p2p : AppColors.borderSolid,
-      background: ColoredBox(
-        color: selected ? AppColors.warn10 : AppColors.surface2,
-      ),
-      constraints: const BoxConstraints(
-        minWidth: _p2pOrderBookAssetChipMinWidth,
-        minHeight: _p2pOrderBookAssetChipMinExtent,
-      ),
-      padding: AppSpacing.p2pOrderBookSelectorPadding,
-      onTap: onTap,
-      clip: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '${market.asset}/VND',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            _formatChange(market.changePct),
-            style: AppTextStyles.micro.copyWith(
-              color: tone,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
+      width: _p2pOrderBookAssetChipMinWidth,
+      child: VitChoicePill(
+        label: '${market.asset} ${_formatChange(market.changePct)}',
+        selected: selected,
+        onTap: onTap,
+        fullWidth: true,
+        accentColor: AppModuleAccents.p2p,
+        padding: AppSpacing.p2pOrderBookSelectorPadding,
+        semanticLabel: '${market.asset} VND ${_formatChange(market.changePct)}',
       ),
     );
   }
@@ -120,20 +95,21 @@ class _MarketTicker extends StatelessWidget {
               Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: VitCard(
+                  child: SizedBox(
                     key: P2POrderBookPage.refreshKey,
-                    variant: VitCardVariant.inner,
-                    radius: VitCardRadius.standard,
                     width: _p2pOrderBookRefreshExtent,
                     height: _p2pOrderBookRefreshExtent,
-                    onTap: onRefresh,
-                    child: AnimatedRotation(
-                      turns: isRefreshing ? 1 : 0,
-                      duration: const Duration(milliseconds: 600),
-                      child: const Icon(
-                        Icons.refresh_rounded,
-                        color: AppColors.text2,
-                        size: AppSpacing.iconSm,
+                    child: Center(
+                      child: AnimatedRotation(
+                        turns: isRefreshing ? 1 : 0,
+                        duration: const Duration(milliseconds: 600),
+                        child: VitIconButton(
+                          icon: Icons.refresh_rounded,
+                          tooltip: 'Làm mới sổ lệnh',
+                          onPressed: onRefresh,
+                          variant: VitIconButtonVariant.ghost,
+                          size: VitIconButtonSize.sm,
+                        ),
                       ),
                     ),
                   ),

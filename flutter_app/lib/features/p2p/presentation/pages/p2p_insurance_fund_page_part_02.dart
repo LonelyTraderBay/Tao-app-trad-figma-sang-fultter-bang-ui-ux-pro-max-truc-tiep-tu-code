@@ -74,7 +74,7 @@ class _PlatformStatsCard extends StatelessWidget {
               Expanded(
                 child: _StatTile(
                   icon: Icons.receipt_long_rounded,
-                  label: 'Tổng claims',
+                  label: 'Tổng yêu cầu',
                   value: '847',
                 ),
               ),
@@ -94,7 +94,7 @@ class _PlatformStatsCard extends StatelessWidget {
               Expanded(
                 child: _StatTile(
                   icon: Icons.groups_rounded,
-                  label: 'Merchants',
+                  label: 'Thương nhân',
                   value: '1.240',
                 ),
               ),
@@ -110,7 +110,7 @@ class _PlatformStatsCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           _TwoColumnInfo(label: 'Tổng đã xử lý', value: '2.14B'),
-          _TwoColumnInfo(label: 'Claim trung bình', value: '15.200.000 đ'),
+          _TwoColumnInfo(label: 'Yêu cầu trung bình', value: '15.200.000 đ'),
         ],
       ),
     );

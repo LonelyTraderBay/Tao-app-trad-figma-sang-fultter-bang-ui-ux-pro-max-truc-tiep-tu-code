@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/controllers/admin_controller.dart';
@@ -81,45 +80,37 @@ class AdminInlineEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       label: '$title. $message',
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(color: AppColors.borderSolid),
-            borderRadius: AppRadii.cardRadius,
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.adminCardPadding,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(icon, color: AppColors.text3, size: AppSpacing.adminIconLg),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                      ),
+      child: VitCard(
+        variant: VitCardVariant.ghost,
+        padding: AppSpacing.adminCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: AppColors.text3, size: AppSpacing.adminIconLg),
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      fontWeight: AppTextStyles.bold,
                     ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      message,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        height: AppSpacing.adminLineHeightDense,
-                      ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    message,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      height: AppSpacing.adminLineHeightDense,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

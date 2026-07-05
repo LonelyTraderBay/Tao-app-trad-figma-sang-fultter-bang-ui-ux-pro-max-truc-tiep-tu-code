@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_analysis.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_common.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_results.dart';
@@ -15,7 +15,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+
+const double _dcaBacktesterVisualNavClearance = 112;
+const double _dcaBacktesterNativeNavClearance = 88;
 
 class DCABacktesterPage extends ConsumerStatefulWidget {
   const DCABacktesterPage({super.key, this.shellRenderMode});
@@ -44,12 +47,19 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaBacktesterProvider);
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
+    final navClearance = mode.usesVisualQaFrame
+        ? _dcaBacktesterVisualNavClearance
+        : _dcaBacktesterNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       semanticLabel: 'SC-176 DCABacktesterPage',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'DCA Backtester',
+          subtitle: 'Đầu tư có kỷ luật · mô phỏng lịch sử',
           showBack: true,
           onBack: _close,
         ),
@@ -62,16 +72,20 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
               onChanged: (tab) => setState(() => _activeTab = tab),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                key: DCABacktesterPage.contentKey,
-                physics: const ClampingScrollPhysics(),
-                child: VitPageContent(
-                  customGap: AppSpacing.x5,
-                  children: [
-                    if (_activeTab == DcaBacktesterTab.setup)
-                      VitCard(
-                        padding: EdgeInsets.zero,
-                        child: DcaBacktesterSetup(
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: VitInsetScrollView(
+                  key: DCABacktesterPage.contentKey,
+                  physics: const ClampingScrollPhysics(),
+                  bottomInset: scrollEndPadding,
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
+                    children: [
+                      if (_activeTab == DcaBacktesterTab.setup)
+                        DcaBacktesterSetup(
                           snapshot: snapshot,
                           asset: _asset,
                           frequency: _frequency,
@@ -86,33 +100,29 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
                               setState(() => _strategy = strategy),
                           onRun: _runBacktest,
                         ),
-                      ),
-                    if (_activeTab == DcaBacktesterTab.results)
-                      if (_hasResults)
-                        VitCard(
-                          padding: EdgeInsets.zero,
-                          child: DcaBacktesterResults(snapshot: snapshot),
-                        )
-                      else
-                        const VitCard(
-                          padding: EdgeInsets.zero,
-                          child: DcaNoResultsCard(),
-                        ),
-                    if (_activeTab == DcaBacktesterTab.analysis)
-                      if (_hasResults)
-                        VitCard(
-                          padding: EdgeInsets.zero,
-                          child: DcaBacktesterAnalysis(
+                      if (_activeTab == DcaBacktesterTab.results)
+                        if (_hasResults)
+                          DcaBacktesterResults(snapshot: snapshot)
+                        else
+                          const DcaNoResultsCard(),
+                      if (_activeTab == DcaBacktesterTab.analysis)
+                        if (_hasResults)
+                          DcaBacktesterAnalysis(
                             snapshot: snapshot,
                             onDownloadReport: _downloadReport,
-                          ),
-                        )
-                      else
-                        const VitCard(
-                          padding: EdgeInsets.zero,
-                          child: DcaNoResultsCard(),
-                        ),
-                  ],
+                          )
+                        else
+                          const DcaNoResultsCard(),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Backtest chỉ mang tính tham khảo',
+                        message:
+                            'Kết quả mô phỏng dựa trên dữ liệu lịch sử; không đảm bảo hiệu suất tương lai. Mọi thay đổi chiến lược DCA cần xem lại trước khi áp dụng.',
+                        contractId: 'SC-176',
+                        density: VitDensity.compact,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

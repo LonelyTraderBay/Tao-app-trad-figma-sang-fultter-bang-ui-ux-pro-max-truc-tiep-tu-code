@@ -73,6 +73,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'N\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD',
+            subtitle: 'Theo d\u00F5i x\u00E1c nh\u1EADn \u00B7 Wallet',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.wallet),
           ),
@@ -89,13 +90,7 @@ class _PendingDepositsPageState extends ConsumerState<PendingDepositsPage> {
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review pending deposit status',
-                        message:
-                            'Check network, confirmations, amount, fee policy, and next step before taking wallet action.',
-                        density: VitDensity.compact,
-                      ),
+                      const _TrustReviewNotice(),
                       _SummaryBanner(
                         pendingCount: snapshot.pendingCount,
                         lastRefreshLabel: _lastRefreshLabel,

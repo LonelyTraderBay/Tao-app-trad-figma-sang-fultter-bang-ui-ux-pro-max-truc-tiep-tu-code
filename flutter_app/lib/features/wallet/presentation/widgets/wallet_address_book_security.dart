@@ -19,12 +19,18 @@ class _WhitelistModeCard extends StatelessWidget {
         borderColor: AppColors.overlayStroke,
         child: Row(
           children: [
-            VitCard(
+            Container(
               width: AppSpacing.buttonCompact,
               height: AppSpacing.buttonCompact,
-              variant: VitCardVariant.inner,
-              radius: VitCardRadius.large,
-              borderColor: enabled ? AppColors.buy20 : AppColors.borderSolid,
+              decoration: BoxDecoration(
+                color: enabled
+                    ? AppColors.buy.withValues(alpha: .12)
+                    : AppColors.surface2,
+                borderRadius: AppRadii.smRadius,
+                border: Border.all(
+                  color: enabled ? AppColors.buy20 : AppColors.borderSolid,
+                ),
+              ),
               alignment: Alignment.center,
               child: Icon(
                 Icons.lock_outline_rounded,

@@ -32,7 +32,7 @@ class _SummaryHero extends StatelessWidget {
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: _SummaryTile(
-              label: 'APY BQ',
+              label: 'APY ước tính BQ',
               value: '${summary.weightedApy.toStringAsFixed(2)}%',
               color: AppColors.primary,
             ),
@@ -97,43 +97,18 @@ class _TimeRangeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (final range in ranges) ...[
-          Expanded(
-            child: _RangeChip(
-              range: range,
-              selected: range == activeRange,
-              onTap: () => onChanged(range),
-            ),
+    return VitPresetChipRow<String>(
+      accentColor: AppModuleAccents.earn,
+      selectedValue: activeRange,
+      onTap: onChanged,
+      items: [
+        for (final range in ranges)
+          VitPresetChipItem(
+            value: range,
+            label: range,
+            key: SavingsAnalyticsPage.rangeKey(range),
           ),
-          if (range != ranges.last) const SizedBox(width: AppSpacing.x2),
-        ],
       ],
-    );
-  }
-}
-
-class _RangeChip extends StatelessWidget {
-  const _RangeChip({
-    required this.range,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String range;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: SavingsAnalyticsPage.rangeKey(range),
-      label: range,
-      selected: selected,
-      onTap: onTap,
-      fullWidth: true,
-      height: AppSpacing.buttonCompact,
     );
   }
 }

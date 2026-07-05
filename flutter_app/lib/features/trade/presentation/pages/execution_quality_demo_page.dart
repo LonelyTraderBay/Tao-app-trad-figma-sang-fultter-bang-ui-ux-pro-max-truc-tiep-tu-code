@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
@@ -16,10 +17,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
-
-import '../widgets/trade_body_review_widgets.dart';
 
 class ExecutionQualityDemoPage extends ConsumerStatefulWidget {
   const ExecutionQualityDemoPage({super.key, this.shellRenderMode});
@@ -75,7 +74,8 @@ class _ExecutionQualityDemoPageState
             type: MaterialType.transparency,
             child: VitAutoHideHeaderScaffold(
               header: VitHeader(
-                title: 'Execution Quality',
+                title: 'Chất lượng khớp lệnh',
+                subtitle: 'Trượt giá · Báo cáo · Sửa lệnh',
                 showBack: true,
                 onBack: () => context.go(AppRoutePaths.trade),
               ),
@@ -94,6 +94,14 @@ class _ExecutionQualityDemoPageState
                           context: context,
                           children: [
                             const ExecutionQualityIntroCard(),
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Xem lại chất lượng khớp lệnh',
+                            message:
+                                'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
+                            contractId: 'execution-quality-demo-review',
+                            density: VitDensity.compact,
+                          ),
                           for (final feature in snapshot.features)
                             ExecutionQualityFeatureCard(
                               feature: feature,
@@ -121,18 +129,6 @@ class _ExecutionQualityDemoPageState
                             ExecutionQualityAmendmentTab(
                               onOpen: _openAmendmentSheet,
                             ),
-                          const TradeBodyReviewSection(
-                            title: 'Execution quality review',
-                            message: 'Execution quality body reviewed',
-                            detail:
-                                'Slippage, execution report, amendment, sheet, success, and result states stay visible.',
-                            primary:
-                                'Feature cards keep execution safeguards visible before sheets open.',
-                            secondary:
-                                'Tabbed controls preserve the active quality workflow.',
-                            tertiary:
-                                'Success toast remains separate from the underlying settings state.',
-                          ),
                           ],
                         ),
                       ),
@@ -144,9 +140,11 @@ class _ExecutionQualityDemoPageState
           ),
           if (_successMessage != null)
             Positioned(
-              left: 20,
-              right: 20,
-              top: mode.usesVisualQaFrame ? 80 : 24,
+              left: AppSpacing.contentPad,
+              right: AppSpacing.contentPad,
+              top: mode.usesVisualQaFrame
+                  ? AppSpacing.buttonHero
+                  : AppSpacing.x5,
               child: ExecutionQualitySuccessToast(
                 message: _successMessage!,
                 onClose: () => setState(() => _successMessage = null),

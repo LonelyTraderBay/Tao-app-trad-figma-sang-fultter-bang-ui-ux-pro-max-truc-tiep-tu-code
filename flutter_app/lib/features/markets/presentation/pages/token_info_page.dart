@@ -17,7 +17,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
-import '../widgets/market_body_review_widgets.dart';
 
 part '../widgets/token_info_tabs_widgets.dart';
 part '../widgets/token_info_market_widgets.dart';
@@ -27,9 +26,6 @@ const _marketPrimary = AppColors.primary;
 const double _tokenInfoVisualScrollClearance = 108;
 const double _tokenInfoNativeScrollClearance = 72;
 const double _tokenInfoSectionGap = AppSpacing.x3;
-const double _tokenInfoTabVerticalPadding = AppSpacing.x3;
-const double _tokenInfoTabIndicatorHeight = AppSpacing.dividerHairline;
-const double _tokenInfoTabIndicatorWidth = 96;
 const double _tokenInfoHeroAvatar = AppSpacing.buttonCompact;
 const double _tokenInfoHeroAvatarGap = AppSpacing.x3;
 const double _tokenInfoHeroSubtitleGap = AppSpacing.x1;
@@ -137,7 +133,7 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: '${pair.baseAsset} - Thong tin',
+            title: '${pair.baseAsset} - Thông tin',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.pairDetail(pair.id)),
           ),
@@ -169,18 +165,6 @@ class _TokenInfoPageState extends ConsumerState<TokenInfoPage> {
                         else
                           _ProjectTab(snapshot: snapshot),
                         const _Disclaimer(),
-                        const MarketBodyReviewSection(
-                          title: 'Token state review',
-                          message: 'Token information data reviewed',
-                          detail:
-                              'Overview, on-chain, project, chart link, empty, and refresh states remain visible.',
-                          primary:
-                              'Market metrics stay separated from project fundamentals.',
-                          secondary:
-                              'On-chain health remains informational before pair navigation.',
-                          tertiary:
-                              'Disclaimer content stays visible before the shared status review.',
-                        ),
                       ],
                     ),
                   ),

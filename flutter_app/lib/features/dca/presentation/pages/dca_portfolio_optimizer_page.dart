@@ -92,7 +92,7 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Portfolio Optimizer',
-          subtitle: 'Tối ưu · DCA',
+          subtitle: 'Đầu tư có kỷ luật · tối ưu danh mục',
           showBack: true,
           onBack: _close,
           actions: [
@@ -138,6 +138,14 @@ class _DCAPortfolioOptimizerState extends ConsumerState<DCAPortfolioOptimizer> {
                   onCompare: () {
                     setState(() => _showCompareHint = true);
                   },
+                ),
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Xem lại phân bổ đề xuất',
+                  message:
+                      'Tối ưu danh mục chỉ mang tính tham khảo; áp dụng phân bổ mới cần xem lại drift, phí và xác nhận trước khi tái cân bằng.',
+                  contractId: 'SC-174',
+                  density: VitDensity.compact,
                 ),
                 _OptimizerApplyAction(
                   snapshot: snapshot,

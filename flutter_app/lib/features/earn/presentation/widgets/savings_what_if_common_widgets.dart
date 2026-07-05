@@ -92,7 +92,7 @@ class _SectionTitle extends StatelessWidget {
           width: AppSpacing.savingsWhatIfSectionMarkerWidth,
           height: AppSpacing.savingsWhatIfSectionMarkerHeight,
           child: Material(
-            color: AppColors.primary,
+            color: AppModuleAccents.earn,
             borderRadius: AppRadii.xsRadius,
           ),
         ),
@@ -169,39 +169,6 @@ class _RoundIcon extends StatelessWidget {
           color: color,
           size: AppSpacing.savingsWhatIfInlineIcon,
         ),
-      ),
-    );
-  }
-}
-
-class _Disclaimer extends StatelessWidget {
-  const _Disclaimer({required this.text, required this.tone});
-
-  final String text;
-  final Color tone;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
-      borderColor: tone.withValues(alpha: .25),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.warning_amber_rounded,
-            color: tone,
-            size: AppSpacing.savingsWhatIfInlineIcon,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ),
-        ],
       ),
     );
   }

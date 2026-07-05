@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -21,6 +22,9 @@ import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
 part 'dca_multi_asset_page_part_01.dart';
 part 'dca_multi_asset_page_part_02.dart';
 part 'dca_multi_asset_page_part_03.dart';
+
+const double _dcaMultiAssetVisualNavClearance = 112;
+const double _dcaMultiAssetNativeNavClearance = 88;
 
 enum _MultiAssetTab { setup, assets, performance }
 

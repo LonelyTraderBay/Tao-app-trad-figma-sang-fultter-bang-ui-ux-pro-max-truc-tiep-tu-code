@@ -62,8 +62,8 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Market Analytics'), findsOneWidget);
-    expect(find.text('Data & Intelligence'), findsOneWidget);
+    expect(find.text('Phân tích thị trường'), findsOneWidget);
+    expect(find.text('Dữ liệu · Thanh khoản'), findsOneWidget);
     expect(find.text('BTC/USDT'), findsWidgets);
     expect(find.text('\$67,543.21'), findsOneWidget);
     expect(find.text('Open Interest'), findsOneWidget);

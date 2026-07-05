@@ -66,38 +66,33 @@ class _RewardPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      constraints: const BoxConstraints(
-        maxWidth: AppSpacing.p2pTrustProgressRewardMaxWidth,
-      ),
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      background: ColoredBox(
-        color: unlocked ? AppColors.buy10 : AppColors.surface2,
-      ),
-      padding: AppSpacing.p2pTrustProgressTinyPillPadding,
-      clip: true,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.star_border_rounded,
-            color: color,
-            size: AppSpacing.p2pTrustProgressTinyIcon,
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Flexible(
-            child: Text(
-              reward,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
+    return Material(
+      color: unlocked ? AppColors.buy10 : AppColors.surface2,
+      borderRadius: AppRadii.smRadius,
+      child: Padding(
+        padding: AppSpacing.p2pTrustProgressTinyPillPadding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.star_border_rounded,
+              color: color,
+              size: AppSpacing.p2pTrustProgressTinyIcon,
+            ),
+            const SizedBox(width: AppSpacing.x1),
+            Flexible(
+              child: Text(
+                reward,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: color,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

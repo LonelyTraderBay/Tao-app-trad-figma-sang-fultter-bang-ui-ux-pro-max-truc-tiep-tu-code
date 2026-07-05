@@ -63,41 +63,22 @@ class _BotApiDocumentationPageState
         .getBotApiDocumentation();
     return VitTradeHubScaffold(
       title: 'API Documentation',
+      subtitle: 'Tài liệu API bot cho nhà phát triển',
       semanticLabel: 'SC-134 BotAPIDocumentationPage',
       contentKey: BotApiDocumentationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
-        VitTradeSection(title: 'Overview', child: const _IntroCard()),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitCard(
-            variant: VitCardVariant.inner,
-            density: VitDensity.compact,
-            child: VitPageContent(
-              padding: VitContentPadding.none,
-              fullBleed: true,
-              density: VitDensity.compact,
-              children: [
-                VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  density: VitDensity.compact,
-                  title: 'Bot API operational review',
-                  message:
-                      'Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.',
-                  contractId: 'bot-api-documentation-review',
-                ),
-                VitStatusPill(
-                  label: 'Read-only documentation',
-                  status: VitStatusPillStatus.info,
-                  size: VitStatusPillSize.sm,
-                ),
-              ],
-            ),
-          ),
+        VitBotSubpageHero(
+          primaryLabel: 'Endpoint',
+          primaryValue: '${snapshot.endpoints.length}',
+          secondaryLabel: 'Sự kiện WS',
+          secondaryValue: '${snapshot.websocketEvents.length}',
         ),
+        VitTradeSection(title: 'Tổng quan', child: const _IntroCard()),
         VitTradeSection(
-          title: 'Documentation',
+          title: 'Tài liệu',
           child: _Tabs(
             tabs: snapshot.tabs,
             active: _view,
@@ -137,6 +118,13 @@ class _BotApiDocumentationPageState
         VitTradeSection(
           title: 'Authentication',
           child: _AuthCard(header: snapshot.authenticationHeader),
+        ),
+        const VitBotRiskReviewFooter(
+          title: 'Bot API operational review',
+          message:
+              'Endpoints, authentication, rate limits, websocket events and support path are reviewed before bot integration.',
+          contractId: 'bot-api-documentation-review',
+          statusLabel: 'Read-only documentation',
         ),
       ],
     );

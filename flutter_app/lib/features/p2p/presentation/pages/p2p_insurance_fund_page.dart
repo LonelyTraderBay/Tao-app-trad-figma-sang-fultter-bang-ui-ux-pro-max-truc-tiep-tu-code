@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -154,18 +155,13 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                                     : _ClaimsContent(snapshot: snapshot),
                               ],
                             ),
-                            const VitCard(
-                              variant: VitCardVariant.inner,
-                              padding:
-                                  AppSpacing.p2pTrustProgressCompactPadding,
-                              child: VitHighRiskStatePanel(
-                                density: VitDensity.compact,
-                                state: VitHighRiskUiState.riskReview,
-                                title: 'Insurance fund review',
-                                message:
-                                    'Fund health, eligibility, coverage tiers, claim list, certificate route and next protection step are reviewed before claim action.',
-                                contractId: 'p2p-insurance-fund-review',
-                              ),
+                            const VitHighRiskStatePanel(
+                              density: VitDensity.compact,
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Xem lại quỹ bảo hiểm',
+                              message:
+                                  'Sức khỏe quỹ, điều kiện, mức bảo hiểm, danh sách yêu cầu, chứng nhận và bước tiếp theo được xem lại trước khi gửi yêu cầu.',
+                              contractId: 'p2p-insurance-fund-review',
                             ),
                           ],
                         ),

@@ -11,7 +11,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      borderColor: stat.tone == 'success' ? AppColors.buy20 : null,
+      borderColor: stat.tone == 'success' ? AppColors.primary20 : null,
       padding: AppSpacing.earnCardPaddingX2X4,
       child: Column(
         children: [
@@ -132,7 +132,7 @@ final class _PostTypeMeta {
           label: 'Achievement',
           icon: Icons.workspace_premium_outlined,
           avatarIcon: Icons.shield_outlined,
-          color: AppColors.primarySoft,
+          color: AppModuleAccents.earn,
           background: AppColors.warningBg,
           border: AppColors.warningBorder,
         );
@@ -143,7 +143,7 @@ final class _PostTypeMeta {
           avatarIcon: Icons.construction_rounded,
           color: AppColors.buy,
           background: AppColors.buy10,
-          border: AppColors.buy20,
+          border: AppColors.primary20,
         );
       case 'milestone':
       default:
@@ -153,7 +153,7 @@ final class _PostTypeMeta {
           avatarIcon: Icons.savings_outlined,
           color: AppColors.buy,
           background: AppColors.buy10,
-          border: AppColors.buy20,
+          border: AppColors.primary20,
         );
     }
   }
@@ -174,7 +174,7 @@ Color _toneColor(String tone) {
 
 Color _softBackground(Color color) {
   if (color == AppColors.buy) return AppColors.buy10;
-  if (color == AppColors.primary || color == AppColors.primarySoft) {
+  if (color == AppColors.primary || color == AppModuleAccents.earn) {
     return AppColors.primary12;
   }
   if (color == AppColors.sell) return AppColors.sell10;
@@ -183,8 +183,8 @@ Color _softBackground(Color color) {
 }
 
 Color _softBorder(Color color) {
-  if (color == AppColors.buy) return AppColors.buy20;
-  if (color == AppColors.primary || color == AppColors.primarySoft) {
+  if (color == AppColors.buy) return AppColors.primary20;
+  if (color == AppColors.primary || color == AppModuleAccents.earn) {
     return AppColors.primary20;
   }
   if (color == AppColors.sell) return AppColors.sell20;

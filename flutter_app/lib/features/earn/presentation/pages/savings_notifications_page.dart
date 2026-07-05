@@ -16,6 +16,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
+
 part '../widgets/savings_notifications_history.dart';
 part '../widgets/savings_notifications_settings.dart';
 part '../widgets/savings_notifications_common.dart';
@@ -75,6 +77,7 @@ class _SavingsNotificationsPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -113,6 +116,7 @@ class _SavingsNotificationsPageState
                           enabledCount: enabledCount,
                           onToggle: _toggleSetting,
                         ),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

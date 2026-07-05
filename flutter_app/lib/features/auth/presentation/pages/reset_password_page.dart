@@ -183,8 +183,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                 key: ResetPasswordPage.contentKey,
                 padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  gap: VitContentGap.defaultGap,
+                  customGap: AppSpacing.authPageContentGap,
                   children: _success
                       ? _successContent
                       : challenge == null
@@ -200,43 +199,39 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
   }
 
   List<Widget> _formContent(PasswordResetChallenge challenge) => [
-    const VitCard(padding: AppSpacing.zeroInsets, child: _ResetHero()),
-    VitCard(
-      padding: AppSpacing.zeroInsets,
-      child: Column(
-        children: [
-          VitInput(
-            controller: _newPasswordController,
-            fieldKey: ResetPasswordPage.newPasswordFieldKey,
-            label: 'Mật khẩu mới',
-            hintText: '••••••••',
-            prefix: const Icon(Icons.lock_outline_rounded),
-            suffix: VitIconButton(
-              key: ResetPasswordPage.newPasswordToggleKey,
-              icon: _showNewPassword
-                  ? Icons.visibility_off_outlined
-                  : Icons.visibility_outlined,
-              tooltip: _showNewPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu',
-              onPressed: () {
-                setState(() => _showNewPassword = !_showNewPassword);
-              },
-              variant: VitIconButtonVariant.transparent,
-              size: VitIconButtonSize.sm,
-            ),
-            errorText: _newPassword.isNotEmpty && !_allRulesPass ? ' ' : null,
-            obscureText: !_showNewPassword,
-            textInputAction: TextInputAction.next,
-            autofillHints: const [AutofillHints.newPassword],
-            onChanged: (_) => _handleNewPasswordChanged(),
+    const _ResetHero(),
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitInput(
+          controller: _newPasswordController,
+          fieldKey: ResetPasswordPage.newPasswordFieldKey,
+          label: 'Mật khẩu mới',
+          hintText: '••••••••',
+          prefix: const Icon(Icons.lock_outline_rounded),
+          suffix: VitIconButton(
+            key: ResetPasswordPage.newPasswordToggleKey,
+            icon: _showNewPassword
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
+            tooltip: _showNewPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu',
+            onPressed: () {
+              setState(() => _showNewPassword = !_showNewPassword);
+            },
+            variant: VitIconButtonVariant.transparent,
+            size: VitIconButtonSize.sm,
           ),
-          const Padding(padding: AppSpacing.authOtpDigitTopPadding),
-          _PasswordRulesList(password: _newPassword),
-        ],
-      ),
+          errorText: _newPassword.isNotEmpty && !_allRulesPass ? ' ' : null,
+          obscureText: !_showNewPassword,
+          textInputAction: TextInputAction.next,
+          autofillHints: const [AutofillHints.newPassword],
+          onChanged: (_) => _handleNewPasswordChanged(),
+        ),
+        const Padding(padding: AppSpacing.authOtpDigitTopPadding),
+        _PasswordRulesList(password: _newPassword),
+      ],
     ),
-    VitCard(
-      padding: AppSpacing.zeroInsets,
-      child: VitInput(
+    VitInput(
         controller: _confirmPasswordController,
         fieldKey: ResetPasswordPage.confirmPasswordFieldKey,
         label: 'Nhập lại mật khẩu',
@@ -260,7 +255,6 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
         autofillHints: const [AutofillHints.newPassword],
         onChanged: (_) => _handleConfirmPasswordChanged(),
         onSubmitted: (_) => _handleSubmit(),
-      ),
     ),
     if (_showMatch) const _InlinePasswordState(success: true),
     if (_error.isNotEmpty) _InlinePasswordState(error: _error),

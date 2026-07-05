@@ -145,6 +145,7 @@ class _MarketMoversPageState extends ConsumerState<MarketMoversPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Biến động thị trường',
+            subtitle: 'So sánh nhanh · Cập nhật ${snapshot.lastUpdatedLabel}',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),

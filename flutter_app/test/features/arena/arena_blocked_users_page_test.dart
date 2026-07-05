@@ -123,6 +123,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ArenaCreatorPage), findsOneWidget);
-    expect(find.text('Creator Profile'), findsOneWidget);
+    expect(find.text('Hồ sơ creator'), findsOneWidget);
   });
 }

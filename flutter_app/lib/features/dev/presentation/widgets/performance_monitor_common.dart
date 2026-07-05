@@ -54,34 +54,27 @@ class _TargetsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.primary08,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: BorderSide(color: AppColors.primary20),
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.devCardPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Performance Targets',
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
+    return VitCard(
+      padding: AppSpacing.devCardPadding,
+      borderColor: AppColors.primary20,
+      background: const ColoredBox(color: AppColors.primary08),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Performance Targets',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
             ),
-            const SizedBox(height: AppSpacing.x2),
-            for (final target in targets)
-              Text(
-                '- $target',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-              ),
-          ],
-        ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          for (final target in targets)
+            Text(
+              '- $target',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+            ),
+        ],
       ),
     );
   }
@@ -94,33 +87,25 @@ class _InternalNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: BorderSide(color: AppColors.borderSolid),
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.devCompactPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.admin_panel_settings_outlined,
-              color: AppColors.primary,
-              size: AppSpacing.iconSm,
+    return VitCard(
+      padding: AppSpacing.devCompactPadding,
+      variant: VitCardVariant.inner,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.admin_panel_settings_outlined,
+            color: AppColors.primary,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -188,7 +173,7 @@ class _IconBadge extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: background,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),

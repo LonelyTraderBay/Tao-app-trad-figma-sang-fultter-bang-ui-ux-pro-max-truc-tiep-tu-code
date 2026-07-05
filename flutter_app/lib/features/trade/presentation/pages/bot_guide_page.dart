@@ -46,40 +46,22 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
     final snapshot = ref.watch(tradeReadModelControllerProvider).getBotGuide();
     return VitTradeHubScaffold(
       title: 'Trading Bots Guide',
+      subtitle: 'Hướng dẫn chiến lược và thực hành bot',
       semanticLabel: 'SC-131 BotGuidePage',
       contentKey: BotGuidePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
-        VitTradeSection(title: 'Introduction', child: const _IntroBanner()),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.cardPaddingCompact,
-            child: VitPageContent(
-              padding: VitContentPadding.none,
-              density: VitDensity.compact,
-              children: [
-                VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  density: VitDensity.compact,
-                  title: 'Bot education review',
-                  message:
-                      'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
-                  contractId: 'bot-guide-review',
-                ),
-                VitStatusPill(
-                  label: 'Education before activation',
-                  status: VitStatusPillStatus.warning,
-                  size: VitStatusPillSize.sm,
-                ),
-              ],
-            ),
-          ),
+        VitBotSubpageHero(
+          primaryLabel: 'Chiến lược',
+          primaryValue: '${snapshot.strategies.length}',
+          secondaryLabel: 'Thực hành',
+          secondaryValue: '${snapshot.bestPractices.length}',
         ),
+        VitTradeSection(title: 'Tổng quan', child: const _IntroBanner()),
         VitTradeSection(
-          title: 'Topics',
+          title: 'Chủ đề',
           child: _Tabs(active: _view, onChanged: _setView),
         ),
         VitTradeSection(
@@ -101,6 +83,14 @@ class _BotGuidePageState extends ConsumerState<BotGuidePage> {
         VitTradeSection(
           title: 'Video tutorials',
           child: const _VideoTutorialsCard(),
+        ),
+        const VitBotRiskReviewFooter(
+          title: 'Bot education review',
+          message:
+              'Strategy type, setup risk, operational limits, mistakes and next steps are reviewed before bot activation.',
+          contractId: 'bot-guide-review',
+          statusLabel: 'Education before activation',
+          status: VitStatusPillStatus.warning,
         ),
       ],
     );

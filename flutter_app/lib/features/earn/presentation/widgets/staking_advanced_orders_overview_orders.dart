@@ -10,28 +10,21 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       key: StakingAdvancedOrdersPage.infoKey,
       variant: VitCardVariant.inner,
-      borderColor: AppColors.primary20,
+      borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
       padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.track_changes_rounded,
-            color: AppColors.primarySoft,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
+            child: Text(
+              snapshot.infoBody,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -71,32 +64,26 @@ class _StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSuccess = stat.tone == 'success';
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX2X3,
-      borderColor: isSuccess ? AppColors.buy20 : null,
-      child: Column(
-        children: [
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              stat.value,
-              style: AppTextStyles.sectionTitle.copyWith(
-                color: isSuccess ? AppColors.buy : AppColors.text1,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
+    return Column(
+      children: [
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            stat.value,
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: isSuccess ? AppModuleAccents.earn : AppColors.text1,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            stat.label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          stat.label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
     );
   }
 }
@@ -109,50 +96,19 @@ class _OrderTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
+    return VitTabBar(
       key: StakingAdvancedOrdersPage.tabsKey,
-      color: AppColors.surface,
-      child: Row(
-        children: [
-          for (final tab in _AdvancedOrderTab.values)
-            Expanded(
-              child: VitCard(
-                key: StakingAdvancedOrdersPage.tabKey(tab.name),
-                variant: VitCardVariant.ghost,
-                padding: AppSpacing.earnTopPaddingX4,
-                onTap: () => onChanged(tab),
-                child: Column(
-                  children: [
-                    Text(
-                      _tabLabel(tab),
-                      style: AppTextStyles.caption.copyWith(
-                        color: active == tab
-                            ? AppColors.primarySoft
-                            : AppColors.text3,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x4),
-                    SizedBox(
-                      width: active == tab ? AppSpacing.buttonHero : 0,
-                      height: AppSpacing.stakingProductTabIndicatorHeight,
-                      child: DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: active == tab
-                              ? AppColors.primarySoft
-                              : AppColors.transparent,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: AppRadii.xsRadius,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
+      variant: VitTabBarVariant.segment,
+      activeKey: active.name,
+      onChanged: (key) => onChanged(_AdvancedOrderTab.values.byName(key)),
+      tabs: [
+        for (final tab in _AdvancedOrderTab.values)
+          VitTabItem(
+            key: tab.name,
+            label: _tabLabel(tab),
+            widgetKey: StakingAdvancedOrdersPage.tabKey(tab.name),
+          ),
+      ],
     );
   }
 }

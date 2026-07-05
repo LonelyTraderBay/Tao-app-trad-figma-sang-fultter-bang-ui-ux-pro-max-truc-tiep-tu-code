@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -91,6 +92,13 @@ class _WelcomeAssessment extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        CopyTradingRiskWarningCard(
+          title: 'Đánh giá bắt buộc trước khi copy',
+          message:
+              'Copy trading không đảm bảo lợi nhuận. Quá khứ không báo hiệu tương lai.',
+          contractId: 'sc071-pre-copy-risk',
+        ),
+        const SizedBox(height: AppSpacing.x3),
         _NoticeCard(
           title: 'Đánh giá bắt buộc (MiFID II)',
           text:
@@ -125,7 +133,7 @@ class _WelcomeAssessment extends StatelessWidget {
                       height: AppSpacing.x1 + AppSpacing.hairlineStroke,
                     ),
                     Text(
-                      'ROI +${provider.totalPnlPct.toStringAsFixed(1)}% · Max DD ${provider.maxDrawdown.toStringAsFixed(1)}%',
+                      'Lợi nhuận +${provider.totalPnlPct.toStringAsFixed(1)}% · Drawdown tối đa ${provider.maxDrawdown.toStringAsFixed(1)}%',
                       style: AppTextStyles.navLabel.copyWith(
                         color: AppColors.text3,
                         fontWeight: AppTextStyles.normal,
@@ -180,11 +188,12 @@ class _QuestionsSummary extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const VitHighRiskStatePanel(
+        VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
-          title: 'Review suitability result',
+          title: 'Xác nhận kết quả phù hợp',
           message:
-              'Confirm risk, limits, cooling-off requirements, and next steps before configuring copy trading.',
+              'Xác nhận rủi ro, giới hạn vốn, thời gian chờ và bước tiếp theo trước khi cấu hình copy trading.',
+          density: VitDensity.compact,
         ),
         const SizedBox(
           height: AppSpacing.x4 + AppSpacing.x1 - AppSpacing.hairlineStroke,

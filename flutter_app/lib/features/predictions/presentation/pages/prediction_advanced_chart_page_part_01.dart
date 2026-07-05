@@ -58,6 +58,7 @@ class _PredictionAdvancedChartPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Advanced Chart',
+            subtitle: 'Biểu đồ · Prediction',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),

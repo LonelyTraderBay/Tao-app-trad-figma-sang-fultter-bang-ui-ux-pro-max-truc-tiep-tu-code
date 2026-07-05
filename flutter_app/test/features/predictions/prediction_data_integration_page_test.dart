@@ -87,6 +87,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Data Integration'), findsOneWidget);
+    expect(find.text('Dữ liệu · Prediction'), findsOneWidget);
     expect(find.text('Nguon du lieu'), findsOneWidget);
     expect(find.text('API Keys'), findsOneWidget);
     expect(find.text('Webhooks'), findsOneWidget);

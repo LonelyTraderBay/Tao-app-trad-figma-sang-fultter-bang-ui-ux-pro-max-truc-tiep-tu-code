@@ -15,8 +15,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
-import '../widgets/trade_body_review_widgets.dart';
-
 part '../widgets/ex_post_costs_report_summary.dart';
 part '../widgets/ex_post_costs_report_variance_common.dart';
 
@@ -64,6 +62,35 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
       ],
       children: [
         VitTradeSection(
+          title: 'Review',
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Actual cost report ready',
+            message:
+                'Review actual versus estimated costs, variance drivers, fee impact, and next-step export before using this report for disclosure.',
+            contractId: 'SC-107 ${report.year} report',
+            density: VitDensity.compact,
+          ),
+        ),
+        VitTradeComplianceSection(
+          title: 'Report status',
+          statusPill: VitStatusPill(
+            label: '${report.year} report',
+            status: VitStatusPillStatus.success,
+            size: VitStatusPillSize.sm,
+          ),
+          items: const [
+            VitTradeComplianceItem(
+              label: 'Framework',
+              value: 'MiFID II cost disclosure',
+            ),
+            VitTradeComplianceItem(
+              label: 'Action',
+              value: 'Review variance before export',
+            ),
+          ],
+        ),
+        VitTradeSection(
           title: 'Notice',
           child: _ComplianceNotice(year: report.year),
         ),
@@ -89,14 +116,6 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
                     ),
                   ),
                 ],
-              ),
-              VitHighRiskStatePanel(
-                state: VitHighRiskUiState.success,
-                title: 'Actual cost report ready',
-                message:
-                    'Review actual versus estimated costs, variance drivers, fee impact, and next-step export before using this report for disclosure.',
-                contractId: 'SC-107 ${report.year} report',
-                density: VitDensity.compact,
               ),
               _YearTabs(
                 reports: snapshot.reports,
@@ -129,37 +148,8 @@ class _ExPostCostsReportPageState extends ConsumerState<ExPostCostsReportPage> {
               ),
               const _SectionLabel('Variance Analysis'),
               _VarianceCard(report: report),
-              const TradeBodyReviewSection(
-                title: 'Cost report body review',
-                message: 'Ex-post cost report body reviewed',
-                detail:
-                    'Year tabs, actual costs, estimates, variance, disclosure, empty, and result states stay visible.',
-                primary:
-                    'Actual and estimated costs remain visible before variance details.',
-                secondary: 'Year switching preserves cost-report context.',
-                tertiary:
-                    'Disclosure copy stays informational and not execution-oriented.',
-              ),
             ],
           ),
-        ),
-        VitTradeComplianceSection(
-          title: 'Report status',
-          statusPill: VitStatusPill(
-            label: '${report.year} report',
-            status: VitStatusPillStatus.success,
-            size: VitStatusPillSize.sm,
-          ),
-          items: const [
-            VitTradeComplianceItem(
-              label: 'Framework',
-              value: 'MiFID II cost disclosure',
-            ),
-            VitTradeComplianceItem(
-              label: 'Action',
-              value: 'Review variance before export',
-            ),
-          ],
         ),
       ],
     );

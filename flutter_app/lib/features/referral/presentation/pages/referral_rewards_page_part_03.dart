@@ -5,50 +5,12 @@ class _DisputeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.referralCardPadding,
-      borderColor: AppColors.primary20,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox.square(
-            dimension: AppSpacing.iconLg + AppSpacing.x2,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: AppColors.primary12,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.chat_bubble_outline_rounded,
-                  color: AppColors.primary,
-                  size: AppSpacing.iconMd,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Hoa hồng không chính xác?',
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  'Bấm vào biểu tượng cảnh báo bên cạnh mỗi giao dịch để báo lỗi. Đội ngũ hỗ trợ sẽ xử lý trong 24-48 giờ.',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return VitBanner(
+      variant: VitBannerVariant.info,
+      icon: Icons.chat_bubble_outline_rounded,
+      message: 'Hoa hồng không chính xác?',
+      detail:
+          'Bấm vào biểu tượng cảnh báo bên cạnh mỗi giao dịch để báo lỗi. Đội ngũ hỗ trợ sẽ xử lý trong 24-48 giờ.',
     );
   }
 }
@@ -170,32 +132,6 @@ class _DisputeHistoryCard extends StatelessWidget {
             ),
           ],
         ],
-      ),
-    );
-  }
-}
-
-class _TinyPill extends StatelessWidget {
-  const _TinyPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface2,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: AppColors.borderSolid),
-          borderRadius: AppRadii.xlRadius,
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.referralCompactPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-        ),
       ),
     );
   }

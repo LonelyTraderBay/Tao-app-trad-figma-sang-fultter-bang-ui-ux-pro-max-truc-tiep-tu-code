@@ -110,9 +110,9 @@ class _P2PContributionHistoryPageState
                           children: const [
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
-                              title: 'Contribution history state review',
+                              title: 'Xem lại lịch sử đóng góp',
                               message:
-                                  'Contribution export, monthly grouping, insurance fee rate, totals, and success feedback remain visible before P2P insurance reporting actions.',
+                                  'Xuất báo cáo, nhóm theo tháng, tỷ lệ phí bảo hiểm, tổng đóng góp và phản hồi thành công được xem lại trước thao tác báo cáo P2P.',
                               contractId: 'SC-242',
                             ),
                           ],

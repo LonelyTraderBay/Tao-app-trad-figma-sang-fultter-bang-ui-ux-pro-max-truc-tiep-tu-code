@@ -9,6 +9,7 @@ final class MockOnboardingRepository implements OnboardingRepository {
   OnboardingSnapshot getFlow() {
     return const OnboardingSnapshot(
       endpoint: '/api/mobile/onboarding/onboarding',
+      screenState: OnboardingScreenState.ready,
       actionDraft:
           'read-only reference data plus local navigation actions for step, '
           'goal selection, skip, complete, and recommended route handoff',

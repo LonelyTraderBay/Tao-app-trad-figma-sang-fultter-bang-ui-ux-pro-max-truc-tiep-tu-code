@@ -75,7 +75,7 @@ class _ArenaStudioPageState extends ConsumerState<ArenaStudioPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Arena Studio',
-            subtitle: 'Tạo challenge mới',
+            subtitle: 'Tạo challenge · Points only',
             showBack: true,
             onBack: _close,
           ),

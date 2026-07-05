@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -12,6 +15,9 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
+
+const double _dcaRebalanceDashboardVisualNavClearance = 112;
+const double _dcaRebalanceDashboardNativeNavClearance = 88;
 
 class DCARebalanceDashboard extends ConsumerWidget {
   const DCARebalanceDashboard({
@@ -22,6 +28,7 @@ class DCARebalanceDashboard extends ConsumerWidget {
 
   static const contentKey = Key('sc171_rebalance_dashboard_content');
   static const missingConfigKey = Key('sc171_missing_config');
+  static const configureKey = Key('sc171_configure_rebalance');
 
   final String configId;
   final ShellRenderMode? shellRenderMode;
@@ -29,6 +36,12 @@ class DCARebalanceDashboard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final snapshot = ref.watch(dcaRebalanceDashboardProvider(configId));
+    final mode = shellRenderMode ?? defaultShellRenderMode();
+    final navClearance = mode.usesVisualQaFrame
+        ? _dcaRebalanceDashboardVisualNavClearance
+        : _dcaRebalanceDashboardNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -37,44 +50,54 @@ class DCARebalanceDashboard extends ConsumerWidget {
         header: VitTopChrome(
           type: VitTopChromeType.detail,
           title: 'Rebalance Dashboard',
-          subtitle: 'DCA',
+          subtitle: 'Đầu tư có kỷ luật · cân bằng danh mục',
           showBack: true,
           onBack: () => _close(context),
         ),
-        child: VitPageContent(
-          key: contentKey,
-          padding: VitContentPadding.none,
-          children: [
-            VitCard(
-              padding: EdgeInsets.zero,
-              child: Center(
-                child: Text(
-                  snapshot.message,
-                  key: missingConfigKey,
-                  style: AppTextStyles.base.copyWith(color: AppColors.text2),
-                  textAlign: TextAlign.center,
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          child: VitInsetScrollView(
+            key: contentKey,
+            physics: const ClampingScrollPhysics(),
+            bottomInset: scrollEndPadding,
+            child: VitPageContent(
+              padding: VitContentPadding.compact,
+              density: VitDensity.compact,
+              children: [
+                if (!snapshot.configFound)
+                  _MissingConfigPanel(
+                    message: snapshot.message,
+                    onConfigure: () =>
+                        context.go(AppRoutePaths.dcaRebalanceConfig),
+                  )
+                else
+                  VitPageSection(
+                    label: 'Lịch sử cân bằng',
+                    accentColor: AppModuleAccents.dca,
+                    children: [
+                      VitCard(
+                        density: VitDensity.compact,
+                        child: Text(
+                          snapshot.message,
+                          style: AppTextStyles.base.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.medium,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Rebalance review required',
+                  message:
+                      'Rebalance changes can move funds between assets. Show allocation delta, fees, limits, and confirmation before execution.',
+                  contractId: 'SC-171',
+                  density: VitDensity.compact,
                 ),
-              ),
+              ],
             ),
-            const VitCard(
-              padding: EdgeInsets.zero,
-              child: VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'Rebalance review required',
-                message:
-                    'Rebalance changes can move funds between assets. Show allocation delta, fees, limits, and confirmation before execution.',
-                contractId: 'SC-171',
-              ),
-            ),
-            VitCard(
-              padding: EdgeInsets.zero,
-              child: Text(
-                'Select a rebalance configuration to review history, drift, and execution evidence.',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -86,5 +109,76 @@ class DCARebalanceDashboard extends ConsumerWidget {
       return;
     }
     context.go(AppRoutePaths.dca);
+  }
+}
+
+class _MissingConfigPanel extends StatelessWidget {
+  const _MissingConfigPanel({
+    required this.message,
+    required this.onConfigure,
+  });
+
+  final String message;
+  final VoidCallback onConfigure;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox.square(
+                dimension: AppSpacing.buttonCompact,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppModuleAccents.dca.withValues(alpha: .12),
+                    shape: const CircleBorder(),
+                  ),
+                  child: Icon(
+                    Icons.pie_chart_outline_rounded,
+                    color: AppModuleAccents.dca,
+                    size: AppSpacing.iconMd,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      message,
+                      key: DCARebalanceDashboard.missingConfigKey,
+                      style: AppTextStyles.base.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x2),
+                    Text(
+                      'Chưa có cấu hình cân bằng danh mục. Thiết lập tỷ lệ mục tiêu và ngưỡng drift trước khi xem lịch sử thực thi.',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          VitCtaButton(
+            key: DCARebalanceDashboard.configureKey,
+            onPressed: onConfigure,
+            leading: const Icon(Icons.tune_rounded),
+            child: const Text('Thiết lập cân bằng'),
+          ),
+        ],
+      ),
+    );
   }
 }

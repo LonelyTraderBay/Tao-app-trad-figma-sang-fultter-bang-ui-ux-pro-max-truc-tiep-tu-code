@@ -103,18 +103,21 @@ class _AmountCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
-          Wrap(
-            spacing: AppSpacing.x3,
-            runSpacing: AppSpacing.x3,
-            children: [
+          VitPresetChipRow<int>(
+            items: [
               for (final quickAmount in quickAmounts)
-                _QuickAmountChip(
-                  amount: quickAmount,
-                  selected: amount == quickAmount,
-                  color: color,
-                  onPressed: () => onQuickAmount(quickAmount),
+                VitPresetChipItem<int>(
+                  key: P2PExpressPage.quickAmountKey(quickAmount),
+                  value: quickAmount,
+                  label: _formatVnd(quickAmount),
+                  semanticLabel: 'Quick amount ${_formatVnd(quickAmount)} VND',
                 ),
             ],
+            onTap: onQuickAmount,
+            selectedValue: amount > 0 ? amount : null,
+            accentColor: color,
+            height: AppSpacing.buttonCompact,
+            padding: AppSpacing.p2pExpressChoiceChipPadding,
           ),
         ],
       ),
@@ -162,12 +165,14 @@ class _PaymentCard extends StatelessWidget {
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
             children: [
-              for (final method in paymentMethods)
+              for (final method in paymentMethods.take(3))
                 _PaymentChip(
                   method: method,
                   selected: selectedPayment == method.bankName,
                   onPressed: () => onChanged(method.bankName),
                 ),
+              if (paymentMethods.length > 3)
+                _SmallTextChip('+${paymentMethods.length - 3} phương thức'),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),

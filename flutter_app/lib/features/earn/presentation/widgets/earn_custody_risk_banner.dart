@@ -6,6 +6,14 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
+/// Standard VitHeader subtitle for savings tool sub-routes.
+const kSavingsToolsHeaderSubtitle =
+    'Công cụ tiết kiệm — APY ước tính có thể thay đổi';
+
+/// Yield + risk disclaimer for savings tool surfaces (SC-335+).
+const kSavingsToolsYieldDisclaimerText =
+    'APY là ước tính tham khảo và có thể thay đổi. Giá tài sản và APY có thể biến động; rút trước hạn có thể mất lãi tích lũy.';
+
 /// Shared info banner for earn/savings flows (icon + body in inner VitCard).
 class EarnInfoBanner extends StatelessWidget {
   const EarnInfoBanner({
@@ -55,6 +63,18 @@ class EarnWarningBanner extends StatelessWidget {
 }
 
 /// Ghost disclaimer card used at the bottom of earn mega-flows.
+/// Footer disclaimer for savings tools batch (guide, DCA, analytics, etc.).
+class SavingsToolsYieldFooter extends StatelessWidget {
+  const SavingsToolsYieldFooter({super.key, this.text});
+
+  final String? text;
+
+  @override
+  Widget build(BuildContext context) {
+    return EarnDisclaimerBanner(text: text ?? kSavingsToolsYieldDisclaimerText);
+  }
+}
+
 class EarnDisclaimerBanner extends StatelessWidget {
   const EarnDisclaimerBanner({
     super.key,

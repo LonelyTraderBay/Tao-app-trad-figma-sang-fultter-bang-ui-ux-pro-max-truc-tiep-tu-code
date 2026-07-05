@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
@@ -26,7 +27,7 @@ class StakingDashboardSummaryCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -34,22 +35,30 @@ class StakingDashboardSummaryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      'Tổng giá trị Staking',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.portfolioTextDim,
-                        fontWeight: AppTextStyles.bold,
+                    Expanded(
+                      child: _HeroKpi(
+                        label: 'Tổng giá trị Staking',
+                        value: stakingFormatUsd(snapshot.totalStakedUsd),
+                        caption: '${snapshot.activePositions} vị thế đang hoạt động',
+                        valueColor: AppColors.text1,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x2),
-                    Text(
-                      stakingFormatUsd(snapshot.totalStakedUsd),
-                      style: AppTextStyles.display.copyWith(
-                        color: AppColors.onAccent,
-                        fontFeatures: AppTextStyles.tabularFigures,
+                    Container(
+                      width: 1,
+                      height: AppSpacing.x6,
+                      color: AppColors.border,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: AppSpacing.x4),
+                        child: _HeroKpi(
+                          label: 'APY ước tính',
+                          value: '${snapshot.weightedApy.toStringAsFixed(2)}%',
+                          caption: 'Tham khảo, có thể thay đổi',
+                          valueColor: AppModuleAccents.earn,
+                        ),
                       ),
                     ),
                   ],
@@ -70,34 +79,37 @@ class StakingDashboardSummaryCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _HeroMetric(
+                child: _FlatMetric(
                   label: 'Tổng thu nhập',
                   value: '+${stakingFormatUsd(snapshot.totalEarnedUsd)}',
-                  color: AppColors.buy,
-                  border: AppColors.buy20,
+                  valueColor: AppColors.text1,
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: _HeroMetric(
-                  label: 'APY trung bình',
-                  value: '${snapshot.weightedApy.toStringAsFixed(2)}%',
-                  color: AppColors.primarySoft,
-                  border: AppColors.primary30,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _HeroMetric(
+                child: _FlatMetric(
                   label: 'Vị thế',
                   value: '${snapshot.activePositions} active',
-                  color: AppColors.warn,
-                  border: AppColors.warn15,
+                  valueColor: AppColors.text1,
+                ),
+              ),
+              Expanded(
+                child: _FlatMetric(
+                  label: 'Đáo hạn sớm',
+                  value: '${snapshot.maturingSoon}',
+                  valueColor: AppColors.warn,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            'Dự báo thu nhập (ước tính tham khảo)',
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x2),
           Row(
             children: [
               Expanded(
@@ -126,51 +138,86 @@ class StakingDashboardSummaryCard extends StatelessWidget {
   }
 }
 
-class _HeroMetric extends StatelessWidget {
-  const _HeroMetric({
+class _HeroKpi extends StatelessWidget {
+  const _HeroKpi({
     required this.label,
     required this.value,
-    required this.color,
-    required this.border,
+    required this.caption,
+    required this.valueColor,
   });
 
   final String label;
   final String value;
-  final Color color;
-  final Color border;
+  final String caption;
+  final Color valueColor;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      borderColor: border,
-      padding: AppSpacing.earnCardPaddingX3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextDim,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          style: AppTextStyles.heroNumber.copyWith(
+            color: valueColor,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          caption,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
+    );
+  }
+}
+
+class _FlatMetric extends StatelessWidget {
+  const _FlatMetric({
+    required this.label,
+    required this.value,
+    required this.valueColor,
+  });
+
+  final String label;
+  final String value;
+  final Color valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        FittedBox(
+          alignment: Alignment.centerLeft,
+          fit: BoxFit.scaleDown,
+          child: Text(
+            value,
+            style: AppTextStyles.caption.copyWith(
+              color: valueColor,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
-          FittedBox(
-            alignment: Alignment.centerLeft,
-            fit: BoxFit.scaleDown,
-            child: Text(
-              value,
-              style: AppTextStyles.sectionTitle.copyWith(
-                color: color,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -197,7 +244,7 @@ class _ProjectionMetric extends StatelessWidget {
         Text(
           '+${stakingFormatUsd(value)}',
           style: AppTextStyles.caption.copyWith(
-            color: AppColors.buy,
+            color: AppModuleAccents.earn,
             fontWeight: AppTextStyles.bold,
             fontFeatures: AppTextStyles.tabularFigures,
           ),

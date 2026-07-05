@@ -5,9 +5,9 @@ Generated from `flutter_app/tool/top_header_behavior_audit.dart`.
 ```text
 total_routed_screens=414
 fixed_vit_header_remaining=9
-auto_hide_header=320
+auto_hide_header=316
 custom_scroll_header=2
-no_top_header=83
+no_top_header=87
 unresolved=0
 ```
 
@@ -58,9 +58,9 @@ unresolved=0
 | auth | `AppRoutePaths.authOtp` | `OTPPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/auth/presentation/pages/otp_page.dart` |
 | auth | `AppRoutePaths.authRegister` | `RegisterPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/auth/presentation/pages/register_page.dart` |
 | auth | `AppRoutePaths.authResetPassword` | `ResetPasswordPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/auth/presentation/pages/reset_password_page.dart` |
-| cross_module | `AppRoutePaths.crossModuleAnalytics` | `CrossModuleAnalytics` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/cross_module_analytics.dart` |
-| cross_module | `AppRoutePaths.smartAlerts` | `SmartAlertCenter` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/smart_alert_center.dart` |
-| cross_module | `AppRoutePaths.taxReports` | `TaxReportCenter` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/tax_report_center.dart` |
+| cross_module | `AppRoutePaths.crossModuleAnalytics` | `CrossModuleAnalytics` | no_top_header | no_top_header | `flutter_app/lib/features/cross_module/presentation/pages/cross_module_analytics.dart` |
+| cross_module | `AppRoutePaths.smartAlerts` | `SmartAlertCenter` | no_top_header | no_top_header | `flutter_app/lib/features/cross_module/presentation/pages/smart_alert_center.dart` |
+| cross_module | `AppRoutePaths.taxReports` | `TaxReportCenter` | no_top_header | no_top_header | `flutter_app/lib/features/cross_module/presentation/pages/tax_report_center.dart` |
 | cross_module | `AppRoutePaths.unifiedPortfolio` | `UnifiedPortfolioDashboard` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/cross_module/presentation/pages/unified_portfolio_dashboard.dart` |
 | dca | `'/dca/rebalance/:configId/edit'` | `DCARebalanceConfig` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/dca_rebalance_config_page.dart` |
 | dca | `'/dca/rebalance/:configId/history'` | `DCARebalanceDashboard` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/dca/presentation/pages/dca_rebalance_dashboard_page.dart` |
@@ -153,7 +153,7 @@ unresolved=0
 | earn | `AppRoutePaths.earnVoting` | `StakingVotingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking_voting_page.dart` |
 | earn | `AppRoutePaths.earnVotingProposalRoute` | `StakingVotingPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking_voting_page.dart` |
 | earn | `AppRoutePaths.earnWebhooks` | `StakingWebhooksPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/earn/presentation/pages/staking_webhooks_page.dart` |
-| enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | no_top_header | no_top_header | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
+| enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
 | home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
 | launchpad | `AppRoutePaths.launchpad` | `LaunchpadPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAbiDiff` | `LaunchpadAbiDiffPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_abi_diff_page.dart` |
@@ -341,14 +341,14 @@ unresolved=0
 | trade | `AppRoutePaths.trade` | `TradePage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/trade_page.dart` |
 | trade | `AppRoutePaths.tradeAdvancedTools` | `AdvancedToolsDemoPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/trade/presentation/pages/advanced_tools_demo_page.dart` |
 | trade | `AppRoutePaths.tradeBotApiDocumentation` | `BotApiDocumentationPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_api_documentation_page.dart` |
-| trade | `AppRoutePaths.tradeBotBacktesting` | `BotBacktestingPage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/trade/presentation/pages/bot_backtesting_page.dart` |
+| trade | `AppRoutePaths.tradeBotBacktesting` | `BotBacktestingPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/trade/presentation/pages/bot_backtesting_page.dart` |
 | trade | `AppRoutePaths.tradeBotDrawdownAnalyzer` | `BotDrawdownAnalyzerPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_drawdown_analyzer_page.dart` |
-| trade | `AppRoutePaths.tradeBotEmergencyStop` | `BotEmergencyStopPage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/trade/presentation/pages/bot_emergency_stop_page.dart` |
+| trade | `AppRoutePaths.tradeBotEmergencyStop` | `BotEmergencyStopPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/trade/presentation/pages/bot_emergency_stop_page.dart` |
 | trade | `AppRoutePaths.tradeBotEquityCurve` | `BotEquityCurvePage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_equity_curve_page.dart` |
 | trade | `AppRoutePaths.tradeBotFaq` | `BotFaqPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_faq_page.dart` |
 | trade | `AppRoutePaths.tradeBotGuide` | `BotGuidePage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_guide_page.dart` |
 | trade | `AppRoutePaths.tradeBotHistory` | `BotHistoryPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_history_page.dart` |
-| trade | `AppRoutePaths.tradeBotOptimization` | `BotOptimizationPage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/trade/presentation/pages/bot_optimization_page.dart` |
+| trade | `AppRoutePaths.tradeBotOptimization` | `BotOptimizationPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/trade/presentation/pages/bot_optimization_page.dart` |
 | trade | `AppRoutePaths.tradeBotPerformanceAnalytics` | `BotPerformanceAnalyticsPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_performance_analytics_page.dart` |
 | trade | `AppRoutePaths.tradeBotPortfolioDashboard` | `BotPortfolioDashboardPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_portfolio_dashboard_page.dart` |
 | trade | `AppRoutePaths.tradeBotRiskDashboard` | `BotRiskDashboardPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_risk_dashboard_page.dart` |
@@ -356,7 +356,7 @@ unresolved=0
 | trade | `AppRoutePaths.tradeBotSecuritySettings` | `BotSecuritySettingsPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_security_settings_page.dart` |
 | trade | `AppRoutePaths.tradeBotStrategyCompare` | `BotStrategyComparePage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_strategy_compare_page.dart` |
 | trade | `AppRoutePaths.tradeBotSuitabilityAssessment` | `BotSuitabilityAssessmentPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_suitability_assessment_page.dart` |
-| trade | `AppRoutePaths.tradeBotTaxReporting` | `BotTaxReportingPage` | fixed_vit_header | vit_header_default_title_only | `flutter_app/lib/features/trade/presentation/pages/bot_tax_reporting_page.dart` |
+| trade | `AppRoutePaths.tradeBotTaxReporting` | `BotTaxReportingPage` | fixed_vit_header | vit_header_default_title_subtitle | `flutter_app/lib/features/trade/presentation/pages/bot_tax_reporting_page.dart` |
 | trade | `AppRoutePaths.tradeBotTermsOfService` | `BotTermsOfServicePage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/bot_terms_of_service_page.dart` |
 | trade | `AppRoutePaths.tradeBots` | `TradingBotsPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/trading_bots_page.dart` |
 | trade | `AppRoutePaths.tradeConvert` | `ConvertPage` | no_top_header | no_top_header | `flutter_app/lib/features/trade/presentation/pages/convert_page.dart` |
@@ -417,13 +417,13 @@ unresolved=0
 | wallet | `'${AppRoutePaths.walletDeposit}/:asset'` | `DepositPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/deposit_page.dart` |
 | wallet | `'${AppRoutePaths.walletWithdraw}/:asset'` | `WithdrawPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/withdraw_page.dart` |
 | wallet | `'/wallet/asset/:assetId'` | `AssetDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/asset_detail_page.dart` |
-| wallet | `'/wallet/transaction/:txId'` | `TransactionDetailPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/transaction_detail_page.dart` |
+| wallet | `'/wallet/transaction/:txId'` | `TransactionDetailPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/transaction_detail_page.dart` |
 | wallet | `AppRoutePaths.wallet` | `WalletPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/wallet_page.dart` |
 | wallet | `AppRoutePaths.walletAddressBook` | `AddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/address_book_page.dart` |
 | wallet | `AppRoutePaths.walletAddressBookAdd` | `AddressAddPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/address_add_page.dart` |
 | wallet | `AppRoutePaths.walletBuyCrypto` | `BuyCryptoPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/buy_crypto_page.dart` |
 | wallet | `AppRoutePaths.walletDeposit` | `DepositPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/deposit_page.dart` |
-| wallet | `AppRoutePaths.walletDustConverter` | `DustConverterPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/dust_converter_page.dart` |
+| wallet | `AppRoutePaths.walletDustConverter` | `DustConverterPage` | no_top_header | no_top_header | `flutter_app/lib/features/wallet/presentation/pages/dust_converter_page.dart` |
 | wallet | `AppRoutePaths.walletGasOptimizer` | `WalletGasOptimizerPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/wallet_gas_optimizer_page.dart` |
 | wallet | `AppRoutePaths.walletHealthScore` | `WalletHealthScorePage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/wallet_health_score_page.dart` |
 | wallet | `AppRoutePaths.walletHistory` | `TransactionHistoryPage` | auto_hide_header | shared_auto_hide_scaffold | `flutter_app/lib/features/wallet/presentation/pages/transaction_history_page.dart` |

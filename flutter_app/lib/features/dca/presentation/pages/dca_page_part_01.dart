@@ -9,12 +9,13 @@ class _DCAPageState extends ConsumerState<DCAPage> {
     final snapshot = ref.watch(dcaDashboardProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
+        ? _dcaVisualNavClearance
+        : _dcaNativeNavClearance;
     final scrollEndPadding =
-        navClearance +
-        MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame ? AppSpacing.x5 : AppSpacing.x4);
+        navClearance + MediaQuery.paddingOf(context).bottom;
+    final showOfflineBanner =
+        snapshot.screenState == DcaScreenState.offline &&
+        snapshot.plans.isNotEmpty;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -25,13 +26,27 @@ class _DCAPageState extends ConsumerState<DCAPage> {
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
             title: 'Mua tự động (DCA)',
-            subtitle: 'Tự động mua crypto định kỳ',
+            subtitle: 'Đầu tư có kỷ luật · mua định kỳ tự động',
             showBack: true,
             onBack: _close,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (showOfflineBanner)
+                Padding(
+                  key: DCAPage.offlineKey,
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    0,
+                  ),
+                  child: const VitOfflineBanner(
+                    message: 'Đang ngoại tuyến',
+                    detail: 'Hiển thị kế hoạch DCA đã lưu gần nhất.',
+                  ),
+                ),
               Expanded(
                 child: Stack(
                   children: [
@@ -39,44 +54,29 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                       behavior: ScrollConfiguration.of(
                         context,
                       ).copyWith(scrollbars: false),
-                      child: SingleChildScrollView(
+                      child: VitInsetScrollView(
                         key: DCAPage.contentKey,
                         physics: const ClampingScrollPhysics(),
-                        padding: AppSpacing.dcaBottomInsetPadding(
-                          scrollEndPadding,
-                        ),
+                        bottomInset: scrollEndPadding,
                         child: VitPageContent(
+                          padding: VitContentPadding.compact,
                           density: VitDensity.compact,
                           children: [
-                            _DcaOverviewCard(
+                            _DcaDashboardBody(
                               snapshot: snapshot,
+                              activeTab: _activeTab,
                               onCreate: _openCreateSheet,
                               onPauseAll: _showPausedState,
                               onChart: () =>
                                   setState(() => _activeTab = _DcaTab.history),
                               onHistory: () =>
                                   setState(() => _activeTab = _DcaTab.history),
-                            ),
-                            _DcaTabs(
-                              active: _activeTab,
-                              planCount: snapshot.plans.length,
-                              onChanged: (tab) =>
+                              onTabChanged: (tab) =>
                                   setState(() => _activeTab = tab),
+                              onPause: _showPausedState,
+                              onOpenTool: _go,
+                              onRetry: _close,
                             ),
-                            AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 180),
-                              child: _activeTab == _DcaTab.plans
-                                  ? _PlansList(
-                                      key: const ValueKey('plans'),
-                                      plans: snapshot.plans,
-                                      onPause: _showPausedState,
-                                    )
-                                  : _HistoryPanel(
-                                      key: const ValueKey('history'),
-                                      snapshot: snapshot,
-                                    ),
-                            ),
-                            _AdvancedTools(tools: snapshot.tools, onOpen: _go),
                           ],
                         ),
                       ),
@@ -125,6 +125,103 @@ class _DCAPageState extends ConsumerState<DCAPage> {
   }
 }
 
+class _DcaDashboardBody extends StatelessWidget {
+  const _DcaDashboardBody({
+    required this.snapshot,
+    required this.activeTab,
+    required this.onCreate,
+    required this.onPauseAll,
+    required this.onChart,
+    required this.onHistory,
+    required this.onTabChanged,
+    required this.onPause,
+    required this.onOpenTool,
+    required this.onRetry,
+  });
+
+  final DcaDashboardSnapshot snapshot;
+  final _DcaTab activeTab;
+  final VoidCallback onCreate;
+  final VoidCallback onPauseAll;
+  final VoidCallback onChart;
+  final VoidCallback onHistory;
+  final ValueChanged<_DcaTab> onTabChanged;
+  final VoidCallback onPause;
+  final ValueChanged<String> onOpenTool;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (snapshot.screenState) {
+      DcaScreenState.loading => const VitSkeletonList(
+        key: DCAPage.loadingKey,
+        rows: 4,
+      ),
+      DcaScreenState.error => VitErrorState(
+        key: DCAPage.errorKey,
+        title: 'Không tải được kế hoạch DCA',
+        message: 'Thử lại sau hoặc quay lại màn giao dịch.',
+        actionLabel: 'Thử lại',
+        onAction: onRetry,
+      ),
+      DcaScreenState.empty => VitEmptyState(
+        key: DCAPage.emptyKey,
+        icon: Icons.sync_rounded,
+        title: 'Chưa có kế hoạch DCA',
+        message: 'Tạo kế hoạch mua định kỳ để đầu tư có kỷ luật.',
+        actionLabel: 'Tạo kế hoạch',
+        actionKey: DCAPage.overviewCreateKey,
+        onAction: onCreate,
+      ),
+      DcaScreenState.offline when snapshot.plans.isEmpty => VitEmptyState(
+        key: DCAPage.offlineKey,
+        icon: Icons.wifi_off_rounded,
+        title: 'Đang ngoại tuyến',
+        message: 'Kết nối lại để xem kế hoạch DCA mới nhất.',
+      ),
+      _ => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _DcaOverviewCard(
+            snapshot: snapshot,
+            onCreate: onCreate,
+            onPauseAll: onPauseAll,
+            onChart: onChart,
+            onHistory: onHistory,
+          ),
+          _DcaTabs(
+            active: activeTab,
+            planCount: snapshot.plans.length,
+            onChanged: onTabChanged,
+          ),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 180),
+            child: activeTab == _DcaTab.plans
+                ? _PlansList(
+                    key: const ValueKey('plans'),
+                    plans: snapshot.plans,
+                    onPause: onPause,
+                    onCreate: onCreate,
+                  )
+                : _HistoryPanel(
+                    key: const ValueKey('history'),
+                    snapshot: snapshot,
+                  ),
+          ),
+          _AdvancedTools(tools: snapshot.tools, onOpen: onOpenTool),
+          const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Xem lại kế hoạch DCA',
+            message:
+                'Tạo, tạm dừng và chỉnh lịch mua đều cần xem lại trước khi áp dụng.',
+            contractId: 'SC-169',
+          ),
+        ],
+      ),
+    };
+  }
+}
+
 class _DcaOverviewCard extends StatelessWidget {
   const _DcaOverviewCard({
     required this.snapshot,
@@ -143,10 +240,12 @@ class _DcaOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final overview = snapshot.overview;
+    final isProfit = overview.profitLossPercent >= 0;
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       density: VitDensity.compact,
+      background: const VitHeroGlow(center: Alignment(0, -0.96)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -187,45 +286,31 @@ class _DcaOverviewCard extends StatelessWidget {
               SizedBox(
                 width: AppSpacing.dcaMainSparklineWidth,
                 height: VitDensity.compact.controlHeight,
-                child: CustomPaint(
-                  painter: _SparklinePainter(
-                    values: snapshot.sparkline,
-                    lineColor: AppColors.buy,
-                    fillColor: AppColors.buy15,
-                  ),
+                child: VitSparkline(
+                  values: snapshot.sparkline,
+                  color: isProfit ? AppColors.buy : AppColors.sell,
                 ),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _DeltaPill(
-                      value:
-                          '+ ${_formatFullVnd(overview.profitLossVnd)} (+${_formatPercent(overview.profitLossPercent)})',
-                    ),
-                    const SizedBox(height: AppSpacing.x2),
-                    Text(
-                      'tổng lãi/lỗ',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.portfolioTextMuted,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  'Tổng lãi/lỗ · 90 ngày',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.portfolioTextMuted,
+                    fontWeight: AppTextStyles.medium,
+                  ),
                 ),
               ),
-              Text(
-                '90 ngày',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.portfolioTextMuted,
-                  fontWeight: AppTextStyles.bold,
-                ),
+              VitMetricDeltaPill(
+                label:
+                    '${isProfit ? '+' : ''}${_formatFullVnd(overview.profitLossVnd.abs())} (${isProfit ? '+' : ''}${_formatPercent(overview.profitLossPercent.abs())})',
+                tone: isProfit
+                    ? VitMetricDeltaTone.positive
+                    : VitMetricDeltaTone.negative,
               ),
             ],
           ),
@@ -238,7 +323,7 @@ class _DcaOverviewCard extends StatelessWidget {
                   label: 'Kế\nhoạch',
                   value: '${overview.totalPlans}',
                   subtitle: '${overview.activePlans} đang chạy',
-                  color: AppModuleAccents.trade,
+                  color: AppModuleAccents.dca,
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -315,54 +400,6 @@ class _DcaOverviewCard extends StatelessWidget {
   }
 }
 
-class _DeltaPill extends StatelessWidget {
-  const _DeltaPill({required this.value});
-
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: AppColors.buy15,
-          shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.inputRadius,
-            side: const BorderSide(color: AppColors.buy20),
-          ),
-        ),
-        child: Padding(
-          padding: AppSpacing.dcaButtonChipPadding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.arrow_upward_rounded,
-                color: AppColors.buy,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Flexible(
-                child: Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.buy,
-                    fontWeight: AppTextStyles.bold,
-                    height: AppTextStyles.badge.height,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _OverviewMetric extends StatelessWidget {
   const _OverviewMetric({
     required this.icon,
@@ -396,7 +433,7 @@ class _OverviewMetric extends StatelessWidget {
                   decoration: ShapeDecoration(
                     color: color.withValues(alpha: .15),
                     shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
+                      borderRadius: AppRadii.smRadius,
                       side: BorderSide(color: color.withValues(alpha: .2)),
                     ),
                   ),

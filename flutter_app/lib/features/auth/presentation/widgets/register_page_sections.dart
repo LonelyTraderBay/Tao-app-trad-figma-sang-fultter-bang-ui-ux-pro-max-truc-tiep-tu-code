@@ -1,85 +1,5 @@
 part of '../pages/register_page.dart';
 
-class _RegisterSegmentedControl extends StatelessWidget {
-  const _RegisterSegmentedControl({
-    required this.contactType,
-    required this.onChanged,
-  });
-
-  final _RegisterContactType contactType;
-  final ValueChanged<_RegisterContactType> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.authSegmentedHeight,
-      child: Material(
-        color: AppColors.surface2,
-        borderRadius: AppRadii.lgRadius,
-        child: Padding(
-          padding: AppSpacing.authSegmentedPadding,
-          child: Row(
-            children: [
-              _RegisterSegmentButton(
-                key: RegisterPage.emailTabKey,
-                label: 'Email',
-                selected: contactType == _RegisterContactType.email,
-                onPressed: () => onChanged(_RegisterContactType.email),
-              ),
-              _RegisterSegmentButton(
-                key: RegisterPage.phoneTabKey,
-                label: 'Điện thoại',
-                selected: contactType == _RegisterContactType.phone,
-                onPressed: () => onChanged(_RegisterContactType.phone),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _RegisterSegmentButton extends StatelessWidget {
-  const _RegisterSegmentButton({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.onPressed,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: SizedBox.expand(
-        child: VitCard(
-          onTap: onPressed,
-          variant: VitCardVariant.ghost,
-          borderColor: AppColors.transparent,
-          padding: EdgeInsets.zero,
-          child: Material(
-            color: selected ? _authSegmentActive : AppColors.transparent,
-            borderRadius: AppRadii.cardRadius,
-            child: Center(
-              child: Text(
-                label,
-                style: AppTextStyles.body.copyWith(
-                  color: selected ? _authPrimary : AppColors.text2,
-                  fontWeight: AppTextStyles.medium,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _AgreementRow extends StatelessWidget {
   const _AgreementRow({required this.agreed, required this.onTap, this.error});
 
@@ -98,12 +18,10 @@ class _AgreementRow extends StatelessWidget {
           button: true,
           checked: agreed,
           label: 'Đồng ý điều khoản dịch vụ',
-          child: VitCard(
+          child: InkWell(
             key: RegisterPage.agreementKey,
             onTap: onTap,
-            variant: VitCardVariant.ghost,
-            borderColor: AppColors.transparent,
-            padding: EdgeInsets.zero,
+            borderRadius: AppRadii.inputRadius,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

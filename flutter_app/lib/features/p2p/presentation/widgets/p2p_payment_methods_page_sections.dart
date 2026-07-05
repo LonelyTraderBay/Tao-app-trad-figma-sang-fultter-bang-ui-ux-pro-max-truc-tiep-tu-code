@@ -1,5 +1,35 @@
 part of '../pages/p2p_payment_methods_page.dart';
 
+class _ComplianceLinksRow extends StatelessWidget {
+  const _ComplianceLinksRow();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: VitCtaButton(
+            variant: VitCtaButtonVariant.secondary,
+            onPressed: () => context.go(AppRoutePaths.p2pPaymentMethodHistory),
+            leading: const Icon(Icons.history_rounded, size: AppSpacing.iconSm),
+            child: const Text('Lịch sử'),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.p2pPaymentMethodsListSectionGap),
+        Expanded(
+          child: VitCtaButton(
+            variant: VitCtaButtonVariant.secondary,
+            onPressed: () =>
+                context.go(AppRoutePaths.p2pPaymentMethodCoolingPeriod),
+            leading: const Icon(Icons.schedule_rounded, size: AppSpacing.iconSm),
+            child: const Text('Thời gian chờ'),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _AddMethodRow extends StatelessWidget {
   const _AddMethodRow({required this.snapshot});
 
@@ -249,7 +279,7 @@ class _MethodIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: tone == AppColors.accent ? AppColors.accent12 : AppColors.warn10,
-      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: Padding(
         padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
         child: Icon(
@@ -270,44 +300,12 @@ class _SetDefaultButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.xlRadius,
-        side: BorderSide(color: AppColors.borderSolid),
-      ),
-      child: VitCard(
-        key: P2PPaymentMethodsPage.defaultKey(methodId),
-        onTap: onTap,
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: AppSpacing.zeroInsets,
-        child: Padding(
-          padding: AppSpacing.p2pPaymentMethodsListDefaultPadding,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.star_border_rounded,
-                color: AppColors.text2,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x1),
-              Flexible(
-                child: Text(
-                  'Đặt làm mặc định',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return VitCtaButton(
+      key: P2PPaymentMethodsPage.defaultKey(methodId),
+      variant: VitCtaButtonVariant.secondary,
+      onPressed: onTap,
+      leading: const Icon(Icons.star_border_rounded, size: AppSpacing.iconSm),
+      child: const Text('Đặt làm mặc định'),
     );
   }
 }

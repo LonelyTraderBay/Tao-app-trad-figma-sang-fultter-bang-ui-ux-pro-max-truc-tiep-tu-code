@@ -60,7 +60,7 @@ void main() {
     expect(find.byType(P2PVideoVerificationPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Video Verification'), findsOneWidget);
+    expect(find.text('Xác minh video'), findsOneWidget);
     expect(find.text('KYC · P2P'), findsOneWidget);
     expect(find.byKey(P2PVideoVerificationPage.heroKey), findsOneWidget);
     expect(find.text('Video KYC Call'), findsOneWidget);

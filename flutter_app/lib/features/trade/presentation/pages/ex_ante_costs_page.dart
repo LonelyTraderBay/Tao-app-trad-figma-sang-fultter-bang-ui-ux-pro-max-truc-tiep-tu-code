@@ -69,7 +69,17 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
       children: [
-        VitTradeSection(title: 'Notice', child: const _RegulatoryNotice()),
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Ex-ante cost preview',
+            message:
+                'Review fees, RIY impact, limits, and next-step documents before investing.',
+            contractId: 'SC-105 ex-ante costs review',
+            density: VitDensity.compact,
+          ),
+        ),
         VitTradeComplianceSection(
           title: 'Cost preview',
           statusPill: const VitStatusPill(
@@ -88,6 +98,7 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
             ),
           ],
         ),
+        VitTradeSection(title: 'Notice', child: const _RegulatoryNotice()),
         VitTradeSection(
           title: 'Costs',
           child: Column(
@@ -106,14 +117,6 @@ class _ExAnteCostsPageState extends ConsumerState<ExAnteCostsPage> {
                   onChanged: (period) =>
                       setState(() => _holdingPeriod = period),
                 ),
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'Ex-ante cost preview',
-                message:
-                    'Review fees, RIY impact, limits, and next-step documents before investing.',
-                contractId: 'SC-105 ex-ante costs review',
-                density: VitDensity.compact,
-              ),
               const _QuickLinks(),
             ],
           ),

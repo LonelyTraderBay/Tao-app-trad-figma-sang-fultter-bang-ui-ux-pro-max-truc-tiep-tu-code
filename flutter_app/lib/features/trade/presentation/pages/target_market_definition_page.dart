@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -13,8 +14,6 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
-
-import '../widgets/trade_body_review_widgets.dart';
 
 const _targetPrimary = AppColors.primary;
 const _targetGreen = AppColors.buy;
@@ -46,10 +45,18 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
       contentKey: contentKey,
       shellRenderMode: shellRenderMode,
       onBack: () => context.go(AppRoutePaths.tradeCopyProductGovernance),
+      useCopyTradingInset: true,
       children: [
         VitTradeSection(
-          title: 'Product summary',
-          child: _SummaryCard(snapshot: snapshot),
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Target market review',
+            message:
+                'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
+            contractId: 'target-market-review',
+            density: VitDensity.compact,
+          ),
         ),
         VitTradeComplianceSection(
           title: 'Target market review',
@@ -70,31 +77,16 @@ class TargetMarketDefinitionPage extends ConsumerWidget {
           ],
         ),
         VitTradeSection(
+          title: 'Product summary',
+          child: _SummaryCard(snapshot: snapshot),
+        ),
+        VitTradeSection(
           title: 'Target Market Criteria',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               for (final dimension in snapshot.dimensions)
                 _DimensionCard(dimension: dimension),
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'Target market review',
-                message:
-                    'Suitable audience, exclusions, knowledge level, capital capacity and distribution limits are reviewed before product action.',
-                contractId: 'target-market-review',
-                density: VitDensity.compact,
-              ),
-              const TradeBodyReviewSection(
-                title: 'Target market body review',
-                message: 'Target market definition body reviewed',
-                detail:
-                    'Product summary, suitability criteria, exclusions, review, empty, and result states stay visible.',
-                primary: 'Product summary stays above target-market criteria.',
-                secondary:
-                    'Suitable and unsuitable audience criteria remain visibly separated.',
-                tertiary:
-                    'Distribution limits stay framed as governance review, not execution advice.',
-              ),
             ],
           ),
         ),
@@ -115,16 +107,20 @@ class _SummaryCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          VitCard(
-            variant: VitCardVariant.ghost,
-            width: _targetSummaryIconExtent,
-            height: _targetSummaryIconExtent,
-            alignment: Alignment.center,
-            borderColor: _targetPrimary.withValues(alpha: .18),
-            child: Icon(
-              Icons.gps_fixed_rounded,
-              color: _targetPrimary,
-              size: AppSpacing.iconMd,
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.surface2,
+              borderRadius: AppRadii.smRadius,
+              border: Border.all(color: _targetPrimary.withValues(alpha: .18)),
+            ),
+            child: SizedBox(
+              width: _targetSummaryIconExtent,
+              height: _targetSummaryIconExtent,
+              child: Icon(
+                Icons.gps_fixed_rounded,
+                color: _targetPrimary,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),

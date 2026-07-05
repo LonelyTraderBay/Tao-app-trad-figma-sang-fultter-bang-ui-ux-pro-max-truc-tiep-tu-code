@@ -146,17 +146,17 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                             key: PairDetailPage.dcaButtonKey,
                             icon: Icons.repeat_rounded,
                             iconColor: AppColors.accent,
-                            title: 'Mua dinh ky BTC',
+                            title: 'Mua định kỳ BTC',
                             subtitle:
-                                'Tu dong mua theo lich - Giam rui ro bien dong',
+                                'Tự động mua theo lịch · Giảm rủi ro biến động',
                             onTap: () => context.go(AppRoutePaths.dca),
                           ),
                           _LinkCard(
                             key: PairDetailPage.infoButtonKey,
                             icon: Icons.info_outline_rounded,
                             iconColor: _marketPrimary,
-                            title: 'Thong tin ${pair.baseAsset}',
-                            subtitle: 'Tokenomics - On-chain - Du an',
+                            title: 'Thông tin ${pair.baseAsset}',
+                            subtitle: 'Tokenomics · On-chain · Dự án',
                             onTap: () =>
                                 context.go(AppRoutePaths.pairInfo(pair.id)),
                           ),
@@ -164,8 +164,8 @@ class _PairDetailPageState extends ConsumerState<PairDetailPage> {
                             key: PairDetailPage.depthButtonKey,
                             icon: Icons.layers_rounded,
                             iconColor: AppAssetColors.cyanChain,
-                            title: 'Do sau thi truong',
-                            subtitle: 'Depth chart - Whale alerts - So lenh',
+                            title: 'Độ sâu thị trường',
+                            subtitle: 'Biểu đồ depth · Cảnh báo cá voi · Sổ lệnh',
                             onTap: () =>
                                 context.go(AppRoutePaths.pairDepth(pair.id)),
                           ),

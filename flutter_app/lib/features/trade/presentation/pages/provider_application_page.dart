@@ -114,93 +114,96 @@ class _ProviderApplicationPageState
                     children: [
                       VitTradeSection(
                         title: 'Tiến trình',
-                      child: _ProgressBars(
-                        steps: snapshot.steps,
-                        activeStep: step,
+                        child: _ProgressBars(
+                          steps: snapshot.steps,
+                          activeStep: step,
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: _stepTitle(step),
-                      child: switch (step) {
-                        TradeProviderApplicationStep.intro => _IntroStep(
-                          snapshot: snapshot,
-                        ),
-                        TradeProviderApplicationStep.requirements =>
-                          _RequirementsStep(
-                            draft: draft,
-                            onChanged: _updateDraft,
-                            monthsController: _monthsController,
+                      VitTradeSection(
+                        title: _stepTitle(step),
+                        child: switch (step) {
+                          TradeProviderApplicationStep.intro => _IntroStep(
+                            snapshot: snapshot,
                           ),
-                        TradeProviderApplicationStep.disclosure =>
-                          _DisclosureStep(
-                            draft: draft,
-                            onChanged: _updateDraft,
-                          ),
-                        TradeProviderApplicationStep.fees => _FeesStep(
-                          draft: draft,
-                          onChanged: _updateDraft,
-                          strategyController: _strategyController,
-                        ),
-                        TradeProviderApplicationStep.review => Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _ReviewStep(draft: draft, onChanged: _updateDraft),
-                            const SizedBox(height: AppSpacing.x4),
-                            VitFinancialSafetySummary(
-                              title: 'Review provider application',
-                              contractId: 'SC-069 Provider application',
-                              footer:
-                                  'Confirm KYC, disclosure, fiduciary duty, fee limits, and terms before submitting your provider application.',
-                              items: [
-                                VitFinancialSafetyItem(
-                                  label: 'KYC verified',
-                                  value: draft.hasKyc ? 'Yes' : 'Pending',
-                                  leading: const Icon(
-                                    Icons.verified_user_outlined,
-                                  ),
-                                  valueColor: draft.hasKyc
-                                      ? AppColors.buy
-                                      : AppColors.warn,
-                                ),
-                                VitFinancialSafetyItem(
-                                  label: 'Disclosures accepted',
-                                  value:
-                                      draft.agreedToDisclosure &&
-                                          draft.agreedToFiduciary
-                                      ? 'Complete'
-                                      : 'Incomplete',
-                                  leading: const Icon(
-                                    Icons.description_outlined,
-                                  ),
-                                  valueColor:
-                                      draft.agreedToDisclosure &&
-                                          draft.agreedToFiduciary
-                                      ? AppColors.buy
-                                      : AppColors.warn,
-                                ),
-                                VitFinancialSafetyItem(
-                                  label: 'Performance fee',
-                                  value:
-                                      '${draft.performanceFee.toStringAsFixed(0)}%',
-                                  leading: const Icon(Icons.percent_rounded),
-                                  valueColor: AppColors.text2,
-                                ),
-                                VitFinancialSafetyItem(
-                                  label: 'Terms accepted',
-                                  value: draft.agreedToTerms
-                                      ? 'Yes'
-                                      : 'Required',
-                                  leading: const Icon(Icons.gavel_outlined),
-                                  valueColor: draft.agreedToTerms
-                                      ? AppColors.buy
-                                      : AppColors.sell,
-                                ),
-                              ],
+                          TradeProviderApplicationStep.requirements =>
+                            _RequirementsStep(
+                              draft: draft,
+                              onChanged: _updateDraft,
+                              monthsController: _monthsController,
                             ),
-                          ],
-                        ),
-                      },
-                    ),
+                          TradeProviderApplicationStep.disclosure =>
+                            _DisclosureStep(
+                              draft: draft,
+                              onChanged: _updateDraft,
+                            ),
+                          TradeProviderApplicationStep.fees => _FeesStep(
+                            draft: draft,
+                            onChanged: _updateDraft,
+                            strategyController: _strategyController,
+                          ),
+                          TradeProviderApplicationStep.review => Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _ReviewStep(
+                                draft: draft,
+                                onChanged: _updateDraft,
+                              ),
+                              const SizedBox(height: AppSpacing.x4),
+                              VitFinancialSafetySummary(
+                                title: 'Xem lại đơn đăng ký provider',
+                                contractId: 'SC-069 Provider application',
+                                footer:
+                                    'Xác nhận KYC, công bố thông tin, nghĩa vụ ủy thác, giới hạn phí và điều khoản trước khi gửi đơn.',
+                                items: [
+                                  VitFinancialSafetyItem(
+                                    label: 'KYC đã xác minh',
+                                    value: draft.hasKyc ? 'Có' : 'Chờ xử lý',
+                                    leading: const Icon(
+                                      Icons.verified_user_outlined,
+                                    ),
+                                    valueColor: draft.hasKyc
+                                        ? AppColors.buy
+                                        : AppColors.warn,
+                                  ),
+                                  VitFinancialSafetyItem(
+                                    label: 'Công bố thông tin',
+                                    value:
+                                        draft.agreedToDisclosure &&
+                                            draft.agreedToFiduciary
+                                        ? 'Đã đủ'
+                                        : 'Chưa đủ',
+                                    leading: const Icon(
+                                      Icons.description_outlined,
+                                    ),
+                                    valueColor:
+                                        draft.agreedToDisclosure &&
+                                            draft.agreedToFiduciary
+                                        ? AppColors.buy
+                                        : AppColors.warn,
+                                  ),
+                                  VitFinancialSafetyItem(
+                                    label: 'Phí hiệu suất',
+                                    value:
+                                        '${draft.performanceFee.toStringAsFixed(0)}%',
+                                    leading: const Icon(Icons.percent_rounded),
+                                    valueColor: AppColors.text2,
+                                  ),
+                                  VitFinancialSafetyItem(
+                                    label: 'Điều khoản',
+                                    value: draft.agreedToTerms
+                                        ? 'Đã đồng ý'
+                                        : 'Bắt buộc',
+                                    leading: const Icon(Icons.gavel_outlined),
+                                    valueColor: draft.agreedToTerms
+                                        ? AppColors.buy
+                                        : AppColors.sell,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        },
+                      ),
                     ],
                   ),
                 ),

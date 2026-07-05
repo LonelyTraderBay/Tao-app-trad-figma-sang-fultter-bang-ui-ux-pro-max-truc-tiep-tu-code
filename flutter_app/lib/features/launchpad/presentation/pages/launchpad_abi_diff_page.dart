@@ -86,6 +86,7 @@ class _LaunchpadAbiDiffPageState extends ConsumerState<LaunchpadAbiDiffPage> {
           semanticLabel: 'SC-308 LaunchpadABIDiffPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
+            subtitle: 'So sánh ABI contract · Xem trước thay đổi',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),

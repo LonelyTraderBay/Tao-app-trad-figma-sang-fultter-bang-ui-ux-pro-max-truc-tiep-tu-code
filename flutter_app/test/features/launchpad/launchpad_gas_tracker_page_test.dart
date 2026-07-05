@@ -74,7 +74,7 @@ void main() {
     expect(find.byKey(LaunchpadGasTrackerPage.eipKey), findsOneWidget);
     expect(find.byKey(LaunchpadGasTrackerPage.allChainsKey), findsOneWidget);
     expect(find.text('Gas Tracker'), findsOneWidget);
-    expect(find.text('Ethereum Gas'), findsOneWidget);
+    expect(find.text('Gas Ethereum'), findsOneWidget);
     expect(find.text('Gas 24h - Ethereum'), findsOneWidget);
     expect(find.text('BSC'), findsWidgets);
   });
@@ -87,7 +87,7 @@ void main() {
     await tester.tap(find.byKey(LaunchpadGasTrackerPage.chainKey('Polygon')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Polygon Gas'), findsOneWidget);
+    expect(find.text('Gas Polygon'), findsOneWidget);
     expect(find.text('Gas 24h - Polygon'), findsOneWidget);
     expect(find.byKey(LaunchpadGasTrackerPage.eipKey), findsNothing);
   });

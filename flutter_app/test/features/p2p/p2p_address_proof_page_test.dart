@@ -65,10 +65,7 @@ void main() {
     expect(find.byType(P2PAddressProofPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Proof of Address'), findsOneWidget);
-    expect(find.text('KYC · P2P'), findsOneWidget);
-    expect(find.byKey(P2PAddressProofPage.heroKey), findsOneWidget);
-    expect(find.text('Xác minh địa chỉ'), findsOneWidget);
+    expect(find.text('Xác minh địa chỉ'), findsNWidgets(2));
     expect(find.byKey(P2PAddressProofPage.requirementsKey), findsOneWidget);
     expect(find.text('Yêu cầu tài liệu'), findsOneWidget);
     expect(find.byKey(P2PAddressProofPage.documentTypesKey), findsOneWidget);

@@ -92,13 +92,13 @@ void main() {
     expect(find.byKey(LaunchpadDetailPage.summaryKey), findsOneWidget);
     expect(find.text('NexaAI Protocol'), findsOneWidget);
     expect(find.text('IEO'), findsOneWidget);
-    expect(find.text('Active'), findsOneWidget);
-    expect(find.text('Token price'), findsOneWidget);
+    expect(find.text('Đang diễn ra'), findsOneWidget);
+    expect(find.text('Giá token'), findsOneWidget);
     expect(find.text(r'$0.05'), findsOneWidget);
-    expect(find.text('Raised'), findsOneWidget);
+    expect(find.text('Đã huy động'), findsOneWidget);
     expect(find.text(r'$2,500,000'), findsOneWidget);
-    expect(find.text('Launchpad staking review required'), findsOneWidget);
-    expect(find.text('Next step'), findsOneWidget);
+    expect(find.text('Cần rà soát staking Launchpad'), findsOneWidget);
+    expect(find.text('Bước tiếp theo'), findsOneWidget);
   });
 
   testWidgets('SC-318 header back returns to launchpad', (tester) async {

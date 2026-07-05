@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -16,6 +17,10 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 
+const double _p2pNotificationsVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pNotificationsNativeNavClearance =
+    _p2pNotificationsVisualNavClearance - AppSpacing.x4;
 const double _p2pNotificationsVisualClearance = AppSpacing.x3;
 const double _p2pNotificationsNativeClearance = AppSpacing.x2;
 const double _p2pNotificationsTitleLineHeight = 1.1;
@@ -48,8 +53,9 @@ class _P2PNotificationsSettingsPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + _p2pNotificationsVisualClearance
-            : DeviceMetrics.nativeBottomChrome +
+            ? _p2pNotificationsVisualNavClearance +
+                  _p2pNotificationsVisualClearance
+            : _p2pNotificationsNativeNavClearance +
                   _p2pNotificationsNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
 
@@ -88,6 +94,13 @@ class _P2PNotificationsSettingsPageState
                           snapshot: snapshot,
                           enabledChannels: _enabledChannels,
                           onToggle: _toggleChannel,
+                        ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Rà soát thông báo P2P',
+                          message:
+                              'Kênh Push, Email, SMS cho cập nhật đơn, thanh toán, release, bảo mật và KYC vẫn hiển thị trước khi lưu cài đặt.',
+                          contractId: 'SC-278',
                         ),
                       ],
                     ),
@@ -137,15 +150,16 @@ class _Hero extends StatelessWidget {
       borderColor: AppColors.primary20,
       padding: AppSpacing.p2pNotificationsCardPadding,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Material(
-            color: AppColors.primary,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
-            child: Padding(
-              padding: EdgeInsetsDirectional.all(AppSpacing.x2),
-              child: Icon(
+          SizedBox.square(
+            dimension: AppSpacing.buttonCompact,
+            child: Material(
+              color: AppModuleAccents.p2p.withValues(alpha: .12),
+              borderRadius: AppRadii.smRadius,
+              child: const Icon(
                 Icons.notifications_none_rounded,
-                color: AppColors.onAccent,
+                color: AppModuleAccents.p2p,
                 size: AppSpacing.iconSm,
               ),
             ),
@@ -160,14 +174,14 @@ class _Hero extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.primary,
+                    color: AppModuleAccents.p2p,
                     height: _p2pNotificationsTitleLineHeight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
+                const SizedBox(height: AppSpacing.x1),
                 Text(
                   snapshot.heroSubtitle,
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                 ),
@@ -245,7 +259,7 @@ class _SettingRow extends StatelessWidget {
           const SizedBox(height: AppSpacing.x1),
           Text(
             setting.description,
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
@@ -292,10 +306,15 @@ class _ChannelButton extends StatelessWidget {
       label: channel.label,
       selected: selected,
       onTap: onTap,
-      tone: VitChoicePillTone.success,
+      tone: selected ? VitChoicePillTone.success : VitChoicePillTone.primary,
+      accentColor: selected ? AppColors.buy : AppModuleAccents.p2p,
       height: AppSpacing.buttonCompact + AppSpacing.x4,
       padding: AppSpacing.p2pNotificationsChannelPadding,
-      leading: Icon(channel.icon),
+      leading: Icon(
+        channel.icon,
+        size: AppSpacing.iconSm,
+        color: selected ? AppColors.buy : AppColors.text3,
+      ),
       semanticLabel: '${channel.label} notifications',
     );
   }

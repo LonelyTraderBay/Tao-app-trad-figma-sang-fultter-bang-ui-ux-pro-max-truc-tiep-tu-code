@@ -9,7 +9,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/comparison_tool_common.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/comparison_tool_content.dart';
@@ -102,6 +101,7 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'So sánh',
+            subtitle: 'So sánh token · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -159,14 +159,6 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
                           ),
                         if (selectedPairs.length < 2)
                           const ComparisonNeedMoreTokensCard(),
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.sync_rounded,
-                          message: 'Comparison data state reviewed',
-                          detail:
-                              'Selected token, picker, metric, empty, and refresh states stay visible while comparing market pairs.',
-                        ),
-                        const _MarketDataReviewCards(),
                       ],
                     ),
                   ),
@@ -176,22 +168,6 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _MarketDataReviewCards extends StatelessWidget {
-  const _MarketDataReviewCards();
-
-  @override
-  Widget build(BuildContext context) {
-    return const VitPageSection(
-      label: 'Data checkpoints',
-      children: [
-        VitCard(child: Text('Token selection and removal constraints')),
-        VitCard(child: Text('Metric comparison and chart readiness')),
-        VitCard(child: Text('Empty state and cached data fallback')),
-      ],
     );
   }
 }

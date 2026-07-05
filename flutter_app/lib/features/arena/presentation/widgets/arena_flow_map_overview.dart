@@ -44,8 +44,15 @@ class _FlowHero extends StatelessWidget {
           Row(
             children: [
               for (final stat in stats) ...[
-                Expanded(child: _StatTile(stat: stat)),
-                if (stat != stats.last) const SizedBox(width: AppSpacing.x2),
+                Expanded(child: _StatMetric(stat: stat)),
+                if (stat != stats.last)
+                  const SizedBox(
+                    height: AppSpacing.x6,
+                    child: VerticalDivider(
+                      width: AppSpacing.x5,
+                      color: AppColors.divider,
+                    ),
+                  ),
               ],
             ],
           ),
@@ -55,37 +62,35 @@ class _FlowHero extends StatelessWidget {
   }
 }
 
-class _StatTile extends StatelessWidget {
-  const _StatTile({required this.stat});
+class _StatMetric extends StatelessWidget {
+  const _StatMetric({required this.stat});
 
   final ArenaFlowStatDraft stat;
 
   @override
   Widget build(BuildContext context) {
     final color = _flowColor(stat.kind);
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: _flowMapStatPadding,
-      child: Column(
-        children: [
-          Text(
-            stat.value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
+    return Column(
+      children: [
+        Text(
+          stat.value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.baseMedium.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            stat.label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          stat.label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
     );
   }
 }

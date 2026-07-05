@@ -39,45 +39,43 @@ class _ActivityRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final isBuy = activity.action == PredictionGlobalActivityAction.bought;
     final sideColor = isBuy ? AppColors.buy : AppColors.sell;
-    return VitCard(
-      onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.zeroInsets,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x1,
-              vertical: AppSpacing.x2,
-            ),
-            child: Row(
-              children: [
-                Material(
-                  color: AppColors.surface3,
-                  shape: const CircleBorder(),
-                  child: SizedBox.square(
-                    dimension: _activityAvatarExtent,
-                    child: Center(
-                      child: Text(
-                        activity.avatar,
-                        style: AppTextStyles.avatarMd,
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: () => context.go(AppRoutePaths.marketsPredictionEvent(event.id)),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                vertical: AppSpacing.x2,
+              ),
+              child: Row(
+                children: [
+                  Material(
+                    color: AppColors.surface3,
+                    shape: const CircleBorder(),
+                    child: SizedBox.square(
+                      dimension: _activityAvatarExtent,
+                      child: Center(
+                        child: Text(
+                          activity.avatar,
+                          style: AppTextStyles.avatarMd,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        spacing: AppSpacing.x1,
-                        runSpacing: AppSpacing.x1,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Text(
-                            activity.user,
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          spacing: AppSpacing.x1,
+                          runSpacing: AppSpacing.x1,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Text(
+                              activity.user,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
@@ -147,18 +145,11 @@ class _ActivityRow extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          if (!last)
-            const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: SizedBox(
-                height: AppSpacing.dividerHairline,
-                child: ColoredBox(color: AppColors.divider),
-              ),
             ),
-        ],
+            if (!last)
+              const Divider(height: 1, thickness: 1, color: AppColors.divider),
+          ],
+        ),
       ),
     );
   }

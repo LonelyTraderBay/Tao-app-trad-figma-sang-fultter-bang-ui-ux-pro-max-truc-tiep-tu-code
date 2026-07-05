@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -15,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 
 part '../widgets/savings_analytics_summary_range.dart';
 part '../widgets/savings_analytics_charts_metrics.dart';
@@ -64,7 +66,7 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -100,7 +102,7 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.zeroInsets.copyWith(bottom: bottomInset),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
@@ -126,6 +128,7 @@ class _SavingsAnalyticsPageState extends ConsumerState<SavingsAnalyticsPage> {
                           tab: activeTab,
                           summary: snapshot.summary,
                         ),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

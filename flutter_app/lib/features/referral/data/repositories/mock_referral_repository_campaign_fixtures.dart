@@ -1,12 +1,13 @@
 part of 'mock_referral_repository.dart';
 
 const _activeCampaign = ReferralCampaignDraft(
-  title: 'Tháng 3 Bùng Nổ',
-  description: 'Mời bạn bè trong tháng 3 nhận thưởng x2 KYC bonus!',
-  bonusLabel: 'x2 Thưởng KYC',
+  title: 'Chương trình tháng 3',
+  description:
+      'Thưởng KYC tăng gấp đôi khi bạn bè hoàn tất xác minh trong tháng 3.',
+  bonusLabel: 'Thưởng KYC x2',
   daysLeft: 29,
   totalParticipants: 1247,
-  extraReward: 'Top 10 người mời nhiều nhất nhận thêm 500 USDT',
+  extraReward: '10 người mời nhiều nhất nhận thêm 500 USDT',
   bonusMultiplier: 2,
 );
 
@@ -36,14 +37,14 @@ const _milestones = [
     id: 'ms-10',
     friends: 10,
     reward: '50 USDT',
-    description: 'Nhà vô địch giới thiệu',
+    description: 'Mốc 10 bạn bè',
     claimed: false,
   ),
   ReferralMilestoneDraft(
     id: 'ms-20',
     friends: 20,
     reward: '100 USDT + Hạng Vàng',
-    description: 'Super Referrer',
+    description: 'Mốc 20 bạn bè',
     claimed: false,
   ),
 ];
@@ -78,9 +79,10 @@ const _pendingCommissions = [
 const _campaignHistory = [
   ReferralCampaignHistoryDraft(
     id: 'camp-march-2026',
-    title: 'Tháng 3 Bùng Nổ',
-    description: 'Mời bạn bè nhận thưởng x2 KYC bonus suốt tháng 3!',
-    bonusLabel: 'x2 Thưởng KYC',
+    title: 'Chương trình tháng 3',
+    description:
+        'Thưởng KYC tăng gấp đôi khi bạn bè hoàn tất xác minh trong tháng 3.',
+    bonusLabel: 'Thưởng KYC x2',
     dateRange: '01/03/2026 - 31/03/2026',
     statusLabel: 'Đang diễn ra',
     participants: 1247,
@@ -89,8 +91,8 @@ const _campaignHistory = [
   ReferralCampaignHistoryDraft(
     id: 'camp-feb-2026',
     title: 'Tết Nguyên Đán 2026',
-    description: 'Mừng xuân mới, mời bạn nhận lì xì crypto.',
-    bonusLabel: 'x3 Thưởng KYC',
+    description: 'Thưởng KYC tăng gấp ba trong dịp Tết Nguyên Đán.',
+    bonusLabel: 'Thưởng KYC x3',
     dateRange: '25/01/2026 - 08/02/2026',
     statusLabel: 'Đã kết thúc',
     participants: 3842,
@@ -108,9 +110,9 @@ const _campaignHistory = [
   ),
   ReferralCampaignHistoryDraft(
     id: 'camp-dec-2025',
-    title: 'Christmas Airdrop',
-    description: 'Mời bạn nhận hộp quà ngẫu nhiên 5-50 USDT.',
-    bonusLabel: 'Hộp quà ngẫu nhiên',
+    title: 'Chương trình cuối năm 2025',
+    description: 'Thưởng KYC bổ sung 5–50 USDT cho mỗi lời mời hợp lệ.',
+    bonusLabel: 'Thưởng KYC bổ sung',
     dateRange: '15/12/2025 - 31/12/2025',
     statusLabel: 'Đã kết thúc',
     participants: 5621,

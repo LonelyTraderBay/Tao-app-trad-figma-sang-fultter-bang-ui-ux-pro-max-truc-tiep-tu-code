@@ -71,8 +71,8 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Advanced Analytics'), findsOneWidget);
-    expect(find.text('AI & Professional Tools'), findsOneWidget);
+    expect(find.text('Phân tích nâng cao'), findsOneWidget);
+    expect(find.text('AI · Rủi ro · Nhật ký'), findsOneWidget);
     expect(find.text('P3: Advanced Analytics'), findsOneWidget);
     expect(find.text('AI Trading Signals'), findsWidgets);
     expect(find.text('BTC/USDT'), findsOneWidget);

@@ -8,9 +8,10 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -24,8 +25,6 @@ const _predictionPrimary = AppColors.primary;
 const _emailPurple = AppColors.accent;
 const _breakingSpace = AppSpacing.x2;
 const _breakingTinySpace = AppSpacing.x1;
-const _breakingVisualScrollClearance = 112.0;
-const _breakingNativeScrollClearance = 72.0;
 const _breakingIconBox = 34.0;
 const _breakingRankBox = 28.0;
 const _breakingCtaHeight = 44.0;
@@ -67,11 +66,13 @@ class _PredictionsBreakingPageState
         .watch(predictionsReadModelControllerProvider)
         .getBreaking(category: _category);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
+    final navClearance = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollEndPadding =
+        navClearance +
         MediaQuery.paddingOf(context).bottom +
-        (mode.usesVisualQaFrame
-            ? _breakingVisualScrollClearance
-            : _breakingNativeScrollClearance);
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -79,9 +80,10 @@ class _PredictionsBreakingPageState
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Breaking Movers',
-            subtitle: 'Biến động · Prediction',
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
+            title: 'Biến động',
+            subtitle: 'Xác suất thay đổi 24h',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),
@@ -95,11 +97,10 @@ class _PredictionsBreakingPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsBreakingPage.contentKey,
-                    padding: EdgeInsetsDirectional.only(
-                      bottom: scrollEndClearance,
+                    padding: AppSpacing.predictionHomeScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
                         _MovementSummary(snapshot: snapshot),
@@ -111,7 +112,11 @@ class _PredictionsBreakingPageState
                           }),
                         ),
                         if (snapshot.movers.isEmpty)
-                          const _BreakingEmptyState()
+                          _BreakingEmptyState(
+                            onShowAll: () => setState(() {
+                              _category = null;
+                            }),
+                          )
                         else
                           for (
                             var index = 0;

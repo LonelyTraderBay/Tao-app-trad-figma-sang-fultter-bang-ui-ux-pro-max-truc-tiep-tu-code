@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -76,22 +77,17 @@ class P2PAchievementsPage extends ConsumerWidget {
                     padding: AppSpacing.p2pAchievementsPageScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _SummaryCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
-                        for (
-                          var index = 0;
-                          index < snapshot.categories.length;
-                          index++
-                        ) ...[
+                        for (final category in snapshot.categories)
                           _AchievementCategory(
                             snapshot: snapshot,
-                            category: snapshot.categories[index],
+                            category: category,
                           ),
-                          const SizedBox(height: AppSpacing.x3),
-                        ],
                         _TradingLevelLink(snapshot: snapshot),
                       ],
                     ),

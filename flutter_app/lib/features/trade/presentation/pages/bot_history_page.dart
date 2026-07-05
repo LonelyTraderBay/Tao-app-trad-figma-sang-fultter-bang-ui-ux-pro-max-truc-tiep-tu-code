@@ -56,9 +56,11 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
     );
     return VitTradeHubScaffold(
       title: 'Trade History',
+      subtitle: 'Lịch sử giao dịch và lãi/lỗ bot',
       semanticLabel: 'SC-123 BotHistoryPage',
       contentKey: BotHistoryPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       headerActions: [
         VitHeaderActionItem(
@@ -67,6 +69,14 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
         ),
       ],
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Giao dịch',
+          primaryValue: '${filteredTrades.length}',
+          secondaryLabel: 'Lãi/lỗ',
+          secondaryValue:
+              '${totalPnL >= 0 ? '+' : ''}\$${totalPnL.toStringAsFixed(2)}',
+          secondaryColor: totalPnL >= 0 ? _historyGreen : _historyRed,
+        ),
         VitTradeSection(
           title: 'Summary',
           child: _StatsCard(
@@ -100,23 +110,11 @@ class _BotHistoryPageState extends ConsumerState<BotHistoryPage> {
           title: 'Export',
           child: _ExportNote(onTap: _handleExport),
         ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            padding: EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
-            ),
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'History export review',
-              message:
-                  'Trade filters, realized PnL, fee totals, export scope and receipt next step are reviewed before records are generated.',
-              contractId: 'bot-history-export-review',
-              density: VitDensity.compact,
-            ),
-          ),
+        const VitBotRiskReviewFooter(
+          title: 'History export review',
+          message:
+              'Trade filters, realized PnL, fee totals, export scope and receipt next step are reviewed before records are generated.',
+          contractId: 'bot-history-export-review',
         ),
       ],
     );

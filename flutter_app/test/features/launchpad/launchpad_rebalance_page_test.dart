@@ -73,7 +73,7 @@ void main() {
     expect(find.byKey(LaunchpadRebalancePage.deviationKey), findsOneWidget);
     expect(find.byKey(LaunchpadRebalancePage.previewKey), findsOneWidget);
     expect(find.text('Rebalance'), findsOneWidget);
-    expect(find.text('Portfolio Value'), findsOneWidget);
+    expect(find.text('Giá trị danh mục'), findsOneWidget);
     expect(find.text('An toan'), findsOneWidget);
     expect(find.text('Can bang'), findsWidgets);
     expect(find.text('Tang truong'), findsOneWidget);

@@ -15,8 +15,6 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
-import '../widgets/trade_body_review_widgets.dart';
-
 const _providerPrimary = AppColors.primary;
 const _providerGreen = AppColors.buy;
 const _providerRed = AppColors.sell;
@@ -49,7 +47,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
 
     if (provider == null) {
       return VitTradeDetailScaffold(
-        title: 'Provider Not Found',
+        title: 'Không tìm thấy provider',
         semanticLabel: 'SC-070 CopyProviderDetailPage not found',
         shellRenderMode: shellRenderMode,
         useCopyTradingInset: true,
@@ -85,18 +83,33 @@ class CopyProviderDetailPage extends ConsumerWidget {
       useCopyTradingInset: true,
       onBack: () => goBackOrFallback(context, fallbackPath: resolvedBackPath),
       children: [
-        VitTradeSection(title: 'Cảnh báo rủi ro', child: const _RiskWarning()),
+        CopyTradingRiskWarningCard(
+          title: 'Copy trading không đảm bảo lợi nhuận',
+          message:
+              'Quá khứ không báo hiệu tương lai. Bạn có thể mất toàn bộ vốn khi sao chép chiến lược.',
+          contractId: 'sc070-provider-risk',
+        ),
         VitTradeSection(
-          title: 'Đánh giá phù hợp',
+          title: 'Đánh giá trước khi copy',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const VitHighRiskStatePanel(
+                state: VitHighRiskUiState.riskReview,
+                title: 'Xem lại trước khi sao chép',
+                message:
+                    'So sánh drawdown tối đa, giới hạn copier, phí và đánh giá phù hợp trước khi copy provider này.',
+                contractId: 'copy-provider-detail-review',
+                density: VitDensity.compact,
+              ),
+              const SizedBox(height: AppSpacing.x3),
               VitCtaButton(
                 key: assessmentKey,
                 onPressed: () => context.go(
                   AppRoutePaths.tradeCopyProviderAssessment(providerId),
                 ),
                 height: VitDensity.compact.controlHeight,
+                leading: const Icon(Icons.fact_check_outlined),
                 trailing: const Icon(Icons.chevron_right_rounded),
                 child: Text(
                   'Đánh giá rủi ro',
@@ -104,15 +117,6 @@ class CopyProviderDetailPage extends ConsumerWidget {
                     color: AppColors.onAccent,
                     fontWeight: AppTextStyles.extraBold,
                   ),
-                ),
-              ),
-              const SizedBox(height: AppSpacing.x3),
-              Text(
-                'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Copy Trading có rủi ro cao.',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text3,
-                  height: AppSpacing.copyProviderDetailDisclaimerLineHeight,
                 ),
               ),
             ],
@@ -123,69 +127,23 @@ class CopyProviderDetailPage extends ConsumerWidget {
           child: _ProviderCard(provider: provider),
         ),
         VitTradeSection(
-          title: 'Chỉ số',
+          title: 'Chỉ số (kèm drawdown)',
           child: _MetricGrid(provider: provider),
         ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.cardPaddingCompact,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Provider detail review required',
-              message:
-                  'Performance, max drawdown, copier limit, risk score, fees and suitability assessment are reviewed before copying.',
-              contractId: 'copy-provider-detail-review',
+        Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x2,
+          ),
+          child: Text(
+            'Copy trading không đảm bảo lợi nhuận. ROI luôn đi kèm drawdown tối đa.',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: AppSpacing.copyProviderDetailDisclaimerLineHeight,
             ),
           ),
-        ),
-        const TradeBodyReviewSection(
-          title: 'Provider detail body review',
-          message: 'Copy provider detail body reviewed',
-          detail:
-              'Risk warning, provider profile, metrics, assessment CTA, not-found, and review states stay visible.',
-          primary:
-              'Risk warning and review panel remain above provider performance data.',
-          secondary:
-              'Assessment CTA stays after provider metrics and before follow-up review.',
-          tertiary:
-              'Not-found state remains routed through the same safe back behavior.',
         ),
       ],
-    );
-  }
-}
-
-class _RiskWarning extends StatelessWidget {
-  const _RiskWarning();
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.cardPaddingCompact,
-      borderColor: AppColors.warningBorderDark,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.caution,
-            size: AppSpacing.ctaLoadingIcon,
-          ),
-          const SizedBox(width: AppSpacing.walletAssetPillGap),
-          Expanded(
-            child: Text(
-              'Hiệu suất quá khứ không đảm bảo lợi nhuận tương lai. Bạn có thể mất toàn bộ vốn đầu tư.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.caution,
-                height: AppSpacing.copyProviderDetailRiskLineHeight,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -234,7 +192,7 @@ class _ProviderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x3),
                 Text(
-                  '${provider.totalTrades} trades · ${provider.avgHoldingTime} avg hold',
+                  '${provider.totalTrades} lệnh · giữ trung bình ${provider.avgHoldingTime}',
                   style: AppTextStyles.captionSm.copyWith(
                     color: AppColors.text3,
                   ),
@@ -256,12 +214,24 @@ class _MetricGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final metrics = [
-      ('ROI', '+${provider.totalPnlPct.toStringAsFixed(1)}%', _providerGreen),
-      ('Max DD', '${provider.maxDrawdown.toStringAsFixed(1)}%', _providerRed),
-      ('Sharpe', provider.sharpeRatio.toStringAsFixed(2), _providerPrimary),
-      ('Win Rate', '${provider.winRate.toStringAsFixed(1)}%', _providerGreen),
       (
-        'Copiers',
+        'Lợi nhuận',
+        '+${provider.totalPnlPct.toStringAsFixed(1)}%',
+        _providerGreen,
+      ),
+      (
+        'Drawdown tối đa',
+        '${provider.maxDrawdown.toStringAsFixed(1)}%',
+        _providerRed,
+      ),
+      ('Sharpe', provider.sharpeRatio.toStringAsFixed(2), _providerPrimary),
+      (
+        'Tỷ lệ thắng',
+        '${provider.winRate.toStringAsFixed(1)}%',
+        AppColors.text2,
+      ),
+      (
+        'Copier',
         '${provider.copiers}/${provider.maxCopiers}',
         _providerPrimary,
       ),
@@ -281,9 +251,8 @@ class _MetricGrid extends StatelessWidget {
       childAspectRatio: AppSpacing.copyProviderDetailMetricAspectRatio,
       children: [
         for (final metric in metrics)
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
+          VitCardStat(
+            padding: AppSpacing.cardPaddingCompact,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -292,6 +261,7 @@ class _MetricGrid extends StatelessWidget {
                   style: AppTextStyles.baseMedium.copyWith(
                     color: metric.$3,
                     fontWeight: AppTextStyles.extraBold,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),

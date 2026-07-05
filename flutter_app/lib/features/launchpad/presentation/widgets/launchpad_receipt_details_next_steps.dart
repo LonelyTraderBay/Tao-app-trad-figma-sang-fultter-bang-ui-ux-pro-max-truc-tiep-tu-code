@@ -58,7 +58,11 @@ class _ProjectReceiptCard extends StatelessWidget {
               ],
             ),
           ),
-          _ReceiptStatusPill(status: status),
+          VitStatusPill(
+            label: status.label,
+            status: _receiptPillStatus(status),
+            size: VitStatusPillSize.sm,
+          ),
         ],
       ),
     );
@@ -296,30 +300,15 @@ class _ReceiptDisclosure extends StatelessWidget {
   }
 }
 
-class _ReceiptStatusPill extends StatelessWidget {
-  const _ReceiptStatusPill({required this.status});
-
-  final _StatusStyle status;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: status.color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadInlinePillPadding,
-        child: Text(
-          status.label,
-          style: AppTextStyles.micro.copyWith(
-            color: status.color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
-  }
+VitStatusPillStatus _receiptPillStatus(_StatusStyle status) {
+  return switch (status.label) {
+    'Chờ phân bổ' => VitStatusPillStatus.warning,
+    'Đã phân bổ' => VitStatusPillStatus.success,
+    'Phân bổ 1 phần' => VitStatusPillStatus.info,
+    'Đã nhận' => VitStatusPillStatus.success,
+    'Đã hoàn tiền' => VitStatusPillStatus.neutral,
+    _ => VitStatusPillStatus.neutral,
+  };
 }
 
 final class _ReceiptRowDraft {

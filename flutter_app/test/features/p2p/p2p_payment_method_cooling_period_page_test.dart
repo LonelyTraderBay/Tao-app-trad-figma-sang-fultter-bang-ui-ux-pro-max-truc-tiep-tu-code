@@ -59,7 +59,7 @@ void main() {
     expect(find.byType(P2PPaymentMethodCoolingPeriodPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Cooling Period'), findsOneWidget);
+    expect(find.text('Thời gian chờ'), findsOneWidget);
     expect(find.text('Thanh toán · P2P'), findsOneWidget);
     expect(find.text('Đang cooling period'), findsOneWidget);
     expect(

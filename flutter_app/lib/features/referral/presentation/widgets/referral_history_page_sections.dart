@@ -51,25 +51,31 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.referralHeroMetricPadding,
-      child: Column(
-        children: [
-          Text(
-            '$value',
-            style: AppTextStyles.base.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
+        color: AppColors.surface2,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+      ),
+      child: Padding(
+        padding: AppSpacing.referralHeroMetricPadding,
+        child: Column(
+          children: [
+            Text(
+              '$value',
+              style: AppTextStyles.base.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x2),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
       ),
     );
   }

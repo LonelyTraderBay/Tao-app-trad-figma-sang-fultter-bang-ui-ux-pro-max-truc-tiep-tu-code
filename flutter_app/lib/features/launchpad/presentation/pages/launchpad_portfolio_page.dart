@@ -3,23 +3,30 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 part '../widgets/launchpad_portfolio_hero_tabs.dart';
 part '../widgets/launchpad_portfolio_subscription.dart';
 part '../widgets/launchpad_portfolio_empty_disclaimer_common.dart';
+
+const double _launchpadPortfolioVisualNavClearance = 112;
+const double _launchpadPortfolioNativeNavClearance = 88;
+const double _launchpadPortfolioLineHeightLabel =
+    AppSpacing.launchpadLineHeightLabel;
+const double _launchpadPortfolioLineHeightDense =
+    AppSpacing.launchpadLineHeightDense;
 
 class LaunchpadPortfolioPage extends ConsumerStatefulWidget {
   const LaunchpadPortfolioPage({super.key, this.shellRenderMode});
@@ -52,12 +59,11 @@ class _LaunchpadPortfolioPageState
     final snapshot = ref.watch(launchpadControllerProvider).getPortfolio();
     final subscriptions = _subscriptionsFor(snapshot.subscriptions, _activeTab);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
-        MediaQuery.paddingOf(context).bottom +
-        AppSpacing.x3;
+    final navClearance = mode.usesVisualQaFrame
+        ? _launchpadPortfolioVisualNavClearance
+        : _launchpadPortfolioNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -65,7 +71,6 @@ class _LaunchpadPortfolioPageState
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: scrollTailReserve,
           semanticLabel: 'SC-296 LaunchpadPortfolioPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
@@ -80,9 +85,10 @@ class _LaunchpadPortfolioPageState
             child: SingleChildScrollView(
               key: LaunchpadPortfolioPage.contentKey,
               physics: const ClampingScrollPhysics(),
+              padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
               child: VitPageContent(
                 padding: VitContentPadding.compact,
-                gap: VitContentGap.tight,
+                density: VitDensity.compact,
                 children: [
                   _PortfolioHero(subscriptions: snapshot.subscriptions),
                   _PortfolioTabs(
@@ -90,7 +96,12 @@ class _LaunchpadPortfolioPageState
                     onChanged: (tab) => setState(() => _activeTab = tab),
                   ),
                   if (subscriptions.isEmpty)
-                    _EmptyPortfolio(route: snapshot.launchpadRoute)
+                    _EmptyPortfolio(
+                      route: snapshot.launchpadRoute,
+                      filtered: _activeTab != _PortfolioTab.all,
+                      onShowAll: () =>
+                          setState(() => _activeTab = _PortfolioTab.all),
+                    )
                   else
                     for (final subscription in subscriptions)
                       _SubscriptionCard(

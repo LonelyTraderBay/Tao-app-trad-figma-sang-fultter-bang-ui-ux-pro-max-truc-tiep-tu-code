@@ -22,11 +22,13 @@ class _SavingsTabs extends StatelessWidget {
           key: _SavingsTab.products.name,
           label: 'Sản phẩm',
           icon: Icons.inventory_2_outlined,
+          widgetKey: SavingsPage.productsTabKey,
         ),
         VitTabItem(
           key: _SavingsTab.my.name,
           label: 'Đăng ký ($positionCount)',
           icon: Icons.business_center_outlined,
+          widgetKey: SavingsPage.myTabKey,
         ),
       ],
     );
@@ -41,43 +43,19 @@ class _SavingsFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (final filter in _SavingsFilter.values) ...[
-          _SavingsFilterChip(
+    return VitPresetChipRow<_SavingsFilter>(
+      accentColor: AppModuleAccents.earn,
+      selectedValue: activeFilter,
+      onTap: onChanged,
+      items: [
+        for (final filter in _SavingsFilter.values)
+          VitPresetChipItem(
+            value: filter,
+            label: _filterLabel(filter),
             key: SavingsPage.filterKey(filter.name),
-            filter: filter,
-            selected: filter == activeFilter,
-            onTap: () => onChanged(filter),
+            semanticLabel: 'Lọc sản phẩm ${_filterLabel(filter)}',
           ),
-          if (filter != _SavingsFilter.values.last)
-            const SizedBox(width: AppSpacing.x2),
-        ],
       ],
-    );
-  }
-}
-
-class _SavingsFilterChip extends StatelessWidget {
-  const _SavingsFilterChip({
-    super.key,
-    required this.filter,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final _SavingsFilter filter;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: _filterLabel(filter),
-      selected: selected,
-      onTap: onTap,
-      leading: Icon(_filterIcon(filter)),
-      padding: AppSpacing.earnCardPaddingX3X2,
     );
   }
 }
@@ -140,6 +118,16 @@ class _SavingsProductCard extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
+                        VitStatusPill(
+                          label: product.type == SavingsProductType.flexible
+                              ? 'Linh hoạt'
+                              : 'Cố định',
+                          status: VitStatusPillStatus.neutral,
+                          icon: product.type == SavingsProductType.flexible
+                              ? Icons.lock_open_rounded
+                              : Icons.lock_outline_rounded,
+                          size: VitStatusPillSize.sm,
+                        ),
                         if (product.isHot)
                           const _StatusBadge(
                             label: 'HOT',
@@ -155,30 +143,13 @@ class _SavingsProductCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: AppSpacing.x1),
-                    Row(
-                      children: [
-                        Icon(
-                          product.type == SavingsProductType.flexible
-                              ? Icons.lock_open_rounded
-                              : Icons.lock_outline_rounded,
-                          color: product.type == SavingsProductType.flexible
-                              ? AppColors.buy
-                              : AppColors.warn,
-                          size: AppSpacing.iconSm,
-                        ),
-                        const SizedBox(width: AppSpacing.x1),
-                        Expanded(
-                          child: Text(
-                            _productSubtitle(product),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.captionSm.copyWith(
-                              color: AppColors.text2,
-                            ),
-                          ),
-                        ),
-                        _RiskPill(label: _riskLabel(product.riskLevel)),
-                      ],
+                    Text(
+                      _productSubtitle(product),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.captionSm.copyWith(
+                        color: AppColors.text2,
+                      ),
                     ),
                   ],
                 ),
@@ -190,26 +161,27 @@ class _SavingsProductCard extends StatelessWidget {
                   Text(
                     product.apy,
                     style: AppTextStyles.amountXs.copyWith(
-                      color: AppColors.buy,
+                      color: AppModuleAccents.earn,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   Text(
-                    'APY',
+                    'APY ước tính',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                   if (product.maxApy != null)
                     Text(
-                      product.maxApy!,
+                      'Tối đa ${product.maxApy}',
                       style: AppTextStyles.micro.copyWith(
-                        color: AppColors.warn,
-                        fontWeight: AppTextStyles.bold,
+                        color: AppColors.text3,
+                        fontWeight: AppTextStyles.medium,
                       ),
                     ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -218,9 +190,10 @@ class _SavingsProductCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              Text(
-                'Còn: ${product.remainingQuota}',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              VitStatusPill(
+                label: 'Rủi ro: ${_riskLabel(product.riskLevel)}',
+                status: _riskPillStatus(product.riskLevel),
+                size: VitStatusPillSize.sm,
               ),
             ],
           ),
@@ -229,28 +202,28 @@ class _SavingsProductCard extends StatelessWidget {
             progress: product.progress,
             color: product.progress > 0.85 ? AppColors.sell : accent,
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
-              VitCtaButton(
-                key: product.id == 'sav001'
-                    ? SavingsPage.productDetailButtonKey
-                    : null,
-                onPressed: () => context.go(detailRoute),
-                variant: VitCtaButtonVariant.secondary,
-                fullWidth: false,
-                height: AppSpacing.savingsConsumerActionHeight,
-                padding: AppSpacing.earnHorizontalPaddingX4,
-                trailing: const Icon(Icons.chevron_right_rounded),
-                child: const Text('Chi tiết'),
+              Expanded(
+                child: VitCtaButton(
+                  key: product.id == 'sav001'
+                      ? SavingsPage.productDetailButtonKey
+                      : null,
+                  onPressed: () => context.go(detailRoute),
+                  variant: VitCtaButtonVariant.secondary,
+                  height: AppSpacing.savingsConsumerActionHeight,
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  child: const Text('Chi tiết'),
+                ),
               ),
-              const Spacer(),
-              VitCtaButton(
-                fullWidth: false,
-                height: AppSpacing.savingsConsumerActionHeight,
-                padding: AppSpacing.earnHorizontalPaddingX4,
-                onPressed: () => HapticFeedback.selectionClick(),
-                child: const Text('Đăng ký'),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: VitCtaButton(
+                  height: AppSpacing.savingsConsumerActionHeight,
+                  onPressed: () => HapticFeedback.selectionClick(),
+                  child: const Text('Đăng ký'),
+                ),
               ),
             ],
           ),

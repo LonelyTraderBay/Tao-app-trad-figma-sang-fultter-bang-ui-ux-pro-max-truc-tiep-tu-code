@@ -7,12 +7,9 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
@@ -63,122 +60,94 @@ class _DustConverterPageState extends ConsumerState<DustConverterPage> {
         .toList(growable: false);
     final selectedTotal = _sumUsd(selectedAssets);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final safeBottom = MediaQuery.paddingOf(context).bottom;
-    final scrollClearance =
-        AppSpacing.dustStickyFooterClearance +
-        navInset +
-        safeBottom +
-        AppSpacing.x3;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return VitWalletDetailScaffold(
+      title: 'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF',
+      subtitle: 'D\u1ECDn d\u1EB9p \u00b7 Wallet',
       semanticLabel: 'SC-154 DustConverterPage',
-      child: Material(
-        color: AppColors.bg,
-        child: Stack(
-          children: [
-            VitAutoHideHeaderScaffold(
-              header: VitTopChrome(
-                type: VitTopChromeType.detail,
-                title: 'Chuy\u1EC3n \u0111\u1ED5i s\u1ED1 d\u01B0 nh\u1ECF',
-                showBack: true,
-                onBack: () => context.go(AppRoutePaths.wallet),
-              ),
-              child: VitInsetScrollView(
-                key: DustConverterPage.contentKey,
-                bottomInset: scrollClearance,
-                physics: const ClampingScrollPhysics(),
-                child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  density: VitDensity.compact,
-                  gap: VitContentGap.tight,
-                  children: [
-                    if (_converted)
-                      _ConvertedBanner(targetSymbol: _targetSymbol),
-                    VitHighRiskStatePanel(
-                      state: VitHighRiskUiState.riskReview,
-                      title: 'Xem lại chuy\u1EC3n \u0111\u1ED5i dust',
-                      message:
-                          'X\u00E1c nh\u1EADn t\u00E0i s\u1EA3n \u0111\u00E3 ch\u1ECDn, ph\u00ED, s\u1ED1 nh\u1EADn v\u00E0 t\u00E0i s\u1EA3n \u0111\u00EDch tr\u01B0\u1EDBc khi g\u1EEDi.',
-                      contractId:
-                          '${_selectedIds.length} \u0111\u00E3 ch\u1ECDn / $_targetSymbol',
-                      density: VitDensity.compact,
-                    ),
-                    _DustHero(
-                      snapshot: snapshot,
-                      targetSymbol: _targetSymbol,
-                      foundCount: assets.length,
-                      selectedCount: _selectedIds.length,
-                      selectedValue: selectedTotal,
-                    ),
-                    VitSectionHeader(
-                      title: 'Chuy\u1EC3n \u0111\u1ED5i sang',
-                      density: VitDensity.compact,
-                    ),
-                    _TargetSelector(
-                      targets: snapshot.targets,
-                      selected: _targetSymbol,
-                      onSelected: (symbol) => setState(() {
-                        _targetSymbol = symbol;
-                        _selectedIds.clear();
-                        _converted = false;
-                      }),
-                    ),
-                    VitSectionHeader(
-                      title: 'S\u1ED1 d\u01B0 nh\u1ECF (${assets.length})',
-                      density: VitDensity.compact,
-                    ),
-                    _SelectAllRow(
-                      selectedAll: _selectedIds.length == assets.length,
-                      selectedCount: _selectedIds.length,
-                      totalCount: assets.length,
-                      onTap: () => setState(() {
-                        _converted = false;
-                        if (_selectedIds.length == assets.length) {
-                          _selectedIds.clear();
-                        } else {
-                          _selectedIds
-                            ..clear()
-                            ..addAll(assets.map((asset) => asset.id));
-                        }
-                      }),
-                    ),
-                    const SizedBox(height: AppSpacing.x2),
-                    _DustAssetList(
-                      assets: assets,
-                      selectedIds: _selectedIds,
-                      onToggle: _toggleAsset,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: navInset + safeBottom,
-              child: VitStickyFooter(
-                child: _PrimaryButton(
-                  key: DustConverterPage.ctaKey,
-                  enabled: _selectedIds.isNotEmpty,
-                  label: _selectedIds.isNotEmpty
-                      ? 'Chuy\u1EC3n \u0111\u1ED5i ${_selectedIds.length} t\u00E0i s\u1EA3n \u2192 $_targetSymbol'
-                      : 'Ch\u1ECDn t\u00E0i s\u1EA3n \u0111\u1EC3 chuy\u1EC3n \u0111\u1ED5i',
-                  onTap: () => _showConfirmSheet(
-                    context,
-                    snapshot,
-                    selectedAssets,
-                    selectedTotal,
-                  ),
-                ),
-              ),
-            ),
-          ],
+      contentKey: DustConverterPage.contentKey,
+      contentGap: VitContentGap.tight,
+      shellRenderMode: mode,
+      onBack: () => context.go(AppRoutePaths.wallet),
+      children: [
+        if (_converted) _ConvertedBanner(targetSymbol: _targetSymbol),
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Xem lại chuy\u1EC3n \u0111\u1ED5i dust',
+          message:
+              'X\u00E1c nh\u1EADn t\u00E0i s\u1EA3n \u0111\u00E3 ch\u1ECDn, ph\u00ED, s\u1ED1 nh\u1EADn v\u00E0 t\u00E0i s\u1EA3n \u0111\u00EDch tr\u01B0\u1EDBc khi g\u1EEDi.',
+          contractId:
+              '${_selectedIds.length} \u0111\u00E3 ch\u1ECDn / $_targetSymbol',
+          density: VitDensity.compact,
         ),
-      ),
+        _DustHero(
+          snapshot: snapshot,
+          targetSymbol: _targetSymbol,
+          foundCount: assets.length,
+          selectedCount: _selectedIds.length,
+          selectedValue: selectedTotal,
+        ),
+        VitSectionHeader(
+          title: 'Chuy\u1EC3n \u0111\u1ED5i sang',
+          density: VitDensity.compact,
+        ),
+        _TargetSelector(
+          targets: snapshot.targets,
+          selected: _targetSymbol,
+          onSelected: (symbol) => setState(() {
+            _targetSymbol = symbol;
+            _selectedIds.clear();
+            _converted = false;
+          }),
+        ),
+        VitSectionHeader(
+          title: 'S\u1ED1 d\u01B0 nh\u1ECF (${assets.length})',
+          density: VitDensity.compact,
+        ),
+        if (assets.isEmpty)
+          const VitEmptyState(
+            title: 'Kh\u00F4ng c\u00F3 s\u1ED1 d\u01B0 nh\u1ECF',
+            message:
+                'C\u00E1c t\u00E0i s\u1EA3n d\u01B0\u1EDBi ng\u01B0\u1EE1ng dust s\u1EBD hi\u1EC3n th\u1ECB t\u1EA1i \u0111\u00E2y.',
+            icon: Icons.auto_awesome_outlined,
+          )
+        else ...[
+          _SelectAllRow(
+            selectedAll: _selectedIds.length == assets.length,
+            selectedCount: _selectedIds.length,
+            totalCount: assets.length,
+            onTap: () => setState(() {
+              _converted = false;
+              if (_selectedIds.length == assets.length) {
+                _selectedIds.clear();
+              } else {
+                _selectedIds
+                  ..clear()
+                  ..addAll(assets.map((asset) => asset.id));
+              }
+            }),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          _DustAssetList(
+            assets: assets,
+            selectedIds: _selectedIds,
+            onToggle: _toggleAsset,
+          ),
+        ],
+        _PrimaryButton(
+          key: DustConverterPage.ctaKey,
+          enabled: _selectedIds.isNotEmpty,
+          label: _selectedIds.isNotEmpty
+              ? 'Chuy\u1EC3n \u0111\u1ED5i ${_selectedIds.length} t\u00E0i s\u1EA3n \u2192 $_targetSymbol'
+              : 'Ch\u1ECDn t\u00E0i s\u1EA3n \u0111\u1EC3 chuy\u1EC3n \u0111\u1ED5i',
+          onTap: () => _showConfirmSheet(
+            context,
+            snapshot,
+            selectedAssets,
+            selectedTotal,
+          ),
+        ),
+      ],
     );
   }
 

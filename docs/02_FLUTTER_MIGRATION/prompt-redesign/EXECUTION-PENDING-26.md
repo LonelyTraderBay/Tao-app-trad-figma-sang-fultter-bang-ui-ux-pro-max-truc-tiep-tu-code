@@ -1,0 +1,5 @@
+# (Legacy) EXECUTION-PENDING-26.md
+
+**Redirect:** dùng **[EXECUTION-PENDING-4-LAST.md](EXECUTION-PENDING-4-LAST.md)** (4 batch cuối) hoặc [EXECUTION-PENDING-FINAL.md](EXECUTION-PENDING-FINAL.md).
+
+Regenerated 2026-07-05.

@@ -209,8 +209,7 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
                 key: TwoFASetupPage.contentKey,
                 padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
-                  padding: VitContentPadding.compact,
-                  gap: VitContentGap.tight,
+                  customGap: AppSpacing.authPageContentGap,
                   children: [
                     if (_step == 1)
                       _QrStep(onCopy: _copySecret, copied: _copied),

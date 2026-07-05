@@ -9,8 +9,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,8 +57,8 @@ class _StakingRiskAssessmentPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollTailReserve =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -67,8 +67,12 @@ class _StakingRiskAssessmentPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: _showResult ? snapshot.resultTitle : snapshot.title,
+            subtitle: _showResult
+                ? snapshot.footerDisclaimer
+                : 'Đánh giá trước khi chọn sản phẩm stake',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -78,9 +82,7 @@ class _StakingRiskAssessmentPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(scrollTailReserve),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
@@ -101,9 +103,9 @@ class _StakingRiskAssessmentPageState
                             ),
                             VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
-                              title: 'Staking risk review active',
+                              title: 'Đánh giá rủi ro staking',
                               message:
-                                  'Answers classify staking knowledge, liquidity need, risk reaction and allocation limits before product selection.',
+                                  'Câu trả lời phân loại kiến thức, nhu cầu thanh khoản, phản ứng rủi ro và giới hạn phân bổ trước khi chọn sản phẩm.',
                               contractId: 'staking-risk-assessment',
                             ),
                             _QuestionCard(

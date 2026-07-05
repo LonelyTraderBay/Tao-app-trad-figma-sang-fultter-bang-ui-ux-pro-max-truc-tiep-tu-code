@@ -410,7 +410,7 @@ class _SocialProofPill extends StatelessWidget {
         color: color.withValues(alpha: .08),
         shape: RoundedRectangleBorder(
           side: BorderSide(color: color.withValues(alpha: .15)),
-          borderRadius: AppRadii.mdRadius,
+          borderRadius: AppRadii.inputRadius,
         ),
       ),
       child: Padding(

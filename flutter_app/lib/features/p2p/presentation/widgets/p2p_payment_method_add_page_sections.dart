@@ -8,57 +8,28 @@ class _TypeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _TypeButton(
-            key: P2PPaymentMethodAddPage.bankTypeKey,
-            label: 'Ngân hàng',
-            icon: Icons.account_balance_rounded,
-            active: value == P2PPaymentAddType.bank,
-            onTap: () => onChanged(P2PPaymentAddType.bank),
-          ),
+    return VitSegmentedChoice<P2PPaymentAddType>(
+      selected: value,
+      onChanged: onChanged,
+      height: _p2pPaymentAddTypeExtent,
+      options: [
+        VitSegmentedChoiceOption(
+          key: P2PPaymentMethodAddPage.bankTypeKey,
+          value: P2PPaymentAddType.bank,
+          label: 'Ngân hàng',
+          accentColor: AppModuleAccents.p2p,
+          leading: const Icon(Icons.account_balance_rounded),
+          semanticLabel: 'Chọn ngân hàng',
         ),
-        const SizedBox(width: _p2pPaymentAddSectionGap),
-        Expanded(
-          child: _TypeButton(
-            key: P2PPaymentMethodAddPage.ewalletTypeKey,
-            label: 'Ví điện tử',
-            icon: Icons.phone_iphone_rounded,
-            active: value == P2PPaymentAddType.ewallet,
-            onTap: () => onChanged(P2PPaymentAddType.ewallet),
-          ),
+        VitSegmentedChoiceOption(
+          key: P2PPaymentMethodAddPage.ewalletTypeKey,
+          value: P2PPaymentAddType.ewallet,
+          label: 'Ví điện tử',
+          accentColor: AppModuleAccents.p2p,
+          leading: const Icon(Icons.phone_iphone_rounded),
+          semanticLabel: 'Chọn ví điện tử',
         ),
       ],
-    );
-  }
-}
-
-class _TypeButton extends StatelessWidget {
-  const _TypeButton({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      fullWidth: true,
-      height: _p2pPaymentAddTypeExtent,
-      accentColor: AppModuleAccents.p2p,
-      leading: Icon(icon),
-      semanticLabel: '$label payment type',
     );
   }
 }
@@ -178,9 +149,9 @@ class _PaymentPreview extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           _PreviewRow(label: 'Chủ tài khoản', value: preview.ownerName),
           const SizedBox(height: AppSpacing.x2),
-          _PreviewRow(label: 'Ownership', value: preview.ownershipRiskMessage),
+          _PreviewRow(label: 'Sở hữu', value: preview.ownershipRiskMessage),
           const SizedBox(height: AppSpacing.x2),
-          _PreviewRow(label: 'Limit', value: preview.limitMessage),
+          _PreviewRow(label: 'Giới hạn', value: preview.limitMessage),
         ],
       ),
     );
@@ -230,7 +201,7 @@ class _IconBadge extends StatelessWidget {
     return Material(
       color: AppColors.primary12,
       shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
+        borderRadius: AppRadii.smRadius,
         side: BorderSide(color: AppColors.primary20),
       ),
       child: SizedBox(

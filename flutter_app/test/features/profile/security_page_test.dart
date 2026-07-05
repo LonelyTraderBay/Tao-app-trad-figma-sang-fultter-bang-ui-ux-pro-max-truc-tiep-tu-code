@@ -182,6 +182,41 @@ void main() {
     expect(find.text('profile-security'), findsOneWidget);
   });
 
+  testWidgets('SC-413 settings security route uses settings chrome', (
+    tester,
+  ) async {
+    await pumpSecurity(tester, initialLocation: AppRoutePaths.settingsSecurity);
+
+    expect(find.text('C\u00E0i \u0111\u1EB7t \u00B7 Profile'), findsOneWidget);
+    expect(find.text('B\u1EA3o m\u1EADt \u00B7 Profile'), findsNothing);
+  });
+
+  testWidgets('SC-405 biometric route uses focused subtitle', (tester) async {
+    await pumpSecurity(
+      tester,
+      initialLocation: AppRoutePaths.settingsSecurityBiometric,
+    );
+
+    expect(
+      find.text('Sinh tr\u1EAFc h\u1ECDc \u00B7 C\u00E0i \u0111\u1EB7t'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('SC-406 change-password route uses focused subtitle', (
+    tester,
+  ) async {
+    await pumpSecurity(
+      tester,
+      initialLocation: AppRoutePaths.settingsSecurityChangePassword,
+    );
+
+    expect(
+      find.text('M\u1EADt kh\u1EA9u \u00B7 C\u00E0i \u0111\u1EB7t'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('SC-158 direct header back returns to profile parent', (
     tester,
   ) async {

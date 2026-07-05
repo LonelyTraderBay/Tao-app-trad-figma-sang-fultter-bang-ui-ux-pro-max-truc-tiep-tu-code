@@ -27,11 +27,8 @@ part '../widgets/launchpad_home_tool_widgets.dart';
 
 const _launchpadVisualNavClearance = 112.0;
 const _launchpadNativeNavClearance = 88.0;
-const _launchpadActionHeight = AppSpacing.searchBarCompactHeight;
 const _launchpadLineHeightDense = AppSpacing.launchpadLineHeightDense;
-const _launchpadLineHeightBody = AppSpacing.launchpadLineHeightBody;
 const _launchpadLineHeightCompact = AppSpacing.launchpadLineHeightCompact;
-const _launchpadLineHeightTight = AppSpacing.launchpadLineHeightTight;
 const _launchpadLineHeightLabel = AppSpacing.launchpadLineHeightLabel;
 const _launchpadLineHeightReadable = AppSpacing.launchpadLineHeightReadable;
 const _launchpadLineHeightShort = AppSpacing.launchpadLineHeightShort;
@@ -49,6 +46,8 @@ class LaunchpadPage extends ConsumerStatefulWidget {
   static const advancedToolsKey = Key('sc295_launchpad_advanced_tools');
   static const riskToolsKey = Key('sc295_launchpad_risk_tools');
   static const safetyKey = Key('sc295_launchpad_safety');
+  static const emptyKey = Key('sc295_launchpad_empty');
+  static const emptyActionKey = Key('sc295_launchpad_empty_action');
 
   static Key projectKey(String id) => Key('sc295_launchpad_project_$id');
   static Key tabKey(String id) => Key('sc295_launchpad_tab_$id');
@@ -95,7 +94,7 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
               VitHeaderActionItem(
                 key: LaunchpadPage.filterActionKey,
                 type: VitHeaderActionType.filter,
-                tooltip: 'Bá»™ lá»c',
+                tooltip: 'Bộ lọc',
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   setState(() => _activeTab = _LaunchpadTab.active);
@@ -104,7 +103,7 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
               VitHeaderActionItem(
                 key: LaunchpadPage.performanceActionKey,
                 type: VitHeaderActionType.analytics,
-                tooltip: 'Hiá»‡u suáº¥t',
+                tooltip: 'Hiệu suất',
                 onPressed: () => context.go(snapshot.performanceRoute),
               ),
               VitHeaderActionItem(
@@ -132,8 +131,15 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
                     activeTab: _activeTab,
                     onChanged: (tab) => setState(() => _activeTab = tab),
                   ),
-                  for (final project in projects)
-                    _ProjectCard(project: project),
+                  if (projects.isEmpty)
+                    _ProjectsEmptyState(
+                      filtered: _activeTab != _LaunchpadTab.all,
+                      onShowAll: () =>
+                          setState(() => _activeTab = _LaunchpadTab.all),
+                    )
+                  else
+                    for (final project in projects)
+                      _ProjectCard(project: project),
                   _StakingEntry(route: snapshot.stakingRoute),
                   _ToolSection(
                     key: LaunchpadPage.advancedToolsKey,

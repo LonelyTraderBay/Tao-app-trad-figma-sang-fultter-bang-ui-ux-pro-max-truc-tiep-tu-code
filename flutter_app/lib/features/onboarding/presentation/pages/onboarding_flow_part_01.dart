@@ -6,26 +6,95 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   String? _expandedBoundaryId;
   final Set<OnboardingUserGoalDraft> _selectedGoals = {};
 
+  bool _isBlockingState(OnboardingScreenState state) {
+    return switch (state) {
+      OnboardingScreenState.loading ||
+      OnboardingScreenState.empty ||
+      OnboardingScreenState.error => true,
+      _ => false,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(onboardingControllerProvider).getFlow();
+    final blocking = _isBlockingState(snapshot.screenState);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-397 OnboardingFlow',
       child: Material(
         color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: _buildHeader(snapshot),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(child: _buildBody(snapshot)),
-              _buildFooter(snapshot),
-            ],
-          ),
-        ),
+        child: blocking
+            ? _buildBlockingShell(snapshot)
+            : VitAutoHideHeaderScaffold(
+                header: _buildHeader(snapshot),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (snapshot.screenState == OnboardingScreenState.offline)
+                      Padding(
+                        key: OnboardingFlow.offlineKey,
+                        padding: AppSpacing.onboardingHeaderProgressPadding,
+                        child: const VitOfflineBanner(
+                          message:
+                              'Mất kết nối. Bạn vẫn có thể hoàn thành onboarding.',
+                        ),
+                      ),
+                    Expanded(child: _buildBody(snapshot)),
+                    _buildFooter(snapshot),
+                  ],
+                ),
+              ),
       ),
+    );
+  }
+
+  Widget _buildBlockingShell(OnboardingSnapshot snapshot) {
+    return SafeArea(
+      child: switch (snapshot.screenState) {
+        OnboardingScreenState.loading => LayoutBuilder(
+          key: OnboardingFlow.loadingKey,
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsetsDirectional.only(
+                start: AppSpacing.contentPad,
+                end: AppSpacing.contentPad,
+                top: AppSpacing.pageContentTopDefault,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  VitSkeleton(
+                    height: AppSpacing.buttonHero + AppSpacing.x7,
+                    width: constraints.maxWidth,
+                    borderRadius: AppRadii.cardLargeRadius,
+                  ),
+                  const SizedBox(height: AppSpacing.x4),
+                  const VitSkeletonList(rows: 3),
+                ],
+              ),
+            );
+          },
+        ),
+        OnboardingScreenState.empty => VitEmptyState(
+          key: OnboardingFlow.emptyKey,
+          title: 'Chưa có nội dung onboarding',
+          message: 'Quay lại sau hoặc vào trang chủ để bắt đầu.',
+          actionLabel: 'Về trang chủ',
+          onAction: () => context.go(snapshot.homeRoute),
+        ),
+        OnboardingScreenState.error => VitErrorState(
+          key: OnboardingFlow.errorKey,
+          title: 'Không tải được onboarding',
+          message: 'Vui lòng thử lại hoặc bỏ qua bước này.',
+          actionLabel: 'Thử lại',
+          onAction: () => setState(() {}),
+          secondaryLabel: 'Bỏ qua',
+          onSecondary: () => _skip(snapshot),
+        ),
+        _ => const SizedBox.shrink(),
+      },
     );
   }
 
@@ -263,33 +332,44 @@ class _WelcomeStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageContent(
       padding: VitContentPadding.defaultPadding,
-      gap: VitContentGap.defaultGap,
+      gap: VitContentGap.tight,
       children: [
-        const SizedBox(height: AppSpacing.x7),
-        const _HeroIcon(icon: Icons.auto_awesome_rounded),
-        Column(
-          children: [
-            Text(
-              welcome.title,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.pageTitle,
-            ),
-            const SizedBox(height: AppSpacing.x3),
-            Text(
-              welcome.subtitle,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.base.copyWith(color: AppColors.text2),
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            for (final feature in welcome.features) ...[
-              _FeatureRow(feature: feature),
-              if (feature != welcome.features.last)
-                const SizedBox(height: AppSpacing.x4),
+        VitCard(
+          variant: VitCardVariant.hero,
+          radius: VitCardRadius.large,
+          clip: true,
+          padding: AppSpacing.onboardingCardPadding,
+          background: const VitHeroGlow(center: Alignment(0, -0.96)),
+          child: Column(
+            children: [
+              const _HeroIcon(icon: Icons.auto_awesome_rounded),
+              const SizedBox(height: AppSpacing.x4),
+              Text(
+                welcome.title,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.pageTitle,
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                welcome.subtitle,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
             ],
-          ],
+          ),
+        ),
+        VitCard(
+          padding: AppSpacing.onboardingCardPadding,
+          radius: VitCardRadius.standard,
+          child: Column(
+            children: [
+              for (final feature in welcome.features) ...[
+                _FeatureRow(feature: feature),
+                if (feature != welcome.features.last)
+                  const SizedBox(height: AppSpacing.x3),
+              ],
+            ],
+          ),
         ),
       ],
     );
@@ -315,13 +395,12 @@ class _ModulesStep extends StatelessWidget {
 
     return VitPageContent(
       padding: VitContentPadding.defaultPadding,
-      gap: VitContentGap.defaultGap,
+      gap: VitContentGap.tight,
       children: [
         _StepHeading(
           title: 'Khám phá 5 modules',
           subtitle: 'Mỗi module phục vụ một nhu cầu khác nhau',
         ),
-        const SizedBox(height: AppSpacing.x5),
         _HeroIcon(icon: _iconForId(module.id), color: accent),
         Column(
           children: [

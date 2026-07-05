@@ -58,7 +58,7 @@ class P2PKycStatusPage extends ConsumerWidget {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'KYC Status',
+            title: 'Trạng thái KYC',
             subtitle: 'KYC · P2P',
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),

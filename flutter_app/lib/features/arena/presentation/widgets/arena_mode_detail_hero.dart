@@ -115,26 +115,26 @@ class ArenaModeHero extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _MiniStatCard(
-                  icon: Icons.copy_rounded,
-                  label: 'Clone',
-                  value: '${snapshot.mode.cloneCount}',
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _MiniStatCard(
-                  icon: Icons.play_arrow_outlined,
+                child: _ModeHeroKpi(
                   label: 'Đang mở',
                   value: '${snapshot.mode.activeChallenges}',
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              Container(
+                width: 1,
+                height: AppSpacing.x6,
+                color: AppColors.border,
+              ),
               Expanded(
-                child: _MiniStatCard(
-                  icon: Icons.check_circle_outline_rounded,
-                  label: 'Hoàn thành',
-                  value: '${snapshot.mode.completionRate}%',
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: AppSpacing.x3,
+                  ),
+                  child: _ModeHeroKpi(
+                    label: 'Hoàn thành',
+                    value: '${snapshot.mode.completionRate}%',
+                    valueColor: templateColor,
+                  ),
                 ),
               ),
             ],
@@ -214,46 +214,40 @@ class _CreatorRow extends StatelessWidget {
   }
 }
 
-class _MiniStatCard extends StatelessWidget {
-  const _MiniStatCard({
-    required this.icon,
+class _ModeHeroKpi extends StatelessWidget {
+  const _ModeHeroKpi({
     required this.label,
     required this.value,
+    this.valueColor,
   });
 
-  final IconData icon;
   final String label;
   final String value;
+  final Color? valueColor;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.arenaModeMiniStatPadding,
-      child: Column(
-        children: [
-          Icon(icon, color: AppColors.text3, size: AppSpacing.iconMd),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.heroNumber.copyWith(
+            color: valueColor ?? AppColors.text1,
+            letterSpacing: 0,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

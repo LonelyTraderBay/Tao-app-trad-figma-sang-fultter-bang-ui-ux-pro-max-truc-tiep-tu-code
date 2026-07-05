@@ -34,6 +34,16 @@ class _RegulatoryReportsDashboardPageState
                 title: 'KPIs',
                 child: _KpiGrid(totals: snapshot.totals),
               ),
+              VitTradeSection(
+                title: 'Review',
+                child: const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Regulatory report review',
+                  message:
+                      'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',
+                  contractId: 'regulatory-reports-review',
+                ),
+              ),
               VitTradeComplianceSection(
                 title: 'Report review',
                 statusPill: const VitStatusPill(
@@ -84,13 +94,6 @@ class _RegulatoryReportsDashboardPageState
                       onArmStatus: () => context.go(
                         AppRoutePaths.tradeCopyArmIntegrationStatus,
                       ),
-                    ),
-                    const VitHighRiskStatePanel(
-                      state: VitHighRiskUiState.riskReview,
-                      title: 'Regulatory report review',
-                      message:
-                          'Report queue, confirmed count, failed count, export action, ARM route and remediation next step are reviewed before submission follow-up.',
-                      contractId: 'regulatory-reports-review',
                     ),
                   ],
                 ),

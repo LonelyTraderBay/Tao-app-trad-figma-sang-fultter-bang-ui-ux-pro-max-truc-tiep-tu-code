@@ -20,38 +20,25 @@ class _PredictionEventCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Wrap(
-            spacing: AppSpacing.x1,
-            runSpacing: AppSpacing.x1,
+          Row(
             children: [
               _SmallBadge(
                 label: event.category,
                 color: _marketPrimary,
                 background: _marketPrimary.withValues(alpha: .12),
               ),
-              for (final tag in event.tags)
-                _SmallBadge(
-                  label: tag,
-                  color: AppColors.text3,
-                  background: AppColors.surface2,
-                ),
-              if (event.isNew)
-                _SmallBadge(
-                  label: 'NEW',
-                  color: AppColors.accent,
-                  background: AppColors.accent12,
-                ),
-              if (event.isTrending)
-                _SmallBadge(
-                  label: 'HOT',
-                  color: AppColors.warn,
-                  background: AppColors.warn10,
-                ),
+              const Spacer(),
+              Text(
+                _timeRemaining(event.endDate),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
           Text(
             event.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
@@ -62,16 +49,6 @@ class _PredictionEventCard extends StatelessWidget {
             _MultiOutcomeRow(event: event)
           else
             _BinaryOutcomeBar(outcomes: outcomes),
-          const SizedBox(height: AppSpacing.x2),
-          _EventStatsRow(event: event),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              Expanded(child: _OutcomeActionButton(outcome: outcomes.first)),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(child: _OutcomeActionButton(outcome: outcomes.last)),
-            ],
-          ),
         ],
       ),
     );
@@ -94,11 +71,17 @@ class _BinaryOutcomeBar extends StatelessWidget {
           children: [
             Text(
               '${yes.label} ${yes.chance}%',
-              style: AppTextStyles.badge.copyWith(color: yes.color),
+              style: AppTextStyles.badge.copyWith(
+                color: yes.color,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
             Text(
               '${no.label} ${no.chance}%',
-              style: AppTextStyles.badge.copyWith(color: no.color),
+              style: AppTextStyles.badge.copyWith(
+                color: no.color,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
           ],
         ),
@@ -138,150 +121,19 @@ class _MultiOutcomeRow extends StatelessWidget {
       runSpacing: AppSpacing.x2,
       children: [
         for (final outcome in event.outcomes.take(3))
-          Material(
-            color: outcome.color.withValues(alpha: .12),
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.smRadius,
-              side: BorderSide(color: outcome.color.withValues(alpha: .25)),
-            ),
-            child: Padding(
-              padding: AppSpacing.predictionHomeOutcomeChipPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox.square(
-                    dimension: AppSpacing.predictionHomeOutcomeDot,
-                    child: Material(
-                      color: outcome.color,
-                      shape: const CircleBorder(),
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    outcome.label,
-                    style: AppTextStyles.badge.copyWith(color: AppColors.text1),
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    '${outcome.chance}%',
-                    style: AppTextStyles.badge.copyWith(color: outcome.color),
-                  ),
-                ],
-              ),
+          Text(
+            '${outcome.label} ${outcome.chance}%',
+            style: AppTextStyles.badge.copyWith(
+              color: outcome.color,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
         if (event.outcomes.length > 3)
           Text(
-            '+${event.outcomes.length - 3} more',
+            '+${event.outcomes.length - 3} khác',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
       ],
-    );
-  }
-}
-
-class _EventStatsRow extends StatelessWidget {
-  const _EventStatsRow({required this.event});
-
-  final PredictionEventDraft event;
-
-  @override
-  Widget build(BuildContext context) {
-    final changeColor = event.change24h >= 0 ? AppColors.buy : AppColors.sell;
-    return Row(
-      children: [
-        _StatText(
-          icon: Icons.bar_chart_rounded,
-          label: 'Vol: ${_formatVolume(event.volume24h)}',
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        _StatText(
-          icon: Icons.group_outlined,
-          label: _formatInt(event.participants),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        _StatText(
-          icon: Icons.schedule_rounded,
-          label: _timeRemaining(event.endDate),
-        ),
-        const Expanded(child: SizedBox.shrink()),
-        Icon(
-          event.change24h >= 0
-              ? Icons.trending_up_rounded
-              : Icons.trending_down_rounded,
-          size: AppSpacing.predictionHomeTrendIcon,
-          color: changeColor,
-        ),
-        Text(
-          _formatPercent(event.change24h),
-          style: AppTextStyles.micro.copyWith(
-            color: changeColor,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _StatText extends StatelessWidget {
-  const _StatText({required this.icon, required this.label});
-
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Flexible(
-      fit: FlexFit.loose,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            size: AppSpacing.predictionHomeStatIcon,
-            color: AppColors.text3,
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _OutcomeActionButton extends StatelessWidget {
-  const _OutcomeActionButton({required this.outcome});
-
-  final PredictionOutcomeDraft outcome;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: VitDensity.compact.controlHeight - AppSpacing.x2,
-      child: Material(
-        color: outcome.color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.mdRadius,
-          side: BorderSide(color: outcome.color.withValues(alpha: .25)),
-        ),
-        child: Center(
-          child: Text(
-            '${outcome.label} ${outcome.chance}%',
-            style: AppTextStyles.caption.copyWith(
-              color: outcome.color,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -317,58 +169,61 @@ class _SmallBadge extends StatelessWidget {
 }
 
 class _PredictionsEmptyState extends StatelessWidget {
-  const _PredictionsEmptyState();
+  const _PredictionsEmptyState({
+    required this.hasActiveFilters,
+    required this.onClearFilters,
+    required this.onBreaking,
+  });
+
+  final bool hasActiveFilters;
+  final VoidCallback onClearFilters;
+  final VoidCallback onBreaking;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: VitDensity.compact.controlHeight * 4,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.search_rounded,
-              color: AppColors.text3.withValues(alpha: .40),
-              size: AppSpacing.predictionHomeEmptyIcon,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x4),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.event_busy_outlined,
+            color: AppColors.text3.withValues(alpha: .40),
+            size: AppSpacing.predictionHomeEmptyIcon,
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            'Không có sự kiện phù hợp',
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
             ),
-            const SizedBox(height: AppSpacing.x2),
-            Text(
-              'No events found',
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              'Try adjusting your filters or search terms',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            'Thử điều chỉnh bộ lọc hoặc xem sự kiện biến động',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+          if (hasActiveFilters) ...[
+            const SizedBox(height: AppSpacing.x3),
+            VitCtaButton(
+              onPressed: onClearFilters,
+              child: const Text('Xóa bộ lọc'),
             ),
           ],
-        ),
+          const SizedBox(height: AppSpacing.x2),
+          TextButton(
+            onPressed: onBreaking,
+            child: Text(
+              'Xem Breaking',
+              style: AppTextStyles.caption.copyWith(color: _marketPrimary),
+            ),
+          ),
+        ],
       ),
     );
   }
-}
-
-String _formatVolume(double value) {
-  if (value >= 1000000) return '\$${(value / 1000000).toStringAsFixed(1)}M';
-  if (value >= 1000) return '\$${(value / 1000).toStringAsFixed(0)}K';
-  return '\$${value.toStringAsFixed(0)}';
-}
-
-String _formatInt(int value) {
-  final text = value.toString();
-  final buffer = StringBuffer();
-  for (var index = 0; index < text.length; index += 1) {
-    if (index > 0 && (text.length - index) % 3 == 0) {
-      buffer.write(',');
-    }
-    buffer.write(text[index]);
-  }
-  return buffer.toString();
 }
 
 String _formatPercent(double value) {
@@ -379,9 +234,9 @@ String _formatPercent(double value) {
 String _timeRemaining(DateTime endDate) {
   final now = DateTime.utc(2026, 2, 27, 12);
   final diff = endDate.difference(now);
-  if (diff.isNegative) return 'Ended';
+  if (diff.isNegative) return 'Đã đóng';
   final days = diff.inDays;
-  if (days > 30) return '${days ~/ 30} tháng';
-  if (days > 0) return '$days ngày';
-  return '${diff.inHours}h';
+  if (days > 30) return 'Đóng ${days ~/ 30} tháng';
+  if (days > 0) return 'Đóng $days ngày';
+  return 'Đóng ${diff.inHours}h';
 }

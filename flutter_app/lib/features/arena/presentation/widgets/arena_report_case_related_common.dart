@@ -158,7 +158,7 @@ class _ToneIcon extends StatelessWidget {
         decoration: ShapeDecoration(
           color: color.withValues(alpha: 0.12),
           shape: RoundedRectangleBorder(
-            borderRadius: AppRadii.mdRadius,
+            borderRadius: AppRadii.smRadius,
             side: BorderSide(color: color.withValues(alpha: 0.22)),
           ),
         ),

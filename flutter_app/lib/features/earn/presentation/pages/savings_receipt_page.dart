@@ -71,7 +71,7 @@ class _EmptyReceiptState extends StatelessWidget {
       children: [
         VitHighRiskStatePanel(
           state: VitHighRiskUiState.empty,
-          title: 'Savings receipt unavailable',
+          title: 'Chưa có biên nhận',
           message: snapshot.emptyMessage,
           contractId: 'savings-receipt-empty',
         ),

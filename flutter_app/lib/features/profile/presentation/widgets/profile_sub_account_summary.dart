@@ -1,5 +1,109 @@
 part of '../pages/sub_account_page.dart';
 
+class _SubAccountBody extends StatelessWidget {
+  const _SubAccountBody({
+    required this.snapshot,
+    required this.isBalanceHidden,
+    required this.showCreate,
+    required this.expandedId,
+    required this.onToggleBalance,
+    required this.onToggleCreateForm,
+    required this.onToggleExpanded,
+  });
+
+  final ProfileSubAccountsSnapshot snapshot;
+  final bool isBalanceHidden;
+  final bool showCreate;
+  final String? expandedId;
+  final VoidCallback onToggleBalance;
+  final VoidCallback onToggleCreateForm;
+  final ValueChanged<String> onToggleExpanded;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (snapshot.screenState) {
+      ProfileScreenState.loading => const VitSkeletonList(
+        key: SubAccountPage.loadingKey,
+        rows: 4,
+      ),
+      ProfileScreenState.error => VitErrorState(
+        key: SubAccountPage.errorKey,
+        title: 'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c t\u00E0i kho\u1EA3n ph\u1EE5',
+        message: 'Ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
+        actionLabel: 'Th\u1EED l\u1EA1i',
+        onAction: () => context.go(AppRoutePaths.profileSubAccounts),
+      ),
+      ProfileScreenState.empty => const VitEmptyState(
+        key: SubAccountPage.emptyKey,
+        title: 'Ch\u01B0a c\u00F3 t\u00E0i kho\u1EA3n ph\u1EE5',
+        message:
+            'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 \u0111\u1EC3 t\u00E1ch quy\u1EC1n, API v\u00E0 v\u00ED giao d\u1ECBch.',
+        icon: Icons.groups_outlined,
+      ),
+      ProfileScreenState.offline => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const VitOfflineBanner(
+            key: SubAccountPage.offlineKey,
+            message: '\u0110ang ngo\u1EA1i tuy\u1EBFn',
+            detail: 'Hi\u1EC3n th\u1ECB danh s\u00E1ch t\u00E0i kho\u1EA3n ph\u1EE5 \u0111\u00E3 l\u01B0u.',
+          ),
+          SizedBox(height: VitDensity.compact.pageContentGap),
+          ..._readyChildren(),
+        ],
+      ),
+      _ => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: _readyChildren(),
+      ),
+    };
+  }
+
+  List<Widget> _readyChildren() {
+    return [
+      _SubAccountSummaryCard(
+        snapshot: snapshot,
+        isBalanceHidden: isBalanceHidden,
+        onToggleBalance: onToggleBalance,
+      ),
+      VitHighRiskStatePanel(
+        state: VitHighRiskUiState.riskReview,
+        title: 'R\u00E0 so\u00E1t quy\u1EC1n t\u00E0i kho\u1EA3n ph\u1EE5',
+        message:
+            'Ki\u1EC3m tra quy\u1EC1n chuy\u1EC3n, r\u00FAt, API key v\u00E0 gi\u1EDBi h\u1EA1n tr\u01B0\u1EDBc khi t\u1EA1o ho\u1EB7c m\u1EDF r\u1ED9ng t\u00E0i kho\u1EA3n ph\u1EE5.',
+        contractId: 'Sub accounts: ${snapshot.accounts.length}',
+        density: VitDensity.compact,
+      ),
+      _CreateSubAccountButton(
+        isOpen: showCreate,
+        onTap: onToggleCreateForm,
+      ),
+      if (showCreate) const _CreateSubAccountForm(),
+      VitSectionHeader(
+        title: 'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
+        density: VitDensity.compact,
+      ),
+      if (snapshot.accounts.isEmpty)
+        const VitEmptyState(
+          title: 'Ch\u01B0a c\u00F3 t\u00E0i kho\u1EA3n ph\u1EE5',
+          message:
+              'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 \u0111\u1EC3 t\u00E1ch quy\u1EC1n, API v\u00E0 v\u00ED giao d\u1ECBch.',
+          icon: Icons.groups_outlined,
+        )
+      else ...[
+        for (final account in snapshot.accounts)
+          _SubAccountCard(
+            account: account,
+            isExpanded: expandedId == account.id,
+            isBalanceHidden: isBalanceHidden,
+            onTap: () => onToggleExpanded(account.id),
+          ),
+      ],
+      const _SubAccountInfoNote(),
+    ];
+  }
+}
+
 class _SubAccountSummaryCard extends StatelessWidget {
   const _SubAccountSummaryCard({
     required this.snapshot,

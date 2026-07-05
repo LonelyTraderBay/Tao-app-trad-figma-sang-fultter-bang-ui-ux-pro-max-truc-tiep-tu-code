@@ -4,17 +4,20 @@ class _PointsHero extends StatelessWidget {
   const _PointsHero({
     required this.stats,
     required this.onDetails,
+    required this.onLedger,
     required this.onEarn,
   });
 
   final MyArenaStats stats;
   final VoidCallback onDetails;
+  final VoidCallback onLedger;
   final VoidCallback onEarn;
 
   @override
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: _arenaAccent,
+      density: VitDensity.compact,
       padding: AppSpacing.zeroInsets,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -29,18 +32,15 @@ class _PointsHero extends StatelessWidget {
                     Expanded(
                       child: Text(
                         'Arena Points',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                          fontWeight: AppTextStyles.bold,
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          fontWeight: AppTextStyles.heavy,
                         ),
                       ),
                     ),
-                    _TextIconButton(
-                      key: MyArenaPage.pointsDetailKey,
-                      icon: Icons.visibility_outlined,
-                      label: 'Chi tiết',
-                      color: AppColors.text3,
-                      onTap: onDetails,
+                    const VitStatusPill(
+                      label: 'Points only',
+                      status: VitStatusPillStatus.orange,
+                      size: VitStatusPillSize.sm,
                     ),
                   ],
                 ),
@@ -64,6 +64,25 @@ class _PointsHero extends StatelessWidget {
                           fontWeight: AppTextStyles.medium,
                         ),
                       ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Row(
+                  children: [
+                    _TextIconButton(
+                      key: MyArenaPage.pointsDetailKey,
+                      icon: Icons.visibility_outlined,
+                      label: 'Chi tiết',
+                      color: AppColors.text3,
+                      onTap: onDetails,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    _TextIconButton(
+                      icon: Icons.receipt_long_outlined,
+                      label: 'Sổ điểm',
+                      color: AppColors.text3,
+                      onTap: onLedger,
                     ),
                   ],
                 ),
@@ -94,9 +113,9 @@ class _PointsHero extends StatelessWidget {
                 ),
                 Expanded(
                   child: _PointsDelta(
-                    label: 'Đã dùng',
-                    value: '-${formatArenaPoints(stats.pointsSpent)}',
-                    color: AppColors.sell,
+                    label: 'Đang chơi',
+                    value: '${stats.activeChallenges}',
+                    color: _arenaAccent,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x4),
@@ -178,144 +197,88 @@ class _StatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      _StatItem(
-        label: 'Đang chơi',
-        value: '${stats.activeChallenges}',
-        subtitle: 'challenges đang hoạt động',
-        icon: Icons.flash_on_rounded,
-        color: AppColors.primary,
+    return VitCard(
+      density: VitDensity.compact,
+      child: Row(
+        children: [
+          Expanded(
+            child: _InlineStat(
+              label: 'Xếp hạng',
+              value: '#${stats.rank}',
+              color: AppColors.warn,
+            ),
+          ),
+          const SizedBox(
+            height: AppSpacing.x6,
+            child: VerticalDivider(
+              width: AppSpacing.x5,
+              color: AppColors.divider,
+            ),
+          ),
+          Expanded(
+            child: _InlineStat(
+              label: 'Mode đã tạo',
+              value: '${stats.modesCreated}',
+              color: AppColors.accent,
+            ),
+          ),
+          const SizedBox(
+            height: AppSpacing.x6,
+            child: VerticalDivider(
+              width: AppSpacing.x5,
+              color: AppColors.divider,
+            ),
+          ),
+          Expanded(
+            child: _InlineStat(
+              label: 'Điểm Creator',
+              value: '${stats.creatorScore}%',
+              color: AppColors.buy,
+            ),
+          ),
+        ],
       ),
-      _StatItem(
-        label: 'Mode đã tạo',
-        value: '${stats.modesCreated}',
-        subtitle: 'modes trong cộng đồng',
-        icon: Icons.auto_awesome_rounded,
-        color: AppColors.accent,
-      ),
-      _StatItem(
-        label: 'Điểm Creator',
-        value: '${stats.creatorScore}%',
-        subtitle: 'dựa trên đánh giá',
-        icon: Icons.star_border_rounded,
-        color: AppColors.buy,
-      ),
-      _StatItem(
-        label: 'Xếp hạng',
-        value: '#${stats.rank}',
-        subtitle: 'trên leaderboard',
-        icon: Icons.emoji_events_outlined,
-        color: AppColors.warn,
-      ),
-    ];
-
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(child: _ArenaStatCard(item: items[0])),
-            const SizedBox(width: AppSpacing.x4),
-            Expanded(child: _ArenaStatCard(item: items[1])),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.x4),
-        Row(
-          children: [
-            Expanded(child: _ArenaStatCard(item: items[2])),
-            const SizedBox(width: AppSpacing.x4),
-            Expanded(child: _ArenaStatCard(item: items[3])),
-          ],
-        ),
-      ],
     );
   }
 }
 
-class _StatItem {
-  const _StatItem({
+class _InlineStat extends StatelessWidget {
+  const _InlineStat({
     required this.label,
     required this.value,
-    required this.subtitle,
-    required this.icon,
     required this.color,
   });
 
   final String label;
   final String value;
-  final String subtitle;
-  final IconData icon;
   final Color color;
-}
-
-class _ArenaStatCard extends StatelessWidget {
-  const _ArenaStatCard({required this.item});
-
-  final _StatItem item;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.x7 + AppSpacing.x5,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                height: AppSpacing.myArenaStatIconBox,
-                width: AppSpacing.myArenaStatIconBox,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: item.color.withValues(alpha: .14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                  ),
-                  child: Icon(
-                    item.icon,
-                    color: item.color,
-                    size: AppSpacing.myArenaStatIcon,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  item.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.bold,
           ),
-          const SizedBox(height: AppSpacing.x4),
-          Text(
-            item.value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: item.color,
-              fontWeight: AppTextStyles.heavy,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.sectionTitle.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.heavy,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            item.subtitle,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -127,7 +127,7 @@ class _ResultSection extends StatelessWidget {
                 decoration: ShapeDecoration(
                   color: color.withValues(alpha: .12),
                   shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.mdRadius,
+                    borderRadius: AppRadii.smRadius,
                   ),
                 ),
                 child: Center(child: Icon(icon, color: color, size: 16)),

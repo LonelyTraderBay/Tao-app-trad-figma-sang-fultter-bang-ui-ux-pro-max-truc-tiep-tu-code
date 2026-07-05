@@ -31,9 +31,9 @@ class _IntroBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Text(
-                  'Learn how each bot strategy works, when to use it, and '
-                  'how to avoid common mistakes. Perfect for beginners and '
-                  'experienced traders.',
+                  'Tìm hiểu từng chiến lược bot, khi nào nên dùng và cách '
+                  'tránh sai lầm phổ biến — phù hợp người mới và trader có '
+                  'kinh nghiệm.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
@@ -53,11 +53,19 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const tabs = ['strategies', 'best-practices', 'mistakes'];
+    const tabs = <({String id, String label})>[
+      (id: 'strategies', label: 'Chiến lược'),
+      (id: 'best-practices', label: 'Thực hành'),
+      (id: 'mistakes', label: 'Sai lầm'),
+    ];
     return VitTabBar(
       tabs: [
         for (final tab in tabs)
-          VitTabItem(key: tab, label: tab, widgetKey: BotGuidePage.tabKey(tab)),
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: BotGuidePage.tabKey(tab.id),
+          ),
       ],
       activeKey: active,
       onChanged: onChanged,

@@ -38,6 +38,7 @@ void main() {
     expect(snapshot.notifications.where((item) => !item.isRead), hasLength(7));
     expect(snapshot.notifications.first.actionPath, '/trade/orders');
     expect(snapshot.contractNotes, contains('notificationsReferenceData'));
+    expect(snapshot.screenState, NotificationsScreenState.ready);
     expect(
       snapshot.supportedStates,
       containsAll([

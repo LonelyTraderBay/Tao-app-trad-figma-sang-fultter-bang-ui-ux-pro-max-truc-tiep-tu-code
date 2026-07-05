@@ -77,8 +77,8 @@ void main() {
     expect(find.byType(ArenaLeaderboardPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Arena Leaderboard'), findsOneWidget);
-    expect(find.text('Bảng xếp hạng · Open Arena'), findsOneWidget);
+    expect(find.text('Bảng xếp hạng'), findsOneWidget);
+    expect(find.text('Fair play · Open Arena'), findsOneWidget);
     expect(find.text('Hạng của bạn'), findsOneWidget);
     expect(find.text('#142'), findsOneWidget);
     expect(find.text('4.5K pts'), findsOneWidget);

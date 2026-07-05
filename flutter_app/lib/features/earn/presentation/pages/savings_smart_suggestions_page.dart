@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_sma
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_smart_suggestions_summary.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_smart_suggestions_suggestions.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_smart_suggestions_trends.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -68,12 +69,32 @@ class _SavingsSmartSuggestionsPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              ColoredBox(
+                color: AppColors.surface,
+                child: Padding(
+                  padding: AppSpacing.earnSurfaceTabsPadding,
+                  child: SavingsSmartTabs(
+                    tabs: snapshot.tabs,
+                    active: activeTab,
+                    onChanged: (tab) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _tab = tab);
+                    },
+                  ),
+                ),
+              ),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
@@ -87,14 +108,6 @@ class _SavingsSmartSuggestionsPageState
                         radius: VitCardRadius.standard,
                         padding: AppSpacing.zeroInsets,
                         child: SavingsSmartSummary(snapshot: snapshot),
-                      ),
-                      SavingsSmartTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
                       ),
                       if (activeTab == 'suggestions') ...[
                         SavingsSmartPriorityFilters(
@@ -111,11 +124,11 @@ class _SavingsSmartSuggestionsPageState
                           onHelpful: _markHelpful,
                           onDismiss: _dismissSuggestion,
                         ),
-                        SavingsSmartDisclaimer(text: snapshot.disclaimer),
                       ] else if (activeTab == 'trends')
                         SavingsSmartTrendList(trends: snapshot.trends)
                       else
                         SavingsSmartSignalList(signals: snapshot.signals),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

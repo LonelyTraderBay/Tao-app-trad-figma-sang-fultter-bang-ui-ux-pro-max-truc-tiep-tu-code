@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -49,8 +51,8 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
         (mode.usesVisualQaFrame
-            ? AppSpacing.x7 + AppSpacing.x6
-            : AppSpacing.x7) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -80,37 +82,29 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      customGap: 0,
-                      fullBleed: true,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
-                        const _SectionTitle(
+                        const _ReferralRulesSection(
                           title: 'Hệ thống hạng',
                           subtitle: 'Mời càng nhiều, thưởng càng lớn',
-                          color: AppColors.warn,
+                          accentColor: AppColors.warn,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _TierTable(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        const _SectionTitle(
+                        const _ReferralRulesSection(
                           title: 'Các loại thưởng',
-                          color: AppModuleAccents.trade,
+                          accentColor: AppModuleAccents.trade,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _RewardTypes(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        const _SectionTitle(
+                        const _ReferralRulesSection(
                           title: 'Điều khoản chương trình',
-                          color: AppColors.text2,
+                          accentColor: AppColors.text2,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _TermsList(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x5),
-                        const _SectionTitle(
+                        const _ReferralRulesSection(
                           title: 'Câu hỏi thường gặp',
-                          color: AppColors.accent,
+                          accentColor: AppColors.accent,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _FaqList(
                           snapshot: snapshot,
                           openIndex: _openFaqIndex,
@@ -123,7 +117,6 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                             });
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         _Disclaimer(snapshot: snapshot),
                       ],
                     ),

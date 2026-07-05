@@ -92,9 +92,9 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
         if (_confirming) ...[
           VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
-            title: 'Review buy order',
+            title: 'Xem lại lệnh mua',
             message:
-                'Confirm amount, received asset, payment method, fee, and next step before submitting.',
+                'Xác nhận số tiền, tài sản nhận, phương thức thanh toán, phí và bước tiếp theo trước khi gửi.',
             contractId: '${crypto.symbol} / ${payment.name}',
           ),
           BuyConfirmContent(
@@ -121,7 +121,9 @@ class _BuyCryptoPageState extends ConsumerState<BuyCryptoPage> {
             },
             onCryptoTap: () => _showCryptoPicker(snapshot),
             onPaymentChanged: (id) => setState(() => _selectedPayment = id),
-            onBuy: _canBuy(crypto) ? () => setState(() => _confirming = true) : null,
+            onBuy: _canBuy(crypto)
+                ? () => setState(() => _confirming = true)
+                : null,
           ),
       ],
     );

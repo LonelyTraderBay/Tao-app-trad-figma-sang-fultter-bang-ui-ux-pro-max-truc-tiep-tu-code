@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/core/product_flow/contextual_support_contract.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart';
@@ -14,9 +13,7 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_preview_sheet.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class WithdrawPage extends ConsumerStatefulWidget {
   const WithdrawPage({
@@ -83,11 +80,6 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
     );
     final canPreview = validationMessage == null;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x7 + AppSpacing.x6
-            : AppSpacing.x7) +
-        MediaQuery.paddingOf(context).bottom;
 
     return VitWalletDetailScaffold(
       title: 'Rút ${snapshot.asset}',
@@ -96,18 +88,23 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
           ? 'SC-140 WithdrawPage Asset'
           : 'SC-139 WithdrawPage',
       contentKey: WithdrawPage.contentKey,
-      bottomInset: scrollEndClearance,
       contentGap: VitContentGap.tight,
+      shellRenderMode: mode,
       onBack: () => goBackOrFallback(
         context,
         fallbackPath: AppRoutePaths.wallet,
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        WithdrawBalanceCard(
-          asset: snapshot.asset,
-          value: snapshot.available,
-        ),
+        if (snapshot.highRiskContractId != null)
+          VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Withdrawal preview required',
+            message:
+                'Address, network, amount, fee, and confirmation are tracked as one wallet money-movement contract.',
+            contractId: snapshot.highRiskContractId,
+          ),
+        WithdrawBalanceCard(asset: snapshot.asset, value: snapshot.available),
         const VitSectionHeader(
           title: 'Mạng rút',
           icon: Icons.hub_outlined,
@@ -156,20 +153,12 @@ class _WithdrawPageState extends ConsumerState<WithdrawPage> {
           },
         ),
         const VitSectionHeader(
-          title: 'Xem lại an toàn',
-          icon: Icons.verified_user_outlined,
+          title: 'An toàn',
+          icon: Icons.shield_outlined,
           iconColor: withdrawAmber,
           accentColor: withdrawAmber,
         ),
-        const WithdrawWarning(),
-        if (snapshot.highRiskContractId != null)
-          VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Withdrawal safety states active',
-            message:
-                'Limits, setup, fee preview, confirmation, submitted status and recovery are tracked as one money-movement contract.',
-            contractId: snapshot.highRiskContractId,
-          ),
+        WithdrawWarning(asset: snapshot.asset, network: selected),
         if (validationMessage != null)
           WithdrawPreviewBlockedNotice(message: validationMessage),
         WithdrawNextButton(

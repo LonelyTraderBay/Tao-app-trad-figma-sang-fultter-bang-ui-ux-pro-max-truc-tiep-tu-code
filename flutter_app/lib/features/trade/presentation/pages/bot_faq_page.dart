@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -69,13 +70,21 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
               .toList();
     return VitTradeHubScaffold(
       title: 'Trading Bots FAQ',
+      subtitle: 'Câu hỏi thường gặp về bot giao dịch',
       semanticLabel: 'SC-132 BotFAQPage',
       contentKey: BotFaqPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Câu hỏi',
+          primaryValue: '${snapshot.totalFaqs}',
+          secondaryLabel: 'Danh mục',
+          secondaryValue: '${snapshot.categories.length}',
+        ),
         VitTradeSection(
-          title: 'Search',
+          title: 'Tìm kiếm',
           child: _SearchField(
             controller: _searchController,
             onChanged: (value) => setState(() {
@@ -85,7 +94,7 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
           ),
         ),
         VitTradeSection(
-          title: 'Categories',
+          title: 'Danh mục',
           child: _CategoryTabs(
             categories: snapshot.categories,
             activeId: _categoryId,
@@ -118,14 +127,8 @@ class _BotFaqPageState extends ConsumerState<BotFaqPage> {
                   ],
                 ),
         ),
-        VitTradeSection(
-          title: 'Stats',
-          child: _StatsRow(
-            totalFaqs: snapshot.totalFaqs,
-            categories: snapshot.categories.length,
-          ),
-        ),
-        VitTradeSection(title: 'Help', child: const _HelpCard()),
+        VitTradeSection(title: 'Hỗ trợ', child: const _HelpCard()),
+        const VitBotRiskDisclaimer(),
       ],
     );
   }

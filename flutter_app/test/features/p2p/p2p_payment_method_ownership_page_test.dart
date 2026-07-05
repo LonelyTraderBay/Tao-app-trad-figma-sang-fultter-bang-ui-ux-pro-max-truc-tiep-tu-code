@@ -61,15 +61,15 @@ void main() {
     expect(find.byType(P2PPaymentMethodOwnershipPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Proof of Ownership'), findsOneWidget);
-    expect(find.text('Thanh toán · P2P'), findsOneWidget);
     expect(find.text('Xác minh sở hữu'), findsOneWidget);
+    expect(find.text('Thanh toán · P2P'), findsOneWidget);
+    expect(find.text('Chứng minh tài khoản'), findsOneWidget);
     expect(find.text('Tài liệu cần thiết'), findsOneWidget);
     expect(find.text('Ảnh thẻ ATM'), findsOneWidget);
     expect(find.text('Selfie với thẻ'), findsOneWidget);
     expect(find.text('Bank statement (optional)'), findsOneWidget);
-    expect(find.text('Optional'), findsOneWidget);
-    expect(find.text('Upload'), findsNWidgets(3));
+    expect(find.text('Tùy chọn'), findsOneWidget);
+    expect(find.text('Tải lên'), findsNWidgets(3));
     expect(find.text('Gửi xác minh'), findsOneWidget);
   });
 

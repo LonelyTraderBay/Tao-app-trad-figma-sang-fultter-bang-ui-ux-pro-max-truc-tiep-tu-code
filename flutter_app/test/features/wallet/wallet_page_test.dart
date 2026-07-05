@@ -95,7 +95,7 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_wallet')),
       findsOneWidget,
     );
-    expect(find.text('Ví tài sản'), findsOneWidget);
+    expect(find.text('Số dư minh bạch · bảo mật đa lớp'), findsOneWidget);
     expect(
       find.text('Một số thao tác ví đang ở chế độ xem trước'),
       findsOneWidget,
@@ -105,15 +105,14 @@ void main() {
     expect(find.text('Mua định kỳ (DCA)'), findsOneWidget);
     expect(find.text('Tài sản'), findsOneWidget);
     expect(find.text('Công cụ ví'), findsOneWidget);
+    expect(find.text('Biến động 24h'), findsOneWidget);
     expect(find.text('Danh sách'), findsOneWidget);
     expect(find.text('Tìm tài sản...'), findsOneWidget);
     expect(find.text('13 tài sản'), findsOneWidget);
     expect(find.text('USDT'), findsOneWidget);
     expect(find.byKey(WalletPage.actionKey('deposit')), findsOneWidget);
     expect(find.byKey(WalletPage.actionKey('withdraw')), findsOneWidget);
-    expect(find.byKey(WalletPage.actionKey('buy')), findsOneWidget);
-    expect(find.byKey(WalletPage.actionKey('transfer')), findsOneWidget);
-    expect(find.byKey(WalletPage.actionKey('history')), findsOneWidget);
+    expect(find.byKey(WalletPage.moreActionsKey), findsOneWidget);
   });
 
   testWidgets('SC-135 first viewport exposes balance and primary actions', (
@@ -189,6 +188,8 @@ void main() {
     expect(find.text('Phân bổ'), findsWidgets);
     expect(find.text('BTC'), findsWidgets);
 
+    await tester.tap(find.byKey(WalletPage.moreActionsKey));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(WalletPage.actionKey('history')));
     await tester.pumpAndSettle();
     expect(find.text('Lịch sử giao dịch'), findsOneWidget);
@@ -197,17 +198,28 @@ void main() {
   testWidgets('SC-135 wallet actions keep their routes after redesign', (
     tester,
   ) async {
-    final cases = [
+    final directCases = [
       (WalletPage.actionKey('deposit'), 'Nạp USDT'),
       (WalletPage.actionKey('withdraw'), 'Rút USDT'),
+    ];
+    final overflowCases = [
       (WalletPage.actionKey('buy'), 'Mua Crypto'),
       (WalletPage.actionKey('transfer'), 'Chuyển nội bộ'),
       (WalletPage.actionKey('history'), 'Lịch sử giao dịch'),
     ];
 
-    for (final testCase in cases) {
+    for (final testCase in directCases) {
       await pumpWallet(tester);
       await tester.ensureVisible(find.byKey(testCase.$1));
+      await tester.tap(find.byKey(testCase.$1));
+      await tester.pumpAndSettle();
+      expect(find.text(testCase.$2), findsOneWidget);
+    }
+
+    for (final testCase in overflowCases) {
+      await pumpWallet(tester);
+      await tester.tap(find.byKey(WalletPage.moreActionsKey));
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(testCase.$1));
       await tester.pumpAndSettle();
       expect(find.text(testCase.$2), findsOneWidget);

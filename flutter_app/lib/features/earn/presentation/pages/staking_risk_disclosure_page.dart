@@ -8,9 +8,10 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -20,10 +21,7 @@ part '../widgets/staking_risk_disclosure_overview.dart';
 part '../widgets/staking_risk_disclosure_categories.dart';
 part '../widgets/staking_risk_disclosure_assessment_common.dart';
 
-const double _stakingRiskVisualNavClearance = 112;
-const double _stakingRiskNativeNavClearance = 88;
 const double _stakingRiskWarningMinHeight = 88;
-const double _stakingRiskTabsMinHeight = AppSpacing.inputHeight;
 const double _stakingRiskBorderWidth = AppSpacing.hairlineStroke;
 const double _stakingRiskWarningIcon = AppSpacing.iconMd;
 const double _stakingRiskCountMinHeight = 64;
@@ -80,11 +78,11 @@ class _StakingRiskDisclosurePageState
         .getDisclosure();
     final activeTab = _activeTab ?? snapshot.defaultTab;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navClearance = mode.usesVisualQaFrame
-        ? _stakingRiskVisualNavClearance
-        : _stakingRiskNativeNavClearance;
-    final scrollEndPadding =
-        navClearance + MediaQuery.paddingOf(context).bottom;
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -92,8 +90,10 @@ class _StakingRiskDisclosurePageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'APY ước tính có thể thay đổi',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -103,12 +103,7 @@ class _StakingRiskDisclosurePageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    scrollEndPadding,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,

@@ -64,7 +64,7 @@ class _WalletTokenApprovalPageState
         color: walletTokenApprovalBackground,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Token Approvals',
+            title: 'Phê duyệt token',
             showBack: true,
             onBack: () =>
                 goBackOrFallback(context, fallbackPath: AppRoutePaths.wallet),
@@ -85,11 +85,11 @@ class _WalletTokenApprovalPageState
                       WalletTokenSecurityOverview(snapshot: snapshot),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review token approval risk',
+                        title: 'Xem lại rủi ro phê duyệt',
                         message:
-                            'Preview spender, token, allowance, gas estimate, and impact before any revoke confirmation.',
+                            'Xem trước spender, token, hạn mức, ước tính gas và tác động trước khi thu hồi.',
                         contractId:
-                            '${snapshot.criticalCount} critical / ${snapshot.unlimitedCount} unlimited',
+                            '${snapshot.criticalCount} nghiêm trọng / ${snapshot.unlimitedCount} không giới hạn',
                         density: VitDensity.compact,
                       ),
                       WalletTokenApprovalTabs(

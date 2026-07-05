@@ -40,7 +40,7 @@ class _WatchlistToolbar extends StatelessWidget {
                     VitIconButton(
                       key: WatchlistPage.addPairKey,
                       icon: Icons.add_rounded,
-                      tooltip: 'ThÃªm cáº·p theo dÃµi',
+                      tooltip: 'Thêm cặp theo dõi',
                       onPressed: onAddPair,
                       variant: VitIconButtonVariant.primary,
                       size: VitIconButtonSize.md,

@@ -85,7 +85,8 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('BTC/USDT'), findsAtLeastNWidgets(1));
     expect(find.text('67,543.21'), findsAtLeastNWidgets(1));
-    expect(find.text('Bước 1 · Chọn hướng'), findsOneWidget);
+    expect(find.byKey(TradePage.buySideKey), findsOneWidget);
+    expect(find.text('BÁN'), findsOneWidget);
   });
 
   testWidgets('SC-049 side query preselects sell and invalid side falls back', (
@@ -130,12 +131,13 @@ void main() {
     expect(find.byKey(TradePage.quickNavKey('futures')), findsOneWidget);
     expect(find.text('67,543.21'), findsAtLeastNWidgets(1));
     expect(find.text('Chế độ Pro'), findsNothing);
-    expect(find.text('Giao dịch'), findsAtLeastNWidgets(1));
-    expect(find.text('Bước 1 · Chọn hướng'), findsOneWidget);
+    expect(find.text('Giao dịch Spot'), findsOneWidget);
     expect(find.text('Charts'), findsNothing);
     expect(find.byKey(TradePage.buySideKey), findsOneWidget);
     expect(find.text('BÁN'), findsOneWidget);
     expect(find.text('Tiếp theo'), findsOneWidget);
+    expect(find.textContaining('Số dư khả dụng'), findsOneWidget);
+    expect(find.text('Giá thị trường có thể thay đổi'), findsOneWidget);
   });
 
   testWidgets('SC-048 first viewport reaches order side switch', (
@@ -163,7 +165,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('0.037'), findsWidgets);
-    expect(find.text('Xem lại & xác nhận'), findsOneWidget);
+    expect(find.text('Xác nhận MUA'), findsOneWidget);
   });
 
   testWidgets('SC-048 confirm sheet gates order submission', (tester) async {
@@ -227,12 +229,7 @@ void main() {
   ) async {
     await pumpTrade(tester);
 
-    const primaryIds = [
-      'spot',
-      'convert',
-      'futures',
-      'margin',
-    ];
+    const primaryIds = ['spot', 'convert', 'futures', 'margin'];
     for (final id in primaryIds) {
       expect(find.byKey(TradePage.quickNavKey(id)), findsOneWidget);
     }

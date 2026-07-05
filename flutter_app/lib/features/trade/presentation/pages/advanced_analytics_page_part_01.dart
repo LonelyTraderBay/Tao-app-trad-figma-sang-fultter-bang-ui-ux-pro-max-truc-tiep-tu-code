@@ -22,8 +22,8 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
         color: _advancedBackground,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Advanced Analytics',
-            subtitle: 'AI & Professional Tools',
+            title: 'Phân tích nâng cao',
+            subtitle: 'AI · Rủi ro · Nhật ký',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.tradeMargin),
           ),
@@ -44,6 +44,14 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                           title: 'Tổng quan',
                         child: _HeroCard(stats: snapshot.stats),
                       ),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        density: VitDensity.compact,
+                        title: 'Xem lại phân tích nâng cao',
+                        message:
+                            'Tín hiệu AI, sizing và nhật ký chỉ hỗ trợ quyết định. Xác nhận giới hạn rủi ro trước khi dùng cho lệnh thật.',
+                        contractId: 'SC-092',
+                      ),
                       _UnderlineTabs(
                         activeId: _tab,
                         onChanged: (id) => setState(() => _tab = id),
@@ -60,14 +68,6 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                         _TradeJournalTab(snapshot: snapshot)
                       else
                         _PositionSizingTab(snapshot: snapshot),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
-                        title: 'Analytics risk review',
-                        message:
-                            'AI signals, sizing, and journal metrics are decision-support tools. Confirm risk limits before using them for live orders.',
-                        contractId: 'SC-092',
-                      ),
                       VitTradeSection(
                         title: 'Model info',
                         child: _ModelInfoCard(),

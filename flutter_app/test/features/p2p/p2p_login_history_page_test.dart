@@ -134,9 +134,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('IP Address'), findsOneWidget);
+    expect(find.text('Địa chỉ IP'), findsOneWidget);
     expect(find.text('103.45.78.21'), findsOneWidget);
-    expect(find.text('Login Method'), findsOneWidget);
+    expect(find.text('Phương thức đăng nhập'), findsOneWidget);
     expect(find.text('Đăng nhập đáng ngờ'), findsOneWidget);
   });
 

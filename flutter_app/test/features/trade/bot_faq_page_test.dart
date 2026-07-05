@@ -61,11 +61,11 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Trading Bots FAQ'), findsOneWidget);
-    expect(find.text('Search FAQs...'), findsOneWidget);
+    expect(find.text('Tìm câu hỏi...'), findsOneWidget);
     expect(find.text('General (5)'), findsOneWidget);
     expect(find.text('What is a trading bot?'), findsOneWidget);
     expect(find.text('Can I lose more than I invest?'), findsOneWidget);
-    expect(find.text('Total FAQs'), findsOneWidget);
+    expect(find.text('25'), findsOneWidget);
     expect(find.text('Still need help?'), findsOneWidget);
   });
 

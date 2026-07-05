@@ -84,7 +84,7 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Smart Scheduling',
-          subtitle: 'Lịch mua · DCA',
+          subtitle: 'Đầu tư có kỷ luật · lịch mua tự động',
           showBack: true,
           onBack: _close,
         ),
@@ -169,6 +169,13 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
                 ),
                 if (_strategy == DcaScheduleStrategy.fixed)
                   const _FixedWarningCard(),
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Xem lại lịch mua tự động',
+                  message:
+                      'Thay đổi chiến lược và khung giờ ảnh hưởng trực tiếp đến thời điểm thực thi DCA.',
+                  contractId: 'SC-172',
+                ),
                 VitCtaButton(
                   key: DCAScheduleConfig.saveKey,
                   onPressed: _save,

@@ -1,5 +1,65 @@
 part of '../pages/announcements_page.dart';
 
+class _AnnouncementsBody extends StatelessWidget {
+  const _AnnouncementsBody({
+    required this.screenState,
+    required this.pinned,
+    required this.regular,
+    required this.expandedId,
+    required this.onToggle,
+    required this.onRetry,
+  });
+
+  final SupportScreenState screenState;
+  final List<AnnouncementDraft> pinned;
+  final List<AnnouncementDraft> regular;
+  final String? expandedId;
+  final ValueChanged<String> onToggle;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (screenState) {
+      SupportScreenState.loading => const VitSkeletonList(
+        key: AnnouncementsPage.loadingKey,
+        rows: 4,
+      ),
+      SupportScreenState.error => VitErrorState(
+        key: AnnouncementsPage.errorKey,
+        title: 'Không tải được thông báo',
+        message: 'Kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: onRetry,
+      ),
+      SupportScreenState.empty ||
+      SupportScreenState.offline when pinned.isEmpty && regular.isEmpty =>
+        const VitEmptyState(
+          key: AnnouncementsPage.emptyKey,
+          title: 'Không có thông báo nào',
+          message: 'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
+          icon: Icons.notifications_none_rounded,
+        ),
+      _ => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (pinned.isNotEmpty)
+            _PinnedSection(
+              announcements: pinned,
+              expandedId: expandedId,
+              onToggle: onToggle,
+            ),
+          _AnnouncementList(
+            announcements: regular,
+            showEmpty: pinned.isEmpty && regular.isEmpty,
+            expandedId: expandedId,
+            onToggle: onToggle,
+          ),
+        ],
+      ),
+    };
+  }
+}
+
 class _PinnedSection extends StatelessWidget {
   const _PinnedSection({
     required this.announcements,
@@ -13,31 +73,14 @@ class _PinnedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return Padding(
       key: AnnouncementsPage.pinnedKey,
-      margin: AppSpacing.supportSectionMargin,
-      padding: AppSpacing.supportCardPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      padding: AppSpacing.supportSectionMargin,
+      child: VitPageSection(
+        label: 'GHIM',
+        accentColor: AppModuleAccents.support,
+        density: VitDensity.compact,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.push_pin_outlined,
-                color: AppModuleAccents.support,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                'GHIM',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x4),
           for (var i = 0; i < announcements.length; i++) ...[
             if (i > 0) const SizedBox(height: AppSpacing.x3),
             _AnnouncementCard(
@@ -67,29 +110,35 @@ class _AnnouncementList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    if (showEmpty) {
+      return Padding(
+        key: AnnouncementsPage.listKey,
+        padding: AppSpacing.supportSectionMargin,
+        child: const VitEmptyState(
+          key: AnnouncementsPage.emptyKey,
+          title: 'Không có thông báo nào',
+          message: 'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
+          icon: Icons.notifications_none_rounded,
+        ),
+      );
+    }
+
+    return Padding(
       key: AnnouncementsPage.listKey,
-      margin: AppSpacing.supportSectionMargin,
-      padding: AppSpacing.supportCardPadding,
-      child: showEmpty
-          ? const VitEmptyState(
-              key: AnnouncementsPage.emptyKey,
-              title: 'Không có thông báo nào',
-              message: 'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
-              icon: Icons.notifications_none_rounded,
-            )
-          : Column(
-              children: [
-                for (var i = 0; i < announcements.length; i++) ...[
-                  if (i > 0) const SizedBox(height: AppSpacing.x3),
-                  _AnnouncementCard(
-                    announcement: announcements[i],
-                    expanded: expandedId == announcements[i].id,
-                    onTap: () => onToggle(announcements[i].id),
-                  ),
-                ],
-              ],
+      padding: AppSpacing.supportSectionMargin,
+      child: VitPageSection(
+        density: VitDensity.compact,
+        children: [
+          for (var i = 0; i < announcements.length; i++) ...[
+            if (i > 0) const SizedBox(height: AppSpacing.x3),
+            _AnnouncementCard(
+              announcement: announcements[i],
+              expanded: expandedId == announcements[i].id,
+              onTap: () => onToggle(announcements[i].id),
             ),
+          ],
+        ],
+      ),
     );
   }
 }

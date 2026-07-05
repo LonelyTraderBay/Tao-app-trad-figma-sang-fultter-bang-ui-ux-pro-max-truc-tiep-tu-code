@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -29,6 +30,9 @@ class HelpCenterPage extends ConsumerStatefulWidget {
   static const categoriesKey = Key('sc292_help_categories');
   static const articlesKey = Key('sc292_help_articles');
   static const emptyKey = Key('sc292_help_empty');
+  static const loadingKey = Key('sc292_help_loading');
+  static const errorKey = Key('sc292_help_error');
+  static const offlineKey = Key('sc292_help_offline');
 
   static Key categoryKey(String id) => Key('sc292_help_category_$id');
   static Key articleKey(String id) => Key('sc292_help_article_$id');
@@ -67,6 +71,9 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
             ? DeviceMetrics.bottomChrome + AppSpacing.x6
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
+    final showOfflineBanner =
+        snapshot.screenState == SupportScreenState.offline &&
+        snapshot.articles.isNotEmpty;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -83,6 +90,20 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (showOfflineBanner)
+                Padding(
+                  key: HelpCenterPage.offlineKey,
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    0,
+                  ),
+                  child: const VitOfflineBanner(
+                    message: 'Đang ngoại tuyến',
+                    detail: 'Hiển thị bài viết trợ giúp đã lưu gần nhất.',
+                  ),
+                ),
               Expanded(
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(
@@ -93,29 +114,21 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.supportScrollPadding(bottomInset),
                     child: VitPageContent(
+                      density: VitDensity.compact,
                       gap: VitContentGap.relaxed,
                       children: [
-                        _HelpHero(
+                        _HelpCenterBody(
                           snapshot: snapshot,
-                          controller: _searchController,
-                          onChanged: _updateSearch,
-                        ),
-                        _QuickActions(
-                          chatRoute: snapshot.chatRoute,
-                          ticketRoute: snapshot.ticketRoute,
-                        ),
-                        if (_query.isEmpty)
-                          _CategorySection(
-                            categories: snapshot.categories,
-                            selectedCategoryId: _selectedCategoryId,
-                            onSelected: _selectCategory,
-                          ),
-                        _ArticleSection(
-                          title: _sectionTitle(snapshot, articles.length),
                           articles: articles,
-                          categories: snapshot.categories,
+                          searchController: _searchController,
+                          query: _query,
+                          selectedCategoryId: _selectedCategoryId,
                           expandedArticleId: _expandedArticleId,
-                          onToggle: _toggleArticle,
+                          sectionTitle: _sectionTitle(snapshot, articles.length),
+                          onSearchChanged: _updateSearch,
+                          onCategorySelected: _selectCategory,
+                          onArticleToggle: _toggleArticle,
+                          onRetry: () => setState(() {}),
                         ),
                       ],
                     ),

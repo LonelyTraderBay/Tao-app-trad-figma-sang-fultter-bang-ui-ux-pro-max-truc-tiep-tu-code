@@ -62,15 +62,15 @@ void main() {
     expect(find.byType(P2POrderRatePage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Danh gia giao dich'), findsOneWidget);
-    expect(find.text('Danh gia - P2P'), findsOneWidget);
+    expect(find.text('Đánh giá giao dịch'), findsOneWidget);
+    expect(find.text('Đánh giá · P2P'), findsOneWidget);
     expect(find.text('CryptoKing_VN'), findsOneWidget);
     expect(find.text('Mua 200.0000 USDT - 5.070.000'), findsOneWidget);
-    expect(find.text('Ban danh gia merchant nay the nao?'), findsOneWidget);
+    expect(find.text('Bạn đánh giá merchant này thế nào?'), findsOneWidget);
     expect(find.byKey(P2POrderRatePage.starKey(5)), findsOneWidget);
-    expect(find.text('Bo qua'), findsOneWidget);
-    expect(find.text('Gui danh gia'), findsOneWidget);
-    expect(find.text('Nhan xet nhanh'), findsNothing);
+    expect(find.text('Bỏ qua'), findsOneWidget);
+    expect(find.text('Gửi đánh giá'), findsOneWidget);
+    expect(find.text('Nhận xét nhanh'), findsNothing);
   });
 
   testWidgets('SC-213 first viewport reaches rating actions', (tester) async {
@@ -101,7 +101,7 @@ void main() {
 
     expectActionableInFirstViewport(
       tester,
-      find.byKey(P2POrderRatePage.tagKey('Giao dich nhanh')),
+      find.byKey(P2POrderRatePage.tagKey('Giao dịch nhanh')),
       routeName: 'SC-213 P2POrderRatePage',
       actionLabel: 'the first quick feedback tag',
       minVisibleHeight: 32,
@@ -116,12 +116,12 @@ void main() {
     await tester.tap(find.byKey(P2POrderRatePage.starKey(5)));
     await tester.pumpAndSettle();
 
-    expect(find.text('Xuat sac!'), findsOneWidget);
-    expect(find.text('Nhan xet nhanh'), findsOneWidget);
-    expect(find.text('Giao dich nhanh'), findsOneWidget);
+    expect(find.text('Xuất sắc!'), findsOneWidget);
+    expect(find.text('Nhận xét nhanh'), findsOneWidget);
+    expect(find.text('Giao dịch nhanh'), findsOneWidget);
     expect(find.byKey(P2POrderRatePage.reviewKey), findsOneWidget);
 
-    await tester.tap(find.byKey(P2POrderRatePage.tagKey('Giao dich nhanh')));
+    await tester.tap(find.byKey(P2POrderRatePage.tagKey('Giao dịch nhanh')));
     await tester.enterText(
       find.byKey(P2POrderRatePage.reviewKey),
       'Fast and clear escrow flow.',
@@ -133,9 +133,9 @@ void main() {
 
     await tester.pump(const Duration(milliseconds: 350));
     await tester.pumpAndSettle();
-    expect(find.text('Cam on ban!'), findsOneWidget);
+    expect(find.text('Cảm ơn bạn!'), findsOneWidget);
     expect(
-      find.text('Danh gia cua ban giup cong dong giao dich an toan hon.'),
+      find.text('Đánh giá của bạn giúp cộng đồng giao dịch an toàn hơn.'),
       findsOneWidget,
     );
   });

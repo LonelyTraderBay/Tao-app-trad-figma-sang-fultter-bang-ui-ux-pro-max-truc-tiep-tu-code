@@ -83,8 +83,8 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Tham gia challenge',
-            subtitle: 'Đăng ký · Open Arena',
+            title: 'Tham gia thử thách',
+            subtitle: 'Xác nhận · Open Arena',
             showBack: true,
             onBack: _close,
           ),
@@ -103,9 +103,9 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
+                      density: VitDensity.compact,
                       children: [
                         _ChallengeSummaryCard(challenge: challenge),
-                        _RulesCard(rules: snapshot.rules),
                         _SafetyPolicyLink(
                           onTap: () => _go(AppRoutePaths.arenaSafety),
                         ),
@@ -115,14 +115,17 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
                           onRules: () => _toggleRules(),
                           onPoints: () => _togglePoints(),
                         ),
-                        _RoomInfoCard(challenge: challenge),
-                        _CreatorCard(creator: snapshot.creator),
                         _BalanceCard(
                           currentBalance: snapshot.currentBalance,
                           entryPoints: challenge.entryPoints,
                           remainingBalance: remainingBalance,
                           hasEnough: hasEnough,
                         ),
+                        _JoinContextCard(
+                          challenge: challenge,
+                          creator: snapshot.creator,
+                        ),
+                        _RulesCard(rules: snapshot.rules),
                         _NoticeCard(text: snapshot.refundNotice),
                         _ActionStack(
                           entryPoints: challenge.entryPoints,

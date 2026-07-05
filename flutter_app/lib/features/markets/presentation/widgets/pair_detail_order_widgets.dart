@@ -16,7 +16,7 @@ class _OrderBookPanel extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'So lenh ${snapshot.pair.symbol}',
+                  'Sổ lệnh ${snapshot.pair.symbol}',
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
                   ),
@@ -121,17 +121,17 @@ class _TradeHeader extends StatelessWidget {
       padding: AppSpacing.pairTradeHeaderPadding,
       child: Row(
         children: [
-          Expanded(child: Text('Gia', style: _tableHeaderStyle())),
+          Expanded(child: Text('Giá', style: _tableHeaderStyle())),
           Expanded(
             child: Text(
-              'Khoi luong',
+              'Khối lượng',
               textAlign: TextAlign.right,
               style: _tableHeaderStyle(),
             ),
           ),
           Expanded(
             child: Text(
-              'Thoi gian',
+              'Thời gian',
               textAlign: TextAlign.right,
               style: _tableHeaderStyle(),
             ),

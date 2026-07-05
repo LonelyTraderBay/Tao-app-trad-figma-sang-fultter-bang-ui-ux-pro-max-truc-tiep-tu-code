@@ -102,28 +102,19 @@ class _RiskBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ColoredBox(
-        color: AppColors.sell10,
-        child: Padding(
-          padding: AppSpacing.p2pChatRiskBannerPadding,
-          child: Row(
-            children: [
-              const Icon(
-                Icons.warning_amber_rounded,
-                color: AppColors.sell,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  message,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.sell),
-                ),
-              ),
-            ],
-          ),
+    return Padding(
+      padding: AppSpacing.p2pChatRiskBannerPadding,
+      child: P2PNoticeCard(
+        icon: Icons.warning_amber_rounded,
+        message: message,
+        iconColor: AppColors.sell,
+        messageColor: AppColors.sell,
+        borderColor: AppColors.sell20,
+        variant: VitCardVariant.standard,
+        padding: AppSpacing.p2pDisputeCardPadding,
+        messageStyle: AppTextStyles.micro.copyWith(
+          color: AppColors.sell,
+          height: 1.4,
         ),
       ),
     );

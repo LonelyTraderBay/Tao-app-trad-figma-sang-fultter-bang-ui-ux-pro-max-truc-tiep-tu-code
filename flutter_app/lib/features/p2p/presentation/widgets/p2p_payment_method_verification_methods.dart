@@ -44,7 +44,7 @@ class _OwnershipHero extends StatelessWidget {
         children: [
           const Material(
             color: AppColors.primary,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
             child: SizedBox(
               width: AppSpacing.x7,
               height: AppSpacing.x7,

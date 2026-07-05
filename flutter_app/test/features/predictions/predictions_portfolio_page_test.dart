@@ -133,7 +133,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Prediction Portfolio'), findsOneWidget);
-    expect(find.text('Danh mục · Prediction'), findsOneWidget);
+    expect(find.text('Vị thế · Prediction'), findsOneWidget);
     expect(find.text('\$1787.00'), findsOneWidget);
     expect(find.text('Portfolio Value'), findsOneWidget);
     expect(find.textContaining('Shares'), findsOneWidget);
@@ -224,7 +224,7 @@ void main() {
     await tester.tap(find.byKey(PredictionsPortfolioPage.positionKey('pos-1')));
     await tester.pumpAndSettle();
     expect(find.byType(PredictionEventDetailPage), findsOneWidget);
-    expect(find.text('Event Detail'), findsOneWidget);
+    expect(find.text('Chi tiết sự kiện'), findsOneWidget);
   });
 
   testWidgets('SC-031 receipt and Arena edges are wired safely', (

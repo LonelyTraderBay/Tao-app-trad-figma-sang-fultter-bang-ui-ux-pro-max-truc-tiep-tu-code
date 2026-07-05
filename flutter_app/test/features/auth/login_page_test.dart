@@ -70,6 +70,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.text('VitTrade'), findsOneWidget);
+    expect(find.text('Đăng nhập an toàn'), findsOneWidget);
     expect(find.text('Đăng nhập'), findsOneWidget);
   });
 
@@ -156,6 +157,17 @@ void main() {
 
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_active_home')), findsOneWidget);
+  });
+
+  testWidgets('SC-001 hides demo login when mock data is disabled', (
+    tester,
+  ) async {
+    _setPhoneViewport(tester);
+
+    await tester.pumpWidget(_productionFailClosedApp());
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(LoginPage.demoSubmitKey), findsNothing);
   });
 
   testWidgets('SC-001 production auth without backend fails closed in UI', (

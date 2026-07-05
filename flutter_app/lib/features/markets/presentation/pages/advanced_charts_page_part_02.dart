@@ -25,71 +25,74 @@ class _IndicatorCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          VitCard(
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
-            padding: _advancedIndicatorHeaderPadding,
-            onTap: onToggleExpanded,
-            child: Row(
-              children: [
-                Material(
-                  color: indicator.color.withValues(alpha: .08),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: SizedBox.square(
-                    dimension: _advancedIndicatorAvatar,
-                    child: Center(
-                      child: Text(
-                        indicator.shortName.length <= 3
-                            ? indicator.shortName
-                            : indicator.shortName.substring(0, 3),
-                        style: AppTextStyles.micro.copyWith(
-                          color: indicator.color,
-                          fontWeight: AppTextStyles.bold,
-                        ),
+          Material(
+            color: AppColors.transparent,
+            child: InkWell(
+              onTap: onToggleExpanded,
+              child: Padding(
+                padding: _advancedIndicatorHeaderPadding,
+                child: Row(
+                  children: [
+                    Material(
+                      color: indicator.color.withValues(alpha: .08),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadii.smRadius,
                       ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: _advancedGap),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            indicator.shortName,
-                            style: AppTextStyles.body.copyWith(
-                              color: AppColors.text1,
+                      child: SizedBox.square(
+                        dimension: _advancedIndicatorAvatar,
+                        child: Center(
+                          child: Text(
+                            indicator.shortName.length <= 3
+                                ? indicator.shortName
+                                : indicator.shortName.substring(0, 3),
+                            style: AppTextStyles.micro.copyWith(
+                              color: indicator.color,
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(width: _advancedCompactGap),
-                          _CategoryBadge(category: category),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.dividerHairline),
-                      Text(
-                        indicator.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: _advancedGap),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                indicator.shortName,
+                                style: AppTextStyles.body.copyWith(
+                                  color: AppColors.text1,
+                                  fontWeight: AppTextStyles.bold,
+                                ),
+                              ),
+                              const SizedBox(width: _advancedCompactGap),
+                              _CategoryBadge(category: category),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.dividerHairline),
+                          Text(
+                            indicator.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: _advancedGap),
+                    _IndicatorToggle(
+                      key: AdvancedChartsPage.indicatorToggleKey(indicator.id),
+                      active: active,
+                      color: indicator.color,
+                      onTap: onToggleActive,
+                    ),
+                  ],
                 ),
-                const SizedBox(width: _advancedGap),
-                _IndicatorToggle(
-                  key: AdvancedChartsPage.indicatorToggleKey(indicator.id),
-                  active: active,
-                  color: indicator.color,
-                  onTap: onToggleActive,
-                ),
-              ],
+              ),
             ),
           ),
           if (expanded) _IndicatorDetails(indicator: indicator),
@@ -180,7 +183,7 @@ class _IndicatorToggle extends StatelessWidget {
     return Semantics(
       button: true,
       selected: active,
-      label: active ? 'Táº¯t chá»‰ bÃ¡o' : 'Báº­t chá»‰ bÃ¡o',
+      label: active ? 'Tắt chỉ báo' : 'Bật chỉ báo',
       child: VitCard(
         variant: VitCardVariant.ghost,
         radius: VitCardRadius.standard,
@@ -433,34 +436,3 @@ class _TipsCard extends StatelessWidget {
   }
 }
 
-class _SignalDisclaimerCard extends StatelessWidget {
-  const _SignalDisclaimerCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      borderColor: AppColors.warn.withValues(alpha: .16),
-      padding: _advancedCardPaddingCompact,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            size: _advancedDisclaimerIcon,
-            color: AppColors.warn,
-          ),
-          const SizedBox(width: _advancedCompactGap),
-          Expanded(
-            child: Text(
-              'Tín hiệu kỹ thuật chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư.',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-                height: _advancedLineHeightReadable,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

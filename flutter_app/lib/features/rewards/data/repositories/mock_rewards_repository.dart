@@ -14,6 +14,7 @@ final class MockRewardsRepository implements RewardsRepository {
       backRoute: '/home',
       referralRoute: '/referral',
       leaderboardRoute: '/arena/leaderboard',
+      screenState: RewardsScreenState.ready,
       summary: RewardSummaryDraft(
         bonusPointsClaimed: '3,500',
         currentPoints: 2220,
@@ -418,6 +419,7 @@ final class MockRewardsRepository implements RewardsRepository {
         RewardsScreenState.empty,
         RewardsScreenState.error,
         RewardsScreenState.offline,
+        RewardsScreenState.ready,
       },
     );
   }

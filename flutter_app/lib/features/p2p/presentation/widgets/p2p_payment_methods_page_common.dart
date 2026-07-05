@@ -57,7 +57,7 @@ class _DeleteConfirmation extends StatelessWidget {
                         const Material(
                           color: AppColors.sell15,
                           shape: RoundedRectangleBorder(
-                            borderRadius: AppRadii.mdRadius,
+                            borderRadius: AppRadii.smRadius,
                           ),
                           child: SizedBox(
                             width: AppSpacing.buttonCompact,

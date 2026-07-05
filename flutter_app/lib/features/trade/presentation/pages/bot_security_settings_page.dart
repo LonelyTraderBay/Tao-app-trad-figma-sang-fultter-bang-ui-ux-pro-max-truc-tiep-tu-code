@@ -65,11 +65,20 @@ class _BotSecuritySettingsPageState
         .snapshot;
     return VitTradeHubScaffold(
       title: 'Security Settings',
+      subtitle: 'Bảo mật API key và quyền truy cập bot',
       semanticLabel: 'SC-122 BotSecuritySettingsPage',
       contentKey: BotSecuritySettingsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
+        VitBotSubpageHero(
+          primaryLabel: '2FA',
+          primaryValue: _twoFaEnabled ? 'Bật' : 'Tắt',
+          primaryColor: _twoFaEnabled ? _securityGreen : _securityAmber,
+          secondaryLabel: 'API keys',
+          secondaryValue: '${snapshot.apiKeys.length}',
+        ),
         VitTradeSection(
           title: 'Two-Factor Authentication',
           child: Column(
@@ -78,30 +87,6 @@ class _BotSecuritySettingsPageState
               _TwoFaCard(
                 enabled: _twoFaEnabled,
                 onTap: () => _toggleTwoFa(snapshot),
-              ),
-              VitCard(
-                variant: VitCardVariant.inner,
-                density: VitDensity.compact,
-                child: VitPageContent(
-                  padding: VitContentPadding.none,
-                  fullBleed: true,
-                  density: VitDensity.compact,
-                  children: [
-                    VitHighRiskStatePanel(
-                      state: VitHighRiskUiState.riskReview,
-                      density: VitDensity.compact,
-                      title: 'Bot security review required',
-                      message:
-                          '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
-                      contractId: 'bot-security-settings-review',
-                    ),
-                    VitStatusPill(
-                      label: 'Sensitive settings',
-                      status: VitStatusPillStatus.warning,
-                      size: VitStatusPillSize.sm,
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
@@ -143,6 +128,14 @@ class _BotSecuritySettingsPageState
         VitTradeSection(
           title: 'Security Tips',
           child: _SecurityTipsCard(tips: snapshot.securityTips),
+        ),
+        const VitBotRiskReviewFooter(
+          title: 'Bot security review required',
+          message:
+              '2FA, API key creation, IP whitelist, recent activity and destructive key changes require explicit review.',
+          contractId: 'bot-security-settings-review',
+          statusLabel: 'Sensitive settings',
+          status: VitStatusPillStatus.warning,
         ),
       ],
     );

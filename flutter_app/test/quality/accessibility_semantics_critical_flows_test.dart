@@ -101,7 +101,8 @@ void main() {
     (tester) async {
       await pumpRoute(tester, AppRoutePaths.p2pPaymentMethodAdd);
 
-      expect(semanticsLabel(RegExp(r'.+ payment type')), findsWidgets);
+      expect(semanticsLabel('Chọn ngân hàng'), findsOneWidget);
+      expect(semanticsLabel('Chọn ví điện tử'), findsOneWidget);
       expect(semanticsLabel('Vietcombank payment option'), findsOneWidget);
       expect(semanticsLabel('P2P payment account'), findsOneWidget);
       expect(semanticsLabel('P2P payment account owner'), findsOneWidget);

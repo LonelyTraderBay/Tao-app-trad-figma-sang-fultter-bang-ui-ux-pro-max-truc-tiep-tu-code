@@ -20,21 +20,21 @@ class _TopTabs extends StatelessWidget {
             tabs: [
               VitTabItem(
                 key: _CompareTab.compare.name,
-                label: 'So sanh',
+                label: 'So sánh',
                 widgetKey: DCAPerformanceComparePage.tabKey(
                   _CompareTab.compare.name,
                 ),
               ),
               VitTabItem(
                 key: _CompareTab.scenarios.name,
-                label: 'Kich ban',
+                label: 'Kịch bản',
                 widgetKey: DCAPerformanceComparePage.tabKey(
                   _CompareTab.scenarios.name,
                 ),
               ),
               VitTabItem(
                 key: _CompareTab.analysis.name,
-                label: 'Phan tich',
+                label: 'Phân tích',
                 widgetKey: DCAPerformanceComparePage.tabKey(
                   _CompareTab.analysis.name,
                 ),

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -20,8 +21,12 @@ part '../widgets/p2p_blacklist_summary_filters.dart';
 part '../widgets/p2p_blacklist_entries.dart';
 part '../widgets/p2p_blacklist_common.dart';
 
-const _p2pBlacklistVisualClearance = AppSpacing.x3;
-const _p2pBlacklistNativeClearance = AppSpacing.x2;
+const double _p2pBlacklistVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pBlacklistNativeNavClearance =
+    _p2pBlacklistVisualNavClearance - AppSpacing.x4;
+const double _p2pBlacklistVisualClearance = AppSpacing.x3;
+const double _p2pBlacklistNativeClearance = AppSpacing.x2;
 const _p2pBlacklistEntryGap = AppSpacing.x1;
 const _p2pBlacklistSectionGap = AppSpacing.x2;
 const _p2pBlacklistTightGap = AppSpacing.x1;
@@ -34,6 +39,7 @@ class P2PBlacklistPage extends ConsumerStatefulWidget {
   static const searchKey = Key('sc277_p2p_blacklist_search');
   static const infoKey = Key('sc277_p2p_blacklist_info');
   static const addKey = Key('sc277_p2p_blacklist_add');
+  static const emptyKey = Key('sc277_p2p_blacklist_empty');
 
   static Key filterKey(String id) => Key('sc277_p2p_blacklist_filter_$id');
 
@@ -65,8 +71,8 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + _p2pBlacklistVisualClearance
-            : DeviceMetrics.nativeBottomChrome + _p2pBlacklistNativeClearance) +
+            ? _p2pBlacklistVisualNavClearance + _p2pBlacklistVisualClearance
+            : _p2pBlacklistNativeNavClearance + _p2pBlacklistNativeClearance) +
         MediaQuery.paddingOf(context).bottom;
     final entries = snapshot.entries
         .where((item) => !_removedIds.contains(item.id))
@@ -99,82 +105,110 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pBlacklistScrollPadding(
-                      scrollEndPadding,
-                    ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      gap: VitContentGap.tight,
-                      children: [
-                        Padding(
-                          padding: AppSpacing.p2pBlacklistListSummaryPadding,
-                          child: _SummaryCard(
-                            snapshot: snapshot,
-                            entries: entries,
-                          ),
-                        ),
-                        Padding(
-                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
-                          child: VitSearchBar(
-                            key: P2PBlacklistPage.searchKey,
-                            controller: _searchController,
-                            placeholder: snapshot.searchHint,
-                            variant: VitSearchBarVariant.compact,
-                            onChanged: (_) => setState(() {}),
-                          ),
-                        ),
-                        _FilterRail(
-                          snapshot: snapshot,
-                          entries: entries,
-                          activeId: _filterId,
-                          onChanged: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _filterId = id);
-                          },
-                        ),
-                        Padding(
-                          padding: AppSpacing.p2pBlacklistListResultPadding,
-                          child: Text(
-                            '${filtered.length} kết quả',
-                            style: AppTextStyles.micro.copyWith(
-                              color: AppColors.text3,
-                              fontWeight: AppTextStyles.bold,
+                child: RefreshIndicator(
+                  color: AppModuleAccents.p2p,
+                  backgroundColor: AppColors.surface2,
+                  onRefresh: () async {
+                    HapticFeedback.selectionClick();
+                    await Future<void>.delayed(
+                      const Duration(milliseconds: 120),
+                    );
+                  },
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(
+                      context,
+                    ).copyWith(scrollbars: false),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: ClampingScrollPhysics(),
+                      ),
+                      padding: AppSpacing.p2pBlacklistScrollPadding(
+                        scrollEndPadding,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: AppSpacing.p2pBlacklistListSummaryPadding,
+                            child: _BlacklistStats(
+                              snapshot: snapshot,
+                              entries: entries,
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
-                          child: _EntryList(
+                          Padding(
+                            padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                            child: VitSearchBar(
+                              key: P2PBlacklistPage.searchKey,
+                              controller: _searchController,
+                              placeholder: snapshot.searchHint,
+                              variant: VitSearchBarVariant.compact,
+                              onChanged: (_) => setState(() {}),
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.x2),
+                          _FilterRail(
                             snapshot: snapshot,
-                            entries: filtered,
-                            expandedId: _expandedId,
-                            onToggle: (id) {
+                            entries: entries,
+                            activeId: _filterId,
+                            onChanged: (id) {
                               HapticFeedback.selectionClick();
                               setState(() {
-                                _expandedId = _expandedId == id ? null : id;
-                              });
-                            },
-                            onUnblock: (id) {
-                              HapticFeedback.mediumImpact();
-                              setState(() {
-                                _removedIds.add(id);
-                                if (_expandedId == id) _expandedId = null;
+                                _filterId = id;
+                                _expandedId = null;
                               });
                             },
                           ),
-                        ),
-                        Padding(
-                          padding: AppSpacing.p2pBlacklistHorizontalPadding,
-                          child: _InfoNote(snapshot: snapshot),
-                        ),
-                      ],
+                          Padding(
+                            padding: AppSpacing.p2pBlacklistListResultPadding,
+                            child: Text(
+                              '${filtered.length} kết quả',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                                fontWeight: AppTextStyles.bold,
+                                fontFeatures: AppTextStyles.tabularFigures,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                            child: _EntryList(
+                              snapshot: snapshot,
+                              entries: filtered,
+                              expandedId: _expandedId,
+                              onToggle: (id) {
+                                HapticFeedback.selectionClick();
+                                setState(() {
+                                  _expandedId = _expandedId == id ? null : id;
+                                });
+                              },
+                              onUnblock: (id) {
+                                HapticFeedback.mediumImpact();
+                                setState(() {
+                                  _removedIds.add(id);
+                                  if (_expandedId == id) _expandedId = null;
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.x2),
+                          Padding(
+                            padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                            child: _InfoNote(snapshot: snapshot),
+                          ),
+                          VitPageContent(
+                            padding: VitContentPadding.compact,
+                            children: const [
+                              VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Rà soát danh sách chặn',
+                                message:
+                                    'Tìm kiếm, lọc theo lý do, chi tiết mở rộng, bỏ chặn và ghi chú an toàn vẫn hiển thị trước khi thao tác giao dịch P2P.',
+                                contractId: 'SC-277',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

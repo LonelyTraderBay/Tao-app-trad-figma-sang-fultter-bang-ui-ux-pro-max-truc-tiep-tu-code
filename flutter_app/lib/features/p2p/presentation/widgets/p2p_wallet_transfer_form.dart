@@ -43,13 +43,11 @@ class _TransferForm extends StatelessWidget {
           destination: destination,
           onSwitch: onSwitch,
         ),
-        const SizedBox(height: _p2pTransferMajorGap),
         _AssetSelection(
           assets: snapshot.assets,
           selectedAsset: asset,
           onChanged: onAssetChanged,
         ),
-        const SizedBox(height: _p2pTransferMajorGap),
         _AmountInput(
           controller: amountController,
           asset: asset,
@@ -57,13 +55,31 @@ class _TransferForm extends StatelessWidget {
           onChanged: onAmountChanged,
           onMax: onMax,
         ),
-        const SizedBox(height: _p2pTransferTightGap),
-        _QuickPercentRow(onPercent: onPercent),
-        const SizedBox(height: _p2pTransferMajorGap),
-        const _FeeNotice(),
-        const SizedBox(height: _p2pTransferTightGap),
-        _EscrowNotice(text: snapshot.escrowNote),
-        const SizedBox(height: _p2pTransferMajorGap),
+        VitPresetChipRow.percentBalance(
+          onTap: onPercent,
+          keyFor: P2PWalletTransferPage.percentKey,
+          accentColor: AppModuleAccents.p2p,
+          height: AppSpacing.buttonCompact,
+          padding: AppSpacing.p2pWalletTransferPercentPadding,
+        ),
+        P2PNoticeCard(
+          key: P2PWalletTransferPage.feeKey,
+          icon: Icons.bolt_rounded,
+          title: 'Miễn phí & Tức thì',
+          message:
+              'Chuyển tiền nội bộ hoàn toàn miễn phí và được xử lý ngay lập tức.',
+          iconColor: AppColors.buy,
+          titleColor: AppColors.buy,
+          borderColor: AppColors.buy.withValues(alpha: .30),
+          padding: AppSpacing.p2pWalletCompactCardPadding,
+        ),
+        P2PNoticeCard(
+          key: P2PWalletTransferPage.escrowNoteKey,
+          icon: Icons.info_outline_rounded,
+          message: snapshot.escrowNote,
+          borderColor: AppModuleAccents.p2p.withValues(alpha: .32),
+          padding: AppSpacing.p2pWalletCompactCardPadding,
+        ),
         _SubmitButton(
           enabled: canTransfer,
           label: amount > 0
@@ -71,13 +87,13 @@ class _TransferForm extends StatelessWidget {
               : 'Chuyển $asset',
           onTap: onSubmit,
         ),
-        const SizedBox(height: _p2pTransferActionGap),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
-          title: 'P2P transfer review',
+          title: 'Xem lại chuyển tiền P2P',
           message:
-              'Confirm source, destination, asset, amount, escrow note, fee, and processing status before moving funds.',
+              'Nguồn, đích, tài sản, số tiền, phí, ghi chú escrow và trạng thái xử lý được xem lại trước khi chuyển.',
           contractId: 'SC-261',
+          density: VitDensity.compact,
         ),
       ],
     );
@@ -201,9 +217,11 @@ class _AssetSelection extends StatelessWidget {
       key: P2PWalletTransferPage.assetSelectorKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Chọn tài sản',
-          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
+        const VitSectionHeader(
+          title: 'Chọn tài sản',
+          icon: Icons.account_balance_wallet_outlined,
+          accentColor: AppModuleAccents.p2p,
+          density: VitDensity.compact,
         ),
         const SizedBox(height: _p2pTransferTightGap),
         Row(
@@ -242,7 +260,7 @@ class _AssetTile extends StatelessWidget {
     final color = _assetColor(asset.symbol);
     return VitCard(
       key: P2PWalletTransferPage.assetKey(asset.symbol),
-      radius: VitCardRadius.large,
+      radius: VitCardRadius.standard,
       variant: VitCardVariant.inner,
       borderColor: selected ? color : AppColors.cardBorder,
       background: ColoredBox(
@@ -294,7 +312,7 @@ class _AssetMark extends StatelessWidget {
     };
     return Material(
       color: color.withValues(alpha: .14),
-      borderRadius: AppRadii.mdRadius,
+      borderRadius: AppRadii.smRadius,
       child: SizedBox(
         width: _p2pTransferAssetMarkSize,
         height: _p2pTransferAssetMarkSize,

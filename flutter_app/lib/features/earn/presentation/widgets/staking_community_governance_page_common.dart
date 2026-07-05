@@ -205,7 +205,7 @@ Color? _toneBorder(String tone) {
     case 'accent':
       return AppColors.accent20;
     case 'success':
-      return AppColors.buy20;
+      return AppColors.primary20;
     case 'warning':
       return AppColors.warningBorder;
     default:
@@ -215,7 +215,7 @@ Color? _toneBorder(String tone) {
 
 Color _softBackground(Color color) {
   if (color == AppColors.buy) return AppColors.buy10;
-  if (color == AppColors.primary || color == AppColors.primarySoft) {
+  if (color == AppColors.primary || color == AppModuleAccents.earn) {
     return AppColors.primary12;
   }
   if (color == AppColors.sell) return AppColors.sell10;
@@ -224,8 +224,8 @@ Color _softBackground(Color color) {
 }
 
 Color _softBorder(Color color) {
-  if (color == AppColors.buy) return AppColors.buy20;
-  if (color == AppColors.primary || color == AppColors.primarySoft) {
+  if (color == AppColors.buy) return AppColors.primary20;
+  if (color == AppColors.primary || color == AppModuleAccents.earn) {
     return AppColors.primary20;
   }
   if (color == AppColors.sell) return AppColors.sell20;

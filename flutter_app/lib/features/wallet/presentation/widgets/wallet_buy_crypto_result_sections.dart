@@ -17,12 +17,12 @@ class _BuyButton extends StatelessWidget {
       button: true,
       enabled: enabled,
       label: enabled
-          ? 'Review buy order'
-          : 'Buy crypto disabled. Enter an amount within the supported limit.',
+          ? 'Xem lại lệnh mua'
+          : 'Mua crypto chưa khả dụng. Nhập số tiền trong hạn mức hỗ trợ.',
       child: Tooltip(
         message: enabled
-            ? 'Review buy order'
-            : 'Enter an amount within the supported limit.',
+            ? 'Xem lại lệnh mua'
+            : 'Nhập số tiền trong hạn mức hỗ trợ.',
         child: VitCtaButton(
           key: const Key('sc145_buy_crypto_buy'),
           onPressed: enabled ? onTap : null,

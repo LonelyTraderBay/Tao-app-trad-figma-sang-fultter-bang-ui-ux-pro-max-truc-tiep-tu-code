@@ -67,6 +67,7 @@ class MarketOverviewPage extends ConsumerWidget {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tổng quan thị trường',
+            subtitle: 'Dữ liệu tham khảo · Cập nhật ${snapshot.lastUpdatedLabel}',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),

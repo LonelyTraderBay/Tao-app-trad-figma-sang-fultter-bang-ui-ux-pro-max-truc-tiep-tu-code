@@ -83,7 +83,7 @@ class _StatsCard extends StatelessWidget {
                   children: [
                     Text('Smart Rules', style: AppTextStyles.sectionTitleXs),
                     Text(
-                      'Automated DCA optimization',
+                      'Tối ưu mua theo điều kiện thị trường',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                       ),

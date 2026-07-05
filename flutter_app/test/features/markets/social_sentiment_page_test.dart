@@ -94,7 +94,7 @@ void main() {
     expect(find.text('2.35M'), findsOneWidget);
     expect(find.text('Social Dominance'), findsOneWidget);
     expect(find.text('Diễn biến 7 ngày'), findsOneWidget);
-    expect(find.text('Top Trending'), findsOneWidget);
+    expect(find.text('Xu hướng nóng'), findsOneWidget);
   });
 
   testWidgets('SC-020 first viewport reaches sentiment timeline card', (
@@ -137,7 +137,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('#ETF Flows'), findsOneWidget);
-    expect(find.text('Sentiment Heatmap'), findsOneWidget);
+    expect(find.text('Bản đồ tâm lý'), findsOneWidget);
     expect(find.text('Tích cực nhất'), findsOneWidget);
     expect(find.text('Tốc độ đề cập (24h)'), findsOneWidget);
   });

@@ -68,7 +68,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('DCA vs Lump Sum'), findsOneWidget);
-    expect(find.text('So sanh'), findsOneWidget);
+    expect(find.text('So sánh'), findsOneWidget);
     expect(find.text('DCA Strategy'), findsOneWidget);
     expect(find.text('Lump Sum'), findsWidgets);
     expect(find.text('DCA Strategy Wins'), findsOneWidget);

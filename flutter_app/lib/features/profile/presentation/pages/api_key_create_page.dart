@@ -24,7 +24,6 @@ part '../widgets/profile_api_key_create_result.dart';
 
 const _apiBackground = AppColors.bg;
 const _apiPanel = AppColors.surface;
-const _apiPanel2 = AppColors.surface2;
 const _apiBorder = AppColors.borderSolid;
 const _apiPrimary = AppColors.primary;
 const _apiGreen = AppColors.buy;
@@ -119,9 +118,9 @@ class _ApiKeyCreatePageState extends ConsumerState<ApiKeyCreatePage> {
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review API key scope',
+                        title: 'R\u00E0 so\u00E1t ph\u1EA1m vi API key',
                         message:
-                            'Use the least permissions, set IP whitelist, choose expiry, and confirm secret handling before creation.',
+                            'Ch\u1EC9 c\u1EA5p quy\u1EC1n t\u1ED1i thi\u1EC3u, thi\u1EBFt l\u1EADp IP whitelist, ch\u1ECDn th\u1EDDi h\u1EA1n v\u00E0 x\u00E1c nh\u1EADn c\u00E1ch l\u01B0u secret tr\u01B0\u1EDBc khi t\u1EA1o.',
                         density: VitDensity.compact,
                       ),
                       _NameSection(

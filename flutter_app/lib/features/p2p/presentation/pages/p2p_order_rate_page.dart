@@ -80,8 +80,8 @@ class _P2POrderRatePageState extends ConsumerState<P2POrderRatePage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: _submitted ? 'Danh gia' : 'Danh gia giao dich',
-            subtitle: 'Danh gia - P2P',
+            title: _submitted ? 'Đánh giá' : 'Đánh giá giao dịch',
+            subtitle: 'Đánh giá · P2P',
             showBack: true,
             onBack: () => _close(context),
           ),

@@ -61,15 +61,19 @@ class _P2PIdentityVerificationPageState
             (document) => document.id == _selectedTypeId,
             orElse: () => snapshot.documentTypes.first,
           );
+    final routeName = GoRouterState.of(context).uri.path;
+    final screenContract = routeName.startsWith('/p2p/kyc/verify')
+        ? 'SC-402'
+        : 'SC-249';
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-249 P2PIdentityVerificationPage',
+      semanticLabel: '$screenContract P2PIdentityVerificationPage',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Identity Verification',
+            title: 'Xác minh danh tính',
             subtitle: 'KYC · P2P',
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),

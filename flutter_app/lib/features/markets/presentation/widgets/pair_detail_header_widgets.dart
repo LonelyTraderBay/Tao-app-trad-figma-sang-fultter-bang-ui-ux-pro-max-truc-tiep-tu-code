@@ -146,7 +146,7 @@ class _PriceOverview extends StatelessWidget {
                   ),
                   Expanded(
                     child: _PriceStat(
-                      label: '24h Thap',
+                      label: '24h Thấp',
                       value: _formatPrice(pair.low24h),
                       color: AppColors.sell,
                     ),

@@ -1,5 +1,17 @@
 part of '../pages/pair_detail_page.dart';
 
+String _pairViewKey(_PairView view) => switch (view) {
+  _PairView.chart => 'chart',
+  _PairView.orderBook => 'orderBook',
+  _PairView.trades => 'trades',
+};
+
+_PairView _pairViewFromKey(String key) => switch (key) {
+  'orderBook' => _PairView.orderBook,
+  'trades' => _PairView.trades,
+  _ => _PairView.chart,
+};
+
 class _ViewTabs extends StatelessWidget {
   const _ViewTabs({required this.activeView, required this.onChanged});
 
@@ -8,76 +20,46 @@ class _ViewTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = [
-      (
-        key: PairDetailPage.chartTabKey,
-        view: _PairView.chart,
-        icon: Icons.show_chart_rounded,
-        label: 'Bieu do',
-      ),
-      (
-        key: PairDetailPage.orderBookTabKey,
-        view: _PairView.orderBook,
-        icon: Icons.bar_chart_rounded,
-        label: 'So lenh',
-      ),
-      (
-        key: PairDetailPage.tradesTabKey,
-        view: _PairView.trades,
-        icon: Icons.currency_exchange_rounded,
-        label: 'Giao dich',
-      ),
-    ];
-
-    return Padding(
-      padding: AppSpacing.pairViewTabsPadding,
-      child: Row(
-        children: [
-          for (final tab in tabs) ...[
+    return Material(
+      color: AppColors.surface,
+      child: SizedBox(
+        height: AppSpacing.marketDepthTabsHeight,
+        child: Column(
+          children: [
             Expanded(
-              child: _ViewTab(
-                key: tab.key,
-                selected: activeView == tab.view,
-                icon: tab.icon,
-                label: tab.label,
-                onTap: () => onChanged(tab.view),
+              child: VitTabBar(
+                activeKey: _pairViewKey(activeView),
+                variant: VitTabBarVariant.underline,
+                onChanged: (key) => onChanged(_pairViewFromKey(key)),
+                tabs: const [
+                  VitTabItem(
+                    key: 'chart',
+                    label: 'Biểu đồ',
+                    icon: Icons.show_chart_rounded,
+                    widgetKey: PairDetailPage.chartTabKey,
+                  ),
+                  VitTabItem(
+                    key: 'orderBook',
+                    label: 'Sổ lệnh',
+                    icon: Icons.bar_chart_rounded,
+                    widgetKey: PairDetailPage.orderBookTabKey,
+                  ),
+                  VitTabItem(
+                    key: 'trades',
+                    label: 'Giao dịch',
+                    icon: Icons.currency_exchange_rounded,
+                    widgetKey: PairDetailPage.tradesTabKey,
+                  ),
+                ],
               ),
             ),
-            if (tab.view != _PairView.trades)
-              const SizedBox(width: AppSpacing.pairViewTabGap),
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: AppColors.divider,
+            ),
           ],
-        ],
+        ),
       ),
-    );
-  }
-}
-
-class _ViewTab extends StatelessWidget {
-  const _ViewTab({
-    super.key,
-    required this.selected,
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  final bool selected;
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      accentColor: _marketPrimary,
-      fullWidth: true,
-      height: VitDensity.compact.controlHeight,
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
-      leading: Icon(icon),
-      semanticLabel: label,
     );
   }
 }
@@ -90,24 +72,22 @@ class _TimeframeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const items = ['15m', '1H', '4H', '1D', '1W', '1M'];
     return Padding(
       padding: AppSpacing.pairTimeframePadding,
-      child: Row(
-        children: [
-          for (final item in items)
-            Expanded(
-              child: VitChoicePill(
-                label: item,
-                selected: active == item,
-                onTap: () => onChanged(item),
-                accentColor: _marketPrimary,
-                fullWidth: true,
-                height: AppSpacing.pairTimeframeHeight,
-                padding: EdgeInsets.zero,
-                semanticLabel: item,
-              ),
-            ),
+      child: VitPresetChipRow<String>(
+        selectedValue: active,
+        onTap: onChanged,
+        accentColor: _marketPrimary,
+        height: AppSpacing.pairTimeframeHeight,
+        padding: EdgeInsets.zero,
+        gap: AppSpacing.x1,
+        items: const [
+          VitPresetChipItem(value: '15m', label: '15m'),
+          VitPresetChipItem(value: '1H', label: '1H'),
+          VitPresetChipItem(value: '4H', label: '4H'),
+          VitPresetChipItem(value: '1D', label: '1D'),
+          VitPresetChipItem(value: '1W', label: '1W'),
+          VitPresetChipItem(value: '1M', label: '1M'),
         ],
       ),
     );
@@ -216,34 +196,13 @@ class _RiskWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return const Padding(
       padding: AppSpacing.pairRiskMargin,
-      child: Material(
-        color: AppColors.warn.withValues(alpha: .08),
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: BorderSide(color: AppColors.warn.withValues(alpha: .24)),
-        ),
-        child: Padding(
-          padding: AppSpacing.pairRiskPadding,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.warning_amber_rounded,
-                color: AppColors.warn,
-                size: AppSpacing.pairRiskIcon,
-              ),
-              const SizedBox(width: AppSpacing.pairRiskGap),
-              Expanded(
-                child: Text(
-                  'Giao dich crypto co rui ro cao. Chi dau tu so tien ban co the chiu mat.',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.warn),
-                ),
-              ),
-            ],
-          ),
-        ),
+      child: VitBanner(
+        variant: VitBannerVariant.warning,
+        icon: Icons.warning_amber_rounded,
+        message: 'Giao dịch crypto có rủi ro cao.',
+        detail: 'Chỉ đầu tư số tiền bạn có thể chịu mất.',
       ),
     );
   }
@@ -280,7 +239,7 @@ class _LinkCard extends StatelessWidget {
               Material(
                 color: iconColor.withValues(alpha: .12),
                 shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
+                  borderRadius: AppRadii.smRadius,
                 ),
                 child: SizedBox(
                   width: AppSpacing.pairLinkIconBox,
@@ -340,80 +299,27 @@ class _TradeCtas extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: _TradeButton(
+            child: VitCtaButton(
               key: PairDetailPage.buyButtonKey,
-              label: 'MUA',
-              color: AppColors.buy,
-              shadowColor: AppColors.buy,
-              onTap: () =>
+              variant: VitCtaButtonVariant.success,
+              density: VitDensity.compact,
+              onPressed: () =>
                   context.go('${AppRoutePaths.tradePair(pairId)}?side=buy'),
+              child: const Text('MUA'),
             ),
           ),
           const SizedBox(width: AppSpacing.pairTradeCtaGap),
           Expanded(
-            child: _TradeButton(
+            child: VitCtaButton(
               key: PairDetailPage.sellButtonKey,
-              label: 'BAN',
-              color: AppColors.sell,
-              shadowColor: AppColors.sell,
-              onTap: () =>
+              variant: VitCtaButtonVariant.danger,
+              density: VitDensity.compact,
+              onPressed: () =>
                   context.go('${AppRoutePaths.tradePair(pairId)}?side=sell'),
+              child: const Text('BÁN'),
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _TradeButton extends StatelessWidget {
-  const _TradeButton({
-    super.key,
-    required this.label,
-    required this.color,
-    required this.shadowColor,
-    required this.onTap,
-  });
-
-  final String label;
-  final Color color;
-  final Color shadowColor;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: EdgeInsets.zero,
-      borderColor: AppColors.transparent,
-      clip: true,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: color,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadii.cardRadius,
-          ),
-          shadows: [
-            BoxShadow(
-              color: shadowColor.withValues(alpha: .18),
-              blurRadius: AppSpacing.x2,
-            ),
-          ],
-        ),
-        child: SizedBox(
-          height: VitDensity.compact.controlHeight,
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.base.copyWith(
-                color: AppColors.onAccent,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

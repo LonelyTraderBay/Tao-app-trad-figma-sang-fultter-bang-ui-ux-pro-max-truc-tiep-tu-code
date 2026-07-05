@@ -269,10 +269,10 @@ class _P2PPaymentMethodAddPageState
             _ConfirmRow(label: 'Tài khoản', value: preview.maskedAccount),
             _ConfirmRow(label: 'Chủ tài khoản', value: preview.ownerName),
             _ConfirmRow(
-              label: 'Ownership',
+              label: 'Sở hữu',
               value: preview.ownershipRiskMessage,
             ),
-            _ConfirmRow(label: 'Limit', value: preview.limitMessage),
+            _ConfirmRow(label: 'Giới hạn', value: preview.limitMessage),
             const SizedBox(height: AppSpacing.x3),
             Text(
               preview.confirmMessage,

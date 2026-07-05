@@ -112,16 +112,12 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                         _RequirementCard(snapshot: snapshot),
                         _TermsCard(snapshot: snapshot),
                         _EscrowCard(snapshot: snapshot, amount: cryptoAmount),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pAdDetailCompactCardPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'P2P order preview review',
-                            message:
-                                'Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.',
-                            contractId: 'p2p-ad-detail-order-review',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'P2P order preview review',
+                          message:
+                              'Merchant trust, limit, available amount, payment terms, escrow protection and next order step are reviewed before the buy action.',
+                          contractId: 'p2p-ad-detail-order-review',
                         ),
                         VitCtaButton(
                           key: P2PAdDetailPage.buyButtonKey,

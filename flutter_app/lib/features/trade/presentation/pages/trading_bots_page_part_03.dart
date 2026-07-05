@@ -9,7 +9,6 @@ class _StrategyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
-    final risk = _riskStyle(strategy.risk);
     return VitCard(
       padding: AppSpacing.tradeBotCardPadding,
       child: Column(
@@ -37,7 +36,7 @@ class _StrategyCard extends StatelessWidget {
                         ),
                         const SizedBox(width: AppSpacing.x3),
                         VitStatusPill(
-                          label: risk.$1,
+                          label: _riskStyle(strategy.risk).$1,
                           status: _riskStatus(strategy.risk),
                           size: VitStatusPillSize.sm,
                         ),
@@ -46,6 +45,8 @@ class _StrategyCard extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x2),
                     Text(
                       strategy.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
                       ),
@@ -56,17 +57,19 @@ class _StrategyCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          Row(
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
             children: [
-              _StrategyDetail(
-                label: 'Lợi nhuận kỳ vọng',
-                value: strategy.avgReturn,
-                valueColor: AppColors.buy,
+              VitAccentPill(
+                label: strategy.avgReturn,
+                accentColor: AppColors.buy,
+                size: VitStatusPillSize.sm,
               ),
-              const SizedBox(width: AppSpacing.x3),
-              _StrategyDetail(
-                label: 'Phù hợp với',
-                value: strategy.suitableFor,
+              VitAccentPill(
+                label: strategy.suitableFor,
+                accentColor: AppColors.text2,
+                size: VitStatusPillSize.sm,
               ),
             ],
           ),
@@ -76,7 +79,7 @@ class _StrategyCard extends StatelessWidget {
             onPressed: onCreate,
             height: AppSpacing.inputHeight,
             leading: const Icon(Icons.add_rounded),
-            child: Text('Tạo Bot ${strategy.name}'),
+            child: Text('Tạo bot'),
           ),
         ],
       ),
@@ -84,52 +87,15 @@ class _StrategyCard extends StatelessWidget {
   }
 }
 
-class _StrategyDetail extends StatelessWidget {
-  const _StrategyDetail({
-    required this.label,
-    required this.value,
-    this.valueColor,
-  });
-
-  final String label;
-  final String value;
-  final Color? valueColor;
+class _RiskDisclaimer extends StatelessWidget {
+  const _RiskDisclaimer();
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        padding: AppSpacing.tradeBotCardPadding,
-        variant: VitCardVariant.inner,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: AppTextStyles.micro),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              value,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: valueColor ?? AppColors.text1,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _BotInfoCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const VitBanner(
-      variant: VitBannerVariant.warning,
-      icon: Icons.warning_amber_rounded,
-      message: 'Lưu ý quan trọng: Bot giao dịch không đảm bảo lợi nhuận.',
-      detail: 'Hiệu suất trong quá khứ không đại diện cho kết quả tương lai.',
+    return Text(
+      'Bot không đảm bảo lợi nhuận. Hiệu suất quá khứ không đại diện kết quả tương lai.',
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      textAlign: TextAlign.center,
     );
   }
 }
@@ -142,10 +108,10 @@ class _EmptyBots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitEmptyState(
-      title: 'Chưa có bot nào đang chạy',
-      message: 'Chọn chiến lược phù hợp để khởi chạy bot đầu tiên.',
+      title: 'Chưa có bot nào',
+      message: 'Khám phá chiến lược phù hợp để khởi chạy bot đầu tiên.',
       icon: Icons.smart_toy_outlined,
-      actionLabel: 'Tạo Bot mới',
+      actionLabel: 'Khám phá chiến lược',
       actionKey: TradingBotsPage.addBotKey,
       onAction: onAdd,
     );

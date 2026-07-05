@@ -23,16 +23,18 @@ class _SubAccountCard extends StatelessWidget {
       key: SubAccountPage.accountCardKey(account.id),
       padding: AppSpacing.zeroInsets,
       borderColor: AppColors.cardBorder,
+      clip: true,
       child: Column(
         children: [
-          VitCard(
-            key: SubAccountPage.expandKey(account.id),
-            onTap: onTap,
-            variant: VitCardVariant.ghost,
-            borderColor: AppColors.transparent,
-            padding: AppSpacing.profileSubAccountCardTapPadding,
-            child: Row(
-              children: [
+          Material(
+            color: AppColors.transparent,
+            child: InkWell(
+              key: SubAccountPage.expandKey(account.id),
+              onTap: onTap,
+              child: Padding(
+                padding: AppSpacing.profileSubAccountCardTapPadding,
+                child: Row(
+                  children: [
                 _AccountAvatar(
                   initial: account.name.isEmpty
                       ? '?'
@@ -126,7 +128,9 @@ class _SubAccountCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
+                  ],
+                ),
+              ),
             ),
           ),
           if (isExpanded)

@@ -117,7 +117,7 @@ class _UnreadDot extends StatelessWidget {
         height: AppSpacing.x2,
         child: DecoratedBox(
           decoration: ShapeDecoration(
-            color: AppColors.primarySoft,
+            color: AppModuleAccents.earn,
             shape: CircleBorder(),
           ),
         ),
@@ -129,7 +129,7 @@ class _UnreadDot extends StatelessWidget {
 Color _priorityColor(StakingNotificationPriority priority) {
   return switch (priority) {
     StakingNotificationPriority.high => AppColors.sell,
-    StakingNotificationPriority.medium => AppColors.primarySoft,
+    StakingNotificationPriority.medium => AppModuleAccents.earn,
     StakingNotificationPriority.low => AppColors.text3,
   };
 }
@@ -148,11 +148,11 @@ IconData _settingsIcon(String iconKey) {
 
 Color _notificationColor(StakingNotificationType type) {
   return switch (type) {
-    StakingNotificationType.maturity => AppColors.primarySoft,
+    StakingNotificationType.maturity => AppModuleAccents.earn,
     StakingNotificationType.apyChange => AppColors.buy,
     StakingNotificationType.reward => AppColors.buy,
     StakingNotificationType.risk => AppColors.sell,
-    StakingNotificationType.system => AppColors.primarySoft,
+    StakingNotificationType.system => AppModuleAccents.earn,
   };
 }
 

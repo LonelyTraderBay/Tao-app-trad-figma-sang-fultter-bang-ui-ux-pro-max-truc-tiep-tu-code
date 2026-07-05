@@ -14,8 +14,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
-import '../widgets/trade_body_review_widgets.dart';
-
 const _kidBorder = AppColors.borderSolid;
 const _kidPrimary = AppColors.primary;
 const _kidGreen = AppColors.buy;
@@ -60,7 +58,16 @@ class KIDGeneratorPage extends ConsumerWidget {
         VitHeaderActionItem(type: VitHeaderActionType.export, onPressed: null),
       ],
       children: [
-        VitTradeSection(title: 'Notice', child: const _RegulatoryNotice()),
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'KID document review required',
+            message:
+                'Risk indicator, performance scenarios, costs, holding period and download next steps are reviewed before distribution.',
+            contractId: 'kid-generator-review',
+          ),
+        ),
         VitTradeComplianceSection(
           title: 'KID review',
           statusPill: const VitStatusPill(
@@ -76,6 +83,7 @@ class KIDGeneratorPage extends ConsumerWidget {
             ),
           ],
         ),
+        VitTradeSection(title: 'Notice', child: const _RegulatoryNotice()),
         VitTradeSection(
           title: 'Document',
           child: Column(
@@ -93,25 +101,6 @@ class KIDGeneratorPage extends ConsumerWidget {
                   const SizedBox(height: _kidSectionCardGap),
               ],
               const _Actions(),
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'KID document review required',
-                message:
-                    'Risk indicator, performance scenarios, costs, holding period and download next steps are reviewed before distribution.',
-                contractId: 'kid-generator-review',
-              ),
-              const TradeBodyReviewSection(
-                title: 'KID body review',
-                message: 'KID generator body reviewed',
-                detail:
-                    'Document preview, sections, download, risk indicator, empty, and result states stay visible.',
-                primary:
-                    'Regulatory notice remains above the generated document preview.',
-                secondary:
-                    'Document sections stay visible before download actions.',
-                tertiary:
-                    'Distribution copy remains disclosure-focused and non-promotional.',
-              ),
             ],
           ),
         ),

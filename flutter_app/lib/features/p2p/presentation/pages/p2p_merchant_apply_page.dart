@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -22,8 +23,10 @@ part 'p2p_merchant_apply_page_part_01.dart';
 part 'p2p_merchant_apply_page_part_02.dart';
 part 'p2p_merchant_apply_page_part_03.dart';
 
-const _p2pMerchantApplyVisualNavClearance = 114.0;
-const _p2pMerchantApplyNativeNavClearance = 88.0;
+const double _p2pMerchantApplyVisualNavClearance =
+    DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
+const double _p2pMerchantApplyNativeNavClearance =
+    _p2pMerchantApplyVisualNavClearance - AppSpacing.x4;
 const _p2pMerchantApplyBenefitExtent =
     AppSpacing.p2pMerchantApplyBenefitMainAxisExtent;
 const _p2pMerchantApplyConnectorHeight =

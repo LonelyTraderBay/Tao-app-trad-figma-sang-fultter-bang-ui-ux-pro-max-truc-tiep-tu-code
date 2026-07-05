@@ -22,8 +22,8 @@ class _MarketDataAnalyticsPageState
         color: _analyticsBackground,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Market Analytics',
-            subtitle: 'Data & Intelligence',
+            title: 'Phân tích thị trường',
+            subtitle: 'Dữ liệu · Thanh khoản',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.tradeMargin),
           ),
@@ -88,9 +88,9 @@ class _MarketAnalyticsRiskPanel extends StatelessWidget {
     return VitHighRiskStatePanel(
       state: VitHighRiskUiState.riskReview,
       density: VitDensity.compact,
-      title: 'Market data risk review',
+      title: 'Xem lại dữ liệu thị trường',
       message:
-          'Use ${snapshot.selectedPair} analytics as a preview input only. Confirm margin, liquidation risk, funding fee, position limits, and next steps before placing a trade.',
+          'Phân tích ${snapshot.selectedPair} chỉ mang tính tham khảo. Xác nhận ký quỹ, rủi ro thanh lý, phí funding và giới hạn vị thế trước khi đặt lệnh.',
       contractId: 'SC-089 analytics review',
     );
   }

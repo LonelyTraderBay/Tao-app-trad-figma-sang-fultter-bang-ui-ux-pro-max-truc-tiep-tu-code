@@ -18,7 +18,7 @@ class _LimitDetailRow extends StatelessWidget {
             child: Material(
               type: MaterialType.transparency,
               color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.lgRadius,
+              borderRadius: AppRadii.smRadius,
               child: Icon(
                 _detailIcon(item.iconKey),
                 color: color,
@@ -69,11 +69,11 @@ class _UpgradeCard extends StatelessWidget {
       key: P2PTransactionLimitsPage.upgradeKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Nâng cấp giới hạn',
-          style: AppTextStyles.baseMedium.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
+        const VitSectionHeader(
+          title: 'Nâng cấp giới hạn',
+          icon: Icons.arrow_upward_rounded,
+          accentColor: AppModuleAccents.p2p,
+          density: VitDensity.compact,
         ),
         const SizedBox(height: _p2pLimitsSectionGap),
         VitCard(
@@ -90,7 +90,7 @@ class _UpgradeCard extends StatelessWidget {
                     child: Material(
                       type: MaterialType.transparency,
                       color: AppModuleAccents.p2p.withValues(alpha: .14),
-                      borderRadius: AppRadii.lgRadius,
+                      borderRadius: AppRadii.smRadius,
                       child: const Icon(
                         Icons.arrow_upward_rounded,
                         color: AppModuleAccents.p2p,
@@ -155,51 +155,16 @@ class _UpgradeCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x2),
               ],
               const SizedBox(height: _p2pLimitsSectionGap),
-              Material(
+              VitCtaButton(
                 key: P2PTransactionLimitsPage.upgradeCtaKey,
-                color: AppModuleAccents.p2p,
-                borderRadius: AppRadii.inputRadius,
-                child: VitCard(
-                  onTap: () {
-                    HapticFeedback.selectionClick();
-                    context.go(snapshot.kycRequirementsRoute);
-                  },
-                  variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.standard,
-                  padding: AppSpacing.zeroInsets,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minHeight: AppSpacing.ctaHeight,
-                    ),
-                    child: Padding(
-                      padding: AppSpacing.p2pTransactionLimitsCtaPadding,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                'Bắt đầu nâng cấp',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.baseMedium.copyWith(
-                                  color: AppColors.onAccent,
-                                  fontWeight: AppTextStyles.bold,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.x2),
-                            const Icon(
-                              Icons.chevron_right_rounded,
-                              color: AppColors.onAccent,
-                              size: AppSpacing.iconMd,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                onPressed: () {
+                  HapticFeedback.selectionClick();
+                  context.go(snapshot.kycRequirementsRoute);
+                },
+                height: AppSpacing.ctaHeight,
+                variant: VitCtaButtonVariant.primary,
+                trailing: const Icon(Icons.chevron_right_rounded),
+                child: const Text('Bắt đầu nâng cấp'),
               ),
             ],
           ),
@@ -216,53 +181,35 @@ class _LimitInfoNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Column(
       key: P2PTransactionLimitsPage.infoKey,
-      type: MaterialType.transparency,
-      color: AppModuleAccents.p2p.withValues(alpha: .10),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.lgRadius,
-        side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .28)),
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pTransactionLimitsInnerPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.info_outline_rounded,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.p2pTransactionLimitsInfoIcon,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Lưu ý về giới hạn',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppModuleAccents.p2p,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(height: _p2pLimitsSectionGap),
-                  for (final item in items) ...[
-                    Text(
-                      '• $item',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        height: _p2pLimitsInfoLineHeight,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                  ],
-                ],
-              ),
-            ),
-          ],
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        P2PNoticeCard(
+          icon: Icons.info_outline_rounded,
+          title: 'Lưu ý về giới hạn',
+          message: items.first,
+          titleColor: AppModuleAccents.p2p,
+          borderColor: AppModuleAccents.p2p.withValues(alpha: .28),
+          padding: AppSpacing.p2pTransactionLimitsInnerPadding,
         ),
-      ),
+        if (items.length > 1) ...[
+          const SizedBox(height: AppSpacing.x2),
+          VitCard(
+            variant: VitCardVariant.inner,
+            padding: AppSpacing.p2pTransactionLimitsInnerPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (var index = 1; index < items.length; index++) ...[
+                  if (index > 1) const SizedBox(height: AppSpacing.x2),
+                  P2PHelpBullet(text: items[index]),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

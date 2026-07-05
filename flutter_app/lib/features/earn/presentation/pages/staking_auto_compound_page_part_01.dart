@@ -55,8 +55,10 @@ class _StakingAutoCompoundPageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              header: VitHeader(
+              header: VitTopChrome(
+                type: VitTopChromeType.detail,
                 title: snapshot.title,
+                subtitle: snapshot.infoTitle,
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
               ),
@@ -78,8 +80,8 @@ class _StakingAutoCompoundPageState
                             threshold: threshold,
                           ),
                           VitPageSection(
-                            label: 'Cài đặt Auto-Compound',
-                            accentColor: AppColors.primary,
+                            label: 'Cai dat Auto-Compound',
+                            accentColor: AppModuleAccents.earn,
                             children: [
                               _SettingsCard(
                                 key: StakingAutoCompoundPage.settingsKey,
@@ -102,8 +104,8 @@ class _StakingAutoCompoundPageState
                             ],
                           ),
                           VitPageSection(
-                            label: 'Vị thế Auto-Compound',
-                            accentColor: AppColors.primary,
+                            label: 'Vi the Auto-Compound',
+                            accentColor: AppModuleAccents.earn,
                             children: [
                               for (final position in positions)
                                 _PositionCard(
@@ -114,8 +116,8 @@ class _StakingAutoCompoundPageState
                             ],
                           ),
                           VitPageSection(
-                            label: 'Mô phỏng Lợi nhuận Kép',
-                            accentColor: AppColors.primary,
+                            label: 'Mo phong lai kep (uoc tinh)',
+                            accentColor: AppModuleAccents.earn,
                             children: [
                               _SimulationCard(
                                 controllerPrincipal: _principalController,
@@ -219,28 +221,21 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       key: StakingAutoCompoundPage.infoKey,
       variant: VitCardVariant.inner,
-      borderColor: AppColors.buy20,
+      borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
       padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.autorenew_rounded,
-            color: AppColors.buy,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
+            child: Text(
+              snapshot.infoBody,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -299,17 +294,17 @@ class _SummaryCard extends StatelessWidget {
               SizedBox.square(
                 dimension: AppSpacing.buttonHero,
                 child: Material(
-                  color: AppColors.buy10,
+                  color: AppModuleAccents.earn.withValues(alpha: 0.1),
                   shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.xlRadius,
                     side: BorderSide(
-                      color: AppColors.buy20,
+                      color: AppModuleAccents.earn,
                       width: AppSpacing.stakingAutoCompoundHeroIconBorderWidth,
                     ),
                   ),
                   child: const Icon(
                     Icons.autorenew_rounded,
-                    color: AppColors.buy,
+                    color: AppModuleAccents.earn,
                     size: AppSpacing.iconLg,
                   ),
                 ),

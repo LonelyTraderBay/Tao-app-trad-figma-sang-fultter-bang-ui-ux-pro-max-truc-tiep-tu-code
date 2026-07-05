@@ -7,12 +7,11 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: AppTextStyles.micro.copyWith(
-        color: AppColors.sectionLabel,
-        fontWeight: AppTextStyles.bold,
-      ),
+    return VitSectionHeader(
+      title: label,
+      variant: VitSectionHeaderVariant.accentBar,
+      accentColor: AppColors.primary,
+      density: VitDensity.compact,
     );
   }
 }

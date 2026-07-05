@@ -5,11 +5,14 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/enterprise_states_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -58,58 +61,71 @@ class _EnterpriseStatesPageState extends ConsumerState<EnterpriseStatesPage> {
       semanticLabel: 'SC-320 EnterpriseStatesPage',
       child: Material(
         type: MaterialType.transparency,
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          child: SingleChildScrollView(
-            key: EnterpriseStatesPage.contentKey,
-            physics: const ClampingScrollPhysics(),
-            padding: AppSpacing.enterpriseStatesScrollPadding(bottomInset),
-            child: VitPageContent(
-              padding: VitContentPadding.none,
-              fullBleed: true,
-              customGap: AppSpacing.x5,
-              children: [
-                Padding(
-                  padding: AppSpacing.enterpriseStatesHeroPadding,
-                  child: _PageHero(
-                    snapshot: snapshot,
-                    onBack: () => context.go(snapshot.backRoute),
-                  ),
+        child: VitAutoHideHeaderScaffold(
+          header: VitHeader(
+            title: snapshot.title,
+            subtitle: snapshot.subtitle,
+            showBack: true,
+            backKey: EnterpriseStatesPage.backKey,
+            onBack: () => context.go(snapshot.backRoute),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: AppSpacing.enterpriseStatesContentPadding,
+                child: _SectionTabs(
+                  tabs: snapshot.tabs,
+                  active: _section,
+                  onChanged: (section) {
+                    HapticFeedback.selectionClick();
+                    setState(() => _section = section);
+                  },
                 ),
-                Padding(
-                  padding: AppSpacing.enterpriseStatesContentPadding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _SectionTabs(
-                        tabs: snapshot.tabs,
-                        active: _section,
-                        onChanged: (section) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _section = section);
-                        },
-                      ),
-                      const SizedBox(height: AppSpacing.x5),
-                      if (_section == EnterpriseStateSection.stateKit)
-                        _StateKitSection(
-                          snapshot: snapshot,
-                          activeState: _preview,
-                          onStateChanged: (state) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _preview = state);
+              ),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    key: EnterpriseStatesPage.contentKey,
+                    physics: const ClampingScrollPhysics(),
+                    padding: AppSpacing.enterpriseStatesScrollPadding(
+                      bottomInset,
+                    ),
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      customGap: AppSpacing.x5,
+                      children: [
+                        Padding(
+                          padding: AppSpacing.enterpriseStatesContentPadding,
+                          child: switch (_section) {
+                            EnterpriseStateSection.stateKit =>
+                              _StateKitSection(
+                                snapshot: snapshot,
+                                activeState: _preview,
+                                onStateChanged: (state) {
+                                  HapticFeedback.selectionClick();
+                                  setState(() => _preview = state);
+                                },
+                                onMarkets: () =>
+                                    context.go(snapshot.marketRoute),
+                                onKyc: () => context.go(snapshot.kycRoute),
+                              ),
+                            EnterpriseStateSection.applied =>
+                              _AppliedSection(snapshot: snapshot),
+                            EnterpriseStateSection.security =>
+                              _SecuritySection(snapshot: snapshot),
                           },
-                          onMarkets: () => context.go(snapshot.marketRoute),
-                          onKyc: () => context.go(snapshot.kycRoute),
-                        )
-                      else if (_section == EnterpriseStateSection.applied)
-                        _AppliedSection(snapshot: snapshot)
-                      else
-                        _SecuritySection(snapshot: snapshot),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

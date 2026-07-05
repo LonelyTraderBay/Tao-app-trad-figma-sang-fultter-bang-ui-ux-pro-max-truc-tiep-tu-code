@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 
 part '../widgets/savings_risk_assessment_questions.dart';
 part '../widgets/savings_risk_assessment_result.dart';
@@ -71,6 +72,7 @@ class _SavingsRiskAssessmentPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: _showResult ? snapshot.resultTitle : snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -86,39 +88,42 @@ class _SavingsRiskAssessmentPageState
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
-                    children: _showResult
-                        ? [
-                            _ResultView(
-                              snapshot: snapshot,
-                              result: controller.resultForAnswers(_answers),
-                              score: _score,
-                              onReset: _reset,
-                            ),
-                          ]
-                        : [
-                            _ProgressHeader(
-                              currentQuestion: _currentQuestion,
-                              totalQuestions: snapshot.questions.length,
-                            ),
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Risk assessment in review',
-                              message:
-                                  'Answers are used only to classify suitability, risk tolerance, lockup comfort and next-step product review.',
-                              contractId: 'savings-risk-assessment',
-                            ),
-                            _QuestionCard(
-                              question: snapshot.questions[_currentQuestion],
-                              index: _currentQuestion,
-                              selectedValue:
-                                  _answers[snapshot
-                                      .questions[_currentQuestion]
-                                      .id],
-                              onSelected: _selectOption,
-                              onPrevious: _previous,
-                            ),
-                            _InfoBanner(text: snapshot.infoText),
-                          ],
+                    children: [
+                      ...(_showResult
+                          ? [
+                              _ResultView(
+                                snapshot: snapshot,
+                                result: controller.resultForAnswers(_answers),
+                                score: _score,
+                                onReset: _reset,
+                              ),
+                            ]
+                          : [
+                              _ProgressHeader(
+                                currentQuestion: _currentQuestion,
+                                totalQuestions: snapshot.questions.length,
+                              ),
+                              VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Risk assessment in review',
+                                message:
+                                    'Answers are used only to classify suitability, risk tolerance, lockup comfort and next-step product review.',
+                                contractId: 'savings-risk-assessment',
+                              ),
+                              _QuestionCard(
+                                question: snapshot.questions[_currentQuestion],
+                                index: _currentQuestion,
+                                selectedValue:
+                                    _answers[snapshot
+                                        .questions[_currentQuestion]
+                                        .id],
+                                onSelected: _selectOption,
+                                onPrevious: _previous,
+                              ),
+                              _InfoBanner(text: snapshot.infoText),
+                            ]),
+                      const SavingsToolsYieldFooter(),
+                    ],
                   ),
                 ),
               ),

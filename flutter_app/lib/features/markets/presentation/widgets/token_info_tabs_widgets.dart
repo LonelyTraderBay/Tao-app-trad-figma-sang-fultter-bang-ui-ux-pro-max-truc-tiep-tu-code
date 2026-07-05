@@ -1,5 +1,17 @@
 part of '../pages/token_info_page.dart';
 
+String _tokenTabKey(_TokenInfoTab tab) => switch (tab) {
+  _TokenInfoTab.overview => 'overview',
+  _TokenInfoTab.onchain => 'onchain',
+  _TokenInfoTab.project => 'project',
+};
+
+_TokenInfoTab _tokenTabFromKey(String key) => switch (key) {
+  'onchain' => _TokenInfoTab.onchain,
+  'project' => _TokenInfoTab.project,
+  _ => _TokenInfoTab.overview,
+};
+
 class _TokenTabs extends StatelessWidget {
   const _TokenTabs({required this.active, required this.onChanged});
 
@@ -9,90 +21,38 @@ class _TokenTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.surface2,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              _TabButton(
-                key: TokenInfoPage.overviewTabKey,
-                label: 'Tong quan',
-                active: active == _TokenInfoTab.overview,
-                onTap: () => onChanged(_TokenInfoTab.overview),
-              ),
-              _TabButton(
-                key: TokenInfoPage.onchainTabKey,
-                label: 'On-chain',
-                active: active == _TokenInfoTab.onchain,
-                onTap: () => onChanged(_TokenInfoTab.onchain),
-              ),
-              _TabButton(
-                key: TokenInfoPage.projectTabKey,
-                label: 'Du an',
-                active: active == _TokenInfoTab.project,
-                onTap: () => onChanged(_TokenInfoTab.project),
-              ),
-            ],
-          ),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            thickness: AppSpacing.dividerHairline,
-            color: AppColors.border,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        onTap: onTap,
+      color: AppColors.surface,
+      child: SizedBox(
+        height: AppSpacing.marketDepthTabsHeight,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.symmetric(
-                vertical: _tokenInfoTabVerticalPadding,
-              ),
-              child: Text(
-                label,
-                style: AppTextStyles.caption.copyWith(
-                  color: active ? _marketPrimary : AppColors.text3,
-                  fontWeight: active
-                      ? AppTextStyles.bold
-                      : AppTextStyles.medium,
-                ),
+            Expanded(
+              child: VitTabBar(
+                activeKey: _tokenTabKey(active),
+                variant: VitTabBarVariant.underline,
+                onChanged: (key) => onChanged(_tokenTabFromKey(key)),
+                tabs: const [
+                  VitTabItem(
+                    key: 'overview',
+                    label: 'Tổng quan',
+                    widgetKey: TokenInfoPage.overviewTabKey,
+                  ),
+                  VitTabItem(
+                    key: 'onchain',
+                    label: 'On-chain',
+                    widgetKey: TokenInfoPage.onchainTabKey,
+                  ),
+                  VitTabItem(
+                    key: 'project',
+                    label: 'Dự án',
+                    widgetKey: TokenInfoPage.projectTabKey,
+                  ),
+                ],
               ),
             ),
-            AnimatedSize(
-              duration: const Duration(milliseconds: 180),
-              child: SizedBox(
-                height: _tokenInfoTabIndicatorHeight,
-                width: active ? _tokenInfoTabIndicatorWidth : 0,
-                child: Material(
-                  color: active ? _marketPrimary : AppColors.transparent,
-                  borderRadius: AppRadii.xsRadius,
-                ),
-              ),
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: AppColors.divider,
             ),
           ],
         ),
@@ -126,7 +86,7 @@ class _OverviewTab extends StatelessWidget {
         _HeroCard(snapshot: snapshot),
         const SizedBox(height: _tokenInfoSectionGap),
         VitSectionHeader(
-          title: 'Thong ke thi truong',
+          title: 'Thống kê thị trường',
           accentColor: pair.logoColor,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -151,7 +111,7 @@ class _OverviewTab extends StatelessWidget {
             _InfoRowData(
               icon: Icons.show_chart_rounded,
               iconColor: AppColors.buy,
-              label: 'Khoi luong 24h',
+              label: 'Khối lượng 24h',
               value: _formatCompact(pair.volume24h, prefix: r'$'),
             ),
             _InfoRowData(

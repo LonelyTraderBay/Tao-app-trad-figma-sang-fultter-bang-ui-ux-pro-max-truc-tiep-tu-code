@@ -14,8 +14,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
 
-import '../widgets/trade_body_review_widgets.dart';
-
 part '../widgets/cass_reconciliation_summary_tabs.dart';
 part '../widgets/cass_reconciliation_records_common.dart';
 
@@ -62,6 +60,7 @@ class _CassReconciliationPageState
       contentKey: CassReconciliationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(AppRoutePaths.tradeCopyClientMoneyProtection),
+      useCopyTradingInset: true,
       children: [
         VitTradeComplianceSection(
           title: 'CASS status',
@@ -101,18 +100,6 @@ class _CassReconciliationPageState
               for (final record in snapshot.records)
                 _RecordCard(record: record),
               const _ExportButton(),
-              const TradeBodyReviewSection(
-                title: 'CASS body review',
-                message: 'CASS reconciliation body reviewed',
-                detail:
-                    'Summary, tabs, records, export, discrepancy, empty, and result states stay visible.',
-                primary:
-                    'Client-money evidence remains above reconciliation records.',
-                secondary:
-                    'Record status and discrepancy context stay visible before export.',
-                tertiary:
-                    'Export remains framed as compliance evidence, not execution.',
-              ),
             ],
           ),
         ),

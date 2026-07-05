@@ -12,9 +12,11 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
 const double _p2pExpressConfirmVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -22,8 +24,6 @@ const double _p2pExpressConfirmNativeNavClearance =
     _p2pExpressConfirmVisualNavClearance - AppSpacing.x4;
 const double _p2pExpressConfirmVisualClearance = AppSpacing.x3;
 const double _p2pExpressConfirmNativeClearance = AppSpacing.x2;
-const double _p2pExpressConfirmSectionGap = AppSpacing.x2;
-const double _p2pExpressConfirmMajorGap = AppSpacing.x3;
 const double _p2pExpressConfirmDividerHeight = AppSpacing.dividerHairline;
 
 class P2PExpressConfirmPage extends ConsumerStatefulWidget {
@@ -109,35 +109,36 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                     padding: AppSpacing.p2pExpressConfirmScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         _Hero(snapshot: snapshot, accent: accent),
-                        const SizedBox(height: _p2pExpressConfirmSectionGap),
                         _SummaryCard(snapshot: snapshot, accent: accent),
-                        const SizedBox(height: _p2pExpressConfirmSectionGap),
                         _MerchantCard(ad: snapshot.ad),
-                        const SizedBox(height: _p2pExpressConfirmSectionGap),
-                        _NoticeCard(
-                          icon: Icons.lock_outline,
-                          text:
+                        P2PNoticeCard(
+                          icon: Icons.lock_outline_rounded,
+                          title: 'Escrow bảo vệ',
+                          message:
                               '${_formatAmount(snapshot.cryptoAmount)} ${snapshot.asset} ${snapshot.escrowNote}',
-                          color: AppColors.buy,
+                          iconColor: AppColors.buy,
+                          titleColor: AppColors.buy,
+                          messageColor: AppColors.text2,
+                          borderColor: AppColors.buy20,
                         ),
-                        const SizedBox(height: _p2pExpressConfirmSectionGap),
-                        _NoticeCard(
-                          icon: Icons.warning_amber_outlined,
-                          text: snapshot.warningNote,
-                          color: AppColors.warn,
+                        P2PNoticeCard(
+                          icon: Icons.warning_amber_rounded,
+                          message: snapshot.warningNote,
+                          iconColor: AppColors.warn,
+                          messageColor: AppColors.warn,
+                          borderColor: AppColors.warningBorder,
                         ),
-                        const SizedBox(height: _p2pExpressConfirmMajorGap),
                         _ActionRow(
                           processing: _processing,
                           isBuy: snapshot.isBuy,
                           onCancel: () => _close(context),
                           onConfirm: () => _confirm(context, controller),
                         ),
-                        const SizedBox(height: _p2pExpressConfirmSectionGap),
                         const VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
                           title: 'Express order confirmation review',
@@ -187,42 +188,47 @@ class _Hero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Material(
-          color: accent,
-          borderRadius: AppRadii.lgRadius,
-          child: const SizedBox.square(
-            dimension: AppSpacing.buttonCompact,
-            child: Center(
-              child: Icon(
-                Icons.bolt_outlined,
-                color: AppColors.onAccent,
-                size: AppSpacing.iconMd,
+    return VitCard(
+      radius: VitCardRadius.large,
+      borderColor: accent.withValues(alpha: .24),
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+      child: Row(
+        children: [
+          Material(
+            color: accent,
+            borderRadius: AppRadii.inputRadius,
+            child: const SizedBox.square(
+              dimension: AppSpacing.buttonCompact,
+              child: Center(
+                child: Icon(
+                  Icons.bolt_outlined,
+                  color: AppColors.onAccent,
+                  size: AppSpacing.iconMd,
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Express ${snapshot.isBuy ? 'Mua' : 'Bán'}',
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontWeight: AppTextStyles.bold,
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Express ${snapshot.isBuy ? 'Mua' : 'Bán'}',
+                  style: AppTextStyles.baseMedium.copyWith(
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.x1),
-              Text(
-                'Kiểm tra kỹ trước khi xác nhận',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-              ),
-            ],
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  'Kiểm tra số tiền, phương thức TT và escrow trước khi xác nhận',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -257,7 +263,6 @@ class _SummaryCard extends StatelessWidget {
         color: accent,
         strong: true,
       ),
-      _SummaryRow(label: 'Merchant', value: snapshot.ad.merchant),
       _SummaryRow(label: 'Phương thức TT', value: snapshot.paymentMethod),
       const _SummaryRow(
         label: 'Phí giao dịch',
@@ -422,47 +427,6 @@ class _MerchantCard extends StatelessWidget {
             size: VitStatusPillSize.sm,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _NoticeCard extends StatelessWidget {
-  const _NoticeCard({
-    required this.icon,
-    required this.text,
-    required this.color,
-  });
-
-  final IconData icon;
-  final String text;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .08),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: color.withValues(alpha: .22)),
-        borderRadius: AppRadii.cardRadius,
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pExpressConfirmCompactCardPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                text,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(color: color),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

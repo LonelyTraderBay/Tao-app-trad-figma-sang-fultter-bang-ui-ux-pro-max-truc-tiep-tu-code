@@ -28,7 +28,7 @@ class _SystemNotePanel extends StatelessWidget {
     return DecoratedBox(
       decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
         padding: _reportInnerPadding,

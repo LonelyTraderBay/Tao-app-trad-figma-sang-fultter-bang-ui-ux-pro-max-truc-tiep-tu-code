@@ -6,6 +6,7 @@ class _ApiDocsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      onTap: () {},
       density: VitDensity.compact,
       borderColor: _apiBorder,
       child: Row(
@@ -13,9 +14,13 @@ class _ApiDocsCard extends StatelessWidget {
           SizedBox(
             width: AppSpacing.profileApiDocsIconBox,
             height: AppSpacing.profileApiDocsIconBox,
-            child: Material(
-              color: _apiPrimary.withValues(alpha: .1),
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: _apiPrimary.withValues(alpha: .1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.cardRadius,
+                ),
+              ),
               child: const Icon(
                 Icons.info_outline_rounded,
                 color: _apiPrimary,

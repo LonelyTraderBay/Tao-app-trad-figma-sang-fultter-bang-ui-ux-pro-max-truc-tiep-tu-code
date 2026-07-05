@@ -62,7 +62,7 @@ class _RatingCard extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Ban danh gia merchant nay the nao?',
+            'Bạn đánh giá merchant này thế nào?',
             textAlign: TextAlign.center,
             style: AppTextStyles.baseMedium.copyWith(
               color: AppColors.text1,
@@ -142,7 +142,7 @@ class _QuickTags extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Nhan xet nhanh',
+          'Nhận xét nhanh',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
@@ -207,7 +207,7 @@ class _ReviewBox extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Nhan xet chi tiet (tuy chon)',
+          'Nhận xét chi tiết (tùy chọn)',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
             fontWeight: AppTextStyles.bold,
@@ -218,7 +218,7 @@ class _ReviewBox extends StatelessWidget {
           fieldKey: P2POrderRatePage.reviewKey,
           controller: controller,
           semanticLabel: 'P2P order review',
-          hintText: 'Chia se trai nghiem giao dich...',
+          hintText: 'Chia sẻ trải nghiệm giao dịch...',
           textStyle: AppTextStyles.caption.copyWith(color: AppColors.text1),
         ),
       ],
@@ -248,7 +248,7 @@ class _ActionRow extends StatelessWidget {
             key: P2POrderRatePage.skipKey,
             onPressed: onSkip,
             variant: VitCtaButtonVariant.secondary,
-            child: const Text('Bo qua'),
+            child: const Text('Bỏ qua'),
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -259,7 +259,7 @@ class _ActionRow extends StatelessWidget {
             loading: loading,
             variant: VitCtaButtonVariant.warning,
             leading: const Icon(Icons.send_outlined),
-            child: const Text('Gui danh gia'),
+            child: const Text('Gửi đánh giá'),
           ),
         ),
       ],
@@ -324,7 +324,7 @@ class _SuccessView extends StatelessWidget {
               key: P2POrderRatePage.backToP2PKey,
               onPressed: onBackToP2P,
               variant: VitCtaButtonVariant.success,
-              child: const Text('Quay lai P2P'),
+              child: const Text('Quay lại P2P'),
             ),
           ],
         ),
@@ -347,11 +347,11 @@ IconData _tagIcon(String iconKey) {
 
 String _ratingLabel(int rating) {
   return switch (rating) {
-    5 => 'Xuat sac!',
-    4 => 'Rat tot',
-    3 => 'Tot',
-    2 => 'Tam duoc',
-    _ => 'Khong hai long',
+    5 => 'Xuất sắc!',
+    4 => 'Rất tốt',
+    3 => 'Tốt',
+    2 => 'Tạm được',
+    _ => 'Không hài lòng',
   };
 }
 

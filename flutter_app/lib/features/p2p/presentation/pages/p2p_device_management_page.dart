@@ -158,10 +158,10 @@ class _P2PDeviceManagementPageState
                             padding: AppSpacing.p2pDevicesInnerPadding,
                             child: VitHighRiskStatePanel(
                               state: VitHighRiskUiState.riskReview,
-                              title: 'Trusted device review',
+                              title: 'Rà soát thiết bị tin cậy',
                               message:
-                                  'Trusted status, revoke/remove action, device evidence, security risk and next verification step are reviewed before device changes.',
-                              contractId: 'p2p-device-management-review',
+                                  'Trạng thái tin cậy, thu hồi/xóa thiết bị, bằng chứng thiết bị, rủi ro bảo mật và bước xác minh tiếp theo được rà soát trước khi thay đổi.',
+                              contractId: 'SC-255',
                             ),
                           ),
                         ],

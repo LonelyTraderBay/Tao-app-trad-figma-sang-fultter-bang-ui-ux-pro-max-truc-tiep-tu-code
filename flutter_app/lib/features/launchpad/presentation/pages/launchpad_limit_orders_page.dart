@@ -119,6 +119,7 @@ class _LaunchpadLimitOrdersPageState
               semanticLabel: 'SC-315 LaunchpadLimitOrdersPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'Lệnh giới hạn · Xem trước trước khi đặt',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
                 actions: [

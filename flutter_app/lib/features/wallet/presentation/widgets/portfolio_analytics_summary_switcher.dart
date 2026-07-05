@@ -112,12 +112,8 @@ class _QuickStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      background: ColoredBox(color: AppColors.onAccent.withValues(alpha: .055)),
-      clip: true,
+    return Padding(
+      padding: AppSpacing.walletAnalyticsQuickStatPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -135,6 +131,7 @@ class _QuickStat extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),

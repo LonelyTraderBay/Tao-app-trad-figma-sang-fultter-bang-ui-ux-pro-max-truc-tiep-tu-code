@@ -124,3 +124,8 @@ String _formatDeposit(double value) {
   if (value == value.roundToDouble()) return value.toInt().toString();
   return value.toString();
 }
+
+String _maskDepositAddress(String address) {
+  if (address.length <= 12) return address;
+  return '${address.substring(0, 6)}...${address.substring(address.length - 4)}';
+}

@@ -25,7 +25,7 @@ class _OnchainTab extends StatelessWidget {
                   ),
                   const SizedBox(width: _tokenInfoOnchainIconGap),
                   Text(
-                    'Hoat dong mang luoi (24h)',
+                    'Hoạt động mạng lưới (24h)',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                       fontWeight: AppTextStyles.bold,
@@ -45,7 +45,7 @@ class _OnchainTab extends StatelessWidget {
                   const SizedBox(width: _tokenInfoMiniStatGap),
                   Expanded(
                     child: _MiniStat(
-                      label: 'Giao dich',
+                      label: 'Giao dịch',
                       value: _formatCompact(f.txCount24h.toDouble()),
                     ),
                   ),
@@ -76,7 +76,7 @@ class _OnchainTab extends StatelessWidget {
         ),
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
-          title: 'Thong tin mang luoi',
+          title: 'Thông tin mạng lưới',
           accentColor: _marketPrimary,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -163,7 +163,7 @@ class _ProjectTab extends StatelessWidget {
                   ),
                   const SizedBox(width: _tokenInfoOnchainIconGap),
                   Text(
-                    'Gioi thieu',
+                    'Giới thiệu',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                       fontWeight: AppTextStyles.bold,
@@ -178,7 +178,7 @@ class _ProjectTab extends StatelessWidget {
         ),
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
-          title: 'Lien ket',
+          title: 'Liên kết',
           accentColor: _marketPrimary,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -327,7 +327,7 @@ class _Disclaimer extends StatelessWidget {
             const SizedBox(width: _tokenInfoDisclaimerIconGap),
             Expanded(
               child: Text(
-                'Thong tin mang tinh tham khao, khong phai loi khuyen dau tu. Hay tu nghien cuu truoc khi dua ra quyet dinh.',
+                'Thông tin mang tính tham khảo, không phải lời khuyên đầu tư. Hãy tự nghiên cứu trước khi đưa ra quyết định.',
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.warn,
                   height: _tokenInfoDisclaimerLineHeight,

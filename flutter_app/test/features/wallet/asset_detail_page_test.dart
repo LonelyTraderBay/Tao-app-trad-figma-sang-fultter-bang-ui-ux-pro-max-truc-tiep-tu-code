@@ -75,7 +75,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('BTC'), findsWidgets);
-    expect(find.text('Chi tiết · Wallet'), findsOneWidget);
+    expect(find.text('Chi tiết tài sản · số dư minh bạch'), findsOneWidget);
     expect(find.text('Bitcoin'), findsOneWidget);
     expect(find.text('\$15,842.10'), findsOneWidget);
     expect(find.text('0.234510 BTC'), findsOneWidget);

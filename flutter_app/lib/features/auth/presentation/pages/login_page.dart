@@ -7,14 +7,11 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/core/network/api_client.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
-
-const _authPrimary = AppColors.primary;
-const _authPrimaryDark = AppColors.primaryDark;
-const _authPrimaryGlow = AppColors.primary40;
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -107,6 +104,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         _error.isNotEmpty &&
         _identifierController.text.trim().isNotEmpty &&
         _passwordController.text.isEmpty;
+    final showDemoLogin = ref.watch(appConfigProvider).enableMockData;
 
     return VitPageLayout(
       semanticLabel: 'SC-001 LoginPage',
@@ -128,20 +126,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       const _LoginHero(),
                       const Padding(padding: AppSpacing.authHeroFormTopPadding),
                       _LoginForm(
-                          identifierController: _identifierController,
-                          passwordController: _passwordController,
-                          showPassword: _showPassword,
-                          submitting: _submitting,
-                          error: _error,
-                          missingIdentifier: missingIdentifier,
-                          missingPassword: missingPassword,
-                          onChanged: _clearFieldError,
-                          onTogglePassword: () {
-                            setState(() => _showPassword = !_showPassword);
-                          },
-                          onLogin: _handleLogin,
-                          onDemoLogin: _handleDemoLogin,
-                        ),
+                        identifierController: _identifierController,
+                        passwordController: _passwordController,
+                        showPassword: _showPassword,
+                        submitting: _submitting,
+                        showDemoLogin: showDemoLogin,
+                        error: _error,
+                        missingIdentifier: missingIdentifier,
+                        missingPassword: missingPassword,
+                        onChanged: _clearFieldError,
+                        onTogglePassword: () {
+                          setState(() => _showPassword = !_showPassword);
+                        },
+                        onLogin: _handleLogin,
+                        onDemoLogin: _handleDemoLogin,
+                      ),
                       const Padding(
                         padding: AppSpacing.authFormFooterTopPadding,
                       ),
@@ -168,9 +167,9 @@ class _LoginHero extends StatelessWidget {
         SizedBox.square(
           dimension: AppSpacing.authLogoBoxSize,
           child: Material(
-            color: _authPrimaryDark,
+            color: AppColors.primaryDark,
             elevation: AppSpacing.authLogoElevation,
-            shadowColor: _authPrimaryGlow,
+            shadowColor: AppColors.primary40,
             borderRadius: AppRadii.cardRadius,
             child: const Center(child: _VitTradeLogoMark()),
           ),
@@ -179,7 +178,13 @@ class _LoginHero extends StatelessWidget {
         Text('VitTrade', style: AppTextStyles.pageTitle),
         const Padding(padding: AppSpacing.authTopGapX2),
         Text(
-          'Giao dịch thông minh, an toàn, tốc độ',
+          'Đăng nhập an toàn',
+          textAlign: TextAlign.center,
+          style: AppTextStyles.sectionTitle,
+        ),
+        const Padding(padding: AppSpacing.authTopGapX2),
+        Text(
+          'Truy cập tài khoản được bảo vệ end-to-end',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
@@ -194,6 +199,7 @@ class _LoginForm extends StatelessWidget {
     required this.passwordController,
     required this.showPassword,
     required this.submitting,
+    required this.showDemoLogin,
     required this.error,
     required this.missingIdentifier,
     required this.missingPassword,
@@ -207,6 +213,7 @@ class _LoginForm extends StatelessWidget {
   final TextEditingController passwordController;
   final bool showPassword;
   final bool submitting;
+  final bool showDemoLogin;
   final String error;
   final bool missingIdentifier;
   final bool missingPassword;
@@ -261,24 +268,6 @@ class _LoginForm extends StatelessWidget {
             const Padding(padding: AppSpacing.authTopGapX4),
             _authInlineErrorBanner(error),
           ],
-          const Padding(padding: AppSpacing.authTopGapX3),
-          Align(
-            alignment: Alignment.centerRight,
-            child: VitCtaButton(
-              key: LoginPage.forgotPasswordKey,
-              onPressed: submitting
-                  ? null
-                  : () => context.go(AppRoutePaths.authForgotPassword),
-              variant: VitCtaButtonVariant.ghost,
-              fullWidth: false,
-              height: AppSpacing.authTextButtonHeight,
-              padding: AppSpacing.authInlineTextButtonPadding,
-              child: Text(
-                'Quên mật khẩu?',
-                style: AppTextStyles.caption.copyWith(color: _authPrimary),
-              ),
-            ),
-          ),
           const Padding(padding: AppSpacing.authTopGapX4),
           VitCtaButton(
             key: LoginPage.submitKey,
@@ -287,45 +276,75 @@ class _LoginForm extends StatelessWidget {
             variant: VitCtaButtonVariant.auth,
             child: const Text('Đăng nhập'),
           ),
-          const Padding(padding: AppSpacing.authTopGapX4),
-          const _DividerLabel(),
-          const Padding(padding: AppSpacing.authTopGapX4),
-          VitCtaButton(
-            key: LoginPage.demoSubmitKey,
-            onPressed: submitting ? null : onDemoLogin,
-            variant: VitCtaButtonVariant.ghost,
-            leading: const Icon(Icons.fingerprint_rounded, color: _authPrimary),
-            child: const Text('Đăng nhập Demo'),
-          ),
-          const Padding(padding: AppSpacing.authTopGapX4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Chưa có tài khoản?',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          if (showDemoLogin) ...[
+            const Padding(padding: AppSpacing.authTopGapX4),
+            const _DividerLabel(),
+            const Padding(padding: AppSpacing.authTopGapX4),
+            VitCtaButton(
+              key: LoginPage.demoSubmitKey,
+              onPressed: submitting ? null : onDemoLogin,
+              variant: VitCtaButtonVariant.ghost,
+              leading: const Icon(
+                Icons.fingerprint_rounded,
+                color: AppColors.primary,
               ),
-              VitCtaButton(
-                key: LoginPage.registerKey,
-                onPressed: submitting
-                    ? null
-                    : () => context.go(AppRoutePaths.authRegister),
-                variant: VitCtaButtonVariant.ghost,
-                fullWidth: false,
-                height: AppSpacing.authTextButtonHeight,
-                padding: AppSpacing.authInlineTextButtonPadding,
-                child: Text(
-                  'Đăng ký ngay',
-                  style: AppTextStyles.caption.copyWith(
-                    color: _authPrimary,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ),
-            ],
-          ),
+              child: const Text('Dùng tài khoản demo'),
+            ),
+          ],
+          const Padding(padding: AppSpacing.authTopGapX4),
+          _AuthLinkRow(submitting: submitting),
         ],
       ),
+    );
+  }
+}
+
+class _AuthLinkRow extends StatelessWidget {
+  const _AuthLinkRow({required this.submitting});
+
+  final bool submitting;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        VitCtaButton(
+          key: LoginPage.forgotPasswordKey,
+          onPressed: submitting
+              ? null
+              : () => context.go(AppRoutePaths.authForgotPassword),
+          variant: VitCtaButtonVariant.ghost,
+          fullWidth: false,
+          height: AppSpacing.authTextButtonHeight,
+          padding: AppSpacing.authInlineTextButtonPadding,
+          child: Text(
+            'Quên mật khẩu?',
+            style: AppTextStyles.caption.copyWith(color: AppColors.primary),
+          ),
+        ),
+        Text(
+          '|',
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+        ),
+        VitCtaButton(
+          key: LoginPage.registerKey,
+          onPressed: submitting
+              ? null
+              : () => context.go(AppRoutePaths.authRegister),
+          variant: VitCtaButtonVariant.ghost,
+          fullWidth: false,
+          height: AppSpacing.authTextButtonHeight,
+          padding: AppSpacing.authInlineTextButtonPadding,
+          child: Text(
+            'Đăng ký',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.primary,
+              fontWeight: AppTextStyles.medium,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

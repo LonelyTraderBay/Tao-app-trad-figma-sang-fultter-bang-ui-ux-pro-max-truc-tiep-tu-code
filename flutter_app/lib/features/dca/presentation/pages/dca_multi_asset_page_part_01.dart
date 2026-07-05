@@ -32,17 +32,18 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaMultiAssetProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x7 + AppSpacing.x6
-            : AppSpacing.x7) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _dcaMultiAssetVisualNavClearance
+        : _dcaMultiAssetNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       semanticLabel: 'SC-177 DCAMultiAssetPage',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Multi-Asset DCA',
+          subtitle: 'Đầu tư có kỷ luật · đa tài sản',
           showBack: true,
           onBack: _close,
         ),
@@ -54,20 +55,26 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
               onChanged: (tab) => setState(() => _activeTab = tab),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                key: DCAMultiAssetPage.contentKey,
-                physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.dcaBottomInsetPadding(scrollEndClearance),
-                child: VitPageContent(
-                  gap: VitContentGap.tight,
-                  children: [
-                    if (_activeTab == _MultiAssetTab.setup)
-                      ..._buildSetup(snapshot),
-                    if (_activeTab == _MultiAssetTab.assets)
-                      ..._buildAssets(snapshot),
-                    if (_activeTab == _MultiAssetTab.performance)
-                      ..._buildPerformance(snapshot),
-                  ],
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: VitInsetScrollView(
+                  key: DCAMultiAssetPage.contentKey,
+                  physics: const ClampingScrollPhysics(),
+                  bottomInset: scrollEndPadding,
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
+                    children: [
+                      if (_activeTab == _MultiAssetTab.setup)
+                        ..._buildSetup(snapshot),
+                      if (_activeTab == _MultiAssetTab.assets)
+                        ..._buildAssets(snapshot),
+                      if (_activeTab == _MultiAssetTab.performance)
+                        ..._buildPerformance(snapshot),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -88,7 +95,7 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
         },
       ),
       VitPageSection(
-        label: 'Phan bo tai san',
+        label: 'Phân bổ tài sản',
         children: [
           for (var i = 0; i < snapshot.allocations.length; i++)
             _AllocationSetupCard(
@@ -117,7 +124,7 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
       const _InfoCallout(
         icon: Icons.info_outline_rounded,
         text:
-            'Multi-asset DCA giup da dang hoa danh muc. Tu dong phan bo theo ti le muc tieu moi ky.',
+            'Multi-asset DCA giúp đa dạng hóa danh mục. Tự động phân bổ theo tỷ lệ mục tiêu mỗi kỳ.',
       ),
       const VitHighRiskStatePanel(
         state: VitHighRiskUiState.riskReview,
@@ -133,7 +140,7 @@ class _DCAMultiAssetPageState extends ConsumerState<DCAMultiAssetPage> {
     return [
       _PortfolioOverviewCard(snapshot: snapshot),
       VitPageSection(
-        label: 'Chi tiet tai san',
+        label: 'Chi tiết tài sản',
         children: [
           for (var i = 0; i < snapshot.allocations.length; i++)
             _AssetDetailCard(
@@ -232,17 +239,17 @@ class _TopTabs extends StatelessWidget {
             tabs: [
               VitTabItem(
                 key: _MultiAssetTab.setup.name,
-                label: 'Cai dat',
+                label: 'Cài đặt',
                 widgetKey: DCAMultiAssetPage.tabKey(_MultiAssetTab.setup.name),
               ),
               VitTabItem(
                 key: _MultiAssetTab.assets.name,
-                label: 'Tai san',
+                label: 'Tài sản',
                 widgetKey: DCAMultiAssetPage.tabKey(_MultiAssetTab.assets.name),
               ),
               VitTabItem(
                 key: _MultiAssetTab.performance.name,
-                label: 'Hieu suat',
+                label: 'Hiệu suất',
                 widgetKey: DCAMultiAssetPage.tabKey(
                   _MultiAssetTab.performance.name,
                 ),

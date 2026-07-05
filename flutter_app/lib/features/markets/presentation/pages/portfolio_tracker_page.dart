@@ -17,7 +17,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
-import '../widgets/market_body_review_widgets.dart';
 
 part 'portfolio_tracker_page_part_01.dart';
 part 'portfolio_tracker_page_part_02.dart';
@@ -26,8 +25,6 @@ part 'portfolio_tracker_page_part_03.dart';
 const _marketPrimary = AppColors.primary;
 const double _portfolioVisualScrollClearance = 108;
 const double _portfolioNativeScrollClearance = 72;
-const double _portfolioTabsHeight = AppSpacing.buttonCompact;
-const double _portfolioTabIndicatorHeight = AppSpacing.dividerHairline;
 const double _portfolioHeroTitleGap = AppSpacing.x1;
 const double _portfolioHeroPnlGap = AppSpacing.x1;
 const double _portfolioHeroToggleIcon = AppSpacing.iconSm + AppSpacing.x1;

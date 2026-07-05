@@ -59,7 +59,17 @@ class _ComplaintsHandlingPageState
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
       children: [
-        VitTradeSection(title: 'Rights', child: const _RightsNotice()),
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            density: VitDensity.compact,
+            title: 'Complaint process review',
+            message:
+                'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
+            contractId: 'complaints-handling-review',
+          ),
+        ),
         VitTradeComplianceSection(
           title: 'Complaint process',
           statusPill: const VitStatusPill(
@@ -78,19 +88,12 @@ class _ComplaintsHandlingPageState
             ),
           ],
         ),
+        VitTradeSection(title: 'Rights', child: const _RightsNotice()),
         VitTradeSection(
           title: 'Complaints',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                density: VitDensity.compact,
-                title: 'Complaint process review',
-                message:
-                    'Complaint status, evidence, escalation, response deadline and next steps are reviewed before submission.',
-                contractId: 'complaints-handling-review',
-              ),
               _StatsRow(snapshot: snapshot),
               const _SubmitComplaintButton(),
               _Tabs(

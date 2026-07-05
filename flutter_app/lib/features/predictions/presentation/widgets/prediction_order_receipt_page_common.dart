@@ -179,98 +179,51 @@ class _TimelineStep extends StatelessWidget {
   }
 }
 
-class _SoftPill extends StatelessWidget {
-  const _SoftPill({
-    required this.label,
-    required this.color,
-    required this.background,
-  });
-
-  final String label;
-  final Color color;
-  final Color background;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: background,
-      borderRadius: AppRadii.smRadius,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: AppSpacing.x6),
-        child: Padding(
-          padding: AppSpacing.predictionReceiptSoftPillPadding,
-          child: Center(
-            child: Text(
-              label,
-              style: AppTextStyles.badge.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-_ReceiptStatus _statusConfig(String status) {
+_ReceiptStatus _receiptStatusConfig(String status) {
   switch (status) {
     case 'submitted':
-      return _ReceiptStatus(
+      return const _ReceiptStatus(
         label: 'Đã gửi',
-        color: AppColors.text2,
-        background: AppColors.medalSilverBlue.withValues(alpha: .12),
+        pillStatus: VitStatusPillStatus.neutral,
       );
     case 'accepted':
       return const _ReceiptStatus(
         label: 'Đã tiếp nhận',
-        color: _predictionPrimary,
-        background: AppColors.primary12,
+        pillStatus: VitStatusPillStatus.info,
       );
     case 'partially_filled':
       return const _ReceiptStatus(
         label: 'Khớp một phần',
-        color: AppColors.warn,
-        background: AppColors.warn15,
+        pillStatus: VitStatusPillStatus.warning,
       );
     case 'filled':
       return const _ReceiptStatus(
         label: 'Đã khớp',
-        color: AppColors.buy,
-        background: AppColors.buy15,
+        pillStatus: VitStatusPillStatus.success,
       );
     case 'canceled':
       return const _ReceiptStatus(
         label: 'Đã hủy',
-        color: AppColors.text3,
-        background: AppColors.surface2,
+        pillStatus: VitStatusPillStatus.neutral,
       );
     case 'rejected':
       return const _ReceiptStatus(
         label: 'Từ chối',
-        color: AppColors.sell,
-        background: AppColors.sell15,
+        pillStatus: VitStatusPillStatus.error,
       );
     default:
       return const _ReceiptStatus(
         label: 'Đang xử lý',
-        color: AppColors.text2,
-        background: AppColors.surface2,
+        pillStatus: VitStatusPillStatus.neutral,
       );
   }
 }
 
 class _ReceiptStatus {
-  const _ReceiptStatus({
-    required this.label,
-    required this.color,
-    required this.background,
-  });
+  const _ReceiptStatus({required this.label, required this.pillStatus});
 
   final String label;
-  final Color color;
-  final Color background;
+  final VitStatusPillStatus pillStatus;
 }
 
 String _formatMoney(double value) => '\$${value.toStringAsFixed(2)}';

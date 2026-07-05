@@ -127,7 +127,7 @@ void main() {
 
     await tester.tap(find.byKey(RewardsHubPage.claimAllKey));
     await tester.pumpAndSettle();
-    expect(find.text('All pending rewards claimed'), findsOneWidget);
+    expect(find.text('Đã nhận hết phần thưởng chờ'), findsOneWidget);
 
     await tester.drag(
       find.byKey(RewardsHubPage.contentKey),

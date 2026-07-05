@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_achievemen
 import 'package:vit_trade_flutter/features/p2p/presentation/pages/p2p_trading_level_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
+import '../../helpers/first_viewport_test_utils.dart';
+
 void main() {
   Future<void> pumpAchievements(WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -81,6 +83,32 @@ void main() {
     );
     expect(find.text('Giao dịch đầu tiên'), findsOneWidget);
     expect(find.text('+5 điểm uy tín'), findsOneWidget);
+  });
+
+  testWidgets('SC-275 first viewport reaches summary and first category', (
+    tester,
+  ) async {
+    await pumpAchievements(tester);
+
+    expectRouteSemanticInFirstViewport(
+      tester,
+      routeName: 'SC-275 P2PAchievementsPage',
+      semanticLabel: 'SC-275 P2PAchievementsPage',
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAchievementsPage.summaryKey),
+      routeName: 'SC-275 P2PAchievementsPage',
+      actionLabel: 'achievements summary',
+      minVisibleHeight: 80,
+    );
+    expectActionableInFirstViewport(
+      tester,
+      find.byKey(P2PAchievementsPage.categoryKey('trades')),
+      routeName: 'SC-275 P2PAchievementsPage',
+      actionLabel: 'first achievement category',
+      minVisibleHeight: 32,
+    );
   });
 
   testWidgets('SC-275 renders category progress while scrolling', (

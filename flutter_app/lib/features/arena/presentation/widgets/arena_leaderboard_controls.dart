@@ -8,22 +8,24 @@ class _MyRankCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
-      accentColor: AppColors.accent,
+      accentColor: _arenaAccent,
       density: VitDensity.compact,
       child: Row(
         children: [
           SizedBox(
             width: _leaderboardMyRankIconBox,
             height: _leaderboardMyRankIconBox,
-            child: const DecoratedBox(
+            child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: AppColors.accent12,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                color: _arenaAccent.withValues(alpha: .12),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.smRadius,
+                ),
               ),
               child: Center(
                 child: Icon(
                   Icons.emoji_events_outlined,
-                  color: AppColors.accent,
+                  color: _arenaAccent,
                   size: _leaderboardMyRankIcon,
                 ),
               ),
@@ -59,14 +61,14 @@ class _MyRankCard extends StatelessWidget {
               Text(
                 '#${myRank.rank}',
                 style: AppTextStyles.sectionTitle.copyWith(
-                  color: AppColors.accent,
+                  color: _arenaAccent,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
               Text(
                 myRank.pointsLabel,
                 style: AppTextStyles.micro.copyWith(
-                  color: AppColors.warn,
+                  color: _arenaAccent,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -127,7 +129,7 @@ class _MetricChips extends StatelessWidget {
               label: chip.label,
               icon: _leaderboardIcon(chip.icon),
               active: chip.id == activeMetric,
-              accentColor: AppColors.accent,
+              accentColor: _arenaAccent,
               onTap: () => onChanged(chip.id),
             ),
             if (chip != chips.last) const SizedBox(width: AppSpacing.x2),

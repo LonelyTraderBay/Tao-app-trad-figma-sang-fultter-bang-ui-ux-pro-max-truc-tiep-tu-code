@@ -107,10 +107,7 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                             padding: VitContentPadding.compact,
                             gap: VitContentGap.tight,
                             children: [
-                              VitCard(
-                                padding: AppSpacing.zeroInsets,
-                                child: _BlockInfoBanner(snapshot: snapshot),
-                              ),
+                              _BlockInfoBanner(snapshot: snapshot),
                               _BlockedUsersCard(
                                 users: _blockedUsers,
                                 onUnblock: (user) => _requestUnblock(user),
@@ -347,7 +344,7 @@ class _BlockedAvatar extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: 0.12),
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Center(
           child: Icon(
@@ -456,7 +453,7 @@ class _ToneIcon extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: 0.12),
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Center(
           child: Icon(

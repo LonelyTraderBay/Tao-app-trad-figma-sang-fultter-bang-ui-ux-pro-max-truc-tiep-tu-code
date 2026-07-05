@@ -21,10 +21,13 @@ class _CurrentLevelHero extends StatelessWidget {
           Material(
             color: accent.withValues(alpha: 0.12),
             child: Padding(
-              padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+              padding: AppSpacing.p2pTradingLevelHeroHeaderPadding,
               child: Row(
                 children: [
-                  _LevelIconBadge(level: level, size: AppSpacing.x6),
+                  _LevelIconBadge(
+                    level: level,
+                    size: AppSpacing.p2pTradingLevelHeroBadgeSize,
+                  ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
                     child: Column(
@@ -81,7 +84,7 @@ class _CurrentLevelHero extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+            padding: AppSpacing.p2pTradingLevelHeroBodyPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -135,7 +138,7 @@ class _CurrentLevelHero extends StatelessWidget {
                 _ProgressTrack(
                   value: dailyRatio,
                   color: accent,
-                  height: AppSpacing.x1,
+                  height: AppSpacing.p2pTradingLevelDailyTrackHeight,
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Row(
@@ -194,73 +197,66 @@ class _HeroMetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: 0.08),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(color: color.withValues(alpha: 0.24)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: AppSpacing.buttonCompact),
-        child: Padding(
-          padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      borderColor: color.withValues(alpha: 0.24),
+      background: ColoredBox(color: color.withValues(alpha: 0.08)),
+      padding: AppSpacing.p2pTradingLevelMetricPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  SizedBox.square(
-                    dimension: AppSpacing.iconMd,
-                    child: Material(
-                      color: color.withValues(alpha: 0.14),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: AppRadii.smRadius,
-                      ),
-                      child: Center(
-                        child: Icon(
-                          icon,
-                          color: color,
-                          size: AppSpacing.iconSm,
-                        ),
-                      ),
+              SizedBox.square(
+                dimension: AppSpacing.p2pTradingLevelMetricIconSize,
+                child: Material(
+                  color: color.withValues(alpha: 0.14),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      icon,
+                      color: color,
+                      size: AppSpacing.p2pTradingLevelMetricGlyphSize,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Text(
-                      label,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.medium,
-                        height: AppTextStyles.micro.height,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.x2),
-              Text(
-                value,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.sectionTitle.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
                 ),
               ),
-              if (subvalue != null)
-                Text(
-                  subvalue!,
-                  maxLines: 1,
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    fontWeight: AppTextStyles.medium,
+                    height: AppSpacing.p2pTradingLevelMicroLineHeight,
+                  ),
                 ),
+              ),
             ],
           ),
-        ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+              height: AppSpacing.p2pTradingLevelTitleLineHeight,
+            ),
+          ),
+          if (subvalue != null)
+            Text(
+              subvalue!,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+        ],
       ),
     );
   }
@@ -278,7 +274,7 @@ class _NextLevelProgress extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.accent30,
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+      padding: AppSpacing.p2pTradingLevelNextCardPadding,
       child: Column(
         children: [
           Row(
@@ -311,7 +307,7 @@ class _NextLevelProgress extends StatelessWidget {
           _ProgressTrack(
             value: progress,
             color: AppColors.accent,
-            height: AppSpacing.x1,
+            height: AppSpacing.p2pTradingLevelNextTrackHeight,
           ),
         ],
       ),

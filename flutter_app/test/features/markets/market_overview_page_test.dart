@@ -113,7 +113,7 @@ void main() {
 
     expect(find.byType(MarketOverviewPage), findsNothing);
     expect(find.byType(MarketHeatmapPage), findsOneWidget);
-    expect(find.text('Market Heatmap'), findsOneWidget);
+    expect(find.text('Bản đồ thị trường'), findsOneWidget);
   });
 
   testWidgets('SC-009 wires movers and sector controls', (tester) async {

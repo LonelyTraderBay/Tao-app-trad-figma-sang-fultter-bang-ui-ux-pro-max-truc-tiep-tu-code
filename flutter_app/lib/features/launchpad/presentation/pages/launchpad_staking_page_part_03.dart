@@ -19,7 +19,7 @@ class _TierChip extends StatelessWidget {
                 ? tier.accent.withValues(alpha: .34)
                 : AppColors.cardBorder,
           ),
-          borderRadius: AppRadii.mdRadius,
+          borderRadius: AppRadii.smRadius,
         ),
       ),
       child: Padding(
@@ -136,23 +136,31 @@ class _TimelineStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = switch (status) {
-      LaunchpoolPoolStatus.upcoming => 'Đã kết thúc',
-      LaunchpoolPoolStatus.active => 'Đã kết thúc',
-      LaunchpoolPoolStatus.ended => 'Đã kết thúc',
+    final (text, color, icon) = switch (status) {
+      LaunchpoolPoolStatus.upcoming => (
+        'Sắp mở',
+        AppColors.warn,
+        Icons.schedule_rounded,
+      ),
+      LaunchpoolPoolStatus.active => (
+        'Đang diễn ra',
+        AppColors.buy,
+        Icons.check_circle_outline_rounded,
+      ),
+      LaunchpoolPoolStatus.ended => (
+        'Đã kết thúc',
+        AppColors.text2,
+        Icons.check_circle_outline_rounded,
+      ),
     };
     return Row(
       children: [
-        const Icon(
-          Icons.check_circle_outline_rounded,
-          color: AppColors.buy,
-          size: AppSpacing.iconSm,
-        ),
+        Icon(icon, color: color, size: AppSpacing.iconSm),
         const SizedBox(width: AppSpacing.x2),
         Text(
           text,
           style: AppTextStyles.caption.copyWith(
-            color: AppColors.buy,
+            color: color,
             fontWeight: AppTextStyles.bold,
           ),
         ),

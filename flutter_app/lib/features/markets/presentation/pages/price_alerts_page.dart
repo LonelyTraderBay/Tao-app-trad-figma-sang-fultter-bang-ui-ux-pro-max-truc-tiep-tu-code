@@ -14,8 +14,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
-import '../widgets/market_body_review_widgets.dart';
-
 part '../widgets/price_alerts_page_overview.dart';
 part '../widgets/price_alerts_page_details.dart';
 part '../widgets/price_alerts_page_common.dart';
@@ -26,7 +24,6 @@ const double _alertsNativeScrollClearance = 72;
 const double _alertsSectionGap = AppSpacing.x3;
 const double _alertsCardGap = AppSpacing.x3;
 const double _alertsAddNoticeGap = AppSpacing.x2;
-const double _alertsBottomReviewGap = AppSpacing.x3;
 const double _alertsFilterGap = AppSpacing.x3;
 const double _alertsFilterHeight = AppSpacing.buttonCompact;
 const double _alertsStatGap = AppSpacing.x3;
@@ -239,19 +236,6 @@ class _PriceAlertsPageState extends ConsumerState<PriceAlertsPage> {
                           const SizedBox(height: _alertsAddNoticeGap),
                           const _AddAlertNotice(),
                         ],
-                        const SizedBox(height: _alertsBottomReviewGap),
-                        const MarketBodyReviewSection(
-                          title: 'Price alert state review',
-                          message: 'Price alert data reviewed',
-                          detail:
-                              'Filter, toggle, delete, add notice, empty, and refresh states remain visible.',
-                          primary:
-                              'Alert counts stay visible before active and triggered alert rows.',
-                          secondary:
-                              'Toggle and delete actions preserve the selected pair context.',
-                          tertiary:
-                              'Add-alert notice remains secondary to the current alert list.',
-                        ),
                       ],
                     ),
                   ),

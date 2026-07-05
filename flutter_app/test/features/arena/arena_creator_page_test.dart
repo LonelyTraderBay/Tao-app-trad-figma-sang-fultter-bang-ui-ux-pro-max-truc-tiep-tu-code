@@ -64,7 +64,7 @@ void main() {
     expect(find.byType(ArenaCreatorPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Creator Profile'), findsOneWidget);
+    expect(find.text('Hồ sơ creator'), findsOneWidget);
     expect(find.text('Nhà sáng tạo · Open Arena'), findsOneWidget);
     expect(find.text('CryptoMaster_VN'), findsOneWidget);
     expect(find.text('Fair Play'), findsWidgets);

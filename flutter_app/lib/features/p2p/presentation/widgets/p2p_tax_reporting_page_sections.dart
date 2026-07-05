@@ -89,53 +89,22 @@ class _YearSelector extends StatelessWidget {
           ),
         ),
         const SizedBox(height: _p2pTaxSectionGap),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              for (final year in years) ...[
-                _YearChip(
-                  year: year,
-                  selected: selectedYear == year,
-                  onTap: () => onChanged(year),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-              ],
-            ],
-          ),
+        VitPresetChipRow<int>(
+          items: [
+            for (final year in years)
+              VitPresetChipItem<int>(
+                key: P2PTaxReportingPage.yearKey(year),
+                value: year,
+                label: '$year',
+                semanticLabel: 'Tax year $year',
+              ),
+          ],
+          selectedValue: selectedYear,
+          onTap: onChanged,
+          accentColor: AppColors.accent,
+          fullWidth: false,
         ),
       ],
-    );
-  }
-}
-
-class _YearChip extends StatelessWidget {
-  const _YearChip({
-    required this.year,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final int year;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minWidth: AppSpacing.p2pDocumentChipMinWidth,
-      ),
-      child: VitChoicePill(
-        key: P2PTaxReportingPage.yearKey(year),
-        label: '$year',
-        selected: selected,
-        onTap: onTap,
-        height: AppSpacing.buttonCompact,
-        padding: AppSpacing.p2pDocumentChipPadding,
-        accentColor: AppColors.accent,
-        semanticLabel: 'Tax year $year',
-      ),
     );
   }
 }

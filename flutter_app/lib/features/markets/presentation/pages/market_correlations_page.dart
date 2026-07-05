@@ -16,7 +16,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
-import '../widgets/market_body_review_widgets.dart';
 
 part '../widgets/market_correlations_tabs_widgets.dart';
 part '../widgets/market_correlations_matrix_widgets.dart';
@@ -26,8 +25,6 @@ part '../widgets/market_correlations_diversification_widgets.dart';
 const _marketPrimary = AppColors.primary;
 const double _corrVisualScrollClearance = 108;
 const double _corrNativeScrollClearance = 72;
-const double _corrTabsHeight = AppSpacing.buttonCompact;
-const double _corrTabIndicatorHeight = AppSpacing.dividerHairline;
 const double _corrChipGap = AppSpacing.x2;
 const double _corrTimeframeChipHeight = AppSpacing.buttonCompact;
 const double _corrSortChipHeight = AppSpacing.buttonCompact;
@@ -95,6 +92,7 @@ class _MarketCorrelationsPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tương quan thị trường',
+            subtitle: 'Tương quan · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -167,17 +165,12 @@ class _MarketCorrelationsPageState
                           _TimeframeScoreCard(repo: repo),
                           const _CorrelationDisclaimer(),
                         ],
-                        const MarketBodyReviewSection(
-                          title: 'Correlation state review',
-                          message: 'Correlation data reviewed',
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.info_outline_rounded,
+                          message: 'Tương quan chỉ mang tính tham khảo',
                           detail:
-                              'Matrix, pair ranking, diversification, empty, and refresh states remain visible for portfolio checks.',
-                          primary:
-                              'Timeframe chips keep each correlation reading tied to the selected window.',
-                          secondary:
-                              'Pair rows preserve direction, magnitude, and ranking before drilling into assets.',
-                          tertiary:
-                              'Diversification guidance stays separated from trading execution surfaces.',
+                              'Không phải khuyến nghị phân bổ. Quá khứ không đảm bảo kết quả tương lai.',
                         ),
                       ],
                     ),

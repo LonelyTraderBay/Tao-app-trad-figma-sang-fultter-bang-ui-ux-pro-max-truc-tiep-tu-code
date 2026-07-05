@@ -1,16 +1,52 @@
 part of '../pages/notifications_page.dart';
 
-class _NotificationToolbar extends StatelessWidget {
-  const _NotificationToolbar({
-    required this.unreadCount,
+class _NotificationFilterBand extends StatelessWidget {
+  const _NotificationFilterBand({
     required this.filter,
-    required this.onToggleFilter,
+    required this.onChanged,
+  });
+
+  final _NotificationFilter filter;
+  final ValueChanged<_NotificationFilter> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
+        color: AppColors.surface,
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: Padding(
+        padding: AppSpacing.notificationsToolbarPadding,
+        child: VitSegmentedChoice<_NotificationFilter>(
+          selected: filter,
+          onChanged: onChanged,
+          options: [
+            VitSegmentedChoiceOption(
+              value: _NotificationFilter.all,
+              label: 'Tất cả',
+              accentColor: AppModuleAccents.notifications,
+            ),
+            VitSegmentedChoiceOption(
+              key: NotificationsPage.filterKey,
+              value: _NotificationFilter.unread,
+              label: 'Chưa đọc',
+              accentColor: AppModuleAccents.notifications,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _UnreadSummaryBar extends StatelessWidget {
+  const _UnreadSummaryBar({
+    required this.unreadCount,
     required this.onMarkAllRead,
   });
 
   final int unreadCount;
-  final _NotificationFilter filter;
-  final VoidCallback onToggleFilter;
   final VoidCallback? onMarkAllRead;
 
   @override
@@ -19,48 +55,126 @@ class _NotificationToolbar extends StatelessWidget {
       key: NotificationsPage.toolbarKey,
       width: double.infinity,
       radius: VitCardRadius.standard,
-      variant: VitCardVariant.inner,
-      borderColor: AppColors.divider,
+      variant: VitCardVariant.ghost,
+      borderColor: AppModuleAccents.notifications.withValues(alpha: .32),
       padding: AppSpacing.notificationsToolbarPadding,
       child: Row(
         children: [
-          const Icon(
-            Icons.notifications_none_rounded,
-            color: AppColors.primary,
+          Icon(
+            Icons.notifications_active_rounded,
+            color: AppModuleAccents.notifications,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
               '$unreadCount chưa đọc',
-              style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
+              style: AppTextStyles.baseMedium.copyWith(
+                color: AppColors.text1,
+              ),
             ),
           ),
-          _ToolbarButton(
-            key: NotificationsPage.filterKey,
-            icon: Icons.tune_rounded,
-            label: filter == _NotificationFilter.all ? 'Tất cả' : 'Chưa đọc',
-            color: AppColors.primary,
-            onTap: onToggleFilter,
-          ),
-          if (onMarkAllRead != null) ...[
-            const SizedBox(width: AppSpacing.x2),
-            _ToolbarButton(
+          if (onMarkAllRead != null)
+            VitCtaButton(
               key: NotificationsPage.markAllReadKey,
-              icon: Icons.done_all_rounded,
-              label: 'Đọc tất cả',
-              color: AppColors.buy,
-              onTap: onMarkAllRead!,
+              onPressed: onMarkAllRead,
+              variant: VitCtaButtonVariant.ghost,
+              height: AppSpacing.buttonCompact,
+              fullWidth: false,
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x2,
+              ),
+              child: Text(
+                'Đọc tất cả',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppModuleAccents.notifications,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            )
+          else
+            Text(
+              'Đã xem hết',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-          ],
         ],
       ),
     );
   }
 }
 
-class _NotificationList extends StatelessWidget {
-  const _NotificationList({
+class _NotificationsBody extends StatelessWidget {
+  const _NotificationsBody({
+    required this.screenState,
+    required this.notifications,
+    required this.filter,
+    required this.onRetry,
+    required this.onToggleFilter,
+    required this.onOpen,
+    required this.onDelete,
+  });
+
+  final NotificationsScreenState screenState;
+  final List<AppNotificationDraft> notifications;
+  final _NotificationFilter filter;
+  final VoidCallback onRetry;
+  final VoidCallback onToggleFilter;
+  final ValueChanged<AppNotificationDraft> onOpen;
+  final ValueChanged<String> onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (screenState) {
+      NotificationsScreenState.loading => const VitSkeletonList(
+        key: NotificationsPage.loadingKey,
+        rows: 5,
+      ),
+      NotificationsScreenState.error => VitErrorState(
+        key: NotificationsPage.errorKey,
+        title: 'Không tải được thông báo',
+        message: 'Kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: onRetry,
+      ),
+      NotificationsScreenState.empty ||
+      NotificationsScreenState.offline when notifications.isEmpty =>
+        VitEmptyState(
+          key: NotificationsPage.emptyKey,
+          title: filter == _NotificationFilter.unread
+              ? 'Không có thông báo chưa đọc'
+              : 'Chưa có thông báo nào',
+          message: screenState == NotificationsScreenState.offline
+              ? 'Kết nối lại để nhận cập nhật mới nhất.'
+              : 'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
+          icon: Icons.notifications_off_rounded,
+          actionLabel: filter == _NotificationFilter.unread
+              ? 'Xem tất cả'
+              : null,
+          onAction:
+              filter == _NotificationFilter.unread ? onToggleFilter : null,
+        ),
+      _ when notifications.isEmpty => VitEmptyState(
+        key: NotificationsPage.emptyKey,
+        title: filter == _NotificationFilter.unread
+            ? 'Không có thông báo chưa đọc'
+            : 'Chưa có thông báo nào',
+        message:
+            'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
+        icon: Icons.notifications_off_rounded,
+        actionLabel: filter == _NotificationFilter.unread ? 'Xem tất cả' : null,
+        onAction: filter == _NotificationFilter.unread ? onToggleFilter : null,
+      ),
+      _ => _NotificationFeed(
+        notifications: notifications,
+        onOpen: onOpen,
+        onDelete: onDelete,
+      ),
+    };
+  }
+}
+
+class _NotificationFeed extends StatelessWidget {
+  const _NotificationFeed({
     required this.notifications,
     required this.onOpen,
     required this.onDelete,
@@ -72,8 +186,13 @@ class _NotificationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return VitPageSection(
+      density: VitDensity.compact,
       children: [
+        VitModuleSectionHeader(
+          title: 'THÔNG BÁO GẦN ĐÂY',
+          accentColor: AppModuleAccents.notifications,
+        ),
         for (var i = 0; i < notifications.length; i++)
           _NotificationRow(
             notification: notifications[i],
@@ -82,6 +201,7 @@ class _NotificationList extends StatelessWidget {
             onTap: () => onOpen(notifications[i]),
             onDelete: () => onDelete(notifications[i].id),
           ),
+        _ListFooter(count: notifications.length),
       ],
     );
   }
@@ -141,7 +261,7 @@ class _NotificationRow extends StatelessWidget {
                         child: SizedBox.square(
                           dimension: AppSpacing.notificationsUnreadDotSize,
                           child: Material(
-                            color: AppColors.primary,
+                            color: AppModuleAccents.notifications,
                             shape: CircleBorder(),
                           ),
                         ),
@@ -186,35 +306,6 @@ class _NotificationRow extends StatelessWidget {
   }
 }
 
-class _ToolbarButton extends StatelessWidget {
-  const _ToolbarButton({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.color,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitIconButton(
-      icon: icon,
-      tooltip: label,
-      label: label,
-      size: VitIconButtonSize.md,
-      variant: color == AppColors.buy
-          ? VitIconButtonVariant.success
-          : VitIconButtonVariant.primary,
-      onPressed: onTap,
-    );
-  }
-}
-
 class _TypeIcon extends StatelessWidget {
   const _TypeIcon({required this.style});
 
@@ -228,7 +319,7 @@ class _TypeIcon extends StatelessWidget {
         dimension: AppSpacing.notificationsTypeIconBox,
         child: Material(
           color: style.color.withValues(alpha: .16),
-          borderRadius: AppRadii.lgRadius,
+          borderRadius: AppRadii.smRadius,
           child: Icon(
             style.icon,
             color: style.color,

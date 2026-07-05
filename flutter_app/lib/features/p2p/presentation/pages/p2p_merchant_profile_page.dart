@@ -130,6 +130,7 @@ class _P2PMerchantProfilePageState
                             VitTabItem(
                               key: _MerchantProfileTab.reviews.name,
                               label: 'Đánh giá (${snapshot.reviews.length})',
+                              widgetKey: P2PMerchantProfilePage.reviewsTabKey,
                             ),
                           ],
                         ),

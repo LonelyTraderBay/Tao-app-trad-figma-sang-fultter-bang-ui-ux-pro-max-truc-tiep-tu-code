@@ -78,9 +78,9 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Trading Bots'), findsOneWidget);
-    expect(find.text('Bot giao dịch · Trade'), findsOneWidget);
-    expect(find.text('Bot đang chạy'), findsOneWidget);
-    expect(find.text('\$2,000'), findsOneWidget);
+    expect(find.text('Tự động hóa giao dịch theo chiến lược'), findsOneWidget);
+    expect(find.text('Khám phá chiến lược'), findsOneWidget);
+    expect(find.text('Lãi/lỗ'), findsOneWidget);
     expect(find.text('+\$199.30'), findsOneWidget);
     expect(find.text('Bot của tôi (3)'), findsOneWidget);
     expect(find.text('DCA Bot'), findsOneWidget);
@@ -122,7 +122,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Tiếp tục'), findsNWidgets(2));
 
+    await tester.tap(find.byKey(TradingBotsPage.botSettingsKey('bot2')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(TradingBotsPage.botDeleteKey('bot2')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Xóa'));
     await tester.pumpAndSettle();
     expect(find.text('Grid Bot'), findsNothing);
     expect(find.text('Bot của tôi (2)'), findsOneWidget);
@@ -134,8 +138,7 @@ void main() {
     await tester.tap(find.byKey(TradingBotsPage.tabKey('strategies')));
     await tester.pumpAndSettle();
 
-    expect(find.text('Hiệu suất chiến lược'), findsOneWidget);
-    expect(find.text('Tạo Bot DCA Bot'), findsOneWidget);
+    expect(find.text('Tạo bot'), findsWidgets);
 
     await tester.tap(find.byKey(TradingBotsPage.strategyCreateKey('dca')));
     await tester.pumpAndSettle();

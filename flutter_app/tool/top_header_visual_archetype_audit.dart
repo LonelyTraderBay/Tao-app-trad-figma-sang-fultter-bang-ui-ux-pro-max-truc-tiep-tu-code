@@ -104,7 +104,6 @@ const _productModuleHubPages = <String>{
 const _fullscreenToolPages = <String>{
   'AdvancedChartPage',
   'P2PChatPage',
-  'EnterpriseStatesPage',
 };
 
 const _noHeaderDecisions = <String, _NoHeaderDecision>{
@@ -861,6 +860,9 @@ List<String> _extraSourceForPageGroup(
     ],
     'VitWalletDetailScaffold(': [
       'lib/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart',
+    ],
+    'CrossModuleTabbedPageShell(': [
+      'lib/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart',
     ],
   };
 

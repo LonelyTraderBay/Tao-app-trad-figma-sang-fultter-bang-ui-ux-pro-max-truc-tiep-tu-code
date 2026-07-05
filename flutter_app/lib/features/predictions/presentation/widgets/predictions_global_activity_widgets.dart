@@ -8,8 +8,11 @@ class _LiveStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
       padding: VitDensity.compact.cardPadding,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -33,25 +36,29 @@ class _LiveStats extends StatelessWidget {
                 ],
               ),
               const SizedBox(width: AppSpacing.x2),
-              Text(
-                'Live Feed',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.buy,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
               Expanded(
-                child: Text(
-                  'Real-time market activity',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Live Feed',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.buy,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      'Real-time market activity',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -60,20 +67,29 @@ class _LiveStats extends StatelessWidget {
                   value: _formatVolume(snapshot.totalVolume),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _StatBox(
-                  label: 'Buys',
-                  value: '${snapshot.buyCount}',
-                  valueColor: AppColors.buy,
-                ),
+              Container(
+                width: 1,
+                height: AppSpacing.x6,
+                color: AppColors.border,
               ),
-              const SizedBox(width: AppSpacing.x2),
               Expanded(
-                child: _StatBox(
-                  label: 'Sells',
-                  value: '${snapshot.sellCount}',
-                  valueColor: AppColors.sell,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: _StatBox(
+                        label: 'Buys',
+                        value: '${snapshot.buyCount}',
+                        valueColor: AppColors.buy,
+                      ),
+                    ),
+                    Expanded(
+                      child: _StatBox(
+                        label: 'Sells',
+                        value: '${snapshot.sellCount}',
+                        valueColor: AppColors.sell,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -97,33 +113,23 @@ class _StatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      borderRadius: AppRadii.cardRadius,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: AppSpacing.x1,
-          vertical: AppSpacing.x2,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              value,
-              style: AppTextStyles.caption.copyWith(
-                color: valueColor,
-                fontWeight: AppTextStyles.bold,
-                fontFeatures: AppTextStyles.tabularFigures,
-              ),
-            ),
-          ],
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          style: AppTextStyles.caption.copyWith(
+            color: valueColor,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -96,38 +96,46 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      customGap: 0,
-                      fullBleed: true,
+                      padding: VitContentPadding.compact,
                       children: [
                         VitCard(
                           padding: AppSpacing.zeroInsets,
-                          child: _StatsRow(stats: snapshot.stats),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: VitSearchBar(
-                            key: ReferralHistoryPage.searchKey,
-                            controller: _searchController,
-                            placeholder: snapshot.searchHint,
-                            variant: VitSearchBarVariant.compact,
-                            onChanged: (_) => setState(() {}),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Padding(
+                                padding: AppSpacing.referralCardPadding,
+                                child: _StatsRow(stats: snapshot.stats),
+                              ),
+                              const Divider(
+                                height: 1,
+                                color: AppColors.divider,
+                              ),
+                              VitSearchBar(
+                                key: ReferralHistoryPage.searchKey,
+                                controller: _searchController,
+                                placeholder: snapshot.searchHint,
+                                variant: VitSearchBarVariant.compact,
+                                onChanged: (_) => setState(() {}),
+                              ),
+                              const Divider(
+                                height: 1,
+                                color: AppColors.divider,
+                              ),
+                              Padding(
+                                padding: AppSpacing.referralCardPadding,
+                                child: _FilterRail(
+                                  filters: snapshot.filters,
+                                  active: snapshot.filter,
+                                  onChanged: (value) {
+                                    HapticFeedback.selectionClick();
+                                    setState(() => _filter = value);
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x4),
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: _FilterRail(
-                            filters: snapshot.filters,
-                            active: snapshot.filter,
-                            onChanged: (value) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _filter = value);
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: AppSpacing.x4),
                         _SortRail(
                           options: snapshot.sortOptions,
                           active: snapshot.sort,
@@ -136,7 +144,6 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                             setState(() => _sort = value);
                           },
                         ),
-                        const SizedBox(height: AppSpacing.x4),
                         if (snapshot.friends.isEmpty)
                           const VitEmptyState(
                             key: ReferralHistoryPage.emptyKey,

@@ -33,6 +33,7 @@ class _AutoCompoundSettingsPageState
             VitAutoHideHeaderScaffold(
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: kSavingsToolsHeaderSubtitle,
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
                 actions: [
@@ -79,6 +80,7 @@ class _AutoCompoundSettingsPageState
                                 'Position toggles, compound frequency, threshold changes, yield impact, save confirmation, and success feedback are reviewed before automation is updated.',
                             contractId: 'SC-341',
                           ),
+                          const SavingsToolsYieldFooter(),
                         ],
                       ),
                     ),

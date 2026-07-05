@@ -7,33 +7,37 @@ class _IntroBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const _IconBadge(
-              icon: Icons.science_outlined,
-              color: AppColors.buy,
-              background: AppColors.buy10,
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                snapshot.title,
-                style: AppTextStyles.sectionTitle.copyWith(
-                  fontWeight: AppTextStyles.bold,
+    return VitCard(
+      padding: AppSpacing.devCardPadding,
+      radius: VitCardRadius.large,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const _IconBadge(
+                icon: Icons.science_outlined,
+                color: AppColors.buy,
+                background: AppColors.buy10,
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Text(
+                  snapshot.title,
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.x3),
-        Text(
-          snapshot.subtitle,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-        ),
-      ],
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            snapshot.subtitle,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+          ),
+        ],
+      ),
     );
   }
 }

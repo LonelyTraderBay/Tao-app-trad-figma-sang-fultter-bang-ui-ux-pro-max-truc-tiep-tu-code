@@ -14,7 +14,7 @@ class _TinySectionIcon extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .14),
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Center(child: Icon(icon, color: color, size: 16)),
       ),

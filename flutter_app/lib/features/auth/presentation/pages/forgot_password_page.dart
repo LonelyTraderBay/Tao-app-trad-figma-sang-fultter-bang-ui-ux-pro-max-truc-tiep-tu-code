@@ -246,60 +246,42 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
                 key: ForgotPasswordPage.contentKey,
                 padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  gap: VitContentGap.defaultGap,
+                  customGap: AppSpacing.authPageContentGap,
                   children: [
                     if (_step == _ForgotPasswordStep.input)
-                      VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: _EmailStep(
-                          controller: _emailController,
-                          error: _emailError,
-                          onChanged: _clearEmailError,
-                        ),
+                      _EmailStep(
+                        controller: _emailController,
+                        error: _emailError,
+                        onChanged: _clearEmailError,
                       ),
                     if (_step == _ForgotPasswordStep.otp)
-                      VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: _OtpStep(
-                          controller: _otpController,
-                          email: _email,
-                          error: _otpError,
-                          onChanged: _handleOtpChanged,
-                        ),
+                      _OtpStep(
+                        controller: _otpController,
+                        email: _email,
+                        error: _otpError,
+                        onChanged: _handleOtpChanged,
                       ),
                     if (_step == _ForgotPasswordStep.reset)
-                      VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: _ResetStep(
-                          newPasswordController: _newPasswordController,
-                          confirmPasswordController: _confirmPasswordController,
-                          showPassword: _showPassword,
-                          error: _passwordError,
-                          onChanged: _clearPasswordError,
-                          onTogglePassword: () {
-                            setState(() => _showPassword = !_showPassword);
-                          },
-                        ),
+                      _ResetStep(
+                        newPasswordController: _newPasswordController,
+                        confirmPasswordController: _confirmPasswordController,
+                        showPassword: _showPassword,
+                        error: _passwordError,
+                        onChanged: _clearPasswordError,
+                        onTogglePassword: () {
+                          setState(() => _showPassword = !_showPassword);
+                        },
                       ),
                     if (_step == _ForgotPasswordStep.success)
-                      const VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: _SuccessStep(),
-                      ),
-                    VitCard(
-                      padding: AppSpacing.zeroInsets,
-                      child: VitCtaButton(
-                        key: _step == _ForgotPasswordStep.success
-                            ? ForgotPasswordPage.loginKey
-                            : ForgotPasswordPage.submitKey,
-                        onPressed: _canSubmit ? _handlePrimaryAction : null,
-                        loading: _submitting,
-                        variant: _step == _ForgotPasswordStep.success
-                            ? VitCtaButtonVariant.auth
-                            : VitCtaButtonVariant.auth,
-                        child: Text(_buttonLabel),
-                      ),
+                      const _SuccessStep(),
+                    VitCtaButton(
+                      key: _step == _ForgotPasswordStep.success
+                          ? ForgotPasswordPage.loginKey
+                          : ForgotPasswordPage.submitKey,
+                      onPressed: _canSubmit ? _handlePrimaryAction : null,
+                      loading: _submitting,
+                      variant: VitCtaButtonVariant.auth,
+                      child: Text(_buttonLabel),
                     ),
                   ],
                 ),

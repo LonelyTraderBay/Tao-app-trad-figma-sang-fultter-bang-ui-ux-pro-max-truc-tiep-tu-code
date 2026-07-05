@@ -56,8 +56,8 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
     final trader = snapshot.trader;
 
     return VitTradeHubScaffold(
-      title: 'Trader Profile',
-      subtitle: 'Hồ sơ · Trade',
+      title: 'Hồ sơ trader',
+      subtitle: 'Copy · Trade',
       semanticLabel: 'SC-087 TraderProfilePage',
       contentKey: TraderProfilePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
@@ -69,23 +69,22 @@ class _TraderProfilePageState extends ConsumerState<TraderProfilePage> {
           isFollowing: _isFollowing,
           onToggleFollow: () => setState(() => _isFollowing = !_isFollowing),
         ),
-        VitCard(
-          variant: VitCardVariant.inner,
-          density: VitDensity.compact,
+        VitTradeSection(
+          title: 'Rủi ro & phù hợp',
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
                 density: VitDensity.compact,
-                title: 'Trader profile review',
+                title: 'Xem lại hồ sơ trader',
                 message:
-                    'Performance, recent trades, statistics, risk history and copy action suitability are reviewed before following.',
+                    'Hiệu suất, giao dịch gần đây, thống kê, lịch sử rủi ro và mức phù hợp copy được xem lại trước khi theo dõi.',
                 contractId: 'trader-profile-${widget.traderId}',
               ),
               const SizedBox(height: AppSpacing.x2),
               const VitStatusPill(
-                label: 'Past performance varies',
+                label: 'Hiệu suất trước không đảm bảo tương lai',
                 status: VitStatusPillStatus.warning,
                 size: VitStatusPillSize.sm,
               ),

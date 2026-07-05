@@ -93,34 +93,33 @@ class _PermissionCard extends StatelessWidget {
     return VitCard(
       key: ApiKeyCreatePage.permissionKey(permission.id),
       onTap: onTap,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      child: VitCard(
-        density: VitDensity.compact,
-        variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
-        borderColor: selected ? accent.withValues(alpha: .42) : _apiBorder,
-        child: Row(
-          children: [
-            SizedBox(
-              width: AppSpacing.profileApiCreatePermissionIconBox,
-              height: AppSpacing.profileApiCreatePermissionIconBox,
-              child: Material(
+      density: VitDensity.compact,
+      variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
+      borderColor: selected ? accent.withValues(alpha: .42) : _apiBorder,
+      child: Row(
+        children: [
+          SizedBox(
+            width: AppSpacing.profileApiCreatePermissionIconBox,
+            height: AppSpacing.profileApiCreatePermissionIconBox,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
                 color: selected ? accent.withValues(alpha: .12) : _apiPanel,
                 shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.lgRadius,
+                  borderRadius: AppRadii.smRadius,
                   side: BorderSide(
                     color: selected
                         ? accent.withValues(alpha: .25)
                         : _apiBorder,
                   ),
                 ),
-                child: Icon(
-                  _apiPermissionIcon(permission.iconKey),
-                  color: selected ? accent : _apiMuted,
-                  size: AppSpacing.profileApiCreatePermissionIcon,
-                ),
+              ),
+              child: Icon(
+                _apiPermissionIcon(permission.iconKey),
+                color: selected ? accent : _apiMuted,
+                size: AppSpacing.profileApiCreatePermissionIcon,
               ),
             ),
+          ),
             const SizedBox(width: AppSpacing.profileApiCreatePermissionIconGap),
             Expanded(
               child: Column(
@@ -163,9 +162,8 @@ class _PermissionCard extends StatelessWidget {
             const SizedBox(
               width: AppSpacing.profileApiCreatePermissionTrailingGap,
             ),
-            _PermissionCheck(selected: selected, color: accent),
-          ],
-        ),
+          _PermissionCheck(selected: selected, color: accent),
+        ],
       ),
     );
   }
@@ -262,29 +260,13 @@ class _IpWhitelistSection extends StatelessWidget {
               runSpacing: AppSpacing.profileApiCreateIpChipGap,
               children: [
                 for (final ip in ips)
-                  VitCard(
+                  VitChoicePill(
+                    label: ip,
+                    selected: true,
                     onTap: () => onRemove(ip),
-                    variant: VitCardVariant.ghost,
-                    borderColor: AppColors.transparent,
-                    child: Material(
-                      color: _apiGreen.withValues(alpha: .1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: AppRadii.mdRadius,
-                        side: BorderSide(
-                          color: _apiGreen.withValues(alpha: .25),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: AppSpacing.profileApiCreateIpChipPadding,
-                        child: Text(
-                          ip,
-                          style: AppTextStyles.micro.copyWith(
-                            color: _apiGreen,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
+                    tone: VitChoicePillTone.success,
+                    height: AppSpacing.homeChipMinHeight,
+                    padding: AppSpacing.profileApiCreateIpChipPadding,
                   ),
               ],
             ),
@@ -326,45 +308,33 @@ class _ExpirySection extends StatelessWidget {
           return VitCard(
             key: ApiKeyCreatePage.expiryKey(option.id),
             onTap: () => onSelect(option.id),
-            variant: VitCardVariant.ghost,
-            borderColor: AppColors.transparent,
-            child: Material(
-              color: isSelected
-                  ? _apiPrimary.withValues(alpha: .12)
-                  : _apiPanel2,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.cardRadius,
-                side: BorderSide(
-                  color: isSelected
-                      ? _apiPrimary.withValues(alpha: .55)
-                      : _apiBorder,
+            density: VitDensity.compact,
+            variant: isSelected ? VitCardVariant.standard : VitCardVariant.inner,
+            borderColor: isSelected
+                ? _apiPrimary.withValues(alpha: .55)
+                : _apiBorder,
+            padding: AppSpacing.profileApiCreateExpiryPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  option.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: isSelected ? _apiPrimary : AppColors.text2,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: AppSpacing.profileApiCreateExpiryPadding,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      option.label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        color: isSelected ? _apiPrimary : AppColors.text2,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x2),
-                    Text(
-                      option.description,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(color: _apiMuted),
-                    ),
-                  ],
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  option.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: _apiMuted),
                 ),
-              ),
+              ],
             ),
           );
         },

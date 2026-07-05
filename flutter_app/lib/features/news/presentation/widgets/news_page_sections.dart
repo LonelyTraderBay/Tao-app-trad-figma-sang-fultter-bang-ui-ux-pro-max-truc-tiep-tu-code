@@ -1,5 +1,102 @@
 part of '../pages/news_page.dart';
 
+class _NewsBody extends StatelessWidget {
+  const _NewsBody({
+    required this.snapshot,
+    required this.activeType,
+    required this.onRetry,
+    required this.onArticleTap,
+  });
+
+  final NewsScreenSnapshot snapshot;
+  final NewsArticleType? activeType;
+  final VoidCallback onRetry;
+  final ValueChanged<NewsArticle> onArticleTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (snapshot.screenState) {
+      NewsScreenState.loading => const VitSkeletonList(
+        key: NewsPage.loadingKey,
+        rows: 4,
+      ),
+      NewsScreenState.error => VitErrorState(
+        key: NewsPage.errorKey,
+        title: 'Không tải được tin tức',
+        message: 'Kiểm tra kết nối và thử lại.',
+        actionLabel: 'Thử lại',
+        onAction: onRetry,
+      ),
+      NewsScreenState.empty ||
+      NewsScreenState.offline when snapshot.articles.isEmpty =>
+        VitEmptyState(
+          key: NewsPage.emptyKey,
+          icon: Icons.newspaper_rounded,
+          title: 'Không có tin tức nào',
+          message: activeType == null
+              ? 'Hãy quay lại sau để xem cập nhật mới.'
+              : 'Không có tin thuộc danh mục đã chọn.',
+        ),
+      _ => _NewsArticleFeed(
+        snapshot: snapshot,
+        onArticleTap: onArticleTap,
+      ),
+    };
+  }
+}
+
+class _NewsArticleFeed extends StatelessWidget {
+  const _NewsArticleFeed({
+    required this.snapshot,
+    required this.onArticleTap,
+  });
+
+  final NewsScreenSnapshot snapshot;
+  final ValueChanged<NewsArticle> onArticleTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (snapshot.pinnedArticles.isNotEmpty)
+          VitPageSection(
+            density: VitDensity.compact,
+            children: [
+              VitModuleSectionHeader(
+                title: 'GHIM (${snapshot.pinnedArticles.length})',
+                accentColor: AppColors.primary,
+              ),
+              for (final article in snapshot.pinnedArticles)
+                _NewsArticleCard(
+                  key: NewsPage.articleCardKey(article.id),
+                  article: article,
+                  pinned: true,
+                  onTap: () => onArticleTap(article),
+                ),
+            ],
+          ),
+        if (snapshot.normalArticles.isNotEmpty)
+          VitPageSection(
+            density: VitDensity.compact,
+            children: [
+              const VitModuleSectionHeader(
+                title: 'TIN TỨC KHÁC',
+                accentColor: AppColors.text2,
+              ),
+              for (final article in snapshot.normalArticles)
+                _NewsArticleCard(
+                  key: NewsPage.articleCardKey(article.id),
+                  article: article,
+                  onTap: () => onArticleTap(article),
+                ),
+            ],
+          ),
+      ],
+    );
+  }
+}
+
 class _NewsFilterBar extends StatelessWidget {
   const _NewsFilterBar({
     required this.activeType,
@@ -19,7 +116,7 @@ class _NewsFilterBar extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: SizedBox(
-        height: _newsFilterBarHeight,
+        height: AppSpacing.newsFilterBarHeight,
         child: ListView(
           scrollDirection: Axis.horizontal,
           padding: AppSpacing.newsFilterBarPadding,
@@ -28,7 +125,7 @@ class _NewsFilterBar extends StatelessWidget {
               key: NewsPage.filterAllKey,
               label: 'Tất cả',
               selected: activeType == null,
-              selectedColor: _newsPrimary,
+              selectedColor: AppColors.primary,
               onTap: () => onSelected(null),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -69,7 +166,7 @@ class _FilterChipButton extends StatelessWidget {
       label: label,
       selected: selected,
       onTap: onTap,
-      height: _newsFilterChipHeight,
+      height: AppSpacing.newsFilterChipHeight,
       accentColor: selectedColor,
       padding: AppSpacing.newsFilterChipPadding,
       semanticLabel: label,
@@ -96,7 +193,7 @@ class _NewsArticleCard extends StatelessWidget {
       width: double.infinity,
       variant: pinned ? VitCardVariant.inner : VitCardVariant.standard,
       borderColor: pinned
-          ? _newsPrimary.withValues(alpha: .28)
+          ? AppColors.primary.withValues(alpha: .28)
           : AppColors.cardBorder,
       density: VitDensity.compact,
       onTap: onTap,
@@ -117,7 +214,7 @@ class _NewsArticleCard extends StatelessWidget {
                     Text(
                       article.title,
                       style: AppTextStyles.body.copyWith(
-                        height: _newsTitleLineHeight,
+                        height: AppSpacing.newsTitleLineHeight,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -128,7 +225,7 @@ class _NewsArticleCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: _newsSummaryLineHeight,
+                        height: AppSpacing.newsSummaryLineHeight,
                       ),
                     ),
                   ],
@@ -150,7 +247,15 @@ class _NewsArticleCard extends StatelessWidget {
             Wrap(
               spacing: AppSpacing.x3,
               runSpacing: AppSpacing.x2 + 1,
-              children: [for (final tag in article.tags) _TagChip(label: tag)],
+              children: [
+                for (final tag in article.tags)
+                  VitStatusPill(
+                    label: tag,
+                    status: VitStatusPillStatus.neutral,
+                    size: VitStatusPillSize.sm,
+                    icon: Icons.sell_outlined,
+                  ),
+              ],
             ),
           ],
         ],
@@ -174,29 +279,15 @@ class _ArticleMeta extends StatelessWidget {
       runSpacing: AppSpacing.x1 + 1,
       children: [
         if (pinned)
-          Icon(
+          const Icon(
             Icons.push_pin_rounded,
             size: AppSpacing.newsSheetCalendarIconSize,
-            color: _newsPrimary,
+            color: AppColors.primary,
           ),
-        DecoratedBox(
-          decoration: ShapeDecoration(
-            color: type.color.withValues(alpha: .18),
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.smRadius,
-            ),
-          ),
-          child: Padding(
-            padding: AppSpacing.newsBadgePadding,
-            child: Text(
-              type.label,
-              style: AppTextStyles.micro.copyWith(
-                color: type.color,
-                fontWeight: AppTextStyles.bold,
-                height: _newsTightLineHeight,
-              ),
-            ),
-          ),
+        VitAccentPill(
+          label: type.label,
+          accentColor: type.color,
+          size: VitStatusPillSize.sm,
         ),
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -211,7 +302,7 @@ class _ArticleMeta extends StatelessWidget {
               article.publishedAtLabel,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: _newsTightLineHeight,
+                height: AppSpacing.newsLineHeightTight,
               ),
             ),
           ],
@@ -229,74 +320,15 @@ class _TypeAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: _newsArticleAvatarSize,
+      dimension: AppSpacing.newsArticleAvatarSize,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: type.color.withValues(alpha: .18),
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Center(
           child: Text(type.emoji, style: AppTextStyles.sectionTitleSm),
         ),
-      ),
-    );
-  }
-}
-
-class _TagChip extends StatelessWidget {
-  const _TagChip({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.surface3,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.newsTagPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.sell_outlined,
-              color: AppColors.text2,
-              size: AppSpacing.newsTagIconSize,
-            ),
-            const SizedBox(width: AppSpacing.x1 + 1),
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: _newsTightLineHeight,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _NewsEmptyState extends StatelessWidget {
-  const _NewsEmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x5),
-      child: Column(
-        children: [
-          Icon(
-            Icons.newspaper_rounded,
-            color: AppColors.borderSolid,
-            size: _newsEmptyIconSize,
-          ),
-          SizedBox(height: AppSpacing.x2),
-          Text('Không có tin tức nào', style: AppTextStyles.caption),
-        ],
       ),
     );
   }

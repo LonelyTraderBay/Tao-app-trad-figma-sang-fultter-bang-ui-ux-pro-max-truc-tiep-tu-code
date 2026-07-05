@@ -93,7 +93,7 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Auto-Rebalance',
-            subtitle: 'Cân bằng · DCA',
+            subtitle: 'Đầu tư có kỷ luật · cân bằng danh mục',
             showBack: true,
             onBack: _close,
           ),

@@ -171,6 +171,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.scrollUntilVisible(
+      find.byKey(SavingsPage.autopilotInsightKey),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.byKey(SavingsPage.autopilotInsightKey));
     await tester.pumpAndSettle();
 

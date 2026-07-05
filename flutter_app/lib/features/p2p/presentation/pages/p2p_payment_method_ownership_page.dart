@@ -76,7 +76,7 @@ class _P2PPaymentMethodOwnershipPageState
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Proof of Ownership',
+            title: 'Xác minh sở hữu',
             subtitle: 'Thanh toán · P2P',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
@@ -217,7 +217,7 @@ class _OwnershipHero extends StatelessWidget {
         children: [
           const Material(
             color: AppColors.primary,
-            shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
             child: SizedBox(
               width: _p2pOwnershipHeroIconBox,
               height: _p2pOwnershipHeroIconBox,
@@ -234,7 +234,7 @@ class _OwnershipHero extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Xác minh sở hữu',
+                  'Chứng minh tài khoản',
                   style: AppTextStyles.sectionTitle.copyWith(
                     color: AppModuleAccents.p2p,
                   ),
@@ -295,7 +295,7 @@ class _OwnershipDocumentCard extends StatelessWidget {
                     if (document.optional) ...[
                       const SizedBox(width: AppSpacing.x2),
                       const VitStatusPill(
-                        label: 'Optional',
+                        label: 'Tùy chọn',
                         status: VitStatusPillStatus.neutral,
                         size: VitStatusPillSize.sm,
                       ),
@@ -345,7 +345,7 @@ class _DocumentIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: uploaded ? AppColors.buy15 : AppColors.primary12,
-      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: SizedBox(
         width: _p2pOwnershipDocumentIconBox,
         height: _p2pOwnershipDocumentIconBox,
@@ -369,7 +369,7 @@ class _UploadButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitChoicePill(
-      label: 'Upload',
+      label: 'Tải lên',
       selected: false,
       onTap: onTap,
       padding: AppSpacing.p2pPaymentOwnershipOptionPadding,

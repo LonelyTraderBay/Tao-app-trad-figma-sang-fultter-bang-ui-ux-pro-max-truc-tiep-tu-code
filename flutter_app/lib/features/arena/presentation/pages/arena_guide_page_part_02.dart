@@ -9,7 +9,7 @@ class _ExampleSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'So sánh challenge',
-      accentColor: AppModuleAccents.arena,
+      accentColor: _arenaAccent,
       children: [
         Text(
           'Challenge tốt vs cần cải thiện',
@@ -101,31 +101,45 @@ class _ConceptSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Thuật ngữ quan trọng',
-      accentColor: AppModuleAccents.arena,
+      accentColor: _arenaAccent,
       children: [
-        for (final concept in concepts)
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.large,
-            padding: AppSpacing.arenaPaddingX3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '${concept.term}:',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppModuleAccents.arena,
-                    fontWeight: AppTextStyles.bold,
+        VitCard(
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              for (var index = 0; index < concepts.length; index++) ...[
+                if (index > 0)
+                  const Divider(
+                    height: AppSpacing.dividerHairline,
+                    thickness: AppSpacing.dividerHairline,
+                    color: AppColors.divider,
+                  ),
+                Padding(
+                  padding: AppSpacing.arenaPaddingX3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        concepts[index].term,
+                        style: AppTextStyles.caption.copyWith(
+                          color: _arenaAccent,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        concepts[index].definition,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text2,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  concept.definition,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
               ],
-            ),
+            ],
           ),
+        ),
       ],
     );
   }
@@ -139,14 +153,14 @@ class _TipsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
-      accentColor: AppModuleAccents.arena,
+      accentColor: _arenaAccent,
       padding: AppSpacing.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.lightbulb_outline,
-            color: AppModuleAccents.arena,
+            color: _arenaAccent,
             size: AppSpacing.arenaGuideTipsHeaderIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -157,7 +171,7 @@ class _TipsHeader extends StatelessWidget {
                 Text(
                   '$total mẹo từ Top Creator',
                   style: AppTextStyles.body.copyWith(
-                    color: AppModuleAccents.arena,
+                    color: _arenaAccent,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -384,7 +398,7 @@ class _PointsOnlyBanner extends StatelessWidget {
             child: const DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.accent12,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
               ),
               child: Center(
                 child: Icon(
@@ -461,7 +475,7 @@ class _SafetyTipCard extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .12),
                 shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
+                  borderRadius: AppRadii.smRadius,
                 ),
               ),
               child: Center(

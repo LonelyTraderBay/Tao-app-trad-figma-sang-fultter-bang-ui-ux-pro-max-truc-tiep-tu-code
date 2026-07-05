@@ -18,7 +18,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
-import '../widgets/market_body_review_widgets.dart';
 
 part '../widgets/social_sentiment_tabs_widgets.dart';
 part '../widgets/social_sentiment_overview_widgets.dart';
@@ -28,8 +27,6 @@ part '../widgets/social_sentiment_trends_widgets.dart';
 const _marketPrimary = AppColors.primary;
 const double _sentimentVisualScrollClearance = 108;
 const double _sentimentNativeScrollClearance = 72;
-const double _sentimentTabsHeight = AppSpacing.buttonCompact;
-const double _sentimentTabIndicatorHeight = AppSpacing.dividerHairline;
 const double _sentimentHeroHeaderGap = AppSpacing.x2;
 const double _sentimentHeroScoreGap = AppSpacing.x2;
 const double _sentimentHeroGaugeGap = AppSpacing.x2;
@@ -157,6 +154,7 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tâm lý thị trường',
+            subtitle: 'Tâm lý xã hội · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -191,7 +189,7 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                           ),
                           _TimelineCard(points: snapshot.timeline),
                           _SectionHeader(
-                            label: 'Top Trending',
+                            label: 'Xu hướng nóng',
                             accentColor: AppColors.warn,
                           ),
                           _TrendingList(
@@ -209,7 +207,7 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                         ] else ...[
                           _TopicCloud(tokens: snapshot.tokens),
                           _SectionHeader(
-                            label: 'Sentiment Heatmap',
+                            label: 'Bản đồ tâm lý',
                             accentColor: AppColors.accent,
                           ),
                           _SentimentHeatmap(tokens: snapshot.tokens),
@@ -220,17 +218,12 @@ class _SocialSentimentPageState extends ConsumerState<SocialSentimentPage> {
                           ),
                           _MentionVelocity(tokens: snapshot.tokens),
                         ],
-                        const MarketBodyReviewSection(
-                          title: 'Sentiment state review',
-                          message: 'Social sentiment data reviewed',
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.info_outline_rounded,
+                          message: 'Chỉ số tâm lý chỉ mang tính tham khảo',
                           detail:
-                              'Overview, token ranking, trend, empty, and refresh states remain visible for sentiment review.',
-                          primary:
-                              'Global sentiment stays separated from token-level rankings.',
-                          secondary:
-                              'Sort and trend controls keep social data comparable across tabs.',
-                          tertiary:
-                              'Mention velocity and heatmap panels remain informational, not execution prompts.',
+                              'Không phải khuyến nghị giao dịch. Dữ liệu xã hội có thể trễ hoặc thiên lệch.',
                         ),
                       ],
                     ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -16,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
 part '../widgets/p2p_transaction_limits_page_sections.dart';
 part '../widgets/p2p_transaction_limits_page_common.dart';
@@ -28,7 +30,6 @@ const double _p2pLimitsVisualClearance = AppSpacing.x3;
 const double _p2pLimitsNativeClearance = AppSpacing.x2;
 const double _p2pLimitsSectionGap = AppSpacing.x2;
 const double _p2pLimitsMajorGap = AppSpacing.x3;
-const double _p2pLimitsInfoLineHeight = 1.34;
 
 class P2PTransactionLimitsPage extends ConsumerWidget {
   const P2PTransactionLimitsPage({super.key, this.shellRenderMode});
@@ -68,12 +69,6 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
             subtitle: snapshot.subtitle,
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),
-            actions: const [
-              VitHeaderActionItem(
-                type: VitHeaderActionType.analytics,
-                onPressed: _noop,
-              ),
-            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -100,10 +95,11 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
                         _LimitInfoNotice(items: snapshot.infoBullets),
                         const VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
-                          title: 'Transaction limits state review',
+                          title: 'Xem lại hạn mức giao dịch',
                           message:
-                              'Current tier, used limits, tracker link, limit details, upgrade CTA, and policy notes remain visible before increasing P2P trading capacity.',
+                              'Tier hiện tại, mức đã dùng, chi tiết giới hạn, CTA nâng cấp và ghi chú chính sách được xem lại trước khi tăng hạn mức P2P.',
                           contractId: 'SC-266',
+                          density: VitDensity.compact,
                         ),
                       ],
                     ),
@@ -117,5 +113,3 @@ class P2PTransactionLimitsPage extends ConsumerWidget {
     );
   }
 }
-
-void _noop() {}

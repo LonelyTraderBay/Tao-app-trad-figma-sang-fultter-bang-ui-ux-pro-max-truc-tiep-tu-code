@@ -65,18 +65,18 @@ void main() {
     expect(find.byType(P2PSecurityCenterPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Security Center'), findsOneWidget);
+    expect(find.text('Trung tâm bảo mật'), findsOneWidget);
     expect(find.text('Bảo mật · P2P'), findsOneWidget);
     expect(find.byKey(P2PSecurityCenterPage.scoreKey), findsOneWidget);
-    expect(find.text('Security Score'), findsOneWidget);
+    expect(find.text('Điểm bảo mật'), findsOneWidget);
     expect(find.text('90'), findsOneWidget);
     expect(find.text('Xuất sắc'), findsOneWidget);
     expect(find.byKey(P2PSecurityCenterPage.featuresKey), findsOneWidget);
     expect(find.text('2FA cho P2P'), findsOneWidget);
-    expect(find.text('Anti-Phishing Code'), findsOneWidget);
-    expect(find.text('Trusted Devices'), findsOneWidget);
-    expect(find.text('Whitelist Mode'), findsOneWidget);
-    expect(find.text('Biometric Lock'), findsOneWidget);
+    expect(find.text('Mã chống phishing'), findsOneWidget);
+    expect(find.text('Thiết bị tin cậy'), findsOneWidget);
+    expect(find.text('Chế độ whitelist'), findsOneWidget);
+    expect(find.text('Khóa sinh trắc học'), findsOneWidget);
     expect(find.byKey(P2PSecurityCenterPage.quickActionsKey), findsOneWidget);
     expect(find.text('Đổi mật khẩu'), findsOneWidget);
     expect(find.text('Hoạt động đáng ngờ'), findsOneWidget);
@@ -124,8 +124,8 @@ void main() {
     expect(find.byType(P2PWhitelistModePage), findsOneWidget);
     expectRouteSemanticInFirstViewport(
       tester,
-      routeName: 'SC-253 P2PWhitelistModePage',
-      semanticLabel: 'SC-253 P2PWhitelistModePage',
+      routeName: 'SC-404 P2PWhitelistModePage',
+      semanticLabel: 'SC-404 P2PWhitelistModePage',
     );
     expectFirstViewportVisible(
       tester,

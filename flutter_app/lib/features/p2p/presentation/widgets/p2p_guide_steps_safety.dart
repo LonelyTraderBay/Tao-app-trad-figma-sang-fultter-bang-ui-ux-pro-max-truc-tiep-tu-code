@@ -17,33 +17,23 @@ class _HowItWorksTab extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitCard(
-          variant: VitCardVariant.inner,
-          padding: AppSpacing.p2pGuideModeRailPadding,
-          child: Row(
-            children: [
-              Expanded(
-                child: _ModeButton(
-                  key: P2PGuidePage.buyModeKey,
-                  label: 'Mua Crypto',
-                  icon: Icons.account_balance_wallet_outlined,
-                  selected: mode == 'buy',
-                  color: AppColors.buy,
-                  onTap: () => onModeChanged('buy'),
-                ),
-              ),
-              Expanded(
-                child: _ModeButton(
-                  key: P2PGuidePage.sellModeKey,
-                  label: 'Bán Crypto',
-                  icon: Icons.description_outlined,
-                  selected: mode == 'sell',
-                  color: AppColors.sell,
-                  onTap: () => onModeChanged('sell'),
-                ),
-              ),
-            ],
-          ),
+        VitSegmentedChoice<String>(
+          selected: mode,
+          onChanged: onModeChanged,
+          options: [
+            VitSegmentedChoiceOption(
+              value: 'buy',
+              label: 'Mua Crypto',
+              key: P2PGuidePage.buyModeKey,
+              leading: const Icon(Icons.account_balance_wallet_outlined),
+            ),
+            VitSegmentedChoiceOption(
+              value: 'sell',
+              label: 'Bán Crypto',
+              key: P2PGuidePage.sellModeKey,
+              leading: const Icon(Icons.description_outlined),
+            ),
+          ],
         ),
         const SizedBox(height: AppSpacing.x2),
         for (final step in steps) ...[
@@ -68,7 +58,7 @@ class _HowItWorksTab extends StatelessWidget {
                       children: [
                         Text('Bắt đầu ngay!', style: AppTextStyles.baseMedium),
                         Text(
-                          'Thực hiện giao dịch đầu tiên',
+                          'Thực hiện giao dịch đầu tiên qua Escrow',
                           style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
                           ),
@@ -95,38 +85,6 @@ class _HowItWorksTab extends StatelessWidget {
   }
 }
 
-class _ModeButton extends StatelessWidget {
-  const _ModeButton({
-    Key? key,
-    required this.label,
-    required this.icon,
-    required this.selected,
-    required this.color,
-    required this.onTap,
-  }) : widgetKey = key;
-
-  final Key? widgetKey;
-  final String label;
-  final IconData icon;
-  final bool selected;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: widgetKey,
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      fullWidth: true,
-      padding: AppSpacing.p2pGuideModeButtonPadding,
-      accentColor: color,
-      leading: Icon(icon),
-      semanticLabel: 'P2P guide mode $label',
-    );
-  }
-}
 
 class _StepRow extends StatelessWidget {
   const _StepRow({required this.step});

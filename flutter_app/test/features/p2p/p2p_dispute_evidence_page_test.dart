@@ -67,7 +67,7 @@ void main() {
     expect(find.text('Payment Receipt'), findsOneWidget);
     expect(find.text('Chat Screenshot'), findsOneWidget);
     expect(find.text('Transaction Proof'), findsOneWidget);
-    expect(find.text('Uploaded'), findsNWidgets(2));
+    expect(find.text('Đã tải lên'), findsNWidgets(2));
     expect(find.text('Upload'), findsOneWidget);
     expect(find.text('Gửi bằng chứng'), findsOneWidget);
   });
@@ -83,7 +83,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Upload'), findsNothing);
-    expect(find.text('Uploaded'), findsNWidgets(3));
+    expect(find.text('Đã tải lên'), findsNWidgets(3));
   });
 
   testWidgets('SC-219 submit returns to dispute detail route', (tester) async {

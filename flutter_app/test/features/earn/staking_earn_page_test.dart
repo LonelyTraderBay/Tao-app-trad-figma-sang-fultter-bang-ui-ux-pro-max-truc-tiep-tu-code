@@ -126,6 +126,8 @@ void main() {
     expect(find.text('Ethereum Flexible'), findsOneWidget);
     expect(find.text('5.8%'), findsOneWidget);
     expect(find.text('Rui ro: Thap'), findsWidgets);
+    expect(find.text('APY uoc tinh'), findsWidgets);
+    expect(find.textContaining('APY la uoc tinh tham khao'), findsOneWidget);
   });
 
   testWidgets('SC-327 360px viewport follows Home rhythm', (tester) async {
@@ -157,12 +159,12 @@ void main() {
 
     await tester.tap(find.text('Cua toi (2)'));
     await tester.pump();
-    expect(find.text('Tong thu nhap uoc tinh'), findsOneWidget);
+    expect(find.text('Thu nhap uoc tinh'), findsOneWidget);
     expect(find.text('0.05 BTC'), findsOneWidget);
 
     await tester.tap(find.text('San pham'));
     await tester.pump();
-    expect(find.text('Tong thu nhap uoc tinh'), findsNothing);
+    expect(find.text('Thu nhap uoc tinh'), findsNothing);
     expect(find.text('ETH-USDT LP Pool'), findsOneWidget);
   });
 

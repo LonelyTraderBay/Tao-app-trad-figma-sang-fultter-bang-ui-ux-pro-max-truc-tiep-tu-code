@@ -31,12 +31,12 @@ class _LevelCard extends StatelessWidget {
                   ? accent.withValues(alpha: 0.05)
                   : AppColors.surface2,
               child: Padding(
-                padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+                padding: AppSpacing.p2pTradingLevelCardHeaderPadding,
                 child: Row(
                   children: [
                     _LevelIconBadge(
                       level: level,
-                      size: AppSpacing.x6,
+                      size: AppSpacing.p2pTradingLevelLevelBadgeSize,
                       locked: locked,
                     ),
                     const SizedBox(width: AppSpacing.x2),
@@ -120,7 +120,7 @@ class _LevelCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+              padding: AppSpacing.p2pTradingLevelCardBodyPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -161,7 +161,7 @@ class _LevelCard extends StatelessWidget {
                         Icon(
                           Icons.check_circle_outline_rounded,
                           color: locked ? AppColors.text3 : AppColors.buy,
-                          size: AppSpacing.iconSm,
+                          size: AppSpacing.p2pTradingLevelRequirementIcon,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Expanded(
@@ -169,7 +169,7 @@ class _LevelCard extends StatelessWidget {
                             requirement,
                             style: AppTextStyles.caption.copyWith(
                               color: locked ? AppColors.text3 : AppColors.text2,
-                              height: AppTextStyles.caption.height,
+                              height: AppSpacing.p2pTradingLevelRequirementLineHeight,
                             ),
                           ),
                         ),
@@ -187,7 +187,7 @@ class _LevelCard extends StatelessWidget {
                     VitCtaButton(
                       key: P2PTradingLevelPage.upgradeButtonKey,
                       variant: VitCtaButtonVariant.warning,
-                      height: AppSpacing.ctaHeight - AppSpacing.x2,
+                      height: AppSpacing.p2pTradingLevelUpgradeButtonHeight,
                       leading: const Icon(Icons.trending_up_rounded),
                       onPressed: () {},
                       child: Text('Nâng cấp lên ${level.nameVi}'),
@@ -221,7 +221,7 @@ class _LevelIconBadge extends StatelessWidget {
       dimension: size,
       child: Material(
         color: locked ? AppColors.surface2 : accent,
-        elevation: locked ? 0 : 2,
+        elevation: locked ? 0 : AppSpacing.p2pTradingLevelBadgeElevation,
         shadowColor: accent.withValues(alpha: 0.26),
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         clipBehavior: Clip.antiAlias,
@@ -229,7 +229,7 @@ class _LevelIconBadge extends StatelessWidget {
           child: Icon(
             _levelIcon(level.id),
             color: locked ? AppColors.text3 : AppColors.navCenterIcon,
-            size: size * .5,
+            size: size * AppSpacing.p2pTradingLevelBadgeIconScale,
           ),
         ),
       ),
@@ -252,52 +252,44 @@ class _LimitTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: highlighted ? accent.withValues(alpha: 0.08) : AppColors.surface2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(
-          color: highlighted
-              ? accent.withValues(alpha: 0.20)
-              : AppColors.divider,
-        ),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.stacked_line_chart_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x1),
-                Expanded(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.x1),
-            Text(
-              value,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.body.copyWith(
-                color: accent,
-                fontWeight: AppTextStyles.bold,
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: highlighted
+          ? accent.withValues(alpha: 0.20)
+          : AppColors.divider,
+      padding: AppSpacing.p2pTradingLevelLimitPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.stacked_line_chart_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.p2pTradingLevelInlineIcon,
               ),
+              const SizedBox(width: AppSpacing.x1),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.body.copyWith(
+              color: accent,
+              fontWeight: AppTextStyles.bold,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

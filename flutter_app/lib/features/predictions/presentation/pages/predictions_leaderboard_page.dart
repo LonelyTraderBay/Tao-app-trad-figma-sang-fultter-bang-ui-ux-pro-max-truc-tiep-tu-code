@@ -26,7 +26,6 @@ const _boardSpace = AppSpacing.x2;
 const _boardTinySpace = AppSpacing.x1;
 const _boardVisualScrollClearance = 112.0;
 const _boardNativeScrollClearance = 72.0;
-const _boardControlExtent = 40.0;
 const _boardPodiumExtent = 168.0;
 const _boardPodiumColumns = [70.0, 88.0, 60.0];
 const _boardRankHeaderExtent = 34.0;

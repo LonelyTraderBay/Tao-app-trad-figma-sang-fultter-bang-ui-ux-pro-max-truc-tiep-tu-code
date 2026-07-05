@@ -20,10 +20,13 @@ part '../widgets/dca_overview_demo_shell.dart';
 part '../widgets/dca_overview_demo_metrics.dart';
 part '../widgets/dca_overview_demo_actions.dart';
 
+enum _DcaUiMode { live, loading, empty, error, offline }
+
 class DCAOverviewDemo extends ConsumerStatefulWidget {
   const DCAOverviewDemo({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc400_dca_overview_content');
+  static const statesKey = Key('sc400_dca_overview_states');
   static const loadingToggleKey = Key('sc400_loading_toggle');
   static const loadingSectionKey = Key('sc400_loading_section');
   static const mobilePreviewKey = Key('sc400_mobile_preview');
@@ -41,6 +44,7 @@ class DCAOverviewDemo extends ConsumerStatefulWidget {
 
 class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
   bool _showLoading = false;
+  _DcaUiMode _uiMode = _DcaUiMode.live;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +60,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-400 DCAOverviewDemo',
       child: Material(
-        color: AppColors.bg,
+        type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
@@ -87,52 +91,44 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
                   child: VitPageContent(
                     gap: VitContentGap.tight,
                     children: [
-                      if (_showLoading)
-                        _DemoSection(
-                          key: DCAOverviewDemo.loadingSectionKey,
-                          title: 'Loading State (Skeleton Shimmer)',
-                          description: 'Hiệu ứng shimmer khi data đang tải.',
-                          child: _DcaOverviewCardPreview(
-                            scenario: snapshot.scenarios.first,
-                            isLoading: true,
-                          ),
-                        ),
-                      for (final scenario in snapshot.scenarios)
-                        _DemoSection(
-                          key: DCAOverviewDemo.scenarioKey(scenario.id),
-                          title: scenario.title,
-                          description: scenario.description,
-                          child: _DcaOverviewCardPreview(scenario: scenario),
-                        ),
-                      _DemoSection(
-                        key: DCAOverviewDemo.mobilePreviewKey,
-                        title: snapshot.mobilePreview.title,
-                        description: snapshot.mobilePreview.description,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(
-                              maxWidth: AppSpacing.dcaOverviewPreviewMaxWidth,
-                            ),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: AppColors.borderSolid,
-                                ),
-                                borderRadius: AppRadii.cardLargeRadius,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(AppSpacing.x2),
-                                child: _DcaOverviewCardPreview(
-                                  scenario: snapshot.mobilePreview,
-                                  compact: true,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                      _DcaStateBar(
+                        key: DCAOverviewDemo.statesKey,
+                        supportedStates: snapshot.supportedStates,
+                        active: _uiMode,
+                        onChanged: (mode) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _uiMode = mode);
+                        },
                       ),
-                      _DemoFooter(snapshot: snapshot),
+                      switch (_uiMode) {
+                        _DcaUiMode.loading => const _DcaOverviewLoading(),
+                        _DcaUiMode.empty => const VitEmptyState(
+                          title: 'No DCA scenarios',
+                          message:
+                              'Add overview card scenarios to preview profitable and loss states.',
+                        ),
+                        _DcaUiMode.error => VitErrorState(
+                          title: 'Overview demo unavailable',
+                          message:
+                              'Could not load DCA card scenarios. Retry when back online.',
+                          onAction: () =>
+                              setState(() => _uiMode = _DcaUiMode.live),
+                        ),
+                        _DcaUiMode.offline => Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const VitOfflineBanner(
+                              detail: 'Showing cached scenario fixtures.',
+                            ),
+                            const SizedBox(height: AppSpacing.x4),
+                            ..._liveSections(snapshot),
+                          ],
+                        ),
+                        _DcaUiMode.live => Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: _liveSections(snapshot),
+                        ),
+                      },
                     ],
                   ),
                 ),
@@ -142,5 +138,112 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
         ),
       ),
     );
+  }
+
+  List<Widget> _liveSections(DcaOverviewDemoSnapshot snapshot) {
+    return [
+      VitPageSection(
+        label: snapshot.componentName,
+        children: [
+          Text(
+            snapshot.componentLocation,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+      if (_showLoading)
+        _DemoSection(
+          key: DCAOverviewDemo.loadingSectionKey,
+          title: 'Loading State (Skeleton Shimmer)',
+          description: 'Hiệu ứng shimmer khi data đang tải.',
+          child: _DcaOverviewCardPreview(
+            scenario: snapshot.scenarios.first,
+            isLoading: true,
+          ),
+        ),
+      for (final scenario in snapshot.scenarios)
+        _DemoSection(
+          key: DCAOverviewDemo.scenarioKey(scenario.id),
+          title: scenario.title,
+          description: scenario.description,
+          child: _DcaOverviewCardPreview(scenario: scenario),
+        ),
+      _DemoSection(
+        key: DCAOverviewDemo.mobilePreviewKey,
+        title: snapshot.mobilePreview.title,
+        description: snapshot.mobilePreview.description,
+        child: Align(
+          alignment: Alignment.center,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: AppSpacing.dcaOverviewPreviewMaxWidth,
+            ),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.borderSolid),
+                borderRadius: AppRadii.cardLargeRadius,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.x2),
+                child: _DcaOverviewCardPreview(
+                  scenario: snapshot.mobilePreview,
+                  compact: true,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      _DemoFooter(snapshot: snapshot),
+    ];
+  }
+}
+
+class _DcaStateBar extends StatelessWidget {
+  const _DcaStateBar({
+    super.key,
+    required this.supportedStates,
+    required this.active,
+    required this.onChanged,
+  });
+
+  final List<DcaScreenState> supportedStates;
+  final _DcaUiMode active;
+  final ValueChanged<_DcaUiMode> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final items = <VitPresetChipItem<_DcaUiMode>>[
+      const VitPresetChipItem(value: _DcaUiMode.live, label: 'Live'),
+      if (supportedStates.contains(DcaScreenState.loading))
+        const VitPresetChipItem(value: _DcaUiMode.loading, label: 'Loading'),
+      if (supportedStates.contains(DcaScreenState.empty))
+        const VitPresetChipItem(value: _DcaUiMode.empty, label: 'Empty'),
+      if (supportedStates.contains(DcaScreenState.error))
+        const VitPresetChipItem(value: _DcaUiMode.error, label: 'Error'),
+      if (supportedStates.contains(DcaScreenState.offline))
+        const VitPresetChipItem(value: _DcaUiMode.offline, label: 'Offline'),
+    ];
+
+    return VitPageSection(
+      label: 'Screen states',
+      children: [
+        VitPresetChipRow<_DcaUiMode>(
+          items: items,
+          selectedValue: active,
+          onTap: onChanged,
+          accentColor: AppModuleAccents.trade,
+        ),
+      ],
+    );
+  }
+}
+
+class _DcaOverviewLoading extends StatelessWidget {
+  const _DcaOverviewLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return const VitSkeletonList(rows: 3);
   }
 }

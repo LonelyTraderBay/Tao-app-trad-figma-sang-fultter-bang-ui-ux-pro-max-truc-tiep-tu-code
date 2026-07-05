@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -23,8 +24,6 @@ part 'referral_home_page_part_02.dart';
 part 'referral_home_page_part_03.dart';
 part 'referral_home_page_part_04.dart';
 
-const _refVisualScrollClearance = 112.0;
-const _refNativeScrollClearance = 72.0;
 const _heroBubble = 36.0;
 const _ctaExtent = 44.0;
 const _dividerExtent = 38.0;
@@ -68,10 +67,10 @@ class _ReferralHomePageState extends ConsumerState<ReferralHomePage> {
     final snapshot = ref.watch(referralControllerProvider).getHome();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndClearance =
-        MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? _refVisualScrollClearance
-            : _refNativeScrollClearance);
+            ? DeviceMetrics.bottomChrome + AppSpacing.x6
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,

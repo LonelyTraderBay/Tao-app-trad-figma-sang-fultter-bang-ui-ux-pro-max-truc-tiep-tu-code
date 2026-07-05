@@ -12,10 +12,12 @@ class _ArenaPredictionBridgeFoundationPageState
         .getArenaPredictionBridge();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _bridgeVisualNavClearance
-        : _bridgeNativeNavClearance;
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
     final scrollEndPadding =
-        navClearance + MediaQuery.paddingOf(context).bottom;
+        navClearance +
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -40,8 +42,8 @@ class _ArenaPredictionBridgeFoundationPageState
                   child: SingleChildScrollView(
                     key: ArenaPredictionBridgeFoundationPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.only(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.arenaBottomScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
@@ -131,7 +133,7 @@ class _BridgeHero extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Text(
-                  'Nền tảng kết nối an toàn giữa Open Arena và Prediction Markets. Khóa boundary trước khi nối flow.',
+                  'Nền tảng bridge an toàn: chỉ topic/context — điểm Arena và ví Prediction tách biệt.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
                     height: _bridgeBodyLineHeight,

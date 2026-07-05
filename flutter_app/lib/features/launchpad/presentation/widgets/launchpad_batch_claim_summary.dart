@@ -1,9 +1,10 @@
 part of '../pages/launchpad_batch_claim_page.dart';
 
 class _BatchSummaryHero extends StatelessWidget {
-  const _BatchSummaryHero({required this.summary});
+  const _BatchSummaryHero({required this.summary, required this.positionCount});
 
   final LaunchpadBatchClaimSummaryDraft summary;
+  final int positionCount;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class _BatchSummaryHero extends StatelessWidget {
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
-                  'Tổng có thể nhận từ 2 vị trí',
+                  'Tổng có thể nhận từ $positionCount vị trí',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(

@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_dispute_
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 
 const double _p2pDisputeDetailVisualNavClearance =
@@ -108,11 +109,12 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
                     padding: AppSpacing.p2pDisputeDetailScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         P2PDisputeStatusBanner(dispute: snapshot.dispute),
-                        const SizedBox(height: AppSpacing.x3),
                         P2PDisputeEscalationCard(
                           escalateKey: P2PDisputeDetailPage.escalateKey,
                           levels: snapshot.levels,
@@ -123,9 +125,7 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
                               ? null
                               : () => _escalate(nextLevel),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         P2PDisputeReasonCard(dispute: snapshot.dispute),
-                        const SizedBox(height: AppSpacing.x3),
                         P2PDisputeEvidenceCard(
                           addEvidenceKey: P2PDisputeDetailPage.addEvidenceKey,
                           evidence: evidence,
@@ -135,9 +135,7 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         P2PDisputeTimelineCard(timeline: snapshot.timeline),
-                        const SizedBox(height: AppSpacing.x3),
                         P2PDisputeSupportChatCard(
                           inputKey: P2PDisputeDetailPage.inputKey,
                           sendKey: P2PDisputeDetailPage.sendKey,
@@ -147,7 +145,6 @@ class _P2PDisputeDetailPageState extends ConsumerState<P2PDisputeDetailPage> {
                           onChanged: () => setState(() {}),
                           onSend: _sendMessage,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         P2PDisputeActionsCard(
                           manageEvidenceKey:
                               P2PDisputeDetailPage.manageEvidenceKey,

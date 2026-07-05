@@ -48,18 +48,18 @@ class _BusinessInfoStep extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
               const SizedBox(height: AppSpacing.x2),
-              Wrap(
-                spacing: AppSpacing.x2,
-                runSpacing: AppSpacing.x2,
-                children: [
+              VitPresetChipRow<String>(
+                items: [
                   for (final type in snapshot.businessTypes)
-                    _ChoiceChipButton(
+                    VitPresetChipItem<String>(
                       key: P2PMerchantApplyPage.businessTypeKey(type),
+                      value: type,
                       label: type,
-                      selected: businessType == type,
-                      onTap: () => onTypeChanged(type),
                     ),
                 ],
+                selectedValue: businessType.isEmpty ? null : businessType,
+                accentColor: AppModuleAccents.p2p,
+                onTap: onTypeChanged,
               ),
               const SizedBox(height: AppSpacing.x4),
               _MultilineInput(
@@ -262,9 +262,9 @@ class _HistoryStep extends StatelessWidget {
             ],
           ),
         ),
-        const _InfoBanner(
+        _InfoBanner(
           icon: Icons.check_circle_rounded,
-          text: 'Tất cả tiêu chí đánh giá đều đạt yêu cầu!',
+          text: 'Tất cả tiêu chí đánh giá đều đạt yêu cầu.',
           color: AppColors.buy,
         ),
       ],
@@ -382,17 +382,19 @@ class _SuccessState extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(
-                    Icons.access_time_rounded,
-                    color: AppColors.warn,
-                    size: AppSpacing.iconSm,
+                  const VitStatusPill(
+                    label: 'Đang xét duyệt',
+                    status: VitStatusPillStatus.warning,
+                    size: VitStatusPillSize.sm,
                   ),
                   const SizedBox(width: AppSpacing.x2),
-                  Text(
-                    'Trạng thái: Đang xét duyệt',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
+                  Expanded(
+                    child: Text(
+                      'Trạng thái: Đang xét duyệt',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
                     ),
                   ),
                 ],

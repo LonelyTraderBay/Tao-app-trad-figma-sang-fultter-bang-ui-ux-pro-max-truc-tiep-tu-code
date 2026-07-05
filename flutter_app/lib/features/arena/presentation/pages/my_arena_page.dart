@@ -113,6 +113,7 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                         _PointsHero(
                           stats: snapshot.stats,
                           onDetails: () => _go(AppRoutePaths.arenaPoints),
+                          onLedger: () => _go(AppRoutePaths.arenaLedger),
                           onEarn: () => _go('/rewards'),
                         ),
                         _StatsGrid(stats: snapshot.stats),

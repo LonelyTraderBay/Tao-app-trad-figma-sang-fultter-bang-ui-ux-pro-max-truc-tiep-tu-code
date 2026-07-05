@@ -71,8 +71,6 @@ class WithdrawNetworkSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const WithdrawSectionLabel('Mạng lưới'),
-        const SizedBox(height: AppSpacing.x2),
         Semantics(
           button: true,
           label:
@@ -165,33 +163,31 @@ class WithdrawAddressInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            const Expanded(child: WithdrawSectionLabel('Địa chỉ ví nhận')),
-            Semantics(
-              button: true,
-              label: 'Scan withdrawal address QR code',
-              child: VitCtaButton(
-                onPressed: onScan,
-                variant: VitCtaButtonVariant.ghost,
-                fullWidth: false,
-                height: AppSpacing.buttonCompact,
-                padding: AppSpacing.walletWithdrawScanButtonPadding,
-                leading: const Icon(
-                  Icons.qr_code_scanner_rounded,
+        Align(
+          alignment: Alignment.centerRight,
+          child: Semantics(
+            button: true,
+            label: 'Scan withdrawal address QR code',
+            child: VitCtaButton(
+              onPressed: onScan,
+              variant: VitCtaButtonVariant.ghost,
+              fullWidth: false,
+              height: AppSpacing.buttonCompact,
+              padding: AppSpacing.walletWithdrawScanButtonPadding,
+              leading: const Icon(
+                Icons.qr_code_scanner_rounded,
+                color: withdrawPrimary,
+                size: AppSpacing.iconSm,
+              ),
+              child: Text(
+                'Quét QR',
+                style: AppTextStyles.control.copyWith(
                   color: withdrawPrimary,
-                  size: AppSpacing.iconSm,
-                ),
-                child: Text(
-                  'Quét QR',
-                  style: AppTextStyles.control.copyWith(
-                    color: withdrawPrimary,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                  fontWeight: AppTextStyles.bold,
                 ),
               ),
             ),
-          ],
+          ),
         ),
         const SizedBox(height: AppSpacing.formFieldLabelGap),
         VitInput(

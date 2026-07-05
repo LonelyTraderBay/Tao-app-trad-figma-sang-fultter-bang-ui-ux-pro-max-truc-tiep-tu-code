@@ -80,17 +80,21 @@ class _CampaignBanner extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.x3),
-            VitCard(
-              variant: VitCardVariant.ghost,
-              radius: VitCardRadius.standard,
-              borderColor: AppColors.primary30,
-              clip: true,
-              background: const ColoredBox(color: AppColors.primary12),
-              padding: AppSpacing.referralCompactPillPadding,
-              child: _InlineIconText(
-                icon: Icons.emoji_events_rounded,
-                text: campaign.extraReward,
-                color: AppColors.portfolioTextDim,
+            DecoratedBox(
+              decoration: const ShapeDecoration(
+                color: AppColors.primary12,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.cardRadius,
+                  side: BorderSide(color: AppColors.primary30),
+                ),
+              ),
+              child: Padding(
+                padding: AppSpacing.referralCompactPillPadding,
+                child: _InlineIconText(
+                  icon: Icons.emoji_events_rounded,
+                  text: campaign.extraReward,
+                  color: AppColors.portfolioTextDim,
+                ),
               ),
             ),
           ],

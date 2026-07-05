@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
@@ -15,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 
+const _arenaAccent = AppModuleAccents.arena;
 const _resolutionBodyLineRatio = AppSpacing.arenaResolutionBodyLineHeight;
 
 class ArenaResolutionCenterPage extends ConsumerWidget {
@@ -64,10 +67,11 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
                     context,
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
                     child: VitPageContent(
-                      padding: VitContentPadding.none,
+                      padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         VitCard(
                           padding: AppSpacing.zeroInsets,
@@ -83,17 +87,15 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
                         ),
                         const _ResolutionStatusCard(
                           icon: Icons.rule_folder_outlined,
-                          title: 'Resolution scope',
+                          title: 'Phạm vi chốt kết quả',
                           body:
-                              'Creator evidence, oracle review, and moderation outcomes are grouped here when a challenge needs a final result.',
+                              'Bằng chứng creator, rà soát oracle và kết quả kiểm duyệt được gom tại đây khi thử thách cần quyết định cuối.',
                         ),
-                        const VitCard(
-                          child: _ResolutionStatusContent(
-                            icon: Icons.verified_user_outlined,
-                            title: 'Points integrity',
-                            body:
-                                'Open Arena keeps point changes paused until the review closes and records the final decision in the points ledger.',
-                          ),
+                        const _ResolutionStatusCard(
+                          icon: Icons.verified_user_outlined,
+                          title: 'Toàn vẹn điểm Arena',
+                          body:
+                              'Open Arena tạm dừng thay đổi điểm cho đến khi rà soát kết thúc và ghi quyết định cuối vào sổ điểm.',
                         ),
                       ],
                     ),
@@ -121,53 +123,38 @@ class _ResolutionStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      child: _ResolutionStatusContent(icon: icon, title: title, body: body),
-    );
-  }
-}
-
-class _ResolutionStatusContent extends StatelessWidget {
-  const _ResolutionStatusContent({
-    required this.icon,
-    required this.title,
-    required this.body,
-  });
-
-  final IconData icon;
-  final String title;
-  final String body;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(icon, color: AppColors.accent, size: AppSpacing.iconMd),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
+    return VitModuleHeroCard(
+      accentColor: _arenaAccent,
+      density: VitDensity.compact,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: AppColors.accent, size: AppSpacing.iconMd),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
                 ),
-              ),
-              const Padding(padding: AppSpacing.arenaTopPaddingX1),
-              Text(
-                body,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: _resolutionBodyLineRatio,
+                const Padding(padding: AppSpacing.arenaTopPaddingX1),
+                Text(
+                  body,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text2,
+                    height: _resolutionBodyLineRatio,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

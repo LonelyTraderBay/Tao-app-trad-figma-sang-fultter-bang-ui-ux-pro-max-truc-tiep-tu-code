@@ -41,6 +41,7 @@ class P2PMyAdsPage extends ConsumerStatefulWidget {
   static Key editKey(String adId) => Key('sc225_edit_$adId');
   static Key deleteKey(String adId) => Key('sc225_delete_$adId');
   static Key quickLinkKey(String id) => Key('sc225_quick_$id');
+  static Key adMenuKey(String adId) => Key('sc225_menu_$adId');
 
   final ShellRenderMode? shellRenderMode;
 

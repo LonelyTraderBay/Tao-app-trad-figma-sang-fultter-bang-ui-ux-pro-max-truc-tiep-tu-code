@@ -48,9 +48,9 @@ class _ReceiptSuccess extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitHighRiskStatePanel(
           state: VitHighRiskUiState.success,
-          title: 'Receipt reviewed',
+          title: 'Đã rà soát biên lai',
           message:
-              'Fees, limits, allocation risk, next step, and refund review stay attached to this receipt.',
+              'Phí, giới hạn, rủi ro phân bổ, bước tiếp theo và hoàn tiền vẫn gắn với biên lai này.',
           contractId: subscription.id,
         ),
         const SizedBox(height: AppSpacing.x4),

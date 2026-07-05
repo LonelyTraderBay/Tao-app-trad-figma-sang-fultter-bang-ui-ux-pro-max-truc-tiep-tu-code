@@ -52,12 +52,12 @@ const List<P2POrderTimelineEventDraft> _p2pOrderTimelineEvents = [
 ];
 
 const List<P2POrderRateTagDraft> _p2pOrderRateTags = [
-  P2POrderRateTagDraft(label: 'Giao dich nhanh', iconKey: 'speed'),
-  P2POrderRateTagDraft(label: 'Than thien', iconKey: 'positive'),
-  P2POrderRateTagDraft(label: 'Dang tin cay', iconKey: 'trust'),
-  P2POrderRateTagDraft(label: 'Gia tot', iconKey: 'price'),
-  P2POrderRateTagDraft(label: 'Phan hoi cham', iconKey: 'slow'),
-  P2POrderRateTagDraft(label: 'Can cai thien', iconKey: 'improve'),
+  P2POrderRateTagDraft(label: 'Giao dịch nhanh', iconKey: 'speed'),
+  P2POrderRateTagDraft(label: 'Thân thiện', iconKey: 'positive'),
+  P2POrderRateTagDraft(label: 'Đáng tin cậy', iconKey: 'trust'),
+  P2POrderRateTagDraft(label: 'Giá tốt', iconKey: 'price'),
+  P2POrderRateTagDraft(label: 'Phản hồi chậm', iconKey: 'slow'),
+  P2POrderRateTagDraft(label: 'Cần cải thiện', iconKey: 'improve'),
 ];
 
 const List<String> _p2pOrderCancelReasons = [

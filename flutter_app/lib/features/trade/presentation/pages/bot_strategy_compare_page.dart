@@ -56,11 +56,20 @@ class _BotStrategyComparePageState
     );
     return VitTradeHubScaffold(
       title: 'Strategy Compare',
+      subtitle: 'So sánh hiệu suất các chiến lược bot',
       semanticLabel: 'SC-126 BotStrategyComparePage',
       contentKey: BotStrategyComparePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Đã chọn',
+          primaryValue: '${selectedStrategies.length}',
+          secondaryLabel: 'Sharpe tốt nhất',
+          secondaryValue: best.metrics.sharpeRatio.toStringAsFixed(2),
+          secondaryColor: _compareGreen,
+        ),
         VitTradeSection(
           title: 'Select Strategies (2-4)',
           child: _StrategySelectionGrid(
@@ -107,20 +116,11 @@ class _BotStrategyComparePageState
           title: 'Analysis period',
           child: _AnalysisPeriodCard(text: snapshot.analysisPeriod),
         ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.cardPaddingCompact,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Strategy comparison review',
-              message:
-                  'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
-              contractId: 'bot-strategy-compare-review',
-              density: VitDensity.compact,
-            ),
-          ),
+        const VitBotRiskReviewFooter(
+          title: 'Strategy comparison review',
+          message:
+              'Selected strategies, performance spread, radar metrics, recommendation rationale and next step are reviewed before allocation changes.',
+          contractId: 'bot-strategy-compare-review',
         ),
       ],
     );

@@ -91,8 +91,16 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
                             setState(() => _tab = _tabFromKey(key));
                           },
                           tabs: const [
-                            VitTabItem(key: 'received', label: 'Nhận được'),
-                            VitTabItem(key: 'given', label: 'Đã viết'),
+                            VitTabItem(
+                              key: 'received',
+                              label: 'Nhận được',
+                              widgetKey: P2PReviewsPage.receivedTabKey,
+                            ),
+                            VitTabItem(
+                              key: 'given',
+                              label: 'Đã viết',
+                              widgetKey: P2PReviewsPage.givenTabKey,
+                            ),
                           ],
                         ),
                         _ReviewList(

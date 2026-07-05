@@ -70,7 +70,7 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Dynamic Amount',
-          subtitle: 'Số tiền · DCA',
+          subtitle: 'Đầu tư có kỷ luật · điều chỉnh số tiền',
           showBack: true,
           onBack: _close,
           actions: [
@@ -118,6 +118,13 @@ class _DCADynamicAmountState extends ConsumerState<DCADynamicAmount> {
                 ),
                 _StrategyExplainer(option: activeOption),
                 const _DynamicDisclaimer(),
+                const VitHighRiskStatePanel(
+                  state: VitHighRiskUiState.riskReview,
+                  title: 'Xem lại chiến lược số tiền',
+                  message:
+                      'Áp dụng chiến lược điều chỉnh sẽ thay đổi lượng mua DCA ở các lần thực thi tiếp theo.',
+                  contractId: 'SC-175',
+                ),
                 _ApplyStrategyAction(
                   onApply: () => context.go(AppRoutePaths.dca),
                 ),

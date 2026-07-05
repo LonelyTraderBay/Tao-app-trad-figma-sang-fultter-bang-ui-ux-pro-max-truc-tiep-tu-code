@@ -63,9 +63,9 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Open Arena'), findsWidgets);
-    expect(find.text('Sân chơi cộng đồng'), findsOneWidget);
+    expect(find.text('Hoàn thành · Fair play'), findsOneWidget);
     expect(find.text('Points only'), findsOneWidget);
-    expect(find.text('Tạo sân chơi'), findsOneWidget);
+    expect(find.text('Thử thách cộng đồng'), findsOneWidget);
     expect(find.text('Templates'), findsOneWidget);
     expect(find.text('Prediction'), findsWidgets);
     expect(find.text('Mode nổi bật'), findsOneWidget);

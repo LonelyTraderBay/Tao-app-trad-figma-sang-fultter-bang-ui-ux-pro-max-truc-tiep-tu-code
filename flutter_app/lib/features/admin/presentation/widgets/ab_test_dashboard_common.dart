@@ -119,39 +119,6 @@ class _DetailStat extends StatelessWidget {
   }
 }
 
-class _EmptyTestsCard extends StatelessWidget {
-  const _EmptyTestsCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.adminEmptyPadding,
-      child: Column(
-        children: [
-          const Icon(
-            Icons.science_outlined,
-            color: AppColors.text3,
-            size: AppSpacing.adminIconHero,
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Text(
-            'Chưa có A/B test nào',
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            'Tạo test mới để bắt đầu thử nghiệm',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 Color _variantAccent(AdminAbTestVariant variant) {
   if (variant.isWinner) return AppColors.buy;
   if (variant.isControl) return AppColors.accent;

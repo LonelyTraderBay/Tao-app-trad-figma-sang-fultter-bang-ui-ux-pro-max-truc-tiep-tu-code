@@ -79,7 +79,7 @@ class _P2PAddressProofPageState extends ConsumerState<P2PAddressProofPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Proof of Address',
+            title: 'Xác minh địa chỉ',
             subtitle: 'KYC · P2P',
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),

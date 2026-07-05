@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -174,13 +175,6 @@ class _AddressBookPageState extends ConsumerState<AddressBookPage> {
                               context.go(AppRoutePaths.walletAddressBookAdd),
                         ),
                       const _SecurityTip(),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Address book state review',
-                        message:
-                            'Search, network filter, whitelist-only mode, favorites, copy state, delete confirmation, empty state, and add-address route remain visible before wallet address changes.',
-                        contractId: 'SC-144',
-                      ),
                     ],
                   ),
                 ),

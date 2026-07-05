@@ -25,7 +25,6 @@ part '../widgets/api_management_docs.dart';
 
 const _apiBackground = AppColors.bg;
 const _apiPanel = AppColors.surface;
-const _apiPanel2 = AppColors.surface2;
 const _apiBorder = AppColors.cardBorder;
 const _apiPrimary = AppColors.primary;
 const _apiGreen = AppColors.buy;
@@ -105,11 +104,11 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
                     children: [
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review API access',
+                        title: 'R\u00E0 so\u00E1t quy\u1EC1n truy c\u1EADp API',
                         message:
                             'Ki\u1EC3m tra quy\u1EC1n giao d\u1ECBch, IP whitelist, secret v\u00E0 key \u0111ang b\u1EADt tr\u01B0\u1EDBc khi ti\u1EBFp t\u1EE5c.',
                         contractId:
-                            'Active keys: ${_keys.where((key) => key.isActive).length}/${_keys.length}',
+                            'Key \u0111ang b\u1EADt: ${_keys.where((key) => key.isActive).length}/${_keys.length}',
                         density: VitDensity.compact,
                       ),
                       if (_keys.isEmpty)

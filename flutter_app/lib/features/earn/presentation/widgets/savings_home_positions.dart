@@ -32,7 +32,7 @@ class _SavingsPositions extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${position.amount} - ${position.apy} APY',
+                        '${position.amount} · APY ước tính ${position.apy}',
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text2,
                         ),
@@ -85,31 +85,6 @@ class _RoundIcon extends StatelessWidget {
   }
 }
 
-class _RiskPill extends StatelessWidget {
-  const _RiskPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.buy10,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.buy,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _AssetBadge extends StatelessWidget {
   const _AssetBadge({required this.asset, required this.color});

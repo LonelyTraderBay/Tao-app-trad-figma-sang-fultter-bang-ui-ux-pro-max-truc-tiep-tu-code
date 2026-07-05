@@ -6,14 +6,55 @@ import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/news/data/news_repository.dart';
 import 'package:vit_trade_flutter/features/news/presentation/pages/news_page.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_empty_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_error_state.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_offline_banner.dart';
+import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_status_bar.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
 
+final class _FixedStateNewsRepository implements NewsRepository {
+  const _FixedStateNewsRepository(this.screenState, {this.articles = const []});
+
+  final NewsScreenState screenState;
+  final List<NewsArticle> articles;
+
+  @override
+  NewsScreenSnapshot getNews({NewsArticleType? type}) {
+    final filtered = type == null
+        ? articles
+        : articles.where((article) => article.type == type).toList();
+    return NewsScreenSnapshot(
+      articles: filtered,
+      pinnedArticles: filtered.where((article) => article.isPinned).toList(),
+      normalArticles: filtered.where((article) => !article.isPinned).toList(),
+      newsReferenceData: const NewsReferenceData(
+        endpoint: '/api/mobile/news/news',
+        filters: NewsArticleType.values,
+        lastUpdatedLabel: 'read-only',
+      ),
+      screenState: filtered.isEmpty && screenState == NewsScreenState.ready
+          ? NewsScreenState.empty
+          : screenState,
+      supportedStates: const [
+        NewsScreenState.loading,
+        NewsScreenState.empty,
+        NewsScreenState.error,
+        NewsScreenState.offline,
+      ],
+    );
+  }
+}
+
 void main() {
-  Future<void> pumpNews(WidgetTester tester) async {
+  Future<void> pumpNews(
+    WidgetTester tester, {
+    NewsRepository? repository,
+    bool settle = true,
+  }) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(440, 956);
     addTearDown(tester.view.resetPhysicalSize);
@@ -21,12 +62,20 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          if (repository != null)
+            newsRepositoryProvider.overrideWithValue(repository),
+        ],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.news),
         ),
       ),
     );
-    await tester.pumpAndSettle();
+    if (settle) {
+      await tester.pumpAndSettle();
+    } else {
+      await tester.pump();
+    }
   }
 
   test('SC-047 mock repository exposes the BE draft read model', () {
@@ -74,7 +123,7 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Tin tức & Thông báo'), findsOneWidget);
-    expect(find.text('Tin tức · Cập nhật'), findsOneWidget);
+    expect(find.text('Sản phẩm · bảo trì · niêm yết'), findsOneWidget);
     expect(find.text('GHIM (2)'), findsOneWidget);
     expect(find.text('Phí giao dịch 0% cho BTC/USDT'), findsOneWidget);
     expect(find.text('Ra mắt tính năng P2P Trading'), findsOneWidget);
@@ -133,5 +182,58 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(HomePage), findsOneWidget);
+  });
+
+  testWidgets('SC-047 shows empty state when no articles match', (
+    tester,
+  ) async {
+    await pumpNews(
+      tester,
+      repository: const _FixedStateNewsRepository(NewsScreenState.empty),
+    );
+
+    expect(find.byKey(NewsPage.emptyKey), findsOneWidget);
+    expect(find.byType(VitEmptyState), findsOneWidget);
+    expect(find.text('Không có tin tức nào'), findsOneWidget);
+  });
+
+  testWidgets('SC-047 renders loading skeleton state', (tester) async {
+    await pumpNews(
+      tester,
+      repository: const _FixedStateNewsRepository(NewsScreenState.loading),
+      settle: false,
+    );
+
+    expect(find.byKey(NewsPage.loadingKey), findsOneWidget);
+    expect(find.byType(VitSkeletonList), findsOneWidget);
+  });
+
+  testWidgets('SC-047 renders error state with retry', (tester) async {
+    await pumpNews(
+      tester,
+      repository: const _FixedStateNewsRepository(NewsScreenState.error),
+    );
+
+    expect(find.byKey(NewsPage.errorKey), findsOneWidget);
+    expect(find.byType(VitErrorState), findsOneWidget);
+    expect(find.text('Không tải được tin tức'), findsOneWidget);
+    expect(find.text('Thử lại'), findsOneWidget);
+  });
+
+  testWidgets('SC-047 renders offline banner with cached articles', (
+    tester,
+  ) async {
+    final cachedArticles = const MockNewsRepository().getNews().articles;
+    await pumpNews(
+      tester,
+      repository: _FixedStateNewsRepository(
+        NewsScreenState.offline,
+        articles: cachedArticles,
+      ),
+    );
+
+    expect(find.byKey(NewsPage.offlineKey), findsOneWidget);
+    expect(find.byType(VitOfflineBanner), findsOneWidget);
+    expect(find.text('Phí giao dịch 0% cho BTC/USDT'), findsOneWidget);
   });
 }

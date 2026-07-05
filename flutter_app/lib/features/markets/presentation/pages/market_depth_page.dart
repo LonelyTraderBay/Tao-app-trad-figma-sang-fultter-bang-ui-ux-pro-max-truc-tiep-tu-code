@@ -72,7 +72,8 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: '${snapshot.pair.baseAsset} Depth',
+            title: 'Độ sâu ${snapshot.pair.baseAsset}',
+            subtitle: 'Sổ lệnh · Markets',
             showBack: true,
             onBack: () =>
                 goBackOrFallback(context, fallbackPath: resolvedBackPath),
@@ -110,12 +111,11 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
                           MarketDepthWhaleAlertsView(snapshot: snapshot),
                         const VitBanner(
                           variant: VitBannerVariant.info,
-                          icon: Icons.sync_rounded,
-                          message: 'Depth data state reviewed',
+                          icon: Icons.info_outline_rounded,
+                          message: 'Dữ liệu depth chỉ mang tính tham khảo',
                           detail:
-                              'Depth chart, order book, whale alerts, level selector, and cached/offline states stay visible while order-book data refreshes.',
+                              'Không phải tín hiệu giao dịch. Giá và sổ lệnh có thể trễ so với thị trường thực.',
                         ),
-                        const _DepthDataReviewCards(),
                       ],
                     ),
                   ),
@@ -125,22 +125,6 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _DepthDataReviewCards extends StatelessWidget {
-  const _DepthDataReviewCards();
-
-  @override
-  Widget build(BuildContext context) {
-    return const VitPageSection(
-      label: 'Data checkpoints',
-      children: [
-        VitCard(child: Text('Pair summary and depth chart readiness')),
-        VitCard(child: Text('Order-book levels and spread state')),
-        VitCard(child: Text('Whale alerts and stale-data fallback')),
-      ],
     );
   }
 }

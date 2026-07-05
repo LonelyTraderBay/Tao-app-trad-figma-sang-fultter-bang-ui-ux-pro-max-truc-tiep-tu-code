@@ -13,9 +13,9 @@ class _AssetTransactions extends StatelessWidget {
   Widget build(BuildContext context) {
     if (transactions.isEmpty) {
       return const VitEmptyState(
-        title: 'No asset transactions',
-        message:
-            'Recent deposit, withdrawal, transfer, and trade activity will appear here.',
+        title: 'Chưa có giao dịch',
+        message: 'Nạp, rút, chuyển và giao dịch gần đây sẽ hiển thị tại đây.',
+        icon: Icons.receipt_long_outlined,
       );
     }
 

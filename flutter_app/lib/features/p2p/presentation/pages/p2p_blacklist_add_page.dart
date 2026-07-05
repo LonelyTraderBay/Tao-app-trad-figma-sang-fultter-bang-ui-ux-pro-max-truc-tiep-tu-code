@@ -141,16 +141,12 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                           leading: const Icon(Icons.block_rounded),
                           child: Text(snapshot.submitLabel),
                         ),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: EdgeInsetsDirectional.all(AppSpacing.x3),
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Blacklist action review',
-                            message:
-                                'Username, reason, note, warning, submitting state and undo/support next step are reviewed before blocking a merchant.',
-                            contractId: 'p2p-blacklist-add-review',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Blacklist action review',
+                          message:
+                              'Username, reason, note, warning, submitting state and undo/support next step are reviewed before blocking a merchant.',
+                          contractId: 'p2p-blacklist-add-review',
                         ),
                       ],
                     ),

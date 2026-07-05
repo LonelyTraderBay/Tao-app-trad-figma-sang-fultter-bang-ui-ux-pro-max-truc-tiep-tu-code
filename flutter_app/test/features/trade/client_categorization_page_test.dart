@@ -100,7 +100,7 @@ void main() {
     expect(find.text('Professional Client'), findsOneWidget);
   });
 
-  testWidgets('SC-099 first viewport reaches current category inventory', (
+  testWidgets('SC-099 first viewport reaches classification review panel', (
     tester,
   ) async {
     await pumpClientCategorization(tester);
@@ -112,12 +112,12 @@ void main() {
     );
     expectFirstViewportVisible(
       tester,
-      find.byKey(ClientCategorizationPage.categoryKey('retail')),
+      find.text('Client classification review'),
       minVisibleHeight: 24,
-      targetLabel: 'current retail category card',
+      targetLabel: 'client classification review panel',
       reason:
-          'Client categorization must preview category inventory above bottom '
-          'navigation after the current protection summary.',
+          'Client categorization must expose the compliance review panel above '
+          'bottom navigation before category inventory and tab content.',
     );
   });
 
@@ -182,9 +182,21 @@ void main() {
   ) async {
     await pumpClientCategorization(tester);
 
-    await tester.ensureVisible(
+    await tester.scrollUntilVisible(
       find.byKey(ClientCategorizationPage.disclosuresKey),
+      120,
+      scrollable: find
+          .descendant(
+            of: find.byType(ClientCategorizationPage),
+            matching: find.byType(Scrollable),
+          )
+          .first,
     );
+    await tester.drag(
+      find.byKey(ClientCategorizationPage.contentKey),
+      const Offset(0, -120),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ClientCategorizationPage.disclosuresKey));
     await tester.pumpAndSettle();
 
@@ -192,9 +204,21 @@ void main() {
     expect(find.text('Regulatory Disclosures'), findsOneWidget);
 
     await pumpClientCategorization(tester);
-    await tester.ensureVisible(
+    await tester.scrollUntilVisible(
       find.byKey(ClientCategorizationPage.settingsKey),
+      120,
+      scrollable: find
+          .descendant(
+            of: find.byType(ClientCategorizationPage),
+            matching: find.byType(Scrollable),
+          )
+          .first,
     );
+    await tester.drag(
+      find.byKey(ClientCategorizationPage.contentKey),
+      const Offset(0, -120),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(ClientCategorizationPage.settingsKey));
     await tester.pumpAndSettle();
 

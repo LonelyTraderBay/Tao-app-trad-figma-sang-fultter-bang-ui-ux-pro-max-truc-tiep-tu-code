@@ -139,6 +139,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(LaunchpadPage), findsOneWidget);
-    expect(find.text('VitLaunch'), findsOneWidget);
+    expect(find.text('Launchpad'), findsOneWidget);
   });
 }

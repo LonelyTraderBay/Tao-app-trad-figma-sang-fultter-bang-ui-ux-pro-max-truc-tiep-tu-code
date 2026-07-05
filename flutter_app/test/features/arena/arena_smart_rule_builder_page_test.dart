@@ -133,7 +133,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Arena Studio'), findsOneWidget);
-    expect(find.text('Smart Rule Builder'), findsOneWidget);
+    expect(find.text('Luật chơi — Smart Builder'), findsOneWidget);
     expect(find.text('Luật chơi — Smart Builder'), findsOneWidget);
     expect(find.text('Rule Clarity Score'), findsOneWidget);
     expect(find.text('Thấp'), findsWidgets);

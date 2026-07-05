@@ -15,7 +15,7 @@ class _StepDetail extends StatelessWidget {
           children: [
             _RoundIcon(
               icon: _guideIcon(step.iconKey),
-              color: AppColors.primarySoft,
+              color: AppModuleAccents.earn,
               size: AppSpacing.buttonStandard,
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -174,7 +174,7 @@ String _difficultyTabLabel(StakingGuideDifficulty difficulty) {
 Color _difficultyColor(StakingGuideDifficulty difficulty) {
   return switch (difficulty) {
     StakingGuideDifficulty.beginner => AppColors.buy,
-    StakingGuideDifficulty.intermediate => AppColors.primarySoft,
+    StakingGuideDifficulty.intermediate => AppModuleAccents.earn,
     StakingGuideDifficulty.advanced => AppColors.warn,
   };
 }
@@ -184,7 +184,7 @@ Color _toneColor(String tone) {
     'success' => AppColors.buy,
     'warning' => AppColors.warn,
     'danger' => AppColors.sell,
-    _ => AppColors.primarySoft,
+    _ => AppModuleAccents.earn,
   };
 }
 

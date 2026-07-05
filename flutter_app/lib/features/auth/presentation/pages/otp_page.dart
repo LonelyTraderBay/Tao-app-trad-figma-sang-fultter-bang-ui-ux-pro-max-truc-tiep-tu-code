@@ -234,26 +234,16 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                 key: OTPPage.contentKey,
                 padding: AppSpacing.authScrollBottomPadding,
                 child: VitPageContent(
-                  padding: VitContentPadding.defaultPadding,
-                  gap: VitContentGap.defaultGap,
+                  customGap: AppSpacing.authPageContentGap,
                   children: [
-                    const VitCard(
-                      padding: AppSpacing.zeroInsets,
-                      child: _ShieldHero(),
-                    ),
-                    VitCard(
-                      padding: AppSpacing.zeroInsets,
-                      child: _OtpIntro(contact: widget.contact),
-                    ),
-                    VitCard(
-                      padding: AppSpacing.zeroInsets,
-                      child: _OtpDigitRow(
-                        controllers: _controllers,
-                        focusNodes: _focusNodes,
-                        hasError: _error.isNotEmpty,
-                        onChanged: _handleChanged,
-                        onKey: _handleKey,
-                      ),
+                    const _ShieldHero(),
+                    _OtpIntro(contact: widget.contact),
+                    _OtpDigitRow(
+                      controllers: _controllers,
+                      focusNodes: _focusNodes,
+                      hasError: _error.isNotEmpty,
+                      onChanged: _handleChanged,
+                      onKey: _handleKey,
                     ),
                     _OtpProgress(filled: filled),
                     if (_error.isNotEmpty) _OtpErrorBanner(error: _error),

@@ -10,28 +10,21 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       key: StakingInstitutionalPage.infoKey,
       variant: VitCardVariant.inner,
-      borderColor: AppColors.primary20,
+      borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
       padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.apartment_rounded,
-            color: AppColors.primarySoft,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
+            child: Text(
+              snapshot.infoBody,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -88,7 +81,7 @@ class _StatTile extends StatelessWidget {
                 stat.value,
                 style: AppTextStyles.sectionTitle.copyWith(
                   color: stat.tone == 'success'
-                      ? AppColors.buy
+                      ? AppModuleAccents.earn
                       : AppColors.text1,
                   fontFeatures: AppTextStyles.tabularFigures,
                 ),
@@ -116,51 +109,19 @@ class _BatchTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
+    return VitTabBar(
       key: StakingInstitutionalPage.tabsKey,
-      color: AppColors.surface,
-      child: Row(
-        children: [
-          for (final tab in _InstitutionalBatchTab.values)
-            Expanded(
-              child: VitCard(
-                key: StakingInstitutionalPage.tabKey(tab.name),
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
-                padding: AppSpacing.earnTopPaddingX4,
-                onTap: () => onChanged(tab),
-                child: Column(
-                  children: [
-                    Text(
-                      _tabLabel(tab),
-                      style: AppTextStyles.caption.copyWith(
-                        color: active == tab
-                            ? AppColors.primarySoft
-                            : AppColors.text3,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x4),
-                    SizedBox(
-                      width: active == tab ? AppSpacing.buttonHero : 0,
-                      height: AppSpacing.stakingProductTabIndicatorHeight,
-                      child: DecoratedBox(
-                        decoration: ShapeDecoration(
-                          color: active == tab
-                              ? AppColors.primarySoft
-                              : AppColors.transparent,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: AppRadii.xsRadius,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
+      variant: VitTabBarVariant.segment,
+      activeKey: active.name,
+      onChanged: (key) => onChanged(_InstitutionalBatchTab.values.byName(key)),
+      tabs: [
+        for (final tab in _InstitutionalBatchTab.values)
+          VitTabItem(
+            key: tab.name,
+            label: _tabLabel(tab),
+            widgetKey: StakingInstitutionalPage.tabKey(tab.name),
+          ),
+      ],
     );
   }
 }

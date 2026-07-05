@@ -87,6 +87,7 @@ class _LaunchpadBridgeComparePageState
               semanticLabel: 'SC-305 LaunchpadBridgeComparePage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'So sánh route bridge · Xác nhận trước khi chuyển',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
                 actions: [

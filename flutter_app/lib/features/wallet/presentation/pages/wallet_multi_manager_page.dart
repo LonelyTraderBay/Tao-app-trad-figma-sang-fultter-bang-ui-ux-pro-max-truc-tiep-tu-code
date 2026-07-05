@@ -8,8 +8,8 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
@@ -68,8 +68,10 @@ class _WalletMultiManagerPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Multi-Wallet Manager',
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
+            title: 'Quản lý đa ví',
+            subtitle: 'Địa chỉ ẩn mặc định · kiểm soát sao chép',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.wallet),
           ),
@@ -89,9 +91,9 @@ class _WalletMultiManagerPageState
                       PortfolioSummaryCard(snapshot: snapshot),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review wallet privacy',
+                        title: 'Bảo mật địa chỉ ví',
                         message:
-                            'Reveal or copy masked wallet addresses only when you trust the destination and next step.',
+                            'Chỉ hiện hoặc sao chép địa chỉ khi bạn tin tưởng đích đến và bước tiếp theo.',
                         density: VitDensity.compact,
                       ),
                       WalletManagerTabs(
@@ -149,7 +151,7 @@ class _WalletMultiManagerPageState
 
   void _showActionNotice() {
     setState(() {
-      _actionNotice = 'Wallet creation is not connected yet.';
+      _actionNotice = 'Chưa kết nối tạo ví mới.';
     });
   }
 }

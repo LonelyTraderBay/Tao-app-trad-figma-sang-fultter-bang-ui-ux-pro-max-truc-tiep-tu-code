@@ -116,10 +116,10 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                     contractId: 'SC-073 Copy confirmation',
                     density: VitDensity.compact,
                     footer:
-                        'Confirm capital at risk, fees, max loss, required consents, and cooling-off before starting copy trading.',
+                        'Xác nhận vốn có thể mất, phí, mất vốn tối đa, đồng ý bắt buộc và thời gian chờ trước khi bắt đầu copy trading.',
                     items: [
                       VitFinancialSafetyItem(
-                        label: 'Capital at risk',
+                        label: 'Vốn có thể mất',
                         value:
                             '\$${snapshot.configuration.copyCapital.toStringAsFixed(0)}',
                         leading: const Icon(
@@ -128,27 +128,27 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                         valueColor: _confirmationRed,
                       ),
                       VitFinancialSafetyItem(
-                        label: 'Max loss scenario',
+                        label: 'Kịch bản mất vốn tối đa',
                         value: '\$${snapshot.maxLossAmount.toStringAsFixed(0)}',
                         leading: const Icon(Icons.trending_down_rounded),
                         valueColor: _confirmationRed,
                       ),
                       VitFinancialSafetyItem(
-                        label: 'Fixed fees (month 1)',
+                        label: 'Phí cố định (tháng 1)',
                         value:
                             '\$${snapshot.feePreview.totalFixedFees.toStringAsFixed(2)}',
                         leading: const Icon(Icons.receipt_long_outlined),
                         valueColor: AppColors.text2,
                       ),
                       VitFinancialSafetyItem(
-                        label: 'Cooling-off',
-                        value: '${snapshot.coolingOffHours} hours',
+                        label: 'Thời gian chờ',
+                        value: '${snapshot.coolingOffHours} giờ',
                         leading: const Icon(Icons.schedule_rounded),
                         valueColor: _confirmationPrimary,
                       ),
                       VitFinancialSafetyItem(
-                        label: 'Required consents',
-                        value: allRequiredAccepted ? 'Complete' : 'Pending',
+                        label: 'Đồng ý bắt buộc',
+                        value: allRequiredAccepted ? 'Đã đủ' : 'Chưa đủ',
                         leading: const Icon(Icons.verified_user_outlined),
                         valueColor: allRequiredAccepted
                             ? AppColors.buy
@@ -171,9 +171,9 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                   ),
                   const VitHighRiskStatePanel(
                     state: VitHighRiskUiState.riskReview,
-                    title: 'Copy confirmation state review',
+                    title: 'Xem lại trước khi xác nhận copy',
                     message:
-                        'Critical warning, suitability review, fees, scenarios, max loss, required consents, cooling-off period, next steps, and submitting state remain visible before starting copy trading.',
+                        'Cảnh báo quan trọng, đánh giá phù hợp, phí, kịch bản, mất vốn tối đa, đồng ý bắt buộc, thời gian chờ và bước tiếp theo hiển thị trước khi bắt đầu copy trading.',
                     contractId: 'SC-073',
                     density: VitDensity.compact,
                   ),

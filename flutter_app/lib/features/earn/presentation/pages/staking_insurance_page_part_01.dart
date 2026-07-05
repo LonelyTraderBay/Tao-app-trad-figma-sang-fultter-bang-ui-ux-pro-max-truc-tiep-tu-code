@@ -21,8 +21,10 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: snapshot.infoTitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -104,28 +106,21 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       key: StakingInsurancePage.infoKey,
       variant: VitCardVariant.inner,
-      borderColor: AppColors.buy20,
+      borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
       padding: AppSpacing.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
-            color: AppColors.buy,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
+            child: Text(
+              snapshot.infoBody,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -142,67 +137,19 @@ class _InsuranceTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitTabBar(
       key: StakingInsurancePage.tabsKey,
-      color: AppColors.surface,
-      child: Row(
-        children: [
-          for (final tab in _InsuranceTab.values)
-            Expanded(
-              child: _TabButton(
-                tab: tab,
-                selected: active == tab,
-                onTap: () => onChanged(tab),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TabButton extends StatelessWidget {
-  const _TabButton({
-    required this.tab,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final _InsuranceTab tab;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      key: StakingInsurancePage.tabKey(tab.name),
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.earnTopPaddingX4,
-      onTap: onTap,
-      child: Column(
-        children: [
-          Text(
-            _tabLabel(tab),
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.primarySoft : AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
+      variant: VitTabBarVariant.segment,
+      activeKey: active.name,
+      onChanged: (key) => onChanged(_InsuranceTab.values.byName(key)),
+      tabs: [
+        for (final tab in _InsuranceTab.values)
+          VitTabItem(
+            key: tab.name,
+            label: _tabLabel(tab),
+            widgetKey: StakingInsurancePage.tabKey(tab.name),
           ),
-          const SizedBox(height: AppSpacing.x4),
-          AnimatedSize(
-            duration: const Duration(milliseconds: 160),
-            child: SizedBox(
-              width: selected ? AppSpacing.buttonHero : 0,
-              height: AppSpacing.stakingInsuranceTabIndicatorHeight,
-              child: Material(
-                color: selected ? AppColors.primarySoft : AppColors.transparent,
-                borderRadius: AppRadii.xsRadius,
-              ),
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 }

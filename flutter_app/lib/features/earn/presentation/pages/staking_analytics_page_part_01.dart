@@ -77,6 +77,11 @@ class _StakingAnalyticsPageState extends ConsumerState<StakingAnalyticsPage> {
                         _RoiTab(snapshot: snapshot)
                       else
                         _ProductsTab(snapshot: snapshot),
+                      const EarnDisclaimerBanner(
+                        text:
+                            'APY là ước tính tham khảo và có thể thay đổi. '
+                            'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
+                      ),
                       _FooterNote(note: snapshot.footerNote),
                     ],
                   ),
@@ -137,18 +142,18 @@ class _SummaryCard extends StatelessWidget {
               Expanded(
                 child: _SummaryMetric(
                   icon: Icons.percent_rounded,
-                  label: 'APY TB',
+                  label: 'APY ước tính',
                   value: '${snapshot.summary.averageApy.toStringAsFixed(1)}%',
-                  color: AppColors.primarySoft,
+                  color: AppModuleAccents.earn,
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: _SummaryMetric(
                   icon: Icons.trending_up_rounded,
-                  label: 'Tốt nhất',
+                  label: 'ROI tham chiếu',
                   value: '${snapshot.summary.bestRoi.toStringAsFixed(1)}%',
-                  color: AppColors.warn,
+                  color: AppColors.text2,
                 ),
               ),
             ],
@@ -298,7 +303,7 @@ class _CalculatorCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
-                child: _CalculatorMetric(label: 'APY', value: '$apy%'),
+                child: _CalculatorMetric(label: 'APY ước tính', value: '$apy%'),
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -382,15 +387,13 @@ class _AnalyticsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.earnHorizontalPaddingX2,
-        child: VitSegmentedTabBar(
-          activeKey: activeTab,
-          onChanged: onChanged,
-          tabs: [
-            for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
-          ],
-        ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: activeTab,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
+      ],
     );
   }
 }

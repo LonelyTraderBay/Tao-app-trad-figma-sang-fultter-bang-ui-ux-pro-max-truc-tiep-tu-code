@@ -9,8 +9,9 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -36,10 +37,10 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
     final controller = ref.watch(stakingEmergencyActionsControllerProvider);
     final snapshot = controller.state.snapshot;
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -48,8 +49,10 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Hành động khẩn cấp cần xác nhận',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -59,9 +62,7 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
@@ -77,9 +78,9 @@ class StakingEmergencyActionsPage extends ConsumerWidget {
                       _FooterNote(note: snapshot.footerNote),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Emergency action confirmation review',
+                        title: 'Xác nhận hành động khẩn cấp',
                         message:
-                            'Pause, emergency withdrawal, penalty impact, current status, monitoring, and support next steps are reviewed before Earn emergency actions execute.',
+                            'Tạm dừng, rút khẩn cấp, phí phạt, trạng thái hiện tại, giám sát và bước hỗ trợ được xem xét trước khi thực thi.',
                         contractId: 'SC-385',
                       ),
                     ],
@@ -236,7 +237,7 @@ class _EmergencyActionsSection extends StatelessWidget {
     return VitPageSection(
       key: StakingEmergencyActionsPage.actionsKey,
       label: 'Available Actions',
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [
         for (final action in actions)
           _EmergencyActionCard(action: action, onTap: () => onTap(action)),
@@ -316,7 +317,7 @@ class _UseCasesSection extends StatelessWidget {
     return VitPageSection(
       key: StakingEmergencyActionsPage.useCasesKey,
       label: 'When to Use Emergency Actions',
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [
         VitCard(
           radius: VitCardRadius.large,
@@ -403,7 +404,7 @@ class _CurrentStatusSection extends StatelessWidget {
     return VitPageSection(
       key: StakingEmergencyActionsPage.statusKey,
       label: 'Current Status',
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [
         VitCard(
           radius: VitCardRadius.large,
@@ -490,7 +491,7 @@ Color _toneColor(String tone) {
     'warning' || 'high' => AppColors.warn,
     'success' => AppColors.buy,
     'neutral' => AppColors.text2,
-    _ => AppColors.primarySoft,
+    _ => AppModuleAccents.earn,
   };
 }
 

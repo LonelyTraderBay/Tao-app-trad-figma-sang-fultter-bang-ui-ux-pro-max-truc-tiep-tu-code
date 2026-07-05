@@ -15,8 +15,6 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_data_analytics_widgets.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
-import '../widgets/trade_body_review_widgets.dart';
-
 const _liveBackground = AppColors.bg;
 
 class LiveMarketDataAnalyticsPage extends ConsumerStatefulWidget {
@@ -51,8 +49,8 @@ class _LiveMarketDataAnalyticsPageState
         color: _liveBackground,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Live Market Analytics',
-            subtitle: 'Real-Time Data',
+            title: 'Phân tích trực tiếp',
+            subtitle: 'Dữ liệu realtime',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.tradeMargin),
           ),
@@ -78,9 +76,9 @@ class _LiveMarketDataAnalyticsPageState
                       children: [
                         const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review real-time market risk',
+                        title: 'Xem lại rủi ro dữ liệu trực tiếp',
                         message:
-                            'Live feeds can move or disconnect during volatility. Confirm liquidity, limits, and execution risk before trading.',
+                            'Luồng realtime có thể trễ hoặc ngắt khi biến động mạnh. Xác nhận thanh khoản, giới hạn và rủi ro khớp lệnh trước khi giao dịch.',
                       ),
                       LiveMarketPairCard(snapshot: snapshot),
                       LiveMarketUnderlineTabs(
@@ -89,18 +87,6 @@ class _LiveMarketDataAnalyticsPageState
                         keyBuilder: LiveMarketDataAnalyticsPage.tabKey,
                       ),
                       LiveMarketTabContent(activeTab: _tab, snapshot: snapshot),
-                      const TradeBodyReviewSection(
-                        title: 'Live data review',
-                        message: 'Live market analytics body reviewed',
-                        detail:
-                            'Feed, liquidity, latency, tab, empty, and reconnect states remain visible before trading.',
-                        primary:
-                            'Pair and feed health stay above tabbed analytics.',
-                        secondary:
-                            'Latency and liquidity metrics remain informational before execution.',
-                        tertiary:
-                            'Disconnected or delayed data remains separated from order placement.',
-                      ),
                       ],
                     ),
                   ),

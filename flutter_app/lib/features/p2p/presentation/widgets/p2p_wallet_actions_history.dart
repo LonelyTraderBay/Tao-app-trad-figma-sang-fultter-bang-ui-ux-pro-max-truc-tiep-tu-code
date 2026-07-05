@@ -121,7 +121,7 @@ class _TransactionRow extends StatelessWidget {
         children: [
           Material(
             color: color.withValues(alpha: .14),
-            borderRadius: AppRadii.lgRadius,
+            borderRadius: AppRadii.smRadius,
             child: SizedBox(
               width: _p2pWalletIconBoxExtent,
               height: _p2pWalletIconBoxExtent,

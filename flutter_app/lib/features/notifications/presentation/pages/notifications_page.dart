@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/notifications_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -29,6 +31,9 @@ class NotificationsPage extends ConsumerStatefulWidget {
   static const filterKey = Key('sc291_notifications_filter');
   static const markAllReadKey = Key('sc291_notifications_mark_all_read');
   static const emptyKey = Key('sc291_notifications_empty');
+  static const loadingKey = Key('sc291_notifications_loading');
+  static const errorKey = Key('sc291_notifications_error');
+  static const offlineKey = Key('sc291_notifications_offline');
 
   static Key notificationKey(String id) => Key('sc291_notification_$id');
   static Key deleteKey(String id) => Key('sc291_delete_$id');
@@ -57,6 +62,9 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
             ? DeviceMetrics.bottomChrome + AppSpacing.x6
             : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
         MediaQuery.paddingOf(context).bottom;
+    final showOfflineBanner =
+        snapshot.screenState == NotificationsScreenState.offline &&
+        notifications.isNotEmpty;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -73,6 +81,24 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              _NotificationFilterBand(
+                filter: _filter,
+                onChanged: _setFilter,
+              ),
+              if (showOfflineBanner)
+                Padding(
+                  key: NotificationsPage.offlineKey,
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    0,
+                  ),
+                  child: const VitOfflineBanner(
+                    message: 'Đang ngoại tuyến',
+                    detail: 'Hiển thị thông báo đã lưu gần nhất.',
+                  ),
+                ),
               Expanded(
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(
@@ -83,39 +109,26 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.notificationsScrollPadding(bottomInset),
                     child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
+                      density: VitDensity.compact,
                       children: [
-                        _NotificationToolbar(
-                          unreadCount: unreadCount,
-                          filter: _filter,
-                          onToggleFilter: _toggleFilter,
-                          onMarkAllRead: unreadCount > 0 ? _markAllRead : null,
-                        ),
-                        if (filtered.isEmpty)
-                          VitEmptyState(
-                            key: NotificationsPage.emptyKey,
-                            title: _filter == _NotificationFilter.unread
-                                ? 'Không có thông báo chưa đọc'
-                                : 'Chưa có thông báo nào',
-                            message:
-                                'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
-                            icon: Icons.notifications_off_rounded,
-                            actionLabel: _filter == _NotificationFilter.unread
-                                ? 'Xem tất cả'
-                                : null,
-                            onAction: _filter == _NotificationFilter.unread
-                                ? _toggleFilter
-                                : null,
-                          )
-                        else
-                          _NotificationList(
-                            notifications: filtered,
-                            onOpen: _openNotification,
-                            onDelete: _deleteNotification,
+                        if (snapshot.screenState ==
+                            NotificationsScreenState.ready)
+                          _UnreadSummaryBar(
+                            unreadCount: unreadCount,
+                            onMarkAllRead:
+                                unreadCount > 0 ? _markAllRead : null,
                           ),
-                        if (filtered.isNotEmpty)
-                          _ListFooter(count: filtered.length),
+                        _NotificationsBody(
+                          screenState: snapshot.screenState,
+                          notifications: filtered,
+                          filter: _filter,
+                          onRetry: () => ref
+                              .read(notificationsStateProvider.notifier)
+                              .resetFromRepository(),
+                          onToggleFilter: _toggleFilter,
+                          onOpen: _openNotification,
+                          onDelete: _deleteNotification,
+                        ),
                       ],
                     ),
                   ),
@@ -128,13 +141,18 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
     );
   }
 
-  void _toggleFilter() {
+  void _setFilter(_NotificationFilter filter) {
+    if (_filter == filter) return;
     HapticFeedback.selectionClick();
-    setState(() {
-      _filter = _filter == _NotificationFilter.all
+    setState(() => _filter = filter);
+  }
+
+  void _toggleFilter() {
+    _setFilter(
+      _filter == _NotificationFilter.all
           ? _NotificationFilter.unread
-          : _NotificationFilter.all;
-    });
+          : _NotificationFilter.all,
+    );
   }
 
   void _markAllRead() {

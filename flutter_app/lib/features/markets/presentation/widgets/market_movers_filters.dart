@@ -112,33 +112,44 @@ class _CategoryDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      key: MarketMoversPage.categoryDropdownKey,
-      variant: VitCardVariant.inner,
-      height: VitDensity.compact.controlHeight,
-      padding: AppSpacing.marketCategoryDropdownPadding,
-      onTap: onTap,
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              'Danh mục: $category',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.medium,
-              ),
+    return Material(
+      color: AppColors.surface2,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadii.inputRadius,
+        side: const BorderSide(color: AppColors.divider),
+      ),
+      child: InkWell(
+        key: MarketMoversPage.categoryDropdownKey,
+        onTap: onTap,
+        borderRadius: AppRadii.inputRadius,
+        child: SizedBox(
+          height: VitDensity.compact.controlHeight,
+          child: Padding(
+            padding: AppSpacing.marketCategoryDropdownPadding,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Danh mục: $category',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.text1,
+                      fontWeight: AppTextStyles.medium,
+                    ),
+                  ),
+                ),
+                Icon(
+                  expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.text2,
+                  size: AppSpacing.iconSm,
+                ),
+              ],
             ),
           ),
-          Icon(
-            expanded
-                ? Icons.keyboard_arrow_up_rounded
-                : Icons.keyboard_arrow_down_rounded,
-            color: AppColors.text2,
-            size: AppSpacing.iconSm,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -157,21 +168,18 @@ class _CategoryPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.marketFilterSheetPadding,
-      child: Wrap(
-        spacing: AppSpacing.marketFilterGap,
-        runSpacing: AppSpacing.marketFilterGap,
-        children: [
-          for (final category in categories)
-            _FilterChipButton(
-              key: Key('sc010_category_$category'),
-              label: category,
-              active: category == activeCategory,
-              onTap: () => onSelected(category),
-            ),
-        ],
-      ),
+    return Wrap(
+      spacing: AppSpacing.marketFilterGap,
+      runSpacing: AppSpacing.marketFilterGap,
+      children: [
+        for (final category in categories)
+          _FilterChipButton(
+            key: Key('sc010_category_$category'),
+            label: category,
+            active: category == activeCategory,
+            onTap: () => onSelected(category),
+          ),
+      ],
     );
   }
 }

@@ -1,66 +1,100 @@
 part of '../pages/p2p_blacklist_page.dart';
 
-class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({required this.snapshot, required this.entries});
+class _BlacklistStats extends StatelessWidget {
+  const _BlacklistStats({required this.snapshot, required this.entries});
 
   final P2PBlacklistSnapshot snapshot;
   final List<P2PBlacklistEntryDraft> entries;
 
   @override
   Widget build(BuildContext context) {
-    final counts = _reasonCounts(entries);
-    return VitCard(
+    final recentCount = entries.where((item) => item.recent30d).length;
+    final reasonCount = _reasonCounts(
+      entries,
+    ).values.where((count) => count > 0).length;
+
+    return Row(
       key: P2PBlacklistPage.summaryKey,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.p2pBlacklistListCardPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              const _ReasonIconBubble(
-                icon: Icons.person_remove_alt_1_outlined,
-                color: AppColors.sell,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${entries.length} người dùng',
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      '${entries.where((item) => item.recent30d).length} chặn trong 30 ngày qua',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      children: [
+        Expanded(
+          child: _StatTile(
+            icon: Icons.person_remove_alt_1_outlined,
+            value: '${entries.length}',
+            label: 'Đã chặn',
+            color: AppModuleAccents.p2p,
           ),
-          const SizedBox(height: _p2pBlacklistSectionGap),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            clipBehavior: Clip.none,
-            child: Row(
-              children: [
-                for (final reason in snapshot.reasons)
-                  if ((counts[reason.id] ?? 0) > 0) ...[
-                    _ReasonCountPill(
-                      reason: reason,
-                      count: counts[reason.id] ?? 0,
-                    ),
-                    const SizedBox(width: AppSpacing.x1),
-                  ],
-              ],
+        ),
+        const SizedBox(width: AppSpacing.x3),
+        Expanded(
+          child: _StatTile(
+            icon: Icons.schedule_rounded,
+            value: '$recentCount',
+            label: '30 ngày qua',
+            color: AppColors.warn,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.x3),
+        Expanded(
+          child: _StatTile(
+            icon: Icons.block_rounded,
+            value: '$reasonCount',
+            label: 'Lý do',
+            color: AppColors.sell,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StatTile extends StatelessWidget {
+  const _StatTile({
+    required this.icon,
+    required this.value,
+    required this.label,
+    required this.color,
+  });
+
+  final IconData icon;
+  final String value;
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.large,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x2,
+        vertical: AppSpacing.x2,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox.square(
+            dimension: AppSpacing.buttonCompact,
+            child: Material(
+              type: MaterialType.transparency,
+              color: color.withValues(alpha: .12),
+              borderRadius: AppRadii.lgRadius,
+              child: Icon(icon, color: color, size: AppSpacing.iconMd),
             ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            value,
+            style: AppTextStyles.baseMedium.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -136,7 +170,9 @@ class _FilterChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = filter.id == 'all' ? AppColors.primary : _reasonColor(filter);
+    final color = filter.id == 'all'
+        ? AppModuleAccents.p2p
+        : _reasonColor(filter);
     return VitChoicePill(
       key: P2PBlacklistPage.filterKey(filter.id),
       label: filter.label,

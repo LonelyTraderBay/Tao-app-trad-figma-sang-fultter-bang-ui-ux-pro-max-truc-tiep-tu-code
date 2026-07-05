@@ -25,7 +25,6 @@ class _ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final riskColor = _riskColor(product.riskLevel);
     final accent = _productAccent(product);
 
     return VitCard(
@@ -55,6 +54,12 @@ class _ProductCard extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
+                        VitStatusPill(
+                          label: _productTypeLabel(product.type),
+                          status: VitStatusPillStatus.neutral,
+                          icon: _productTypeIcon(product.type),
+                          size: VitStatusPillSize.sm,
+                        ),
                         if (product.isHot)
                           const _StatusBadge(
                             label: 'HOT',
@@ -70,25 +75,13 @@ class _ProductCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: AppSpacing.x1),
-                    Row(
-                      children: [
-                        Icon(
-                          _productTypeIcon(product.type),
-                          color: _productTypeColor(product.type),
-                          size: AppSpacing.iconSm,
-                        ),
-                        const SizedBox(width: AppSpacing.x1),
-                        Expanded(
-                          child: Text(
-                            '${product.lockLabel} - ${product.participants}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.captionSm.copyWith(
-                              color: AppColors.text2,
-                            ),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      '${product.lockLabel} · ${product.participants}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.captionSm.copyWith(
+                        color: AppColors.text2,
+                      ),
                     ),
                   ],
                 ),
@@ -100,26 +93,27 @@ class _ProductCard extends StatelessWidget {
                   Text(
                     product.apy,
                     style: AppTextStyles.amountXs.copyWith(
-                      color: AppColors.buy,
+                      color: AppModuleAccents.earn,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   Text(
-                    'APY',
+                    'APY uoc tinh',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                   if (product.boostApy != null)
                     Text(
-                      product.boostApy!,
+                      'Toi da ${product.boostApy!.replaceFirst('Max ', '')}',
                       style: AppTextStyles.micro.copyWith(
-                        color: AppColors.warn,
-                        fontWeight: AppTextStyles.bold,
+                        color: AppColors.text3,
+                        fontWeight: AppTextStyles.medium,
                       ),
                     ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -128,19 +122,32 @@ class _ProductCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              Text(
-                'Rui ro: ${_riskLabel(product.riskLevel)}',
-                style: AppTextStyles.micro.copyWith(
-                  color: riskColor,
-                  fontWeight: AppTextStyles.bold,
-                ),
+              VitStatusPill(
+                label: 'Rui ro: ${_riskLabel(product.riskLevel)}',
+                status: _riskPillStatus(product.riskLevel),
+                size: VitStatusPillSize.sm,
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
           _ProgressBar(progress: product.progress, color: accent),
+          const SizedBox(height: AppSpacing.x3),
+          VitCtaButton(
+            height: AppSpacing.inputHeight - AppSpacing.x1,
+            variant: VitCtaButtonVariant.secondary,
+            onPressed: () {},
+            child: const Text('Xem chi tiet'),
+          ),
         ],
       ),
     );
   }
+}
+
+VitStatusPillStatus _riskPillStatus(EarnRiskLevel riskLevel) {
+  return switch (riskLevel) {
+    EarnRiskLevel.low => VitStatusPillStatus.success,
+    EarnRiskLevel.medium => VitStatusPillStatus.warning,
+    EarnRiskLevel.high => VitStatusPillStatus.error,
+  };
 }

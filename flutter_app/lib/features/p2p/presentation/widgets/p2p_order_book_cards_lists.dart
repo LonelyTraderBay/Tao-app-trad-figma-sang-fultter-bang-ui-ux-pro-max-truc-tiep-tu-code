@@ -80,7 +80,7 @@ class _BestPriceCards extends StatelessWidget {
       children: [
         Expanded(
           child: _BestPriceCard(
-            title: 'BID CAO NHẤT',
+            title: 'Bid cao nhất',
             icon: Icons.trending_up_rounded,
             entry: snapshot.bestBid,
             asset: snapshot.selectedAsset.asset,
@@ -90,7 +90,7 @@ class _BestPriceCards extends StatelessWidget {
         const SizedBox(width: _p2pOrderBookSectionGap),
         Expanded(
           child: _BestPriceCard(
-            title: 'ASK THẤP NHẤT',
+            title: 'Ask thấp nhất',
             icon: Icons.trending_down_rounded,
             entry: snapshot.bestAsk,
             asset: snapshot.selectedAsset.asset,
@@ -120,8 +120,7 @@ class _BestPriceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      radius: VitCardRadius.large,
-      variant: VitCardVariant.inner,
+      radius: VitCardRadius.standard,
       borderColor: tone.withValues(alpha: .28),
       padding: AppSpacing.p2pOrderBookCardPadding,
       child: Column(
@@ -211,7 +210,7 @@ class _OrderBookLists extends StatelessWidget {
       children: [
         Expanded(
           child: _OrderBookSide(
-            title: 'MUA (BID)',
+            title: 'Mua (Bid)',
             entries: snapshot.bids,
             maxTotal: snapshot.maxTotal,
             tone: AppColors.buy,
@@ -220,7 +219,7 @@ class _OrderBookLists extends StatelessWidget {
         const SizedBox(width: _p2pOrderBookSectionGap),
         Expanded(
           child: _OrderBookSide(
-            title: 'BÁN (ASK)',
+            title: 'Bán (Ask)',
             entries: snapshot.asks,
             maxTotal: snapshot.maxTotal,
             tone: AppColors.sell,

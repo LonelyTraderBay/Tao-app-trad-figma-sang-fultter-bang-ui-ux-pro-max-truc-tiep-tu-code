@@ -96,42 +96,37 @@ class WalletDcaCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: _walletDcaGap),
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
-            padding: VitDensity.compact.cardPadding,
-            borderColor: _walletAmber.withValues(alpha: .24),
-            child: Row(
-              children: [
-                _IconCircle(
-                  icon: Icons.schedule_rounded,
-                  color: _walletAmber,
-                  size: _walletDcaStatIcon,
-                ),
-                const SizedBox(width: _walletDcaGap),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        'Giao dịch tiếp theo',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                        ),
+          Row(
+            children: [
+              _IconCircle(
+                icon: Icons.schedule_rounded,
+                color: _walletAmber,
+                size: _walletDcaStatIcon,
+              ),
+              const SizedBox(width: _walletDcaGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Giao dịch tiếp theo',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        dca.nextTrade,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                        ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      dca.nextTrade,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

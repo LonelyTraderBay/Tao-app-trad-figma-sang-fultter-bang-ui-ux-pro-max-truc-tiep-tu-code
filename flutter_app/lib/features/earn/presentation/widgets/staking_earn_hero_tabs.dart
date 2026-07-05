@@ -10,91 +10,30 @@ class _EarnHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      padding: AppSpacing.cardPaddingCompact,
+      child: Row(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tong thu nhap (USD)',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      snapshot.totalEarnedUsd,
-                      style: AppTextStyles.amountMd.copyWith(
-                        color: AppColors.buy,
-                        fontFeatures: AppTextStyles.tabularFigures,
-                      ),
-                    ),
-                    Text(
-                      'Tich luy tu truoc den nay',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              VitCard(
-                variant: VitCardVariant.inner,
-                padding: AppSpacing.earnCardPaddingX4X3,
-                child: Column(
-                  children: [
-                    Text(
-                      '${snapshot.activePositions}',
-                      style: AppTextStyles.amountSm.copyWith(
-                        color: AppColors.buy,
-                      ),
-                    ),
-                    Text(
-                      'Vi the hoat dong',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          Expanded(
+            child: _HeroKpi(
+              label: 'Tong stake',
+              value: _stakedHeroValue(snapshot.positions),
+              caption: snapshot.positions.isEmpty
+                  ? 'Chua co vi the'
+                  : '${snapshot.activePositions} vi the dang hoat dong',
+              valueColor: AppColors.text1,
+            ),
           ),
-          const SizedBox(height: AppSpacing.x4),
-          Row(
-            children: [
-              Expanded(
-                child: _HeroPill(
-                  icon: Icons.bolt_rounded,
-                  label: snapshot.maxApyLabel,
-                  color: AppColors.warn,
-                ),
+          Container(width: 1, height: AppSpacing.x6, color: AppColors.border),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: AppSpacing.x4),
+              child: _HeroKpi(
+                label: 'APY uoc tinh',
+                value: _apyEstimateRange(snapshot.products),
+                caption: 'Tham khao, co the thay doi',
+                valueColor: AppModuleAccents.earn,
               ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _HeroPill(
-                  icon: Icons.shield_outlined,
-                  label: snapshot.fundProtectionLabel,
-                  color: AppColors.buy,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _HeroPill(
-                  key: StakingEarnPage.savingsButtonKey,
-                  icon: Icons.savings_outlined,
-                  label: 'Tiet kiem',
-                  color: AppColors.text2,
-                  onTap: () => context.go(snapshot.savingsRoute),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),
@@ -102,47 +41,44 @@ class _EarnHero extends StatelessWidget {
   }
 }
 
-class _HeroPill extends StatelessWidget {
-  const _HeroPill({
-    super.key,
-    required this.icon,
+class _HeroKpi extends StatelessWidget {
+  const _HeroKpi({
     required this.label,
-    required this.color,
-    this.onTap,
+    required this.value,
+    required this.caption,
+    required this.valueColor,
   });
 
-  final IconData icon;
   final String label;
-  final Color color;
-  final VoidCallback? onTap;
+  final String value;
+  final String caption;
+  final Color valueColor;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      onTap: onTap,
-      padding: AppSpacing.earnCardPaddingX3,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.x2),
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
-              ),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          style: AppTextStyles.heroNumber.copyWith(
+            color: valueColor,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          caption,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
     );
   }
 }
@@ -169,11 +105,13 @@ class _MainTabs extends StatelessWidget {
           key: _EarnTab.products.name,
           label: 'San pham',
           icon: Icons.inventory_2_outlined,
+          widgetKey: StakingEarnPage.productsTabKey,
         ),
         VitTabItem(
           key: _EarnTab.positions.name,
           label: 'Cua toi ($positionCount)',
           icon: Icons.business_center_outlined,
+          widgetKey: StakingEarnPage.positionsTabKey,
         ),
       ],
     );
@@ -188,80 +126,68 @@ class _FilterRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      physics: const ClampingScrollPhysics(),
-      child: Row(
-        children: [
-          for (final filter in _EarnFilter.values) ...[
-            _FilterChip(
-              key: StakingEarnPage.filterKey(filter.name),
-              filter: filter,
-              selected: filter == activeFilter,
-              onTap: () => onChanged(filter),
-            ),
-            if (filter != _EarnFilter.values.last)
-              const SizedBox(width: AppSpacing.x1),
-          ],
-        ],
-      ),
+    return VitPresetChipRow<_EarnFilter>(
+      accentColor: AppModuleAccents.earn,
+      selectedValue: activeFilter,
+      onTap: onChanged,
+      items: [
+        for (final filter in _EarnFilter.values)
+          VitPresetChipItem(
+            value: filter,
+            label: _filterLabel(filter),
+            key: StakingEarnPage.filterKey(filter.name),
+            semanticLabel: 'Loc san pham ${_filterLabel(filter)}',
+          ),
+      ],
     );
   }
 }
 
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    super.key,
-    required this.filter,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final _EarnFilter filter;
-  final bool selected;
-  final VoidCallback onTap;
+class _YieldDisclaimer extends StatelessWidget {
+  const _YieldDisclaimer();
 
   @override
   Widget build(BuildContext context) {
-    final icon = _filterIcon(filter);
-
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.large,
-      onTap: onTap,
-      clip: true,
-      padding: AppSpacing.earnSmallPillPadding,
-      background: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: selected ? AppColors.primary12 : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.xlRadius,
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) ...[
-            Icon(
-              icon,
-              color: selected ? AppColors.primary : AppColors.text2,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-          ],
-          Text(
-            _filterLabel(filter),
-            style: AppTextStyles.micro.copyWith(
-              color: selected ? AppColors.primary : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
-      ),
+    return Text(
+      'APY la uoc tinh tham khao va co the thay doi. Gia tai san va APY co the bien dong; DeFi co rui ro smart contract.',
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      textAlign: TextAlign.center,
     );
   }
+}
+
+String _stakedHeroValue(List<EarnPositionDraft> positions) {
+  if (positions.isEmpty) {
+    return 'Chua stake';
+  }
+  if (positions.length == 1) {
+    return positions.first.amount;
+  }
+  return '${positions.length} vi the';
+}
+
+String _apyEstimateRange(List<EarnProductDraft> products) {
+  if (products.isEmpty) {
+    return '--';
+  }
+
+  final values = products
+      .map((product) => _parseApyPercent(product.apy))
+      .whereType<double>()
+      .toList();
+  if (values.isEmpty) {
+    return '--';
+  }
+
+  final minApy = values.reduce((a, b) => a < b ? a : b);
+  final maxApy = values.reduce((a, b) => a > b ? a : b);
+  if ((maxApy - minApy).abs() < 0.05) {
+    return '${minApy.toStringAsFixed(1)}%';
+  }
+  return '${minApy.toStringAsFixed(1)}–${maxApy.toStringAsFixed(1)}%';
+}
+
+double? _parseApyPercent(String apy) {
+  final normalized = apy.replaceAll('%', '').trim();
+  return double.tryParse(normalized);
 }

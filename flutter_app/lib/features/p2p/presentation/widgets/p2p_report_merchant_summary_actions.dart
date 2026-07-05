@@ -9,13 +9,13 @@ class _MerchantSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final merchant = snapshot.merchant;
     return VitCard(
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
+      padding: AppSpacing.p2pRiskControlsInnerPadding,
       child: Row(
         children: [
           VitAssetAvatar(
             label: merchant.name,
             accentColor: AppModuleAccents.p2p,
-            size: AppSpacing.x6,
+            size: AppSpacing.p2pRiskControlsAvatarSize,
             radius: AppRadii.pillRadius,
             border: true,
           ),
@@ -24,19 +24,44 @@ class _MerchantSummaryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  merchant.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        merchant.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                    if (merchant.kycVerified) ...[
+                      const SizedBox(width: AppSpacing.x2),
+                      const VitStatusPill(
+                        label: 'KYC',
+                        status: VitStatusPillStatus.success,
+                        size: VitStatusPillSize.sm,
+                      ),
+                    ],
+                  ],
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   'ID: ${snapshot.merchantId}',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  '${merchant.positiveRate.toStringAsFixed(1)}% tích cực · '
+                  '${merchant.totalTrades} giao dịch',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ],
             ),
@@ -73,10 +98,7 @@ class _ReportActionRow extends StatelessWidget {
       variant: VitCardVariant.ghost,
       borderColor: borderColor,
       background: ColoredBox(color: background),
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.p2pRiskControlsActionPadding,
       onTap: onTap,
       clip: true,
       child: Row(

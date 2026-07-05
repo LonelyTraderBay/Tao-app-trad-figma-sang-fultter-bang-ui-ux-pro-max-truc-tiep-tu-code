@@ -71,7 +71,7 @@ void main() {
     expect(find.byKey(P2POrderBookPage.assetRailKey), findsOneWidget);
     expect(find.byKey(P2POrderBookPage.assetKey('USDT')), findsOneWidget);
     expect(find.byKey(P2POrderBookPage.assetKey('BTC')), findsOneWidget);
-    expect(find.text('+0.80%'), findsNWidgets(2));
+    expect(find.textContaining('+0.80%'), findsNWidgets(2));
     expect(find.byKey(P2POrderBookPage.tickerKey), findsOneWidget);
     expect(find.text('Giá hiện tại'), findsOneWidget);
     expect(find.text('25.300'), findsOneWidget);
@@ -85,11 +85,11 @@ void main() {
     expect(find.byKey(P2POrderBookPage.depthChartKey), findsOneWidget);
     expect(find.text('Biểu đồ độ sâu'), findsOneWidget);
     expect(find.byKey(P2POrderBookPage.bestPricesKey), findsOneWidget);
-    expect(find.text('BID CAO NHẤT'), findsOneWidget);
-    expect(find.text('ASK THẤP NHẤT'), findsOneWidget);
+    expect(find.text('Bid cao nhất'), findsOneWidget);
+    expect(find.text('Ask thấp nhất'), findsOneWidget);
     expect(find.byKey(P2POrderBookPage.orderListsKey), findsOneWidget);
-    expect(find.text('MUA (BID)'), findsOneWidget);
-    expect(find.text('BÁN (ASK)'), findsOneWidget);
+    expect(find.text('Mua (Bid)'), findsOneWidget);
+    expect(find.text('Bán (Ask)'), findsOneWidget);
   });
 
   testWidgets('SC-273 first viewport reaches ticker and best prices', (
@@ -132,7 +132,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('1.715B'), findsOneWidget);
-    expect(find.text('-2.30%'), findsNWidgets(2));
+    expect(find.textContaining('-2.30%'), findsNWidgets(2));
 
     await tester.tap(find.byKey(P2POrderBookPage.refreshKey));
     await tester.pump();

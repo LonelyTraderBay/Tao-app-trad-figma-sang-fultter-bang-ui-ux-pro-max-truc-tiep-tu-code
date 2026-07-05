@@ -2,38 +2,39 @@ part of 'wallet_page_sections.dart';
 
 const double _walletHeroPrimaryActionHeight =
     AppSpacing.searchBarCompactHeight - AppSpacing.x1;
-const double _walletHeroSecondaryActionHeight =
-    AppSpacing.searchBarCompactHeight - AppSpacing.x2;
 const double _walletHeroActionGap = AppSpacing.x2;
 const double _walletBreakdownLabelGap = AppSpacing.x1;
+const double _walletBreakdownDividerHeight = AppSpacing.x6;
 
 class WalletBalanceHero extends StatelessWidget {
   const WalletBalanceHero({
     super.key,
     required this.snapshot,
+    required this.change24hPct,
     required this.hidden,
     required this.onToggle,
     required this.onNavigate,
+    required this.onShowMore,
   });
 
   final WalletSnapshot snapshot;
+  final double change24hPct;
   final bool hidden;
   final VoidCallback onToggle;
   final ValueChanged<String> onNavigate;
+  final VoidCallback onShowMore;
 
   @override
   Widget build(BuildContext context) {
-    const primaryIds = ['deposit', 'withdraw', 'transfer'];
+    const primaryIds = ['deposit', 'withdraw'];
     final actionsById = {
       for (final action in snapshot.actions) action.id: action,
     };
-    final primaryActions = [
-      for (final id in primaryIds)
-        if (actionsById[id] != null) actionsById[id]!,
-    ];
-    final secondaryActions = snapshot.actions
-        .where((action) => !primaryIds.contains(action.id))
-        .toList();
+    final deposit = actionsById['deposit'];
+    final withdraw = actionsById['withdraw'];
+    final hasOverflow = snapshot.actions.any(
+      (action) => !primaryIds.contains(action.id),
+    );
 
     return VitCard(
       variant: VitCardVariant.hero,
@@ -41,24 +42,36 @@ class WalletBalanceHero extends StatelessWidget {
       clip: true,
       padding: VitDensity.compact.cardPadding,
       borderColor: _walletPrimary.withValues(alpha: .20),
-      background: const VitHeroGlow(),
+      background: const VitHeroGlow(center: Alignment(0, -0.96)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               Expanded(
-                child: Text(
-                  'Tổng tài sản ước tính',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.portfolioTextDim,
-                    fontWeight: AppTextStyles.medium,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Tổng tài sản ước tính',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.portfolioTextDim,
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      'Quy USD · theo giá thị trường',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.portfolioTextMuted,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               VitInlineIconAction(
                 key: const Key('sc135_wallet_balance_toggle'),
-                tooltip: hidden ? 'Show balance' : 'Hide balance',
+                tooltip: hidden ? 'Hiện số dư' : 'Ẩn số dư',
                 onPressed: onToggle,
                 icon: hidden
                     ? Icons.visibility_off_outlined
@@ -84,33 +97,86 @@ class WalletBalanceHero extends StatelessWidget {
               color: AppColors.portfolioTextMuted,
             ),
           ),
-          const SizedBox(height: AppSpacing.x3),
-          _BreakdownRow(snapshot: snapshot, hidden: hidden),
-          const SizedBox(height: _walletHeroActionGap),
-          Row(
-            children: [
-              for (var i = 0; i < primaryActions.length; i++) ...[
+          if (!hidden) ...[
+            const SizedBox(height: AppSpacing.x3),
+            Row(
+              children: [
                 Expanded(
-                  child: _HeroActionButton(
-                    action: primaryActions[i],
-                    primary: i == 0,
-                    onTap: () => onNavigate(primaryActions[i].route),
+                  child: Text(
+                    'Biến động 24h',
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.portfolioTextMuted,
+                      fontWeight: AppTextStyles.medium,
+                    ),
                   ),
                 ),
-                if (i != primaryActions.length - 1)
-                  const SizedBox(width: _walletHeroActionGap),
+                VitMetricDeltaPill(
+                  label: _formatPct(change24hPct),
+                  tone: change24hPct >= 0
+                      ? VitMetricDeltaTone.positive
+                      : VitMetricDeltaTone.negative,
+                ),
               ],
-            ],
-          ),
-          if (secondaryActions.isNotEmpty) ...[
+            ),
+          ],
+          const SizedBox(height: AppSpacing.x3),
+          _BreakdownRow(snapshot: snapshot, hidden: hidden),
+          if (deposit != null || withdraw != null || hasOverflow) ...[
             const SizedBox(height: _walletHeroActionGap),
-            _CompactActionRow(
-              actions: secondaryActions,
-              onNavigate: onNavigate,
+            Row(
+              children: [
+                if (deposit != null)
+                  Expanded(
+                    child: _HeroActionButton(
+                      action: deposit,
+                      primary: true,
+                      onTap: () => onNavigate(deposit.route),
+                    ),
+                  ),
+                if (deposit != null && withdraw != null)
+                  const SizedBox(width: _walletHeroActionGap),
+                if (withdraw != null)
+                  Expanded(
+                    child: _HeroActionButton(
+                      action: withdraw,
+                      primary: false,
+                      onTap: () => onNavigate(withdraw.route),
+                    ),
+                  ),
+                if (hasOverflow) ...[
+                  const SizedBox(width: _walletHeroActionGap),
+                  VitInlineIconAction(
+                    key: const Key('sc135_wallet_more_actions'),
+                    tooltip: 'Thêm thao tác',
+                    onPressed: onShowMore,
+                    icon: Icons.more_horiz_rounded,
+                    color: AppColors.portfolioTextDim,
+                  ),
+                ],
+              ],
             ),
           ],
         ],
       ),
+    );
+  }
+}
+
+class WalletPortfolioHint extends StatelessWidget {
+  const WalletPortfolioHint({super.key, required this.onNavigate});
+
+  final ValueChanged<String> onNavigate;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitNextActionCard(
+      icon: Icons.health_and_safety_outlined,
+      title: 'Điểm sức khỏe ví',
+      subtitle: 'Bảo mật và đa dạng hóa danh mục',
+      statusLabel: 'Gợi ý',
+      ctaLabel: 'Xem',
+      accentColor: _walletPrimary,
+      onTap: () => onNavigate('/wallet/health-score'),
     );
   }
 }
@@ -168,52 +234,6 @@ class _HeroActionButton extends StatelessWidget {
   }
 }
 
-class _CompactActionRow extends StatelessWidget {
-  const _CompactActionRow({required this.actions, required this.onNavigate});
-
-  final List<WalletAction> actions;
-  final ValueChanged<String> onNavigate;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (var i = 0; i < actions.length; i++) ...[
-          Expanded(
-            child: _CompactActionChip(
-              action: actions[i],
-              onTap: () => onNavigate(actions[i].route),
-            ),
-          ),
-          if (i != actions.length - 1)
-            const SizedBox(width: _walletHeroActionGap),
-        ],
-      ],
-    );
-  }
-}
-
-class _CompactActionChip extends StatelessWidget {
-  const _CompactActionChip({required this.action, required this.onTap});
-
-  final WalletAction action;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Color(action.colorHex);
-    return VitCtaButton(
-      key: Key('sc135_wallet_action_${action.id}'),
-      height: _walletHeroSecondaryActionHeight,
-      density: VitDensity.compact,
-      variant: VitCtaButtonVariant.ghost,
-      onPressed: onTap,
-      leading: Icon(_actionIcon(action.iconKey), color: color),
-      child: Text(action.label),
-    );
-  }
-}
-
 class _BreakdownRow extends StatelessWidget {
   const _BreakdownRow({required this.snapshot, required this.hidden});
 
@@ -233,43 +253,42 @@ class _BreakdownRow extends StatelessWidget {
       ('Đóng băng', snapshot.frozenUsd, _walletRed, Icons.lock_outline_rounded),
     ];
 
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: VitDensity.compact.cardPadding,
-      borderColor: AppColors.onAccent.withValues(alpha: .08),
-      child: Row(
-        children: [
-          for (var i = 0; i < items.length; i++) ...[
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: VitStatusPill(
-                      label: items[i].$1,
-                      status: _breakdownStatus(items[i].$3),
-                      icon: items[i].$4,
-                      size: VitStatusPillSize.sm,
-                    ),
+    return Row(
+      children: [
+        for (var i = 0; i < items.length; i++) ...[
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: VitStatusPill(
+                    label: items[i].$1,
+                    status: _breakdownStatus(items[i].$3),
+                    icon: items[i].$4,
+                    size: VitStatusPillSize.sm,
                   ),
-                  const SizedBox(height: _walletBreakdownLabelGap),
-                  Text(
-                    hidden ? '••••' : _formatUsd(items[i].$2),
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
+                ),
+                const SizedBox(height: _walletBreakdownLabelGap),
+                Text(
+                  hidden ? '••••' : _formatUsd(items[i].$2),
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            if (i != items.length - 1) const SizedBox(width: AppSpacing.x1),
-          ],
+          ),
+          if (i != items.length - 1)
+            Container(
+              width: 1,
+              height: _walletBreakdownDividerHeight,
+              color: AppColors.onAccent.withValues(alpha: .08),
+            ),
         ],
-      ),
+      ],
     );
   }
 }

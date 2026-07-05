@@ -7,10 +7,9 @@ import 'package:vit_trade_flutter/features/markets/domain/entities/market_entiti
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-const double _marketMoverCompactHeight = AppSpacing.x7 + AppSpacing.x6;
-const EdgeInsets _marketMoverCompactPadding =
+const double _marketMoverStripHeight = AppSpacing.buttonCompact;
+const EdgeInsets _marketMoverStripPadding =
     AppSpacing.marketListMoverCompactPadding;
-const double _marketMoverCompactGap = AppSpacing.x2;
 
 class MarketListTopMovers extends StatelessWidget {
   const MarketListTopMovers({super.key, required this.pairs});
@@ -24,32 +23,43 @@ class MarketListTopMovers extends StatelessWidget {
     final losers = pairs.where((pair) => pair.change24h < 0).toList()
       ..sort((a, b) => a.change24h.compareTo(b.change24h));
 
-    return Row(
-      children: [
-        Expanded(
-          child: _MoverCard(
-            title: 'Tăng mạnh',
-            icon: Icons.trending_up_rounded,
-            color: AppColors.buy,
-            pairs: gainers.take(2).toList(),
+    return VitCard(
+      height: _marketMoverStripHeight,
+      padding: _marketMoverStripPadding,
+      child: Row(
+        children: [
+          Expanded(
+            child: _MoverStripSection(
+              title: 'Tăng mạnh',
+              icon: Icons.trending_up_rounded,
+              color: AppColors.buy,
+              pairs: gainers.take(2).toList(),
+            ),
           ),
-        ),
-        const SizedBox(width: AppSpacing.marketMoverGap),
-        Expanded(
-          child: _MoverCard(
-            title: 'Giảm mạnh',
-            icon: Icons.trending_down_rounded,
-            color: AppColors.sell,
-            pairs: losers.take(2).toList(),
+          const SizedBox(
+            width: AppSpacing.dividerHairline,
+            height: AppSpacing.x5,
+            child: VerticalDivider(
+              color: AppColors.divider,
+              width: AppSpacing.dividerHairline,
+            ),
           ),
-        ),
-      ],
+          Expanded(
+            child: _MoverStripSection(
+              title: 'Giảm mạnh',
+              icon: Icons.trending_down_rounded,
+              color: AppColors.sell,
+              pairs: losers.take(2).toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _MoverCard extends StatelessWidget {
-  const _MoverCard({
+class _MoverStripSection extends StatelessWidget {
+  const _MoverStripSection({
     required this.title,
     required this.icon,
     required this.color,
@@ -63,60 +73,39 @@ class _MoverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      height: _marketMoverCompactHeight,
-      borderColor: color.withValues(alpha: 0.18),
-      padding: _marketMoverCompactPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: color, size: AppSpacing.marketMoverIcon),
-              const SizedBox(width: AppSpacing.marketMoverIconGap),
-              Flexible(
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: _marketMoverCompactGap),
-          for (final pair in pairs) ...[
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    pair.baseAsset,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.badge.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ),
-                Text(
-                  marketListFormatPct(pair.change24h),
-                  style: AppTextStyles.badge.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
-              ],
+    return Row(
+      children: [
+        Icon(icon, color: color, size: AppSpacing.marketMoverIcon),
+        const SizedBox(width: AppSpacing.x1),
+        Flexible(
+          flex: 0,
+          child: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.badge.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
             ),
-            if (pair != pairs.last)
-              const SizedBox(height: _marketMoverCompactGap),
-          ],
+          ),
+        ),
+        const SizedBox(width: AppSpacing.x2),
+        for (var i = 0; i < pairs.length; i++) ...[
+          if (i > 0) const SizedBox(width: AppSpacing.x2),
+          Flexible(
+            child: Text(
+              '${pairs[i].baseAsset} ${marketListFormatPct(pairs[i].change24h)}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.badge.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+            ),
+          ),
         ],
-      ),
+      ],
     );
   }
 }

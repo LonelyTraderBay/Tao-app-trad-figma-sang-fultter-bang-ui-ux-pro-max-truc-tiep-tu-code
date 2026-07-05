@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -24,6 +25,9 @@ part '../widgets/dca_performance_compare_primitives.dart';
 part '../widgets/dca_performance_compare_painters.dart';
 
 enum _CompareTab { compare, scenarios, analysis }
+
+const double _dcaPerformanceCompareVisualNavClearance = 112;
+const double _dcaPerformanceCompareNativeNavClearance = 88;
 
 class DCAPerformanceComparePage extends ConsumerStatefulWidget {
   const DCAPerformanceComparePage({super.key, this.shellRenderMode});
@@ -47,17 +51,18 @@ class _DCAPerformanceComparePageState
   Widget build(BuildContext context) {
     final snapshot = ref.watch(dcaPerformanceCompareProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? AppSpacing.x7 + AppSpacing.x6
-            : AppSpacing.x7) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _dcaPerformanceCompareVisualNavClearance
+        : _dcaPerformanceCompareNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       semanticLabel: 'SC-178 DCAPerformanceComparePage',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'DCA vs Lump Sum',
+          subtitle: 'Đầu tư có kỷ luật · so sánh chiến lược',
           showBack: true,
           onBack: _close,
         ),
@@ -69,20 +74,34 @@ class _DCAPerformanceComparePageState
               onChanged: (tab) => setState(() => _activeTab = tab),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                key: DCAPerformanceComparePage.contentKey,
-                physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.dcaBottomInsetPadding(scrollEndClearance),
-                child: VitPageContent(
-                  gap: VitContentGap.tight,
-                  children: [
-                    if (_activeTab == _CompareTab.compare)
-                      ..._buildCompare(snapshot),
-                    if (_activeTab == _CompareTab.scenarios)
-                      ..._buildScenarios(snapshot),
-                    if (_activeTab == _CompareTab.analysis)
-                      ..._buildAnalysis(snapshot),
-                  ],
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(scrollbars: false),
+                child: VitInsetScrollView(
+                  key: DCAPerformanceComparePage.contentKey,
+                  physics: const ClampingScrollPhysics(),
+                  bottomInset: scrollEndPadding,
+                  child: VitPageContent(
+                    padding: VitContentPadding.compact,
+                    density: VitDensity.compact,
+                    children: [
+                      if (_activeTab == _CompareTab.compare)
+                        ..._buildCompare(snapshot),
+                      if (_activeTab == _CompareTab.scenarios)
+                        ..._buildScenarios(snapshot),
+                      if (_activeTab == _CompareTab.analysis)
+                        ..._buildAnalysis(snapshot),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'So sánh chỉ mang tính tham khảo',
+                        message:
+                            'Kết quả dựa trên dữ liệu lịch sử; không đảm bảo hiệu suất tương lai. Mọi thay đổi chiến lược DCA cần xem lại trước khi áp dụng.',
+                        contractId: 'SC-178',
+                        density: VitDensity.compact,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -159,7 +178,7 @@ class _DCAPerformanceComparePageState
       ),
       const _WarningCard(
         text:
-            'So sanh dua tren du lieu lich su cu the. Ket qua co the khac trong dieu kien thi truong khac. Khong dam bao hieu suat tuong lai.',
+            'So sánh dựa trên dữ liệu lịch sử cụ thể. Kết quả có thể khác trong điều kiện thị trường khác. Không đảm bảo hiệu suất tương lai.',
       ),
     ];
   }

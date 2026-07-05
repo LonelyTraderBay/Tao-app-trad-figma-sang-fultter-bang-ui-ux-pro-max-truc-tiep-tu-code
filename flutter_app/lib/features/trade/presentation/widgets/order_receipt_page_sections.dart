@@ -61,7 +61,7 @@ class _ReceiptCard extends StatelessWidget {
     final sideColor = isBuy ? AppColors.buy : AppColors.sell;
 
     return VitTradeSection(
-      title: 'Execution summary',
+      title: 'Tóm tắt khớp lệnh',
       headerTrailing: _StatusBadge(
         key: OrderReceiptPage.openOrdersKey,
         status: receipt.status,
@@ -92,7 +92,7 @@ class _ReceiptCard extends StatelessWidget {
             ),
             const Divider(height: 1, color: AppColors.divider),
             _DetailRow(
-              label: 'Order ID',
+              label: 'Mã lệnh',
               value: receipt.orderId,
               trailing: _CopyOrderIdButton(orderId: receipt.orderId),
             ),
@@ -126,7 +126,7 @@ class _ReceiptCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Risk controls',
+                      'Kiểm soát rủi ro',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.textMutedLight,
                         fontWeight: AppTextStyles.bold,
@@ -192,33 +192,11 @@ class _StatusBadge extends StatelessWidget {
       TradeReceiptStatus.partiallyFilled => 'Khớp 1 phần',
     };
 
-    return VitCard(
+    return VitStatusPill(
+      label: label,
+      status: VitStatusPillStatus.info,
+      size: VitStatusPillSize.sm,
       onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x2,
-        vertical: AppSpacing.x1,
-      ),
-      borderColor: _tradePrimary.withValues(alpha: .18),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.schedule_rounded,
-            color: _tradePrimary,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(
-              color: _tradePrimary,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

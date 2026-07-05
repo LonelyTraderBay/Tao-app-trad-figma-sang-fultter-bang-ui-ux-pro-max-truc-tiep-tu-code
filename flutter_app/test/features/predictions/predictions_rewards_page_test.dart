@@ -174,7 +174,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(PredictionEventDetailPage), findsOneWidget);
-    expect(find.text('Event Detail'), findsOneWidget);
+    expect(find.text('Chi tiết sự kiện'), findsOneWidget);
   });
 
   testWidgets('SC-032 Arena edge is wired to Arena Home', (tester) async {

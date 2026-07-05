@@ -14,21 +14,7 @@ class _ComponentLine extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Material(
-            color: color.withValues(alpha: .13),
-            borderRadius: AppRadii.xsRadius,
-            child: Padding(
-              padding: AppSpacing.arenaProductionPillPadding,
-              child: Text(
-                component.type,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppTextStyles.microTiny.height,
-                ),
-              ),
-            ),
-          ),
+          _MiniPill(label: component.type, color: color),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
@@ -37,8 +23,9 @@ class _ComponentLine extends StatelessWidget {
                 Text(
                   component.name,
                   style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppTextStyles.numericMicro.height,
+                    height: AppSpacing.arenaProductionCompactLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -46,7 +33,7 @@ class _ComponentLine extends StatelessWidget {
                   component.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppTextStyles.numericMicro.height,
+                    height: AppSpacing.arenaProductionBodyLineHeight,
                   ),
                 ),
               ],
@@ -65,10 +52,11 @@ class _DictionaryBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _HandoffBoard(
+    return _HandoffCard(
       icon: Icons.menu_book_outlined,
       color: AppColors.warn,
       title: dictionary.category,
+      subtitle: '${dictionary.items.length} entries',
       child: Column(
         children: [
           for (final item in dictionary.items) _DictionaryLine(item: item),
@@ -90,21 +78,7 @@ class _DictionaryLine extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Material(
-            color: AppColors.surface2,
-            borderRadius: AppRadii.xsRadius,
-            child: Padding(
-              padding: AppSpacing.arenaProductionPillPadding,
-              child: Text(
-                item.code,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.bold,
-                  height: AppTextStyles.microTiny.height,
-                ),
-              ),
-            ),
-          ),
+          _MiniPill(label: item.code, color: AppColors.text2),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
@@ -113,8 +87,9 @@ class _DictionaryLine extends StatelessWidget {
                 Text(
                   item.label,
                   style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppTextStyles.numericMicro.height,
+                    height: AppSpacing.arenaProductionCompactLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -122,7 +97,7 @@ class _DictionaryLine extends StatelessWidget {
                   item.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppTextStyles.numericMicro.height,
+                    height: AppSpacing.arenaProductionBodyLineHeight,
                   ),
                 ),
               ],
@@ -157,7 +132,7 @@ class _ChecklistLine extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppTextStyles.numericMicro.height,
+                height: AppSpacing.arenaProductionCheckLineHeight,
               ),
             ),
           ),
@@ -175,12 +150,13 @@ class _InternalOnlyFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      variant: VitCardVariant.inner,
       density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
-            Icons.shield_outlined,
+            Icons.info_outline_rounded,
             color: AppColors.text3,
             size: AppSpacing.arenaProductionChecklistIcon,
           ),
@@ -188,10 +164,9 @@ class _InternalOnlyFooter extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              textAlign: TextAlign.center,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppTextStyles.numericMicro.height,
+                height: AppSpacing.arenaProductionBodyLineHeight,
               ),
             ),
           ),
@@ -208,24 +183,130 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = _statusColor(status);
+    return VitStatusPill(
+      label: _statusLabel(status),
+      status: _statusPillStatus(status),
+      size: VitStatusPillSize.sm,
+    );
+  }
+}
 
-    return Material(
-      color: color.withValues(alpha: .13),
-      borderRadius: AppRadii.xsRadius,
-      child: Padding(
-        padding: AppSpacing.arenaProductionPillPadding,
-        child: Text(
-          _statusLabel(status),
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: AppTextStyles.microTiny.height,
+class _MiniPill extends StatelessWidget {
+  const _MiniPill({required this.label, required this.color});
+
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitAccentPill(
+      label: label,
+      accentColor: color,
+      semanticStatus: _semanticStatusForColor(color),
+    );
+  }
+}
+
+class _TintIcon extends StatelessWidget {
+  const _TintIcon({
+    required this.icon,
+    required this.color,
+    this.small = false,
+  });
+
+  final IconData icon;
+  final Color color;
+  final bool small;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = small
+        ? AppSpacing.arenaEcosystemTintIconBoxSmall
+        : AppSpacing.arenaEcosystemTintIconBox;
+    return SizedBox(
+      width: size,
+      height: size,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: color.withValues(alpha: .12),
+          shape: RoundedRectangleBorder(
+            borderRadius: small ? AppRadii.inputRadius : AppRadii.mdRadius,
+            side: BorderSide(color: color.withValues(alpha: .20)),
           ),
+        ),
+        child: Icon(
+          icon,
+          color: color,
+          size: small
+              ? AppSpacing.arenaEcosystemTintGlyphSmall
+              : AppSpacing.arenaEcosystemTintGlyph,
         ),
       ),
     );
   }
+}
+
+class _SummaryMetric extends StatelessWidget {
+  const _SummaryMetric({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+VitStatusPillStatus _statusPillStatus(ArenaProductionScreenStatus status) {
+  return switch (status) {
+    ArenaProductionScreenStatus.live => VitStatusPillStatus.success,
+    ArenaProductionScreenStatus.future => VitStatusPillStatus.warning,
+    ArenaProductionScreenStatus.qaOnly => VitStatusPillStatus.info,
+    ArenaProductionScreenStatus.archived => VitStatusPillStatus.neutral,
+  };
+}
+
+VitStatusPillStatus _semanticStatusForColor(Color color) {
+  if (color == AppColors.buy) {
+    return VitStatusPillStatus.success;
+  }
+  if (color == AppColors.sell) {
+    return VitStatusPillStatus.error;
+  }
+  if (color == AppColors.warn) {
+    return VitStatusPillStatus.warning;
+  }
+  if (color == AppColors.primary) {
+    return VitStatusPillStatus.info;
+  }
+  if (color == AppModuleAccents.arena) {
+    return VitStatusPillStatus.orange;
+  }
+  if (color == AppColors.accent) {
+    return VitStatusPillStatus.purple;
+  }
+  return VitStatusPillStatus.neutral;
 }
 
 class _StateMiniPill extends StatelessWidget {
@@ -235,19 +316,10 @@ class _StateMiniPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.surface2,
-      borderRadius: AppRadii.xsRadius,
-      child: Padding(
-        padding: AppSpacing.arenaProductionPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.text2,
-            height: AppTextStyles.microTiny.height,
-          ),
-        ),
-      ),
+    return VitAccentPill(
+      label: label,
+      accentColor: AppColors.text2,
+      semanticStatus: VitStatusPillStatus.neutral,
     );
   }
 }
@@ -295,7 +367,9 @@ class _StateMatrixPill extends StatelessWidget {
     return Opacity(
       opacity: active ? 1 : .32,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 64),
+        constraints: const BoxConstraints(
+          minWidth: AppSpacing.arenaProductionStateMatrixMinWidth,
+        ),
         child: Material(
           color: active ? color.withValues(alpha: .12) : AppColors.surface2,
           borderRadius: AppRadii.xsRadius,

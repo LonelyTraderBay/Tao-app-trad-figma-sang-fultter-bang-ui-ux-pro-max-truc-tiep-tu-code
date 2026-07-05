@@ -13,7 +13,10 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref.watch(arenaReadModelControllerProvider).getArenaHome();
+    final controller = ref.watch(arenaReadModelControllerProvider);
+    final snapshot = controller.getArenaHome();
+    final pointsBalance = controller.getArenaPoints().summary.currentBalance;
+    final activeChallenges = _countActiveArenaChallenges(snapshot.liveRooms);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? _arenaHomeVisualNavClearance
@@ -32,7 +35,7 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
             title: 'Open Arena',
-            subtitle: 'Sân chơi cộng đồng',
+            subtitle: 'Hoàn thành · Fair play',
             showBack: true,
             onBack: _close,
           ),
@@ -54,19 +57,43 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
-                        _IntroBlock(
-                          controller: _searchController,
-                          query: _query,
-                          pendingNotifications: snapshot.pendingNotifications,
-                          onChanged: (value) => setState(() => _query = value),
-                          onClear: () => setState(() => _query = ''),
-                          onGuide: () => _go(AppRoutePaths.arenaGuide),
-                          onRewards: () =>
-                              _go('${AppRoutePaths.rewards}?tab=arena'),
-                          onLeaderboard: () =>
-                              _go(AppRoutePaths.arenaLeaderboard),
-                          onMyArena: () => _go(AppRoutePaths.profileArena),
-                        ),
+                        if (hasSearch)
+                          _IntroBlock(
+                            controller: _searchController,
+                            query: _query,
+                            pendingNotifications: snapshot.pendingNotifications,
+                            onChanged: (value) =>
+                                setState(() => _query = value),
+                            onClear: () => setState(() => _query = ''),
+                            onGuide: () => _go(AppRoutePaths.arenaGuide),
+                            onRewards: () =>
+                                _go('${AppRoutePaths.rewards}?tab=arena'),
+                            onLeaderboard: () =>
+                                _go(AppRoutePaths.arenaLeaderboard),
+                            onMyArena: () => _go(AppRoutePaths.profileArena),
+                          )
+                        else ...[
+                          _HeroCard(
+                            pointsBalance: pointsBalance,
+                            activeChallenges: activeChallenges,
+                            onCreate: () => _go(AppRoutePaths.arenaStudio),
+                            onExplore: _scrollToTemplates,
+                          ),
+                          _IntroBlock(
+                            controller: _searchController,
+                            query: _query,
+                            pendingNotifications: snapshot.pendingNotifications,
+                            onChanged: (value) =>
+                                setState(() => _query = value),
+                            onClear: () => setState(() => _query = ''),
+                            onGuide: () => _go(AppRoutePaths.arenaGuide),
+                            onRewards: () =>
+                                _go('${AppRoutePaths.rewards}?tab=arena'),
+                            onLeaderboard: () =>
+                                _go(AppRoutePaths.arenaLeaderboard),
+                            onMyArena: () => _go(AppRoutePaths.profileArena),
+                          ),
+                        ],
                         if (hasSearch)
                           _SearchResults(
                             query: _query,
@@ -78,10 +105,6 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                                 _go(AppRoutePaths.arenaCreator(id)),
                           )
                         else ...[
-                          _HeroCard(
-                            onCreate: () => _go(AppRoutePaths.arenaStudio),
-                            onExplore: _scrollToTemplates,
-                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -104,6 +127,7 @@ class _ArenaHomePageState extends ConsumerState<ArenaHomePage> {
                             rooms: snapshot.liveRooms,
                             onRoom: (id) =>
                                 _go(AppRoutePaths.arenaChallenge(id)),
+                            onGuide: () => _go(AppRoutePaths.arenaGuide),
                           ),
                           _CreatorSpotlightSection(
                             creators: snapshot.creators,
@@ -184,26 +208,6 @@ class _IntroBlock extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                'Tạo mode chơi, mở phòng và thách đấu bằng Arena Points',
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.text2,
-                  height: _arenaHomeIntroLineHeight,
-                ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            const VitStatusPill(
-              label: 'Points only',
-              status: VitStatusPillStatus.orange,
-              size: VitStatusPillSize.sm,
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.x2),
         VitSearchBar(
           key: ArenaHomePage.searchKey,
           controller: controller,
@@ -227,7 +231,7 @@ class _IntroBlock extends StatelessWidget {
               _QuickChip(
                 key: ArenaHomePage.quickRewardsKey,
                 icon: Icons.card_giftcard_rounded,
-                label: 'Kiếm Points',
+                label: 'Phần thưởng',
                 onTap: onRewards,
               ),
               _QuickChip(
@@ -304,8 +308,15 @@ class _QuickChip extends StatelessWidget {
 }
 
 class _HeroCard extends StatelessWidget {
-  const _HeroCard({required this.onCreate, required this.onExplore});
+  const _HeroCard({
+    required this.pointsBalance,
+    required this.activeChallenges,
+    required this.onCreate,
+    required this.onExplore,
+  });
 
+  final int pointsBalance;
+  final int activeChallenges;
   final VoidCallback onCreate;
   final VoidCallback onExplore;
 
@@ -317,41 +328,21 @@ class _HeroCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            'Open Arena',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text3,
-              fontWeight: AppTextStyles.medium,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            'Tạo sân chơi',
-            style: AppTextStyles.sectionTitle.copyWith(
-              fontWeight: AppTextStyles.heavy,
-              height: _arenaHomeHeroTitleLineHeight,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
           Row(
             children: [
-              const VitStatusPill(
-                label: 'Tự đặt luật · Mời bạn bè',
-                icon: Icons.auto_awesome_rounded,
-                status: VitStatusPillStatus.purple,
-                size: VitStatusPillSize.sm,
-              ),
-              const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Text(
-                  'room riêng',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontWeight: AppTextStyles.bold,
+                  'Thử thách cộng đồng',
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    fontWeight: AppTextStyles.heavy,
+                    height: _arenaHomeHeroTitleLineHeight,
                   ),
                 ),
+              ),
+              const VitStatusPill(
+                label: 'Points only',
+                status: VitStatusPillStatus.orange,
+                size: VitStatusPillSize.sm,
               ),
             ],
           ),
@@ -359,35 +350,88 @@ class _HeroCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: VitCtaButton(
-                  key: ArenaHomePage.createChallengeKey,
-                  onPressed: onCreate,
-                  density: VitDensity.compact,
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: AppSpacing.x3,
+                child: _ArenaHeroKpi(
+                  label: 'Điểm Arena',
+                  value: formatArenaPoints(pointsBalance),
+                  valueStyle: AppTextStyles.heroNumber.copyWith(
+                    color: AppColors.text1,
+                    letterSpacing: 0,
                   ),
-                  leading: const Icon(Icons.auto_awesome_rounded),
-                  child: const Text('Tạo challenge'),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x2),
+              Container(
+                width: 1,
+                height: AppSpacing.x6,
+                color: AppColors.border,
+              ),
               Expanded(
-                child: VitCtaButton(
-                  key: ArenaHomePage.exploreModeKey,
-                  onPressed: onExplore,
-                  variant: VitCtaButtonVariant.secondary,
-                  density: VitDensity.compact,
-                  padding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: AppSpacing.x3,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: AppSpacing.x3,
                   ),
-                  leading: const Icon(Icons.search_rounded),
-                  child: const Text('Khám phá mode'),
+                  child: _ArenaHeroKpi(
+                    label: 'Đang mở',
+                    value: '$activeChallenges',
+                    valueStyle: AppTextStyles.heroNumber.copyWith(
+                      color: _arenaAccent,
+                      letterSpacing: 0,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
+          const SizedBox(height: AppSpacing.x2),
+          VitCtaButton(
+            key: ArenaHomePage.createChallengeKey,
+            onPressed: onCreate,
+            density: VitDensity.compact,
+            fullWidth: true,
+            leading: const Icon(Icons.auto_awesome_rounded),
+            child: const Text('Tạo challenge'),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Align(
+            alignment: AlignmentDirectional.center,
+            child: TextButton.icon(
+              key: ArenaHomePage.exploreModeKey,
+              onPressed: onExplore,
+              icon: const Icon(Icons.search_rounded, size: AppSpacing.iconSm),
+              label: const Text('Khám phá mode'),
+            ),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class _ArenaHeroKpi extends StatelessWidget {
+  const _ArenaHeroKpi({
+    required this.label,
+    required this.value,
+    required this.valueStyle,
+  });
+
+  final String label;
+  final String value;
+  final TextStyle valueStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.medium,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(value, style: valueStyle),
+      ],
     );
   }
 }

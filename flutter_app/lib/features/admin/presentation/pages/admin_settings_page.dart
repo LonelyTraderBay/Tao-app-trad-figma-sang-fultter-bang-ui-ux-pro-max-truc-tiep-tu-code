@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -18,8 +20,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 class AdminSettingsPage extends ConsumerWidget {
   const AdminSettingsPage({super.key, this.shellRenderMode});
 
-  static const contentKey = Key('sc180_admin_settings_content');
-  static const routingKey = Key('sc180_admin_settings_routing');
+  static const contentKey = Key('sc410_admin_settings_content');
+  static const routingKey = Key('sc410_admin_settings_routing');
 
   final ShellRenderMode? shellRenderMode;
 
@@ -35,7 +37,7 @@ class AdminSettingsPage extends ConsumerWidget {
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
-      semanticLabel: 'SC-180 AdminSettingsPage',
+      semanticLabel: 'SC-410 AdminSettingsPage',
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Admin Settings',
@@ -146,14 +148,15 @@ class _AdminSettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
+    final content = Padding(
       padding: AppSpacing.adminRowPadding,
-      onTap: onTap,
       child: Row(
         children: [
-          Icon(icon, color: AppColors.primary, size: AppSpacing.adminIconLg),
+          Icon(
+            icon,
+            color: AppModuleAccents.admin,
+            size: AppSpacing.adminIconLg,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -204,6 +207,16 @@ class _AdminSettingsRow extends StatelessWidget {
           ],
         ],
       ),
+    );
+
+    if (onTap == null) {
+      return content;
+    }
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: AppRadii.inputRadius,
+      child: content,
     );
   }
 }

@@ -86,9 +86,22 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        _PeriodTabs(
-                          usages: snapshot.usages,
-                          selectedPeriod: _period,
+                        VitSegmentedChoice<String>(
+                          key: P2PLimitTrackerPage.periodTabsKey,
+                          selected: _period,
+                          height: AppSpacing.buttonCompact,
+                          padding: AppSpacing.p2pLimitTrackerPeriodTabPadding,
+                          options: [
+                            for (final usage in snapshot.usages)
+                              VitSegmentedChoiceOption(
+                                value: usage.period,
+                                label: usage.label,
+                                key: P2PLimitTrackerPage.periodKey(
+                                  usage.period,
+                                ),
+                                accentColor: AppModuleAccents.p2p,
+                              ),
+                          ],
                           onChanged: (period) {
                             HapticFeedback.selectionClick();
                             setState(() => _period = period);
@@ -119,64 +132,6 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _PeriodTabs extends StatelessWidget {
-  const _PeriodTabs({
-    required this.usages,
-    required this.selectedPeriod,
-    required this.onChanged,
-  });
-
-  final List<P2PLimitUsageDraft> usages;
-  final String selectedPeriod;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      key: P2PLimitTrackerPage.periodTabsKey,
-      children: [
-        for (var index = 0; index < usages.length; index++) ...[
-          Expanded(
-            child: _PeriodTab(
-              usage: usages[index],
-              selected: selectedPeriod == usages[index].period,
-              onTap: () => onChanged(usages[index].period),
-            ),
-          ),
-          if (index != usages.length - 1)
-            const SizedBox(width: _p2pLimitSectionGap),
-        ],
-      ],
-    );
-  }
-}
-
-class _PeriodTab extends StatelessWidget {
-  const _PeriodTab({
-    required this.usage,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final P2PLimitUsageDraft usage;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: P2PLimitTrackerPage.periodKey(usage.period),
-      label: usage.label,
-      selected: selected,
-      onTap: onTap,
-      accentColor: AppModuleAccents.p2p,
-      fullWidth: true,
-      height: AppSpacing.buttonCompact,
-      padding: AppSpacing.p2pLimitTrackerPeriodTabPadding,
     );
   }
 }

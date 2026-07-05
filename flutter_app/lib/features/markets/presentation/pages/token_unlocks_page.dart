@@ -24,8 +24,6 @@ part 'token_unlocks_page_part_04.dart';
 const _marketPrimary = AppColors.primary;
 const double _unlockVisualScrollClearance = 108;
 const double _unlockNativeScrollClearance = 72;
-const double _unlockTabsHeight = AppSpacing.buttonCompact;
-const double _unlockTabIndicatorHeight = AppSpacing.dividerHairline;
 const double _unlockHeroLabelGap = AppSpacing.x1;
 const double _unlockHeroValueGap = AppSpacing.x2;
 const double _unlockFilterGap = AppSpacing.x2;
@@ -41,13 +39,10 @@ const double _unlockCategoryGap = AppSpacing.x2;
 const double _unlockCategoryProgressGap = AppSpacing.x1;
 const double _unlockCategoryProgressHeight = 5;
 const double _unlockDilutionRowGap = AppSpacing.x2;
-const double _unlockWarningTitleGap = AppSpacing.x1;
-const double _unlockWarningLineHeight = 1.25;
 const double _unlockScheduleGap = AppSpacing.x2;
 const double _unlockScheduleSupplyGap = AppSpacing.x2;
 const double _unlockScheduleProgressGap = AppSpacing.x1;
 const double _unlockScheduleTitleGap = AppSpacing.x2;
-const double _unlockEmptyGap = AppSpacing.x2;
 
 class TokenUnlocksPage extends ConsumerStatefulWidget {
   const TokenUnlocksPage({super.key, this.shellRenderMode});

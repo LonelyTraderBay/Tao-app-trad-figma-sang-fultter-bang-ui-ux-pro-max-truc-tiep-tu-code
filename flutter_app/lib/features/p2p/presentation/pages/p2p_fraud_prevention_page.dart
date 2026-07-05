@@ -124,6 +124,17 @@ class _P2PFraudPreventionPageState
                         ),
                         _EmergencyActions(snapshot: snapshot),
                         _Disclosure(text: snapshot.disclosure),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: AppSpacing.p2pFraudInnerPadding,
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Rà soát phòng chống gian lận',
+                            message:
+                                'Chỉ số an toàn, checklist, mẫu gian lận, hành động khẩn cấp và cảnh báo pháp lý vẫn hiển thị trước khi tiếp tục giao dịch P2P.',
+                            contractId: 'SC-260',
+                          ),
+                        ),
                       ],
                     ),
                   ),

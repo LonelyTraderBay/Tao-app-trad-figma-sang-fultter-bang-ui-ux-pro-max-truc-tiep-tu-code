@@ -22,7 +22,7 @@ class _LeaderboardBody extends StatelessWidget {
         _Podium(entries: snapshot.podium),
         _EntrySection(
           title: 'Top Creators',
-          accentColor: AppColors.accent,
+          accentColor: _arenaAccent,
           entries: snapshot.topCreators,
           onCreator: onCreator,
         ),

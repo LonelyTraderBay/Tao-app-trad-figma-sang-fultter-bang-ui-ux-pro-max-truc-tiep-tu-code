@@ -43,6 +43,9 @@ class P2PHomePage extends ConsumerStatefulWidget {
   static const myOrdersKey = Key('sc282_p2p_home_my_orders');
   static const createKey = Key('sc282_p2p_home_create');
   static const emptyKey = Key('sc282_p2p_home_empty');
+  static const kycBannerKey = Key('sc282_p2p_home_kyc_banner');
+  static const guideLinkKey = Key('sc282_p2p_home_guide');
+  static const escrowDisclaimerKey = Key('sc282_p2p_home_escrow_disclaimer');
 
   static Key tradeTabKey(P2PTradeType type) =>
       Key('sc282_p2p_home_tab_${type.name}');

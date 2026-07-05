@@ -16,26 +16,19 @@ class _Controls extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: DecoratedBox(
-            decoration: const ShapeDecoration(
-              color: AppColors.surface2,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
-            ),
-            child: Padding(
-              padding: AppSpacing.adminFinePadding,
-              child: Row(
-                children: [
-                  for (final range in ranges)
-                    Expanded(
-                      child: _RangeButton(
-                        option: range,
-                        active: range.range == activeRange,
-                        onTap: () => onRangeChanged(range.range),
-                      ),
-                    ),
-                ],
-              ),
-            ),
+          child: VitSegmentedChoice<AdminAnalyticsRange>(
+            selected: activeRange,
+            onChanged: onRangeChanged,
+            options: [
+              for (final option in ranges)
+                VitSegmentedChoiceOption(
+                  key: AnalyticsDashboard.rangeKey(option.range),
+                  value: option.range,
+                  label: option.label,
+                  accentColor: AppModuleAccents.admin,
+                  semanticLabel: '${option.label} range',
+                ),
+            ],
           ),
         ),
         const SizedBox(width: AppSpacing.x5),
@@ -55,48 +48,6 @@ class _Controls extends StatelessWidget {
           size: VitIconButtonSize.md,
         ),
       ],
-    );
-  }
-}
-
-class _RangeButton extends StatelessWidget {
-  const _RangeButton({
-    required this.option,
-    required this.active,
-    required this.onTap,
-  });
-
-  final AdminAnalyticsRangeOption option;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      selected: active,
-      label: '${option.label} range',
-      child: VitCard(
-        key: AnalyticsDashboard.rangeKey(option.range),
-        onTap: onTap,
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        borderColor: AppColors.transparent,
-        background: ColoredBox(
-          color: active ? AppColors.surface3 : AppColors.transparent,
-        ),
-        padding: AppSpacing.adminSegmentButtonPadding,
-        child: Text(
-          option.label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.text1 : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          ),
-        ),
-      ),
     );
   }
 }

@@ -11,20 +11,24 @@ class _SubscriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final status = _statusStyle(subscription.status);
+    final status = _subscriptionStatus(subscription.status);
     final hasClaimable =
         subscription.status == LaunchpadSubscriptionStatus.allocated ||
+        subscription.status == LaunchpadSubscriptionStatus.partiallyAllocated;
+    final hasRefund =
+        subscription.refundAmount > 0 &&
         subscription.status == LaunchpadSubscriptionStatus.partiallyAllocated;
 
     return VitCard(
       key: LaunchpadPortfolioPage.subscriptionKey(subscription.id),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: VitDensity.compact.cardPadding,
       onTap: () => context.go(receiptRoute),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _SubscriptionAvatar(subscription: subscription),
               const SizedBox(width: AppSpacing.x3),
@@ -34,11 +38,14 @@ class _SubscriptionCard extends StatelessWidget {
                   children: [
                     Text(
                       subscription.projectName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.launchpadLineHeightLabel,
+                        height: _launchpadPortfolioLineHeightLabel,
                       ),
                     ),
+                    const SizedBox(height: AppSpacing.x1),
                     Text(
                       subscription.timestamp,
                       style: AppTextStyles.micro.copyWith(
@@ -48,21 +55,25 @@ class _SubscriptionCard extends StatelessWidget {
                   ],
                 ),
               ),
-              _StatusPill(style: status),
+              VitStatusPill(
+                label: status.label,
+                status: status.pillStatus,
+                size: VitStatusPillSize.sm,
+              ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
-                child: _InfoTile(
+                child: _KpiColumn(
                   label: 'Đã đầu tư',
                   value: _formatUsd(subscription.amount),
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: _InfoTile(
+                child: _KpiColumn(
                   label: 'Token phân bổ',
                   value:
                       '${_formatInt(subscription.tokensAllocated)} ${subscription.projectSymbol}',
@@ -74,35 +85,38 @@ class _SubscriptionCard extends StatelessWidget {
               subscription.allocationRatio < 1) ...[
             const SizedBox(height: AppSpacing.x3),
             _InlineNotice(
-              icon: Icons.error_outline_rounded,
+              icon: Icons.info_outline_rounded,
               label:
                   'Phân bổ ${(subscription.allocationRatio * 100).round()}% — Hoàn lại: ${_formatUsd(subscription.refundAmount)}',
               color: AppColors.warn,
             ),
           ],
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           _VestingProgress(subscription: subscription),
-          if (hasClaimable) ...[
+          if (hasClaimable || hasRefund) ...[
             const SizedBox(height: AppSpacing.x3),
-            _ActionRow(
-              key: LaunchpadPortfolioPage.claimKey(subscription.id),
-              icon: Icons.lock_open_rounded,
-              label: 'Có token sẵn sàng nhận',
-              color: AppColors.buy,
-              onTap: HapticFeedback.selectionClick,
-            ),
-          ],
-          if (subscription.refundAmount > 0 &&
-              subscription.status ==
-                  LaunchpadSubscriptionStatus.partiallyAllocated) ...[
-            const SizedBox(height: AppSpacing.x3),
-            _ActionRow(
-              key: LaunchpadPortfolioPage.refundKey(subscription.id),
-              icon: Icons.file_download_outlined,
-              label: 'Nhận hoàn ${_formatUsd(subscription.refundAmount)} USDT',
-              color: AppColors.primary,
-              onTap: HapticFeedback.selectionClick,
-            ),
+            if (hasClaimable)
+              VitCtaButton(
+                key: LaunchpadPortfolioPage.claimKey(subscription.id),
+                density: VitDensity.compact,
+                variant: VitCtaButtonVariant.success,
+                leading: const Icon(Icons.lock_open_rounded),
+                onPressed: HapticFeedback.selectionClick,
+                child: const Text('Có token sẵn sàng nhận'),
+              ),
+            if (hasClaimable && hasRefund)
+              const SizedBox(height: AppSpacing.x2),
+            if (hasRefund)
+              VitCtaButton(
+                key: LaunchpadPortfolioPage.refundKey(subscription.id),
+                density: VitDensity.compact,
+                variant: VitCtaButtonVariant.secondary,
+                leading: const Icon(Icons.file_download_outlined),
+                onPressed: HapticFeedback.selectionClick,
+                child: Text(
+                  'Nhận hoàn ${_formatUsd(subscription.refundAmount)} USDT',
+                ),
+              ),
           ],
         ],
       ),
@@ -118,7 +132,7 @@ class _SubscriptionAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox44,
+      dimension: AppSpacing.x7,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: subscription.accent.withValues(alpha: .12),
@@ -130,7 +144,7 @@ class _SubscriptionAvatar extends StatelessWidget {
         child: Center(
           child: Text(
             subscription.projectLogo,
-            style: AppTextStyles.caption.copyWith(
+            style: AppTextStyles.baseMedium.copyWith(
               color: subscription.accent,
               fontWeight: AppTextStyles.bold,
             ),
@@ -141,38 +155,35 @@ class _SubscriptionAvatar extends StatelessWidget {
   }
 }
 
-class _InfoTile extends StatelessWidget {
-  const _InfoTile({required this.label, required this.value});
+class _KpiColumn extends StatelessWidget {
+  const _KpiColumn({required this.label, required this.value});
 
   final String label;
   final String value;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.launchpadPaddingX3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -194,7 +205,7 @@ class _VestingProgress extends StatelessWidget {
             Expanded(
               child: Text(
                 'Vesting',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ),
             Text(
@@ -222,32 +233,20 @@ class _VestingProgress extends StatelessWidget {
                     0.0,
                     1.0,
                   ),
-                  child: const ColoredBox(color: AppColors.primary),
+                  child: ColoredBox(
+                    color: AppModuleAccents.launchpad,
+                  ),
                 ),
               ],
             ),
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                '${subscription.vestingProgress}% đã mở khóa',
-                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-              ),
-            ),
-            const Icon(
-              Icons.schedule_rounded,
-              color: AppColors.text3,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Text(
-              'Tiếp theo: ${subscription.nextUnlockDate}',
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ],
+        Text(
+          '${subscription.vestingProgress}% đã mở khóa · Tiếp theo: ${subscription.nextUnlockDate}',
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
       ],
     );
@@ -268,6 +267,7 @@ class _InlineNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, color: color, size: AppSpacing.iconSm),
         const SizedBox(width: AppSpacing.x2),
@@ -282,80 +282,6 @@ class _InlineNotice extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _ActionRow extends StatelessWidget {
-  const _ActionRow({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.color,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      borderColor: color.withValues(alpha: .20),
-      background: ColoredBox(color: color.withValues(alpha: .10)),
-      padding: AppSpacing.launchpadPaddingX4,
-      child: Row(
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconMd),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: color,
-            size: AppSpacing.iconMd,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.style});
-
-  final _StatusStyle style;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: style.color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadInlinePillPadding,
-        child: Text(
-          style.label,
-          style: AppTextStyles.micro.copyWith(
-            color: style.color,
-            fontWeight: AppTextStyles.bold,
-            height: AppSpacing.launchpadLineHeightTight,
-          ),
-        ),
-      ),
     );
   }
 }

@@ -102,52 +102,10 @@ class _SummaryTile extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: _captionBold.copyWith(
-              color: accent ? AppColors.buy : AppColors.text1,
+              color: accent ? AppModuleAccents.earn : AppColors.text1,
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _SensitiveNotice extends StatelessWidget {
-  const _SensitiveNotice({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: AppColors.warningBg,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: AppColors.warningBorder),
-          borderRadius: AppRadii.cardRadius,
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.earnCardPaddingX4,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.warning_amber_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.iconMd,
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.earnExportWarningLineHeight,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -164,13 +122,13 @@ class _PreviewReadyBanner extends StatelessWidget {
       key: SavingsExportPage.previewBannerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      borderColor: AppColors.buy20,
+      borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
-            color: AppColors.buy,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -429,9 +387,9 @@ String _statusLabel(SavingsExportStatus status) {
 
 Color _statusColor(SavingsExportStatus status) {
   return switch (status) {
-    SavingsExportStatus.ready => AppColors.primary,
+    SavingsExportStatus.ready => AppModuleAccents.earn,
     SavingsExportStatus.generating => AppColors.warn,
-    SavingsExportStatus.completed => AppColors.buy,
+    SavingsExportStatus.completed => AppModuleAccents.earn,
     SavingsExportStatus.failed => AppColors.sell,
   };
 }

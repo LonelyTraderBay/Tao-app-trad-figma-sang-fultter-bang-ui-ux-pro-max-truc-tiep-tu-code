@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -50,6 +51,9 @@ class LaunchpadIdoBridgePage extends ConsumerWidget {
           semanticLabel: 'SC-299 LaunchpadIdoBridgePage scroll surface',
           header: VitHeader(
             title: snapshot.title,
+            subtitle: snapshot.project == null
+                ? null
+                : 'Bridge token · Tham gia IDO',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -57,12 +61,13 @@ class LaunchpadIdoBridgePage extends ConsumerWidget {
             key: contentKey,
             physics: const ClampingScrollPhysics(),
             child: VitPageContent(
-              padding: VitContentPadding.defaultPadding,
+              padding: VitContentPadding.compact,
+              gap: VitContentGap.tight,
               children: [
                 if (snapshot.project == null)
                   const _BridgeProjectNotFound()
                 else
-                  _BridgeProjectSummary(snapshot: snapshot),
+                  _BridgeParticipationFlow(snapshot: snapshot),
               ],
             ),
           ),
@@ -97,22 +102,70 @@ class _BridgeProjectNotFound extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            'Kiểm tra lại liên kết hoặc quay về Launchpad để chọn dự án khác.',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
         ],
       ),
     );
   }
 }
 
-class _BridgeProjectSummary extends StatelessWidget {
-  const _BridgeProjectSummary({required this.snapshot});
+class _BridgeParticipationFlow extends StatelessWidget {
+  const _BridgeParticipationFlow({required this.snapshot});
 
   final LaunchpadIdoBridgeSnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
     final project = snapshot.project!;
+    final recommendedRoute = snapshot.routes.firstWhere(
+      (route) => route.recommended,
+      orElse: () => snapshot.routes.first,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _BridgeProjectHero(project: project),
+        const SizedBox(height: AppSpacing.x4),
+        _BridgeNetworksSection(networks: snapshot.sourceNetworks),
+        const SizedBox(height: AppSpacing.x4),
+        _BridgeRouteCard(route: recommendedRoute),
+        const SizedBox(height: AppSpacing.x4),
+        VitCtaButton(
+          onPressed: () => context.go(snapshot.bridgeCompareRoute),
+          leading: const Icon(Icons.compare_arrows_rounded),
+          child: const Text('So sánh routes'),
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        VitCtaButton(
+          variant: VitCtaButtonVariant.secondary,
+          onPressed: () => context.go(snapshot.bridgeOrderRoute),
+          leading: const Icon(Icons.receipt_long_outlined),
+          child: const Text('Theo dõi đơn bridge'),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        const _BridgeRiskDisclosure(),
+      ],
+    );
+  }
+}
+
+class _BridgeProjectHero extends StatelessWidget {
+  const _BridgeProjectHero({required this.project});
+
+  final LaunchpadProjectDraft project;
+
+  @override
+  Widget build(BuildContext context) {
     return VitCard(
+      variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
+      borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
       padding: AppSpacing.launchpadPaddingX5,
       child: Row(
         children: [
@@ -123,7 +176,7 @@ class _BridgeProjectSummary extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: project.accent.withValues(alpha: .12),
                 shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
+                  borderRadius: AppRadii.smRadius,
                 ),
               ),
               child: Center(
@@ -171,3 +224,215 @@ class _BridgeProjectSummary extends StatelessWidget {
     );
   }
 }
+
+class _BridgeNetworksSection extends StatelessWidget {
+  const _BridgeNetworksSection({required this.networks});
+
+  final List<LaunchpadBridgeNetworkDraft> networks;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.large,
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Mạng nguồn',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          for (final network in networks) ...[
+            Row(
+              children: [
+                SizedBox(
+                  width: AppSpacing.x6,
+                  height: AppSpacing.x6,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: network.accent.withValues(alpha: .12),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadii.smRadius,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        network.logo,
+                        style: AppTextStyles.micro.copyWith(
+                          color: network.accent,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        network.name,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      Text(
+                        'Gas ~${network.gasEstimate} · ${network.averageTime}',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            if (network != networks.last) const SizedBox(height: AppSpacing.x3),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _BridgeRouteCard extends StatelessWidget {
+  const _BridgeRouteCard({required this.route});
+
+  final LaunchpadSwapRouteDraft route;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.large,
+      borderColor: AppColors.buy20,
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  route.provider,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              if (route.recommended)
+                const VitStatusPill(
+                  label: 'Đề xuất',
+                  status: VitStatusPillStatus.success,
+                  size: VitStatusPillSize.sm,
+                ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x4),
+          Row(
+            children: [
+              Expanded(
+                child: _RouteMetric(
+                  label: 'Output ước tính',
+                  value: _formatNumber(route.estimatedOutput),
+                ),
+              ),
+              Expanded(
+                child: _RouteMetric(label: 'Tổng phí', value: route.totalFee),
+              ),
+              Expanded(
+                child: _RouteMetric(
+                  label: 'Thời gian',
+                  value: route.estimatedTime,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            'Price impact ${_formatPercent(route.priceImpact)} · ${route.hops.length} bước',
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RouteMetric extends StatelessWidget {
+  const _RouteMetric({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        Text(
+          value,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _BridgeRiskDisclosure extends StatelessWidget {
+  const _BridgeRiskDisclosure();
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.warn15,
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.warn,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              'Bridge IDO yêu cầu xác nhận số tiền, phí gas và thời gian khóa trước khi gửi. Không đảm bảo lợi nhuận.',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+String _formatNumber(num value) {
+  if (value >= 1000) {
+    return value
+        .toStringAsFixed(0)
+        .replaceAllMapped(
+          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (match) => '${match[1]},',
+        );
+  }
+  return value.toStringAsFixed(value is int ? 0 : 2);
+}
+
+String _formatPercent(double value) => '${value.toStringAsFixed(2)}%';

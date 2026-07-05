@@ -46,21 +46,39 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      variant: VitCardVariant.hero,
       density: VitDensity.compact,
+      borderColor: type.color.withValues(alpha: .22),
       child: Column(
         children: [
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
-            width: AppSpacing.walletTransactionSummaryIconSize,
-            height: AppSpacing.walletTransactionSummaryIconSize,
-            alignment: Alignment.center,
-            borderColor: type.color.withValues(alpha: .22),
-            child: Icon(
-              type.icon,
-              color: AppColors.text1,
-              size: AppSpacing.walletTransactionSummaryStatusIcon,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox.square(
+                dimension: AppSpacing.walletTransactionSummaryIconSize,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: type.color.withValues(alpha: .12),
+                    borderRadius: AppRadii.smRadius,
+                    border: Border.all(
+                      color: type.color.withValues(alpha: .22),
+                    ),
+                  ),
+                  child: Icon(
+                    type.icon,
+                    color: type.color,
+                    size: AppSpacing.walletTransactionSummaryStatusIcon,
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              VitStatusPill(
+                label: status.label,
+                icon: status.icon,
+                status: _detailPillStatus(tx.status),
+                size: VitStatusPillSize.md,
+              ),
+            ],
           ),
           const SizedBox(height: AppSpacing.x2),
           Text(
@@ -76,13 +94,6 @@ class _SummaryCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          VitStatusPill(
-            label: status.label,
-            icon: status.icon,
-            status: _detailPillStatus(tx.status),
-            size: VitStatusPillSize.md,
           ),
         ],
       ),

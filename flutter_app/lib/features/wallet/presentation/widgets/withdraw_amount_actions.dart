@@ -59,7 +59,7 @@ class WithdrawRecentAddresses extends StatelessWidget {
                         ),
                         const SizedBox(height: AppSpacing.x1),
                         Text(
-                          address.address,
+                          maskWithdrawAddress(address.address),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.micro.copyWith(
@@ -108,7 +108,7 @@ class WithdrawAmountInput extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(child: WithdrawSectionLabel('Số lượng rút')),
+            const Spacer(),
             VitChoicePill(
               key: withdrawAllAmountKey,
               label: 'Tất cả',
@@ -181,27 +181,60 @@ class WithdrawPreviewBlockedNotice extends StatelessWidget {
 }
 
 class WithdrawWarning extends StatelessWidget {
-  const WithdrawWarning({super.key});
+  const WithdrawWarning({
+    required this.asset,
+    required this.network,
+    super.key,
+  });
+
+  final String asset;
+  final WalletWithdrawNetwork network;
 
   @override
   Widget build(BuildContext context) {
+    final warningItems = [
+      'Chỉ rút $asset qua mạng ${network.name}',
+      'Rút sai mạng có thể mất tiền vĩnh viễn, không thể khôi phục',
+      'Rút tối thiểu: ${formatWithdrawCompact(network.minWithdraw)} $asset',
+      'Rút cần xác minh 2FA · >\$10,000 xem xét trong 24h',
+    ];
+
     return VitCard(
       variant: VitCardVariant.standard,
-      borderColor: withdrawAmber.withValues(alpha: .30),
+      borderColor: withdrawAmber.withValues(alpha: .38),
       density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            Icons.access_time_rounded,
+          const Icon(
+            Icons.warning_amber_rounded,
             color: withdrawAmber,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
-            child: Text(
-              'Rút tiền cần xác minh 2FA. Yêu cầu rút trên \$10,000 chỉ được xem xét trong 24h.',
-              style: AppTextStyles.micro.copyWith(color: withdrawAmber),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Quan trọng — Đọc trước khi rút',
+                  style: AppTextStyles.body.copyWith(
+                    color: withdrawAmber,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                for (final item in warningItems) ...[
+                  Text(
+                    '• $item',
+                    style: AppTextStyles.micro.copyWith(
+                      color: withdrawAmber,
+                      fontWeight: AppTextStyles.medium,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                ],
+              ],
             ),
           ),
         ],

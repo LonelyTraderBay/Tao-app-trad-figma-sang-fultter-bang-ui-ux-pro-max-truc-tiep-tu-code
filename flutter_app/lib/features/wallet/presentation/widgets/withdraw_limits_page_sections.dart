@@ -20,14 +20,14 @@ class _CurrentTierCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              VitCard(
+              Container(
                 width: _limitsIconBox,
                 height: _limitsIconBox,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
-                borderColor: tierColor.withValues(alpha: .5),
-                background: ColoredBox(color: tierColor.withValues(alpha: .14)),
-                clip: true,
+                decoration: BoxDecoration(
+                  color: tierColor.withValues(alpha: .14),
+                  borderRadius: AppRadii.smRadius,
+                  border: Border.all(color: tierColor.withValues(alpha: .5)),
+                ),
                 alignment: Alignment.center,
                 child: Icon(
                   Icons.shield_outlined,

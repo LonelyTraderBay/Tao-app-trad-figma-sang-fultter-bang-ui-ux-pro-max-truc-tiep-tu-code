@@ -256,34 +256,34 @@ class _PriceChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(snapshot.colorHex);
-    return VitCard(
-      density: VitDensity.compact,
-      borderColor: AppColors.overlayStroke,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const VitSectionHeader(
-            title: 'Biểu đồ giá',
-            icon: Icons.show_chart_rounded,
-            iconColor: _assetPrimary,
-            density: VitDensity.compact,
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          VitTabBar(
-            tabs: [
-              for (final period in const ['1W', '1M', '3M'])
-                VitTabItem(
-                  key: period,
-                  label: period,
-                  widgetKey: AssetDetailPage.periodKey(period),
-                ),
-            ],
-            activeKey: activePeriod,
-            onChanged: onPeriod,
-            variant: VitTabBarVariant.segment,
-          ),
-          const SizedBox(height: AppSpacing.walletAssetChartBottomGap),
-          SizedBox(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const VitSectionHeader(
+          title: 'Biểu đồ giá',
+          icon: Icons.show_chart_rounded,
+          iconColor: _assetPrimary,
+          density: VitDensity.compact,
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        VitTabBar(
+          tabs: [
+            for (final period in const ['1W', '1M', '3M'])
+              VitTabItem(
+                key: period,
+                label: period,
+                widgetKey: AssetDetailPage.periodKey(period),
+              ),
+          ],
+          activeKey: activePeriod,
+          onChanged: onPeriod,
+          variant: VitTabBarVariant.segment,
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        VitCard(
+          density: VitDensity.compact,
+          borderColor: AppColors.overlayStroke,
+          child: SizedBox(
             height: AppSpacing.walletAssetChartHeight - AppSpacing.x6,
             child: VitSparkline(
               values: [for (final point in snapshot.chart) point.price],
@@ -291,8 +291,8 @@ class _PriceChartCard extends StatelessWidget {
               strokeWidth: AppSpacing.borderWidth,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

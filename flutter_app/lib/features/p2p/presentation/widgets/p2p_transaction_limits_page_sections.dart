@@ -7,90 +7,85 @@ class _TierHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCard(
       key: P2PTransactionLimitsPage.tierHeroKey,
-      type: MaterialType.transparency,
-      color: AppColors.buy,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadii.cardLargeRadius,
-        side: BorderSide(color: AppColors.buy),
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pTransactionLimitsCardPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(
-                  Icons.shield_outlined,
-                  color: AppColors.onAccent,
-                  size: AppSpacing.iconMd,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Tier ${tier.tier} - ${tier.name}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.sectionTitle.copyWith(
-                          color: AppColors.onAccent,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        'Giới hạn hiện tại của bạn',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.onAccent.withValues(alpha: .90),
-                          fontWeight: AppTextStyles.medium,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Material(
-                  type: MaterialType.transparency,
-                  color: AppColors.onAccent.withValues(alpha: .20),
-                  borderRadius: AppRadii.inputRadius,
-                  child: Padding(
-                    padding: AppSpacing.p2pTransactionLimitsBadgePadding,
-                    child: Text(
-                      tier.statusLabel,
-                      style: AppTextStyles.micro.copyWith(
+      radius: VitCardRadius.large,
+      borderColor: AppModuleAccents.p2p,
+      background: const ColoredBox(color: AppModuleAccents.p2p),
+      padding: AppSpacing.p2pTransactionLimitsCardPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.shield_outlined,
+                color: AppColors.onAccent,
+                size: AppSpacing.iconMd,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Tier ${tier.tier} - ${tier.name}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      'Giới hạn hiện tại của bạn',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.onAccent.withValues(alpha: .90),
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Material(
+                type: MaterialType.transparency,
+                color: AppColors.onAccent.withValues(alpha: .20),
+                borderRadius: AppRadii.inputRadius,
+                child: Padding(
+                  padding: AppSpacing.p2pTransactionLimitsBadgePadding,
+                  child: Text(
+                    tier.statusLabel,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.onAccent,
+                      fontWeight: AppTextStyles.bold,
+                    ),
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: _p2pLimitsMajorGap),
-            Row(
-              children: [
-                Expanded(
-                  child: _TierMetric(
-                    label: 'Mua/ngày',
-                    value: '${_formatMillions(tier.dailyBuy)} VND',
-                  ),
+              ),
+            ],
+          ),
+          const SizedBox(height: _p2pLimitsMajorGap),
+          Row(
+            children: [
+              Expanded(
+                child: _TierMetric(
+                  label: 'Mua/ngày',
+                  value: '${_formatMillions(tier.dailyBuy)} VND',
                 ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: _TierMetric(
-                    label: 'Bán/ngày',
-                    value: '${_formatMillions(tier.dailySell)} VND',
-                  ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: _TierMetric(
+                  label: 'Bán/ngày',
+                  value: '${_formatMillions(tier.dailySell)} VND',
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -149,13 +144,14 @@ class _CurrentUsage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: Text(
-                'Sử dụng hiện tại',
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontWeight: AppTextStyles.bold,
-                ),
+            const Expanded(
+              child: VitSectionHeader(
+                title: 'Sử dụng hiện tại',
+                icon: Icons.bar_chart_rounded,
+                accentColor: AppModuleAccents.p2p,
+                density: VitDensity.compact,
               ),
             ),
             VitCtaButton(
@@ -278,11 +274,11 @@ class _LimitDetails extends StatelessWidget {
       key: P2PTransactionLimitsPage.detailsKey,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Chi tiết giới hạn',
-          style: AppTextStyles.baseMedium.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
+        const VitSectionHeader(
+          title: 'Chi tiết giới hạn',
+          icon: Icons.tune_rounded,
+          accentColor: AppModuleAccents.p2p,
+          density: VitDensity.compact,
         ),
         const SizedBox(height: _p2pLimitsSectionGap),
         VitCard(

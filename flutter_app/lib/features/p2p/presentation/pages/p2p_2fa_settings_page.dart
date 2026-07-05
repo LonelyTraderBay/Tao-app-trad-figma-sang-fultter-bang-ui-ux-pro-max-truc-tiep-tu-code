@@ -132,10 +132,10 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
                           padding: AppSpacing.p2pTwoFactorInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'P2P 2FA change review',
+                            title: 'Rà soát thay đổi 2FA P2P',
                             message:
-                                'Enabled methods, primary factor, transaction thresholds, setup status and next security step are reviewed before P2P protection changes.',
-                            contractId: 'p2p-2fa-settings-review',
+                                'Phương thức bật, yếu tố chính, ngưỡng giao dịch, trạng thái thiết lập và bước bảo mật tiếp theo được rà soát trước khi đổi bảo vệ P2P.',
+                            contractId: 'SC-254',
                           ),
                         ),
                       ],

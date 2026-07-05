@@ -10,59 +10,36 @@ class _SavingsHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: AppSpacing.cardPaddingCompact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Tổng tiền gửi (USD)',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      snapshot.totalDepositedUsd,
-                      style: AppTextStyles.numericDisplayMd,
-                    ),
-                    const SizedBox(height: AppSpacing.x2),
-                    Row(
-                      children: [
-                        DecoratedBox(
-                          decoration: const ShapeDecoration(
-                            color: AppColors.buy10,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: AppRadii.xlRadius,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: AppSpacing.earnPillPadding,
-                            child: Text(
-                              snapshot.gainLabel,
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.buy,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: AppSpacing.x2),
-                        Text(
-                          'lãi tích lũy',
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.text3,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                child: _HeroKpi(
+                  label: 'Tổng tiền gửi (USD)',
+                  value: snapshot.totalDepositedUsd,
+                  caption: snapshot.gainLabel.isEmpty
+                      ? 'Chưa có vị thế'
+                      : '${snapshot.gainLabel} lãi tích lũy',
+                  valueColor: AppColors.text1,
+                ),
+              ),
+              Container(
+                width: 1,
+                height: AppSpacing.x6,
+                color: AppColors.border,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: AppSpacing.x4),
+                  child: _HeroKpi(
+                    label: 'APY ước tính',
+                    value: _savingsApyEstimateRange(snapshot.products),
+                    caption: 'Tham khảo, có thể thay đổi',
+                    valueColor: AppModuleAccents.earn,
+                  ),
                 ),
               ),
               VitIconButton(
@@ -75,7 +52,7 @@ class _SavingsHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
@@ -104,6 +81,48 @@ class _SavingsHero extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _HeroKpi extends StatelessWidget {
+  const _HeroKpi({
+    required this.label,
+    required this.value,
+    required this.caption,
+    required this.valueColor,
+  });
+
+  final String label;
+  final String value;
+  final String caption;
+  final Color valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          style: AppTextStyles.heroNumber.copyWith(
+            color: valueColor,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          caption,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
     );
   }
 }
@@ -251,6 +270,19 @@ class _ToolboxButton extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _YieldDisclaimer extends StatelessWidget {
+  const _YieldDisclaimer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'APY là ước tính tham khảo và có thể thay đổi. Giá tài sản và APY có thể biến động; rút trước hạn có thể mất lãi tích lũy.',
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      textAlign: TextAlign.center,
     );
   }
 }

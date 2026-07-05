@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -14,13 +16,15 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 part '../widgets/launchpad_claim_receipt_hero_widgets.dart';
 part '../widgets/launchpad_claim_receipt_overview_widgets.dart';
 part '../widgets/launchpad_claim_receipt_timeline_widgets.dart';
 part '../widgets/launchpad_claim_receipt_claim_sheet_widgets.dart';
 part '../widgets/launchpad_claim_receipt_misc_widgets.dart';
+
+const double _launchpadClaimReceiptVisualNavClearance = 112;
+const double _launchpadClaimReceiptNativeNavClearance = 88;
 
 class LaunchpadClaimReceiptPage extends ConsumerStatefulWidget {
   const LaunchpadClaimReceiptPage({
@@ -69,12 +73,11 @@ class _LaunchpadClaimReceiptPageState
         .getClaimReceipt(widget.positionId);
     final receipt = snapshot.receipt;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
-        MediaQuery.paddingOf(context).bottom +
-        AppSpacing.x3;
+    final navClearance = mode.usesVisualQaFrame
+        ? _launchpadClaimReceiptVisualNavClearance
+        : _launchpadClaimReceiptNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -84,10 +87,10 @@ class _LaunchpadClaimReceiptPageState
         child: Stack(
           children: [
             VitAutoHideHeaderScaffold(
-              bottomInset: scrollTailReserve,
               semanticLabel: 'SC-302 LaunchpadClaimReceiptPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: '${receipt.projectSymbol} · Vesting & nhận thưởng',
                 showBack: true,
                 onBack: () =>
                     goBackOrFallback(context, fallbackPath: snapshot.backRoute),
@@ -130,13 +133,20 @@ class _LaunchpadClaimReceiptPageState
                     ),
                   ),
                   Expanded(
-                    child: SingleChildScrollView(
-                      key: LaunchpadClaimReceiptPage.contentKey,
-                      physics: const ClampingScrollPhysics(),
-                      child: VitPageContent(
-                        padding: VitContentPadding.compact,
-                        gap: VitContentGap.tight,
-                        children: [
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: LaunchpadClaimReceiptPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        padding: EdgeInsetsDirectional.only(
+                          bottom: scrollEndPadding,
+                        ),
+                        child: VitPageContent(
+                          padding: VitContentPadding.compact,
+                          density: VitDensity.compact,
+                          children: [
                           _RewardHero(receipt: receipt),
                           if (_activeTab == _ClaimReceiptTab.overview) ...[
                             _ClaimableBanner(
@@ -177,8 +187,9 @@ class _LaunchpadClaimReceiptPageState
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
             ),
             if (_claimEntry != null)
               _ClaimSheet(

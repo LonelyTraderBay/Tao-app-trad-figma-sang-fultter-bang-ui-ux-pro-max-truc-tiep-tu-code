@@ -48,10 +48,11 @@ class _ReceiptContent extends StatelessWidget {
             if (snapshot.highRiskContractId != null)
               VitHighRiskStatePanel(
                 state: VitHighRiskUiState.success,
-                title: 'Prediction receipt state tracked',
+                title: 'Trạng thái biên lai lệnh',
                 message:
-                    'Submitted status, receipt detail, portfolio history and support recovery stay bound to the shared prediction contract.',
+                    'Trạng thái gửi, chi tiết biên lai, lịch sử danh mục và khôi phục hỗ trợ được gắn với hợp đồng prediction dùng chung.',
                 contractId: snapshot.highRiskContractId,
+                density: VitDensity.compact,
               ),
             _TimelineCard(receipt: receipt),
             _TimestampCard(receipt: receipt),
@@ -73,10 +74,11 @@ class _ReceiptHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isBuy = receipt.side == 'buy';
-    final status = _statusConfig(receipt.status);
+    final status = _receiptStatusConfig(receipt.status);
 
     return VitCard(
       density: VitDensity.compact,
+      radius: VitCardRadius.large,
       child: Column(
         children: [
           Wrap(
@@ -84,15 +86,14 @@ class _ReceiptHero extends StatelessWidget {
             runSpacing: AppSpacing.x2,
             alignment: WrapAlignment.center,
             children: [
-              _SoftPill(
-                label: isBuy ? '↑ Buy' : '↓ Sell',
-                color: isBuy ? AppColors.buy : AppColors.sell,
-                background: isBuy ? AppColors.buy10 : AppColors.sell10,
+              VitAccentPill(
+                label: isBuy ? '↑ Mua' : '↓ Bán',
+                accentColor: isBuy ? AppColors.buy : AppColors.sell,
               ),
-              _SoftPill(
+              VitStatusPill(
                 label: status.label,
-                color: status.color,
-                background: status.background,
+                status: status.pillStatus,
+                size: VitStatusPillSize.sm,
               ),
             ],
           ),
@@ -138,23 +139,23 @@ class _OrderSummary extends StatelessWidget {
           child: Column(
             children: [
               _SummaryRow(
-                label: 'Tá»•ng giÃ¡ trá»‹',
+                label: 'Tổng giá trị',
                 value: _formatMoney(receipt.total),
                 mono: true,
               ),
               _SummaryRow(
-                label: 'PhÃ­ (2%)',
+                label: 'Phí (2%)',
                 key: PredictionOrderReceiptPage.feeSummaryKey,
                 value: _formatMoney(receipt.fee),
                 mono: true,
               ),
               _SummaryRow(
                 label: 'Loại lệnh',
-                value: receipt.orderType == 'market' ? 'Market' : 'Limit',
+                value: receipt.orderType == 'market' ? 'Thị trường' : 'Giới hạn',
               ),
-              _SummaryRow(label: 'Outcome', value: receipt.outcome),
+              _SummaryRow(label: 'Kết quả', value: receipt.outcome),
               _SummaryRow(
-                label: 'Shares',
+                label: 'Cổ phần',
                 value:
                     '${_formatShares(receipt.filledShares)}/${_formatShares(receipt.shares)}',
                 mono: true,
@@ -170,18 +171,6 @@ class _OrderSummary extends StatelessWidget {
                   value: _formatPrice(receipt.avgPrice),
                   mono: true,
                 ),
-              if (receipt.id.isEmpty) ...[
-                _SummaryRow(
-                  label: 'Tổng giá trị',
-                  value: _formatMoney(receipt.total),
-                  mono: true,
-                ),
-                _SummaryRow(
-                  label: 'Phí (2%)',
-                  value: _formatMoney(receipt.fee),
-                  mono: true,
-                ),
-              ],
               if (receipt.status != 'canceled' && receipt.status != 'rejected')
                 _FillProgress(percent: fillPct),
             ],
@@ -263,51 +252,16 @@ class _ShareReceiptButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: 'Chia sẻ chi tiết lệnh ${receipt.id}',
-      child: Material(
-        color: AppColors.primary12,
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.inputRadius,
-          side: const BorderSide(
-            color: AppColors.primary15,
-            width: AppSpacing.predictionReceiptShareBorderWidth,
-          ),
-        ),
-        child: VitCard(
-          key: PredictionOrderReceiptPage.shareKey,
-          onTap: () {},
-          variant: VitCardVariant.ghost,
-          padding: AppSpacing.zeroInsets,
-          child: SizedBox(
-            height: VitDensity.compact.controlHeight,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.ios_share_rounded,
-                  color: _predictionPrimary,
-                  size: AppSpacing.predictionReceiptShareIcon,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Flexible(
-                  child: Text(
-                    'Chia sẻ chi tiết lệnh',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.body.copyWith(
-                      color: _predictionPrimary,
-                      fontWeight: AppTextStyles.medium,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+    return VitCtaButton(
+      key: PredictionOrderReceiptPage.shareKey,
+      onPressed: () {},
+      variant: VitCtaButtonVariant.secondary,
+      leading: const Icon(
+        Icons.ios_share_rounded,
+        color: _predictionPrimary,
+        size: AppSpacing.predictionReceiptShareIcon,
       ),
+      child: const Text('Chia sẻ chi tiết lệnh'),
     );
   }
 }

@@ -43,11 +43,13 @@ final class OnboardingSnapshot {
     required this.commitments,
     required this.goals,
     required this.recommendations,
+    this.screenState = OnboardingScreenState.ready,
   });
 
   final String endpoint;
   final String actionDraft;
   final List<OnboardingScreenState> supportedStates;
+  final OnboardingScreenState screenState;
   final String contractNotes;
   final String backRoute;
   final String homeRoute;

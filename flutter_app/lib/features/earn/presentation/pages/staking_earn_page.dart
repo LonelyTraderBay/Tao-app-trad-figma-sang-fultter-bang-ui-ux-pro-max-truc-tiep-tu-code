@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -89,6 +90,13 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
                 density: VitDensity.compact,
                 children: [
                   _EarnHero(snapshot: snapshot),
+                  VitCtaButton(
+                    key: StakingEarnPage.savingsButtonKey,
+                    onPressed: () => context.go(snapshot.savingsRoute),
+                    height: AppSpacing.inputHeight,
+                    leading: const Icon(Icons.savings_outlined),
+                    child: const Text('Tiet kiem'),
+                  ),
                   if (snapshot.highRiskContractId != null)
                     VitHighRiskStatePanel(
                       state: VitHighRiskUiState.riskReview,
@@ -115,7 +123,14 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
                     ),
                     _ProductList(products: products),
                   ] else
-                    _PositionsList(snapshot: snapshot),
+                    _PositionsList(
+                      snapshot: snapshot,
+                      onExploreProducts: () {
+                        HapticFeedback.selectionClick();
+                        setState(() => _tab = _EarnTab.products);
+                      },
+                    ),
+                  const _YieldDisclaimer(),
                 ],
               ),
             ),

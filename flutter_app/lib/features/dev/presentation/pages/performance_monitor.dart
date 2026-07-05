@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/dev_tools_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -18,17 +20,28 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 part '../widgets/performance_monitor_sections.dart';
 part '../widgets/performance_monitor_common.dart';
 
-class PerformanceMonitor extends ConsumerWidget {
+enum _DevUiMode { live, loading, empty, error, offline }
+
+class PerformanceMonitor extends ConsumerStatefulWidget {
   const PerformanceMonitor({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc326_performance_monitor_content');
+  static const statesKey = Key('sc326_performance_monitor_states');
 
   final ShellRenderMode? shellRenderMode;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PerformanceMonitor> createState() =>
+      _PerformanceMonitorState();
+}
+
+class _PerformanceMonitorState extends ConsumerState<PerformanceMonitor> {
+  _DevUiMode _uiMode = _DevUiMode.live;
+
+  @override
+  Widget build(BuildContext context) {
     final snapshot = ref.watch(performanceMonitorControllerProvider).snapshot();
-    final mode = shellRenderMode ?? defaultShellRenderMode();
+    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome + AppSpacing.x7
@@ -39,10 +52,11 @@ class PerformanceMonitor extends ConsumerWidget {
       variant: VitPageVariant.flush,
       semanticLabel: 'SC-326 PerformanceMonitor',
       child: Material(
-        color: AppColors.bg,
+        type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: snapshot.subtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -57,35 +71,44 @@ class PerformanceMonitor extends ConsumerWidget {
                   child: VitPageContent(
                     gap: VitContentGap.defaultGap,
                     children: [
-                      _PerformanceScoreCard(snapshot: snapshot),
-                      VitPageSection(
-                        label: 'Core Web Vitals',
-                        children: [_VitalsCard(metrics: snapshot.vitals)],
+                      _DevStateBar(
+                        key: PerformanceMonitor.statesKey,
+                        supportedStates: snapshot.supportedStates,
+                        active: _uiMode,
+                        onChanged: (mode) {
+                          HapticFeedback.selectionClick();
+                          setState(() => _uiMode = mode);
+                        },
                       ),
-                      VitPageSection(
-                        label: 'Memory Usage',
-                        children: [_MemoryCard(memory: snapshot.memory)],
-                      ),
-                      VitPageSection(
-                        label: 'Lazy Loaded Chunks',
-                        children: [
-                          _LazyChunksCard(chunks: snapshot.lazyChunks),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Top 10 Slowest Resources',
-                        children: [
-                          _ResourcesCard(resources: snapshot.resources),
-                        ],
-                      ),
-                      VitPageSection(
-                        label: 'Optimization Tips',
-                        children: [
-                          for (final tip in snapshot.tips) _TipCard(tip: tip),
-                        ],
-                      ),
-                      _TargetsCard(targets: snapshot.targets),
-                      _InternalNotice(text: snapshot.contractNotes),
+                      switch (_uiMode) {
+                        _DevUiMode.loading => const _PerformanceLoading(),
+                        _DevUiMode.empty => const VitEmptyState(
+                          title: 'No performance samples',
+                          message:
+                              'Run a profiling session to populate vitals and resource timings.',
+                        ),
+                        _DevUiMode.error => VitErrorState(
+                          title: 'Monitor unavailable',
+                          message:
+                              'Performance metrics could not be loaded. Retry when back online.',
+                          onAction: () =>
+                              setState(() => _uiMode = _DevUiMode.live),
+                        ),
+                        _DevUiMode.offline => Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const VitOfflineBanner(
+                              detail: 'Showing last captured session.',
+                            ),
+                            const SizedBox(height: AppSpacing.x4),
+                            ..._liveSections(snapshot),
+                          ],
+                        ),
+                        _DevUiMode.live => Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: _liveSections(snapshot),
+                        ),
+                      },
                     ],
                   ),
                 ),
@@ -95,5 +118,82 @@ class PerformanceMonitor extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> _liveSections(PerformanceMonitorSnapshot snapshot) {
+    return [
+      _PerformanceScoreCard(snapshot: snapshot),
+      VitPageSection(
+        label: 'Core Web Vitals',
+        children: [_VitalsCard(metrics: snapshot.vitals)],
+      ),
+      VitPageSection(
+        label: 'Memory Usage',
+        children: [_MemoryCard(memory: snapshot.memory)],
+      ),
+      VitPageSection(
+        label: 'Lazy Loaded Chunks',
+        children: [_LazyChunksCard(chunks: snapshot.lazyChunks)],
+      ),
+      VitPageSection(
+        label: 'Top 10 Slowest Resources',
+        children: [_ResourcesCard(resources: snapshot.resources)],
+      ),
+      VitPageSection(
+        label: 'Optimization Tips',
+        children: [for (final tip in snapshot.tips) _TipCard(tip: tip)],
+      ),
+      _TargetsCard(targets: snapshot.targets),
+      _InternalNotice(text: snapshot.contractNotes),
+    ];
+  }
+}
+
+class _DevStateBar extends StatelessWidget {
+  const _DevStateBar({
+    super.key,
+    required this.supportedStates,
+    required this.active,
+    required this.onChanged,
+  });
+
+  final Set<DevScreenState> supportedStates;
+  final _DevUiMode active;
+  final ValueChanged<_DevUiMode> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final items = <VitPresetChipItem<_DevUiMode>>[
+      const VitPresetChipItem(value: _DevUiMode.live, label: 'Live'),
+      if (supportedStates.contains(DevScreenState.loading))
+        const VitPresetChipItem(value: _DevUiMode.loading, label: 'Loading'),
+      if (supportedStates.contains(DevScreenState.empty))
+        const VitPresetChipItem(value: _DevUiMode.empty, label: 'Empty'),
+      if (supportedStates.contains(DevScreenState.error))
+        const VitPresetChipItem(value: _DevUiMode.error, label: 'Error'),
+      if (supportedStates.contains(DevScreenState.offline))
+        const VitPresetChipItem(value: _DevUiMode.offline, label: 'Offline'),
+    ];
+
+    return VitPageSection(
+      label: 'Screen states',
+      children: [
+        VitPresetChipRow<_DevUiMode>(
+          items: items,
+          selectedValue: active,
+          onTap: onChanged,
+          accentColor: AppModuleAccents.dev,
+        ),
+      ],
+    );
+  }
+}
+
+class _PerformanceLoading extends StatelessWidget {
+  const _PerformanceLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return const VitSkeletonList(rows: 5);
   }
 }

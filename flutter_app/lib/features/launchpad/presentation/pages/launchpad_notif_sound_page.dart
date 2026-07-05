@@ -88,6 +88,7 @@ class _LaunchpadNotifSoundPageState
           semanticLabel: 'SC-306 LaunchpadNotifSoundPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
+            subtitle: 'Cài đặt thông báo · Không ảnh hưởng tham gia IDO',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),

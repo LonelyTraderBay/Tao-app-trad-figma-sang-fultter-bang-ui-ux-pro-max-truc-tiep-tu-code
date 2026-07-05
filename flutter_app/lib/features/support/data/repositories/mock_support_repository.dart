@@ -20,6 +20,7 @@ final class MockSupportRepository implements SupportRepository {
       faqItems: _supportFaqItems,
       contractNotes:
           'Support hub should return supportArticles, tickets, announcements, faqItems, contactLinks, and screenState. Ticket creation remains a local action placeholder until POST /support/tickets is defined.',
+      screenState: SupportScreenState.ready,
       supportedStates: {
         SupportScreenState.loading,
         SupportScreenState.empty,
@@ -46,6 +47,7 @@ final class MockSupportRepository implements SupportRepository {
       articles: _helpArticles,
       contractNotes:
           'Support help center should return supportArticles, tickets, announcements, screenState, and local navigation actions. Article expansion and search are client-side for the current Flutter mock.',
+      screenState: SupportScreenState.ready,
       supportedStates: {
         SupportScreenState.loading,
         SupportScreenState.empty,
@@ -67,6 +69,7 @@ final class MockSupportRepository implements SupportRepository {
       announcements: _announcements,
       contractNotes:
           'Support announcements should return supportArticles, tickets, announcements, screenState, and filter metadata. Details expand locally until announcement detail endpoints are introduced.',
+      screenState: SupportScreenState.ready,
       supportedStates: {
         SupportScreenState.loading,
         SupportScreenState.empty,

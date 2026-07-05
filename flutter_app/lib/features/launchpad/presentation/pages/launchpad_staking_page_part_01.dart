@@ -7,11 +7,11 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(launchpadControllerProvider).getStaking();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _launchpadStakingVisualNavClearance
+        : _launchpadStakingNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -19,7 +19,6 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: scrollTailReserve,
           semanticLabel: 'SC-298 LaunchpadStakingPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
@@ -41,9 +40,12 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
                   child: SingleChildScrollView(
                     key: LaunchpadStakingPage.contentKey,
                     physics: const ClampingScrollPhysics(),
+                    padding: EdgeInsetsDirectional.only(
+                      bottom: scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
-                      gap: VitContentGap.tight,
+                      density: VitDensity.compact,
                       children: [
                         _StakingHero(snapshot: snapshot),
                         switch (_activeTab) {
@@ -77,27 +79,33 @@ class _StakingTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        VitSegmentedChoice.withPrimaryAccent<_StakingTab>(
-          key: LaunchpadStakingPage.tabsKey,
-          selected: activeTab,
-          onChanged: onChanged,
-          options: [
-            for (final tab in _StakingTab.values)
-              VitSegmentedChoiceOption(
-                key: LaunchpadStakingPage.tabKey(tab.id),
-                value: tab,
-                label: tab.label,
-              ),
-          ],
-        ),
-        const Divider(
-          height: AppSpacing.dividerHairline,
-          color: AppColors.divider,
-        ),
-      ],
+    return ColoredBox(
+      color: AppColors.navBg,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: AppSpacing.launchpadHorizontalContentPadding,
+            child: VitSegmentedChoice.withPrimaryAccent<_StakingTab>(
+              key: LaunchpadStakingPage.tabsKey,
+              selected: activeTab,
+              onChanged: onChanged,
+              options: [
+                for (final tab in _StakingTab.values)
+                  VitSegmentedChoiceOption(
+                    key: LaunchpadStakingPage.tabKey(tab.id),
+                    value: tab,
+                    label: tab.label,
+                  ),
+              ],
+            ),
+          ),
+          const Divider(
+            height: AppSpacing.dividerHairline,
+            color: AppColors.divider,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -399,7 +407,7 @@ class _PositionsTab extends StatelessWidget {
                   decoration: ShapeDecoration(
                     color: AppColors.buy15,
                     shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
+                      borderRadius: AppRadii.smRadius,
                     ),
                   ),
                   child: Center(
@@ -417,7 +425,7 @@ class _PositionsTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Batch Claim',
+                      'Nhận hàng loạt',
                       style: AppTextStyles.baseMedium.copyWith(
                         color: AppColors.buy,
                         fontWeight: AppTextStyles.bold,

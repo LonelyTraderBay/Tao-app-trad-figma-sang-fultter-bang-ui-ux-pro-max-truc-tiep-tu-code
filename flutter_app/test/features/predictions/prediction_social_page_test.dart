@@ -73,6 +73,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Social & Discussion'), findsOneWidget);
+    expect(find.text('Thảo luận · Prediction'), findsOneWidget);
     expect(find.text('Binh luan'), findsOneWidget);
     expect(find.text('Phan tich'), findsOneWidget);
     expect(find.text('Chia se'), findsOneWidget);

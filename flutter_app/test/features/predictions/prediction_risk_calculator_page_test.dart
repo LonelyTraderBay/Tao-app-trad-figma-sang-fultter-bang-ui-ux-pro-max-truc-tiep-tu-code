@@ -72,6 +72,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Risk Calculator'), findsOneWidget);
+    expect(find.text('Rủi ro · Prediction'), findsOneWidget);
     expect(find.text('May tinh'), findsOneWidget);
     expect(find.text('Kich ban'), findsOneWidget);
     expect(find.text('Huong dan'), findsOneWidget);

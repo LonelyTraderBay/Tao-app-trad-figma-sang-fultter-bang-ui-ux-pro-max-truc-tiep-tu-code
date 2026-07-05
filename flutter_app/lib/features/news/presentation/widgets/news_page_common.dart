@@ -34,7 +34,7 @@ class _ArticleSheet extends StatelessWidget {
                   padding: AppSpacing.newsSheetHandleMargin,
                   child: SizedBox(
                     width: AppSpacing.newsSheetHandleWidth,
-                    height: _newsSheetHandleHeight,
+                    height: AppSpacing.newsSheetHandleHeight,
                     child: DecoratedBox(
                       decoration: const ShapeDecoration(
                         color: AppColors.borderSolid,
@@ -55,24 +55,10 @@ class _ArticleSheet extends StatelessWidget {
                           children: [
                             Text(type.emoji, style: AppTextStyles.sectionTitle),
                             const SizedBox(width: AppSpacing.x3 + 2),
-                            DecoratedBox(
-                              decoration: ShapeDecoration(
-                                color: type.color.withValues(alpha: .18),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: AppRadii.mdRadius,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: AppSpacing.newsSheetBadgePadding,
-                                child: Text(
-                                  type.label,
-                                  style: AppTextStyles.captionSm.copyWith(
-                                    color: type.color,
-                                    fontWeight: AppTextStyles.bold,
-                                    height: _newsTightLineHeight,
-                                  ),
-                                ),
-                              ),
+                            VitAccentPill(
+                              label: type.label,
+                              accentColor: type.color,
+                              size: VitStatusPillSize.sm,
                             ),
                           ],
                         ),
@@ -80,7 +66,7 @@ class _ArticleSheet extends StatelessWidget {
                         Text(
                           article.title,
                           style: AppTextStyles.sectionTitle.copyWith(
-                            height: _newsSheetTitleLineHeight,
+                            height: AppSpacing.newsSheetTitleLineHeight,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.x3),
@@ -105,13 +91,13 @@ class _ArticleSheet extends StatelessWidget {
                           width: double.infinity,
                           density: VitDensity.compact,
                           variant: VitCardVariant.inner,
-                          borderColor: _newsPrimary.withValues(alpha: .12),
+                          borderColor: AppColors.primary.withValues(alpha: .12),
                           child: Text(
                             article.summary,
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text2,
                               fontStyle: FontStyle.italic,
-                              height: _newsSheetSummaryLineHeight,
+                              height: AppSpacing.newsSheetSummaryLineHeight,
                             ),
                           ),
                         ),
@@ -119,7 +105,7 @@ class _ArticleSheet extends StatelessWidget {
                         Text(
                           article.content,
                           style: AppTextStyles.body.copyWith(
-                            height: _newsSheetBodyLineHeight,
+                            height: AppSpacing.newsSheetBodyLineHeight,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.newsSectionBreak),
@@ -128,7 +114,12 @@ class _ArticleSheet extends StatelessWidget {
                           runSpacing: AppSpacing.x3,
                           children: [
                             for (final tag in article.tags)
-                              _TagChip(label: tag),
+                              VitStatusPill(
+                                label: tag,
+                                status: VitStatusPillStatus.neutral,
+                                size: VitStatusPillSize.sm,
+                                icon: Icons.sell_outlined,
+                              ),
                           ],
                         ),
                         const SizedBox(height: AppSpacing.x4),

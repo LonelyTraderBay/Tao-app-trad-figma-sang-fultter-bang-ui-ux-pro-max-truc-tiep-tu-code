@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -22,7 +23,6 @@ const double _p2pDisputeResolutionVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
 const double _p2pDisputeResolutionNativeNavClearance =
     _p2pDisputeResolutionVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
-const double _p2pDisputeResolutionMajorGap = AppSpacing.x3;
 const double _p2pDisputeResolutionSectionGap = AppSpacing.x2;
 const double _p2pDisputeResolutionIconBox = AppSpacing.buttonCompact;
 
@@ -88,37 +88,30 @@ class _P2PDisputeResolutionPageState
                     padding: AppSpacing.p2pDisputeResolutionScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _DecisionHero(snapshot: snapshot),
-                        const SizedBox(height: _p2pDisputeResolutionSectionGap),
                         _DecisionDetailCard(snapshot: snapshot),
-                        const SizedBox(height: _p2pDisputeResolutionSectionGap),
                         _AppealCard(
                           deadline: snapshot.appealDeadline,
                           appealOpened: _appealOpened,
                           onAppeal: _openAppeal,
                         ),
-                        const SizedBox(height: _p2pDisputeResolutionMajorGap),
                         VitCtaButton(
                           key: P2PDisputeResolutionPage.disputesKey,
                           onPressed: () =>
                               context.go(AppRoutePaths.p2pDisputes),
                           child: const Text('Quay về danh sách tranh chấp'),
                         ),
-                        const SizedBox(height: _p2pDisputeResolutionSectionGap),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding:
-                              AppSpacing.p2pDisputeResolutionCompactCardPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Dispute resolution review',
-                            message:
-                                'Decision, refund amount, mediator note, appeal state, dispute list route and next case step are reviewed before closing.',
-                            contractId: 'p2p-dispute-resolution-review',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Dispute resolution review',
+                          message:
+                              'Decision, refund amount, mediator note, appeal state, dispute list route and next case step are reviewed before closing.',
+                          contractId: 'p2p-dispute-resolution-review',
                         ),
                       ],
                     ),
@@ -226,7 +219,7 @@ class _DecisionDetailCard extends StatelessWidget {
           const SizedBox(height: _p2pDisputeResolutionSectionGap),
           _DetailField(label: 'Lý do', value: snapshot.reason),
           const SizedBox(height: _p2pDisputeResolutionSectionGap),
-          _DetailField(label: 'Mediator', value: snapshot.mediator),
+          _DetailField(label: 'Trọng tài', value: snapshot.mediator),
           const SizedBox(height: _p2pDisputeResolutionSectionGap),
           _DetailField(label: 'Quyết định lúc', value: snapshot.resolvedAt),
         ],

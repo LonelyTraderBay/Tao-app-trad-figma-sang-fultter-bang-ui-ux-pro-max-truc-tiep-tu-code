@@ -17,7 +17,7 @@ class _HeroBanner extends StatelessWidget {
         children: [
           const Icon(
             Icons.menu_book_outlined,
-            color: AppColors.primarySoft,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -93,7 +93,7 @@ class _TutorialCard extends StatelessWidget {
           children: [
             _RoundIcon(
               icon: Icons.play_circle_outline_rounded,
-              color: AppColors.primarySoft,
+              color: AppModuleAccents.earn,
               size: AppSpacing.buttonStandard,
             ),
             const SizedBox(width: AppSpacing.x4),
@@ -142,7 +142,7 @@ class _QuickTipsGrid extends StatelessWidget {
     return VitPageSection(
       key: StakingGuidePage.quickTipsKey,
       label: 'Quick Tips',
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [
         LayoutBuilder(
           builder: (context, constraints) {
@@ -213,7 +213,7 @@ class _CommonMistakes extends StatelessWidget {
     return VitPageSection(
       key: StakingGuidePage.mistakesKey,
       label: 'Tránh sai lầm phổ biến',
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [
         VitCard(
           radius: VitCardRadius.large,
@@ -288,7 +288,7 @@ class _StartStakingCard extends StatelessWidget {
     return VitCard(
       key: StakingGuidePage.ctaKey,
       variant: VitCardVariant.inner,
-      borderColor: AppColors.buy20,
+      borderColor: AppColors.primary20,
       radius: VitCardRadius.large,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(

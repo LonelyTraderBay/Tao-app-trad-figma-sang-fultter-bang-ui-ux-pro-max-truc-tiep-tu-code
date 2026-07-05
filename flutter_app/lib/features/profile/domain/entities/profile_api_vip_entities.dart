@@ -43,6 +43,7 @@ final class ProfileVipSnapshot {
     required this.endpoint,
     required this.actionDraft,
     required this.supportedStates,
+    this.screenState = ProfileScreenState.success,
   });
 
   final int currentLevel;
@@ -54,6 +55,7 @@ final class ProfileVipSnapshot {
   final String endpoint;
   final String actionDraft;
   final List<ProfileScreenState> supportedStates;
+  final ProfileScreenState screenState;
 
   ProfileVipTier get currentTier =>
       tiers.firstWhere((tier) => tier.level == currentLevel);
@@ -145,12 +147,14 @@ final class ProfileSubAccountsSnapshot {
     required this.endpoint,
     required this.actionDraft,
     required this.supportedStates,
+    this.screenState = ProfileScreenState.success,
   });
 
   final List<ProfileSubAccount> accounts;
   final String endpoint;
   final String actionDraft;
   final List<ProfileScreenState> supportedStates;
+  final ProfileScreenState screenState;
 
   double get totalBalance =>
       accounts.fold(0, (sum, account) => sum + account.balance);

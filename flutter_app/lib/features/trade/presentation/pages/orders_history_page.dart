@@ -14,8 +14,6 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 
-import '../widgets/trade_body_review_widgets.dart';
-
 part '../widgets/orders_history_page_sections.dart';
 part '../widgets/orders_history_page_common.dart';
 
@@ -56,66 +54,45 @@ class _OrdersHistoryPageState extends ConsumerState<OrdersHistoryPage> {
       shellRenderMode: widget.shellRenderMode,
       onBack: () => context.go(AppRoutePaths.trade),
       children: [
-        VitTradeSection(
-          title: 'Phân loại',
-          child: _OrderTopTabs(
-            active: _activeTab,
-            openCount: snapshot.openOrders.length,
-            historyCount: snapshot.historyOrders.length,
-            onChanged: (tab) => setState(() => _activeTab = tab),
-          ),
+        _OrderTopTabs(
+          active: _activeTab,
+          openCount: snapshot.openOrders.length,
+          historyCount: snapshot.historyOrders.length,
+          onChanged: (tab) => setState(() => _activeTab = tab),
         ),
-        VitTradeSection(
-          title: 'Bộ lọc',
-          child: _FilterRow(
-            active: _filter,
-            onChanged: (filter) => setState(() => _filter = filter),
-          ),
+        const SizedBox(height: AppSpacing.x2),
+        _FilterRow(
+          active: _filter,
+          onChanged: (filter) => setState(() => _filter = filter),
         ),
+        const SizedBox(height: AppSpacing.x3),
         if (orders.isEmpty)
-          VitTradeSection(
-            title: _activeTab == 'open' ? 'Lệnh đang mở' : 'Lịch sử khớp',
-            child: _EmptyState(activeTab: _activeTab),
-          )
+          _EmptyState(activeTab: _activeTab)
         else
-          VitTradeSection(
-            title: _activeTab == 'open' ? 'Lệnh đang mở' : 'Lịch sử khớp',
-            child: VitCard(
-              clip: true,
-              child: Column(
-                children: [
-                  for (var i = 0; i < orders.length; i++) ...[
-                    _OrderHistoryTile(
-                      key: OrdersHistoryPage.orderKey(orders[i].id),
-                      order: orders[i],
-                      grouped: true,
-                      actionKey: i == 0
-                          ? OrdersHistoryPage.cancelFirstOrderKey
-                          : null,
-                      onCancel: () => _cancelOrder(orders[i].id),
+          VitCard(
+            clip: true,
+            child: Column(
+              children: [
+                for (var i = 0; i < orders.length; i++) ...[
+                  _OrderHistoryTile(
+                    key: OrdersHistoryPage.orderKey(orders[i].id),
+                    order: orders[i],
+                    grouped: true,
+                    actionKey: i == 0
+                        ? OrdersHistoryPage.cancelFirstOrderKey
+                        : null,
+                    onCancel: () => _cancelOrder(orders[i].id),
+                  ),
+                  if (i < orders.length - 1)
+                    const Divider(
+                      height: AppSpacing.dividerHairline,
+                      thickness: AppSpacing.dividerHairline,
+                      color: AppColors.divider,
                     ),
-                    if (i < orders.length - 1)
-                      const Divider(
-                        height: AppSpacing.dividerHairline,
-                        thickness: AppSpacing.dividerHairline,
-                        color: AppColors.divider,
-                      ),
-                  ],
                 ],
-              ),
+              ],
             ),
           ),
-        const TradeBodyReviewSection(
-          title: 'Orders history body review',
-          message: 'Orders history body reviewed',
-          detail:
-              'Open/history tabs, filters, empty, cancel, snackbar, and result states stay visible.',
-          primary:
-              'Tabs and filters stay above order rows for recovery from empty states.',
-          secondary: 'Cancel action keeps selected order context visible.',
-          tertiary:
-              'History rows remain separated from live position management.',
-        ),
       ],
     );
   }

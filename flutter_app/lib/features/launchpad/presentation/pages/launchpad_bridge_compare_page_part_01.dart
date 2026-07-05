@@ -23,17 +23,17 @@ class _InputSummaryHero extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Bridge Route Comparison',
+                  'So sánh route bridge',
                   style: AppTextStyles.caption.copyWith(
-                    color: AppColors.portfolioTextDim,
+                    color: AppColors.text3,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
               ),
               Text(
-                '${comparison.routes.length} routes',
+                '${comparison.routes.length} route',
                 style: AppTextStyles.micro.copyWith(
-                  color: AppColors.portfolioTextMuted,
+                  color: AppColors.text3,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -55,13 +55,13 @@ class _InputSummaryHero extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.arrow_forward_rounded,
-                    color: AppColors.portfolioTextMuted,
+                    color: AppColors.text3,
                     size: AppSpacing.iconMd,
                   ),
                   Text(
                     'bridge',
                     style: AppTextStyles.micro.copyWith(
-                      color: AppColors.portfolioTextMuted,
+                      color: AppColors.text3,
                     ),
                   ),
                 ],
@@ -119,7 +119,7 @@ class _ChainAmount extends StatelessWidget {
         Text(
           token,
           style: AppTextStyles.micro.copyWith(
-            color: AppColors.portfolioTextMuted,
+            color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
           ),
         ),

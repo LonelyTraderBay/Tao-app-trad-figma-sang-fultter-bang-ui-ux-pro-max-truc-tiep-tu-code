@@ -61,7 +61,7 @@ void main() {
     expect(find.byType(P2PAntiPhishingCodePage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Anti-Phishing Code'), findsOneWidget);
+    expect(find.text('Mã chống phishing'), findsOneWidget);
     expect(find.text('Bảo mật · P2P'), findsOneWidget);
     expect(find.byKey(P2PAntiPhishingCodePage.statusKey), findsOneWidget);
     expect(find.text('Anti-Phishing Code đã bật'), findsOneWidget);
@@ -70,7 +70,7 @@ void main() {
     expect(find.text('Bảo vệ khỏi email phishing'), findsOneWidget);
     expect(find.byKey(P2PAntiPhishingCodePage.codeCardKey), findsOneWidget);
     expect(find.text('Code hiện tại'), findsOneWidget);
-    expect(find.text('Your Code'), findsOneWidget);
+    expect(find.text('Mã của bạn'), findsOneWidget);
     expect(find.byKey(P2PAntiPhishingCodePage.examplesKey), findsOneWidget);
     expect(find.text('Ví dụ email'), findsOneWidget);
     expect(find.text('[VitTrade] P2P Order Confirmed'), findsOneWidget);

@@ -70,13 +70,13 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_wallet')),
       findsOneWidget,
     );
-    expect(find.text('Gas Optimizer'), findsOneWidget);
-    expect(find.text('Hien tai'), findsOneWidget);
-    expect(find.text('Xu huong'), findsOneWidget);
-    expect(find.text('Meo tiet kiem'), findsOneWidget);
+    expect(find.text('Tối ưu phí gas'), findsOneWidget);
+    expect(find.text('Hiện tại'), findsOneWidget);
+    expect(find.text('Xu hướng'), findsOneWidget);
+    expect(find.text('Mẹo tiết kiệm'), findsOneWidget);
     expect(find.text('Gas is below 24h average'), findsOneWidget);
     expect(find.textContaining('11% below'), findsOneWidget);
-    expect(find.text('Chon toc do giao dich'), findsOneWidget);
+    expect(find.text('Chọn tốc độ giao dịch'), findsOneWidget);
     expect(find.text('Slow'), findsOneWidget);
     expect(find.text('15 Gwei'), findsOneWidget);
     expect(find.text('Standard'), findsWidgets);
@@ -121,18 +121,18 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(WalletGasOptimizerPage.feedbackKey), findsOneWidget);
     expect(
-      find.text('Gas estimates refreshed. Confirm fees before signing.'),
+      find.text('Đã làm mới ước tính gas. Xác nhận phí trước khi ký.'),
       findsOneWidget,
     );
 
-    await tester.tap(find.byKey(WalletGasOptimizerPage.tabKey('Xu huong')));
+    await tester.tap(find.byKey(WalletGasOptimizerPage.tabKey('Xu hướng')));
     await tester.pumpAndSettle();
     expect(find.text('24h Gas Price Trends'), findsOneWidget);
     expect(find.text('Network Activity'), findsOneWidget);
     expect(find.text('Lower Activity Window'), findsOneWidget);
 
     await tester.tap(
-      find.byKey(WalletGasOptimizerPage.tabKey('Meo tiet kiem')),
+      find.byKey(WalletGasOptimizerPage.tabKey('Mẹo tiết kiệm')),
     );
     await tester.pumpAndSettle();
     expect(find.text('Gas Optimization Tips'), findsOneWidget);

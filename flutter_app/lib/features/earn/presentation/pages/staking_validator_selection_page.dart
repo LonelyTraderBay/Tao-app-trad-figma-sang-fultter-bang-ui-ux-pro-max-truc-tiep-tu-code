@@ -7,11 +7,10 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_detail.dart';
@@ -75,8 +74,10 @@ class _StakingValidatorSelectionPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: snapshot.infoTitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -91,14 +92,7 @@ class _StakingValidatorSelectionPageState
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.standard,
-                        padding: AppSpacing.zeroInsets,
-                        child: StakingValidatorSelectionInfoBanner(
-                          snapshot: snapshot,
-                        ),
-                      ),
+                      StakingValidatorSelectionInfoBanner(snapshot: snapshot),
                       StakingValidatorSelectionStatsSummary(snapshot: snapshot),
                       StakingValidatorSelectionSearchAndFilter(
                         controller: _searchController,

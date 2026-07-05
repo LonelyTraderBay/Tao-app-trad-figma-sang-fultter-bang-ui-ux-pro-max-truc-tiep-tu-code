@@ -149,6 +149,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(PredictionEventDetailPage), findsOneWidget);
-    expect(find.text('Event Detail'), findsOneWidget);
+    expect(find.text('Chi tiết sự kiện'), findsOneWidget);
   });
 }

@@ -71,9 +71,11 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Lịch sử giao dịch'), findsOneWidget);
-    expect(find.text('Lịch sử · Wallet'), findsOneWidget);
+    expect(
+      find.text('Theo dõi nạp, rút và giao dịch · an toàn'),
+      findsOneWidget,
+    );
     expect(find.text('6 giao dịch'), findsOneWidget);
-    expect(find.text('Yêu cầu CSV'), findsOneWidget);
     expect(find.text('21/02/2024'), findsOneWidget);
     expect(find.text('Nạp USDT'), findsOneWidget);
     expect(find.text('+5,000.00 USDT'), findsOneWidget);

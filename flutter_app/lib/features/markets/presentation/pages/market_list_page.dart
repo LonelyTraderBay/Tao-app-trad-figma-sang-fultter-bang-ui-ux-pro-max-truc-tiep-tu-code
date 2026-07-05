@@ -16,7 +16,6 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_l
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_movers.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_pairs.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_tools.dart';
-import '../widgets/market_body_review_widgets.dart';
 
 class MarketListPage extends ConsumerStatefulWidget {
   const MarketListPage({super.key, this.shellRenderMode});
@@ -146,7 +145,10 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
               children: [
-                MarketListHeader(onNavigate: _go),
+                MarketListHeader(
+                  onNavigate: _go,
+                  lastUpdatedLabel: snapshot.lastUpdatedLabel,
+                ),
                 VitSearchBar(
                   key: MarketListPage.searchKey,
                   controller: _searchController,
@@ -200,18 +202,6 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
                     onNavigate: _go,
                   ),
                 const MarketListDiscoverMoreSection(),
-                const MarketBodyReviewSection(
-                  title: 'Market list state review',
-                  message: 'Market list data reviewed',
-                  detail:
-                      'Search, sort, category, favorite, empty, and refresh states remain visible for list browsing.',
-                  primary:
-                      'Search and filter controls keep a clear reset path when no pair matches.',
-                  secondary:
-                      'Favorite toggles preserve pair context before chart or trade navigation.',
-                  tertiary:
-                      'Discover-more content stays below core list results to avoid pushing primary data away.',
-                ),
               ],
             ),
           ),

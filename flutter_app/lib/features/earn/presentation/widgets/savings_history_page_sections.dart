@@ -150,10 +150,12 @@ class _TypeFilterRow extends StatelessWidget {
       child: Row(
         children: [
           for (final filter in filters) ...[
-            _Chip(
+            VitChoicePill(
               label: _typeFilterLabel(filter),
               selected: filter == active,
               onTap: () => onChanged(filter),
+              accentColor: AppModuleAccents.earn,
+              padding: AppSpacing.earnWidePillPadding,
             ),
             if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
           ],
@@ -179,17 +181,21 @@ class _DateFilterRow extends StatelessWidget {
     ];
     return Row(
       children: [
-        for (final filter in filters) ...[
-          Expanded(
-            child: _Chip(
-              label: _dateFilterLabel(filter),
-              selected: filter == active,
-              onTap: () => onChanged(filter),
-              center: true,
-            ),
+        Expanded(
+          child: VitPresetChipRow<_HistoryDateFilter>(
+            accentColor: AppModuleAccents.earn,
+            selectedValue: active,
+            onTap: onChanged,
+            items: [
+              for (final filter in filters)
+                VitPresetChipItem(
+                  value: filter,
+                  label: _dateFilterLabel(filter),
+                  semanticLabel: 'Lọc thời gian ${_dateFilterLabel(filter)}',
+                ),
+            ],
           ),
-          if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
-        ],
+        ),
         const SizedBox(width: AppSpacing.x2),
         DecoratedBox(
           decoration: const ShapeDecoration(
@@ -207,31 +213,6 @@ class _DateFilterRow extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _Chip extends StatelessWidget {
-  const _Chip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-    this.center = false,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-  final bool center;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      fullWidth: center,
-      padding: AppSpacing.earnWidePillPadding,
     );
   }
 }

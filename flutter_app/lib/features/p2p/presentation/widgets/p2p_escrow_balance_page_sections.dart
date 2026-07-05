@@ -18,18 +18,19 @@ class _EscrowHeroCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VitCard(
-                width: _p2pEscrowBalanceIconBox,
-                height: _p2pEscrowBalanceIconBox,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.large,
-                borderColor: AppColors.warningBorder,
-                background: const ColoredBox(color: AppColors.warn15),
-                clip: true,
-                child: const Icon(
-                  Icons.lock_outline_rounded,
-                  color: AppModuleAccents.p2p,
-                  size: AppSpacing.iconMd,
+              SizedBox.square(
+                dimension: _p2pEscrowBalanceIconBox,
+                child: Material(
+                  color: AppColors.warn15,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadii.smRadius,
+                    side: const BorderSide(color: AppColors.warningBorder),
+                  ),
+                  child: const Icon(
+                    Icons.lock_outline_rounded,
+                    color: AppModuleAccents.p2p,
+                    size: AppSpacing.iconMd,
+                  ),
                 ),
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -63,28 +64,33 @@ class _EscrowHeroCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: _p2pEscrowBalanceTightGap),
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
-            padding: AppSpacing.p2pEscrowBalanceInnerPadding,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.verified_user_outlined,
-                  color: AppModuleAccents.p2p,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    '${balance.orderCount} đơn hàng đang giữ tiền',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.medium,
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.surface2,
+              borderRadius: AppRadii.inputRadius,
+              border: Border.all(color: AppColors.cardBorder),
+            ),
+            child: Padding(
+              padding: AppSpacing.p2pEscrowBalanceInnerPadding,
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.verified_user_outlined,
+                    color: AppModuleAccents.p2p,
+                    size: AppSpacing.iconSm,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: Text(
+                      '${balance.orderCount} đơn hàng đang giữ tiền',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.medium,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

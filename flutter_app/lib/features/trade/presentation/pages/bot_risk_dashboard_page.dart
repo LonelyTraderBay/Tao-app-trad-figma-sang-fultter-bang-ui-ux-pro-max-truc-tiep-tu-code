@@ -46,9 +46,11 @@ class BotRiskDashboardPage extends ConsumerWidget {
 
     return VitTradeHubScaffold(
       title: 'Risk Dashboard',
+      subtitle: 'Giám sát rủi ro bot theo thời gian thực',
       semanticLabel: 'SC-120 BotRiskDashboardPage',
       contentKey: BotRiskDashboardPage.contentKey,
       shellRenderMode: shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       headerActions: [
         VitHeaderActionItem(
@@ -58,6 +60,14 @@ class BotRiskDashboardPage extends ConsumerWidget {
         ),
       ],
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Điểm rủi ro',
+          primaryValue: '${snapshot.riskScore}',
+          primaryColor: _riskAmber,
+          secondaryLabel: 'Bot đang chạy',
+          secondaryValue: '${snapshot.runningBots}',
+          secondaryColor: AppColors.buy,
+        ),
         VitTradeSection(
           title: 'Tổng quan rủi ro',
           child: _RiskScoreCard(snapshot: snapshot),
@@ -93,31 +103,13 @@ class BotRiskDashboardPage extends ConsumerWidget {
           title: 'Risk explanation',
           child: const _RiskExplanationCard(),
         ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            density: VitDensity.compact,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Risk dashboard review',
-                  message:
-                      'Score, critical metrics, exposure, VaR trend, safety controls and emergency-stop next step are reviewed before bot risk action.',
-                  contractId: 'bot-risk-dashboard-review',
-                  density: VitDensity.compact,
-                ),
-                SizedBox(height: AppSpacing.x2),
-                VitStatusPill(
-                  label: 'Emergency route confirmed',
-                  status: VitStatusPillStatus.warning,
-                  size: VitStatusPillSize.sm,
-                ),
-              ],
-            ),
-          ),
+        const VitBotRiskReviewFooter(
+          title: 'Risk dashboard review',
+          message:
+              'Score, critical metrics, exposure, VaR trend, safety controls and emergency-stop next step are reviewed before bot risk action.',
+          contractId: 'bot-risk-dashboard-review',
+          statusLabel: 'Emergency route confirmed',
+          status: VitStatusPillStatus.warning,
         ),
       ],
     );

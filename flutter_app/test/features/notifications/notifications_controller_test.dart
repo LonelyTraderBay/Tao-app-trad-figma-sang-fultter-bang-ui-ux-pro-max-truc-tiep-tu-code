@@ -15,6 +15,7 @@ void main() {
       expect(snapshot.endpoint, '/api/mobile/notifications/notifications');
       expect(snapshot.notifications, hasLength(15));
       expect(snapshot.notifications.where((item) => !item.isRead), isNotEmpty);
+      expect(snapshot.screenState, NotificationsScreenState.ready);
       expect(
         snapshot.supportedStates,
         containsAll([

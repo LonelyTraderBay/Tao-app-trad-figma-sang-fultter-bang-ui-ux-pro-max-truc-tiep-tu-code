@@ -17,7 +17,7 @@ class _InfoBanner extends StatelessWidget {
         children: [
           const Icon(
             Icons.chat_bubble_outline_rounded,
-            color: AppColors.primarySoft,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -113,7 +113,7 @@ class _PostsSection extends StatelessWidget {
     return VitPageSection(
       key: StakingSocialFeedPage.feedKey,
       label: title,
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [for (final post in posts) _PostCard(post: post)],
     );
   }
@@ -152,7 +152,7 @@ class _PostCard extends StatelessWidget {
                         if (post.badge != null)
                           _Pill(
                             label: post.badge!,
-                            color: AppColors.primarySoft,
+                            color: AppModuleAccents.earn,
                             emphasis: true,
                           ),
                       ],
@@ -253,7 +253,7 @@ class _Avatar extends StatelessWidget {
             label: label,
             child: Icon(
               icon,
-              color: AppColors.primarySoft,
+              color: AppModuleAccents.earn,
               size: AppSpacing.iconMd,
             ),
           ),

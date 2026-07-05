@@ -27,6 +27,7 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Danh mục',
+            subtitle: 'Theo dõi danh mục · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -118,17 +119,12 @@ class _PortfolioTrackerPageState extends ConsumerState<PortfolioTrackerPage> {
                             hidden: _hideBalance,
                           ),
                         ],
-                        const MarketBodyReviewSection(
-                          title: 'Portfolio state review',
-                          message: 'Portfolio tracker data reviewed',
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.info_outline_rounded,
+                          message: 'Giá trị danh mục chỉ mang tính tham khảo',
                           detail:
-                              'Overview, assets, performance, hidden balance, empty, and refresh states remain visible.',
-                          primary:
-                              'Balance masking preserves user privacy across overview and asset rows.',
-                          secondary:
-                              'Sort and timeframe controls keep portfolio comparisons explicit.',
-                          tertiary:
-                              'Risk and PnL summaries stay separate from pair-level market navigation.',
+                              'PnL và phân bổ dựa trên dữ liệu mock. Không phải khuyến nghị đầu tư.',
                         ),
                       ],
                     ),

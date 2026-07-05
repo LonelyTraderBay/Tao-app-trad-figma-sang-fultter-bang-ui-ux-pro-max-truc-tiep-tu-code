@@ -54,6 +54,7 @@ class _InvestorCompensationPageState
       semanticLabel: 'SC-104 InvestorCompensationPage',
       contentKey: InvestorCompensationPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
       onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
       children: [
         VitTradeSection(

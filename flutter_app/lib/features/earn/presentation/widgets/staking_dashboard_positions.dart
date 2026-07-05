@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -103,12 +104,12 @@ class _PositionCard extends StatelessWidget {
                   Text(
                     '${position.apy.toStringAsFixed(1)}%',
                     style: AppTextStyles.sectionTitle.copyWith(
-                      color: AppColors.buy,
+                      color: AppModuleAccents.earn,
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   Text(
-                    'APY',
+                    'APY ước tính',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],

@@ -106,7 +106,7 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
-    expect(find.text('Token Unlock'), findsOneWidget);
+    expect(find.text('Mở khóa token'), findsOneWidget);
     expect(find.text('Sắp mở khóa'), findsOneWidget);
     expect(find.text('Phân tích'), findsOneWidget);
     expect(find.text('Lịch trình'), findsOneWidget);

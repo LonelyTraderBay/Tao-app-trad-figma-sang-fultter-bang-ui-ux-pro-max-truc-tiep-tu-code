@@ -77,7 +77,7 @@ class _MissingPositionState extends StatelessWidget {
       children: [
         VitHighRiskStatePanel(
           state: VitHighRiskUiState.empty,
-          title: 'Redeem position unavailable',
+          title: 'Không tìm thấy vị thế tiết kiệm',
           message: snapshot.notFoundMessage,
           contractId: 'savings-redeem-empty',
         ),

@@ -275,19 +275,6 @@ class _BiggestWinCard extends StatelessWidget {
   }
 }
 
-Key _timeFilterKey(PredictionLeaderboardTimeFilter filter) {
-  return switch (filter) {
-    PredictionLeaderboardTimeFilter.today =>
-      PredictionsLeaderboardPage.todayFilterKey,
-    PredictionLeaderboardTimeFilter.weekly =>
-      PredictionsLeaderboardPage.weeklyFilterKey,
-    PredictionLeaderboardTimeFilter.monthly =>
-      PredictionsLeaderboardPage.monthlyFilterKey,
-    PredictionLeaderboardTimeFilter.allTime =>
-      PredictionsLeaderboardPage.allTimeFilterKey,
-  };
-}
-
 Color _winRateColor(int winRate) {
   if (winRate >= 70) return AppColors.buy;
   if (winRate >= 50) return AppColors.warn;

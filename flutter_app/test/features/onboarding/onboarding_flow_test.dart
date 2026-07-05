@@ -50,6 +50,7 @@ void main() {
         OnboardingScreenState.ready,
       ]),
     );
+    expect(snapshot.screenState, OnboardingScreenState.ready);
   });
 
   testWidgets('SC-397 renders welcome baseline as standalone onboarding', (

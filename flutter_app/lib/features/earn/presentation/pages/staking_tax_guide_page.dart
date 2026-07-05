@@ -13,11 +13,10 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_tax
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_tax_guide_jurisdictions.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_tax_guide_overview.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class StakingTaxGuidePage extends ConsumerStatefulWidget {
   const StakingTaxGuidePage({super.key, this.shellRenderMode});
@@ -68,8 +67,10 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Tham khảo thuế — không phải tư vấn pháp lý',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -84,12 +85,7 @@ class _StakingTaxGuidePageState extends ConsumerState<StakingTaxGuidePage> {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.standard,
-                        padding: AppSpacing.zeroInsets,
-                        child: StakingTaxDisclaimerBanner(snapshot: snapshot),
-                      ),
+                      StakingTaxDisclaimerBanner(snapshot: snapshot),
                       StakingTaxTabs(
                         tabs: snapshot.tabs,
                         active: activeTab,

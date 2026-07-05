@@ -15,7 +15,6 @@ class _FriendCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final palette = _statusPalette(friend.status);
     return VitCard(
       key: ReferralHistoryPage.friendKey(friend.id),
       onTap: onOpen,
@@ -45,10 +44,10 @@ class _FriendCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: AppSpacing.x3),
-                        _StatusPill(
-                          label: palette.label,
-                          color: palette.color,
-                          background: palette.background,
+                        VitStatusPill(
+                          label: _statusLabel(friend.status),
+                          status: _statusPillStatus(friend.status),
+                          size: VitStatusPillSize.sm,
                         ),
                       ],
                     ),
@@ -167,38 +166,6 @@ class _Avatar extends StatelessWidget {
   }
 }
 
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({
-    required this.label,
-    required this.color,
-    required this.background,
-  });
-
-  final String label;
-  final Color color;
-  final Color background;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: background,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.referralTinyPillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _FriendMetric extends StatelessWidget {
   const _FriendMetric({
     required this.label,
@@ -272,6 +239,18 @@ final class _ReferralStatusPalette {
   final String label;
   final Color color;
   final Color background;
+}
+
+String _statusLabel(ReferralFriendStatus status) =>
+    _statusPalette(status).label;
+
+VitStatusPillStatus _statusPillStatus(ReferralFriendStatus status) {
+  return switch (status) {
+    ReferralFriendStatus.pendingKyc => VitStatusPillStatus.warning,
+    ReferralFriendStatus.kycDone => VitStatusPillStatus.info,
+    ReferralFriendStatus.activeTrader => VitStatusPillStatus.success,
+    ReferralFriendStatus.inactive => VitStatusPillStatus.neutral,
+  };
 }
 
 _ReferralStatusPalette _statusPalette(ReferralFriendStatus status) {

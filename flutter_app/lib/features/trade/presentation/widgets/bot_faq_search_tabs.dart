@@ -11,7 +11,7 @@ class _SearchField extends StatelessWidget {
     return VitSearchBar(
       controller: controller,
       fieldKey: BotFaqPage.searchKey,
-      placeholder: 'Search FAQs...',
+      placeholder: 'Tìm câu hỏi...',
       variant: VitSearchBarVariant.compact,
       onChanged: onChanged,
     );
@@ -36,7 +36,7 @@ class _CategoryTabs extends StatelessWidget {
         for (final category in categories)
           VitTabItem(
             key: category.id,
-            label: category.id,
+            label: category.label,
             widgetKey: BotFaqPage.tabKey(category.id),
           ),
       ],

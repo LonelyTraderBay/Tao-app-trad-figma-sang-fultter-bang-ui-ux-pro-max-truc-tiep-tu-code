@@ -21,31 +21,6 @@ class _StepIntro extends StatelessWidget {
   }
 }
 
-class _ChoiceChipButton extends StatelessWidget {
-  const _ChoiceChipButton({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      padding: AppSpacing.p2pMerchantApplyChoicePadding,
-      accentColor: AppModuleAccents.p2p,
-      semanticLabel: 'Merchant application choice $label',
-    );
-  }
-}
-
 class _MultilineInput extends StatelessWidget {
   const _MultilineInput({
     required this.controller,
@@ -176,31 +151,26 @@ class _InfoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .08),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(color: color.withValues(alpha: .22)),
-      ),
-      child: Padding(
-        padding: VitDensity.compact.cardPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  height: _p2pMerchantApplyReadableLineHeight,
-                  fontWeight: AppTextStyles.medium,
-                ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: color.withValues(alpha: .22),
+      padding: AppSpacing.p2pMerchantApplyInfoPadding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: color, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(
+                color: color,
+                height: _p2pMerchantApplyReadableLineHeight,
+                fontWeight: AppTextStyles.medium,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -314,9 +284,7 @@ class _IconBadge extends StatelessWidget {
       dimension: size,
       child: Material(
         color: color.withValues(alpha: .12),
-        shape: RoundedRectangleBorder(
-          borderRadius: large ? AppRadii.mdRadius : AppRadii.smRadius,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         child: Icon(
           icon,
           color: color,

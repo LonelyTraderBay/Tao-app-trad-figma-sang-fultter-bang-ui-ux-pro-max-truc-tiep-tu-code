@@ -63,6 +63,10 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
                       setState(() => _claimedAll = true);
                     },
                   ),
+                  _CategoryProgress(
+                    categories: snapshot.categories,
+                    completionLabel: snapshot.summary.completionLabel,
+                  ),
                   _CheckInSection(checkIns: snapshot.checkIns),
                   _ReferralBanner(
                     onTap: () {
@@ -126,75 +130,93 @@ class _RewardsHero extends StatelessWidget {
 
     return VitModuleHeroCard(
       accentColor: AppColors.accent,
+      density: VitDensity.compact,
       padding: AppSpacing.arenaPaddingX5,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              _AccentIcon(
-                icon: Icons.emoji_events_outlined,
-                color: AppColors.accent,
-              ),
-              const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Phần thưởng',
-                      style: AppTextStyles.baseMedium.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    Text(
-                      'Hoàn thành nhiệm vụ - nhận Arena Points',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  'Arena Points',
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    fontWeight: AppTextStyles.heavy,
+                  ),
                 ),
               ),
               VitStatusPill(
                 label: summary.tierLabel,
                 icon: Icons.workspace_premium_outlined,
                 status: VitStatusPillStatus.purple,
-                size: VitStatusPillSize.md,
+                size: VitStatusPillSize.sm,
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            'Hoàn thành nhiệm vụ · nhận điểm Arena',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+          ),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
-                child: _RewardMetricCard(
-                  label: 'Points đã nhận',
-                  value: '${summary.bonusPointsClaimed} pts',
-                  helper:
-                      '${summary.claimedCount} xong · ${summary.pendingCount} chờ',
-                  icon: Icons.redeem_outlined,
-                  color: AppColors.warn,
+                child: _RewardHeroKpi(
+                  label: 'Số dư',
+                  value: '${formatArenaPoints(summary.currentBalance)} pts',
+                  valueStyle: AppTextStyles.heroNumber.copyWith(
+                    color: AppColors.text1,
+                    letterSpacing: 0,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x3),
+              Container(
+                width: 1,
+                height: AppSpacing.x6,
+                color: AppColors.border,
+              ),
               Expanded(
-                child: _RewardMetricCard(
-                  label: 'Arena Points',
-                  value: '${formatArenaPoints(summary.currentBalance)} pts',
-                  helper: 'Hạng #${summary.rank} · Top ${summary.topPercent}%',
-                  icon: Icons.bolt_outlined,
-                  color: AppColors.accent,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: AppSpacing.x3,
+                  ),
+                  child: _RewardHeroKpi(
+                    label: 'Đã nhận',
+                    value: '${summary.bonusPointsClaimed} pts',
+                    valueStyle: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.accent,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
-          _BalanceBreakdown(
-            available: available,
-            locked: summary.lockedBalance,
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              Expanded(
+                child: _TinyStat(
+                  icon: Icons.lock_open_outlined,
+                  label: 'Khả dụng',
+                  value: formatArenaPoints(available),
+                  color: AppColors.buy,
+                ),
+              ),
+              Expanded(
+                child: _TinyStat(
+                  icon: Icons.lock_outline_rounded,
+                  label: 'Đang khóa',
+                  value: formatArenaPoints(summary.lockedBalance),
+                  color: AppColors.warn,
+                  alignEnd: true,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: AppSpacing.x4),
           _PendingClaimBanner(
@@ -204,123 +226,41 @@ class _RewardsHero extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x3),
           _ExpiringBanner(count: summary.expiringCount),
-          const SizedBox(height: AppSpacing.x4),
-          _CategoryProgress(
-            categories: snapshot.categories,
-            completionLabel: summary.completionLabel,
-          ),
         ],
       ),
     );
   }
 }
 
-class _RewardMetricCard extends StatelessWidget {
-  const _RewardMetricCard({
+class _RewardHeroKpi extends StatelessWidget {
+  const _RewardHeroKpi({
     required this.label,
     required this.value,
-    required this.helper,
-    required this.icon,
-    required this.color,
+    required this.valueStyle,
   });
 
   final String label;
   final String value;
-  final String helper;
-  final IconData icon;
-  final Color color;
+  final TextStyle valueStyle;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaPaddingX3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: color, size: AppSpacing.arenaPointsMicroIcon),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: color,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            helper,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontWeight: AppTextStyles.medium,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _BalanceBreakdown extends StatelessWidget {
-  const _BalanceBreakdown({required this.available, required this.locked});
-
-  final int available;
-  final int locked;
-
-  @override
-  Widget build(BuildContext context) {
-    final total = available + locked;
-    final ratio = total == 0 ? 0.0 : available / total;
-
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _ProgressBar(
-          value: ratio,
-          color: AppColors.buy,
-          trackColor: AppColors.warn15,
+        Text(
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.medium,
+          ),
         ),
-        const SizedBox(height: AppSpacing.x3),
-        Row(
-          children: [
-            Expanded(
-              child: _TinyStat(
-                icon: Icons.lock_open_outlined,
-                label: 'Khả dụng',
-                value: formatArenaPoints(available),
-                color: AppColors.buy,
-              ),
-            ),
-            Expanded(
-              child: _TinyStat(
-                icon: Icons.lock_outline_rounded,
-                label: 'Đang khóa',
-                value: formatArenaPoints(locked),
-                color: AppColors.warn,
-                alignEnd: true,
-              ),
-            ),
-          ],
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: valueStyle,
         ),
       ],
     );
@@ -362,8 +302,8 @@ class _PendingClaimBanner extends StatelessWidget {
               children: [
                 Text(
                   claimedAll
-                      ? 'All pending rewards claimed'
-                      : '${summary.pendingCount} rewards waiting',
+                      ? 'Đã nhận hết phần thưởng chờ'
+                      : '${summary.pendingCount} phần thưởng đang chờ',
                   style: AppTextStyles.caption.copyWith(
                     color: claimedAll ? AppColors.buy : AppColors.warn,
                     fontWeight: AppTextStyles.bold,
@@ -410,7 +350,7 @@ class _ExpiringBanner extends StatelessWidget {
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
-              '$count nhiệm vụ sắp hết hạn · Giao dịch 5 lệnh Spot',
+              '$count nhiệm vụ sắp hết hạn · Hoàn thành thêm để giữ điểm',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.micro.copyWith(color: AppColors.text2),

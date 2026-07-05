@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -16,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
 part '../widgets/p2p_wallet_transfer_form.dart';
 part '../widgets/p2p_wallet_transfer_amount.dart';
@@ -23,7 +25,6 @@ part '../widgets/p2p_wallet_transfer_confirm.dart';
 
 const _p2pTransferMajorGap = AppSpacing.x3;
 const _p2pTransferTightGap = AppSpacing.x2;
-const _p2pTransferActionGap = AppSpacing.x3;
 const _p2pTransferSwitchSize = AppSpacing.searchBarCompactHeight;
 const _p2pTransferAssetTileMinHeight = AppSpacing.x7 + AppSpacing.x3;
 const _p2pTransferAssetMarkSize = AppSpacing.searchBarCompactHeight;
@@ -149,6 +150,8 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         if (_showConfirm)
                           _ConfirmTransferView(

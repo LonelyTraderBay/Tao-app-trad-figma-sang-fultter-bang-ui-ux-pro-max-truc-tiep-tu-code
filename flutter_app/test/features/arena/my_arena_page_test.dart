@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_challenge_detail_page.dart';
-import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points_page.dart';
+import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hub_page.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/my_arena_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_phone_frame.dart';
@@ -232,7 +232,7 @@ void main() {
     await tester.ensureVisible(find.byKey(MyArenaPage.pointsDetailKey));
     await tester.tap(find.byKey(MyArenaPage.pointsDetailKey));
     await tester.pumpAndSettle();
-    expect(find.byType(ArenaPointsPage), findsOneWidget);
+    expect(find.byType(RewardsHubPage), findsOneWidget);
 
     await pumpMyArena(tester);
     await tester.ensureVisible(find.byKey(MyArenaPage.reportsKey));

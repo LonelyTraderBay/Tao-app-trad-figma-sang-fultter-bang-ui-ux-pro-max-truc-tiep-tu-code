@@ -58,8 +58,8 @@ void main() {
     expect(find.byType(ArenaJoinPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Tham gia challenge'), findsOneWidget);
-    expect(find.text('Đăng ký · Open Arena'), findsOneWidget);
+    expect(find.text('Tham gia thử thách'), findsOneWidget);
+    expect(find.text('Xác nhận · Open Arena'), findsOneWidget);
     expect(find.text('Altcoin Team Battle — SOL vs AVAX'), findsOneWidget);
     expect(find.text('Altcoin Battle Royale'), findsOneWidget);
     expect(find.text('Team Battle'), findsOneWidget);

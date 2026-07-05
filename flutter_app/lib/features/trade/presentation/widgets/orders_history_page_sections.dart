@@ -15,74 +15,21 @@ class _OrderTopTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      radius: VitCardRadius.standard,
-      padding: VitDensity.compact.cardPadding,
-      borderColor: AppColors.border,
-      child: Row(
-        children: [
-          Expanded(
-            child: _TopTabButton(
-              key: OrdersHistoryPage.openTabKey,
-              label: 'Lệnh mở',
-              count: openCount,
-              active: active == 'open',
-              onTap: () => onChanged('open'),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: _TopTabButton(
-              key: OrdersHistoryPage.historyTabKey,
-              label: 'Lịch sử',
-              count: historyCount,
-              active: active == 'history',
-              onTap: () => onChanged('history'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TopTabButton extends StatelessWidget {
-  const _TopTabButton({
-    super.key,
-    required this.label,
-    required this.count,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final int count;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCtaButton(
-      onPressed: onTap,
-      variant: active ? VitCtaButtonVariant.primary : VitCtaButtonVariant.ghost,
-      height: VitDensity.compact.controlHeight,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: active ? AppColors.onAccent : AppColors.text2,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          VitAccentPill(
-            label: '$count',
-            accentColor: active ? AppColors.onAccent : AppColors.text2,
-          ),
-        ],
-      ),
+    return VitSegmentedTabBar(
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        VitTabItem(
+          key: 'open',
+          label: 'Lệnh mở ($openCount)',
+          widgetKey: OrdersHistoryPage.openTabKey,
+        ),
+        VitTabItem(
+          key: 'history',
+          label: 'Lịch sử ($historyCount)',
+          widgetKey: OrdersHistoryPage.historyTabKey,
+        ),
+      ],
     );
   }
 }
@@ -95,66 +42,29 @@ class _FilterRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filters = const [
-      ('all', 'Tất cả', _tradePrimary),
-      ('buy', 'Mua', AppColors.buy),
-      ('sell', 'Bán', AppColors.sell),
-    ];
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x1),
-      child: Row(
-        children: [
-          for (var index = 0; index < filters.length; index += 1) ...[
-            if (index > 0) const SizedBox(width: AppSpacing.x2),
-            _FilterChip(
-              key: OrdersHistoryPage.filterKey(filters[index].$1),
-              id: filters[index].$1,
-              label: filters[index].$2,
-              color: filters[index].$3,
-              active: active == filters[index].$1,
-              onTap: () => onChanged(filters[index].$1),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    super.key,
-    required this.id,
-    required this.label,
-    required this.color,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String id;
-  final String label;
-  final Color color;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minWidth: id == 'all'
-            ? AppSpacing.buttonCompact
-            : AppSpacing.buttonStandard,
-      ),
-      child: VitChoicePill(
-        label: label,
-        selected: active,
-        onTap: onTap,
-        height: VitDensity.compact.controlHeight - AppSpacing.x2,
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: AppSpacing.x3,
+    return VitSegmentedChoice<String>(
+      selected: active,
+      onChanged: onChanged,
+      options: [
+        VitSegmentedChoiceOption(
+          key: OrdersHistoryPage.filterKey('all'),
+          value: 'all',
+          label: 'Tất cả',
+          accentColor: _tradePrimary,
         ),
-        accentColor: color,
-      ),
+        VitSegmentedChoiceOption(
+          key: OrdersHistoryPage.filterKey('buy'),
+          value: 'buy',
+          label: 'MUA',
+          accentColor: AppColors.buy,
+        ),
+        VitSegmentedChoiceOption(
+          key: OrdersHistoryPage.filterKey('sell'),
+          value: 'sell',
+          label: 'BÁN',
+          accentColor: AppColors.sell,
+        ),
+      ],
     );
   }
 }
@@ -176,10 +86,7 @@ class _OrderHistoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return grouped
-        ? Padding(
-            padding: AppSpacing.tradeOrderRowPadding,
-            child: content,
-          )
+        ? Padding(padding: AppSpacing.tradeOrderRowPadding, child: content)
         : VitCard(
             radius: VitCardRadius.standard,
             padding: VitDensity.compact.cardPadding,
@@ -199,124 +106,124 @@ class _OrderHistoryTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-          Row(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        order.symbol,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.baseMedium,
+        Row(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      order.symbol,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.baseMedium,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  _SmallBadge(
+                    label: isBuy ? 'MUA' : 'BÁN',
+                    color: isBuy ? AppColors.buy : AppColors.sell,
+                  ),
+                  const SizedBox(width: AppSpacing.x1),
+                  _TypeBadge(type: order.type),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: _ordersStatusExtent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    status.icon,
+                    color: status.color,
+                    size: AppSpacing.iconSm,
+                  ),
+                  const SizedBox(width: AppSpacing.x1),
+                  Flexible(
+                    child: Text(
+                      status.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        color: status.color,
+                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.x2),
-                    _SmallBadge(
-                      label: isBuy ? 'MUA' : 'BÁN',
-                      color: isBuy ? AppColors.buy : AppColors.sell,
-                    ),
-                    const SizedBox(width: AppSpacing.x1),
-                    _TypeBadge(type: order.type),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(
-                width: _ordersStatusExtent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      status.icon,
-                      color: status.color,
-                      size: AppSpacing.iconSm,
-                    ),
-                    const SizedBox(width: AppSpacing.x1),
-                    Flexible(
-                      child: Text(
-                        status.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          color: status.color,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: _InfoColumn(
-                  label: 'Giá',
-                  value: '\$${_formatMoney(order.price)}',
-                ),
-              ),
-              Expanded(
-                child: _InfoColumn(
-                  label: 'Số lượng',
-                  value: order.amount.toStringAsFixed(4),
-                ),
-              ),
-            ],
-          ),
-          if (order.status == TradeOrderStatus.partial || order.fee > 0) ...[
-            const SizedBox(height: AppSpacing.x1),
-            Row(
-              children: [
-                Expanded(
-                  child: order.status == TradeOrderStatus.partial
-                      ? _InfoColumn(
-                          label: 'Đã khớp',
-                          value:
-                              '${order.filled.toStringAsFixed(4)}  (${(fillPercent * 100).toStringAsFixed(0)}%)',
-                          valueColor: AppColors.buy,
-                        )
-                      : const SizedBox.shrink(),
-                ),
-                Expanded(
-                  child: order.fee > 0
-                      ? _InfoColumn(
-                          label: 'Phí',
-                          value: '\$${order.fee.toStringAsFixed(2)}',
-                        )
-                      : const SizedBox.shrink(),
-                ),
-              ],
             ),
           ],
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _InfoColumn(
+                label: 'Giá',
+                value: '\$${_formatMoney(order.price)}',
+              ),
+            ),
+            Expanded(
+              child: _InfoColumn(
+                label: 'Số lượng',
+                value: order.amount.toStringAsFixed(4),
+              ),
+            ),
+          ],
+        ),
+        if (order.status == TradeOrderStatus.partial || order.fee > 0) ...[
           const SizedBox(height: AppSpacing.x1),
-          _InfoColumn(label: 'Thời gian', value: order.createdAt),
-          if (order.status == TradeOrderStatus.partial) ...[
-            const SizedBox(height: AppSpacing.x2),
-            ClipRRect(
-              borderRadius: AppRadii.xsRadius,
-              child: LinearProgressIndicator(
-                value: fillPercent,
-                minHeight: AppSpacing.x1,
-                color: AppColors.buy,
-                backgroundColor: AppColors.surface3,
+          Row(
+            children: [
+              Expanded(
+                child: order.status == TradeOrderStatus.partial
+                    ? _InfoColumn(
+                        label: 'Đã khớp',
+                        value:
+                            '${order.filled.toStringAsFixed(4)}  (${(fillPercent * 100).toStringAsFixed(0)}%)',
+                        valueColor: AppColors.buy,
+                      )
+                    : const SizedBox.shrink(),
               ),
-            ),
-          ],
-          if (actionable) ...[
-            const SizedBox(height: AppSpacing.x2),
-            VitCtaButton(
-              key: actionKey,
-              onPressed: onCancel,
-              variant: VitCtaButtonVariant.danger,
-              height: VitDensity.compact.controlHeight,
-              child: const Text('Hủy lệnh'),
-            ),
-          ],
+              Expanded(
+                child: order.fee > 0
+                    ? _InfoColumn(
+                        label: 'Phí',
+                        value: '\$${order.fee.toStringAsFixed(2)}',
+                      )
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ),
         ],
+        const SizedBox(height: AppSpacing.x1),
+        _InfoColumn(label: 'Thời gian', value: order.createdAt),
+        if (order.status == TradeOrderStatus.partial) ...[
+          const SizedBox(height: AppSpacing.x2),
+          ClipRRect(
+            borderRadius: AppRadii.xsRadius,
+            child: LinearProgressIndicator(
+              value: fillPercent,
+              minHeight: AppSpacing.x1,
+              color: AppColors.buy,
+              backgroundColor: AppColors.surface3,
+            ),
+          ),
+        ],
+        if (actionable) ...[
+          const SizedBox(height: AppSpacing.x2),
+          VitCtaButton(
+            key: actionKey,
+            onPressed: onCancel,
+            variant: VitCtaButtonVariant.danger,
+            height: VitDensity.compact.controlHeight,
+            child: const Text('Hủy lệnh'),
+          ),
+        ],
+      ],
     );
   }
 }

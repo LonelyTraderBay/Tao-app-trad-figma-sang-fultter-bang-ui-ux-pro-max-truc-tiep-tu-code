@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -24,6 +25,7 @@ part '../widgets/arena_leaderboard_rows_footer.dart';
 
 enum _LeaderboardTab { creators, players, teams }
 
+const _arenaAccent = AppModuleAccents.arena;
 const double _leaderboardVisualScrollClearance = 108;
 const double _leaderboardNativeScrollClearance = 72;
 const double _leaderboardPodiumSideSize =
@@ -100,8 +102,8 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Arena Leaderboard',
-            subtitle: 'Bảng xếp hạng · Open Arena',
+            title: 'Bảng xếp hạng',
+            subtitle: 'Fair play · Open Arena',
             showBack: true,
             onBack: _close,
           ),
@@ -121,6 +123,7 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       density: VitDensity.compact,
                       children: [
                         _MyRankCard(myRank: snapshot.myRank),

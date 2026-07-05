@@ -37,11 +37,20 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
         .getBotPortfolioDashboard();
     return VitTradeHubScaffold(
       title: 'Portfolio Dashboard',
+      subtitle: 'Tổng quan danh mục bot đang chạy',
       semanticLabel: 'SC-128 BotPortfolioDashboardPage',
       contentKey: BotPortfolioDashboardPage.contentKey,
       shellRenderMode: shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Tổng vốn',
+          primaryValue: '\$${snapshot.summary.totalEquity.toStringAsFixed(0)}',
+          secondaryLabel: 'Bot hoạt động',
+          secondaryValue: '${snapshot.summary.activeBots}',
+          secondaryColor: _portfolioGreen,
+        ),
         VitTradeSection(
           title: 'Summary',
           child: _SummaryGrid(summary: snapshot.summary),
@@ -62,19 +71,11 @@ class BotPortfolioDashboardPage extends ConsumerWidget {
           title: 'Health',
           child: _HealthCard(items: snapshot.healthItems),
         ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.tradeBotInnerPanelPadding,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Portfolio risk review',
-              message:
-                  'Equity curve, allocation concentration, correlation pressure and health next steps are reviewed before portfolio changes.',
-              contractId: 'bot-portfolio-review',
-            ),
-          ),
+        const VitBotRiskReviewFooter(
+          title: 'Portfolio risk review',
+          message:
+              'Equity curve, allocation concentration, correlation pressure and health next steps are reviewed before portfolio changes.',
+          contractId: 'bot-portfolio-review',
         ),
       ],
     );

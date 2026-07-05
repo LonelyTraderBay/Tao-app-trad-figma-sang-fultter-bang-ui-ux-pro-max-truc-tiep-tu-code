@@ -61,10 +61,10 @@ void main() {
     expect(find.byType(P2POrderTimelinePage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Order #p2p001 Timeline'), findsOneWidget);
-    expect(find.text('Order - P2P'), findsOneWidget);
-    expect(find.text('Order Timeline'), findsOneWidget);
-    expect(find.text('Real-time status updates'), findsOneWidget);
+    expect(find.text('Tiến trình #p2p001'), findsOneWidget);
+    expect(find.text('Đơn hàng - P2P'), findsOneWidget);
+    expect(find.text('Tiến trình đơn hàng'), findsOneWidget);
+    expect(find.text('Cập nhật trạng thái theo thời gian thực'), findsOneWidget);
     expect(find.text('Order Created'), findsOneWidget);
     expect(find.text('Matched with Seller'), findsOneWidget);
     expect(find.text('Funds Locked in Escrow'), findsOneWidget);
@@ -86,7 +86,7 @@ void main() {
     );
     expectActionableInFirstViewport(
       tester,
-      find.text('Order Timeline'),
+      find.text('Tiến trình đơn hàng'),
       routeName: 'SC-212 P2POrderTimelinePage',
       actionLabel: 'the timeline summary',
       minVisibleHeight: 18,

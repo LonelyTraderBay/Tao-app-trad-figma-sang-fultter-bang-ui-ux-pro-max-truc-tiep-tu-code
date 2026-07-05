@@ -80,73 +80,17 @@ class _CategoryScroller extends StatelessWidget {
       child: Row(
         children: [
           for (final category in categories) ...[
-            _CategoryChip(
+            VitChoicePill(
               key: SavingsFAQPage.categoryKey(category.id),
-              category: category,
-              count: counts[category.id] ?? 0,
+              label: '${category.label} ${counts[category.id] ?? 0}',
               selected: category.id == activeId,
               onTap: () => onChanged(category.id),
+              fullWidth: false,
+              height: AppSpacing.vitPresetChipRowHeight,
             ),
             if (category != categories.last)
               const SizedBox(width: AppSpacing.x2),
           ],
-        ],
-      ),
-    );
-  }
-}
-
-class _CategoryChip extends StatelessWidget {
-  const _CategoryChip({
-    super.key,
-    required this.category,
-    required this.count,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final SavingsFAQCategoryDraft category;
-  final int count;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.large,
-      onTap: onTap,
-      clip: true,
-      padding: AppSpacing.earnPillPaddingLarge,
-      background: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: selected ? AppColors.primary12 : AppColors.surface2,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: selected ? AppColors.primary30 : AppColors.cardBorder,
-            ),
-            borderRadius: AppRadii.lgRadius,
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            category.label,
-            style: AppTextStyles.caption.copyWith(
-              color: selected ? AppColors.primary : AppColors.text3,
-              fontWeight: selected ? AppTextStyles.bold : AppTextStyles.normal,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x1),
-          Text(
-            '$count',
-            style: AppTextStyles.micro.copyWith(
-              color: selected ? AppColors.primary : AppColors.text3,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
         ],
       ),
     );
@@ -201,12 +145,10 @@ class _FAQCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
+      onTap: onTap,
       child: Column(
         children: [
-          VitCard(
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
-            onTap: onTap,
+          Padding(
             padding: AppSpacing.earnPillPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,

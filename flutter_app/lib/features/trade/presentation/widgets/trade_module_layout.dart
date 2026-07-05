@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_product_navigation.dart';
@@ -11,8 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 export 'copy_trading_list.dart';
 
@@ -347,6 +348,141 @@ class VitTradeWorkspaceScaffold extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Home-aligned 2-KPI hero strip for bot sub-pages (mirrors SC-059 hub).
+class VitBotSubpageHero extends StatelessWidget {
+  const VitBotSubpageHero({
+    super.key,
+    required this.primaryLabel,
+    required this.primaryValue,
+    required this.secondaryLabel,
+    required this.secondaryValue,
+    this.primaryColor,
+    this.secondaryColor,
+  });
+
+  final String primaryLabel;
+  final String primaryValue;
+  final String secondaryLabel;
+  final String secondaryValue;
+  final Color? primaryColor;
+  final Color? secondaryColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      padding: AppSpacing.cardPaddingCompact,
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  primaryLabel,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  primaryValue,
+                  style: AppTextStyles.heroNumber.copyWith(
+                    color: primaryColor ?? AppColors.text1,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 1,
+            height: AppSpacing.x6,
+            color: AppColors.border,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: AppSpacing.x4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    secondaryLabel,
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    secondaryValue,
+                    style: AppTextStyles.heroNumber.copyWith(
+                      color: secondaryColor ?? AppColors.text1,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Flat risk review footer — no card-in-card nesting.
+class VitBotRiskReviewFooter extends StatelessWidget {
+  const VitBotRiskReviewFooter({
+    super.key,
+    required this.title,
+    required this.message,
+    this.contractId,
+    this.statusLabel,
+    this.status = VitStatusPillStatus.info,
+  });
+
+  final String title;
+  final String message;
+  final String? contractId;
+  final String? statusLabel;
+  final VitStatusPillStatus status;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: title,
+          message: message,
+          contractId: contractId,
+          density: VitDensity.compact,
+        ),
+        if (statusLabel != null) ...[
+          const SizedBox(height: AppSpacing.x2),
+          VitStatusPill(
+            label: statusLabel!,
+            status: status,
+            size: VitStatusPillSize.sm,
+          ),
+        ],
+        const SizedBox(height: AppSpacing.x3),
+        const VitBotRiskDisclaimer(),
+      ],
+    );
+  }
+}
+
+/// Hub-aligned risk micro-disclaimer.
+class VitBotRiskDisclaimer extends StatelessWidget {
+  const VitBotRiskDisclaimer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Bot không đảm bảo lợi nhuận. Hiệu suất quá khứ không đại diện kết quả tương lai.',
+      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+      textAlign: TextAlign.center,
     );
   }
 }

@@ -210,39 +210,39 @@ class _MoverListCard extends StatelessWidget {
       density: VitDensity.compact,
       child: Column(
         children: [
-          VitCard(
-            key: headerKey,
-            onTap: () => context.go(AppRoutePaths.marketsMovers),
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
-            padding: EdgeInsets.zero,
-            borderColor: AppColors.transparent,
-            child: Padding(
-              padding: AppSpacing.marketOverviewMoverHeaderPadding,
-              child: Row(
-                children: [
-                  Icon(
-                    icon,
-                    color: color,
-                    size: AppSpacing.marketOverviewMoverHeaderIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
-                  Expanded(
-                    child: Text(
-                      title,
-                      style: AppTextStyles.caption.copyWith(
-                        color: color,
-                        fontWeight: AppTextStyles.bold,
-                        height: AppTextStyles.numericMicro.height,
+          Material(
+            color: AppColors.transparent,
+            child: InkWell(
+              key: headerKey,
+              onTap: () => context.go(AppRoutePaths.marketsMovers),
+              borderRadius: AppRadii.inputRadius,
+              child: Padding(
+                padding: AppSpacing.marketOverviewMoverHeaderPadding,
+                child: Row(
+                  children: [
+                    Icon(
+                      icon,
+                      color: color,
+                      size: AppSpacing.marketOverviewMoverHeaderIcon,
+                    ),
+                    const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: AppTextStyles.caption.copyWith(
+                          color: color,
+                          fontWeight: AppTextStyles.bold,
+                          height: AppTextStyles.numericMicro.height,
+                        ),
                       ),
                     ),
-                  ),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.marketOverviewMoverChevron,
-                  ),
-                ],
+                    const Icon(
+                      Icons.chevron_right_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.marketOverviewMoverChevron,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -353,33 +353,35 @@ class _SectorPerformance extends StatelessWidget {
                     '${AppRoutePaths.marketsSectors}?id=${sector.id}',
                   ),
                 ),
-              VitCard(
+              Material(
                 key: MarketOverviewPage.allSectorsKey,
-                onTap: () => context.go(AppRoutePaths.marketsSectors),
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
-                padding: EdgeInsets.zero,
-                borderColor: AppColors.transparent,
-                child: Padding(
-                  padding: AppSpacing.marketOverviewSectorActionPadding,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Xem tất cả ngành',
-                        style: AppTextStyles.caption.copyWith(
-                          color: _marketPrimary,
-                          fontWeight: AppTextStyles.bold,
-                          height: AppTextStyles.numericMicro.height,
+                color: AppColors.transparent,
+                child: InkWell(
+                  onTap: () => context.go(AppRoutePaths.marketsSectors),
+                  borderRadius: AppRadii.inputRadius,
+                  child: Padding(
+                    padding: AppSpacing.marketOverviewSectorActionPadding,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Xem tất cả ngành',
+                          style: AppTextStyles.caption.copyWith(
+                            color: _marketPrimary,
+                            fontWeight: AppTextStyles.bold,
+                            height: AppTextStyles.numericMicro.height,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: AppSpacing.marketAnalyticsMicroGap),
-                      const Icon(
-                        Icons.chevron_right_rounded,
-                        color: _marketPrimary,
-                        size: AppSpacing.marketOverviewMoverHeaderIcon,
-                      ),
-                    ],
+                        const SizedBox(
+                          width: AppSpacing.marketAnalyticsMicroGap,
+                        ),
+                        const Icon(
+                          Icons.chevron_right_rounded,
+                          color: _marketPrimary,
+                          size: AppSpacing.marketOverviewMoverHeaderIcon,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -401,84 +403,80 @@ class _SectorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = sector.change24h >= 0;
     final color = positive ? AppColors.buy : AppColors.sell;
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: EdgeInsets.zero,
-      borderColor: AppColors.transparent,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              vertical: AppSpacing.x2,
-            ),
-            child: Row(
-              children: [
-                _IconBubble(
-                  icon: sector.icon,
-                  color: sector.color,
-                  size: AppSpacing.marketOverviewSectorIcon,
-                  iconSize: AppSpacing.marketOverviewSectorGlyph,
-                ),
-                const SizedBox(width: AppSpacing.marketAnalyticsGap),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        sector.nameVi,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.body.copyWith(
-                          fontWeight: AppTextStyles.bold,
-                          height: AppTextStyles.numericMicro.height,
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.inputRadius,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                vertical: AppSpacing.x2,
+              ),
+              child: Row(
+                children: [
+                  _IconBubble(
+                    icon: sector.icon,
+                    color: sector.color,
+                    size: AppSpacing.marketOverviewSectorIcon,
+                    iconSize: AppSpacing.marketOverviewSectorGlyph,
+                  ),
+                  const SizedBox(width: AppSpacing.marketAnalyticsGap),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          sector.nameVi,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.body.copyWith(
+                            fontWeight: AppTextStyles.bold,
+                            height: AppTextStyles.numericMicro.height,
+                          ),
                         ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          '${sector.coinCount} coins',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                            height: AppTextStyles.numericMicro.height,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      VitAccentPill(
+                        label: _formatSignedPercent(sector.change24h),
+                        accentColor: color,
                       ),
                       const SizedBox(height: AppSpacing.x1),
                       Text(
-                        '${sector.coinCount} coins',
+                        _formatCompact(sector.totalMarketCap, prefix: r'$'),
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
+                          fontFeatures: AppTextStyles.tabularFigures,
                           height: AppTextStyles.numericMicro.height,
                         ),
                       ),
                     ],
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      _formatSignedPercent(sector.change24h),
-                      style: AppTextStyles.caption.copyWith(
-                        color: color,
-                        fontWeight: AppTextStyles.bold,
-                        fontFeatures: AppTextStyles.tabularFigures,
-                        height: AppTextStyles.numericMicro.height,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      _formatCompact(sector.totalMarketCap, prefix: r'$'),
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        height: AppTextStyles.numericMicro.height,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
-                const Icon(
-                  Icons.chevron_right_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.marketOverviewSectorChevron,
-                ),
-              ],
+                  const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.text3,
+                    size: AppSpacing.marketOverviewSectorChevron,
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Divider(height: AppSpacing.dividerHairline),
-        ],
+            const Divider(height: AppSpacing.dividerHairline),
+          ],
+        ),
       ),
     );
   }

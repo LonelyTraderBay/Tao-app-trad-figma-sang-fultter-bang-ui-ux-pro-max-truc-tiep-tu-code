@@ -49,51 +49,19 @@ class _RewardTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitSegmentedChoice<ReferralRewardFilter>(
       key: ReferralRewardsPage.tabsKey,
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.referralTinyPillPadding,
-      child: Row(
-        children: [
-          for (final filter in filters)
-            Expanded(
-              child: Padding(
-                padding: AppSpacing.referralFineInset,
-                child: _FilterButton(
-                  filter: filter,
-                  active: filter.filter == active,
-                  onTap: () => onChanged(filter.filter),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _FilterButton extends StatelessWidget {
-  const _FilterButton({
-    required this.filter,
-    required this.active,
-    required this.onTap,
-  });
-
-  final ReferralRewardFilterDraft filter;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: ReferralRewardsPage.tabKey(filter.filter),
-      label: filter.label,
       selected: active,
-      onTap: onTap,
-      accentColor: AppColors.primary,
-      fullWidth: true,
-      height: VitDensity.compact.controlHeight,
-      padding: AppSpacing.referralTabButtonPadding,
+      onChanged: onChanged,
+      options: [
+        for (final filter in filters)
+          VitSegmentedChoiceOption(
+            key: ReferralRewardsPage.tabKey(filter.filter),
+            value: filter.filter,
+            label: filter.label,
+            accentColor: AppColors.primary,
+          ),
+      ],
     );
   }
 }
@@ -210,6 +178,7 @@ class _RewardLedger extends StatelessWidget {
             const Padding(
               padding: AppSpacing.referralEmptyPadding,
               child: VitEmptyState(
+                key: ReferralRewardsPage.emptyKey,
                 title: 'Chưa có giao dịch',
                 message: 'Thử thay đổi bộ lọc phần thưởng',
                 icon: Icons.card_giftcard_rounded,
@@ -240,32 +209,11 @@ class _PendingPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.warn10,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.referralTinyPillPadding,
-        child: Row(
-          children: [
-            const Icon(
-              Icons.schedule_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Text(
-              '$count đang chờ',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.warn,
-                fontWeight: AppTextStyles.bold,
-                height: AppSpacing.referralLineHeightTight,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return VitStatusPill(
+      label: '$count đang chờ',
+      icon: Icons.schedule_rounded,
+      status: VitStatusPillStatus.warning,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -377,7 +325,7 @@ class _RecordIcon extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: isKyc ? AppColors.primary12 : AppColors.buy10,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Center(
           child: Icon(
@@ -398,24 +346,10 @@ class _StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.warn10,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.referralTinyPillPadding,
-        child: Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(
-            color: AppColors.warn,
-            fontWeight: AppTextStyles.bold,
-            height: AppSpacing.referralLineHeightTight,
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      label: label,
+      status: VitStatusPillStatus.warning,
+      size: VitStatusPillSize.sm,
     );
   }
 }

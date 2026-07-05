@@ -17,7 +17,7 @@ class _InfoBanner extends StatelessWidget {
         children: [
           const Icon(
             Icons.notifications_none_rounded,
-            color: AppColors.primarySoft,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -51,7 +51,7 @@ class _SettingsList extends StatelessWidget {
     return VitPageSection(
       key: StakingNotificationsPage.settingsKey,
       label: 'Cài đặt Thông báo',
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [
         Column(
           children: [
@@ -143,7 +143,7 @@ class _ChannelsList extends StatelessWidget {
     return VitPageSection(
       key: StakingNotificationsPage.channelsKey,
       label: 'Kênh nhận Thông báo',
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [
         VitCard(
           radius: VitCardRadius.large,
@@ -210,7 +210,7 @@ class _HistoryList extends StatelessWidget {
     return VitPageSection(
       key: StakingNotificationsPage.historyKey,
       label: 'Lịch sử ($unreadCount chưa đọc)',
-      accentColor: AppColors.primarySoft,
+      accentColor: AppModuleAccents.earn,
       children: [
         Row(
           children: [
@@ -229,7 +229,7 @@ class _HistoryList extends StatelessWidget {
                 child: Text(
                   'Đánh dấu tất cả đã đọc',
                   style: AppTextStyles.micro.copyWith(
-                    color: AppColors.primarySoft,
+                    color: AppModuleAccents.earn,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -272,7 +272,7 @@ class _NotificationCard extends StatelessWidget {
       radius: VitCardRadius.large,
       borderColor: notification.read
           ? null
-          : AppColors.primarySoft.withValues(alpha: 0.28),
+          : AppModuleAccents.earn.withValues(alpha: 0.28),
       padding: AppSpacing.earnCardPaddingX4,
       onTap: onTap,
       child: Row(

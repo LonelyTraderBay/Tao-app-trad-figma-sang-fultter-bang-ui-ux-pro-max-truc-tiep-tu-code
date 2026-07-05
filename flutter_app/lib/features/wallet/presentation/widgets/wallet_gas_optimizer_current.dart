@@ -50,7 +50,7 @@ class _CurrentGasTab extends StatelessWidget {
       density: VitDensity.compact,
       children: [
         _GasStatusCard(snapshot: snapshot),
-        const _SectionLabel(label: 'Chon toc do giao dich'),
+        const _SectionLabel(label: 'Chọn tốc độ giao dịch'),
         for (var i = 0; i < snapshot.levels.length; i++) ...[
           _GasLevelCard(
             level: snapshot.levels[i],

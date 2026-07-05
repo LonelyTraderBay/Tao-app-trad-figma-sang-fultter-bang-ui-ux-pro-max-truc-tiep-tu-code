@@ -28,7 +28,8 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Token Unlock',
+            title: 'Mở khóa token',
+            subtitle: 'Lịch unlock · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -46,11 +47,10 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: TokenUnlocksPage.contentKey,
-                    padding: EdgeInsetsDirectional.only(
-                      bottom: scrollEndClearance,
-                    ),
+                    padding: AppSpacing.marketScrollPadding(scrollEndClearance),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       density: VitDensity.compact,
                       children: [
                         if (_tab == 'upcoming') ...[
@@ -71,7 +71,17 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                             }),
                           ),
                           if (snapshot.unlocks.isEmpty)
-                            const _UnlockEmptyState()
+                            VitEmptyState(
+                              title: 'Không có unlock phù hợp',
+                              message:
+                                  'Thử xóa bộ lọc tác động hoặc đổi cách sắp xếp',
+                              icon: Icons.lock_outline_rounded,
+                              actionLabel: 'Xóa bộ lọc',
+                              onAction: () => setState(() {
+                                _impactFilter = null;
+                                _sortBy = MarketUnlockSort.nearest;
+                              }),
+                            )
                           else
                             _UnlockList(
                               unlocks: snapshot.unlocks,
@@ -100,6 +110,13 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                         ] else ...[
                           _ScheduleList(snapshot: allSnapshot),
                         ],
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.info_outline_rounded,
+                          message: 'Dữ liệu unlock chỉ mang tính tham khảo',
+                          detail:
+                              'Unlock lớn có thể tạo áp lực bán tiềm ẩn. Không phải khuyến nghị đầu tư.',
+                        ),
                       ],
                     ),
                   ),
@@ -124,80 +141,36 @@ class _UnlockTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: _unlockTabsHeight,
-        child: Row(
-          children: [
-            _UnderlinedTab(
-              key: TokenUnlocksPage.upcomingTabKey,
-              label: 'Sắp mở khóa',
-              value: 'upcoming',
-              active: activeTab == 'upcoming',
-              onChanged: onChanged,
-            ),
-            _UnderlinedTab(
-              key: TokenUnlocksPage.analysisTabKey,
-              label: 'Phân tích',
-              value: 'analysis',
-              active: activeTab == 'analysis',
-              onChanged: onChanged,
-            ),
-            _UnderlinedTab(
-              key: TokenUnlocksPage.scheduleTabKey,
-              label: 'Lịch trình',
-              value: 'schedule',
-              active: activeTab == 'schedule',
-              onChanged: onChanged,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _UnderlinedTab extends StatelessWidget {
-  const _UnderlinedTab({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final String value;
-  final bool active;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        onTap: () => onChanged(value),
+        height: AppSpacing.marketDepthTabsHeight,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(
-              child: Center(
-                child: Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketPrimary : AppColors.text3,
-                    fontWeight: AppTextStyles.medium,
+              child: VitTabBar(
+                activeKey: activeTab,
+                variant: VitTabBarVariant.underline,
+                onChanged: onChanged,
+                tabs: const [
+                  VitTabItem(
+                    key: 'upcoming',
+                    label: 'Sắp mở khóa',
+                    widgetKey: TokenUnlocksPage.upcomingTabKey,
                   ),
-                ),
+                  VitTabItem(
+                    key: 'analysis',
+                    label: 'Phân tích',
+                    widgetKey: TokenUnlocksPage.analysisTabKey,
+                  ),
+                  VitTabItem(
+                    key: 'schedule',
+                    label: 'Lịch trình',
+                    widgetKey: TokenUnlocksPage.scheduleTabKey,
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: _unlockTabIndicatorHeight,
-              child: FractionallySizedBox(
-                widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketPrimary),
-              ),
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: AppColors.divider,
             ),
           ],
         ),
@@ -271,55 +244,68 @@ class _UnlockFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      clipBehavior: Clip.none,
-      child: Row(
-        children: [
-          _FilterChipButton(
-            label: 'Gần nhất',
-            active: sortBy == MarketUnlockSort.nearest,
-            color: _marketPrimary,
-            onTap: () => onSortSelected(MarketUnlockSort.nearest),
-          ),
-          const SizedBox(width: _unlockFilterGap),
-          _FilterChipButton(
-            key: TokenUnlocksPage.sortValueKey,
-            label: 'Giá trị cao',
-            active: sortBy == MarketUnlockSort.value,
-            color: _marketPrimary,
-            onTap: () => onSortSelected(MarketUnlockSort.value),
-          ),
-          const SizedBox(width: _unlockFilterGap),
-          _FilterChipButton(
-            label: 'Tác động',
-            active: sortBy == MarketUnlockSort.impact,
-            color: _marketPrimary,
-            onTap: () => onSortSelected(MarketUnlockSort.impact),
-          ),
-          const SizedBox(width: _unlockFilterGap),
-          _FilterChipButton(
-            label: 'Tất cả',
-            active: impactFilter == null,
-            color: AppColors.text3,
-            onTap: onAllImpacts,
-          ),
-          const SizedBox(width: _unlockFilterGap),
-          for (final entry in impactConfigs.entries) ...[
-            _FilterChipButton(
-              key: entry.key == MarketUnlockImpact.high
-                  ? TokenUnlocksPage.impactHighKey
-                  : null,
-              label: entry.value.label,
-              active: impactFilter == entry.key,
-              color: entry.value.color,
-              onTap: () => onImpactSelected(entry.key),
-            ),
-            if (entry.key != impactConfigs.keys.last)
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          clipBehavior: Clip.none,
+          child: Row(
+            children: [
+              _FilterChipButton(
+                label: 'Gần nhất',
+                active: sortBy == MarketUnlockSort.nearest,
+                color: _marketPrimary,
+                onTap: () => onSortSelected(MarketUnlockSort.nearest),
+              ),
               const SizedBox(width: _unlockFilterGap),
-          ],
-        ],
-      ),
+              _FilterChipButton(
+                key: TokenUnlocksPage.sortValueKey,
+                label: 'Giá trị cao',
+                active: sortBy == MarketUnlockSort.value,
+                color: _marketPrimary,
+                onTap: () => onSortSelected(MarketUnlockSort.value),
+              ),
+              const SizedBox(width: _unlockFilterGap),
+              _FilterChipButton(
+                label: 'Tác động',
+                active: sortBy == MarketUnlockSort.impact,
+                color: _marketPrimary,
+                onTap: () => onSortSelected(MarketUnlockSort.impact),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: _unlockFilterGap),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          clipBehavior: Clip.none,
+          child: Row(
+            children: [
+              _FilterChipButton(
+                label: 'Tất cả',
+                active: impactFilter == null,
+                color: AppColors.text3,
+                onTap: onAllImpacts,
+              ),
+              const SizedBox(width: _unlockFilterGap),
+              for (final entry in impactConfigs.entries) ...[
+                _FilterChipButton(
+                  key: entry.key == MarketUnlockImpact.high
+                      ? TokenUnlocksPage.impactHighKey
+                      : null,
+                  label: entry.value.label,
+                  active: impactFilter == entry.key,
+                  color: entry.value.color,
+                  onTap: () => onImpactSelected(entry.key),
+                ),
+                if (entry.key != impactConfigs.keys.last)
+                  const SizedBox(width: _unlockFilterGap),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -340,32 +326,13 @@ class _FilterChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      selected: active,
+    return VitChoicePill(
       label: label,
-      child: VitCard(
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        borderColor: active
-            ? color.withValues(alpha: color == AppColors.text3 ? .18 : .32)
-            : AppColors.transparent,
-        background: ColoredBox(
-          color: active
-              ? color.withValues(alpha: color == AppColors.text3 ? .06 : .12)
-              : AppColors.surface2,
-        ),
-        clip: true,
-        onTap: onTap,
-        padding: AppSpacing.tokenUnlocksFilterPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: active ? color : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
-          ),
-        ),
-      ),
+      selected: active,
+      onTap: onTap,
+      accentColor: color,
+      padding: AppSpacing.tokenUnlocksFilterPadding,
+      semanticLabel: label,
     );
   }
 }

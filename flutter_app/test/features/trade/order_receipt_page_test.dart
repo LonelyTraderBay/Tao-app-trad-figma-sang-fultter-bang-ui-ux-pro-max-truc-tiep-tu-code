@@ -78,8 +78,8 @@ void main() {
     expect(find.text('Chi tiết lệnh'), findsOneWidget);
     expect(find.text('Đặt lệnh thành công!'), findsOneWidget);
     expect(find.text('Lệnh Mua BTC/USDT đang được xử lý'), findsOneWidget);
-    expect(find.text('Execution summary'), findsOneWidget);
-    expect(find.text('Risk controls'), findsOneWidget);
+    expect(find.text('Tóm tắt khớp lệnh'), findsOneWidget);
+    expect(find.text('Kiểm soát rủi ro'), findsOneWidget);
     expect(find.text('ORD-98EH1ZT2'), findsOneWidget);
     expect(find.text('Giới hạn'), findsOneWidget);
     expect(find.text('\$67,543.21'), findsOneWidget);

@@ -105,7 +105,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
     final preview = formController.preview(draft);
     final publishBlockers = [
       ...formController.publishBlockers(draft),
-      if (_submitting) 'Dang dang quang cao',
+      if (_submitting) 'Đang đăng quảng cáo',
     ];
     final canPublish = preview.canPublish && !_submitting;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -341,16 +341,12 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                           preview: preview,
                         ),
                         const SizedBox(height: _p2pCreateFieldGap),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pMerchantCommerceInnerPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'P2P ad publish review',
-                            message:
-                                'Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.',
-                            contractId: 'p2p-create-ad-review',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'P2P ad publish review',
+                          message:
+                              'Price, limits, payment methods, escrow review, fee/risk preview, confirmation dialog and publish result are reviewed before listing.',
+                          contractId: 'p2p-create-ad-review',
                         ),
                         const SizedBox(height: _p2pCreateGroupGap),
                         _buildPublishActionSection(

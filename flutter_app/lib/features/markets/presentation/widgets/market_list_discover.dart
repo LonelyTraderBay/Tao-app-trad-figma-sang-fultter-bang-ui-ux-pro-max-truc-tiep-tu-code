@@ -91,67 +91,70 @@ class _DiscoverRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      padding: AppSpacing.marketDiscoverRowPadding,
-      onTap: onTap,
-      child: Row(
-        children: [
-          Material(
-            color: color.withValues(alpha: 0.12),
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.mdRadius,
-            ),
-            child: SizedBox(
-              width: AppSpacing.marketDiscoverIconBox,
-              height: AppSpacing.marketDiscoverIconBox,
-              child: Icon(
-                icon,
-                color: color,
-                size: AppSpacing.marketDiscoverIcon,
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: AppSpacing.marketDiscoverRowPadding,
+          child: Row(
+            children: [
+              Material(
+                color: color.withValues(alpha: 0.12),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.mdRadius,
+                ),
+                child: SizedBox(
+                  width: AppSpacing.marketDiscoverIconBox,
+                  height: AppSpacing.marketDiscoverIconBox,
+                  child: Icon(
+                    icon,
+                    color: color,
+                    size: AppSpacing.marketDiscoverIcon,
+                  ),
+                ),
               ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.marketDiscoverRowGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+              const SizedBox(width: AppSpacing.marketDiscoverRowGap),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Flexible(
-                      child: Text(
-                        title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.body.copyWith(
-                          fontWeight: AppTextStyles.bold,
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.body.copyWith(
+                              fontWeight: AppTextStyles.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(
+                          width: AppSpacing.marketDiscoverTitleBadgeGap,
+                        ),
+                        VitAccentPill(label: badge, accentColor: color),
+                      ],
                     ),
-                    const SizedBox(
-                      width: AppSpacing.marketDiscoverTitleBadgeGap,
+                    const SizedBox(height: AppSpacing.marketDiscoverSubtitleGap),
+                    Text(
+                      subtitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                     ),
-                    VitAccentPill(label: badge, accentColor: color),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.marketDiscoverSubtitleGap),
-                Text(
-                  subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
+              ),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.marketDiscoverChevron,
+              ),
+            ],
           ),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.marketDiscoverChevron,
-          ),
-        ],
+        ),
       ),
     );
   }

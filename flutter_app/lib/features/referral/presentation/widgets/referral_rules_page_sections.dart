@@ -1,55 +1,33 @@
 part of '../pages/referral_rules_page.dart';
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({
+class _ReferralRulesSection extends StatelessWidget {
+  const _ReferralRulesSection({
     required this.title,
-    required this.color,
+    required this.accentColor,
     this.subtitle,
   });
 
   final String title;
+  final Color accentColor;
   final String? subtitle;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: AppSpacing.referralSectionMarkerMargin,
-          child: SizedBox(
-            width: AppSpacing.x1,
-            height: subtitle == null ? AppSpacing.x5 : AppSpacing.x6,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: color,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.xsRadius,
-                ),
-              ),
-            ),
-          ),
+        VitModuleSectionHeader(
+          title: title,
+          accentColor: accentColor,
+          density: VitDensity.compact,
         ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: AppTextStyles.baseMedium.copyWith(
-                  color: AppColors.text1,
-                ),
-              ),
-              if (subtitle != null)
-                Text(
-                  subtitle!,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-            ],
+        if (subtitle != null) ...[
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            subtitle!,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-        ),
+        ],
       ],
     );
   }
@@ -298,7 +276,7 @@ class _RewardTypeCard extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: isKyc ? AppColors.primary12 : AppColors.buy10,
                 shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
+                  borderRadius: AppRadii.smRadius,
                 ),
               ),
               child: Center(
@@ -329,24 +307,10 @@ class _RewardTypeCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
                 const SizedBox(height: AppSpacing.x3),
-                DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: isKyc ? AppColors.primary12 : AppColors.buy10,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: AppRadii.xlRadius,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: AppSpacing.referralCompactPillPadding,
-                    child: Text(
-                      rule.highlight,
-                      style: AppTextStyles.micro.copyWith(
-                        color: color,
-                        fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.referralLineHeightTight,
-                      ),
-                    ),
-                  ),
+                VitAccentPill(
+                  label: rule.highlight,
+                  accentColor: color,
+                  size: VitStatusPillSize.sm,
                 ),
               ],
             ),

@@ -160,9 +160,9 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       ),
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review profile changes',
+                        title: 'X\u00E1c nh\u1EADn thay \u0111\u1ED5i h\u1ED3 s\u01A1',
                         message:
-                            'Confirm name, phone number, avatar change, and account notification details before saving.',
+                            'Ki\u1EC3m tra h\u1ECD t\u00EAn, s\u1ED1 \u0111i\u1EC7n tho\u1EA1i v\u00E0 \u1EA3nh \u0111\u1EA1i di\u1EC7n tr\u01B0\u1EDBc khi l\u01B0u.',
                         density: VitDensity.compact,
                       ),
                     ],

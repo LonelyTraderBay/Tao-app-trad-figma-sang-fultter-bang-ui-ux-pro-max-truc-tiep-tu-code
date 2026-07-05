@@ -91,8 +91,7 @@ class _PredictionsRewardsPageState
             title: 'Daily Rewards',
             subtitle: 'Phần thưởng · Prediction',
             showBack: true,
-            onBack: () =>
-                context.go(AppRoutePaths.marketsPredictionEvent('pred-1')),
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

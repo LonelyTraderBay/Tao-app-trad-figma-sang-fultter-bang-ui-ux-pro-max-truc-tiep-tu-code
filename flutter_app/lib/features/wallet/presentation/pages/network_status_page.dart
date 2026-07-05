@@ -141,9 +141,9 @@ class _NetworkStatusPageState extends ConsumerState<NetworkStatusPage> {
                     children: [
                       const VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review network availability',
+                        title: 'Xem lại trạng thái mạng',
                         message:
-                            'Check fee, latency, congestion, and confirmation status before deposit or withdrawal actions.',
+                            'Kiểm tra phí, độ trễ, tắc nghẽn và trạng thái xác nhận trước khi nạp hoặc rút.',
                         density: VitDensity.compact,
                       ),
                       _SummaryCard(

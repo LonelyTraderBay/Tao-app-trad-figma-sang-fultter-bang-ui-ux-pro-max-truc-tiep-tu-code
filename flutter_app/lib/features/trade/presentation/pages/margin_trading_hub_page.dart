@@ -50,8 +50,8 @@ class MarginTradingHubPage extends ConsumerWidget {
     final mode = shellRenderMode ?? defaultShellRenderMode();
 
     return VitTradeHubScaffold(
-      title: 'Margin Trading Hub',
-      subtitle: 'Enterprise Features',
+      title: 'Hub ký quỹ',
+      subtitle: 'Công cụ · Tuân thủ',
       semanticLabel: 'SC-090 MarginTradingHubPage',
       contentKey: contentKey,
       shellRenderMode: mode,
@@ -59,7 +59,7 @@ class MarginTradingHubPage extends ConsumerWidget {
       activeProductId: 'margin',
       children: [
         VitTradeSection(
-          title: 'Margin suite',
+          title: 'Tổng quan ký quỹ',
           child: _HeroCard(stats: snapshot.stats),
         ),
         VitTradeSection(
@@ -68,9 +68,9 @@ class MarginTradingHubPage extends ConsumerWidget {
         ),
         const VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
-          title: 'Margin suite risk review',
+          title: 'Xem lại rủi ro ký quỹ',
           message:
-              'Review leverage limits, liquidation risk, fees, available margin, and next steps before opening any margin workflow.',
+              'Kiểm tra hạn đòn bẩy, rủi ro thanh lý, phí và ký quỹ khả dụng trước khi mở bất kỳ luồng margin nào.',
           contractId: 'SC-090 margin hub review',
           density: VitDensity.compact,
         ),

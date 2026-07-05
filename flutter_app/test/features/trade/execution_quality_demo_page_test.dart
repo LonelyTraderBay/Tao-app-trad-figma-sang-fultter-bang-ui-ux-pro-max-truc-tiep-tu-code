@@ -79,7 +79,7 @@ void main() {
       expect(find.byType(VitPhoneFrame), findsNothing);
       expect(find.byType(VitStatusBar), findsNothing);
       expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-      expect(find.text('Execution Quality'), findsOneWidget);
+      expect(find.text('Chất lượng khớp lệnh'), findsOneWidget);
       expect(find.text('Phase 2: Execution Quality'), findsOneWidget);
       expect(find.text('Slippage Protection'), findsWidgets);
       expect(find.text('Execution Report'), findsWidgets);

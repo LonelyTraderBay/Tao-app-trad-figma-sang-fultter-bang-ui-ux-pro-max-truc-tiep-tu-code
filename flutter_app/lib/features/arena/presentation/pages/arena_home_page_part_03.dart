@@ -369,6 +369,16 @@ IconData _templateIcon(ArenaTemplateKind kind) {
   };
 }
 
+int _countActiveArenaChallenges(List<ArenaChallengeDraft> rooms) {
+  return rooms
+      .where(
+        (room) =>
+            room.state != ArenaChallengeState.resolved &&
+            room.state != ArenaChallengeState.canceled,
+      )
+      .length;
+}
+
 Color _templateColor(ArenaTemplateKind kind) {
   return switch (kind) {
     ArenaTemplateKind.prediction => AppColors.sell,

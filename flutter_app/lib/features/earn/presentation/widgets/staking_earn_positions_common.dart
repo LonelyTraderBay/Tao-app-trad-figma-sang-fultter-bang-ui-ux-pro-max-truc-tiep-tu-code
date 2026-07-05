@@ -1,12 +1,28 @@
 part of '../pages/staking_earn_page.dart';
 
 class _PositionsList extends StatelessWidget {
-  const _PositionsList({required this.snapshot});
+  const _PositionsList({
+    required this.snapshot,
+    required this.onExploreProducts,
+  });
 
   final StakingEarnSnapshot snapshot;
+  final VoidCallback onExploreProducts;
 
   @override
   Widget build(BuildContext context) {
+    if (snapshot.positions.isEmpty) {
+      return VitEmptyState(
+        title: 'Chua co vi the stake',
+        message:
+            'Kham pha san pham de bat dau kiem them tu tai san nhan roi cua ban.',
+        icon: Icons.business_center_outlined,
+        actionLabel: 'Kham pha san pham',
+        actionKey: StakingEarnPage.productsTabKey,
+        onAction: onExploreProducts,
+      );
+    }
+
     return Column(
       children: [
         for (final position in snapshot.positions) ...[
@@ -18,7 +34,7 @@ class _PositionsList extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.earnCardPaddingX4X3,
-          borderColor: AppColors.buy20,
+          borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -26,14 +42,14 @@ class _PositionsList extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.trending_up_rounded,
-                    color: AppColors.buy,
+                    color: AppModuleAccents.earn,
                     size: AppSpacing.iconMd,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
-                    'Tong thu nhap uoc tinh',
+                    'Thu nhap uoc tinh',
                     style: AppTextStyles.body.copyWith(
-                      color: AppColors.buy,
+                      color: AppModuleAccents.earn,
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -122,11 +138,12 @@ class _PositionCard extends StatelessWidget {
                   Text(
                     position.apy,
                     style: AppTextStyles.amountSm.copyWith(
-                      color: AppColors.buy,
+                      color: AppModuleAccents.earn,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
                   Text(
-                    'APY',
+                    'APY uoc tinh',
                     style: AppTextStyles.captionSm.copyWith(
                       color: AppColors.text3,
                       height: AppSpacing.stakingEarnPositionCaptionLineHeight,
@@ -266,7 +283,7 @@ class _IncomeEstimate extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.body.copyWith(
-                color: AppColors.buy,
+                color: AppModuleAccents.earn,
                 fontWeight: AppTextStyles.bold,
                 height: AppSpacing.stakingEarnPositionMetricValueLineHeight,
               ),
@@ -402,15 +419,6 @@ String _filterLabel(_EarnFilter filter) {
   };
 }
 
-IconData? _filterIcon(_EarnFilter filter) {
-  return switch (filter) {
-    _EarnFilter.all => null,
-    _EarnFilter.fixed => Icons.lock_outline_rounded,
-    _EarnFilter.flexible => Icons.lock_open_rounded,
-    _EarnFilter.defi => Icons.bolt_rounded,
-  };
-}
-
 IconData _productTypeIcon(EarnProductType type) {
   return switch (type) {
     EarnProductType.fixed => Icons.lock_outline_rounded,
@@ -437,14 +445,6 @@ String _productTypeLabel(EarnProductType type) {
 
 Color _productAccent(EarnProductDraft product) {
   return switch (product.riskLevel) {
-    EarnRiskLevel.low => AppColors.buy,
-    EarnRiskLevel.medium => AppColors.warn,
-    EarnRiskLevel.high => AppColors.sell,
-  };
-}
-
-Color _riskColor(EarnRiskLevel riskLevel) {
-  return switch (riskLevel) {
     EarnRiskLevel.low => AppColors.buy,
     EarnRiskLevel.medium => AppColors.warn,
     EarnRiskLevel.high => AppColors.sell,

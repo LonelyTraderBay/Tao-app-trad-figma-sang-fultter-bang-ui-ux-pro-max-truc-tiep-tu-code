@@ -1,6 +1,6 @@
 # Kế hoạch Redesign UI theo Module — VitTrade (token-lite)
 
-**Version:** 2.5 | **Updated:** 2026-07-03
+**Version:** 2.5 | **Updated:** 2026-07-05
 
 > **Entry point:** [prompt-redesign/EXECUTION-PLAYBOOK.md](prompt-redesign/EXECUTION-PLAYBOOK.md) — **66 bước** copy-paste.
 > **Contract:** [REDESIGN-CONTRACT.md](prompt-redesign/REDESIGN-CONTRACT.md) · Hub → [README.md](prompt-redesign/README.md).
@@ -98,30 +98,30 @@ Bảng dưới **tự sinh** từ `ke-hoach-redesign-batches.csv`. Tra batch: fi
 | module_id | module | hub_sc | màn | accent | batches | progress |
 | --- | --- | --- | ---: | --- | ---: | --- |
 | `RD-M01` | **home** | `sc007Home` | 1 | Global foundation | 0 | 🔒 reference |
-| `RD-M02` | **auth** | `sc001Login` | 6 | Trust, security, clarity | 1 | ⬜ 1 batch · next `RD-M02-B01` |
-| `RD-M03` | **onboarding** | `sc397Onboarding` | 1 | Guided first-run | 1 | ⬜ 1 batch · next `RD-M03-B01` |
-| `RD-M04` | **markets** | `sc008MarketList` | 22 | Scan, compare, data | 4 | ⬜ 4 batches · next `RD-K01` |
-| `RD-M05` | **trade** | `sc048Trade` | 91 | Action, precision, risk | 11 | ⬜ 11 batches · next `RD-T01` |
-| `RD-M06` | **wallet** | `sc135Wallet` | 21 | Assets, trust, security | 4 | ⬜ 4 batches · next `RD-W01` |
-| `RD-M07` | **profile** | `sc156Profile` | 16 | Account, settings | 3 | ⬜ 3 batches · next `RD-F01` |
-| `RD-M08` | **p2p** | `sc282P2PHome` | 77 | Escrow, compliance UX | 11 | ⬜ 11 batches · next `RD-P01` |
-| `RD-M09` | **earn** | `sc327StakingEarn` | 70 | Yield + risk transparency | 7 | ⬜ 7 batches · next `RD-E01` |
-| `RD-M10` | **dca** | `sc169Dca` | 13 | Disciplined investing | 3 | ⬜ 3 batches · next `RD-C01` |
-| `RD-M11` | **predictions** | `sc027PredictionsHome` | 18 | Probability, not casino | 3 | ⬜ 3 batches · next `RD-R01` |
-| `RD-M12` | **arena** | `sc184ArenaHome` | 26 | Points-only | 5 | ⬜ 5 batches · next `RD-A01` |
-| `RD-M13` | **launchpad** | `sc295Launchpad` | 24 | IDO participation | 3 | ⬜ 3 batches · next `RD-L01` |
-| `RD-M14` | **discovery** | `sc283UnifiedSearch` | 3 | Discovery | 1 | ⬜ 1 batch · next `RD-M14-B01` |
-| `RD-M15` | **news** | `sc047News` | 1 | Information | 1 | ⬜ 1 batch · next `RD-M15-B01` |
-| `RD-M16` | **notifications** | `sc291Notifications` | 1 | Actionable alerts | 1 | ⬜ 1 batch · next `RD-M16-B01` |
-| `RD-M17` | **referral** | `sc290ReferralHome` | 5 | No hype | 1 | ⬜ 1 batch · next `RD-M17-B01` |
-| `RD-M18` | **support** | `sc292HelpCenter` | 3 | Help & trust | 1 | ⬜ 1 batch · next `RD-M18-B01` |
-| `RD-M19` | **rewards** | `sc319RewardsHub` | 1 | Rewards hub | 1 | ⬜ 1 batch · next `RD-M19-B01` |
-| `RD-M20` | **cross_module** | `sc321UnifiedPortfolio` | 4 | Unified views | 1 | ⬜ 1 batch · next `RD-M20-B01` |
-| `RD-M21` | **enterprise_states** | `sc320EnterpriseStates` | 1 | Enterprise states | 1 | ⬜ 1 batch · next `RD-M21-B01` |
-| `RD-M22` | **admin** | `sc180AdminHome` | 5 | Ops dashboards | 1 | ⬜ 1 batch · next `RD-M22-B01` |
-| `RD-M23` | **dev** | `sc399DesignSystem` | 6 | Design system | 1 | ⬜ 1 batch · next `RD-M23-B01` |
+| `RD-M02` | **auth** | `sc001Login` | 6 | Trust, security, clarity | 1 | ✅ 1/1 |
+| `RD-M03` | **onboarding** | `sc397Onboarding` | 1 | Guided first-run | 1 | ✅ 1/1 |
+| `RD-M04` | **markets** | `sc008MarketList` | 22 | Scan, compare, data | 4 | ✅ 4/4 |
+| `RD-M05` | **trade** | `sc048Trade` | 91 | Action, precision, risk | 11 | ✅ 11/11 |
+| `RD-M06` | **wallet** | `sc135Wallet` | 21 | Assets, trust, security | 4 | ✅ 4/4 |
+| `RD-M07` | **profile** | `sc156Profile` | 16 | Account, settings | 3 | ✅ 3/3 |
+| `RD-M08` | **p2p** | `sc282P2PHome` | 77 | Escrow, compliance UX | 11 | ✅ 11/11 |
+| `RD-M09` | **earn** | `sc327StakingEarn` | 70 | Yield + risk transparency | 7 | ✅ 7/7 |
+| `RD-M10` | **dca** | `sc169Dca` | 13 | Disciplined investing | 3 | ✅ 3/3 |
+| `RD-M11` | **predictions** | `sc027PredictionsHome` | 18 | Probability, not casino | 3 | ✅ 3/3 |
+| `RD-M12` | **arena** | `sc184ArenaHome` | 26 | Points-only | 5 | ✅ 5/5 |
+| `RD-M13` | **launchpad** | `sc295Launchpad` | 24 | IDO participation | 3 | ✅ 3/3 |
+| `RD-M14` | **discovery** | `sc283UnifiedSearch` | 3 | Discovery | 1 | ✅ 1/1 |
+| `RD-M15` | **news** | `sc047News` | 1 | Information | 1 | ✅ 1/1 |
+| `RD-M16` | **notifications** | `sc291Notifications` | 1 | Actionable alerts | 1 | ✅ 1/1 |
+| `RD-M17` | **referral** | `sc290ReferralHome` | 5 | No hype | 1 | ✅ 1/1 |
+| `RD-M18` | **support** | `sc292HelpCenter` | 3 | Help & trust | 1 | ✅ 1/1 |
+| `RD-M19` | **rewards** | `sc319RewardsHub` | 1 | Rewards hub | 1 | ✅ 1/1 |
+| `RD-M20` | **cross_module** | `sc321UnifiedPortfolio` | 4 | Unified views | 1 | ✅ 1/1 |
+| `RD-M21` | **enterprise_states** | `sc320EnterpriseStates` | 1 | Enterprise states | 1 | ✅ 1/1 |
+| `RD-M22` | **admin** | `sc180AdminHome` | 5 | Ops dashboards | 1 | ✅ 1/1 |
+| `RD-M23` | **dev** | `sc399DesignSystem` | 6 | Design system | 1 | ✅ 1/1 |
 
-Inventory **416** · redesign **415** màn · **66** batches · done **0/66**.
+Inventory **416** · redesign **415** màn · **66** batches · done **66/66**.
 
 ---
 

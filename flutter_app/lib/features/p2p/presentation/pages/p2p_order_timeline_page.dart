@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -46,8 +47,8 @@ class P2POrderTimelinePage extends ConsumerWidget {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Order #$orderId Timeline',
-            subtitle: 'Order - P2P',
+            title: 'Tiến trình #$orderId',
+            subtitle: 'Đơn hàng - P2P',
             showBack: true,
             onBack: () => _close(context, orderId),
           ),
@@ -127,17 +128,16 @@ class _TimelineHeroCard extends StatelessWidget {
       padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Row(
         children: [
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
-            width: AppSpacing.buttonCompact,
-            height: AppSpacing.buttonCompact,
-            alignment: Alignment.center,
-            borderColor: AppColors.primary20,
-            child: const Icon(
-              Icons.schedule_rounded,
-              color: AppColors.primary,
-              size: AppSpacing.iconSm,
+          SizedBox.square(
+            dimension: AppSpacing.buttonCompact,
+            child: Material(
+              color: AppColors.primary12,
+              borderRadius: AppRadii.smRadius,
+              child: const Icon(
+                Icons.schedule_rounded,
+                color: AppColors.primary,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -146,7 +146,7 @@ class _TimelineHeroCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Order Timeline',
+                  'Tiến trình đơn hàng',
                   style: AppTextStyles.baseMedium.copyWith(
                     color: AppColors.primary,
                     fontWeight: AppTextStyles.bold,
@@ -154,7 +154,7 @@ class _TimelineHeroCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Real-time status updates',
+                  'Cập nhật trạng thái theo thời gian thực',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],

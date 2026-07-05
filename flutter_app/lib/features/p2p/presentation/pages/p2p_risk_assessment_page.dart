@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -22,7 +23,6 @@ const double _p2pRiskNativeNavClearance =
 const double _p2pRiskVisualClearance = AppSpacing.x3;
 const double _p2pRiskNativeClearance = AppSpacing.x2;
 const double _p2pRiskSectionGap = AppSpacing.x2;
-const double _p2pRiskMajorGap = AppSpacing.x3;
 const double _p2pRiskScoreBox = AppSpacing.x7 + AppSpacing.x2;
 const double _p2pRiskInfoLineHeight = 1.34;
 const double _p2pRiskFactorIconBox = AppSpacing.buttonCompact;
@@ -76,32 +76,26 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                     padding: AppSpacing.p2pRiskAssessmentScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _RiskScoreHero(snapshot: snapshot),
-                        const SizedBox(height: _p2pRiskMajorGap),
                         _RiskInfo(snapshot: snapshot),
-                        const SizedBox(height: _p2pRiskMajorGap),
                         Text(
                           snapshot.factorTitle,
                           style: AppTextStyles.baseMedium.copyWith(
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: _p2pRiskSectionGap),
                         _RiskFactorList(factors: controller.materialFactors),
-                        const SizedBox(height: _p2pRiskSectionGap),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pRiskAssessmentInnerPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'P2P risk score review',
-                            message:
-                                'Risk score, factor weights, account signals, limit impact and next review step are checked before P2P exposure changes.',
-                            contractId: 'p2p-risk-assessment-review',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'P2P risk score review',
+                          message:
+                              'Risk score, factor weights, account signals, limit impact and next review step are checked before P2P exposure changes.',
+                          contractId: 'p2p-risk-assessment-review',
                         ),
                       ],
                     ),
@@ -125,10 +119,10 @@ class _RiskScoreHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       key: P2PRiskAssessmentPage.scoreHeroKey,
-      color: AppColors.buy,
+      color: AppModuleAccents.p2p,
       shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        side: BorderSide(color: AppColors.buy),
+        side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
         padding: AppSpacing.p2pRiskAssessmentHeroPadding,

@@ -1,4 +1,4 @@
-enum RewardsScreenState { loading, empty, error, offline }
+enum RewardsScreenState { loading, empty, error, offline, ready }
 
 enum RewardTaskStatus { active, completed, claimed }
 
@@ -23,6 +23,7 @@ final class RewardsHubSnapshot {
     required this.backRoute,
     required this.referralRoute,
     required this.leaderboardRoute,
+    required this.screenState,
     required this.summary,
     required this.categories,
     required this.checkIns,
@@ -42,6 +43,7 @@ final class RewardsHubSnapshot {
   final String backRoute;
   final String referralRoute;
   final String leaderboardRoute;
+  final RewardsScreenState screenState;
   final RewardSummaryDraft summary;
   final List<RewardCategoryDraft> categories;
   final List<RewardCheckInDraft> checkIns;

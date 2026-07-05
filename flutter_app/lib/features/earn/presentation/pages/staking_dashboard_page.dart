@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_dashboard_actions.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_dashboard_charts.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_dashboard_positions.dart';
@@ -16,7 +17,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 
 class StakingDashboardPage extends ConsumerStatefulWidget {
   const StakingDashboardPage({super.key, this.shellRenderMode});
@@ -77,17 +77,12 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.standard,
-                        padding: AppSpacing.zeroInsets,
-                        child: StakingDashboardSummaryCard(
-                          key: StakingDashboardPage.summaryKey,
-                          snapshot: snapshot,
-                          isRefreshing: _isRefreshing,
-                          onRefresh: _refresh,
-                          onExport: _exportReport,
-                        ),
+                      StakingDashboardSummaryCard(
+                        key: StakingDashboardPage.summaryKey,
+                        snapshot: snapshot,
+                        isRefreshing: _isRefreshing,
+                        onRefresh: _refresh,
+                        onExport: _exportReport,
                       ),
                       VitPageSection(
                         label: 'Biểu đồ Hiệu suất (6 tháng)',
@@ -130,6 +125,11 @@ class _StakingDashboardPageState extends ConsumerState<StakingDashboardPage> {
                           key: StakingDashboardPage.alertKey,
                           snapshot: snapshot,
                         ),
+                      const EarnDisclaimerBanner(
+                        text:
+                            'APY là ước tính tham khảo và có thể thay đổi. '
+                            'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
+                      ),
                     ],
                   ),
                 ),

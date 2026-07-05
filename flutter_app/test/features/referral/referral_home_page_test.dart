@@ -42,7 +42,7 @@ void main() {
     expect(snapshot.stats.activeFriends, 5);
     expect(snapshot.currentTier.name, 'Bạc');
     expect(snapshot.nextTier?.name, 'Vàng');
-    expect(snapshot.campaign.title, 'Tháng 3 Bùng Nổ');
+    expect(snapshot.campaign.title, 'Chương trình tháng 3');
     expect(snapshot.detailLinks.map((link) => link.route), [
       AppRoutePaths.referralHistory,
       AppRoutePaths.referralRewards,
@@ -71,7 +71,7 @@ void main() {
     expect(find.text('Giới thiệu bạn bè'), findsOneWidget);
     expect(find.text('Chương trình · Referral'), findsOneWidget);
     expect(find.byKey(ReferralHomePage.campaignKey), findsOneWidget);
-    expect(find.text('Tháng 3 Bùng Nổ'), findsWidgets);
+    expect(find.text('Chương trình tháng 3'), findsWidgets);
     expect(find.byKey(ReferralHomePage.pendingKycKey), findsOneWidget);
     expect(find.byKey(ReferralHomePage.heroKey), findsOneWidget);
     expect(find.text('VITTA-A2B3C'), findsOneWidget);

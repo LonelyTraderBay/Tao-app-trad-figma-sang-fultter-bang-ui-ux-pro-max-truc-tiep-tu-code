@@ -84,12 +84,12 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
-    expect(find.text('Search Events'), findsOneWidget);
-    expect(find.text('Search by title, tag, category...'), findsOneWidget);
-    expect(find.text('Sort by'), findsOneWidget);
-    expect(find.text('Event Status'), findsOneWidget);
-    expect(find.text('Category'), findsOneWidget);
-    expect(find.text('12 events found'), findsOneWidget);
+    expect(find.text('Tìm sự kiện'), findsOneWidget);
+    expect(find.text('Tìm theo tiêu đề, thẻ, danh mục...'), findsOneWidget);
+    expect(find.text('Sắp xếp'), findsOneWidget);
+    expect(find.text('Trạng thái'), findsOneWidget);
+    expect(find.text('Danh mục'), findsOneWidget);
+    expect(find.text('Tìm thấy 12 sự kiện'), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
     expect(find.text('Tesla stock above \$400 by mid-2026?'), findsOneWidget);
   });
@@ -123,7 +123,7 @@ void main() {
     await tester.enterText(find.byType(TextField), 'Tesla');
     await tester.pumpAndSettle();
 
-    expect(find.text('1 event found'), findsOneWidget);
+    expect(find.text('Tìm thấy 1 sự kiện'), findsOneWidget);
     expect(
       find.byKey(PredictionsSearchPage.resultKey('pred-10')),
       findsOneWidget,
@@ -136,19 +136,19 @@ void main() {
     await tester.tap(find.byKey(PredictionsSearchPage.statusResolvedKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('2 events found'), findsOneWidget);
+    expect(find.text('Tìm thấy 2 sự kiện'), findsOneWidget);
     expect(
       find.byKey(PredictionsSearchPage.resultKey('pred-r1')),
       findsOneWidget,
     );
-    expect(find.text('RESOLVED'), findsWidgets);
+    expect(find.text('ĐÃ KẾT THÚC'), findsWidgets);
 
     await tester.tap(find.byKey(PredictionsSearchPage.statusActiveKey));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(PredictionsSearchPage.categoryLiveCryptoKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('4 events found'), findsOneWidget);
+    expect(find.text('Tìm thấy 4 sự kiện'), findsOneWidget);
     expect(
       find.byKey(PredictionsSearchPage.resultKey('pred-1')),
       findsOneWidget,
@@ -164,13 +164,13 @@ void main() {
     await tester.tap(find.byKey(PredictionsSearchPage.filtersToggleKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Sort by'), findsNothing);
+    expect(find.text('Sắp xếp'), findsNothing);
 
     await tester.tap(find.byKey(PredictionsSearchPage.resultKey('pred-5')));
     await tester.pumpAndSettle();
 
     expect(find.byType(PredictionEventDetailPage), findsOneWidget);
-    expect(find.text('Event Detail'), findsOneWidget);
+    expect(find.text('Chi tiết sự kiện'), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
   });
 

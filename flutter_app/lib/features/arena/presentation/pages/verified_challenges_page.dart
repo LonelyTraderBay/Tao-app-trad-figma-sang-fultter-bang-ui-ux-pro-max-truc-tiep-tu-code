@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -18,6 +19,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 
+const _arenaAccent = AppModuleAccents.arena;
 const _verifiedFeatureLineRatio = AppSpacing.arenaVerifiedFeatureLineHeight;
 const _verifiedHeroLineRatio = AppSpacing.arenaVerifiedHeroLineHeight;
 
@@ -70,11 +72,8 @@ class VerifiedChallengesPage extends ConsumerWidget {
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
-                        VitCard(child: _VerifiedHero(snapshot: snapshot)),
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: _VerifiedInfoCard(snapshot: snapshot),
-                        ),
+                        _VerifiedHero(snapshot: snapshot),
+                        _VerifiedInfoCard(snapshot: snapshot),
                       ],
                     ),
                   ),
@@ -104,55 +103,57 @@ class _VerifiedHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: AppSpacing.x1),
-        const SizedBox.square(
-          dimension: AppSpacing.arenaVerifiedHeroIconBox,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: AppColors.accent12,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadii.cardLargeRadius,
-                side: BorderSide(color: AppColors.accent20),
+    return VitModuleHeroCard(
+      accentColor: _arenaAccent,
+      child: Column(
+        children: [
+          const SizedBox.square(
+            dimension: AppSpacing.arenaVerifiedHeroIconBox,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: AppColors.accent12,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadii.cardLargeRadius,
+                  side: BorderSide(color: AppColors.accent20),
+                ),
               ),
-            ),
-            child: Center(
-              child: Icon(
-                Icons.lock_outline_rounded,
-                color: AppColors.accent,
-                size: AppSpacing.iconLg,
+              child: Center(
+                child: Icon(
+                  Icons.lock_outline_rounded,
+                  color: AppColors.accent,
+                  size: AppSpacing.iconLg,
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.x6),
-        Text(
-          snapshot.title,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
-        ),
-        const SizedBox(height: AppSpacing.x3),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: AppSpacing.arenaVerifiedHeroTextMaxWidth,
-          ),
-          child: Text(
-            snapshot.subtitle,
+          const SizedBox(height: AppSpacing.x5),
+          Text(
+            snapshot.title,
             textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text2,
-              height: _verifiedHeroLineRatio,
+            style: AppTextStyles.sectionTitle.copyWith(color: AppColors.text1),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: AppSpacing.arenaVerifiedHeroTextMaxWidth,
+            ),
+            child: Text(
+              snapshot.subtitle,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                height: _verifiedHeroLineRatio,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: AppSpacing.x5),
-        VitStatusPill(
-          label: snapshot.statusLabel,
-          status: VitStatusPillStatus.purple,
-          size: VitStatusPillSize.lg,
-        ),
-      ],
+          const SizedBox(height: AppSpacing.x5),
+          VitStatusPill(
+            label: snapshot.statusLabel,
+            status: VitStatusPillStatus.purple,
+            size: VitStatusPillSize.lg,
+          ),
+        ],
+      ),
     );
   }
 }

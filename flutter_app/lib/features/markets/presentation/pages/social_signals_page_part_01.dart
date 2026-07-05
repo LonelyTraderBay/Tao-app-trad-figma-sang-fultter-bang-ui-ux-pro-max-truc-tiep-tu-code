@@ -31,6 +31,7 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tín hiệu giao dịch',
+            subtitle: 'Tín hiệu · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -124,18 +125,6 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                                   allSnapshot.statusConfigs[signal.status]!,
                             ),
                         ],
-                        const MarketBodyReviewSection(
-                          title: 'Signal state review',
-                          message: 'Social signal data reviewed',
-                          detail:
-                              'Signal, provider, performance, filter, empty, and refresh states remain visible.',
-                          primary:
-                              'Risk disclaimer stays above signal cards before any provider detail.',
-                          secondary:
-                              'Provider and performance tabs remain informational and separated from trade execution.',
-                          tertiary:
-                              'Filter chips preserve category and status context before result rows.',
-                        ),
                       ],
                     ),
                   ),

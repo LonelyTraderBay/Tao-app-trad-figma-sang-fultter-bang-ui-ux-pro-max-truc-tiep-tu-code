@@ -48,7 +48,7 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Payment History',
+            title: 'Lịch sử thanh toán',
             subtitle: 'Thanh toán · P2P',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),

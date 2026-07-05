@@ -47,6 +47,17 @@ _StatusMeta _statusMeta(String status) {
   };
 }
 
+VitStatusPillStatus _statusPillStatus(String status) {
+  return switch (status) {
+    'pending_payment' => VitStatusPillStatus.warning,
+    'paid' => VitStatusPillStatus.info,
+    'released' => VitStatusPillStatus.success,
+    'cancelled' => VitStatusPillStatus.neutral,
+    'disputed' => VitStatusPillStatus.error,
+    _ => VitStatusPillStatus.neutral,
+  };
+}
+
 String _formatCrypto(double value) => value.toStringAsFixed(4);
 
 String _formatVnd(num value) {

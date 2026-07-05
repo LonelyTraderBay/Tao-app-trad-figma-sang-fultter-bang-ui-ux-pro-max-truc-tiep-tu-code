@@ -81,38 +81,27 @@ class _CreatorHero extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _CreatorStatTile(
-                  label: 'Modes',
-                  value: '${creator.modesCreated}',
-                  color: AppColors.primary,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _CreatorStatTile(
-                  label: 'Phòng HT',
-                  value: '${creator.completedRooms}',
-                  color: AppColors.accent,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _CreatorStatTile(
-                  label: 'Clone',
-                  value: '${creator.totalClones}',
-                  color: AppColors.buy,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _CreatorStatTile(
+                child: _CreatorHeroKpi(
                   label: 'Trust',
                   value: '${creator.trustScore}%',
                   color: AppColors.warn,
                   onTap: onTrust,
                 ),
               ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: _CreatorHeroKpi(
+                  label: 'Phòng HT',
+                  value: '${creator.completedRooms}',
+                  color: AppColors.accent,
+                ),
+              ),
             ],
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            '${creator.modesCreated} modes · ${creator.totalClones} clone',
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
         ],
       ),
@@ -120,8 +109,8 @@ class _CreatorHero extends StatelessWidget {
   }
 }
 
-class _CreatorStatTile extends StatelessWidget {
-  const _CreatorStatTile({
+class _CreatorHeroKpi extends StatelessWidget {
+  const _CreatorHeroKpi({
     required this.label,
     required this.value,
     required this.color,
@@ -135,32 +124,40 @@ class _CreatorStatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      borderColor: onTap == null ? null : color.withValues(alpha: .28),
-      padding: AppSpacing.arenaCreatorStatPadding,
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: color,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.heroNumber.copyWith(
+            color: color,
+            fontFeatures: const [FontFeature.tabularFigures()],
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+        ),
+      ],
+    );
+
+    if (onTap == null) return content;
+
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.inputRadius,
+        child: Padding(
+          padding: AppSpacing.arenaCreatorStatPadding,
+          child: content,
+        ),
       ),
     );
   }
@@ -178,24 +175,20 @@ class _TrustSection extends StatelessWidget {
       children: [
         _TrustHeader(onDetails: onDetails),
         const SizedBox(height: AppSpacing.x3),
-        Column(
-          children: [
-            Row(
-              children: [
-                Expanded(child: _TrustMetricCard(metric: metrics[0])),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(child: _TrustMetricCard(metric: metrics[1])),
+        VitCard(
+          padding: AppSpacing.arenaCreatorCardPadding,
+          child: Column(
+            children: [
+              for (var i = 0; i < metrics.length; i++) ...[
+                _TrustMetricRow(metric: metrics[i]),
+                if (i != metrics.length - 1)
+                  const Divider(
+                    color: AppColors.divider,
+                    height: AppSpacing.x4,
+                  ),
               ],
-            ),
-            const SizedBox(height: AppSpacing.x3),
-            Row(
-              children: [
-                Expanded(child: _TrustMetricCard(metric: metrics[2])),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(child: _TrustMetricCard(metric: metrics[3])),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -268,66 +261,54 @@ class _TrustHeader extends StatelessWidget {
   }
 }
 
-class _TrustMetricCard extends StatelessWidget {
-  const _TrustMetricCard({required this.metric});
+class _TrustMetricRow extends StatelessWidget {
+  const _TrustMetricRow({required this.metric});
 
   final ArenaCreatorTrustMetricDraft metric;
 
   @override
   Widget build(BuildContext context) {
     final color = _metricColor(metric.kind);
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaCreatorMetricPadding,
-      child: Row(
-        children: [
-          SizedBox(
-            width: AppSpacing.arenaCreatorMetricIconBox,
-            height: AppSpacing.arenaCreatorMetricIconBox,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: color.withValues(alpha: .14),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
-                ),
+    return Row(
+      children: [
+        SizedBox(
+          width: AppSpacing.arenaCreatorMetricIconBox,
+          height: AppSpacing.arenaCreatorMetricIconBox,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color.withValues(alpha: .14),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.smRadius,
               ),
-              child: Center(
-                child: Icon(
-                  _metricIcon(metric.kind),
-                  color: color,
-                  size: AppSpacing.arenaCreatorMetricGlyph,
-                ),
+            ),
+            child: Center(
+              child: Icon(
+                _metricIcon(metric.kind),
+                color: color,
+                size: AppSpacing.arenaCreatorMetricGlyph,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  metric.value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: color,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  metric.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
+        ),
+        const SizedBox(width: AppSpacing.x3),
+        Expanded(
+          child: Text(
+            metric.label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-        ],
-      ),
+        ),
+        Text(
+          metric.value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.baseMedium.copyWith(
+            color: color,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+      ],
     );
   }
 }

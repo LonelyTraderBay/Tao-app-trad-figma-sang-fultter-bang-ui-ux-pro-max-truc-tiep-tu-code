@@ -104,6 +104,7 @@ class _LaunchpadEventLogPageState extends ConsumerState<LaunchpadEventLogPage> {
               semanticLabel: 'SC-307 LaunchpadEventLogPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'Nhật ký sự kiện on-chain · Tham khảo rủi ro',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
               ),

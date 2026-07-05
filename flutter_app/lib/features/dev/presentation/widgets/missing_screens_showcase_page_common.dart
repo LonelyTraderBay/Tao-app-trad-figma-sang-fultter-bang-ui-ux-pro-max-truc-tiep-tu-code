@@ -17,7 +17,7 @@ class _IconBadge extends StatelessWidget {
       decoration: ShapeDecoration(
         color: background,
         shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.mdRadius,
+          borderRadius: AppRadii.smRadius,
           side: BorderSide(color: _borderFromColor(color)),
         ),
       ),

@@ -154,6 +154,23 @@ class CopyTradingTraderList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (skin == CopyTradingListSkin.classic) {
+      return Column(
+        children: [
+          for (var i = 0; i < traders.length; i++) ...[
+            _CopyTraderCard(
+              trader: traders[i],
+              onOpen: () => onOpen(traders[i]),
+              keys: keys,
+              skin: skin,
+            ),
+            if (i < traders.length - 1)
+              const SizedBox(height: AppSpacing.tradePageContentGap),
+          ],
+        ],
+      );
+    }
+
     return VitCard(
       clip: true,
       density: VitDensity.compact,
@@ -213,7 +230,9 @@ class _CopyTraderCard extends StatelessWidget {
           children: [
             _CopyAvatarBadge(trader: trader, tier: tier, skin: skin),
             SizedBox(
-              width: skin == CopyTradingListSkin.classic ? innerSpace : cardSpace,
+              width: skin == CopyTradingListSkin.classic
+                  ? innerSpace
+                  : cardSpace,
             ),
             Expanded(
               child: skin == CopyTradingListSkin.v2
@@ -242,12 +261,9 @@ class _CopyTraderCard extends StatelessWidget {
         SizedBox(
           height: skin == CopyTradingListSkin.classic ? innerSpace : cardSpace,
         ),
-        if (skin == CopyTradingListSkin.classic) ...[
-          _CopyMetricsGrid(trader: trader),
-          SizedBox(height: innerSpace),
-          _CopyWeeklyChart(values: trader.weeklyPnl),
-          SizedBox(height: innerSpace),
-        ],
+        if (skin == CopyTradingListSkin.classic)
+          _CopyProviderStats(trader: trader),
+        if (skin == CopyTradingListSkin.classic) SizedBox(height: innerSpace),
         _CopyDetailsButton(
           traderId: trader.id,
           onOpen: onOpen,
@@ -261,6 +277,16 @@ class _CopyTraderCard extends StatelessWidget {
       return Padding(
         key: keys.traderKey(trader.id),
         padding: AppSpacing.cardPaddingCompact,
+        child: content,
+      );
+    }
+
+    if (skin == CopyTradingListSkin.classic) {
+      return VitCard(
+        key: keys.traderKey(trader.id),
+        density: VitDensity.compact,
+        padding: AppSpacing.cardPaddingCompact,
+        borderColor: AppColors.cardBorder,
         child: content,
       );
     }
@@ -305,8 +331,9 @@ class _CopyTraderHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final followColor =
-        skin == CopyTradingListSkin.classic ? AppColors.caution : AppColors.warn;
+    final followColor = skin == CopyTradingListSkin.classic
+        ? AppColors.caution
+        : AppColors.warn;
     final followSize = skin == CopyTradingListSkin.classic
         ? AppSpacing.tradeBotSmallIcon
         : AppSpacing.iconSm;
@@ -333,11 +360,7 @@ class _CopyTraderHeader extends StatelessWidget {
                     ? AppSpacing.x1
                     : AppSpacing.x2,
               ),
-              Icon(
-                Icons.star_rounded,
-                color: followColor,
-                size: followSize,
-              ),
+              Icon(Icons.star_rounded, color: followColor, size: followSize),
             ],
           ],
         ),
@@ -350,14 +373,16 @@ class _CopyTraderHeader extends StatelessWidget {
           spacing: AppSpacing.x2,
           runSpacing: AppSpacing.x2,
           children: [
-            VitAccentPill(label: tier.label, accentColor: tier.color),
-            for (final tag in trader.tags.take(2))
-              VitAccentPill(label: tag, accentColor: AppColors.text2),
             if (risk != null)
               VitAccentPill(
                 label: 'Rủi ro: ${risk!.label}',
                 accentColor: risk!.color,
               ),
+            if (skin == CopyTradingListSkin.v2)
+              VitAccentPill(label: tier.label, accentColor: tier.color),
+            if (skin == CopyTradingListSkin.v2)
+              for (final tag in trader.tags.take(2))
+                VitAccentPill(label: tag, accentColor: AppColors.text2),
           ],
         ),
       ],
@@ -379,40 +404,12 @@ class _CopyAvatarBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (skin == CopyTradingListSkin.classic) {
-      return SizedBox(
-        width: AppSpacing.walletAssetLogoSize,
-        height: AppSpacing.walletAssetLogoSize,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            VitAssetAvatar(
-              label: trader.avatar,
-              accentColor: AppColors.primary,
-              size: AppSpacing.tradeToolIconTileMd,
-              radius: AppRadii.xlRadius,
-              border: true,
-            ),
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: VitCard(
-                width: AppSpacing.ctaLoadingIcon,
-                height: AppSpacing.ctaLoadingIcon,
-                variant: VitCardVariant.inner,
-                radius: VitCardRadius.standard,
-                density: VitDensity.compact,
-                padding: AppSpacing.zeroInsets,
-                borderColor: tier.color,
-                alignment: Alignment.center,
-                child: Icon(
-                  tier.icon,
-                  color: tier.color,
-                  size: AppSpacing.x3 + AppSpacing.x1,
-                ),
-              ),
-            ),
-          ],
-        ),
+      return VitAssetAvatar(
+        label: trader.avatar,
+        accentColor: AppColors.primary,
+        size: AppSpacing.tradeToolIconTileMd,
+        radius: AppRadii.xlRadius,
+        border: true,
       );
     }
 
@@ -519,7 +516,9 @@ class _CopyRoiBlock extends StatelessWidget {
                 : AppSpacing.x2,
           ),
           Text(
-            skin == CopyTradingListSkin.classic ? 'Tổng ROI  ·  Max DD' : 'Tổng ROI',
+            skin == CopyTradingListSkin.classic
+                ? 'Tổng ROI  ·  Max DD'
+                : 'Tổng ROI',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.right,
@@ -527,6 +526,59 @@ class _CopyRoiBlock extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _CopyProviderStats extends StatelessWidget {
+  const _CopyProviderStats({required this.trader});
+
+  final TradeCopyTrader trader;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Drawdown tối đa',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                '${trader.maxDrawdown.toStringAsFixed(1)}%',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.sell,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Thời gian hoạt động',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Text(
+                trader.avgHoldingTime,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -581,86 +633,6 @@ class _CopyDetailsButton extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _CopyMetricsGrid extends StatelessWidget {
-  const _CopyMetricsGrid({required this.trader});
-
-  final TradeCopyTrader trader;
-
-  @override
-  Widget build(BuildContext context) {
-    final metrics = [
-      ('Win Rate', '${trader.winRate.toStringAsFixed(1)}%', AppColors.buy),
-      ('PnL', _formatSignedUsd(trader.totalPnl), AppColors.buy),
-      ('Copiers', '${trader.copiers}', AppColors.primary),
-      ('Sharpe', trader.sharpeRatio.toStringAsFixed(2), AppColors.caution),
-    ];
-
-    return Row(
-      children: [
-        for (var i = 0; i < metrics.length; i++) ...[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  metrics[i].$1,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    metrics[i].$2,
-                    style: AppTextStyles.caption.copyWith(
-                      color: metrics[i].$3,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (i < metrics.length - 1) const SizedBox(width: AppSpacing.x2),
-        ],
-      ],
-    );
-  }
-}
-
-class _CopyWeeklyChart extends StatelessWidget {
-  const _CopyWeeklyChart({required this.values});
-
-  final List<double> values;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          'P/L 7 ngày gần nhất',
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
-        const SizedBox(height: AppSpacing.x1),
-        SizedBox(
-          height: AppSpacing.copyTradingWeeklyChartHeight,
-          child: VitSparkline(
-            values: values,
-            color: values.isNotEmpty && values.last < values.first
-                ? AppColors.sell
-                : AppColors.buy,
-            strokeWidth: AppSpacing.copyTradingWeeklyStrokeWidth,
-          ),
-        ),
-      ],
     );
   }
 }
@@ -729,20 +701,4 @@ _CopyRiskStyle _riskFor(TradeCopyRiskLevel risk) {
       color: AppColors.sell,
     ),
   };
-}
-
-String _formatCompact(double value, {String prefix = ''}) {
-  final abs = value.abs();
-  if (abs >= 1000000) {
-    return '$prefix${(value / 1000000).toStringAsFixed(2)}M';
-  }
-  if (abs >= 1000) {
-    return '$prefix${(value / 1000).toStringAsFixed(1)}K';
-  }
-  return '$prefix${value.toStringAsFixed(0)}';
-}
-
-String _formatSignedUsd(double value) {
-  final sign = value >= 0 ? '+' : '-';
-  return '$sign${_formatCompact(value.abs(), prefix: r'$')}';
 }

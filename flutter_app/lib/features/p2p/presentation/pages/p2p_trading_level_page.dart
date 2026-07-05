@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -74,12 +75,9 @@ class P2PTradingLevelPage extends ConsumerWidget {
                         if (snapshot.userLevel.currentLevel <
                             snapshot.levels.length)
                           _NextLevelProgress(snapshot: snapshot),
-                        Text(
-                          'Tất cả cấp độ',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text2,
-                            fontWeight: AppTextStyles.medium,
-                          ),
+                        VitModuleSectionHeader(
+                          title: 'Tất cả cấp độ',
+                          accentColor: AppModuleAccents.p2p,
                         ),
                         for (final level in snapshot.levels)
                           _LevelCard(snapshot: snapshot, level: level),

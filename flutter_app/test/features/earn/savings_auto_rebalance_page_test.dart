@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_auto_rebalance_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
@@ -64,7 +65,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Tái cân bằng'), findsOneWidget);
-    expect(find.text('Auto-rebalance portfolio'), findsOneWidget);
+    expect(find.text(kSavingsToolsHeaderSubtitle), findsOneWidget);
     expect(find.byKey(SavingsAutoRebalancePage.allocationKey), findsOneWidget);
     expect(find.text('Hiện tại vs Mục tiêu'), findsOneWidget);
     expect(find.text('Drift 11.9%'), findsOneWidget);

@@ -136,36 +136,36 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
                     activeProductId: 'copy',
                     children: [
                       _CapitalSection(
-                      controller: _capitalController,
-                      allocationPercent: allocationPercent,
-                      availableCapital: snapshot.availableCapital,
-                      totalPortfolio: snapshot.totalPortfolio,
-                      onChanged: _updateCapital,
-                      onPreset: _setCapitalPercent,
-                    ),
-                    VitTradeSection(
-                      title: 'Provider',
-                      child: _ProviderCard(provider: provider),
-                    ),
-                    _ModeSection(
-                      selected: draft.copyMode,
-                      copyRatio: draft.copyRatio,
-                      onModeChanged: _setMode,
-                      onRatioChanged: _setCopyRatio,
-                    ),
-                    _RiskSection(draft: draft, onDraftChanged: _setDraft),
-                    _FeeSection(preview: preview),
-                    if (preview.validations.isNotEmpty)
-                      _ValidationList(items: preview.validations),
-                    _SummaryCard(draft: draft),
-                    const VitHighRiskStatePanel(
-                      state: VitHighRiskUiState.riskReview,
-                      title: 'Copy configuration state review',
-                      message:
-                          'Provider summary, capital allocation, copy mode, risk controls, fee preview, validation messages, and disabled confirmation state remain visible before copy-trading confirmation.',
-                      contractId: 'SC-072',
-                      density: VitDensity.compact,
-                    ),
+                        controller: _capitalController,
+                        allocationPercent: allocationPercent,
+                        availableCapital: snapshot.availableCapital,
+                        totalPortfolio: snapshot.totalPortfolio,
+                        onChanged: _updateCapital,
+                        onPreset: _setCapitalPercent,
+                      ),
+                      VitTradeSection(
+                        title: 'Provider',
+                        child: _ProviderCard(provider: provider),
+                      ),
+                      _ModeSection(
+                        selected: draft.copyMode,
+                        copyRatio: draft.copyRatio,
+                        onModeChanged: _setMode,
+                        onRatioChanged: _setCopyRatio,
+                      ),
+                      _RiskSection(draft: draft, onDraftChanged: _setDraft),
+                      _FeeSection(preview: preview),
+                      if (preview.validations.isNotEmpty)
+                        _ValidationList(items: preview.validations),
+                      _SummaryCard(draft: draft),
+                      const VitHighRiskStatePanel(
+                        state: VitHighRiskUiState.riskReview,
+                        title: 'Xem lại cấu hình copy',
+                        message:
+                            'Tóm tắt provider, phân bổ vốn, chế độ copy, kiểm soát rủi ro, phí dự kiến và thông báo xác thực hiển thị trước khi xác nhận.',
+                        contractId: 'SC-072',
+                        density: VitDensity.compact,
+                      ),
                     ],
                   ),
                 ),

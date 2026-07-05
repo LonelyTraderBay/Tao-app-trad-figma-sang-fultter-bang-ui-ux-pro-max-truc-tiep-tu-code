@@ -284,7 +284,7 @@ class _FlowIcon extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .13),
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Center(
           child: Icon(_flowIcon(kind), color: color, size: AppSpacing.iconMd),

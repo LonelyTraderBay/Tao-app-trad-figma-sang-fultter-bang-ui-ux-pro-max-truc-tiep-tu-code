@@ -1,5 +1,34 @@
 part of '../pages/pending_deposits_page.dart';
 
+class _TrustReviewNotice extends StatelessWidget {
+  const _TrustReviewNotice();
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      density: VitDensity.compact,
+      borderColor: AppColors.caution.withValues(alpha: .28),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.fact_check_outlined,
+            color: AppColors.caution,
+            size: AppSpacing.iconMd,
+          ),
+          const SizedBox(width: _pendingInlineGap),
+          Expanded(
+            child: Text(
+              'Ki\u1EC3m tra m\u1EA1ng, s\u1ED1 x\u00E1c nh\u1EADn, s\u1ED1 ti\u1EC1n v\u00E0 ph\u00ED tr\u01B0\u1EDBc khi thao t\u00E1c v\u00ED.',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _SummaryBanner extends StatelessWidget {
   const _SummaryBanner({
     required this.pendingCount,
@@ -23,19 +52,22 @@ class _SummaryBanner extends StatelessWidget {
       borderColor: AppColors.overlayStroke,
       child: Row(
         children: [
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.standard,
-            width: AppSpacing.walletPendingAssetIconBox,
-            height: AppSpacing.walletPendingAssetIconBox,
-            alignment: Alignment.center,
-            borderColor: color.withValues(alpha: .22),
-            child: Icon(
-              hasPending
-                  ? Icons.access_time_rounded
-                  : Icons.check_circle_outline_rounded,
-              color: color,
-              size: AppSpacing.walletPendingSummaryIconGlyph,
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .12),
+              borderRadius: AppRadii.smRadius,
+              border: Border.all(color: color.withValues(alpha: .22)),
+            ),
+            child: SizedBox(
+              width: AppSpacing.walletPendingAssetIconBox,
+              height: AppSpacing.walletPendingAssetIconBox,
+              child: Icon(
+                hasPending
+                    ? Icons.access_time_rounded
+                    : Icons.check_circle_outline_rounded,
+                color: color,
+                size: AppSpacing.walletPendingSummaryIconGlyph,
+              ),
             ),
           ),
           const SizedBox(width: _pendingInlineGap),
@@ -155,17 +187,22 @@ class _DepositCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              VitCard(
-                variant: VitCardVariant.inner,
-                radius: VitCardRadius.standard,
-                width: AppSpacing.walletPendingAssetIconBox,
-                height: AppSpacing.walletPendingAssetIconBox,
-                alignment: Alignment.center,
-                borderColor: config.color.withValues(alpha: .22),
-                child: Icon(
-                  Icons.south_west_rounded,
-                  color: config.color,
-                  size: AppSpacing.walletPendingAssetIconGlyph,
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: config.color.withValues(alpha: .12),
+                  borderRadius: AppRadii.smRadius,
+                  border: Border.all(
+                    color: config.color.withValues(alpha: .22),
+                  ),
+                ),
+                child: SizedBox(
+                  width: AppSpacing.walletPendingAssetIconBox,
+                  height: AppSpacing.walletPendingAssetIconBox,
+                  child: Icon(
+                    Icons.south_west_rounded,
+                    color: config.color,
+                    size: AppSpacing.walletPendingAssetIconGlyph,
+                  ),
                 ),
               ),
               const SizedBox(width: _pendingInlineGap),

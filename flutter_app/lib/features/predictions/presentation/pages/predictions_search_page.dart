@@ -8,9 +8,10 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -21,11 +22,6 @@ part '../widgets/predictions_search_page_sections.dart';
 part '../widgets/predictions_search_page_common.dart';
 
 const _predictionPrimary = AppColors.primary;
-const double _searchFramedScrollClearance =
-    AppSpacing.buttonStandard + AppSpacing.x7;
-const double _searchNativeScrollClearance =
-    AppSpacing.buttonStandard + AppSpacing.x5;
-const double _searchChanceExtent = AppSpacing.buttonCompact + AppSpacing.x3;
 
 class PredictionsSearchPage extends ConsumerStatefulWidget {
   const PredictionsSearchPage({super.key, this.shellRenderMode});
@@ -81,11 +77,13 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
           searchQuery: _searchController.text,
         );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollEndClearance =
-        (mode.usesVisualQaFrame
-            ? _searchFramedScrollClearance
-            : _searchNativeScrollClearance) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
+    final scrollEndPadding =
+        navClearance +
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -93,9 +91,10 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Search Events',
-            subtitle: 'Tìm kiếm · Prediction',
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
+            title: 'Tìm sự kiện',
+            subtitle: 'Lọc theo chủ đề · xác suất',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),
@@ -107,11 +106,12 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
                   behavior: ScrollConfiguration.of(
                     context,
                   ).copyWith(scrollbars: false),
-                  child: VitInsetScrollView(
+                  child: SingleChildScrollView(
                     key: PredictionsSearchPage.contentKey,
-                    bottomInset: scrollEndClearance,
+                    padding: AppSpacing.predictionHomeScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
-                      padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
                         _SearchControl(
@@ -148,7 +148,13 @@ class _PredictionsSearchPageState extends ConsumerState<PredictionsSearchPage> {
                           ),
                         ),
                         if (snapshot.results.isEmpty)
-                          const _SearchEmptyState()
+                          _SearchEmptyState(
+                            hasActiveFilters: _hasActiveFilters,
+                            onClearFilters: _clearFilters,
+                            onBreaking: () => context.go(
+                              AppRoutePaths.marketsPredictionsBreaking,
+                            ),
+                          )
                         else
                           for (final event in snapshot.results)
                             _SearchResultCard(

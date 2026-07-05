@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -33,6 +34,9 @@ class SupportPage extends ConsumerStatefulWidget {
   static const createTicketKey = Key('sc294_support_create_ticket');
   static const activeTicketsKey = Key('sc294_support_active_tickets');
   static const doneTicketsKey = Key('sc294_support_done_tickets');
+  static const loadingKey = Key('sc294_support_loading');
+  static const errorKey = Key('sc294_support_error');
+  static const offlineKey = Key('sc294_support_offline');
 
   static Key quickLinkKey(String id) => Key('sc294_support_quick_$id');
   static Key ticketKey(String id) => Key('sc294_support_ticket_$id');
@@ -72,6 +76,9 @@ class _SupportPageState extends ConsumerState<SupportPage> {
             ? AppSpacing.x7 + AppSpacing.x6
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
+    final showOfflineBanner =
+        snapshot.screenState == SupportScreenState.offline &&
+        (snapshot.tickets.isNotEmpty || snapshot.faqItems.isNotEmpty);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -90,6 +97,20 @@ class _SupportPageState extends ConsumerState<SupportPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (showOfflineBanner)
+                Padding(
+                  key: SupportPage.offlineKey,
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    0,
+                  ),
+                  child: const VitOfflineBanner(
+                    message: 'Đang ngoại tuyến',
+                    detail: 'Hiển thị ticket và FAQ đã lưu gần nhất.',
+                  ),
+                ),
               Expanded(
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(
@@ -105,36 +126,19 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
+                      density: VitDensity.compact,
                       children: [
-                        if (widget.supportContext != null)
-                          Padding(
-                            padding: AppSpacing.supportContentPadding,
-                            child: _SupportContextCard(
-                              supportContext: widget.supportContext!,
-                            ),
-                          ),
-                        _QuickContactGrid(snapshot: snapshot),
-                        Padding(
-                          padding: AppSpacing.supportContentPadding,
-                          child: _SupportTabs(
-                            ticketCount: snapshot.tickets.length,
-                            showFaq: _showFaq,
-                            onShowTickets: () => _setFaq(false),
-                            onShowFaq: () => _setFaq(true),
-                          ),
-                        ),
-                        Padding(
-                          padding: AppSpacing.supportContentPadding,
-                          child: _showFaq
-                              ? _FaqPanel(
-                                  items: snapshot.faqItems,
-                                  expandedIndex: _expandedFaqIndex,
-                                  onToggle: _toggleFaq,
-                                )
-                              : _TicketsPanel(
-                                  activeTickets: activeTickets,
-                                  doneTickets: doneTickets,
-                                ),
+                        _SupportHubBody(
+                          snapshot: snapshot,
+                          supportContext: widget.supportContext,
+                          showFaq: _showFaq,
+                          expandedFaqIndex: _expandedFaqIndex,
+                          activeTickets: activeTickets,
+                          doneTickets: doneTickets,
+                          onShowTickets: () => _setFaq(false),
+                          onShowFaq: () => _setFaq(true),
+                          onToggleFaq: _toggleFaq,
+                          onRetry: () => setState(() {}),
                         ),
                       ],
                     ),

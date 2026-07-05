@@ -134,13 +134,38 @@ class _ModeCard extends StatelessWidget {
 }
 
 class _LiveRoomsSection extends StatelessWidget {
-  const _LiveRoomsSection({required this.rooms, required this.onRoom});
+  const _LiveRoomsSection({
+    required this.rooms,
+    required this.onRoom,
+    required this.onGuide,
+  });
 
   final List<ArenaChallengeDraft> rooms;
   final ValueChanged<String> onRoom;
+  final VoidCallback onGuide;
 
   @override
   Widget build(BuildContext context) {
+    if (rooms.isEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const VitModuleSectionHeader(
+            title: 'Phòng đang mở',
+            accentColor: AppColors.warn,
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          VitEmptyState(
+            title: 'Chưa có phòng mở',
+            message: 'Tạo thử thách mới hoặc tham gia mode nổi bật bên dưới.',
+            icon: Icons.groups_2_outlined,
+            actionLabel: 'Xem hướng dẫn',
+            onAction: onGuide,
+          ),
+        ],
+      );
+    }
+
     final activeCount = rooms
         .where((item) => item.state != ArenaChallengeState.resolved)
         .length;
@@ -204,92 +229,93 @@ class _RoomRow extends StatelessWidget {
         : (room.slotsFilled / room.slotsTotal).clamp(0.0, 1.0).toDouble();
     final color = _challengeStateColor(room.state);
 
-    return VitCard(
-      key: ArenaHomePage.roomKey(room.id),
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        key: ArenaHomePage.roomKey(room.id),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x3,
+            vertical: AppSpacing.x2,
+          ),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          room.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.body.copyWith(
+                            fontWeight: AppTextStyles.bold,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Row(
+                          children: [
+                            Flexible(child: _MetaText(room.format)),
+                            const _MetaDot(),
+                            const _MetaText('Công khai'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        room.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.body.copyWith(
+                        _challengeStateLabel(room.state),
+                        style: AppTextStyles.micro.copyWith(
+                          color: color,
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.x1),
-                      Row(
-                        children: [
-                          Flexible(child: _MetaText(room.format)),
-                          const _MetaDot(),
-                          const _MetaText('Công khai'),
-                        ],
+                      Text(
+                        '${room.entryPoints} pts',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.warn,
+                          fontWeight: AppTextStyles.bold,
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      _challengeStateLabel(room.state),
-                      style: AppTextStyles.micro.copyWith(
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x1),
+              Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: AppRadii.xsRadius,
+                      child: LinearProgressIndicator(
+                        minHeight: _arenaHomeRoomProgressHeight,
+                        value: progress,
+                        backgroundColor: AppColors.surface3,
                         color: color,
-                        fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.x1),
-                    Text(
-                      '${room.entryPoints} pts',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.warn,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.x1),
-            Row(
-              children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: AppRadii.xsRadius,
-                    child: LinearProgressIndicator(
-                      minHeight: _arenaHomeRoomProgressHeight,
-                      value: progress,
-                      backgroundColor: AppColors.surface3,
-                      color: color,
+                  ),
+                  const SizedBox(width: AppSpacing.x3),
+                  Text(
+                    '${room.slotsFilled}/${room.slotsTotal}',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Text(
-                  '${room.slotsFilled}/${room.slotsTotal}',
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.text3,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

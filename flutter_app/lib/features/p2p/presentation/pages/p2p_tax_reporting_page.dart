@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -24,7 +25,6 @@ const double _p2pTaxNativeNavClearance =
     _p2pTaxVisualNavClearance - AppSpacing.x5 + AppSpacing.x1;
 const double _p2pTaxVisualClearance = AppSpacing.x3;
 const double _p2pTaxNativeClearance = AppSpacing.x2;
-const double _p2pTaxMajorGap = AppSpacing.x3;
 const double _p2pTaxSectionGap = AppSpacing.x2;
 const double _p2pTaxIconBox = AppSpacing.searchBarCompactHeight;
 const double _p2pTaxNoticeLineHeight = 1.35;
@@ -105,11 +105,12 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.p2pTaxScrollPadding(scrollEndPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _TaxHero(snapshot: snapshot),
-                        const SizedBox(height: _p2pTaxMajorGap),
                         _YearSelector(
                           years: snapshot.years,
                           selectedYear: _selectedYear,
@@ -118,7 +119,6 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                             setState(() => _selectedYear = year);
                           },
                         ),
-                        const SizedBox(height: _p2pTaxMajorGap),
                         _JurisdictionSelector(
                           jurisdictions: snapshot.jurisdictions,
                           selectedCode: _jurisdiction,
@@ -127,13 +127,9 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                             setState(() => _jurisdiction = code);
                           },
                         ),
-                        const SizedBox(height: _p2pTaxMajorGap),
                         _TaxSummary(snapshot: snapshot),
-                        const SizedBox(height: _p2pTaxMajorGap),
                         _TaxDocuments(snapshot: snapshot),
-                        const SizedBox(height: _p2pTaxMajorGap),
                         _TaxDisclaimer(snapshot: snapshot),
-                        const SizedBox(height: _p2pTaxMajorGap),
                         VitCtaButton(
                           key: P2PTaxReportingPage.detailCtaKey,
                           onPressed: () {

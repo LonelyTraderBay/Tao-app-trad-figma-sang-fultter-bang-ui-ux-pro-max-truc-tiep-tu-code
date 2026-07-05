@@ -80,96 +80,60 @@ class _LiveStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: _challengeCardPadding,
+    return VitModuleHeroCard(
+      accentColor: _arenaAccent,
+      density: VitDensity.compact,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               Expanded(
-                child: _StatColumn(
+                child: _ChallengeHeroKpi(
                   label: 'Entry Points',
                   value: '${challenge.entryPoints}',
-                  color: AppColors.primary,
+                  valueColor: AppColors.primary,
                 ),
               ),
+              Container(
+                width: 1,
+                height: AppSpacing.x6,
+                color: AppColors.border,
+              ),
               Expanded(
-                child: _StatColumn(
-                  label: 'Prize Pool',
-                  value: _formatCompact(challenge.prizePool),
-                  color: AppColors.buy,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: AppSpacing.x3,
+                  ),
+                  child: _ChallengeHeroKpi(
+                    label: 'Prize Pool',
+                    value: _formatCompact(challenge.prizePool),
+                    valueColor: AppColors.buy,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: _challengeGap),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-          const SizedBox(height: _challengeGap),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
-              const Icon(
-                Icons.schedule_outlined,
-                size: _challengeSmallIcon,
+              Icon(
+                Icons.timer_outlined,
+                size: AppSpacing.iconSm,
                 color: AppColors.text3,
               ),
-              const SizedBox(width: _challengeTinyGap),
-              Expanded(
-                child: Text(
-                  'Đã kết thúc',
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ),
-              const _LiveDot(),
-              const SizedBox(width: _challengeTinyGap),
+              const SizedBox(width: AppSpacing.x1),
               Text(
-                'Live',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.buy,
+                challenge.countdownLabel,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text2,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: _challengeGap),
-          SizedBox(
-            height: _challengeCountdownHeight,
-            child: Material(
-              color: AppColors.surface2,
-              borderRadius: AppRadii.inputRadius,
-              child: Padding(
-                padding: _challengeCardPaddingTight,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Đếm ngược',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                    ),
-                    const Icon(
-                      Icons.timer_outlined,
-                      size: _challengeSmallIcon,
-                      color: AppColors.sell,
-                    ),
-                    const SizedBox(width: _challengeTinyGap),
-                    Text(
-                      challenge.countdownLabel,
-                      style: AppTextStyles.body.copyWith(
-                        color: AppColors.sell,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: _challengeGap),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               Expanded(
@@ -183,22 +147,61 @@ class _LiveStatusCard extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: _challengeTinyGap),
+          const SizedBox(height: AppSpacing.x1),
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
               minHeight: _challengeProgressHeight,
               value: challenge.fillPercent / 100,
-              color: AppColors.sell,
+              color: _arenaAccent,
               backgroundColor: AppColors.surface3,
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ChallengeHeroKpi extends StatelessWidget {
+  const _ChallengeHeroKpi({
+    required this.label,
+    required this.value,
+    required this.valueColor,
+  });
+
+  final String label;
+  final String value;
+  final Color valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.heroNumber.copyWith(
+            color: valueColor,
+            letterSpacing: 0,
+            fontFeatures: AppTextStyles.tabularFigures,
+          ),
+        ),
+      ],
     );
   }
 }

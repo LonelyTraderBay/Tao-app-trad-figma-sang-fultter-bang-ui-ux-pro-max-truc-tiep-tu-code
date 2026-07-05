@@ -71,7 +71,7 @@ void main() {
     expect(find.byType(P2PKycStatusPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('KYC Status'), findsOneWidget);
+    expect(find.text('Trạng thái KYC'), findsOneWidget);
     expect(find.text('KYC · P2P'), findsOneWidget);
     expect(find.byKey(P2PKycStatusPage.statusCardKey), findsOneWidget);
     expect(find.text('Tier 2 - Intermediate'), findsOneWidget);
@@ -124,7 +124,7 @@ void main() {
       find.byKey(P2PKycStatusPage.actionKey('selfie_verification')),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Selfie Verification'), findsOneWidget);
+    expect(find.text('Xác minh selfie'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();

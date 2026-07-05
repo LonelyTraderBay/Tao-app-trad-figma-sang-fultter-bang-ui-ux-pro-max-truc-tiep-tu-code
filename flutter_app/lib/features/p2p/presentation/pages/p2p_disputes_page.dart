@@ -369,7 +369,7 @@ class _DisputeListTile extends StatelessWidget {
                   ],
                 ),
               ),
-              _StatusPill(label: dispute.statusLabel, color: color),
+              VitAccentPill(label: dispute.statusLabel, accentColor: color),
               const SizedBox(width: AppSpacing.x2),
               const Icon(
                 Icons.chevron_right_rounded,
@@ -402,18 +402,6 @@ class _DisputeListTile extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  const _StatusPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitAccentPill(label: label, accentColor: color);
   }
 }
 

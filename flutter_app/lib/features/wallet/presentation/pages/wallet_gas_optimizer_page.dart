@@ -28,9 +28,9 @@ const _gasGreen = AppColors.buy;
 const _gasAmber = AppColors.caution;
 const _gasRed = AppColors.sell;
 
-const _tabCurrent = 'Hien tai';
-const _tabTrends = 'Xu huong';
-const _tabTips = 'Meo tiet kiem';
+const _tabCurrent = 'Hiện tại';
+const _tabTrends = 'Xu hướng';
+const _tabTips = 'Mẹo tiết kiệm';
 
 double _gasScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
@@ -76,7 +76,7 @@ class _WalletGasOptimizerPageState
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Gas Optimizer',
+            title: 'Tối ưu phí gas',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.wallet),
           ),
@@ -141,7 +141,7 @@ class _WalletGasOptimizerPageState
 
   void _refreshGasPrices() {
     ref.invalidate(walletGasOptimizerProvider);
-    _showGasNotice('Gas estimates refreshed. Confirm fees before signing.');
+    _showGasNotice('Đã làm mới ước tính gas. Xác nhận phí trước khi ký.');
   }
 
   void _showGasNotice(String message) {

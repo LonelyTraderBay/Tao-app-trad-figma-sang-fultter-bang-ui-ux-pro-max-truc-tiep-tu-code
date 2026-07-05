@@ -80,7 +80,7 @@ class _PredictionsPortfolioPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Prediction Portfolio',
-            subtitle: 'Danh m\u1ee5c \u00b7 Prediction',
+            subtitle: 'Vị thế · Prediction',
             showBack: true,
             onBack: () =>
                 goBackOrFallback(context, fallbackPath: resolvedBackPath),

@@ -22,10 +22,6 @@ const double _marketPairCompactPriceGap = AppSpacing.x1;
 const double _marketPairCompactFavoriteGap = AppSpacing.x2;
 const double _marketPairCompactFavoriteIcon = AppSpacing.iconMd - AppSpacing.x1;
 const double _marketPairCompactAvatar = AppSpacing.x6 - AppSpacing.x1;
-const double _marketPairChangePillMinHeight =
-    AppSpacing.statusPillHeightSm - AppSpacing.x1;
-const EdgeInsets _marketPairChangePillPadding =
-    AppSpacing.marketListPairChangePillPadding;
 
 class MarketListColumnHeader extends StatelessWidget {
   const MarketListColumnHeader({super.key, required this.lastUpdatedLabel});
@@ -46,7 +42,7 @@ class MarketListColumnHeader extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 42,
+                      flex: 44,
                       child: Text(
                         'Cặp giao dịch',
                         style: AppTextStyles.micro.copyWith(
@@ -55,19 +51,19 @@ class MarketListColumnHeader extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 22,
+                      flex: 36,
                       child: Text(
-                        'Biểu đồ',
-                        textAlign: TextAlign.center,
+                        'Giá',
+                        textAlign: TextAlign.right,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 36,
+                    SizedBox(
+                      width: AppSpacing.x7 + AppSpacing.x2,
                       child: Text(
-                        'Giá / Thay đổi',
+                        '24h',
                         textAlign: TextAlign.right,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
@@ -139,95 +135,98 @@ class _MarketPairRow extends StatelessWidget {
     final positive = pair.change24h >= 0;
     final color = positive ? AppColors.buy : AppColors.sell;
 
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      padding: EdgeInsets.zero,
-      onTap: onTap,
-      child: Column(
-        children: [
-          Padding(
-            padding: _marketPairCompactRowPadding,
-            child: Row(
-              children: [
-                _CoinAvatar(pair: pair),
-                const SizedBox(width: _marketPairCompactGap),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        pair.baseAsset,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          fontWeight: AppTextStyles.bold,
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          children: [
+            Padding(
+              padding: _marketPairCompactRowPadding,
+              child: Row(
+                children: [
+                  _CoinAvatar(pair: pair),
+                  const SizedBox(width: _marketPairCompactGap),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          pair.baseAsset,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.caption.copyWith(
+                            fontWeight: AppTextStyles.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: _marketPairCompactMicroGap),
-                      Text(
-                        pair.quoteAsset,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.badge.copyWith(
-                          color: AppColors.text3,
+                        const SizedBox(height: _marketPairCompactMicroGap),
+                        Text(
+                          'Vol ${marketListFormatVolume(pair.volume24h)}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.badge.copyWith(
+                            color: AppColors.text3,
+                            fontFeatures: AppTextStyles.tabularFigures,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: _marketPairCompactSparklineWidth,
-                  height: _marketPairCompactSparklineHeight,
-                  child: VitSparkline(values: pair.sparklineData, color: color),
-                ),
-                const SizedBox(width: _marketPairCompactGap),
-                SizedBox(
-                  width: _marketPairCompactPriceColumnWidth,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        marketListFormatPrice(pair.price),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.caption.copyWith(
-                          fontWeight: AppTextStyles.bold,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                        ),
-                      ),
-                      const SizedBox(height: _marketPairCompactPriceGap),
-                      _MarketPairChangePill(
-                        label: marketListFormatPct(pair.change24h),
-                        color: color,
-                      ),
-                    ],
+                  SizedBox(
+                    width: _marketPairCompactSparklineWidth,
+                    height: _marketPairCompactSparklineHeight,
+                    child: VitSparkline(
+                      values: pair.sparklineData,
+                      color: color,
+                    ),
                   ),
-                ),
-                const SizedBox(width: _marketPairCompactFavoriteGap),
-                Tooltip(
-                  message: favorite ? 'Bỏ yêu thích' : 'Thêm vào yêu thích',
-                  child: VitInlineIconAction(
-                    icon: favorite
-                        ? Icons.star_rounded
-                        : Icons.star_border_rounded,
-                    tooltip: favorite
-                        ? 'Bỏ yêu thích ${pair.baseAsset}'
-                        : 'Thêm vào yêu thích ${pair.baseAsset}',
-                    onPressed: onFavoriteToggle,
-                    color: favorite ? marketListArenaAccent : AppColors.text3,
-                    size: _marketPairCompactFavoriteIcon,
-                    padding: AppSpacing.zero,
+                  const SizedBox(width: _marketPairCompactGap),
+                  SizedBox(
+                    width: _marketPairCompactPriceColumnWidth,
+                    child: Text(
+                      marketListFormatPrice(pair.price),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.right,
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: _marketPairCompactPriceGap),
+                  VitStatusPill(
+                    label: marketListFormatPct(pair.change24h),
+                    status: positive
+                        ? VitStatusPillStatus.success
+                        : VitStatusPillStatus.error,
+                    size: VitStatusPillSize.sm,
+                  ),
+                  const SizedBox(width: _marketPairCompactFavoriteGap),
+                  Tooltip(
+                    message: favorite ? 'Bỏ yêu thích' : 'Thêm vào yêu thích',
+                    child: VitInlineIconAction(
+                      icon: favorite
+                          ? Icons.star_rounded
+                          : Icons.star_border_rounded,
+                      tooltip: favorite
+                          ? 'Bỏ yêu thích ${pair.baseAsset}'
+                          : 'Thêm vào yêu thích ${pair.baseAsset}',
+                      onPressed: onFavoriteToggle,
+                      color: favorite ? marketListArenaAccent : AppColors.text3,
+                      size: _marketPairCompactFavoriteIcon,
+                      padding: AppSpacing.zero,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Divider(
-            color: AppColors.divider,
-            height: AppSpacing.dividerHairline,
-          ),
-        ],
+            const Divider(
+              color: AppColors.divider,
+              height: AppSpacing.dividerHairline,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -246,49 +245,6 @@ class _CoinAvatar extends StatelessWidget {
       size: _marketPairCompactAvatar,
       radius: AppRadii.pillRadius,
       border: true,
-    );
-  }
-}
-
-class _MarketPairChangePill extends StatelessWidget {
-  const _MarketPairChangePill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: label,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minHeight: _marketPairChangePillMinHeight,
-        ),
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: color.withValues(alpha: 0.14),
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: color.withValues(alpha: 0.26)),
-              borderRadius: AppRadii.pillRadius,
-            ),
-          ),
-          child: Padding(
-            padding: _marketPairChangePillPadding,
-            child: ExcludeSemantics(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: color,
-                  fontWeight: AppTextStyles.bold,
-                  fontFeatures: AppTextStyles.tabularFigures,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

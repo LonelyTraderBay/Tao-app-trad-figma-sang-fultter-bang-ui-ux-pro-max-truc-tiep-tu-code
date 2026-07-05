@@ -94,10 +94,16 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
                     density: VitDensity.compact,
                     fullBleed: true,
                     children: [
+                      if (suspiciousCount > 0)
+                        Padding(
+                          padding: const EdgeInsetsDirectional.symmetric(
+                            horizontal: AppSpacing.contentPad,
+                          ),
+                          child: _SuspiciousBanner(count: suspiciousCount),
+                        ),
                       _FilterPanel(
                         filters: snapshot.filters,
                         activeFilter: _activeFilter,
-                        suspiciousCount: suspiciousCount,
                         onChanged: _setFilter,
                       ),
                       if (logs.isEmpty)

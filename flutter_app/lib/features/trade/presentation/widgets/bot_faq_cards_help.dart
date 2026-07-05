@@ -56,82 +56,29 @@ class _FaqCard extends StatelessWidget {
             ),
           ),
           if (expanded)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: AppSpacing.tradeBotQuestionIconBox + AppSpacing.x3,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.tradeBotQuestionIconBox + AppSpacing.x3,
+                0,
+                AppSpacing.x3,
+                AppSpacing.x3,
+              ),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: AppColors.surface2,
+                  borderRadius: AppRadii.smRadius,
                 ),
-                Expanded(
-                  child: VitCard(
-                    variant: VitCardVariant.inner,
-                    padding: AppSpacing.tradeBotInnerPanelPadding,
-                    child: Text(
-                      item.answer,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                      ),
+                child: Padding(
+                  padding: AppSpacing.tradeBotInnerPanelPadding,
+                  child: Text(
+                    item.answer,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.x3),
-              ],
+              ),
             ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatsRow extends StatelessWidget {
-  const _StatsRow({required this.totalFaqs, required this.categories});
-
-  final int totalFaqs;
-  final int categories;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _StatCard(label: 'Total FAQs', value: totalFaqs.toString()),
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: _StatCard(label: 'Categories', value: categories.toString()),
-        ),
-      ],
-    );
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  const _StatCard({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
-      alignment: Alignment.center,
-      borderColor: AppColors.cardBorder,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            value,
-            style: AppTextStyles.amountSm.copyWith(
-              color: AppColors.text1,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
         ],
       ),
     );

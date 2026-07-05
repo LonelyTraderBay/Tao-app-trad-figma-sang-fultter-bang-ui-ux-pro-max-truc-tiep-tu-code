@@ -76,7 +76,8 @@ class _RiskManagementDemoPageState
             type: MaterialType.transparency,
             child: VitAutoHideHeaderScaffold(
               header: VitHeader(
-                title: 'Risk Management',
+                title: 'Quản lý rủi ro',
+                subtitle: 'OCO · Vị thế · Khối lượng',
                 showBack: true,
                 onBack: () => context.go(AppRoutePaths.trade),
               ),
@@ -105,15 +106,15 @@ class _RiskManagementDemoPageState
                               children: [
                                 VitHighRiskStatePanel(
                                   state: VitHighRiskUiState.riskReview,
-                                  title: 'Risk tool review required',
+                                  title: 'Xem lại công cụ rủi ro',
                                   message:
-                                      'OCO order, protected positions, calculator result, fee impact and confirmation are reviewed before applying risk actions.',
+                                      'Lệnh OCO, vị thế bảo vệ, kết quả máy tính khối lượng và phí được xem trước trước khi áp dụng.',
                                   contractId: 'risk-management-demo-review',
                                   density: VitDensity.compact,
                                 ),
                                 SizedBox(height: _riskSpace),
                                 VitStatusPill(
-                                  label: 'Preview before action',
+                                  label: 'Xem trước khi thực hiện',
                                   status: VitStatusPillStatus.warning,
                                   size: VitStatusPillSize.sm,
                                 ),

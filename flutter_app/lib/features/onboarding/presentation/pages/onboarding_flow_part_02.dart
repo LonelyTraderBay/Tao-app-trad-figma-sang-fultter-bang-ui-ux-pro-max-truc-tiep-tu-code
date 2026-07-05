@@ -74,9 +74,8 @@ class _CompleteStep extends StatelessWidget {
 
     return VitPageContent(
       padding: VitContentPadding.defaultPadding,
-      gap: VitContentGap.defaultGap,
+      gap: VitContentGap.tight,
       children: [
-        const SizedBox(height: AppSpacing.x5),
         const _HeroIcon(
           icon: Icons.check_circle_outline_rounded,
           success: true,
@@ -154,7 +153,7 @@ class _ProgressHeader extends StatelessWidget {
           child: LinearProgressIndicator(
             minHeight: AppSpacing.x2,
             value: progress,
-            color: AppColors.primary,
+            color: AppModuleAccents.onboarding,
             backgroundColor: AppColors.divider,
           ),
         ),
@@ -206,7 +205,7 @@ class _StepHeading extends StatelessWidget {
 class _HeroIcon extends StatelessWidget {
   const _HeroIcon({
     required this.icon,
-    this.color = AppColors.primary,
+    this.color = AppModuleAccents.onboarding,
     this.success = false,
   });
 
@@ -216,17 +215,20 @@ class _HeroIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bgColor = success ? AppColors.buy : color;
+    final borderColor = success ? AppColors.buy20 : AppColors.primary20;
+
     return Center(
-      child: SizedBox.square(
-        dimension: AppSpacing.buttonHero,
-        child: Material(
-          color: success ? AppColors.buy : color,
-          elevation: AppSpacing.onboardingHeroIconElevation,
-          shadowColor: success ? AppColors.buy20 : AppColors.primary30,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: bgColor,
           shape: RoundedRectangleBorder(
             borderRadius: AppRadii.cardLargeRadius,
-            side: BorderSide(color: success ? AppColors.buy20 : color),
+            side: BorderSide(color: borderColor),
           ),
+        ),
+        child: SizedBox.square(
+          dimension: AppSpacing.buttonHero,
           child: Icon(
             icon,
             color: AppColors.onAccent,

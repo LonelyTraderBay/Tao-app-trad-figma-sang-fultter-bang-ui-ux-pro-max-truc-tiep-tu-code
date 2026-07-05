@@ -55,8 +55,20 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
       semanticLabel: 'SC-100 ProductGovernancePage',
       contentKey: ProductGovernancePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      useCopyTradingInset: true,
       onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
       children: [
+        VitTradeSection(
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            density: VitDensity.compact,
+            title: 'Product governance review',
+            message:
+                'Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.',
+            contractId: 'SC-100 product governance review',
+          ),
+        ),
         VitTradeSection(
           title: 'Notice',
           child: _ComplianceNotice(snapshot: snapshot),
@@ -81,14 +93,6 @@ class _ProductGovernancePageState extends ConsumerState<ProductGovernancePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                density: VitDensity.compact,
-                title: 'Product governance review',
-                message:
-                    'Review target market, negative market, risk level, distribution channel, fee disclosure, and next review deadline before approving copy products.',
-                contractId: 'SC-100 product governance review',
-              ),
               _Stats(products: snapshot.products),
               _Tabs(
                 activeId: _tab!,

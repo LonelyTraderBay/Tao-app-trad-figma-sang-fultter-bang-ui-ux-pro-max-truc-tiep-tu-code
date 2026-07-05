@@ -79,6 +79,9 @@ class _TradePageState extends ConsumerState<TradePage> {
         widget.chartVariant == TradeChartVariant.pairRoute || context.canPop();
     final marketPrice = formatTradePrice(pair.price);
     final nextAction = _resolveNextAction(snapshot);
+    final availableBalanceLabel = _side == TradeOrderSide.buy
+        ? '${formatTradeMoney(snapshot.balances.usdtAvailable)} USDT'
+        : '${formatTradeMoney(snapshot.balances.baseAvailable)} ${pair.baseAsset}';
 
     return VitTradeSimpleShell(
       title: pair.symbol,
@@ -103,10 +106,43 @@ class _TradePageState extends ConsumerState<TradePage> {
           symbol: pair.symbol,
           priceLabel: marketPrice,
           changePct: pair.changePct,
-          highLabel: formatTradePrice(pair.price * 1.02),
-          lowLabel: formatTradePrice(pair.price * 0.98),
-          volumeLabel: '252.58K',
+          availableBalanceLabel: availableBalanceLabel,
         ),
+        VitTradeSimpleOrderForm(
+          side: _side,
+          pair: pair,
+          balances: snapshot.balances,
+          amountController: _amountController,
+          preview: preview,
+          canSubmit: canSubmit,
+          marketPriceLabel: marketPrice,
+          buyKey: TradePage.buySideKey,
+          sellKey: TradePage.sellSideKey,
+          amountFieldKey: TradePage.amountFieldKey,
+          submitKey: TradePage.submitKey,
+          pctKeyBuilder: TradePage.pctKey,
+          onSideChanged: (side) => setState(() => _side = side),
+          onPct: (pct) => setState(() {
+            final available = _side == TradeOrderSide.buy
+                ? snapshot.balances.usdtAvailable / pair.price
+                : snapshot.balances.baseAvailable;
+            _amountController.text = (available * pct / 100).toStringAsFixed(6);
+          }),
+          onChanged: () => setState(() {}),
+          onConfirmedSubmit: () => _submitOrder(orderController),
+        ),
+        if (snapshot.highRiskContractId != null)
+          VitTradeSection(
+            title: 'Đánh giá rủi ro',
+            child: VitHighRiskStatePanel(
+              state: VitHighRiskUiState.riskReview,
+              title: 'Review spot order risk',
+              message:
+                  'Preview fees, slippage, and available balance before submitting a market order.',
+              contractId: snapshot.highRiskContractId,
+              density: VitDensity.compact,
+            ),
+          ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -123,46 +159,6 @@ class _TradePageState extends ConsumerState<TradePage> {
               onTap: nextAction.onTap,
             ),
           ],
-        ),
-        if (snapshot.highRiskContractId != null)
-          VitTradeSection(
-            title: 'Đánh giá rủi ro',
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Review spot order risk',
-              message:
-                  'Preview fees, slippage, and available balance before submitting a market order.',
-              contractId: snapshot.highRiskContractId,
-              density: VitDensity.compact,
-            ),
-          ),
-        VitTradeSection(
-          title: 'Giao dịch',
-          child: VitTradeSimpleOrderForm(
-            side: _side,
-            pair: pair,
-            balances: snapshot.balances,
-            amountController: _amountController,
-            preview: preview,
-            canSubmit: canSubmit,
-            marketPriceLabel: marketPrice,
-            buyKey: TradePage.buySideKey,
-            sellKey: TradePage.sellSideKey,
-            amountFieldKey: TradePage.amountFieldKey,
-            submitKey: TradePage.submitKey,
-            pctKeyBuilder: TradePage.pctKey,
-            onSideChanged: (side) => setState(() => _side = side),
-            onPct: (pct) => setState(() {
-              final available = _side == TradeOrderSide.buy
-                  ? snapshot.balances.usdtAvailable / pair.price
-                  : snapshot.balances.baseAvailable;
-              _amountController.text = (available * pct / 100).toStringAsFixed(
-                6,
-              );
-            }),
-            onChanged: () => setState(() {}),
-            onConfirmedSubmit: () => _submitOrder(orderController),
-          ),
         ),
         VitTradeSection(
           title: 'Tài sản của bạn',

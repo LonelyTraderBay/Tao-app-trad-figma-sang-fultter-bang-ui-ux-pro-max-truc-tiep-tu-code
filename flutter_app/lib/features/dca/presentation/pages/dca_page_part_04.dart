@@ -96,13 +96,6 @@ Path _buildLinePath(
   return path;
 }
 
-double _yForValue(double value, List<double> values, Size size) {
-  final min = values.reduce((a, b) => a < b ? a : b);
-  final max = values.reduce((a, b) => a > b ? a : b);
-  final range = (max - min).abs() < 0.01 ? 1 : max - min;
-  return size.height - ((value - min) / range * size.height);
-}
-
 Color _toolAccentColor(DcaToolAccent accent) {
   return switch (accent) {
     DcaToolAccent.purple => AppColors.accent,

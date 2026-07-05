@@ -1,38 +1,5 @@
 part of '../pages/funnel_dashboard.dart';
 
-class _EmptyFunnelCard extends StatelessWidget {
-  const _EmptyFunnelCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.adminEmptyPadding,
-      child: Column(
-        children: [
-          const Icon(
-            Icons.filter_alt_outlined,
-            color: AppColors.text3,
-            size: AppSpacing.adminIconHero,
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Text(
-            'Chưa có dữ liệu funnel',
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            'Dữ liệu sẽ xuất hiện khi có người dùng đi qua funnel',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _CardTitle extends StatelessWidget {
   const _CardTitle({required this.icon, required this.title});
 

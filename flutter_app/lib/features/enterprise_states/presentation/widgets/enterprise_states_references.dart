@@ -117,7 +117,7 @@ class _ReferenceTile extends StatelessWidget {
       padding: AppSpacing.enterpriseStatesCardPadding,
       child: Row(
         children: [
-          _IconBubble(icon: icon, color: AppColors.primary),
+          _IconBubble(icon: icon, color: AppModuleAccents.enterpriseStates),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Column(
@@ -198,36 +198,6 @@ EnterpriseStateSection _sectionFromKey(String key) {
     (section) => section.name == key,
     orElse: () => EnterpriseStateSection.stateKit,
   );
-}
-
-IconData _previewIcon(EnterprisePreviewState state) {
-  switch (state) {
-    case EnterprisePreviewState.loading:
-      return Icons.hourglass_top_rounded;
-    case EnterprisePreviewState.empty:
-      return Icons.inbox_outlined;
-    case EnterprisePreviewState.error:
-      return Icons.close_rounded;
-    case EnterprisePreviewState.offline:
-      return Icons.wifi_off_rounded;
-    case EnterprisePreviewState.gate:
-      return Icons.lock_outline_rounded;
-  }
-}
-
-VitStatusPillStatus _pillStatus(EnterprisePreviewState state) {
-  switch (state) {
-    case EnterprisePreviewState.loading:
-      return VitStatusPillStatus.info;
-    case EnterprisePreviewState.empty:
-      return VitStatusPillStatus.neutral;
-    case EnterprisePreviewState.error:
-      return VitStatusPillStatus.error;
-    case EnterprisePreviewState.offline:
-      return VitStatusPillStatus.warning;
-    case EnterprisePreviewState.gate:
-      return VitStatusPillStatus.purple;
-  }
 }
 
 VitBannerVariant _bannerVariant(EnterpriseBannerKind kind) {

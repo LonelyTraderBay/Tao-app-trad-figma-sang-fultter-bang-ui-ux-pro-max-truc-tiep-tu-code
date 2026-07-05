@@ -52,66 +52,67 @@ class _BalanceCard extends StatelessWidget {
       padding: AppSpacing.zeroInsets,
       child: Column(
         children: [
-          VitCard(
-            onTap: onToggle,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
-            padding: AppSpacing.zeroInsets,
-            child: Padding(
-              padding: _p2pWalletCardPadding,
-              child: Row(
-                children: [
-                  _AssetMark(symbol: balance.asset),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              balance.asset,
-                              style: AppTextStyles.baseMedium.copyWith(
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.x2),
-                            Flexible(
-                              child: Text(
-                                '≈ \$${_formatComma(balance.usdValue, 2)}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.micro.copyWith(
-                                  color: AppColors.text3,
+          Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: onToggle,
+              borderRadius: AppRadii.cardLargeRadius,
+              child: Padding(
+                padding: _p2pWalletCardPadding,
+                child: Row(
+                  children: [
+                    _AssetMark(symbol: balance.asset),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                balance.asset,
+                                style: AppTextStyles.baseMedium.copyWith(
+                                  fontWeight: AppTextStyles.bold,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: AppSpacing.x1),
-                        Text(
-                          _formatAssetTotal(balance),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.sectionTitle.copyWith(
-                            fontWeight: AppTextStyles.bold,
-                            fontFeatures: AppTextStyles.tabularFigures,
+                              const SizedBox(width: AppSpacing.x2),
+                              Flexible(
+                                child: Text(
+                                  '≈ \$${_formatComma(balance.usdValue, 2)}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.micro.copyWith(
+                                    color: AppColors.text3,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: AppSpacing.x1),
+                          Text(
+                            _formatAssetTotal(balance),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.sectionTitle.copyWith(
+                              fontWeight: AppTextStyles.bold,
+                              fontFeatures: AppTextStyles.tabularFigures,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  AnimatedRotation(
-                    turns: expanded ? .5 : 0,
-                    duration: const Duration(milliseconds: 180),
-                    child: const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppColors.text3,
-                      size: AppSpacing.iconMd,
+                    const SizedBox(width: AppSpacing.x2),
+                    AnimatedRotation(
+                      turns: expanded ? .5 : 0,
+                      duration: const Duration(milliseconds: 180),
+                      child: const Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: AppColors.text3,
+                        size: AppSpacing.iconMd,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -182,7 +183,7 @@ class _AssetMark extends StatelessWidget {
     final color = _assetColor(symbol);
     return Material(
       color: color.withValues(alpha: .14),
-      borderRadius: AppRadii.lgRadius,
+      borderRadius: AppRadii.smRadius,
       child: SizedBox(
         width: _p2pWalletIconBoxExtent,
         height: _p2pWalletIconBoxExtent,

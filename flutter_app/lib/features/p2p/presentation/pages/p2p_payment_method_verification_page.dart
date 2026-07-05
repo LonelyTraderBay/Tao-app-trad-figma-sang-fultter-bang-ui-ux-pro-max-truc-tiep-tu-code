@@ -161,7 +161,7 @@ class _P2PPaymentMethodVerificationPageState
       (item) => item.id == _selectedMethodId,
       orElse: () => snapshot.methods.first,
     );
-    if (method.id == 'micro_deposit') return 'Micro-deposit Verification';
+    if (method.id == 'micro_deposit') return 'Xác minh micro-deposit';
     return method.label;
   }
 

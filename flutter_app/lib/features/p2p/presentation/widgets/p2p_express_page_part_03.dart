@@ -26,34 +26,6 @@ class _AssetMark extends StatelessWidget {
   }
 }
 
-class _QuickAmountChip extends StatelessWidget {
-  const _QuickAmountChip({
-    required this.amount,
-    required this.selected,
-    required this.color,
-    required this.onPressed,
-  });
-
-  final int amount;
-  final bool selected;
-  final Color color;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: P2PExpressPage.quickAmountKey(amount),
-      label: _formatVnd(amount),
-      selected: selected,
-      onTap: onPressed,
-      height: AppSpacing.buttonCompact,
-      padding: AppSpacing.p2pExpressChoiceChipPadding,
-      accentColor: color,
-      semanticLabel: 'Quick amount ${_formatVnd(amount)} VND',
-    );
-  }
-}
-
 class _PaymentChip extends StatelessWidget {
   const _PaymentChip({
     required this.method,
@@ -200,34 +172,37 @@ class _OfferMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.p2pExpressTightCardPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: valueColor,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.inputRadius,
+      child: Padding(
+        padding: AppSpacing.p2pExpressTightCardPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-          ),
-          Text(
-            caption,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: valueColor,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+            ),
+            Text(
+              caption,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
       ),
     );
   }

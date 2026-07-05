@@ -105,32 +105,34 @@ class _SummaryMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.p2pTrustProgressSummaryMetricPadding,
-      child: Column(
-        children: [
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.cardRadius,
+      child: Padding(
+        padding: AppSpacing.p2pTrustProgressSummaryMetricPadding,
+        child: Column(
+          children: [
+            Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.baseMedium.copyWith(
+                color: color,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -297,19 +299,17 @@ class _AchievementIconBubble extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        VitCard(
-          width: size,
-          height: size,
-          variant: VitCardVariant.ghost,
-          radius: VitCardRadius.standard,
-          background: ColoredBox(
-            color: color.withValues(alpha: locked ? .34 : .22),
-          ),
-          clip: true,
-          child: Icon(
-            icon,
-            color: locked ? AppColors.text3 : color,
-            size: iconSize,
+        Material(
+          color: color.withValues(alpha: locked ? .34 : .22),
+          borderRadius: AppRadii.smRadius,
+          child: SizedBox(
+            width: size,
+            height: size,
+            child: Icon(
+              icon,
+              color: locked ? AppColors.text3 : color,
+              size: iconSize,
+            ),
           ),
         ),
         if (!large && !locked && showBadge)

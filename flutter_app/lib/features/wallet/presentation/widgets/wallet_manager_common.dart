@@ -185,7 +185,7 @@ class WalletManagerAddWalletButton extends StatelessWidget {
       onPressed: onPressed,
       height: AppSpacing.inputHeight,
       leading: const Icon(Icons.add_rounded),
-      child: const Text('Add Wallet'),
+      child: const Text('Thêm ví'),
     );
   }
 }
@@ -218,8 +218,8 @@ class WalletManagerSecurityNotice extends StatelessWidget {
           const SizedBox(width: AppSpacing.walletManagerSecurityGap),
           Expanded(
             child: Text(
-              'Addresses are masked by default. Click eye icon to reveal. '
-              'Never share your private keys.',
+              'Địa chỉ được ẩn mặc định. Nhấn biểu tượng mắt để hiện. '
+              'Không chia sẻ private key.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
                 height: AppSpacing.tradeBotLineHeightReadable,

@@ -88,7 +88,7 @@ class _ChatComposer extends StatelessWidget {
                               controller: controller,
                               onChanged: (_) => onChanged(),
                               semanticLabel: 'P2P encrypted chat message',
-                              hintText: 'Nhap tin nhan...',
+                              hintText: 'Nhập tin nhắn...',
                               textStyle: AppTextStyles.body.copyWith(
                                 color: AppColors.text1,
                               ),

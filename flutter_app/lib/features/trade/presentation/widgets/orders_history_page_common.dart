@@ -71,7 +71,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return VitCard(
       padding: VitDensity.compact.cardPadding,
       child: Column(
         children: [
@@ -85,8 +85,17 @@ class _EmptyState extends StatelessWidget {
             activeTab == 'open'
                 ? 'Không có lệnh đang mở'
                 : 'Chưa có lịch sử giao dịch',
+            textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
+          if (activeTab == 'open') ...[
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              'Giá thị trường có thể thay đổi trước khi lệnh khớp.',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
         ],
       ),
     );

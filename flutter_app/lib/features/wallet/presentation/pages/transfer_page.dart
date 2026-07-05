@@ -16,7 +16,6 @@ import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 
 const _transferPrimary = AppColors.primary;
-const _transferGreen = AppColors.buy;
 const _transferNativeBottomClearance = 88.0;
 const _transferVisualBottomClearance = 112.0;
 
@@ -85,12 +84,6 @@ class _TransferPageState extends ConsumerState<TransferPage> {
       onBack: () => context.go(AppRoutePaths.wallet),
       children: [
         if (_showSuccess) const TransferSuccessBanner(),
-        const VitSectionHeader(
-          title: 'Lu\u1ed3ng chuy\u1ec3n',
-          icon: Icons.swap_vert_rounded,
-          iconColor: _transferPrimary,
-          accentColor: _transferPrimary,
-        ),
         TransferDirectionCard(
           fromKey: TransferPage.fromWalletKey,
           toKey: TransferPage.toWalletKey,
@@ -112,12 +105,6 @@ class _TransferPageState extends ConsumerState<TransferPage> {
             onSelected: (id) => setState(() => _toWalletId = id),
           ),
         ),
-        const VitSectionHeader(
-          title: 'T\u00e0i s\u1ea3n & s\u1ed1 l\u01b0\u1ee3ng',
-          icon: Icons.account_balance_wallet_outlined,
-          iconColor: _transferPrimary,
-          accentColor: _transferPrimary,
-        ),
         TransferAmountCard(
           controller: _amountController,
           asset: asset,
@@ -130,21 +117,15 @@ class _TransferPageState extends ConsumerState<TransferPage> {
           },
         ),
         if (_amount > 0) TransferAmountEstimate(usdValue: usdValue),
-        const VitSectionHeader(
-          title: 'Xem l\u1ea1i an to\u00e0n',
-          icon: Icons.verified_user_outlined,
-          iconColor: _transferGreen,
-          accentColor: _transferGreen,
-        ),
-        const TransferInfoNotice(),
-        VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Review transfer before confirmation',
-          message:
-              'Check source wallet, destination wallet, amount, fee, and confirmation details before submitting.',
-          contractId:
-              '${fromWallet.name} -> ${toWallet.name} / ${asset.symbol}',
-        ),
+        if (_amount > 0)
+          VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Xem lại trước khi chuyển',
+            message:
+                'Kiểm tra ví nguồn, ví nhận, số lượng, phí và chi tiết xác nhận trước khi gửi.',
+            contractId:
+                '${fromWallet.name} → ${toWallet.name} / ${asset.symbol}',
+          ),
         if (validationMessage != null)
           TransferValidationNotice(message: validationMessage),
         TransferButton(

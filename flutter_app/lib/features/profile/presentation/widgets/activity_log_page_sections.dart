@@ -4,43 +4,32 @@ class _FilterPanel extends StatelessWidget {
   const _FilterPanel({
     required this.filters,
     required this.activeFilter,
-    required this.suspiciousCount,
     required this.onChanged,
   });
 
   final List<ProfileActivityFilter> filters;
   final String activeFilter;
-  final int suspiciousCount;
   final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      borderColor: _activityDivider,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.contentPad,
+      ),
+      child: Row(
         children: [
-          if (suspiciousCount > 0)
-            _SuspiciousBanner(count: suspiciousCount)
-          else
-            const SizedBox(height: AppSpacing.x6),
-          const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              for (final filter in filters) ...[
-                _FilterChip(
-                  filter: filter,
-                  selected: filter.id == activeFilter,
-                  onTap: () => onChanged(filter.id),
-                ),
-                if (filter != filters.last)
-                  const SizedBox(
-                    width: AppSpacing.profileActivityFilterChipGap,
-                  ),
-              ],
-            ],
-          ),
+          for (final filter in filters) ...[
+            _FilterChip(
+              filter: filter,
+              selected: filter.id == activeFilter,
+              onTap: () => onChanged(filter.id),
+            ),
+            if (filter != filters.last)
+              const SizedBox(
+                width: AppSpacing.profileActivityFilterChipGap,
+              ),
+          ],
         ],
       ),
     );

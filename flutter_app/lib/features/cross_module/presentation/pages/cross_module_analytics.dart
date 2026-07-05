@@ -10,11 +10,9 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/cross_module_tabbed_shell.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/cross_module_controller_providers.dart';
 part '../widgets/cross_module_analytics_tabs.dart';
@@ -64,72 +62,12 @@ class _CrossModuleAnalyticsState extends ConsumerState<CrossModuleAnalytics> {
           setState(() => _activeTab = tab);
         },
       ),
-      body: VitPageContent(
-        gap: VitContentGap.tight,
-        children: [
-          if (_activeTab == CrossModuleAnalyticsTab.performance)
-            _PerformanceTab(snapshot: snapshot)
-          else if (_activeTab == CrossModuleAnalyticsTab.metrics)
-            _MetricsTab(snapshot: snapshot)
-          else
-            _ComparisonTab(snapshot: snapshot),
-        ],
-      ),
-    );
-  }
-}
-
-class CrossModuleTabbedPageShell extends StatelessWidget {
-  const CrossModuleTabbedPageShell({
-    super.key,
-    required this.semanticLabel,
-    required this.contentKey,
-    required this.title,
-    required this.onBack,
-    required this.scrollEndClearance,
-    required this.tabs,
-    required this.body,
-  });
-
-  final String semanticLabel;
-  final Key contentKey;
-  final String title;
-  final VoidCallback onBack;
-  final double scrollEndClearance;
-  final Widget tabs;
-  final Widget body;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: semanticLabel,
-      child: Material(
-        color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: title,
-            showBack: true,
-            onBack: onBack,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              tabs,
-              Expanded(
-                child: SingleChildScrollView(
-                  key: contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.crossModuleScrollPadding(
-                    scrollEndClearance,
-                  ),
-                  child: body,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      contentGap: VitContentGap.tight,
+      body: _activeTab == CrossModuleAnalyticsTab.performance
+          ? _PerformanceTab(snapshot: snapshot)
+          : _activeTab == CrossModuleAnalyticsTab.metrics
+          ? _MetricsTab(snapshot: snapshot)
+          : _ComparisonTab(snapshot: snapshot),
     );
   }
 }

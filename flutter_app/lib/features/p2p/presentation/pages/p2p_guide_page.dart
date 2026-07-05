@@ -111,6 +111,12 @@ class _P2PGuidePageState extends ConsumerState<P2PGuidePage> {
                             });
                           },
                         ),
+                        Text(
+                          snapshot.contractNotes,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
                       ],
                     ),
                   ),

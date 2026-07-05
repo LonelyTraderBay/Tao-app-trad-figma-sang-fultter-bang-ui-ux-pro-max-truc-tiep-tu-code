@@ -36,6 +36,7 @@ void main() {
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');
     expect(snapshot.overview.currentValueVnd, 3027250000);
     expect(snapshot.overview.totalPlans, 3);
+    expect(snapshot.screenState, DcaScreenState.success);
     expect(snapshot.tools.map((tool) => tool.route), [
       AppRoutePaths.dcaPortfolioOptimizer,
       AppRoutePaths.dcaDynamicAmount,
@@ -49,6 +50,7 @@ void main() {
         DcaScreenState.empty,
         DcaScreenState.error,
         DcaScreenState.offline,
+        DcaScreenState.success,
       ]),
     );
   });

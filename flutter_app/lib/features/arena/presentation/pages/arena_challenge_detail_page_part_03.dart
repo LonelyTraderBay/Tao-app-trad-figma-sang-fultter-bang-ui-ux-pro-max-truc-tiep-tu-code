@@ -337,52 +337,6 @@ class _InlineAction extends StatelessWidget {
   }
 }
 
-class _StatColumn extends StatelessWidget {
-  const _StatColumn({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: AppTextStyles.sectionTitle.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.heavy,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
-        ),
-        const SizedBox(height: _challengeTinyGap),
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
-      ],
-    );
-  }
-}
-
-class _LiveDot extends StatelessWidget {
-  const _LiveDot();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: _challengeLiveDot,
-      height: _challengeLiveDot,
-      child: const Material(color: AppColors.buy, shape: CircleBorder()),
-    );
-  }
-}
-
 class _SmallIcon extends StatelessWidget {
   const _SmallIcon({required this.icon, required this.color});
 

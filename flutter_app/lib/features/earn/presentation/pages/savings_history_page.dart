@@ -4,10 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -77,12 +79,7 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      VitCard(
-                        variant: VitCardVariant.standard,
-                        radius: VitCardRadius.standard,
-                        padding: AppSpacing.zeroInsets,
-                        child: _SummaryPills(snapshot: snapshot),
-                      ),
+                      _SummaryPills(snapshot: snapshot),
                       _SearchField(placeholder: snapshot.searchPlaceholder),
                       _TypeFilterRow(
                         active: _typeFilter,
@@ -117,6 +114,10 @@ class _SavingsHistoryPageState extends ConsumerState<SavingsHistoryPage> {
                             ),
                           ),
                       ],
+                      const EarnDisclaimerBanner(
+                        text:
+                            'Lãi suất và giá trị giao dịch mang tính tham khảo; APY có thể thay đổi theo thời gian.',
+                      ),
                     ],
                   ),
                 ),

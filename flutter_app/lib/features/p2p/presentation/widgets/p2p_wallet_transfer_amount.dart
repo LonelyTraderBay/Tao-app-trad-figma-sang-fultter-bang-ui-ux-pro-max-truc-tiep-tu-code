@@ -21,13 +21,14 @@ class _AmountInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: Text(
-                'Số tiền',
-                style: AppTextStyles.caption.copyWith(
-                  fontWeight: AppTextStyles.bold,
-                ),
+            const Expanded(
+              child: VitSectionHeader(
+                title: 'Số tiền',
+                icon: Icons.payments_outlined,
+                accentColor: AppModuleAccents.p2p,
+                density: VitDensity.compact,
               ),
             ),
             VitChoicePill(
@@ -63,145 +64,7 @@ class _AmountInput extends StatelessWidget {
           ),
           onChanged: (_) => onChanged(),
         ),
-        if (insufficient) ...[
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            'Số dư không đủ',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.sell,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
       ],
-    );
-  }
-}
-
-class _QuickPercentRow extends StatelessWidget {
-  const _QuickPercentRow({required this.onPercent});
-
-  final ValueChanged<int> onPercent;
-
-  @override
-  Widget build(BuildContext context) {
-    const values = [25, 50, 75, 100];
-    return Row(
-      children: [
-        for (var index = 0; index < values.length; index++) ...[
-          Expanded(
-            child: VitCtaButton(
-              key: P2PWalletTransferPage.percentKey(values[index]),
-              onPressed: () => onPercent(values[index]),
-              height: AppSpacing.buttonCompact,
-              variant: VitCtaButtonVariant.ghost,
-              padding: AppSpacing.p2pWalletTransferPercentPadding,
-              child: Text(
-                '${values[index]}%',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ),
-          if (index != values.length - 1) const SizedBox(width: AppSpacing.x2),
-        ],
-      ],
-    );
-  }
-}
-
-class _FeeNotice extends StatelessWidget {
-  const _FeeNotice();
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      key: P2PWalletTransferPage.feeKey,
-      color: AppColors.buy.withValues(alpha: .10),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.lgRadius,
-        side: BorderSide(color: AppColors.buy.withValues(alpha: .30)),
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pWalletCompactCardPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.bolt_rounded,
-              color: AppColors.buy,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Miễn phí & Tức thì',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.buy,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    'Chuyển tiền nội bộ hoàn toàn miễn phí và được xử lý ngay lập tức.',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      height: AppSpacing.p2pWalletTransferNoticeLineHeight,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _EscrowNotice extends StatelessWidget {
-  const _EscrowNotice({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      key: P2PWalletTransferPage.escrowNoteKey,
-      color: AppModuleAccents.p2p.withValues(alpha: .10),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.lgRadius,
-        side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .32)),
-      ),
-      child: Padding(
-        padding: AppSpacing.p2pWalletCompactCardPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.info_outline_rounded,
-              color: AppModuleAccents.p2p,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.p2pWalletTransferNoticeLineHeight,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

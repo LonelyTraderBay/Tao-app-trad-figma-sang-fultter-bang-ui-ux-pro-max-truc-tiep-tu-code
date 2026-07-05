@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -51,6 +53,17 @@ void main() {
     );
   });
 
+  test('SC-171 keeps the Home-standard page foundation contract', () {
+    final pageSource = File(
+      'lib/features/dca/presentation/pages/dca_rebalance_dashboard_page.dart',
+    ).readAsStringSync();
+
+    expect(pageSource, contains('VitInsetScrollView'));
+    expect(pageSource, contains('VitContentPadding.compact'));
+    expect(pageSource, contains('VitDensity.compact'));
+    expect(pageSource, isNot(contains('SingleChildScrollView')));
+  });
+
   testWidgets('SC-171 renders Flutter missing config state', (tester) async {
     await pumpRebalanceDashboard(tester);
 
@@ -59,6 +72,17 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.byKey(DCARebalanceDashboard.missingConfigKey), findsOneWidget);
     expect(find.text('Configuration not found'), findsOneWidget);
+    expect(find.text('Thiết lập cân bằng'), findsOneWidget);
+    expect(find.byKey(DCARebalanceDashboard.configureKey), findsOneWidget);
+  });
+
+  testWidgets('SC-171 configure CTA opens rebalance config edge', (tester) async {
+    await pumpRebalanceDashboard(tester);
+
+    await tester.tap(find.byKey(DCARebalanceDashboard.configureKey));
+    await tester.pumpAndSettle();
+    expect(find.byType(DCARebalanceConfig), findsOneWidget);
+    expect(find.text('Auto-Rebalance'), findsOneWidget);
   });
 
   testWidgets('SC-171 edit and history edges resolve to real pages', (

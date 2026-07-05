@@ -136,7 +136,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ActiveCopiesPage), findsNothing);
-    expect(find.text('Provider Not Found'), findsOneWidget);
+    expect(find.text('Không tìm thấy provider'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();

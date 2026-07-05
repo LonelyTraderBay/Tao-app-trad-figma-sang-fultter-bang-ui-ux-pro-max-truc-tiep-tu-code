@@ -171,33 +171,6 @@ class _DetailLine extends StatelessWidget {
   }
 }
 
-class _StatusBadge extends StatelessWidget {
-  const _StatusBadge({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .12),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadInlinePillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 final class _DetailRow {
   const _DetailRow(this.label, this.value, {this.color});
 
@@ -251,9 +224,18 @@ String _vestingLabel(LaunchpadVestingEntryStatus status) {
 }
 
 String _unlockStateText(String nextUnlockDate) {
-  final parts = nextUnlockDate.split(' ');
-  if (parts.isEmpty) return 'Đã kết thúc';
-  return 'Đã kết thúc';
+  final trimmed = nextUnlockDate.trim();
+  if (trimmed.isEmpty) return 'Chưa có lịch mở khóa';
+  return trimmed;
+}
+
+VitStatusPillStatus _vestingPillStatus(LaunchpadVestingEntryStatus status) {
+  return switch (status) {
+    LaunchpadVestingEntryStatus.claimed => VitStatusPillStatus.success,
+    LaunchpadVestingEntryStatus.claimable => VitStatusPillStatus.info,
+    LaunchpadVestingEntryStatus.unlocking => VitStatusPillStatus.warning,
+    LaunchpadVestingEntryStatus.locked => VitStatusPillStatus.neutral,
+  };
 }
 
 String _truncateAddress(String value) {

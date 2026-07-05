@@ -5,7 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_flow_map_page.dart';
-import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points_page.dart';
+import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hub_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
@@ -130,6 +130,6 @@ void main() {
     );
     await tester.tap(find.byKey(ArenaFlowMapPage.nodeKey('ArenaPointsPage')));
     await tester.pumpAndSettle();
-    expect(find.byType(ArenaPointsPage), findsOneWidget);
+    expect(find.byType(RewardsHubPage), findsOneWidget);
   });
 }

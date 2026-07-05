@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -50,6 +51,9 @@ class LaunchpadContractPage extends ConsumerWidget {
           semanticLabel: 'SC-300 LaunchpadContractPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
+            subtitle: snapshot.project == null
+                ? null
+                : 'Xem trước contract · Xác nhận trước khi ký',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -57,12 +61,13 @@ class LaunchpadContractPage extends ConsumerWidget {
             key: contentKey,
             physics: const ClampingScrollPhysics(),
             child: VitPageContent(
-              padding: VitContentPadding.defaultPadding,
+              padding: VitContentPadding.compact,
+              gap: VitContentGap.tight,
               children: [
                 if (snapshot.project == null)
                   const _ContractProjectNotFound()
                 else
-                  _ContractProjectSummary(snapshot: snapshot),
+                  _ContractParticipationFlow(snapshot: snapshot),
               ],
             ),
           ),
@@ -97,83 +102,333 @@ class _ContractProjectNotFound extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            'Contract chỉ khả dụng khi dự án IDO hợp lệ. Quay về Launchpad để chọn dự án.',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+          ),
         ],
       ),
     );
   }
 }
 
-class _ContractProjectSummary extends StatelessWidget {
-  const _ContractProjectSummary({required this.snapshot});
+class _ContractParticipationFlow extends StatelessWidget {
+  const _ContractParticipationFlow({required this.snapshot});
 
   final LaunchpadContractSnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
     final project = snapshot.project!;
-    return VitCard(
-      radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: AppSpacing.x7,
-                height: AppSpacing.x7,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: project.accent.withValues(alpha: .12),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      project.logo,
-                      style: AppTextStyles.caption.copyWith(
-                        color: project.accent,
-                        fontWeight: AppTextStyles.extraBold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x4),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${project.name} Contract',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.baseMedium.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    Text(
-                      '${snapshot.functions.length} functions · ${snapshot.networks.length} networks',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+    final writeFunctions = snapshot.functions
+        .where((fn) => fn.type == LaunchpadContractFunctionType.write)
+        .take(3)
+        .toList();
+    final previewSimulation = snapshot.simulations.isNotEmpty
+        ? snapshot.simulations.first
+        : null;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _ContractProjectHero(project: project, snapshot: snapshot),
+        const SizedBox(height: AppSpacing.x4),
+        _ContractNetworksSection(networks: snapshot.networks),
+        const SizedBox(height: AppSpacing.x4),
+        _ContractFunctionsSection(functions: writeFunctions),
+        if (previewSimulation != null) ...[
           const SizedBox(height: AppSpacing.x4),
-          VitCtaButton(
-            variant: VitCtaButtonVariant.secondary,
-            onPressed: () => context.go(snapshot.abiDiffRoute),
-            leading: const Icon(Icons.difference_outlined),
-            child: const Text('ABI Diff'),
+          _ContractSimulationCard(simulation: previewSimulation),
+        ],
+        const SizedBox(height: AppSpacing.x4),
+        VitCtaButton(
+          variant: VitCtaButtonVariant.secondary,
+          onPressed: () => context.go(snapshot.abiDiffRoute),
+          leading: const Icon(Icons.difference_outlined),
+          child: const Text('ABI Diff'),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        const _ContractRiskDisclosure(),
+      ],
+    );
+  }
+}
+
+class _ContractProjectHero extends StatelessWidget {
+  const _ContractProjectHero({required this.project, required this.snapshot});
+
+  final LaunchpadProjectDraft project;
+  final LaunchpadContractSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
+      borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
+      padding: AppSpacing.launchpadPaddingX5,
+      child: Row(
+        children: [
+          SizedBox(
+            width: AppSpacing.x7,
+            height: AppSpacing.x7,
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: project.accent.withValues(alpha: .12),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.smRadius,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  project.logo,
+                  style: AppTextStyles.caption.copyWith(
+                    color: project.accent,
+                    fontWeight: AppTextStyles.extraBold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${project.name} Contract',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.baseMedium.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                Text(
+                  '${snapshot.functions.length} functions · ${snapshot.networks.length} networks',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+class _ContractNetworksSection extends StatelessWidget {
+  const _ContractNetworksSection({required this.networks});
+
+  final List<LaunchpadBridgeNetworkDraft> networks;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.large,
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Mạng hỗ trợ',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Wrap(
+            spacing: AppSpacing.x2,
+            runSpacing: AppSpacing.x2,
+            children: [
+              for (final network in networks)
+                VitAccentPill(
+                  label: network.symbol,
+                  accentColor: network.accent,
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ContractFunctionsSection extends StatelessWidget {
+  const _ContractFunctionsSection({required this.functions});
+
+  final List<LaunchpadContractFunctionDraft> functions;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      radius: VitCardRadius.large,
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Hành động chính',
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.text2,
+              fontWeight: AppTextStyles.bold,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          for (final fn in functions) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        fn.name,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      Text(
+                        fn.description,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                      if (fn.estimatedGas != null)
+                        Text(
+                          'Gas ~${fn.estimatedGas}',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x3),
+                VitStatusPill(
+                  label: _riskLabel(fn.riskLevel),
+                  status: _riskStatus(fn.riskLevel),
+                  size: VitStatusPillSize.sm,
+                ),
+              ],
+            ),
+            if (fn != functions.last) const SizedBox(height: AppSpacing.x3),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _ContractSimulationCard extends StatelessWidget {
+  const _ContractSimulationCard({required this.simulation});
+
+  final LaunchpadTxSimulationDraft simulation;
+
+  @override
+  Widget build(BuildContext context) {
+    final status = switch (simulation.status) {
+      LaunchpadTxSimulationStatus.success => VitStatusPillStatus.success,
+      LaunchpadTxSimulationStatus.warning => VitStatusPillStatus.warning,
+      LaunchpadTxSimulationStatus.failed => VitStatusPillStatus.error,
+      LaunchpadTxSimulationStatus.simulating => VitStatusPillStatus.neutral,
+    };
+
+    return VitCard(
+      radius: VitCardRadius.large,
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Mô phỏng: ${simulation.functionName}',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+              ),
+              VitStatusPill(
+                label: simulation.chain,
+                status: status,
+                size: VitStatusPillSize.sm,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            simulation.expectedOutput,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            'Chi phí ${simulation.totalCost} · Gas ${simulation.gasEstimate}',
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          if (simulation.warnings.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.x3),
+            for (final warning in simulation.warnings)
+              Text(
+                warning,
+                style: AppTextStyles.micro.copyWith(color: AppColors.warn),
+              ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _ContractRiskDisclosure extends StatelessWidget {
+  const _ContractRiskDisclosure();
+
+  @override
+  Widget build(BuildContext context) {
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: AppColors.warn15,
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.shield_outlined,
+            color: AppColors.warn,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              'Mọi giao dịch contract cần xem trước phí, gas và rủi ro slashing/refund trước khi xác nhận.',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+VitStatusPillStatus _riskStatus(LaunchpadContractRiskLevel level) {
+  return switch (level) {
+    LaunchpadContractRiskLevel.low => VitStatusPillStatus.success,
+    LaunchpadContractRiskLevel.medium => VitStatusPillStatus.warning,
+    LaunchpadContractRiskLevel.high => VitStatusPillStatus.error,
+  };
+}
+
+String _riskLabel(LaunchpadContractRiskLevel level) {
+  return switch (level) {
+    LaunchpadContractRiskLevel.low => 'Thấp',
+    LaunchpadContractRiskLevel.medium => 'Trung bình',
+    LaunchpadContractRiskLevel.high => 'Cao',
+  };
 }

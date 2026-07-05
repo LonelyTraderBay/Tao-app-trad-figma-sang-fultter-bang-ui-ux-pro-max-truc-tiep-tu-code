@@ -86,6 +86,7 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
           children: [
             VitHeader(
               title: 'Tax Reporting',
+              subtitle: 'Báo cáo thuế bot giao dịch',
               showBack: true,
               onBack: () => context.go(AppRoutePaths.tradeBots),
             ),
@@ -149,32 +150,12 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
                       title: 'Tax notes',
                       child: _TaxNotesCard(notes: snapshot.taxNotes),
                     ),
-                    VitTradeSection(
-                      title: 'Đánh giá rủi ro',
-                      child: const VitCard(
-                        variant: VitCardVariant.inner,
-                        density: VitDensity.compact,
-                        child: VitPageContent(
-                          padding: VitContentPadding.none,
-                          fullBleed: true,
-                          density: VitDensity.compact,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              density: VitDensity.compact,
-                              title: 'Tax export review required',
-                              message:
-                                  'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
-                              contractId: 'bot-tax-reporting-review',
-                            ),
-                            VitStatusPill(
-                              label: 'Report preview before export',
-                              status: VitStatusPillStatus.info,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
+                    const VitBotRiskReviewFooter(
+                      title: 'Tax export review required',
+                      message:
+                          'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
+                      contractId: 'bot-tax-reporting-review',
+                      statusLabel: 'Report preview before export',
                     ),
                     ],
                   ),

@@ -90,11 +90,12 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                             ? VitHighRiskUiState.submitting
                             : VitHighRiskUiState.riskReview,
                         title: _submitting
-                            ? 'Submitting identity review'
-                            : 'Review identity verification',
+                            ? '\u0110ang g\u1EEDi h\u1ED3 s\u01A1 x\u00E1c minh'
+                            : 'R\u00E0 so\u00E1t x\u00E1c minh danh t\u00EDnh',
                         message:
                             'Ki\u1EC3m tra c\u1EA5p KYC, gi\u1EDBi h\u1EA1n giao d\u1ECBch v\u00E0 t\u00EDnh n\u0103ng m\u1EDF kho\u00E1 tr\u01B0\u1EDBc khi n\u1ED9p.',
-                        contractId: 'Current level: ${snapshot.currentLevel}',
+                        contractId:
+                            'C\u1EA5p hi\u1EC7n t\u1EA1i: ${snapshot.currentLevel}',
                         density: VitDensity.compact,
                       ),
                       if (snapshot.levels.isEmpty)

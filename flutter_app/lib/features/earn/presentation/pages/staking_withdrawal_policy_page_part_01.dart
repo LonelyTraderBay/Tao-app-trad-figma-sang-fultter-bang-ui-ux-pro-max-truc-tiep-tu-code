@@ -11,11 +11,11 @@ class _StakingWithdrawalPolicyPageState
         .getPolicy();
     final activeTab = _activeTab ?? snapshot.defaultTab;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navClearance = mode.usesVisualQaFrame
-        ? _stakingWithdrawalVisualNavClearance
-        : _stakingWithdrawalNativeNavClearance;
-    final scrollEndPadding =
-        navClearance + MediaQuery.paddingOf(context).bottom;
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -23,8 +23,10 @@ class _StakingWithdrawalPolicyPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Thời gian rút và phí phạt được liệt kê rõ',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -34,12 +36,7 @@ class _StakingWithdrawalPolicyPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    scrollEndPadding,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
@@ -105,11 +102,11 @@ class _InfoBanner extends StatelessWidget {
         minHeight: _stakingWithdrawalInfoMinHeight,
       ),
       child: Material(
-        color: AppColors.primary08,
+        color: AppModuleAccents.earn.withValues(alpha: 0.08),
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.cardLargeRadius,
-          side: const BorderSide(
-            color: AppColors.primary20,
+          side: BorderSide(
+            color: AppModuleAccents.earn.withValues(alpha: 0.2),
             width: _stakingWithdrawalBorderWidth,
           ),
         ),
@@ -118,9 +115,9 @@ class _InfoBanner extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(
+              Icon(
                 Icons.info_outline_rounded,
-                color: AppColors.primary,
+                color: AppModuleAccents.earn,
                 size: _stakingWithdrawalInfoIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -167,28 +164,18 @@ class _PolicyTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: _stakingWithdrawalTabMinHeight,
-      ),
-      child: Material(
-        color: AppColors.surface2,
-        child: Padding(
-          padding: AppSpacing.earnHorizontalPaddingX4,
-          child: Align(
-            alignment: Alignment.center,
-            child: VitTabBar(
-              variant: VitTabBarVariant.underline,
-              activeKey: active,
-              onChanged: onChanged,
-              tabs: [
-                for (final tab in tabs)
-                  VitTabItem(key: tab.id, label: tab.label, icon: null),
-              ],
-            ),
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: StakingWithdrawalPolicyPage.tabKey(tab.id),
           ),
-        ),
-      ),
+      ],
     );
   }
 }

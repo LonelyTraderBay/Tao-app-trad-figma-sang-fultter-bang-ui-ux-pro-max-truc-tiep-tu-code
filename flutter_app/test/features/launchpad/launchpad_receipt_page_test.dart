@@ -124,7 +124,7 @@ void main() {
 
     expect(find.byType(LaunchpadReceiptPage), findsOneWidget);
     expect(find.byType(VitHighRiskStatePanel), findsOneWidget);
-    expect(find.text('Receipt reviewed'), findsOneWidget);
+    expect(find.text('Đã rà soát biên lai'), findsOneWidget);
     final panel = tester.widget<VitHighRiskStatePanel>(
       find.byType(VitHighRiskStatePanel),
     );

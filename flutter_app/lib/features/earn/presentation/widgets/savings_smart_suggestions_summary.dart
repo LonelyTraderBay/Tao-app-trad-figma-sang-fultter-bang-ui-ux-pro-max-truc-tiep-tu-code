@@ -65,7 +65,7 @@ class SavingsSmartSummary extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'Tiềm năng APY tăng',
+                    'Tiềm năng APY tăng (ước tính)',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                   Text(

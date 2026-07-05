@@ -41,9 +41,6 @@ class _ApiKeyCard extends StatelessWidget {
                 icon: copiedId == '${apiKey.id}_key'
                     ? Icons.check_circle_outline_rounded
                     : Icons.copy_rounded,
-                color: copiedId == '${apiKey.id}_key'
-                    ? _apiGreen
-                    : AppColors.text2,
                 onTap: () => onCopy('${apiKey.id}_key', apiKey.key),
               ),
             ),
@@ -59,11 +56,13 @@ class _ApiKeyCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _IconTap(
-                    key: ApiManagementPage.revealKey(apiKey.id),
+                    buttonKey: ApiManagementPage.revealKey(apiKey.id),
                     icon: showSecret
                         ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
-                    color: AppColors.text2,
+                    tooltip: showSecret
+                        ? '\u1EA8n secret'
+                        : 'Hi\u1EC7n secret',
                     onTap: onReveal,
                   ),
                   if (showSecret) ...[
@@ -72,10 +71,8 @@ class _ApiKeyCard extends StatelessWidget {
                       icon: copiedId == '${apiKey.id}_secret'
                           ? Icons.check_circle_outline_rounded
                           : Icons.copy_rounded,
-                      color: copiedId == '${apiKey.id}_secret'
-                          ? _apiGreen
-                          : AppColors.text2,
-                      onTap: () => onCopy('${apiKey.id}_secret', apiKey.secret),
+                      onTap: () =>
+                          onCopy('${apiKey.id}_secret', apiKey.secret),
                     ),
                   ],
                 ],
@@ -115,16 +112,18 @@ class _ApiKeyHeader extends StatelessWidget {
         SizedBox(
           width: AppSpacing.profileApiIconBox,
           height: AppSpacing.profileApiIconBox,
-          child: Material(
-            color: active
-                ? _apiPrimary.withValues(alpha: .15)
-                : _apiRed.withValues(alpha: .1),
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadii.cardRadius,
-              side: BorderSide(
-                color: active
-                    ? _apiPrimary.withValues(alpha: .22)
-                    : _apiRed.withValues(alpha: .22),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: active
+                  ? _apiPrimary.withValues(alpha: .15)
+                  : _apiRed.withValues(alpha: .1),
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadii.cardRadius,
+                side: BorderSide(
+                  color: active
+                      ? _apiPrimary.withValues(alpha: .22)
+                      : _apiRed.withValues(alpha: .22),
+                ),
               ),
             ),
             child: Icon(

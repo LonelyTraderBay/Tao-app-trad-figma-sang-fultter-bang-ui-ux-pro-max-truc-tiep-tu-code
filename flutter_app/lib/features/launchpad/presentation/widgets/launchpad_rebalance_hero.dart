@@ -16,22 +16,24 @@ class LaunchpadRebalanceHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
+      borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.pie_chart_outline_rounded,
-                color: AppColors.portfolioTextMuted,
+                color: AppModuleAccents.launchpad,
                 size: AppSpacing.launchpadIconLg,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
-                'Portfolio Value',
+                'Giá trị danh mục',
                 style: AppTextStyles.caption.copyWith(
-                  color: AppColors.portfolioTextDim,
+                  color: AppColors.text3,
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
@@ -46,9 +48,9 @@ class LaunchpadRebalanceHero extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x1),
           Text(
-            '$assetCount assets - Deviation: ${totalDeviation.toStringAsFixed(1)}%',
+            '$assetCount tài sản · Lệch: ${totalDeviation.toStringAsFixed(1)}%',
             style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
+              color: AppColors.text3,
             ),
           ),
         ],

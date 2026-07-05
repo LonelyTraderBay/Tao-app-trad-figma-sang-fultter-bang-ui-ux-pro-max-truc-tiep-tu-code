@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -90,33 +91,24 @@ class _P2PDisputeEvidencePageState
                     padding: AppSpacing.p2pDisputeEvidenceScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _HeroCard(
                           title: snapshot.title,
                           subtitle: snapshot.subtitle,
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         const _MockActionNote(
                           text:
                               'Mock/fail-closed: upload chỉ cập nhật trạng thái cục bộ trong dev smoke; chưa gửi file lên backend.',
                         ),
-                        const SizedBox(height: AppSpacing.x3),
-                        for (
-                          var index = 0;
-                          index < documents.length;
-                          index++
-                        ) ...[
+                        for (final document in documents)
                           _EvidenceRow(
-                            document: documents[index],
-                            onUpload: () =>
-                                _markUploaded(documents[index].source.id),
+                            document: document,
+                            onUpload: () => _markUploaded(document.source.id),
                           ),
-                          if (index != documents.length - 1)
-                            const SizedBox(height: AppSpacing.x2),
-                        ],
-                        const SizedBox(height: AppSpacing.x3),
                         VitCtaButton(
                           key: P2PDisputeEvidencePage.submitKey,
                           onPressed: controller.canSubmit(_uploaded)
@@ -134,17 +126,12 @@ class _P2PDisputeEvidencePageState
                               : null,
                           child: const Text('Gửi bằng chứng'),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pDisputeCompactCardPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Evidence submission review',
-                            message:
-                                'Required documents, uploaded state, fail-closed backend note, dispute target and receipt next step are reviewed before evidence submission.',
-                            contractId: 'p2p-dispute-evidence-review',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Evidence submission review',
+                          message:
+                              'Required documents, uploaded state, fail-closed backend note, dispute target and receipt next step are reviewed before evidence submission.',
+                          contractId: 'p2p-dispute-evidence-review',
                         ),
                       ],
                     ),
@@ -262,7 +249,7 @@ class _EvidenceRow extends StatelessWidget {
                 if (document.uploaded) ...[
                   const SizedBox(height: AppSpacing.x1),
                   Text(
-                    'Uploaded',
+                    'Đã tải lên',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.buy,
                       fontWeight: AppTextStyles.bold,

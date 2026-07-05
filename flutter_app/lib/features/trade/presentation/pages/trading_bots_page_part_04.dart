@@ -90,8 +90,3 @@ String _formatSignedMoney(double value) {
   final sign = value >= 0 ? '+' : '-';
   return '$sign\$${value.abs().toStringAsFixed(2)}';
 }
-
-String _formatSignedPct(double value) {
-  final sign = value >= 0 ? '+' : '';
-  return '$sign${value.toStringAsFixed(2)}%';
-}

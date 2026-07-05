@@ -71,10 +71,10 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Multi-Asset DCA'), findsOneWidget);
-    expect(find.text('Cai dat'), findsOneWidget);
+    expect(find.text('Cài đặt'), findsOneWidget);
     expect(find.text('Total Budget per Period'), findsOneWidget);
     expect(find.byKey(DCAMultiAssetPage.budgetFieldKey), findsOneWidget);
-    expect(find.text('Phan bo tai san'), findsOneWidget);
+    expect(find.text('Phân bổ tài sản'), findsOneWidget);
     expect(find.byKey(DCAMultiAssetPage.assetKey('BTC')), findsOneWidget);
     expect(find.byKey(DCAMultiAssetPage.addAssetKey), findsOneWidget);
     expect(find.text('Auto Rebalancing'), findsOneWidget);
@@ -115,7 +115,7 @@ void main() {
     await tester.tap(find.byKey(DCAMultiAssetPage.tabKey('assets')));
     await tester.pumpAndSettle();
     expect(find.text('Portfolio Overview'), findsOneWidget);
-    expect(find.text('Chi tiet tai san'), findsOneWidget);
+    expect(find.text('Chi tiết tài sản'), findsOneWidget);
     expect(find.text(r'+$1200'), findsOneWidget);
 
     await tester.tap(find.byKey(DCAMultiAssetPage.tabKey('performance')));

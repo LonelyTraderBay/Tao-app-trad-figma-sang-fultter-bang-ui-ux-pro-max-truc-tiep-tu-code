@@ -61,19 +61,19 @@ class _PortfolioRiskAnalysisPageState
       onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
       children: [
         VitTradeSection(
-          title: 'Summary',
+          title: 'Tóm tắt',
           child: _RiskSummaryGrid(snapshot: snapshot),
         ),
         VitTradeSection(
-          title: 'Analysis',
+          title: 'Phân tích',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
-                title: 'Portfolio risk preview',
+                title: 'Xem trước rủi ro danh mục',
                 message:
-                    'Review exposure, VaR, correlation, stress scenarios, limits, and next-step rebalancing before changing copy allocations.',
+                    'Xem lại mức phơi nhiễm, VaR, tương quan, kịch bản stress, giới hạn và bước tái cân bằng trước khi thay đổi phân bổ copy.',
                 contractId: 'SC-078 risk analysis review',
                 density: VitDensity.compact,
               ),
@@ -87,7 +87,7 @@ class _PortfolioRiskAnalysisPageState
                 _ExposureTab(snapshot: snapshot)
               else if (_activeTab == 'correlation')
                 const _PlaceholderPanel(
-                  title: 'Provider Correlation Matrix',
+                  title: 'Ma trận tương quan provider',
                   description:
                       'Correlation >0.8 nghĩa là 2 providers có xu hướng giống nhau.',
                 )
@@ -99,20 +99,20 @@ class _PortfolioRiskAnalysisPageState
           ),
         ),
         VitTradeComplianceSection(
-          title: 'Risk review',
+          title: 'Đánh giá rủi ro',
           statusPill: VitStatusPill(
-            label: '${snapshot.riskAlerts.length} alerts',
+            label: '${snapshot.riskAlerts.length} cảnh báo',
             status: VitStatusPillStatus.warning,
             size: VitStatusPillSize.sm,
           ),
           items: const [
             VitTradeComplianceItem(
-              label: 'Framework',
-              value: 'Copy portfolio risk review',
+              label: 'Khung',
+              value: 'Đánh giá rủi ro danh mục copy',
             ),
             VitTradeComplianceItem(
-              label: 'Action',
-              value: 'Review before changing allocations',
+              label: 'Hành động',
+              value: 'Xem lại trước khi thay đổi phân bổ',
             ),
           ],
         ),

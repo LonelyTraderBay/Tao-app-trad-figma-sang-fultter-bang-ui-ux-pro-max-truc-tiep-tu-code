@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -51,6 +52,9 @@ class LaunchpadDetailPage extends ConsumerWidget {
           semanticLabel: 'SC-318 LaunchpadDetailPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
+            subtitle: snapshot.project == null
+                ? null
+                : '${_typeLabel(snapshot.project!.type)} · ${snapshot.project!.chain}',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -118,7 +122,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.large,
           padding: AppSpacing.launchpadPaddingX5,
-          borderColor: project.accent.withValues(alpha: .24),
+          borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
           child: Row(
             children: [
               _LaunchpadLogoMark(project: project),
@@ -170,7 +174,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
             Expanded(
               child: VitCardStat(
                 child: _LaunchpadDetailStat(
-                  label: 'Token price',
+                  label: 'Giá token',
                   value: '\$${_formatPrice(project.price)}',
                   meta: project.priceUnit,
                 ),
@@ -180,9 +184,9 @@ class _LaunchpadDetailSummary extends StatelessWidget {
             Expanded(
               child: VitCardStat(
                 child: _LaunchpadDetailStat(
-                  label: 'Raised',
+                  label: 'Đã huy động',
                   value: project.totalRaise,
-                  meta: 'of ${project.hardCap}',
+                  meta: 'trên ${project.hardCap}',
                 ),
               ),
             ),
@@ -241,9 +245,9 @@ class _LaunchpadDetailSummary extends StatelessWidget {
         const SizedBox(height: AppSpacing.x4),
         VitHighRiskStatePanel(
           state: VitHighRiskUiState.riskReview,
-          title: 'Launchpad staking review required',
+          title: 'Cần rà soát staking Launchpad',
           message:
-              'Review allocation, eligibility, lockup terms, fees and project risk before opening the staking flow.',
+              'Xem lại phân bổ, điều kiện tham gia, thời hạn khóa, phí và rủi ro dự án trước khi mở luồng staking.',
           contractId: project.id,
         ),
         const SizedBox(height: AppSpacing.x4),
@@ -251,17 +255,17 @@ class _LaunchpadDetailSummary extends StatelessWidget {
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.large,
           padding: AppSpacing.launchpadPaddingX5,
-          borderColor: project.accent.withValues(alpha: .24),
+          borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Next step',
+                'Bước tiếp theo',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),
               ),
               const SizedBox(height: AppSpacing.x2),
               Text(
-                'Open staking only after reviewing eligibility and lockup terms.',
+                'Chỉ mở staking sau khi đã xem điều kiện và thời hạn khóa.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
                   height: AppSpacing.launchpadLineHeightLong,
@@ -271,7 +275,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
               VitCtaButton(
                 onPressed: () => context.go(snapshot.stakingRoute),
                 leading: const Icon(Icons.rocket_launch_outlined),
-                child: const Text('Mở Launchpad staking'),
+                child: const Text('Mở staking Launchpad'),
               ),
             ],
           ),
@@ -341,8 +345,10 @@ class _LaunchpadDetailStat extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.x1),
-        Text(meta, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
+        if (meta.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.x1),
+          Text(meta, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
+        ],
       ],
     );
   }
@@ -357,7 +363,7 @@ class _LaunchpadDetailFact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      child: _LaunchpadDetailStat(label: label, value: value, meta: 'Required'),
+      child: _LaunchpadDetailStat(label: label, value: value, meta: ''),
     );
   }
 }
@@ -372,15 +378,15 @@ final class _LaunchpadStatusLabel {
 _LaunchpadStatusLabel _statusPill(LaunchpadProjectStatus status) {
   return switch (status) {
     LaunchpadProjectStatus.active => const _LaunchpadStatusLabel(
-      label: 'Active',
+      label: 'Đang diễn ra',
       status: VitStatusPillStatus.success,
     ),
     LaunchpadProjectStatus.upcoming => const _LaunchpadStatusLabel(
-      label: 'Upcoming',
+      label: 'Sắp diễn ra',
       status: VitStatusPillStatus.info,
     ),
     LaunchpadProjectStatus.ended => const _LaunchpadStatusLabel(
-      label: 'Ended',
+      label: 'Đã kết thúc',
       status: VitStatusPillStatus.neutral,
     ),
   };

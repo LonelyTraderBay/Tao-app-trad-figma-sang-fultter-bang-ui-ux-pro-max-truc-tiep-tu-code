@@ -231,7 +231,7 @@ class _TrustMetricRow extends StatelessWidget {
             decoration: ShapeDecoration(
               color: color.withValues(alpha: .14),
               shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.mdRadius,
+                borderRadius: AppRadii.smRadius,
               ),
             ),
             child: Center(
@@ -287,7 +287,7 @@ class _CreatorProfileLink extends StatelessWidget {
             child: DecoratedBox(
               decoration: const ShapeDecoration(
                 color: AppColors.surface2,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
               ),
               child: Center(
                 child: Text(
@@ -336,16 +336,14 @@ class _SafetyLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitModuleHeroCard(
+    return VitCard(
       key: ArenaTrustBreakdownPage.safetyLinkKey,
-      accentColor: AppColors.buy,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.arenaSafety);
       },
       padding: AppSpacing.arenaTrustCardPadding,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
@@ -372,17 +370,10 @@ class _SafetyLink extends StatelessWidget {
                     height: _trustHeroLineRatio,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  'Xem quy tắc an toàn',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.buy,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
               ],
             ),
           ),
+          const Icon(Icons.chevron_right_rounded, color: AppColors.text3),
         ],
       ),
     );

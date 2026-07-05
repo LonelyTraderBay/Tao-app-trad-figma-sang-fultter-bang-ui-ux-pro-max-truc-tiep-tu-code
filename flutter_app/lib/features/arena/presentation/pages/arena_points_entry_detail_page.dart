@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -21,6 +23,7 @@ import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_
 part '../widgets/arena_points_entry_detail_page_sections.dart';
 part '../widgets/arena_points_entry_detail_page_common.dart';
 
+const _arenaAccent = AppModuleAccents.arena;
 const _entryBodyLineRatio = AppSpacing.arenaPointsBodyLineHeight;
 const _entryNoticeLineRatio = AppSpacing.arenaPointsNoticeLineHeight;
 const _entrySectionMarkerExtent =

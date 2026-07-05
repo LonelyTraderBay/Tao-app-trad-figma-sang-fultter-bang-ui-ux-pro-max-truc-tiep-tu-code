@@ -42,28 +42,24 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
         .getBotDrawdownAnalyzer();
     return VitTradeHubScaffold(
       title: 'Drawdown Analyzer',
+      subtitle: 'Phân tích độ sụt giảm vốn bot',
       semanticLabel: 'SC-129 BotDrawdownAnalyzerPage',
       contentKey: BotDrawdownAnalyzerPage.contentKey,
       shellRenderMode: shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Sụt tối đa',
+          primaryValue: '-${snapshot.summary.maxDrawdownPct.toStringAsFixed(1)}%',
+          primaryColor: _drawdownRed,
+          secondaryLabel: 'Ngày sụt',
+          secondaryValue: '${snapshot.summary.drawdownDays}',
+          secondaryColor: _drawdownAmber,
+        ),
         VitTradeSection(
           title: 'Metrics',
           child: _MetricGrid(summary: snapshot.summary),
-        ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.tradeBotCompactCardPadding,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Drawdown review state',
-              message:
-                  'Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.',
-              contractId: 'bot-drawdown-review',
-            ),
-          ),
         ),
         VitTradeSection(
           title: 'Underwater Equity',
@@ -80,6 +76,12 @@ class BotDrawdownAnalyzerPage extends ConsumerWidget {
         VitTradeSection(
           title: 'Analysis',
           child: _AnalysisCard(insights: snapshot.insights),
+        ),
+        const VitBotRiskReviewFooter(
+          title: 'Drawdown review state',
+          message:
+              'Peak-to-trough metrics, duration distribution, event evidence and mitigation next steps are reviewed before strategy changes.',
+          contractId: 'bot-drawdown-review',
         ),
       ],
     );

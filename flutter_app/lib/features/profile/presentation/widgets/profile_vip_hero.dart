@@ -1,5 +1,88 @@
 part of '../pages/vip_page.dart';
 
+class _VipBody extends StatelessWidget {
+  const _VipBody({
+    required this.snapshot,
+    required this.selectedTab,
+    required this.onTabChanged,
+    required this.onTrade,
+  });
+
+  final ProfileVipSnapshot snapshot;
+  final _VipTab selectedTab;
+  final ValueChanged<_VipTab> onTabChanged;
+  final VoidCallback onTrade;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (snapshot.screenState) {
+      ProfileScreenState.loading => const VitSkeletonList(
+        key: VIPPage.loadingKey,
+        rows: 4,
+      ),
+      ProfileScreenState.error => VitErrorState(
+        key: VIPPage.errorKey,
+        title: 'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c ch\u01B0\u01A1ng tr\u00ECnh VIP',
+        message: 'Ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
+        actionLabel: 'Th\u1EED l\u1EA1i',
+        onAction: () => context.go(AppRoutePaths.profileVip),
+      ),
+      ProfileScreenState.empty => const VitEmptyState(
+        key: VIPPage.emptyKey,
+        title: 'Ch\u01B0a c\u00F3 d\u1EEF li\u1EC7u VIP',
+        message:
+            'Th\u00F4ng tin h\u1EA1ng VIP s\u1EBD hi\u1EC3n th\u1ECB sau khi \u0111\u1ED3ng b\u1ED9.',
+        icon: Icons.workspace_premium_outlined,
+      ),
+      ProfileScreenState.offline => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const VitOfflineBanner(
+            key: VIPPage.offlineKey,
+            message: '\u0110ang ngo\u1EA1i tuy\u1EBFn',
+            detail: 'Hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u VIP \u0111\u00E3 l\u01B0u g\u1EA7n nh\u1EA5t.',
+          ),
+          SizedBox(height: VitDensity.compact.pageContentGap),
+          ..._readyChildren(),
+        ],
+      ),
+      _ => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: _readyChildren(),
+      ),
+    };
+  }
+
+  List<Widget> _readyChildren() {
+    return [
+      _VipHero(snapshot: snapshot),
+      _VipTabs(active: selectedTab, onChanged: onTabChanged),
+      AnimatedSwitcher(
+        duration: const Duration(milliseconds: 180),
+        child: _tabContent(),
+      ),
+    ];
+  }
+
+  Widget _tabContent() {
+    return switch (selectedTab) {
+      _VipTab.overview => _OverviewTab(
+        key: const ValueKey('overview'),
+        snapshot: snapshot,
+      ),
+      _VipTab.benefits => _BenefitsTab(
+        key: const ValueKey('benefits'),
+        snapshot: snapshot,
+        onTrade: onTrade,
+      ),
+      _VipTab.history => VipHistoryTab(
+        key: const ValueKey('history'),
+        snapshot: snapshot,
+      ),
+    };
+  }
+}
+
 class _VipHero extends StatelessWidget {
   const _VipHero({required this.snapshot});
 
@@ -117,30 +200,39 @@ class _HeroFeeBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.compact,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.portfolioTextMuted,
-              fontWeight: FontWeight.w700,
-            ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: VitDensity.compact.controlHeight),
+      child: Material(
+        color: AppColors.onAccent.withValues(alpha: .08),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadii.cardRadius,
+          side: BorderSide(color: AppColors.onAccent.withValues(alpha: .08)),
+        ),
+        child: Padding(
+          padding: AppSpacing.profileHeroInfoPadding,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.portfolioTextMuted,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: VitDensity.compact.verticalSpace),
+              Text(
+                value,
+                style: AppTextStyles.sectionTitle.copyWith(
+                  color: _vipSuccess,
+                  fontWeight: AppTextStyles.heavy,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: VitDensity.compact.verticalSpace),
-          Text(
-            value,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: _vipSuccess,
-              fontWeight: AppTextStyles.heavy,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -154,20 +246,27 @@ class _VipTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      density: VitDensity.tool,
-      child: VitTabBar(
-        variant: VitTabBarVariant.pill,
-        activeKey: active.name,
-        onChanged: (key) => onChanged(_VipTab.values.byName(key)),
-        tabs: const [
-          VitTabItem(key: 'overview', label: 'T\u1ED5ng quan'),
-          VitTabItem(key: 'benefits', label: '\u0110\u1EB7c quy\u1EC1n'),
-          VitTabItem(key: 'history', label: 'L\u1ECBch s\u1EED'),
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      activeKey: active.name,
+      onChanged: (key) => onChanged(_VipTab.values.byName(key)),
+      tabs: [
+        VitTabItem(
+          key: 'overview',
+          label: 'T\u1ED5ng quan',
+          widgetKey: VIPPage.tabKey('overview'),
+        ),
+        VitTabItem(
+          key: 'benefits',
+          label: '\u0110\u1EB7c quy\u1EC1n',
+          widgetKey: VIPPage.tabKey('benefits'),
+        ),
+        VitTabItem(
+          key: 'history',
+          label: 'L\u1ECBch s\u1EED',
+          widgetKey: VIPPage.tabKey('history'),
+        ),
+      ],
     );
   }
 }

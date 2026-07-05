@@ -25,6 +25,11 @@ Key withdrawRecentAddressKey(String label) {
   return Key('sc139_withdraw_recent_$label');
 }
 
+String maskWithdrawAddress(String address) {
+  if (address.length <= 12) return address;
+  return '${address.substring(0, 6)}...${address.substring(address.length - 4)}';
+}
+
 String formatWithdrawBalance(double value) {
   return formatWithdrawNumber(value, fractionDigits: 2);
 }

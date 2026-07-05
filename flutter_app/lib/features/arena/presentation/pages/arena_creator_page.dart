@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -75,7 +76,7 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Creator Profile',
+            title: 'Hồ sơ creator',
             subtitle: 'Nhà sáng tạo · Open Arena',
             showBack: true,
             onBack: _close,
@@ -95,6 +96,7 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
+                      density: VitDensity.compact,
                       children: [
                         _CreatorHero(
                           creator: snapshot.creator,
@@ -127,6 +129,7 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
                           snapshot: snapshot,
                           onMode: (id) => _go(AppRoutePaths.arenaMode(id)),
                           onUseMode: () => _go(AppRoutePaths.arenaStudio),
+                          onGuide: () => _go(AppRoutePaths.arenaGuide),
                         ),
                         _PolicyLink(
                           label: snapshot.policyLabel,

@@ -13,8 +13,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api_documentation_examples.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api_documentation_overview.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
@@ -84,8 +84,10 @@ class _StakingApiDocumentationPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Tài liệu API stake — không lời khuyên đầu tư',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),

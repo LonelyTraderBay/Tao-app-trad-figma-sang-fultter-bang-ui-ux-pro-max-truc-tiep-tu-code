@@ -9,8 +9,9 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -66,13 +67,15 @@ class _TransactionHistoryPageState
       child: Material(
         color: _historyBackground,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: 'Lịch sử giao dịch',
-            subtitle: 'Lịch sử · Wallet',
+            subtitle: 'Theo dõi nạp, rút và giao dịch · an toàn',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.wallet),
             actions: [
               VitHeaderActionItem(
+                key: TransactionHistoryPage.exportKey,
                 type: VitHeaderActionType.export,
                 tooltip: 'Xuất lịch sử',
                 onPressed: () => _showExportNotice(transactions.length),
@@ -91,17 +94,9 @@ class _TransactionHistoryPageState
                     density: VitDensity.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      _ExportBar(
+                      _HistorySummaryBar(
                         count: transactions.length,
-                        onExport: () => _showExportNotice(transactions.length),
-                      ),
-                      if (_exportNotice != null)
-                        _ExportNotice(message: _exportNotice!),
-                      const VitSectionHeader(
-                        title: 'Bộ lọc giao dịch',
-                        icon: Icons.tune_rounded,
-                        iconColor: _historyPrimary,
-                        density: VitDensity.compact,
+                        exportNotice: _exportNotice,
                       ),
                       _FilterTabs(
                         filters: snapshot.filters,

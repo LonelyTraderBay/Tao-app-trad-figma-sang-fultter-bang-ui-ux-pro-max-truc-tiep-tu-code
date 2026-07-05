@@ -112,42 +112,19 @@ class _SearchSortRow extends StatelessWidget {
             onChanged: onQueryChanged,
           ),
         ),
-        const SizedBox(width: AppSpacing.x3),
-        Material(
+        const SizedBox(width: AppSpacing.x2),
+        VitChoicePill(
           key: P2PMyOrdersPage.sortKey,
-          color: AppColors.surface2,
-          borderRadius: AppRadii.inputRadius,
-          child: VitCard(
-            onTap: onSort,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
-            padding: AppSpacing.zeroInsets,
-            child: VitCard(
-              height: _p2pMyOrdersSortHeight,
-              variant: VitCardVariant.ghost,
-              radius: VitCardRadius.standard,
-              borderColor: AppColors.borderSolid,
-              padding: AppSpacing.p2pMyOrdersChipPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.sort_rounded,
-                    color: AppColors.text2,
-                    size: AppSpacing.iconSm,
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                  Text(
-                    sort == _OrdersSort.date ? 'Ngày' : 'Số tiền',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          label: sort == _OrdersSort.date ? 'Ngày' : 'Số tiền',
+          selected: true,
+          onTap: onSort,
+          padding: AppSpacing.p2pMyOrdersChipPadding,
+          leading: const Icon(
+            Icons.sort_rounded,
+            color: AppColors.text2,
+            size: AppSpacing.iconSm,
           ),
+          semanticLabel: 'Sắp xếp theo ${sort == _OrdersSort.date ? 'ngày' : 'số tiền'}',
         ),
       ],
     );
@@ -155,10 +132,15 @@ class _SearchSortRow extends StatelessWidget {
 }
 
 class _OrderCard extends StatelessWidget {
-  const _OrderCard({required this.order, required this.onTap});
+  const _OrderCard({
+    required this.order,
+    required this.onTap,
+    this.onDispute,
+  });
 
   final P2PMyOrderDraft order;
   final VoidCallback onTap;
+  final VoidCallback? onDispute;
 
   @override
   Widget build(BuildContext context) {
@@ -192,14 +174,11 @@ class _OrderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Icon(status.icon, color: status.color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x1),
-              Text(
-                status.label,
-                style: AppTextStyles.micro.copyWith(
-                  color: status.color,
-                  fontWeight: AppTextStyles.bold,
-                ),
+              VitStatusPill(
+                label: status.label,
+                status: _statusPillStatus(order.status),
+                icon: status.icon,
+                size: VitStatusPillSize.sm,
               ),
             ],
           ),
@@ -271,6 +250,24 @@ class _OrderCard extends StatelessWidget {
               ),
             ],
           ),
+          if (onDispute != null) ...[
+            const SizedBox(height: _p2pMyOrdersTightGap),
+            Align(
+              alignment: Alignment.centerRight,
+              child: VitCtaButton(
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                height: AppSpacing.buttonCompact,
+                padding: AppSpacing.p2pMyOrdersChipPadding,
+                onPressed: onDispute,
+                leading: const Icon(
+                  Icons.report_problem_outlined,
+                  size: AppSpacing.iconSm,
+                ),
+                child: const Text('Chi tiết tranh chấp'),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -352,6 +349,13 @@ class _EmptyOrders extends StatelessWidget {
             variant: VitCtaButtonVariant.primary,
             onPressed: () => context.go(snapshot.parentRoute),
             child: const Text('Tạo giao dịch P2P'),
+          ),
+          const SizedBox(height: _p2pMyOrdersTightGap),
+          VitCtaButton(
+            key: P2PMyOrdersPage.guideKey,
+            variant: VitCtaButtonVariant.ghost,
+            onPressed: () => context.go(AppRoutePaths.p2pGuide),
+            child: const Text('Xem hướng dẫn P2P'),
           ),
         ],
       ),

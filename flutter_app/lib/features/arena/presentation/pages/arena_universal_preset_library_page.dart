@@ -77,8 +77,8 @@ class _ArenaUniversalPresetLibraryPageState
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Universal Rule Presets',
-            subtitle: '10B — Preset Library',
+            title: 'Preset Library',
+            subtitle: 'Preset an toàn · Points only',
             showBack: true,
             onBack: _close,
           ),

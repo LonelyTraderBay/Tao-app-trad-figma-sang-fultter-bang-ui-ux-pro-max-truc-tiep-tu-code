@@ -9,15 +9,23 @@ class _InfoNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: P2PBlacklistPage.infoKey,
+      radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
       padding: AppSpacing.p2pBlacklistListCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
-            Icons.shield_outlined,
-            color: AppColors.primary,
-            size: AppSpacing.iconSm,
+          SizedBox.square(
+            dimension: AppSpacing.buttonCompact,
+            child: Material(
+              color: AppColors.primary.withValues(alpha: .12),
+              borderRadius: AppRadii.smRadius,
+              child: const Icon(
+                Icons.shield_outlined,
+                color: AppColors.primary,
+                size: AppSpacing.iconSm,
+              ),
+            ),
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -48,58 +56,6 @@ class _InfoNote extends StatelessWidget {
   }
 }
 
-class _ReasonCountPill extends StatelessWidget {
-  const _ReasonCountPill({required this.reason, required this.count});
-
-  final P2PBlacklistReasonDraft reason;
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = _reasonColor(reason);
-    return Material(
-      color: color.withValues(alpha: .08),
-      borderRadius: AppRadii.smRadius,
-      child: Padding(
-        padding: AppSpacing.p2pBlacklistReasonCountPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              _reasonIcon(reason.iconKey),
-              color: color,
-              size: AppSpacing.p2pBlacklistReasonCountIcon,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Text(
-              reason.label,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Material(
-              color: color.withValues(alpha: .14),
-              borderRadius: AppRadii.xsRadius,
-              child: Padding(
-                padding: AppSpacing.p2pBlacklistReasonBadgePadding,
-                child: Text(
-                  '$count',
-                  style: AppTextStyles.micro.copyWith(
-                    color: color,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _SmallReasonPill extends StatelessWidget {
   const _SmallReasonPill({required this.reason});
 
@@ -125,25 +81,6 @@ class _SmallReasonPill extends StatelessWidget {
   }
 }
 
-class _ReasonIconBubble extends StatelessWidget {
-  const _ReasonIconBubble({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppSpacing.buttonCompact,
-      height: AppSpacing.buttonCompact,
-      child: Material(
-        color: color.withValues(alpha: .12),
-        borderRadius: AppRadii.cardRadius,
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
-      ),
-    );
-  }
-}
 
 class _TinyStat extends StatelessWidget {
   const _TinyStat({required this.value, required this.label, this.color});
@@ -154,30 +91,32 @@ class _TinyStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.p2pBlacklistListTinyPadding,
-      child: Column(
-        children: [
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: color ?? AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.cardRadius,
+      child: Padding(
+        padding: AppSpacing.p2pBlacklistListTinyPadding,
+        child: Column(
+          children: [
+            Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.caption.copyWith(
+                color: color ?? AppColors.text1,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
+          ],
+        ),
       ),
     );
   }

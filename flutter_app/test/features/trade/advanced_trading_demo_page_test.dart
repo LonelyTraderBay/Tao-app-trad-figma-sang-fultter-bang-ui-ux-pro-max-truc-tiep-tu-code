@@ -61,8 +61,8 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Advanced Trading'), findsOneWidget);
-    expect(find.text('Position Management Features'), findsOneWidget);
+    expect(find.text('Giao dịch nâng cao'), findsOneWidget);
+    expect(find.text('Quản lý vị thế'), findsOneWidget);
     expect(find.text('Mock Position (Demo)'), findsOneWidget);
     expect(find.text('BTC/USDT · LONG'), findsOneWidget);
   });
@@ -93,7 +93,7 @@ void main() {
 
     await tester.tap(AdvancedTradingDemoPage.modeKey('hedge').asFinder());
     await tester.pumpAndSettle();
-    expect(find.textContaining('hedging strategy'), findsOneWidget);
+    expect(find.textContaining('phòng hộ'), findsOneWidget);
 
     await tester.tap(
       AdvancedTradingDemoPage.actionKey('partial-close').asFinder(),

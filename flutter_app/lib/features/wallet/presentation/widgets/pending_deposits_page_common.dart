@@ -92,14 +92,14 @@ class _DepositDetails extends StatelessWidget {
           ),
           VitInfoRow(
             label: 'T\u1EEB \u0111\u1ECBa ch\u1EC9',
-            value: deposit.fromAddress,
+            value: _maskPendingAddress(deposit.fromAddress),
             leading: const Icon(Icons.account_balance_wallet_outlined),
             density: VitDensity.compact,
             showDivider: true,
           ),
           VitInfoRow(
             label: 'TxHash',
-            value: deposit.txHash,
+            value: _maskPendingAddress(deposit.txHash),
             leading: const Icon(Icons.receipt_long_outlined),
             valueColor: AppColors.primary,
             density: VitDensity.compact,
@@ -210,4 +210,9 @@ _DepositStatusConfig _statusConfig(String status) {
       status: VitStatusPillStatus.warning,
     ),
   };
+}
+
+String _maskPendingAddress(String value) {
+  if (value.length <= 12) return value;
+  return '${value.substring(0, 6)}...${value.substring(value.length - 4)}';
 }

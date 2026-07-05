@@ -27,33 +27,33 @@ class _PortfolioHero extends StatelessWidget {
         )
         .length;
 
-    return VitCard(
+    return VitModuleHeroCard(
       key: LaunchpadPortfolioPage.heroKey,
-      variant: VitCardVariant.hero,
-      radius: VitCardRadius.large,
-      borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
-      padding: AppSpacing.launchpadPaddingX5,
+      accentColor: AppModuleAccents.launchpad,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               SizedBox.square(
-                dimension: AppSpacing.launchpadBox48,
+                dimension: AppSpacing.x7,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: AppColors.primary12,
+                    color: AppModuleAccents.launchpad.withValues(alpha: .12),
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.lgRadius,
-                      side: const BorderSide(color: AppColors.primary30),
+                      side: BorderSide(
+                        color: AppModuleAccents.launchpad.withValues(
+                          alpha: .28,
+                        ),
+                      ),
                     ),
                   ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.business_center_outlined,
-                      color: AppColors.primary,
-                      size: AppSpacing.iconMd,
-                    ),
+                  child: Icon(
+                    Icons.business_center_outlined,
+                    color: AppModuleAccents.launchpad,
+                    size: AppSpacing.iconLg,
                   ),
                 ),
               ),
@@ -80,14 +80,14 @@ class _PortfolioHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x5),
+          const SizedBox(height: AppSpacing.x4),
           Row(
             children: [
               Expanded(
                 child: _HeroMetric(
                   label: 'Dự án',
                   value: '${subscriptions.length}',
-                  color: AppColors.primary,
+                  color: AppModuleAccents.launchpad,
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -108,6 +108,15 @@ class _PortfolioHero extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: AppSpacing.x3),
+          Text(
+            'Phân bổ phụ thuộc tổng đăng ký. Token mở khóa theo lịch vesting từng dự án.',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.portfolioTextMuted,
+              height: _launchpadPortfolioLineHeightDense,
+            ),
+          ),
         ],
       ),
     );
@@ -127,28 +136,28 @@ class _HeroMetric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCardStat(
-      padding: AppSpacing.launchpadMetricCardPadding,
-      child: Column(
-        children: [
-          Text(
-            value,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: color,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
+    return Column(
+      children: [
+        Text(
+          value,
+          style: AppTextStyles.baseMedium.copyWith(
+            color: color,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
-              height: AppSpacing.launchpadLineHeightTight,
-            ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.portfolioTextMuted,
+            height: AppSpacing.launchpadLineHeightTight,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -161,19 +170,21 @@ class _PortfolioTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return VitTabBar(
       key: LaunchpadPortfolioPage.tabsKey,
-      spacing: AppSpacing.x3,
-      runSpacing: AppSpacing.x3,
-      children: [
+      variant: VitTabBarVariant.segment,
+      activeKey: activeTab.id,
+      onChanged: (id) {
+        HapticFeedback.selectionClick();
+        final tab = _PortfolioTab.values.firstWhere((tab) => tab.id == id);
+        onChanged(tab);
+      },
+      tabs: [
         for (final tab in _PortfolioTab.values)
-          VitChoicePill(
-            key: LaunchpadPortfolioPage.tabKey(tab.id),
+          VitTabItem(
+            key: tab.id,
             label: tab.label,
-            selected: tab == activeTab,
-            onTap: () => onChanged(tab),
-            accentColor: AppColors.primary,
-            padding: AppSpacing.launchpadActionButtonPadding,
+            widgetKey: LaunchpadPortfolioPage.tabKey(tab.id),
           ),
       ],
     );

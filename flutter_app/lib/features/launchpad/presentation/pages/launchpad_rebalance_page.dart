@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -114,6 +115,7 @@ class _LaunchpadRebalancePageState
               semanticLabel: 'SC-312 LaunchpadRebalancePage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'Cân bằng danh mục · Xem trước trước khi thực hiện',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
               ),

@@ -77,7 +77,7 @@ void main() {
     expect(find.byType(P2PSuspiciousActivityPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Suspicious Activity'), findsOneWidget);
+    expect(find.text('Hoạt động đáng ngờ'), findsOneWidget);
     expect(find.text('An toàn · P2P'), findsOneWidget);
     expect(find.byKey(P2PSuspiciousActivityPage.summaryKey), findsOneWidget);
     expect(find.text('2 cảnh báo mới'), findsOneWidget);

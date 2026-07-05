@@ -18,24 +18,11 @@ class _EntryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (entries.isEmpty) {
-      return VitCard(
-        padding: AppSpacing.p2pBlacklistListCardPadding,
-        child: Column(
-          children: [
-            const Icon(
-              Icons.shield_outlined,
-              color: AppColors.text3,
-              size: AppSpacing.iconLg,
-            ),
-            const SizedBox(height: _p2pBlacklistSectionGap),
-            Text(
-              snapshot.emptyTitle,
-              style: AppTextStyles.baseMedium.copyWith(
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
+      return VitEmptyState(
+        key: P2PBlacklistPage.emptyKey,
+        icon: Icons.shield_outlined,
+        title: snapshot.emptyTitle,
+        message: 'Thử đổi bộ lọc hoặc thêm người dùng vào danh sách chặn.',
       );
     }
 
@@ -82,75 +69,77 @@ class _EntryCard extends StatelessWidget {
       clip: true,
       child: Column(
         children: [
-          VitCard(
-            onTap: onToggle,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
-            padding: AppSpacing.zeroInsets,
-            child: Padding(
-              padding: AppSpacing.p2pBlacklistListCardPadding,
-              child: Row(
-                children: [
-                  _Avatar(entry: entry, reason: reason),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                entry.username,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.caption.copyWith(
-                                  fontWeight: AppTextStyles.bold,
+          Material(
+            color: AppColors.transparent,
+            child: InkWell(
+              onTap: onToggle,
+              child: Padding(
+                padding: AppSpacing.p2pBlacklistListCardPadding,
+                child: Row(
+                  children: [
+                    _Avatar(entry: entry, reason: reason),
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  entry.username,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.caption.copyWith(
+                                    fontWeight: AppTextStyles.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            if (entry.isVerified) ...[
+                              if (entry.isVerified) ...[
+                                const SizedBox(width: AppSpacing.x2),
+                                const Icon(
+                                  Icons.verified_outlined,
+                                  color: AppColors.primary,
+                                  size: AppSpacing.iconSm,
+                                ),
+                              ],
+                              if (entry.badge != null) ...[
+                                const SizedBox(width: AppSpacing.x2),
+                                VitStatusPill(
+                                  label: entry.badge == 'elite'
+                                      ? 'Elite'
+                                      : 'Pro',
+                                  status: VitStatusPillStatus.purple,
+                                  size: VitStatusPillSize.sm,
+                                ),
+                              ],
+                            ],
+                          ),
+                          const SizedBox(height: _p2pBlacklistTightGap),
+                          Row(
+                            children: [
+                              _SmallReasonPill(reason: reason),
                               const SizedBox(width: AppSpacing.x2),
-                              const Icon(
-                                Icons.verified_outlined,
-                                color: AppColors.primary,
-                                size: AppSpacing.iconSm,
+                              Text(
+                                _timeAgo(entry.blockedAt),
+                                style: AppTextStyles.micro.copyWith(
+                                  color: AppColors.text3,
+                                ),
                               ),
                             ],
-                            if (entry.badge != null) ...[
-                              const SizedBox(width: AppSpacing.x2),
-                              VitStatusPill(
-                                label: entry.badge == 'elite' ? 'Elite' : 'Pro',
-                                status: VitStatusPillStatus.purple,
-                                size: VitStatusPillSize.sm,
-                              ),
-                            ],
-                          ],
-                        ),
-                        const SizedBox(height: _p2pBlacklistTightGap),
-                        Row(
-                          children: [
-                            _SmallReasonPill(reason: reason),
-                            const SizedBox(width: AppSpacing.x2),
-                            Text(
-                              _timeAgo(entry.blockedAt),
-                              style: AppTextStyles.micro.copyWith(
-                                color: AppColors.text3,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Icon(
-                    expanded
-                        ? Icons.keyboard_arrow_down_rounded
-                        : Icons.chevron_right_rounded,
-                    color: AppColors.text3,
-                    size: AppSpacing.iconMd,
-                  ),
-                ],
+                    Icon(
+                      expanded
+                          ? Icons.keyboard_arrow_down_rounded
+                          : Icons.chevron_right_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -187,28 +176,31 @@ class _ExpandedEntry extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              VitCard(
-                variant: VitCardVariant.inner,
-                padding: AppSpacing.p2pBlacklistListTinyPadding,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      _reasonIcon(reason.iconKey),
-                      color: color,
-                      size: AppSpacing.iconSm,
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    Expanded(
-                      child: Text(
-                        entry.reasonText,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text2,
-                          height: 1.25,
+              Material(
+                color: AppColors.surface2,
+                borderRadius: AppRadii.cardRadius,
+                child: Padding(
+                  padding: AppSpacing.p2pBlacklistListTinyPadding,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        _reasonIcon(reason.iconKey),
+                        color: color,
+                        size: AppSpacing.iconSm,
+                      ),
+                      const SizedBox(width: AppSpacing.x2),
+                      Expanded(
+                        child: Text(
+                          entry.reasonText,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text2,
+                            height: 1.25,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: _p2pBlacklistSectionGap),
@@ -347,29 +339,32 @@ class _OrderLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      padding: AppSpacing.p2pBlacklistListTinyPadding,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.primary,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              'Đơn liên quan: $orderId',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.primary,
-                fontWeight: AppTextStyles.bold,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.cardRadius,
+      child: Padding(
+        padding: AppSpacing.p2pBlacklistListTinyPadding,
+        child: Row(
+          children: [
+            const Icon(
+              Icons.info_outline_rounded,
+              color: AppColors.primary,
+              size: AppSpacing.iconSm,
+            ),
+            const SizedBox(width: AppSpacing.x2),
+            Expanded(
+              child: Text(
+                'Đơn liên quan: $orderId',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.micro.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

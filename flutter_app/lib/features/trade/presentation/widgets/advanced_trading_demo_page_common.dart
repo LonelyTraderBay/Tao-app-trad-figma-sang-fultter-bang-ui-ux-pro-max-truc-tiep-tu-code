@@ -160,7 +160,7 @@ class _DemoSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Demo control state only. Backend execution stays in draft mode for SC-088.',
+                      'Chỉ trạng thái demo. Thực thi backend vẫn ở chế độ nháp cho SC-088.',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                       ),

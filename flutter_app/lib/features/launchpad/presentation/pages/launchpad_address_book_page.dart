@@ -104,6 +104,7 @@ class _LaunchpadAddressBookPageState
               semanticLabel: 'SC-309 LaunchpadAddressBookPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'Sổ địa chỉ tin cậy · Xác minh trước khi gửi',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
                 actions: [

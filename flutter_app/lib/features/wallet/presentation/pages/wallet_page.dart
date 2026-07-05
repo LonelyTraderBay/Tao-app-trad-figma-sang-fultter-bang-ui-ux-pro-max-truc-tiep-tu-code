@@ -17,14 +17,15 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
+import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class WalletPage extends ConsumerStatefulWidget {
   const WalletPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc135_wallet_content');
   static const balanceToggleKey = Key('sc135_wallet_balance_toggle');
+  static const moreActionsKey = Key('sc135_wallet_more_actions');
+  static const moreActionsSheetKey = Key('sc135_wallet_more_actions_sheet');
   static const searchKey = Key('sc135_wallet_search');
   static const filterKey = Key('sc135_wallet_filter');
   static Key actionKey(String id) => Key('sc135_wallet_action_$id');
@@ -80,9 +81,9 @@ class _WalletPageState extends ConsumerState<WalletPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
-            title: 'V\u00ED t\u00E0i s\u1EA3n',
+            title: 'V\u00ED',
             subtitle:
-                'S\u1ED1 d\u01B0, c\u00F4ng c\u1EE5 v\u00E0 t\u00E0i s\u1EA3n',
+                'S\u1ED1 d\u01B0 minh b\u1EA1ch \u00B7 b\u1EA3o m\u1EADt \u0111a l\u1EDBp',
             showBack: showBack,
             onBack: showBack
                 ? () => goBackOrFallback(
@@ -103,10 +104,12 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                   WalletUnavailableBanner(message: snapshot.actionDraft),
                 WalletBalanceHero(
                   snapshot: snapshot,
+                  change24hPct: walletPortfolioChange24h(snapshot.assets),
                   hidden: _balanceHidden,
                   onToggle: () =>
                       setState(() => _balanceHidden = !_balanceHidden),
                   onNavigate: _navigate,
+                  onShowMore: () => _showMoreActions(snapshot.actions),
                 ),
                 if (snapshot.actions.isNotEmpty &&
                     pendingDeposits.pendingCount > 0)
@@ -114,6 +117,37 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                     pendingDeposits: pendingDeposits,
                     onNavigate: _navigate,
                   ),
+                VitSectionHeader(
+                  title: 'T\u00E0i s\u1EA3n',
+                  icon: Icons.account_balance_wallet_outlined,
+                  iconColor: AppModuleAccents.wallet,
+                  accentColor: AppModuleAccents.wallet,
+                  actionLabel: 'Ph\u00E2n t\u00EDch',
+                  onAction: () => _navigate('/wallet/portfolio-analytics'),
+                ),
+                if (_tab == 'assets')
+                  WalletSearchAndFilter(
+                    controller: _searchController,
+                    filterActive: _hideSmallBalances,
+                    onChanged: (value) => setState(() => _query = value),
+                    onFilter: () => setState(
+                      () => _hideSmallBalances = !_hideSmallBalances,
+                    ),
+                  ),
+                WalletSegmentedTabs(active: _tab, onChanged: _setTab),
+                if (_tab == 'assets') ...[
+                  WalletAssetHeader(
+                    count: assets.length,
+                    onNavigate: _navigate,
+                  ),
+                  WalletAssetList(
+                    assets: assets,
+                    hidden: _balanceHidden,
+                    onNavigate: _navigate,
+                  ),
+                ] else
+                  WalletAllocationCard(assets: snapshot.assets),
+                WalletPortfolioHint(onNavigate: _navigate),
                 const VitSectionHeader(
                   title: 'C\u00F4ng c\u1EE5 v\u00ED',
                   icon: Icons.grid_view_rounded,
@@ -121,36 +155,6 @@ class _WalletPageState extends ConsumerState<WalletPage> {
                   accentColor: AppModuleAccents.wallet,
                 ),
                 WalletToolGrid(tools: snapshot.tools, onNavigate: _navigate),
-                VitSectionHeader(
-                  title: _tab == 'assets'
-                      ? 'T\u00E0i s\u1EA3n'
-                      : 'Ph\u00E2n b\u1ED5',
-                  icon: _tab == 'assets'
-                      ? Icons.account_balance_wallet_outlined
-                      : Icons.donut_large_rounded,
-                  iconColor: AppModuleAccents.wallet,
-                  accentColor: AppModuleAccents.wallet,
-                  actionLabel: _tab == 'assets' ? 'Ph\u00E2n t\u00EDch' : null,
-                  onAction: _tab == 'assets'
-                      ? () => _navigate('/wallet/portfolio-analytics')
-                      : null,
-                ),
-                WalletSegmentedTabs(active: _tab, onChanged: _setTab),
-                if (_tab == 'assets')
-                  WalletAssetSection(
-                    controller: _searchController,
-                    filterActive: _hideSmallBalances,
-                    count: assets.length,
-                    assets: assets,
-                    hidden: _balanceHidden,
-                    onChanged: (value) => setState(() => _query = value),
-                    onFilter: () => setState(
-                      () => _hideSmallBalances = !_hideSmallBalances,
-                    ),
-                    onNavigate: _navigate,
-                  )
-                else
-                  WalletAllocationCard(assets: snapshot.assets),
                 const VitSectionHeader(
                   title: 'Mua \u0111\u1ECBnh k\u1EF3',
                   icon: Icons.sync_alt_rounded,
@@ -182,4 +186,56 @@ class _WalletPageState extends ConsumerState<WalletPage> {
   void _navigate(String route) {
     context.go(route);
   }
+
+  void _showMoreActions(List<WalletAction> actions) {
+    const primaryIds = {'deposit', 'withdraw'};
+    final overflowActions = actions
+        .where((action) => !primaryIds.contains(action.id))
+        .toList(growable: false);
+    if (overflowActions.isEmpty) return;
+
+    final rootContext = context;
+    showVitBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.bg,
+      barrierColor: AppColors.modalScrim,
+      builder: (sheetContext) {
+        return VitSheetPanel(
+          key: WalletPage.moreActionsSheetKey,
+          title: 'Th\u00EAm thao t\u00E1c',
+          child: VitActionTileGrid(
+            density: VitDensity.compact,
+            crossAxisSpacing: AppSpacing.x3,
+            mainAxisSpacing: AppSpacing.x3,
+            physics: const ClampingScrollPhysics(),
+            itemCount: overflowActions.length,
+            itemBuilder: (context, index, density) {
+              final action = overflowActions[index];
+              return VitServiceTile(
+                key: WalletPage.actionKey(action.id),
+                density: density,
+                icon: _walletOverflowActionIcon(action.iconKey),
+                label: action.label,
+                accentColor: Color(action.colorHex),
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  rootContext.go(action.route);
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
 }
+
+IconData _walletOverflowActionIcon(String key) => switch (key) {
+  'deposit' => Icons.file_download_outlined,
+  'withdraw' => Icons.file_upload_outlined,
+  'buy' => Icons.shopping_cart_outlined,
+  'transfer' => Icons.swap_vert_rounded,
+  'history' => Icons.schedule_rounded,
+  _ => Icons.account_balance_wallet_outlined,
+};

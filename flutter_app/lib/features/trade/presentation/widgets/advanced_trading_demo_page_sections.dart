@@ -22,7 +22,7 @@ class _PositionModeCard extends StatelessWidget {
               ),
               const SizedBox(width: _advancedSpace),
               Text(
-                'Position Mode',
+                'Chế độ vị thế',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,
@@ -37,75 +37,35 @@ class _PositionModeCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: _advancedSpace),
-          VitCard(
-            height: _advancedModeControlExtent,
-            padding: AppSpacing.tradeToolMetricPadding,
-            density: VitDensity.compact,
-            variant: VitCardVariant.inner,
-            child: Row(
-              children: [
-                _ModeButton(
-                  id: 'one-way',
-                  label: 'One-Way Mode',
-                  activeMode: activeMode,
-                  onChanged: onChanged,
-                ),
-                _ModeButton(
-                  id: 'hedge',
-                  label: 'Hedge Mode',
-                  activeMode: activeMode,
-                  onChanged: onChanged,
-                ),
-              ],
-            ),
+          VitSegmentedChoice<String>(
+            selected: activeMode,
+            onChanged: onChanged,
+            options: [
+              VitSegmentedChoiceOption(
+                key: AdvancedTradingDemoPage.modeKey('one-way'),
+                value: 'one-way',
+                label: 'Một chiều',
+                accentColor: AppColors.primary,
+              ),
+              VitSegmentedChoiceOption(
+                key: AdvancedTradingDemoPage.modeKey('hedge'),
+                value: 'hedge',
+                label: 'Phòng hộ',
+                accentColor: AppColors.caution,
+              ),
+            ],
           ),
           const SizedBox(height: _advancedSpace),
           Text(
             activeMode == 'one-way'
-                ? 'Chỉ được giữ Long HOẶC Short cho mỗi cặp. Đơn giản, phù hợp beginner.'
-                : 'Có thể giữ đồng thời Long VÀ Short cho cùng 1 cặp. Dùng cho hedging strategy.',
+                ? 'Chỉ được giữ Long HOẶC Short cho mỗi cặp. Đơn giản, phù hợp người mới.'
+                : 'Có thể giữ đồng thời Long VÀ Short cho cùng một cặp. Phù hợp chiến lược phòng hộ.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               height: _advancedLineBody,
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ModeButton extends StatelessWidget {
-  const _ModeButton({
-    required this.id,
-    required this.label,
-    required this.activeMode,
-    required this.onChanged,
-  });
-
-  final String id;
-  final String label;
-  final String activeMode;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final active = activeMode == id;
-    return Expanded(
-      child: VitCard(
-        key: AdvancedTradingDemoPage.modeKey(id),
-        onTap: () => onChanged(id),
-        alignment: Alignment.center,
-        variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        borderColor: active ? AppColors.primary : AppColors.transparent,
-        child: Text(
-          label,
-          style: AppTextStyles.caption.copyWith(
-            color: active ? AppColors.onAccent : AppColors.text3,
-            fontWeight: active ? AppTextStyles.bold : AppTextStyles.medium,
-          ),
-        ),
       ),
     );
   }
@@ -118,9 +78,9 @@ class _UnderlineTabs extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
   static const _tabs = [
-    ('position', 'Position Controls'),
-    ('orders', 'Order Types'),
-    ('analytics', 'PnL Analytics'),
+    ('position', 'Vị thế'),
+    ('orders', 'Loại lệnh'),
+    ('analytics', 'PnL'),
   ];
 
   @override
@@ -157,7 +117,7 @@ class _PositionTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Position Management Features',
+                'Quản lý vị thế',
                 style: AppTextStyles.baseMedium.copyWith(
                   color: AppColors.onAccent,
                   fontWeight: AppTextStyles.bold,

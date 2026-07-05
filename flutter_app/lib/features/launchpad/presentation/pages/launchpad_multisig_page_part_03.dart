@@ -21,7 +21,7 @@ class _SafeInfoCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
-                'Thong tin Safe',
+                'Thông tin Safe',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
@@ -51,37 +51,31 @@ class _SecurityNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return VitCard(
       key: LaunchpadMultisigPage.noticeKey,
-      decoration: const ShapeDecoration(
-        color: AppColors.accent08,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: BorderSide(color: AppColors.accent20),
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.lock_outline_rounded,
-              color: AppColors.accent,
-              size: AppSpacing.launchpadIconLg,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text(
-                'Multi-sig yeu cau ${safe.threshold}/${safe.owners.length} chu ky truoc khi thuc hien. Moi giao dich co thoi han 7 ngay. Dam bao tat ca signers xac nhan truoc khi het han.',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  height: AppSpacing.launchpadLineHeightShort,
-                ),
+      variant: VitCardVariant.inner,
+      borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
+      background: const ColoredBox(color: AppColors.accent08),
+      padding: AppSpacing.launchpadPaddingX3,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.lock_outline_rounded,
+            color: AppModuleAccents.launchpad,
+            size: AppSpacing.launchpadIconLg,
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Text(
+              'Multi-sig yêu cầu ${safe.threshold}/${safe.owners.length} chữ ký trước khi thực hiện. Mỗi giao dịch có thời hạn 7 ngày. Đảm bảo tất cả signers xác nhận trước khi hết hạn.',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text2,
+                height: AppSpacing.launchpadLineHeightShort,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -167,7 +161,7 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                       children: [
                         Expanded(
                           child: Text(
-                            'Tao giao dich Multi-sig',
+                            'Tạo giao dịch Multi-sig',
                             style: AppTextStyles.base.copyWith(
                               color: AppColors.text1,
                               fontWeight: AppTextStyles.bold,
@@ -187,15 +181,15 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                     _SafeSheetBadge(safe: widget.safe),
                     const SizedBox(height: AppSpacing.x3),
                     VitInput(
-                      label: 'Ten giao dich',
+                      label: 'Tên giao dịch',
                       hintText: 'VD: Withdraw rewards',
                       controller: _labelController,
                       onChanged: (_) => setState(() {}),
                     ),
                     const SizedBox(height: AppSpacing.x3),
                     VitInput(
-                      label: 'Mo ta',
-                      hintText: 'Chi tiet giao dich...',
+                      label: 'Mô tả',
+                      hintText: 'Chi tiết giao dịch...',
                       controller: _descriptionController,
                     ),
                     const SizedBox(height: AppSpacing.x3),
@@ -224,7 +218,7 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                     VitCtaButton(
                       key: LaunchpadMultisigPage.submitCreateKey,
                       onPressed: canSubmit ? _submit : null,
-                      child: const Text('Tao giao dich'),
+                      child: const Text('Tạo giao dịch'),
                     ),
                   ],
                 ),
@@ -272,9 +266,9 @@ class _SafeSheetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.accent08,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      decoration: ShapeDecoration(
+        color: AppModuleAccents.launchpad.withValues(alpha: .08),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
         padding: AppSpacing.launchpadPaddingX2,
@@ -334,7 +328,7 @@ class _CreateWarning extends StatelessWidget {
             const SizedBox(width: AppSpacing.x2),
             Expanded(
               child: Text(
-                'Can ${safe.threshold} chu ky tu ${safe.owners.length} signers. Giao dich het han sau 7 ngay.',
+                'Cần ${safe.threshold} chữ ký từ ${safe.owners.length} signers. Giao dịch hết hạn sau 7 ngày.',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text2),
               ),
             ),
@@ -387,38 +381,10 @@ class _IconBubble extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .14),
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Center(
           child: Icon(icon, color: color, size: size * .45),
-        ),
-      ),
-    );
-  }
-}
-
-class _MiniPill extends StatelessWidget {
-  const _MiniPill({required this.label, required this.color});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .12),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadTinyChipPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.chartLabelTiny.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: AppSpacing.launchpadLineHeightTight,
-          ),
         ),
       ),
     );
@@ -441,35 +407,47 @@ _StatusView _statusView(LaunchpadMultisigTxStatus status) {
       Icons.description_outlined,
     ),
     LaunchpadMultisigTxStatus.pendingSignatures => const _StatusView(
-      'Cho ky',
+      'Chờ ký',
       AppColors.primary,
       Icons.edit_outlined,
     ),
     LaunchpadMultisigTxStatus.ready => const _StatusView(
-      'San sang',
+      'Sẵn sàng',
       AppColors.buy,
       Icons.check_circle_outline_rounded,
     ),
     LaunchpadMultisigTxStatus.executing => const _StatusView(
-      'Dang xu ly',
-      AppColors.accent,
+      'Đang xử lý',
+      AppModuleAccents.launchpad,
       Icons.bolt_rounded,
     ),
     LaunchpadMultisigTxStatus.executed => const _StatusView(
-      'Da thuc hien',
+      'Đã thực hiện',
       AppColors.buy,
       Icons.check_circle_outline_rounded,
     ),
     LaunchpadMultisigTxStatus.expired => const _StatusView(
-      'Het han',
+      'Hết hạn',
       AppColors.sell,
       Icons.cancel_outlined,
     ),
     LaunchpadMultisigTxStatus.cancelled => const _StatusView(
-      'Da huy',
+      'Đã hủy',
       AppColors.text3,
       Icons.cancel_outlined,
     ),
+  };
+}
+
+VitStatusPillStatus _statusPillStatus(LaunchpadMultisigTxStatus status) {
+  return switch (status) {
+    LaunchpadMultisigTxStatus.draft => VitStatusPillStatus.neutral,
+    LaunchpadMultisigTxStatus.pendingSignatures => VitStatusPillStatus.info,
+    LaunchpadMultisigTxStatus.ready => VitStatusPillStatus.success,
+    LaunchpadMultisigTxStatus.executing => VitStatusPillStatus.purple,
+    LaunchpadMultisigTxStatus.executed => VitStatusPillStatus.success,
+    LaunchpadMultisigTxStatus.expired => VitStatusPillStatus.error,
+    LaunchpadMultisigTxStatus.cancelled => VitStatusPillStatus.neutral,
   };
 }
 

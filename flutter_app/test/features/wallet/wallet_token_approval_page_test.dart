@@ -70,7 +70,7 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_wallet')),
       findsOneWidget,
     );
-    expect(find.text('Token Approvals'), findsWidgets);
+    expect(find.text('Phê duyệt token'), findsOneWidget);
     expect(find.text('Ho\u1EA1t \u0111\u1ED9ng'), findsOneWidget);
     expect(find.text('L\u1ECBch s\u1EED'), findsOneWidget);
     expect(find.text('C\u00E0i \u0111\u1EB7t'), findsOneWidget);

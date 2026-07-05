@@ -94,7 +94,7 @@ class _IconBubble extends StatelessWidget {
           color: background,
           shape: RoundedRectangleBorder(
             side: BorderSide(color: color.withValues(alpha: .22)),
-            borderRadius: AppRadii.mdRadius,
+            borderRadius: AppRadii.smRadius,
           ),
         ),
         child: Center(

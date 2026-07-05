@@ -14,6 +14,7 @@ final class ProfileSnapshot {
     required this.endpoint,
     required this.actionDraft,
     required this.supportedStates,
+    this.screenState = ProfileScreenState.success,
   });
 
   final ProfileUser user;
@@ -25,6 +26,7 @@ final class ProfileSnapshot {
   final String endpoint;
   final String actionDraft;
   final List<ProfileScreenState> supportedStates;
+  final ProfileScreenState screenState;
 }
 
 final class ProfileUser {

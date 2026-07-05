@@ -90,15 +90,6 @@ class WithdrawLimitsPage extends ConsumerWidget {
                           currentLevel: snapshot.currentLevel,
                         ),
                       _FaqCard(faqs: snapshot.faqs),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review withdrawal limits',
-                        message:
-                            'Confirm daily limit, remaining quota, KYC tier, fee policy, and next step before withdrawal.',
-                        contractId:
-                            'Current tier: ${snapshot.currentTier.name}',
-                        density: VitDensity.compact,
-                      ),
                     ],
                   ),
                 ),

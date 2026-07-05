@@ -189,7 +189,7 @@ class _MyAdCard extends StatelessWidget {
                 Expanded(
                   child: _DetailColumn(
                     label: 'Thanh toán',
-                    value: ad.paymentMethods.join(', '),
+                    value: _formatPaymentMethods(ad.paymentMethods),
                   ),
                 ),
               ],
@@ -217,40 +217,67 @@ class _MyAdCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _ActionButton(
-                    key: P2PMyAdsPage.analyticsKey(ad.id),
-                    icon: Icons.bar_chart_rounded,
-                    label: 'Analytics',
-                    color: AppModuleAccents.p2p,
-                    onTap: onAnalytics,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: _ActionButton(
+                  child: VitCtaButton(
                     key: P2PMyAdsPage.toggleKey(ad.id),
-                    icon: active
-                        ? Icons.pause_rounded
-                        : Icons.play_arrow_rounded,
-                    label: active ? 'Dừng' : 'Bật',
+                    onPressed: onToggle,
+                    variant: VitCtaButtonVariant.secondary,
+                    height: _p2pMyAdsActionExtent,
+                    leading: Icon(
+                      active
+                          ? Icons.pause_rounded
+                          : Icons.play_arrow_rounded,
+                      size: AppSpacing.iconSm,
+                    ),
+                    child: Text(active ? 'Dừng' : 'Bật'),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                PopupMenuButton<String>(
+                  key: P2PMyAdsPage.adMenuKey(ad.id),
+                  tooltip: 'Tùy chọn quảng cáo',
+                  color: AppColors.surface2,
+                  icon: const Icon(
+                    Icons.more_horiz_rounded,
                     color: AppColors.text2,
-                    onTap: onToggle,
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: _ActionButton(
-                    key: P2PMyAdsPage.editKey(ad.id),
-                    icon: Icons.edit_rounded,
-                    label: 'Sửa',
-                    color: AppColors.primary,
-                    onTap: onEdit,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                _DeleteButton(
-                  key: P2PMyAdsPage.deleteKey(ad.id),
-                  onTap: onDelete,
+                  onSelected: (value) {
+                    switch (value) {
+                      case 'analytics':
+                        onAnalytics();
+                      case 'edit':
+                        onEdit();
+                      case 'delete':
+                        onDelete();
+                    }
+                  },
+                  itemBuilder: (_) => [
+                    PopupMenuItem(
+                      value: 'analytics',
+                      child: KeyedSubtree(
+                        key: P2PMyAdsPage.analyticsKey(ad.id),
+                        child: const Text('Phân tích'),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'edit',
+                      child: KeyedSubtree(
+                        key: P2PMyAdsPage.editKey(ad.id),
+                        child: const Text('Sửa'),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 'delete',
+                      child: KeyedSubtree(
+                        key: P2PMyAdsPage.deleteKey(ad.id),
+                        child: Text(
+                          'Xóa',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.sell,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -295,67 +322,8 @@ class _DetailColumn extends StatelessWidget {
   }
 }
 
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.color,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      height: _p2pMyAdsActionExtent,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      borderColor: color.withValues(alpha: .18),
-      background: ColoredBox(color: color.withValues(alpha: .08)),
-      onTap: onTap,
-      clip: true,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: _p2pMyAdsSectionGap),
-          Flexible(
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _DeleteButton extends StatelessWidget {
-  const _DeleteButton({super.key, required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: _p2pMyAdsActionExtent,
-      child: _ActionButton(
-        icon: Icons.delete_outline_rounded,
-        label: '',
-        color: AppColors.sell,
-        onTap: onTap,
-      ),
-    );
-  }
+String _formatPaymentMethods(List<String> methods) {
+  if (methods.isEmpty) return '-';
+  if (methods.length <= 2) return methods.join(', ');
+  return '${methods.take(2).join(', ')} +${methods.length - 2}';
 }

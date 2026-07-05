@@ -25,25 +25,6 @@ class _RewardAnalyticsSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(
-                    Icons.query_stats_rounded,
-                    color: AppColors.warn,
-                    size: AppSpacing.myArenaAnalyticsIcon,
-                  ),
-                  const SizedBox(width: AppSpacing.x3),
-                  Expanded(
-                    child: Text(
-                      'Phân tích phần thưởng',
-                      style: AppTextStyles.body.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.x4),
-              Row(
-                children: [
                   Expanded(
                     child: _RewardMetric(
                       value: '${history.totalReceipts}',

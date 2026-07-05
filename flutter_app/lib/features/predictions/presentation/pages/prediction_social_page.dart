@@ -91,6 +91,7 @@ class _PredictionSocialPageState extends ConsumerState<PredictionSocialPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Social & Discussion',
+            subtitle: 'Thảo luận · Prediction',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),

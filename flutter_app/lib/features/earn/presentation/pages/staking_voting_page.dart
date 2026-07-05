@@ -8,8 +8,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -44,8 +44,8 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome
-            : DeviceMetrics.nativeBottomChrome) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -54,8 +54,10 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Bỏ phiếu đề xuất stake',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),

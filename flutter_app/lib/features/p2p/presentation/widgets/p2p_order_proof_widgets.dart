@@ -294,28 +294,7 @@ class _TipsCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
-          for (final tip in tips)
-            Padding(
-              padding: AppSpacing.p2pFinancialSafetyTipPadding,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.check_circle_outline,
-                    color: AppColors.buy,
-                    size: AppSpacing.iconSm,
-                  ),
-                  const SizedBox(width: AppSpacing.x2),
-                  Expanded(
-                    child: Text(
-                      tip,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          for (final tip in tips) P2PHelpBullet(text: tip),
         ],
       ),
     );
@@ -329,30 +308,14 @@ class _ProofWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
+    return P2PNoticeCard(
+      icon: Icons.warning_amber_rounded,
+      message: message,
+      iconColor: AppColors.warn,
+      messageColor: AppColors.warn,
       borderColor: AppColors.warningBorder,
-      background: const ColoredBox(color: AppColors.warningBg),
+      variant: VitCardVariant.ghost,
       padding: AppSpacing.p2pFinancialSafetyInnerPadding,
-      clip: true,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              message,
-              style: AppTextStyles.micro.copyWith(color: AppColors.warn),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

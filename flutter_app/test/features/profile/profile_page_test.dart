@@ -96,7 +96,7 @@ void main() {
     expect(find.text('nguyenvana@email.com'), findsOneWidget);
     expect(find.text('USR001'), findsOneWidget);
     expect(find.text('VITTA-A2B3C'), findsOneWidget);
-    expect(find.text('VIP Progress'), findsOneWidget);
+    expect(find.text('Ti\u1EBFn \u0111\u1ED9 VIP'), findsOneWidget);
     expect(find.text('Prediction Portfolio'), findsOneWidget);
     expect(find.text('Open Arena'), findsOneWidget);
     expect(find.byKey(ProfilePage.productHubKey), findsOneWidget);

@@ -15,7 +15,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
-import '../widgets/market_body_review_widgets.dart';
 part '../widgets/market_screener_filters.dart';
 part '../widgets/market_screener_results.dart';
 part '../widgets/market_screener_row_common.dart';
@@ -193,6 +192,7 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Bộ lọc thị trường',
+            subtitle: 'Lọc token · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -250,18 +250,6 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
                             onPairTap: (pair) =>
                                 context.go(AppRoutePaths.pairDetail(pair.id)),
                           ),
-                        const MarketBodyReviewSection(
-                          title: 'Screener state review',
-                          message: 'Market screener data reviewed',
-                          detail:
-                              'Search, preset, advanced filter, sort, empty, and refresh states remain visible for screening.',
-                          primary:
-                              'Search and preset selection keep a clear reset path for empty results.',
-                          secondary:
-                              'Advanced filters stay grouped before result rows for fast comparison.',
-                          tertiary:
-                              'Pair rows preserve symbol, liquidity, movement, and detail navigation.',
-                        ),
                       ],
                     ),
                   ),

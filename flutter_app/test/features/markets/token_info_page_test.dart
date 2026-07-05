@@ -67,10 +67,10 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('BTC - Thong tin'), findsOneWidget);
-    expect(find.text('Tong quan'), findsOneWidget);
+    expect(find.text('BTC - Thông tin'), findsOneWidget);
+    expect(find.text('Tổng quan'), findsOneWidget);
     expect(find.text('Bitcoin'), findsOneWidget);
-    expect(find.text('Thong ke thi truong'), findsOneWidget);
+    expect(find.text('Thống kê thị trường'), findsOneWidget);
     expect(find.text('Cung token'), findsOneWidget);
   });
 
@@ -100,14 +100,14 @@ void main() {
     await tester.tap(find.byKey(TokenInfoPage.onchainTabKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Hoat dong mang luoi (24h)'), findsOneWidget);
-    expect(find.text('Thong tin mang luoi'), findsOneWidget);
+    expect(find.text('Hoạt động mạng lưới (24h)'), findsOneWidget);
+    expect(find.text('Thông tin mạng lưới'), findsOneWidget);
 
     await tester.tap(find.byKey(TokenInfoPage.projectTabKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Gioi thieu'), findsOneWidget);
-    expect(find.text('Lien ket'), findsOneWidget);
+    expect(find.text('Giới thiệu'), findsOneWidget);
+    expect(find.text('Liên kết'), findsOneWidget);
   });
 
   testWidgets('SC-045 back button returns to SC-044 PairDetailPage', (

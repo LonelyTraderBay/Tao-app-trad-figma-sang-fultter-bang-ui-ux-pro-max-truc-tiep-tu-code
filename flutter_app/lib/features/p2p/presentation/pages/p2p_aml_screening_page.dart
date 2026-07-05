@@ -106,10 +106,10 @@ class _AmlHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       key: P2PAmlScreeningPage.heroKey,
-      color: AppColors.buy,
+      color: AppModuleAccents.p2p,
       shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        side: BorderSide(color: AppColors.buy),
+        side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
         padding: AppSpacing.p2pAmlScreeningCardPadding,
@@ -139,7 +139,7 @@ class _AmlHero extends StatelessWidget {
                     snapshot.statusLabel,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.baseMedium.copyWith(
+                    style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                     ),

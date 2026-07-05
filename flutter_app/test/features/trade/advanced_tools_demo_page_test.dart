@@ -75,7 +75,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Advanced Trading Tools'), findsOneWidget);
+    expect(find.text('Công cụ nâng cao'), findsOneWidget);
     expect(find.text('Phase 3: Advanced Trading Tools'), findsOneWidget);
     expect(find.text('Ladder Trading'), findsWidgets);
     expect(find.text('Bulk Operations'), findsWidgets);

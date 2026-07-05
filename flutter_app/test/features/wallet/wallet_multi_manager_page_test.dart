@@ -68,11 +68,15 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_wallet')),
       findsOneWidget,
     );
-    expect(find.text('Multi-Wallet Manager'), findsOneWidget);
+    expect(find.text('Quản lý đa ví'), findsOneWidget);
+    expect(
+      find.text('Địa chỉ ẩn mặc định · kiểm soát sao chép'),
+      findsOneWidget,
+    );
     expect(find.text('T\u1EA5t c\u1EA3'), findsOneWidget);
-    expect(find.text('Nh\u00F3m'), findsOneWidget);
+    expect(find.text('Nh\u00F3m'), findsWidgets);
     expect(find.text('Ho\u1EA1t \u0111\u1ED9ng'), findsOneWidget);
-    expect(find.text('Total Portfolio Value'), findsOneWidget);
+    expect(find.text('Tổng giá trị danh mục'), findsOneWidget);
     expect(find.text('\$267,680'), findsOneWidget);
     expect(find.text('+1.29%'), findsOneWidget);
     expect(find.text('+\$3,454'), findsOneWidget);
@@ -82,15 +86,12 @@ void main() {
     expect(find.text('Trading Wallet'), findsOneWidget);
     expect(find.text('Cold Storage'), findsOneWidget);
     expect(find.text('Hardware Ledger'), findsOneWidget);
-    expect(find.text('Add Wallet'), findsOneWidget);
+    expect(find.text('Thêm ví'), findsOneWidget);
     expect(
       find.text('0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'),
       findsNothing,
     );
-    expect(
-      find.textContaining('Addresses are masked by default'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('Địa chỉ được ẩn mặc định'), findsOneWidget);
   });
 
   testWidgets('SC-148 first viewport reaches wallet controls', (tester) async {
@@ -167,6 +168,6 @@ void main() {
       find.byKey(WalletMultiManagerPage.addWalletNoticeKey),
       findsOneWidget,
     );
-    expect(find.text('Wallet creation is not connected yet.'), findsOneWidget);
+    expect(find.text('Chưa kết nối tạo ví mới.'), findsOneWidget);
   });
 }

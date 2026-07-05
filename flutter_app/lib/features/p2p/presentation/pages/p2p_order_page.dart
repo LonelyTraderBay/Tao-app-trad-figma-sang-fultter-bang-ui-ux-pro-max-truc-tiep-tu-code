@@ -50,6 +50,7 @@ class P2POrderPage extends ConsumerStatefulWidget {
   static const chatKey = Key('sc216_p2p_order_chat');
   static const copyAllKey = Key('sc216_p2p_order_copy_all');
   static const escrowKey = Key('sc216_p2p_order_escrow');
+  static const disputeKey = Key('sc216_p2p_order_dispute');
   static const qrToggleKey = Key('sc216_p2p_order_qr_toggle');
 
   static Key copyKey(String id) => Key('sc216_p2p_order_copy_$id');

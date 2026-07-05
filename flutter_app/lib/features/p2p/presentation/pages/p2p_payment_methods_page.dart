@@ -111,6 +111,7 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: _withP2PMethodsGaps([
                             _AddMethodRow(snapshot: snapshot),
+                            const _ComplianceLinksRow(),
                             if (bankMethods.isNotEmpty) ...[
                               _SectionHeader(
                                 icon: Icons.credit_card_rounded,

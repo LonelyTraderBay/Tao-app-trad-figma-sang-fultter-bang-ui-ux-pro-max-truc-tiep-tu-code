@@ -82,7 +82,7 @@ class _HistoricalProjectCard extends StatelessWidget {
                   ],
                 ),
               ),
-              _TinyPill(label: project.type, color: project.accent),
+              _TinyPill(label: project.type, status: VitStatusPillStatus.purple),
             ],
           ),
           const SizedBox(height: AppSpacing.x3),

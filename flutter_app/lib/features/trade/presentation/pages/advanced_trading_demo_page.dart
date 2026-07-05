@@ -26,7 +26,6 @@ const _advancedPrimary = AppColors.primary;
 const double _advancedSheetClearance = 72;
 const double _advancedSpace = AppSpacing.x2;
 const double _advancedTinySpace = AppSpacing.x1;
-const double _advancedModeControlExtent = 44;
 const double _advancedActionMinExtent = 44;
 const double _advancedSheetActionExtent = 44;
 const double _advancedLineBody = 1.24;
@@ -72,8 +71,8 @@ class _AdvancedTradingDemoPageState
           children: [
             VitAutoHideHeaderScaffold(
               header: VitHeader(
-                title: 'Advanced Trading',
-                subtitle: 'Position & Order Controls',
+                title: 'Giao dịch nâng cao',
+                subtitle: 'Vị thế & lệnh',
                 showBack: true,
                 onBack: () => context.go(AppRoutePaths.tradeMargin),
               ),
@@ -114,9 +113,9 @@ class _AdvancedTradingDemoPageState
                             _AnalyticsTab(snapshot: snapshot),
                           const VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Demo execution boundary',
+                            title: 'Giới hạn demo thực thi',
                             message:
-                                'Advanced order controls are shown in demo mode. Live execution requires preview, margin, fee, and liquidation review.',
+                                'Điều khiển lệnh nâng cao chỉ hiển thị ở chế độ demo. Thực thi thật cần xem trước, ký quỹ, phí và rủi ro thanh lý.',
                             contractId: 'SC-088',
                             density: VitDensity.compact,
                           ),

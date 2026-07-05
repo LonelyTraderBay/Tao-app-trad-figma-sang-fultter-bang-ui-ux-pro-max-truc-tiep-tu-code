@@ -4,13 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -54,8 +55,10 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Minh bạch điều khoản — không cam kết lợi nhuận',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -149,15 +152,15 @@ class _TermsHero extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
+              SizedBox(
                 width: AppSpacing.earnTermsHeroIconBox,
                 height: AppSpacing.earnTermsHeroIconBox,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: AppColors.primary12,
+                    color: AppModuleAccents.earn.withValues(alpha: 0.12),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
-                        color: AppColors.primary30,
+                        color: AppModuleAccents.earn.withValues(alpha: 0.3),
                         width: AppSpacing.earnTermsHeroBorderWidth,
                       ),
                       borderRadius: AppRadii.lgRadius,
@@ -165,7 +168,7 @@ class _TermsHero extends StatelessWidget {
                   ),
                   child: Icon(
                     Icons.description_outlined,
-                    color: AppColors.primary,
+                    color: AppModuleAccents.earn,
                     size: AppSpacing.earnTermsHeroIcon,
                   ),
                 ),
@@ -303,7 +306,7 @@ class _ActionStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: AppTextStyles.caption.copyWith(color: AppColors.primary),
+      style: AppTextStyles.caption.copyWith(color: AppModuleAccents.earn),
     );
   }
 }
@@ -435,10 +438,12 @@ class _AcceptanceCard extends StatelessWidget {
             height: AppSpacing.earnTermsAcceptanceBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: accepted ? AppColors.buy : AppColors.transparent,
+                color: accepted ? AppModuleAccents.earn : AppColors.transparent,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    color: accepted ? AppColors.buy : AppColors.borderSolid,
+                    color: accepted
+                        ? AppModuleAccents.earn
+                        : AppColors.borderSolid,
                   ),
                   borderRadius: AppRadii.smRadius,
                 ),

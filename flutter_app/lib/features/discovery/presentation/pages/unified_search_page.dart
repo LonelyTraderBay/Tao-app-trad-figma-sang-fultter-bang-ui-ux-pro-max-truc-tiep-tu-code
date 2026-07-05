@@ -31,6 +31,8 @@ class UnifiedSearchPage extends ConsumerStatefulWidget {
   static const offlineKey = Key('sc283_unified_search_offline');
   static const trendingKey = Key('sc283_unified_search_trending');
   static const emptyKey = Key('sc283_unified_search_empty');
+  static const loadingKey = Key('sc283_unified_search_loading');
+  static const errorKey = Key('sc283_unified_search_error');
   static const disclosureKey = Key('sc283_unified_search_disclosure');
 
   static Key moduleKey(String id) => Key('sc283_module_$id');
@@ -109,15 +111,13 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
                       gap: VitContentGap.tight,
                       fullBleed: true,
                       children: [
-                        if (snapshot.hasQuery)
-                          _ResultsState(snapshot: snapshot)
-                        else
-                          _NoQueryState(
-                            snapshot: snapshot,
-                            onQuerySelected: (value) => setState(() {
-                              _searchController.text = value;
-                            }),
-                          ),
+                        _UnifiedSearchBody(
+                          snapshot: snapshot,
+                          onQuerySelected: (value) => setState(() {
+                            _searchController.text = value;
+                          }),
+                          onRetry: () => setState(() {}),
+                        ),
                       ],
                     ),
                   ),

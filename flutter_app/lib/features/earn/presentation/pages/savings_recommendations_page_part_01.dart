@@ -25,10 +25,10 @@ class _SavingsRecommendationsPageState
         .watch(savingsRecommendationsRepositoryProvider)
         .getRecommendations();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -39,6 +39,7 @@ class _SavingsRecommendationsPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -48,12 +49,10 @@ class _SavingsRecommendationsPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
+                    gap: VitContentGap.defaultGap,
                     children: [
                       _HeroCard(snapshot: snapshot),
                       _ProfileCard(snapshot: snapshot),
@@ -112,7 +111,7 @@ class _SavingsRecommendationsPageState
                         ],
                       ),
                       _QuickLinks(snapshot: snapshot),
-                      _Disclaimer(text: snapshot.disclaimer),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),
@@ -432,48 +431,21 @@ class _AmountSimulator extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              for (final amount in amounts) ...[
-                Expanded(
-                  child: _AmountChip(
-                    key: SavingsRecommendationsPage.amountChipKey(amount),
-                    amount: amount,
-                    selected: activeAmount == amount,
-                    onTap: () => onQuickAmount(amount),
-                  ),
+          VitPresetChipRow<int>(
+            accentColor: AppModuleAccents.earn,
+            selectedValue: activeAmount,
+            onTap: onQuickAmount,
+            items: [
+              for (final amount in amounts)
+                VitPresetChipItem(
+                  value: amount,
+                  label: amount >= 1000 ? '\$${amount ~/ 1000}K' : '\$$amount',
+                  key: SavingsRecommendationsPage.amountChipKey(amount),
                 ),
-                if (amount != amounts.last)
-                  const SizedBox(width: AppSpacing.x2),
-              ],
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _AmountChip extends StatelessWidget {
-  const _AmountChip({
-    super.key,
-    required this.amount,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final int amount;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: amount >= 1000 ? '\$${amount ~/ 1000}K' : '\$$amount',
-      selected: selected,
-      onTap: onTap,
-      fullWidth: true,
-      height: AppSpacing.buttonCompact,
     );
   }
 }

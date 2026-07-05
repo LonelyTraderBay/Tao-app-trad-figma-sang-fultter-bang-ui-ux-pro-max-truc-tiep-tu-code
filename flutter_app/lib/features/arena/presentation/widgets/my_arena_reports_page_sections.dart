@@ -7,38 +7,53 @@ class _ReportsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _SummaryTile(
-            label: 'Tổng cộng',
-            value: summary.total,
-            color: AppColors.text2,
+    return VitCard(
+      density: VitDensity.compact,
+      child: Row(
+        children: [
+          Expanded(
+            child: _SummaryMetric(
+              label: 'Tổng cộng',
+              value: summary.total,
+              color: AppColors.text2,
+            ),
           ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: _SummaryTile(
-            label: 'Đang xử lý',
-            value: summary.inReview,
-            color: AppColors.warn,
+          const SizedBox(
+            height: AppSpacing.x6,
+            child: VerticalDivider(
+              width: AppSpacing.x5,
+              color: AppColors.divider,
+            ),
           ),
-        ),
-        const SizedBox(width: AppSpacing.x2),
-        Expanded(
-          child: _SummaryTile(
-            label: 'Đã giải quyết',
-            value: summary.resolved,
-            color: AppColors.buy,
+          Expanded(
+            child: _SummaryMetric(
+              label: 'Đang xử lý',
+              value: summary.inReview,
+              color: AppColors.warn,
+            ),
           ),
-        ),
-      ],
+          const SizedBox(
+            height: AppSpacing.x6,
+            child: VerticalDivider(
+              width: AppSpacing.x5,
+              color: AppColors.divider,
+            ),
+          ),
+          Expanded(
+            child: _SummaryMetric(
+              label: 'Đã giải quyết',
+              value: summary.resolved,
+              color: AppColors.buy,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _SummaryTile extends StatelessWidget {
-  const _SummaryTile({
+class _SummaryMetric extends StatelessWidget {
+  const _SummaryMetric({
     required this.label,
     required this.value,
     required this.color,
@@ -50,26 +65,24 @@ class _SummaryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.myArenaReportsSummaryTilePadding,
-      child: Column(
-        children: [
-          Text(
-            '$value',
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: color,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
+    return Column(
+      children: [
+        Text(
+          '$value',
+          style: AppTextStyles.sectionTitle.copyWith(
+            color: color,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
     );
   }
 }

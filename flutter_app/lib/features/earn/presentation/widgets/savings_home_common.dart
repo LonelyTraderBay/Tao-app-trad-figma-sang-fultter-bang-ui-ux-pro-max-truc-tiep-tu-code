@@ -23,14 +23,6 @@ String _filterLabel(_SavingsFilter filter) {
   };
 }
 
-IconData _filterIcon(_SavingsFilter filter) {
-  return switch (filter) {
-    _SavingsFilter.all => Icons.bolt_rounded,
-    _SavingsFilter.flexible => Icons.lock_open_rounded,
-    _SavingsFilter.locked => Icons.lock_outline_rounded,
-  };
-}
-
 String _productSubtitle(SavingsProductDraft product) {
   final duration = product.type == SavingsProductType.flexible
       ? 'Linh hoạt'
@@ -69,4 +61,38 @@ String _riskLabel(EarnRiskLevel riskLevel) {
     EarnRiskLevel.medium => 'Trung bình',
     EarnRiskLevel.high => 'Cao',
   };
+}
+
+VitStatusPillStatus _riskPillStatus(EarnRiskLevel riskLevel) {
+  return switch (riskLevel) {
+    EarnRiskLevel.low => VitStatusPillStatus.success,
+    EarnRiskLevel.medium => VitStatusPillStatus.warning,
+    EarnRiskLevel.high => VitStatusPillStatus.error,
+  };
+}
+
+String _savingsApyEstimateRange(List<SavingsProductDraft> products) {
+  if (products.isEmpty) {
+    return '--';
+  }
+
+  final values = products
+      .map((product) => _parseSavingsApyPercent(product.apy))
+      .whereType<double>()
+      .toList();
+  if (values.isEmpty) {
+    return '--';
+  }
+
+  final minApy = values.reduce((a, b) => a < b ? a : b);
+  final maxApy = values.reduce((a, b) => a > b ? a : b);
+  if ((maxApy - minApy).abs() < 0.05) {
+    return '${minApy.toStringAsFixed(1)}%';
+  }
+  return '${minApy.toStringAsFixed(1)}–${maxApy.toStringAsFixed(1)}%';
+}
+
+double? _parseSavingsApyPercent(String apy) {
+  final normalized = apy.replaceAll('%', '').trim();
+  return double.tryParse(normalized);
 }

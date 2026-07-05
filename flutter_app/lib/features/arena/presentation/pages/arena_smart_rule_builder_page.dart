@@ -157,7 +157,7 @@ class _ArenaSmartRuleBuilderPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Arena Studio',
-            subtitle: 'Smart Rule Builder',
+            subtitle: 'Đặt luật · Points only',
             showBack: true,
             onBack: _close,
           ),

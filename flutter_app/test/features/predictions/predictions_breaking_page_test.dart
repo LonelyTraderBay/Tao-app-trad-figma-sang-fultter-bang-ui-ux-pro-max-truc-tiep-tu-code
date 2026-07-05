@@ -80,13 +80,13 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
-    expect(find.text('Breaking Movers'), findsOneWidget);
-    expect(find.text('24h Movement'), findsOneWidget);
-    expect(find.text('9 up'), findsOneWidget);
-    expect(find.text('3 down'), findsOneWidget);
+    expect(find.text('Biến động'), findsOneWidget);
+    expect(find.text('Biến động 24h'), findsOneWidget);
+    expect(find.text('9 tăng'), findsOneWidget);
+    expect(find.text('3 giảm'), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
     expect(find.text('Tesla stock above \$400 by mid-2026?'), findsOneWidget);
-    expect(find.text('Get daily updates'), findsOneWidget);
+    expect(find.text('Nhận cập nhật hàng ngày'), findsOneWidget);
   });
 
   testWidgets('SC-029 first viewport reaches first mover card', (tester) async {
@@ -126,7 +126,7 @@ void main() {
     await tester.tap(find.byKey(PredictionsBreakingPage.subscribeKey));
     await tester.pumpAndSettle();
 
-    expect(find.text('Subscribed!'), findsOneWidget);
+    expect(find.text('Đã đăng ký'), findsOneWidget);
   });
 
   testWidgets('SC-029 result tap and back button are wired', (tester) async {
@@ -135,7 +135,7 @@ void main() {
     await tester.tap(find.byKey(PredictionsBreakingPage.moverKey('pred-5')));
     await tester.pumpAndSettle();
     expect(find.byType(PredictionEventDetailPage), findsOneWidget);
-    expect(find.text('Event Detail'), findsOneWidget);
+    expect(find.text('Chi tiết sự kiện'), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));

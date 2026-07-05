@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -17,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 
 part 'savings_what_if_page_part_01.dart';
 part 'savings_what_if_page_part_02.dart';
@@ -94,12 +96,35 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Material(
+                color: AppColors.surface,
+                child: Padding(
+                  padding: AppSpacing.contentInsets.copyWith(
+                    top: AppSpacing.zero,
+                    bottom: AppSpacing.zero,
+                  ),
+                  child: _WhatIfTabs(
+                    tabs: snapshot.tabs,
+                    active: activeTab,
+                    onChanged: (tab) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _tab = tab);
+                    },
+                  ),
+                ),
+              ),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
@@ -114,14 +139,6 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
                         weightedApy: weightedApy,
                         selectedScenario: scenario,
                         assetCount: snapshot.portfolio.length,
-                      ),
-                      _WhatIfTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
                       ),
                       if (activeTab == 'scenarios')
                         ..._buildScenariosTab(
@@ -140,6 +157,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
                         )
                       else
                         _StressTab(snapshot: snapshot),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),
@@ -179,7 +197,7 @@ class _SavingsWhatIfPageState extends ConsumerState<SavingsWhatIfPage> {
       ),
       const _SectionTitle(label: 'Danh mục hiện tại'),
       _PortfolioList(positions: snapshot.portfolio),
-      _Disclaimer(text: snapshot.disclaimer, tone: AppColors.warn),
+      EarnWarningBanner(text: snapshot.disclaimer),
       VitCtaButton(
         key: SavingsWhatIfPage.runKey,
         onPressed: () => _runScenario(snapshot),

@@ -40,11 +40,6 @@ const EdgeInsetsDirectional _flowMapCardPadding = EdgeInsetsDirectional.all(
 const EdgeInsetsDirectional _flowMapInnerPadding = EdgeInsetsDirectional.all(
   AppSpacing.x3,
 );
-const EdgeInsetsDirectional _flowMapStatPadding =
-    EdgeInsetsDirectional.symmetric(
-      horizontal: AppSpacing.x2,
-      vertical: AppSpacing.x3,
-    );
 const EdgeInsetsDirectional _flowMapSectionTogglePadding =
     EdgeInsetsDirectional.symmetric(vertical: AppSpacing.x2);
 const EdgeInsetsDirectional _flowMapRouteHeaderPadding =

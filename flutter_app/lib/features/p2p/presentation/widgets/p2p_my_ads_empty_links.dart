@@ -95,14 +95,14 @@ class _QuickLinkTile extends StatelessWidget {
       padding: AppSpacing.p2pMerchantCommerceQuickLinkPadding,
       child: Row(
         children: [
-          VitCard(
-            width: _p2pMyAdsQuickIconBox,
-            height: _p2pMyAdsQuickIconBox,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
-            background: ColoredBox(color: color.withValues(alpha: .10)),
-            clip: true,
-            child: Icon(icon, color: color, size: AppSpacing.iconSm),
+          Material(
+            color: color.withValues(alpha: .10),
+            shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+            clipBehavior: Clip.antiAlias,
+            child: SizedBox.square(
+              dimension: _p2pMyAdsQuickIconBox,
+              child: Icon(icon, color: color, size: AppSpacing.iconSm),
+            ),
           ),
           const SizedBox(width: _p2pMyAdsMajorGap),
           Expanded(

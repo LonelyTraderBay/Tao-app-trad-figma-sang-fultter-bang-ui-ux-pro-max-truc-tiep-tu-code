@@ -134,6 +134,7 @@ class _PredictionRiskCalculatorPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Risk Calculator',
+            subtitle: 'Rủi ro · Prediction',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),

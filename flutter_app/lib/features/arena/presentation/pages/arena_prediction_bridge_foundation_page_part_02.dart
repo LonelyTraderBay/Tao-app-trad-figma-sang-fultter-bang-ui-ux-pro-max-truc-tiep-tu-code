@@ -355,48 +355,60 @@ class _ModuleStatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(tone);
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      borderColor: color.withValues(alpha: .20),
-      density: VitDensity.compact,
-      onTap: onTap,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            _toneIcon(tone),
-            color: color,
-            size: AppSpacing.arenaBridgeActionIcon,
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: color,
-              fontWeight: AppTextStyles.bold,
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadii.inputRadius,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: color.withValues(alpha: .06),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(color: color.withValues(alpha: .20)),
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+          child: Padding(
+            padding: VitDensity.compact.cardPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  _toneIcon(tone),
+                  color: color,
+                  size: AppSpacing.arenaBridgeActionIcon,
+                ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: color,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  detail,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            detail,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-        ],
+        ),
       ),
     );
   }

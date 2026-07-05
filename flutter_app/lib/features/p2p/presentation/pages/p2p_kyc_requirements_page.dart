@@ -61,7 +61,7 @@ class P2PKycRequirementsPage extends ConsumerWidget {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'P2P KYC Requirements',
+            title: 'Yêu cầu KYC',
             subtitle: 'KYC · P2P',
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),

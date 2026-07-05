@@ -90,7 +90,7 @@ class _P2PAntiPhishingCodePageState
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Anti-Phishing Code',
+            title: 'Mã chống phishing',
             subtitle: 'Bảo mật · P2P',
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),
@@ -164,7 +164,7 @@ class _P2PAntiPhishingCodePageState
             children: [
               Expanded(
                 child: Text(
-                  'Your Code',
+                  'Mã của bạn',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
                     fontWeight: AppTextStyles.bold,
@@ -184,20 +184,24 @@ class _P2PAntiPhishingCodePageState
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
-          VitCard(
-            radius: VitCardRadius.standard,
-            variant: VitCardVariant.inner,
-            borderColor: AppColors.borderSolid,
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
+          Material(
+            color: AppColors.surface2,
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: const BorderSide(color: AppColors.borderSolid),
             ),
-            child: Center(
-              child: Text(
-                _showCode ? code : List.filled(code.length, '•').join(),
-                style: AppTextStyles.baseMedium.copyWith(
-                  fontFeatures: AppTextStyles.tabularFigures,
-                  letterSpacing: 2,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x3,
+                vertical: AppSpacing.x2,
+              ),
+              child: Center(
+                child: Text(
+                  _showCode ? code : List.filled(code.length, '•').join(),
+                  style: AppTextStyles.baseMedium.copyWith(
+                    fontFeatures: AppTextStyles.tabularFigures,
+                    letterSpacing: 2,
+                  ),
                 ),
               ),
             ),
@@ -208,7 +212,7 @@ class _P2PAntiPhishingCodePageState
               Expanded(
                 child: _SoftActionButton(
                   key: P2PAntiPhishingCodePage.copyKey,
-                  label: 'Copy',
+                  label: 'Sao chép',
                   icon: Icons.copy_rounded,
                   color: AppModuleAccents.p2p,
                   onTap: () {
@@ -249,7 +253,7 @@ class _P2PAntiPhishingCodePageState
           VitInput(
             controller: _codeController,
             fieldKey: P2PAntiPhishingCodePage.inputKey,
-            label: 'Anti-Phishing Code',
+            label: 'Mã chống phishing',
             hintText: 'Nhập code tối thiểu 6 ký tự',
             textCapitalization: TextCapitalization.characters,
             inputFormatters: [

@@ -19,7 +19,7 @@ class _ExportHero extends StatelessWidget {
             children: [
               const Icon(
                 Icons.file_download_outlined,
-                color: AppColors.primary,
+                color: AppModuleAccents.earn,
                 size: AppSpacing.iconMd,
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -64,7 +64,7 @@ class _ExportHero extends StatelessWidget {
                   Text(
                     snapshot.reportTypeCountLabel,
                     style: AppTextStyles.sectionTitle.copyWith(
-                      color: AppColors.primary,
+                      color: AppModuleAccents.earn,
                     ),
                   ),
                 ],
@@ -86,7 +86,7 @@ class _ExportHero extends StatelessWidget {
                 child: _HeroPill(
                   label: 'Lưu trữ',
                   value: snapshot.retentionLabel,
-                  color: AppColors.buy,
+                  color: AppModuleAccents.earn,
                   icon: Icons.shield_outlined,
                 ),
               ),
@@ -190,7 +190,7 @@ class _SectionTitle extends StatelessWidget {
           height: AppSpacing.earnExportTitleMarkerHeight,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              color: AppColors.primary,
+              color: AppModuleAccents.earn,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
             ),
           ),
@@ -244,13 +244,13 @@ class _ReportTypeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? AppColors.buy : AppColors.text3;
+    final color = selected ? AppModuleAccents.earn : AppColors.text3;
 
     return VitCard(
       key: SavingsExportPage.reportTypeKey(report.id),
       variant: selected ? VitCardVariant.inner : VitCardVariant.standard,
       radius: VitCardRadius.large,
-      borderColor: selected ? AppColors.buy : AppColors.cardBorder,
+      borderColor: selected ? AppModuleAccents.earn : AppColors.cardBorder,
       onTap: onTap,
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(

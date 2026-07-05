@@ -129,25 +129,13 @@ class _CalendarTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppSpacing.stakingEarningsTabHeight,
-      child: ColoredBox(
-        color: AppColors.surface,
-        child: Center(
-          child: Padding(
-            padding: AppSpacing.earnContentHorizontalPadding,
-            child: VitTabBar(
-              variant: VitTabBarVariant.underline,
-              tabs: [
-                for (final tab in tabs)
-                  VitTabItem(key: tab.id, label: tab.label),
-              ],
-              activeKey: active,
-              onChanged: onChanged,
-            ),
-          ),
-        ),
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.segment,
+      tabs: [
+        for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
+      ],
+      activeKey: active,
+      onChanged: onChanged,
     );
   }
 }

@@ -179,29 +179,18 @@ class _PerformanceDisclaimer extends StatelessWidget {
 }
 
 class _TinyPill extends StatelessWidget {
-  const _TinyPill({required this.label, required this.color});
+  const _TinyPill({required this.label, required this.status});
 
   final String label;
-  final Color color;
+  final VitStatusPillStatus status;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .10),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadInlinePillPadding,
-        child: Text(
-          label,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            height: _launchpadPerformanceLineHeightCompact,
-          ),
-        ),
-      ),
+    return VitStatusPill(
+      label: label,
+      status: status,
+      size: VitStatusPillSize.sm,
+      outline: true,
     );
   }
 }
@@ -209,7 +198,7 @@ class _TinyPill extends StatelessWidget {
 enum _PerformanceTab {
   overview('overview', 'Tổng quan'),
   projects('projects', 'Dự án'),
-  chart('chart', 'ROI Chart');
+  chart('chart', 'Biểu đồ');
 
   const _PerformanceTab(this.id, this.label);
 

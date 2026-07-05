@@ -6,21 +6,19 @@ class _SecuritySummaryCard extends StatelessWidget {
     required this.trustedCount,
     required this.untrustedCount,
     required this.activeCount,
-    this.compactBorder = false,
   });
 
   final int totalDevices;
   final int trustedCount;
   final int untrustedCount;
   final int activeCount;
-  final bool compactBorder;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      key: compactBorder ? null : DeviceManagementPage.summaryKey,
+      key: DeviceManagementPage.summaryKey,
       density: VitDensity.compact,
-      borderColor: compactBorder ? _devicesBorder : AppColors.primary20,
+      borderColor: AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

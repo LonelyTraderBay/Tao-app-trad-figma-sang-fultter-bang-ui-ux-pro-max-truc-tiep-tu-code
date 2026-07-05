@@ -70,6 +70,7 @@ class _PredictionPortfolioAnalyzerPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Portfolio Analyzer',
+            subtitle: 'Phân tích · Prediction',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),

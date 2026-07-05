@@ -17,11 +17,11 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
     final snapshot = ref.watch(p2pClaimDetailProvider(widget.claimId));
     final claim = snapshot.claim;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navClearance = mode.usesVisualQaFrame
-        ? _p2pClaimVisualNavClearance
-        : _p2pClaimNativeNavClearance;
     final scrollEndPadding =
-        navClearance + MediaQuery.paddingOf(context).bottom;
+        (mode.usesVisualQaFrame
+            ? _p2pClaimVisualNavClearance + _p2pClaimVisualClearance
+            : _p2pClaimNativeNavClearance + _p2pClaimNativeClearance) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -61,23 +61,18 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pClaimScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: VitPageContent(
-                      padding: VitContentPadding.none,
-                      fullBleed: true,
-                      density: VitDensity.compact,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _ClaimHeroCard(claim: claim),
-                        VitPageSection(
-                          density: VitDensity.compact,
-                          children: [_ClaimBenchmarksCard(snapshot: snapshot)],
-                        ),
+                        const SizedBox(height: _p2pClaimSectionGap),
+                        _ClaimBenchmarksCard(snapshot: snapshot),
+                        const SizedBox(height: _p2pClaimSectionGap),
                         _DescriptionCard(description: claim.description),
+                        const SizedBox(height: _p2pClaimSectionGap),
                         _ClaimSectionTabs(
                           active: _section,
                           claim: claim,
@@ -86,7 +81,9 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             setState(() => _section = section);
                           },
                         ),
+                        const SizedBox(height: _p2pClaimTightGap),
                         _ClaimSectionBody(section: _section, claim: claim),
+                        const SizedBox(height: _p2pClaimSectionGap),
                         _NotificationsCard(
                           enabled: _notificationsEnabled,
                           onChanged: (value) {
@@ -99,6 +96,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             });
                           },
                         ),
+                        const SizedBox(height: _p2pClaimTightGap),
                         _ActionRow(
                           key: P2PClaimDetailPage.orderLinkKey,
                           icon: Icons.open_in_new_rounded,
@@ -108,6 +106,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             context.go(snapshot.orderRoute);
                           },
                         ),
+                        const SizedBox(height: _p2pClaimTightGap),
                         _ActionRow(
                           key: P2PClaimDetailPage.supportLinkKey,
                           icon: Icons.help_outline_rounded,
@@ -117,9 +116,12 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             context.go(snapshot.supportRoute);
                           },
                         ),
-                        if (_feedback != null)
+                        if (_feedback != null) ...[
+                          const SizedBox(height: _p2pClaimTightGap),
                           _FeedbackBanner(message: _feedback!),
-                        if (claim.status == P2PInsuranceClaimStatus.paid)
+                        ],
+                        if (claim.status == P2PInsuranceClaimStatus.paid) ...[
+                          const SizedBox(height: _p2pClaimTightGap),
                           VitCtaButton(
                             key: P2PClaimDetailPage.receiptKey,
                             variant: VitCtaButtonVariant.success,
@@ -134,17 +136,15 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                             },
                             child: const Text('Tải biên lai'),
                           ),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pClaimCompactCardPadding,
-                          child: VitHighRiskStatePanel(
-                            density: VitDensity.compact,
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Claim detail review',
-                            message:
-                                'Claim status, covered amount, evidence, notifications, receipt action and support next step are reviewed before follow-up.',
-                            contractId: 'p2p-claim-detail-review',
-                          ),
+                        ],
+                        const SizedBox(height: _p2pClaimTightGap),
+                        const VitHighRiskStatePanel(
+                          density: VitDensity.compact,
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Xem lại chi tiết claim',
+                          message:
+                              'Trạng thái claim, số tiền bảo hiểm, bằng chứng, thông báo, biên lai và bước hỗ trợ tiếp theo được xem lại trước thao tác tiếp.',
+                          contractId: 'p2p-claim-detail-review',
                         ),
                       ],
                     ),
@@ -169,11 +169,9 @@ class _ClaimHeroCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.heroKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        density: VitDensity.compact,
+      padding: AppSpacing.p2pClaimHeroPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -192,38 +190,55 @@ class _ClaimHeroCard extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(height: AppSpacing.x3),
           _ClaimProgress(status: claim.status),
           const Divider(
             height: _p2pClaimDividerExtent,
             color: AppColors.divider,
           ),
-          _InfoRow(
+          VitInfoRow(
             label: 'Lệnh P2P',
             value: claim.orderId,
             valueColor: AppModuleAccents.p2p,
-            trailing: Icons.open_in_new_rounded,
+            density: VitDensity.compact,
+            trailing: Icon(
+              Icons.open_in_new_rounded,
+              color: AppModuleAccents.p2p,
+              size: AppSpacing.p2pClaimInlineIcon,
+            ),
           ),
-          _InfoRow(label: 'Lý do', value: claim.reason),
-          _InfoRow(
+          VitInfoRow(
+            label: 'Lý do',
+            value: claim.reason,
+            density: VitDensity.compact,
+          ),
+          VitInfoRow(
             label: 'Số tiền yêu cầu',
             value: '${_formatVnd(claim.amount)} đ',
+            density: VitDensity.compact,
           ),
-          _InfoRow(
+          VitInfoRow(
             label: 'Tỷ lệ bảo hiểm',
             value: '${claim.coveragePct}%',
             valueColor: AppModuleAccents.p2p,
+            density: VitDensity.compact,
           ),
           const Divider(
             height: _p2pClaimDividerExtent,
             color: AppColors.divider,
           ),
           if (claim.paidAmount != null)
-            _InfoRow(
+            VitInfoRow(
               label: claim.statusLabel,
               value: '${_formatVnd(claim.paidAmount!)} đ',
               valueColor: AppColors.buy,
+              density: VitDensity.compact,
             ),
-          _InfoRow(label: 'Ngày gửi', value: claim.submittedAt),
+          VitInfoRow(
+            label: 'Ngày gửi',
+            value: claim.submittedAt,
+            density: VitDensity.compact,
+          ),
         ],
       ),
     );
@@ -289,66 +304,6 @@ class _ClaimProgress extends StatelessWidget {
   }
 }
 
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({
-    required this.label,
-    required this.value,
-    this.valueColor = AppColors.text1,
-    this.trailing,
-  });
-
-  final String label;
-  final String value;
-  final Color valueColor;
-  final IconData? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.p2pClaimInfoRowPadding,
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-            ),
-          ),
-          Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    value,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.right,
-                    style: AppTextStyles.baseMedium.copyWith(
-                      color: valueColor,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
-                ),
-                if (trailing != null) ...[
-                  const SizedBox(width: AppSpacing.x1),
-                  Icon(
-                    trailing,
-                    color: valueColor,
-                    size: AppSpacing.p2pClaimInlineIcon,
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _ClaimBenchmarksCard extends StatelessWidget {
   const _ClaimBenchmarksCard({required this.snapshot});
 
@@ -359,27 +314,15 @@ class _ClaimBenchmarksCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.benchmarksKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
+      padding: AppSpacing.p2pClaimCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.bar_chart_rounded,
-                color: AppColors.accent,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  'So sánh với nền tảng',
-                  style: AppTextStyles.baseMedium.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
-            ],
+          const VitSectionHeader(
+            title: 'So sánh với nền tảng',
+            icon: Icons.bar_chart_rounded,
+            iconColor: AppColors.accent,
+            density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.x2),
           Text(
@@ -387,25 +330,38 @@ class _ClaimBenchmarksCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x4),
-          for (final benchmark in snapshot.benchmarks) ...[
-            _BenchmarkMetricCard(benchmark: benchmark),
-            if (benchmark != snapshot.benchmarks.last)
-              const SizedBox(height: AppSpacing.x4),
+          for (var i = 0; i < snapshot.benchmarks.length; i++) ...[
+            if (i > 0)
+              const Divider(
+                height: _p2pClaimDividerExtent,
+                color: AppColors.divider,
+              ),
+            _BenchmarkMetricRow(benchmark: snapshot.benchmarks[i]),
           ],
           const SizedBox(height: AppSpacing.x4),
-          _ReasonDistribution(rows: snapshot.reasonShares),
+          const VitSectionHeader(
+            title: 'Phân bổ lý do claim',
+            icon: Icons.groups_outlined,
+            density: VitDensity.compact,
+          ),
+          const SizedBox(height: AppSpacing.x3),
+          for (final row in snapshot.reasonShares) ...[
+            _ReasonShareRow(row: row),
+            if (row != snapshot.reasonShares.last)
+              const SizedBox(height: AppSpacing.x2),
+          ],
           const SizedBox(height: AppSpacing.x4),
           Row(
             children: const [
               Expanded(
-                child: _MiniStatCard(
+                child: _MiniStatTile(
                   label: 'Tỷ lệ duyệt chung',
                   value: '78.5%',
                 ),
               ),
               SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: _MiniStatCard(label: 'Xử lý nhanh nhất', value: '4h'),
+                child: _MiniStatTile(label: 'Xử lý nhanh nhất', value: '4h'),
               ),
             ],
           ),
@@ -415,18 +371,16 @@ class _ClaimBenchmarksCard extends StatelessWidget {
   }
 }
 
-class _BenchmarkMetricCard extends StatelessWidget {
-  const _BenchmarkMetricCard({required this.benchmark});
+class _BenchmarkMetricRow extends StatelessWidget {
+  const _BenchmarkMetricRow({required this.benchmark});
 
   final P2PClaimBenchmarkDraft benchmark;
 
   @override
   Widget build(BuildContext context) {
     final color = _toneColor(benchmark.toneKey);
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.x2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -472,48 +426,6 @@ class _BenchmarkMetricCard extends StatelessWidget {
             benchmark.caption,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ReasonDistribution extends StatelessWidget {
-  const _ReasonDistribution({required this.rows});
-
-  final List<P2PClaimReasonShareDraft> rows;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.groups_outlined,
-                color: AppColors.text3,
-                size: AppSpacing.p2pClaimBenchmarkIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                'Phân bổ lý do claim',
-                style: AppTextStyles.caption.copyWith(
-                  color: AppColors.text2,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          for (final row in rows) ...[
-            _ReasonShareRow(row: row),
-            if (row != rows.last) const SizedBox(height: AppSpacing.x2),
-          ],
         ],
       ),
     );

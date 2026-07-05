@@ -119,41 +119,6 @@ class _SupportCard extends StatelessWidget {
   }
 }
 
-class _Disclaimer extends StatelessWidget {
-  const _Disclaimer({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX3,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.shield_outlined,
-            color: AppColors.primary,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.primary,
-                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 List<SavingsFAQItemDraft> _filteredItems(
   List<SavingsFAQItemDraft> items,
   SavingsFAQCategory? category,

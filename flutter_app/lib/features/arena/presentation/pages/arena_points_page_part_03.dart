@@ -246,12 +246,10 @@ class _ProgressBar extends StatelessWidget {
   const _ProgressBar({
     required this.value,
     required this.color,
-    this.trackColor = AppColors.surface3,
   });
 
   final double value;
   final Color color;
-  final Color trackColor;
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +259,7 @@ class _ProgressBar extends StatelessWidget {
       child: SizedBox(
         height: AppSpacing.x3,
         child: ColoredBox(
-          color: trackColor,
+          color: AppColors.surface3,
           child: Align(
             alignment: Alignment.centerLeft,
             child: FractionallySizedBox(

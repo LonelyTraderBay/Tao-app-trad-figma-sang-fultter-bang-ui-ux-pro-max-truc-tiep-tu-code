@@ -152,9 +152,9 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                             children: const [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,
-                                title: 'Login history state review',
+                                title: 'Rà soát lịch sử đăng nhập',
                                 message:
-                                    'Risk filters, suspicious events, expanded session details, export action, and security guidance remain visible before acting on P2P account access.',
+                                    'Bộ lọc rủi ro, sự kiện đáng ngờ, chi tiết phiên mở rộng, xuất dữ liệu và hướng dẫn bảo mật vẫn hiển thị trước khi thao tác truy cập P2P.',
                                 contractId: 'SC-257',
                               ),
                             ],

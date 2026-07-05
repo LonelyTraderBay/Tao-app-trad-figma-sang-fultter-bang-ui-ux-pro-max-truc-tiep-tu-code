@@ -124,7 +124,7 @@ class _OtpErrorBanner extends StatelessWidget {
       child: Material(
         color: AppColors.sell10,
         shape: const RoundedRectangleBorder(
-          borderRadius: AppRadii.mdRadius,
+          borderRadius: AppRadii.inputRadius,
           side: BorderSide(color: AppColors.sell20),
         ),
         child: Padding(
@@ -165,15 +165,13 @@ class _ResendControl extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.x3),
         if (canResend)
-          VitCard(
+          VitCtaButton(
             key: OTPPage.resendKey,
-            onTap: onResend,
-            variant: VitCardVariant.ghost,
-            borderColor: AppColors.transparent,
-            padding: AppSpacing.zeroInsets,
-            constraints: const BoxConstraints(
-              minHeight: AppSpacing.authTextButtonHeight,
-            ),
+            onPressed: onResend,
+            variant: VitCtaButtonVariant.ghost,
+            fullWidth: false,
+            height: AppSpacing.authTextButtonHeight,
+            padding: AppSpacing.authInlineTextButtonPadding,
             child: Text(
               'Gửi lại mã OTP',
               style: AppTextStyles.caption.copyWith(

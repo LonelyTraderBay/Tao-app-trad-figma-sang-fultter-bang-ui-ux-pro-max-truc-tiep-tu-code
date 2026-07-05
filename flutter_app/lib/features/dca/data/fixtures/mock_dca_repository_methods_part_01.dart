@@ -10,7 +10,9 @@ mixin _DcaRepositoryMethodsPart01 {
         DcaScreenState.empty,
         DcaScreenState.error,
         DcaScreenState.offline,
+        DcaScreenState.success,
       ],
+      screenState: DcaScreenState.success,
       overview: DcaOverview(
         currentValueVnd: 3027250000,
         totalInvestedVnd: 22200000,

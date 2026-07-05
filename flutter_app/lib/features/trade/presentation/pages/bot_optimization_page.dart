@@ -66,6 +66,7 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
           children: [
             VitHeader(
               title: 'Parameter Optimization',
+              subtitle: 'Tối ưu tham số chiến lược bot',
               showBack: true,
               onBack: () => context.go(AppRoutePaths.tradeBots),
             ),
@@ -90,34 +91,17 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                     context: context,
                     activeProductId: 'bots',
                     children: [
+                      VitBotSubpageHero(
+                        primaryLabel: 'Mục tiêu',
+                        primaryValue: _selectedTarget.toUpperCase(),
+                        secondaryLabel: 'Kết quả',
+                        secondaryValue: _lastResult == null ? '—' : 'Sẵn sàng',
+                        secondaryColor:
+                            _lastResult == null ? AppColors.text3 : _optimizationPrimary,
+                      ),
                       VitTradeSection(
                         title: 'Overview',
                       child: const _IntroCard(),
-                    ),
-                    VitTradeSection(
-                      title: 'Đánh giá rủi ro',
-                      child: const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Optimization review required',
-                              message:
-                                  'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
-                              contractId: 'bot-optimization-review',
-                            ),
-                            SizedBox(height: AppSpacing.x3),
-                            VitStatusPill(
-                              label: 'Queued before apply',
-                              status: VitStatusPillStatus.info,
-                              size: VitStatusPillSize.sm,
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
                     VitTradeSection(
                       title: 'Optimization Target',
@@ -142,6 +126,13 @@ class _BotOptimizationPageState extends ConsumerState<BotOptimizationPage> {
                     VitTradeSection(
                       title: 'How it works',
                       child: _HowItWorksCard(steps: snapshot.steps),
+                    ),
+                    const VitBotRiskReviewFooter(
+                      title: 'Optimization review required',
+                      message:
+                          'Target metric, parameter range, queue state, result preview and rollback next step are reviewed before bot changes.',
+                      contractId: 'bot-optimization-review',
+                      statusLabel: 'Queued before apply',
                     ),
                     ],
                   ),

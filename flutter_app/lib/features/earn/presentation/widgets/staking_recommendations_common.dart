@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -203,7 +204,7 @@ Color stakingRecommendationsAssetColor(String asset) {
     'BTC' => AppColors.warn,
     'ETH' => AppColors.primary,
     'SOL' => AppColors.accent,
-    'stETH' => AppColors.primarySoft,
+    'stETH' => AppModuleAccents.earn,
     'rETH' => AppColors.accent,
     _ => AppColors.text2,
   };

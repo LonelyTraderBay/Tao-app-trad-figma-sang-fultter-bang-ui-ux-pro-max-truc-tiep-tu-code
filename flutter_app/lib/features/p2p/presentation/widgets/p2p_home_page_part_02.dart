@@ -119,8 +119,22 @@ class _ResultsHeader extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ),
-        const _EscrowPill(label: 'Escrow'),
+        const _EscrowStatusPill(),
       ],
+    );
+  }
+}
+
+class _EscrowStatusPill extends StatelessWidget {
+  const _EscrowStatusPill();
+
+  @override
+  Widget build(BuildContext context) {
+    return const VitStatusPill(
+      label: 'Escrow',
+      status: VitStatusPillStatus.success,
+      icon: Icons.shield_outlined,
+      size: VitStatusPillSize.sm,
     );
   }
 }
@@ -221,15 +235,9 @@ class _OfferCard extends StatelessWidget {
                   PopupMenuItem(value: 'report', child: Text('Báo cáo offer')),
                 ],
               ),
-              const SizedBox(width: AppSpacing.x2),
-              _ActionButton(
-                label: tradeType == P2PTradeType.buy ? 'Mua' : 'Bán',
-                color: actionColor,
-                onTap: onOpen,
-              ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x4),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -248,34 +256,11 @@ class _OfferCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
-              const SizedBox(width: AppSpacing.x2),
-              Padding(
-                padding: const EdgeInsetsDirectional.only(top: AppSpacing.x1),
-                child: Text(
-                  _priceDelta(ad),
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.buy,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-              ),
               if (ad.priceType == 'floating') ...[
                 const SizedBox(width: AppSpacing.x2),
                 const _Badge(label: 'Thả nổi', color: AppColors.accent),
               ],
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Giới hạn ${_formatVnd(ad.minLimit)} - ${_formatVnd(ad.maxLimit)}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ),
+              const Spacer(),
               Text(
                 '${_formatAmount(ad.available)} ${ad.asset}',
                 style: AppTextStyles.micro.copyWith(
@@ -285,6 +270,13 @@ class _OfferCard extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            'Giới hạn ${_formatVnd(ad.minLimit)} - ${_formatVnd(ad.maxLimit)}',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x3),
           Row(
@@ -296,6 +288,10 @@ class _OfferCard extends StatelessWidget {
                   children: [
                     for (final method in ad.paymentMethods.take(3))
                       _PaymentPill(label: method),
+                    if (ad.paymentMethods.length > 3)
+                      _PaymentPill(
+                        label: '+${ad.paymentMethods.length - 3} phương thức',
+                      ),
                   ],
                 ),
               ),
@@ -320,14 +316,15 @@ class _OfferCard extends StatelessWidget {
               message: 'Merchant mới - kiểm tra kỹ trước khi giao dịch',
             ),
           ],
+          const SizedBox(height: AppSpacing.x3),
+          _ActionButton(
+            label: tradeType == P2PTradeType.buy ? 'Mua' : 'Bán',
+            color: actionColor,
+            onTap: onOpen,
+          ),
         ],
       ),
     );
-  }
-
-  String _priceDelta(P2PAdDraft ad) {
-    final margin = ((ad.price - 25300) / 25300) * 100;
-    return '${margin >= 0 ? '+' : ''}${margin.toStringAsFixed(2)}%';
   }
 }
 
@@ -343,6 +340,9 @@ class _EmptyOffers extends StatelessWidget {
       icon: Icons.search_off_rounded,
       title: snapshot.emptyTitle,
       message: snapshot.emptySubtitle,
+      actionLabel: 'Xem hướng dẫn P2P',
+      actionKey: P2PHomePage.guideLinkKey,
+      onAction: () => context.go(AppRoutePaths.p2pGuide),
     );
   }
 }
@@ -393,9 +393,8 @@ class _ActionButton extends StatelessWidget {
       variant: color == AppColors.buy
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.danger,
-      fullWidth: false,
+      fullWidth: true,
       height: AppSpacing.buttonCompact,
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x3),
       child: Text(label),
     );
   }

@@ -63,7 +63,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Trader Profile'), findsOneWidget);
+    expect(find.text('Hồ sơ trader'), findsOneWidget);
     expect(find.text('AlphaHunter_VN'), findsOneWidget);
     expect(find.text('+342.5%'), findsOneWidget);
     expect(find.text('\$2.45M'), findsOneWidget);

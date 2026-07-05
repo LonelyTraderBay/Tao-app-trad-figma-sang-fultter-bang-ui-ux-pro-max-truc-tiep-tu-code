@@ -66,10 +66,9 @@ void main() {
     expect(find.byType(P2PIdentityVerificationPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Identity Verification'), findsOneWidget);
+    expect(find.text('Xác minh danh tính'), findsNWidgets(2));
     expect(find.text('KYC · P2P'), findsOneWidget);
     expect(find.byKey(P2PIdentityVerificationPage.heroKey), findsOneWidget);
-    expect(find.text('Xác minh danh tính'), findsOneWidget);
     expect(
       find.byKey(P2PIdentityVerificationPage.documentTypesKey),
       findsOneWidget,
@@ -137,7 +136,7 @@ void main() {
     await tester.tap(find.byKey(P2PIdentityVerificationPage.submitKey));
     await tester.pumpAndSettle();
     expect(find.byType(P2PSelfieVerificationPage), findsOneWidget);
-    expect(find.text('Selfie Verification'), findsOneWidget);
+    expect(find.text('So khớp khuôn mặt'), findsOneWidget);
   });
 
   testWidgets('SC-249 back returns to KYC status page', (tester) async {

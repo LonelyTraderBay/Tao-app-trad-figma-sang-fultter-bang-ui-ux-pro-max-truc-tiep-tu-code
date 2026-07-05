@@ -7,16 +7,17 @@ class _ChallengeSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.arenaJoinCardPadding,
+    return VitModuleHeroCard(
+      accentColor: _arenaAccent,
+      density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             challenge.title,
-            style: AppTextStyles.body.copyWith(
+            style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
+              fontWeight: AppTextStyles.heavy,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -48,10 +49,11 @@ class _ChallengeSummaryCard extends StatelessWidget {
   }
 }
 
-class _RoomInfoCard extends StatelessWidget {
-  const _RoomInfoCard({required this.challenge});
+class _JoinContextCard extends StatelessWidget {
+  const _JoinContextCard({required this.challenge, required this.creator});
 
   final ArenaChallengeDetailDraft challenge;
+  final ArenaChallengeCreatorDraft creator;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,51 @@ class _RoomInfoCard extends StatelessWidget {
       padding: AppSpacing.arenaJoinCardPadding,
       child: Column(
         children: [
+          Row(
+            children: [
+              SizedBox.square(
+                dimension: AppSpacing.arenaJoinCreatorAvatar,
+                child: DecoratedBox(
+                  decoration: const ShapeDecoration(
+                    color: AppColors.surface2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                      side: BorderSide(color: AppColors.border),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.workspace_premium_rounded,
+                      color: _arenaAccent,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      creator.name,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      creator.role,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const Divider(color: AppColors.divider, height: AppSpacing.x5),
           _InfoRow(
             label: 'Quyền riêng tư',
             value: challenge.privacyLabel,
@@ -107,61 +154,6 @@ class _InfoRow extends StatelessWidget {
             style: AppTextStyles.body.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CreatorCard extends StatelessWidget {
-  const _CreatorCard({required this.creator});
-
-  final ArenaChallengeCreatorDraft creator;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.arenaJoinCardPadding,
-      child: Row(
-        children: [
-          SizedBox.square(
-            dimension: AppSpacing.arenaJoinCreatorAvatar,
-            child: DecoratedBox(
-              decoration: const ShapeDecoration(
-                color: AppColors.surface2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
-                  side: BorderSide(color: AppColors.border),
-                ),
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.workspace_premium_rounded,
-                  color: _arenaAccent,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  creator.name,
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  creator.role,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-                ),
-              ],
             ),
           ),
         ],
@@ -270,7 +262,7 @@ class _BalanceCard extends StatelessWidget {
           ),
           const Divider(color: AppColors.divider, height: AppSpacing.x5),
           _BalanceRow(
-            label: 'Entry Points',
+            label: 'Điểm vào',
             value: '-${_formatPoints(entryPoints)} pts',
             color: _arenaAccent,
           ),

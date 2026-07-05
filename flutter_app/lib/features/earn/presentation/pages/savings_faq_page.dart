@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 
 part '../widgets/savings_faq_page_sections.dart';
 part '../widgets/savings_faq_page_common.dart';
@@ -44,10 +45,10 @@ class _SavingsFAQPageState extends ConsumerState<SavingsFAQPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(savingsFAQRepositoryProvider).getFAQ();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
     final activeCategory = snapshot.categories.firstWhere(
       (category) => category.id == _activeCategoryId,
@@ -67,6 +68,7 @@ class _SavingsFAQPageState extends ConsumerState<SavingsFAQPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -76,12 +78,10 @@ class _SavingsFAQPageState extends ConsumerState<SavingsFAQPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
-                    padding: VitContentPadding.defaultPadding,
-                    gap: VitContentGap.tight,
+                    padding: VitContentPadding.compact,
+                    gap: VitContentGap.defaultGap,
                     children: [
                       _HeroCard(snapshot: snapshot),
                       _SearchField(
@@ -126,7 +126,7 @@ class _SavingsFAQPageState extends ConsumerState<SavingsFAQPage> {
                           },
                         ),
                       _SupportCard(snapshot: snapshot),
-                      _Disclaimer(text: snapshot.disclaimer),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

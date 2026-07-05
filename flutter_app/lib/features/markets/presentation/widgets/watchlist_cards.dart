@@ -26,38 +26,33 @@ class _WatchlistCard extends StatelessWidget {
       key: WatchlistPage.cardKey(pair.id),
       padding: VitDensity.compact.cardPadding,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              VitCard(
-                key: WatchlistPage.pairLinkKey(pair.id),
-                onTap: onPairTap,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
-                padding: EdgeInsets.zero,
-                borderColor: AppColors.transparent,
-                clip: true,
-                child: _AssetAvatar(pair: pair),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: VitCard(
-                  onTap: onPairTap,
-                  variant: VitCardVariant.ghost,
-                  radius: VitCardRadius.standard,
-                  padding: EdgeInsets.zero,
-                  borderColor: AppColors.transparent,
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.symmetric(
-                      vertical: AppSpacing.x1,
-                    ),
+          Material(
+            color: AppColors.transparent,
+            child: InkWell(
+              key: WatchlistPage.pairLinkKey(pair.id),
+              onTap: onPairTap,
+              borderRadius: AppRadii.inputRadius,
+              child: Row(
+                children: [
+                  _AssetAvatar(pair: pair),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(pair.baseAsset, style: AppTextStyles.baseMedium),
+                        Text(
+                          pair.baseAsset,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.baseMedium,
+                        ),
                         const SizedBox(height: AppSpacing.x1),
                         Text(
                           pair.symbol,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text3,
                           ),
@@ -65,73 +60,35 @@ class _WatchlistCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    _formatUsd(pair.price),
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
-                      fontFeatures: AppTextStyles.tabularFigures,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Icon(
-                        positive
-                            ? Icons.trending_up_rounded
-                            : Icons.trending_down_rounded,
-                        color: changeColor,
-                        size: AppSpacing.iconSm,
-                      ),
-                      const SizedBox(width: AppSpacing.x1),
                       Text(
-                        _formatPercent(pair.change24h),
+                        _formatUsd(pair.price),
                         style: AppTextStyles.caption.copyWith(
-                          color: changeColor,
+                          color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      VitAccentPill(
+                        label: _formatPercent(pair.change24h),
+                        accentColor: changeColor,
                       ),
                     ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
           const SizedBox(height: AppSpacing.x2),
           SizedBox(
             height: _watchlistSparklineExtent,
-            child: VitSparkline(values: pair.sparklineData, color: changeColor),
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              Expanded(
-                child: _WatchlistStat(
-                  label: '24h High',
-                  value: _formatUsd(pair.high24h),
-                  color: AppColors.buy,
-                ),
-              ),
-              Expanded(
-                child: _WatchlistStat(
-                  label: '24h Low',
-                  value: _formatUsd(pair.low24h),
-                  color: AppColors.sell,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
+            child: VitSparkline(
+              values: pair.sparklineData,
+              color: changeColor,
+            ),
           ),
           if (entry.note != null) ...[
             const SizedBox(height: AppSpacing.x3),
@@ -141,46 +98,37 @@ class _WatchlistCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _ActionButton(
+                child: VitCtaButton(
                   key: WatchlistPage.tradeKey(pair.id),
-                  label: 'Giao dịch',
-                  background: _marketPrimary,
-                  foreground: AppColors.onAccent,
-                  onTap: onTradeTap,
+                  onPressed: onTradeTap,
+                  density: VitDensity.compact,
+                  height: VitDensity.compact.controlHeight,
+                  child: const Text('Giao dịch'),
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
-              _ActionButton(
+              VitCtaButton(
                 key: WatchlistPage.noteKey(entry.id),
-                label: entry.note == null ? 'Thêm ghi chú' : 'Sửa ghi chú',
-                background: AppColors.surface2,
-                foreground: AppColors.text2,
-                onTap: onNoteTap,
+                onPressed: onNoteTap,
+                variant: VitCtaButtonVariant.ghost,
+                fullWidth: false,
+                density: VitDensity.compact,
+                height: VitDensity.compact.controlHeight,
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: AppSpacing.x3,
+                ),
+                child: Text(
+                  entry.note == null ? 'Thêm ghi chú' : 'Sửa ghi chú',
+                ),
               ),
               const SizedBox(width: AppSpacing.x2),
-              VitCard(
+              VitIconButton(
                 key: WatchlistPage.removeKey(entry.id),
-                onTap: onRemoveTap,
-                variant: VitCardVariant.ghost,
-                radius: VitCardRadius.standard,
-                padding: EdgeInsets.zero,
-                width: AppSpacing.watchlistRemoveButton,
-                height: AppSpacing.watchlistRemoveButton,
-                borderColor: AppColors.transparent,
-                clip: true,
-                child: const DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: AppColors.sell10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
-                    ),
-                  ),
-                  child: Icon(
-                    Icons.delete_outline_rounded,
-                    color: AppColors.sell,
-                    size: AppSpacing.iconSm,
-                  ),
-                ),
+                icon: Icons.delete_outline_rounded,
+                tooltip: 'Xóa khỏi danh sách',
+                onPressed: onRemoveTap,
+                variant: VitIconButtonVariant.danger,
+                size: VitIconButtonSize.md,
               ),
             ],
           ),
@@ -206,40 +154,6 @@ class _AssetAvatar extends StatelessWidget {
   }
 }
 
-class _WatchlistStat extends StatelessWidget {
-  const _WatchlistStat({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.text3),
-        ),
-        const SizedBox(height: AppSpacing.x1),
-        Text(
-          value,
-          style: AppTextStyles.caption.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            fontFeatures: AppTextStyles.tabularFigures,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _NotePill extends StatelessWidget {
   const _NotePill({required this.note});
 
@@ -250,7 +164,7 @@ class _NotePill extends StatelessWidget {
     return Material(
       color: _marketPrimary.withValues(alpha: 0.07),
       shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.mdRadius,
+        borderRadius: AppRadii.inputRadius,
         side: BorderSide(color: _marketPrimary.withValues(alpha: 0.14)),
       ),
       child: SizedBox(
@@ -276,61 +190,6 @@ class _NotePill extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({
-    super.key,
-    required this.label,
-    required this.background,
-    required this.foreground,
-    required this.onTap,
-  });
-
-  final String label;
-  final Color background;
-  final Color foreground;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: EdgeInsets.zero,
-      borderColor: AppColors.transparent,
-      clip: true,
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          color: background,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-        ),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: AppSpacing.watchlistActionMinWidth,
-            minHeight: VitDensity.compact.controlHeight,
-          ),
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-            ),
-            child: Center(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: foreground,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
           ),
         ),
       ),

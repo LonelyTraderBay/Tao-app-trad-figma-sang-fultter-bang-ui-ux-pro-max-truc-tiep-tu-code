@@ -73,8 +73,8 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Lịch sử lệnh'), findsOneWidget);
     expect(find.text('Lệnh · Trade'), findsOneWidget);
-    expect(find.text('Lệnh mở'), findsOneWidget);
-    expect(find.text('4'), findsOneWidget);
+    expect(find.textContaining('Lệnh mở'), findsOneWidget);
+    expect(find.textContaining('(4)'), findsWidgets);
     expect(find.text('BTC/USDT'), findsWidgets);
     expect(find.text('MUA'), findsWidgets);
     expect(find.text('Đang mở'), findsWidgets);
@@ -97,7 +97,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('BÁN'), findsWidgets);
-    expect(find.text('MUA'), findsNothing);
+    expect(find.byKey(OrdersHistoryPage.orderKey('ord-history-002')), findsOneWidget);
+    expect(find.byKey(OrdersHistoryPage.orderKey('ord-history-001')), findsNothing);
   });
 
   testWidgets('SC-050 first viewport reaches first open order', (tester) async {

@@ -71,8 +71,7 @@ class _PredictionsGlobalActivityPageState
             title: 'Global Activity',
             subtitle: 'Hoạt động · Prediction',
             showBack: true,
-            onBack: () =>
-                context.go(AppRoutePaths.marketsPredictionEvent('pred-1')),
+            onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -90,29 +89,20 @@ class _PredictionsGlobalActivityPageState
                       density: VitDensity.compact,
                       children: [
                         _LiveStats(snapshot: snapshot),
-                        VitCard(
-                          density: VitDensity.compact,
-                          child: _AmountFilters(
-                            active: _minAmount,
-                            onSelected: (value) => setState(() {
-                              _minAmount = value;
-                            }),
-                          ),
+                        _AmountFilters(
+                          active: _minAmount,
+                          onSelected: (value) => setState(() {
+                            _minAmount = value;
+                          }),
                         ),
                         if (snapshot.activities.isEmpty)
-                          const VitCard(
-                            density: VitDensity.compact,
-                            child: VitEmptyState(
-                              title: 'No activity found',
-                              message: 'Lower the minimum amount filter',
-                              icon: Icons.timeline_rounded,
-                            ),
+                          const VitEmptyState(
+                            title: 'No activity found',
+                            message: 'Lower the minimum amount filter',
+                            icon: Icons.timeline_rounded,
                           )
                         else
-                          VitCard(
-                            density: VitDensity.compact,
-                            child: _ActivityList(snapshot: snapshot),
-                          ),
+                          _ActivityList(snapshot: snapshot),
                       ],
                     ),
                   ),

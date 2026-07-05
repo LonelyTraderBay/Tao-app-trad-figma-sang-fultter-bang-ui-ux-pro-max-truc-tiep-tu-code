@@ -56,27 +56,23 @@ class _BotSuitabilityAssessmentPageState
     final snapshot = controller.state.snapshot;
     return VitTradeHubScaffold(
       title: _showResult ? 'Assessment Result' : 'Suitability Assessment',
+      subtitle: 'Đánh giá mức độ phù hợp với bot',
       semanticLabel: 'SC-119 BotSuitabilityAssessmentPage',
       contentKey: _showResult
           ? BotSuitabilityAssessmentPage.resultContentKey
           : BotSuitabilityAssessmentPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.cardPaddingCompact,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              density: VitDensity.compact,
-              title: 'Review bot suitability risk',
-              message:
-                  'Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.',
-            ),
+        if (!_showResult)
+          VitBotSubpageHero(
+            primaryLabel: 'Câu hỏi',
+            primaryValue:
+                '${_currentQuestion + 1}/${snapshot.questions.length}',
+            secondaryLabel: 'Đã trả lời',
+            secondaryValue: '${_answers.length}',
           ),
-        ),
         if (_showResult)
           VitTradeSection(
             title: 'Kết quả',
@@ -97,6 +93,11 @@ class _BotSuitabilityAssessmentPageState
               onAnswer: _handleAnswer,
             ),
           ),
+        const VitBotRiskReviewFooter(
+          title: 'Review bot suitability risk',
+          message:
+              'Confirm knowledge, risk limits, automation exposure, and next steps before enabling trading bots.',
+        ),
       ],
     );
   }

@@ -88,15 +88,14 @@ class PortfolioSummaryCard extends StatelessWidget {
     final positive = snapshot.totalChangeUsd >= 0;
     return VitCard(
       padding: AppSpacing.walletManagerSummaryPadding,
-      variant: VitCardVariant.ghost,
-      borderColor: walletManagerBorder,
-      background: const ColoredBox(color: walletManagerPanel),
+      variant: VitCardVariant.hero,
+      borderColor: walletManagerPrimary.withValues(alpha: .28),
       clip: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Total Portfolio Value',
+            'Tổng giá trị danh mục',
             style: AppTextStyles.badge.copyWith(
               color: AppColors.text3,
               height: AppSpacing.tradeBotLineHeightTight,
@@ -125,22 +124,16 @@ class PortfolioSummaryCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.walletManagerSummaryMetricGap),
           Row(
             children: [
+              _SummaryMetric(label: 'Ví', value: '${snapshot.wallets.length}'),
               _SummaryMetric(
-                label: 'Wallets',
-                value: '${snapshot.wallets.length}',
-              ),
-              _SummaryMetric(
-                label: '24h Change',
+                label: '24h',
                 value: formatWalletManagerSignedUsd(
                   snapshot.totalChangeUsd,
                   decimals: 0,
                 ),
                 valueColor: positive ? walletManagerGreen : walletManagerRed,
               ),
-              _SummaryMetric(
-                label: 'Groups',
-                value: '${snapshot.groups.length}',
-              ),
+              _SummaryMetric(label: 'Nhóm', value: '${snapshot.groups.length}'),
             ],
           ),
         ],
@@ -326,7 +319,7 @@ class _WalletCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.walletManagerWalletBalanceBlockGap),
           Text(
-            'Balance',
+            'Số dư',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
               height: AppSpacing.tradeBotLineHeightTight,

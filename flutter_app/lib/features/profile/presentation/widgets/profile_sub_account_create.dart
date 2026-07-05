@@ -23,8 +23,17 @@ class _CreateSubAccountButton extends StatelessWidget {
   }
 }
 
-class _CreateSubAccountForm extends StatelessWidget {
+class _CreateSubAccountForm extends StatefulWidget {
   const _CreateSubAccountForm();
+
+  @override
+  State<_CreateSubAccountForm> createState() => _CreateSubAccountFormState();
+}
+
+class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
+  String _accountType = 'Spot';
+
+  static const _accountTypes = ['Spot', 'Margin', 'Futures', 'T\u1EA5t c\u1EA3'];
 
   @override
   Widget build(BuildContext context) {
@@ -47,23 +56,27 @@ class _CreateSubAccountForm extends StatelessWidget {
             value: 'VD: Grid Bot #2',
           ),
           const SizedBox(height: AppSpacing.x3),
-          const _FormPillRow(
-            label: 'Lo\u1EA1i t\u00E0i kho\u1EA3n',
-            values: ['Spot', 'Margin', 'Futures', 'T\u1EA5t c\u1EA3'],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Lo\u1EA1i t\u00E0i kho\u1EA3n',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              VitPresetChipRow<String>(
+                gap: AppSpacing.profileSubAccountFormPillGap,
+                selectedValue: _accountType,
+                onTap: (value) => setState(() => _accountType = value),
+                items: [
+                  for (final type in _accountTypes)
+                    VitPresetChipItem<String>(value: type, label: type),
+                ],
+              ),
+            ],
           ),
           const SizedBox(height: AppSpacing.x3),
-          const _FormPillRow(
-            label: 'Quy\u1EC1n h\u1EA1n',
-            values: [
-              'Spot',
-              'Margin',
-              'Futures',
-              'Chuy\u1EC3n',
-              'R\u00FAt',
-              'Xem',
-            ],
-            wrap: true,
-          ),
+          const _FormPermissionPreview(),
           const SizedBox(height: AppSpacing.x3),
           VitCtaButton(
             onPressed: () {},
@@ -72,6 +85,44 @@ class _CreateSubAccountForm extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _FormPermissionPreview extends StatelessWidget {
+  const _FormPermissionPreview();
+
+  static const _permissions = [
+    'Spot',
+    'Margin',
+    'Futures',
+    'Chuy\u1EC3n',
+    'R\u00FAt',
+    'Xem',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Quy\u1EC1n h\u1EA1n',
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Wrap(
+          spacing: AppSpacing.profileSubAccountFormPillGap,
+          runSpacing: AppSpacing.profileSubAccountFormPillGap,
+          children: [
+            for (final permission in _permissions)
+              VitAccentPill(
+                label: permission,
+                accentColor: AppColors.primary,
+              ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -114,55 +165,6 @@ class _FormFieldPreview extends StatelessWidget {
             ),
           ),
         ),
-      ],
-    );
-  }
-}
-
-class _FormPillRow extends StatelessWidget {
-  const _FormPillRow({
-    required this.label,
-    required this.values,
-    this.wrap = false,
-  });
-
-  final String label;
-  final List<String> values;
-  final bool wrap;
-
-  @override
-  Widget build(BuildContext context) {
-    final children = [
-      for (final value in values)
-        VitAccentPill(label: value, accentColor: AppColors.primary),
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-        ),
-        const SizedBox(height: AppSpacing.x1),
-        if (wrap)
-          Wrap(
-            spacing: AppSpacing.profileSubAccountFormPillGap,
-            runSpacing: AppSpacing.profileSubAccountFormPillGap,
-            children: children,
-          )
-        else
-          Row(
-            children: [
-              for (final child in children) ...[
-                Expanded(child: child),
-                if (child != children.last)
-                  const SizedBox(
-                    width: AppSpacing.profileSubAccountFormPillGap,
-                  ),
-              ],
-            ],
-          ),
       ],
     );
   }

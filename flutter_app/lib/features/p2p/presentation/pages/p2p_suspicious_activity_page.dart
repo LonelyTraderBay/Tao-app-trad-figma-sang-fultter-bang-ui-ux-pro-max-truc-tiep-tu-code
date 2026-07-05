@@ -71,7 +71,7 @@ class _P2PSuspiciousActivityPageState
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Suspicious Activity',
+            title: 'Hoạt động đáng ngờ',
             subtitle: 'An toàn · P2P',
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),
@@ -318,7 +318,7 @@ class _DismissButton extends StatelessWidget {
       child: VitInlineIconAction(
         key: P2PSuspiciousActivityPage.dismissKey(alertId),
         icon: Icons.close_rounded,
-        tooltip: 'ÄÃ³ng cáº£nh bÃ¡o',
+        tooltip: 'Đóng cảnh báo',
         onPressed: () => onDismiss(alertId),
         color: AppColors.text3,
         size: AppSpacing.iconSm,

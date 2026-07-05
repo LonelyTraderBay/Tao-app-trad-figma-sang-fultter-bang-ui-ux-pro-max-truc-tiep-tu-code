@@ -63,7 +63,7 @@ class _P2PVideoVerificationPageState
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Video Verification',
+            title: 'Xác minh video',
             subtitle: 'KYC · P2P',
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),

@@ -20,7 +20,7 @@ class _SearchControl extends StatelessWidget {
     return VitSearchBar(
       key: PredictionsSearchPage.searchFieldKey,
       controller: controller,
-      placeholder: 'Search by title, tag, category...',
+      placeholder: 'Tìm theo tiêu đề, thẻ, danh mục...',
       autofocus: true,
       filterKey: PredictionsSearchPage.filtersToggleKey,
       filterActive: showFilters,
@@ -57,145 +57,119 @@ class _FilterPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: VitDensity.compact.cardPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _FilterLabel('Sort by'),
-          const SizedBox(height: AppSpacing.x1),
-          Wrap(
-            spacing: AppSpacing.x2,
-            runSpacing: AppSpacing.x2,
-            children: [
-              _SortChip(
-                key: PredictionsSearchPage.sortTrendingKey,
-                label: 'Trending',
-                icon: Icons.trending_up_rounded,
-                active: sort == PredictionSearchSort.trending,
-                onTap: () => onSortSelected(PredictionSearchSort.trending),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _FilterLabel('Sắp xếp'),
+        const SizedBox(height: AppSpacing.x1),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: VitTabBar(
+            variant: VitTabBarVariant.pill,
+            activeKey: sort.name,
+            onChanged: (key) =>
+                onSortSelected(PredictionSearchSort.values.byName(key)),
+            tabs: [
+              VitTabItem(
+                key: PredictionSearchSort.trending.name,
+                label: 'Xu hướng',
+                icon: Icons.trending_up_outlined,
+                widgetKey: PredictionsSearchPage.sortTrendingKey,
               ),
-              _SortChip(
-                key: PredictionsSearchPage.sortLiquidityKey,
-                label: 'Liquidity',
-                icon: Icons.bar_chart_rounded,
-                active: sort == PredictionSearchSort.liquidity,
-                onTap: () => onSortSelected(PredictionSearchSort.liquidity),
+              VitTabItem(
+                key: PredictionSearchSort.liquidity.name,
+                label: 'Thanh khoản',
+                icon: Icons.bar_chart_outlined,
+                widgetKey: PredictionsSearchPage.sortLiquidityKey,
               ),
-              _SortChip(
-                label: 'Volume',
-                icon: Icons.bar_chart_rounded,
-                active: sort == PredictionSearchSort.volume,
-                onTap: () => onSortSelected(PredictionSearchSort.volume),
+              VitTabItem(
+                key: PredictionSearchSort.volume.name,
+                label: 'Khối lượng',
+                icon: Icons.show_chart_outlined,
+                widgetKey: const Key('sc028_sort_volume'),
               ),
-              _SortChip(
-                label: 'Newest',
-                icon: Icons.auto_awesome_rounded,
-                active: sort == PredictionSearchSort.newest,
-                onTap: () => onSortSelected(PredictionSearchSort.newest),
+              VitTabItem(
+                key: PredictionSearchSort.newest.name,
+                label: 'Mới nhất',
+                icon: Icons.fiber_new_outlined,
+                widgetKey: const Key('sc028_sort_newest'),
               ),
-              _SortChip(
-                label: 'Ending Soon',
-                icon: Icons.schedule_rounded,
-                active: sort == PredictionSearchSort.ending,
-                onTap: () => onSortSelected(PredictionSearchSort.ending),
+              VitTabItem(
+                key: PredictionSearchSort.ending.name,
+                label: 'Sắp đóng',
+                icon: Icons.schedule_outlined,
+                widgetKey: const Key('sc028_sort_ending'),
               ),
-              _SortChip(
-                label: 'Competitive',
-                icon: Icons.track_changes_rounded,
-                active: sort == PredictionSearchSort.competitive,
-                onTap: () => onSortSelected(PredictionSearchSort.competitive),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          _FilterLabel('Event Status'),
-          const SizedBox(height: AppSpacing.x1),
-          Row(
-            children: [
-              Expanded(
-                child: _StatusChip(
-                  key: PredictionsSearchPage.statusActiveKey,
-                  label: 'Active',
-                  active: status == PredictionStatusFilter.active,
-                  onTap: () => onStatusSelected(PredictionStatusFilter.active),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _StatusChip(
-                  key: PredictionsSearchPage.statusResolvedKey,
-                  label: 'Resolved',
-                  active: status == PredictionStatusFilter.resolved,
-                  onTap: () =>
-                      onStatusSelected(PredictionStatusFilter.resolved),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _StatusChip(
-                  key: PredictionsSearchPage.statusAllKey,
-                  label: 'All',
-                  active: status == PredictionStatusFilter.all,
-                  onTap: () => onStatusSelected(PredictionStatusFilter.all),
-                ),
+              VitTabItem(
+                key: PredictionSearchSort.competitive.name,
+                label: 'Cạnh tranh',
+                icon: Icons.track_changes_outlined,
+                widgetKey: const Key('sc028_sort_competitive'),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x3),
-          _FilterLabel('Category'),
-          const SizedBox(height: AppSpacing.x1),
-          Wrap(
-            spacing: AppSpacing.x2,
-            runSpacing: AppSpacing.x2,
-            children: [
-              for (final category in categories)
-                _CategoryChip(
-                  key: category == 'Live Crypto'
-                      ? PredictionsSearchPage.categoryLiveCryptoKey
-                      : Key('sc028_category_$category'),
-                  label: category,
-                  active: selectedCategory == category,
-                  onTap: () => onCategorySelected(
-                    selectedCategory == category ? null : category,
-                  ),
-                ),
-            ],
-          ),
-          if (hasActiveFilters) ...[
-            const SizedBox(height: AppSpacing.x3),
-            VitCard(
-              key: PredictionsSearchPage.clearFiltersKey,
-              onTap: onClear,
-              variant: VitCardVariant.ghost,
-              radius: VitCardRadius.standard,
-              height: VitDensity.compact.controlHeight,
-              padding: AppSpacing.zeroInsets,
-              clip: true,
-              borderColor: AppColors.sell20,
-              background: const ColoredBox(color: AppColors.sell10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.close_rounded,
-                    color: AppColors.sell,
-                    size: AppSpacing.iconSm,
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                  Text(
-                    'Clear all filters',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.sell,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        const _FilterLabel('Trạng thái'),
+        const SizedBox(height: AppSpacing.x1),
+        VitSegmentedChoice<PredictionStatusFilter>(
+          selected: status,
+          onChanged: onStatusSelected,
+          options: [
+            VitSegmentedChoiceOption(
+              value: PredictionStatusFilter.active,
+              label: 'Đang mở',
+              key: PredictionsSearchPage.statusActiveKey,
+            ),
+            VitSegmentedChoiceOption(
+              value: PredictionStatusFilter.resolved,
+              label: 'Đã kết thúc',
+              key: PredictionsSearchPage.statusResolvedKey,
+            ),
+            VitSegmentedChoiceOption(
+              value: PredictionStatusFilter.all,
+              label: 'Tất cả',
+              key: PredictionsSearchPage.statusAllKey,
             ),
           ],
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        const _FilterLabel('Danh mục'),
+        const SizedBox(height: AppSpacing.x1),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              for (var index = 0; index < categories.length; index += 1) ...[
+                _CategoryChip(
+                  key: categories[index] == 'Live Crypto'
+                      ? PredictionsSearchPage.categoryLiveCryptoKey
+                      : Key('sc028_category_${categories[index]}'),
+                  label: categories[index],
+                  active: selectedCategory == categories[index],
+                  onTap: () => onCategorySelected(
+                    selectedCategory == categories[index]
+                        ? null
+                        : categories[index],
+                  ),
+                ),
+                if (index != categories.length - 1)
+                  const SizedBox(width: AppSpacing.x2),
+              ],
+            ],
+          ),
+        ),
+        if (hasActiveFilters) ...[
+          const SizedBox(height: AppSpacing.x3),
+          VitCtaButton(
+            key: PredictionsSearchPage.clearFiltersKey,
+            onPressed: onClear,
+            variant: VitCtaButtonVariant.secondary,
+            leading: const Icon(Icons.close_rounded),
+            child: const Text('Xóa bộ lọc'),
+          ),
         ],
-      ),
+      ],
     );
   }
 }
@@ -213,58 +187,6 @@ class _FilterLabel extends StatelessWidget {
         color: AppColors.text2,
         fontWeight: AppTextStyles.bold,
       ),
-    );
-  }
-}
-
-class _SortChip extends StatelessWidget {
-  const _SortChip({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: _predictionPrimary,
-      height: VitDensity.compact.controlHeight,
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.x2),
-      leading: Icon(icon),
-    );
-  }
-}
-
-class _StatusChip extends StatelessWidget {
-  const _StatusChip({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: _predictionPrimary,
-      height: VitDensity.compact.controlHeight,
     );
   }
 }

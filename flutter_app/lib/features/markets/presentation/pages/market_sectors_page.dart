@@ -17,7 +17,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
-import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 class MarketSectorsPage extends ConsumerStatefulWidget {
   const MarketSectorsPage({
@@ -82,6 +81,9 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: selectedSector?.nameVi ?? 'Ngành thị trường',
+            subtitle: selectedSector == null
+                ? 'Phân bổ vốn hóa · Cập nhật ${snapshot.lastUpdatedLabel}'
+                : '${selectedSector.coinCount} coin · Cập nhật ${snapshot.lastUpdatedLabel}',
             showBack: true,
             onBack: () {
               if (selectedSector != null) {
@@ -165,14 +167,6 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
                                   highlightedSectorId: selectedSector.id,
                                 ),
                               ]),
-                        const VitBanner(
-                          variant: VitBannerVariant.info,
-                          icon: Icons.sync_rounded,
-                          message: 'Sector data state reviewed',
-                          detail:
-                              'Distribution, timeframe, sort, detail, top coins, comparison, and fallback states stay visible while sector data refreshes.',
-                        ),
-                        const _SectorDataReviewCards(),
                       ],
                     ),
                   ),
@@ -182,22 +176,6 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SectorDataReviewCards extends StatelessWidget {
-  const _SectorDataReviewCards();
-
-  @override
-  Widget build(BuildContext context) {
-    return const VitPageSection(
-      label: 'Data checkpoints',
-      children: [
-        VitCard(child: Text('Sector distribution and filters')),
-        VitCard(child: Text('Top coins and detail drill-down')),
-        VitCard(child: Text('Comparison table and refresh footer')),
-      ],
     );
   }
 }

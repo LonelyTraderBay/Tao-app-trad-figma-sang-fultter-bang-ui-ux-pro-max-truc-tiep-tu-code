@@ -92,6 +92,7 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
+                      gap: VitContentGap.tight,
                       children: [
                         _SafetyHero(snapshot: snapshot),
                         _SafetySection(

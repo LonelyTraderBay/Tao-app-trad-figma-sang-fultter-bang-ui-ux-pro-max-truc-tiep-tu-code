@@ -6,12 +6,14 @@ class _TabContent extends StatelessWidget {
     required this.snapshot,
     required this.onMode,
     required this.onUseMode,
+    required this.onGuide,
   });
 
   final _CreatorTab activeTab;
   final ArenaCreatorProfileSnapshot snapshot;
   final ValueChanged<String> onMode;
   final VoidCallback onUseMode;
+  final VoidCallback onGuide;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,8 @@ class _TabContent extends StatelessWidget {
         icon: Icons.bolt_rounded,
         title: 'Không có phòng',
         message: 'Hiện chưa có phòng nào đang mở',
+        actionLabel: 'Xem hướng dẫn',
+        onAction: onGuide,
       ),
       _CreatorTab.history => _HistoryTab(rooms: snapshot.historyRooms),
       _CreatorTab.about => _AboutTab(

@@ -80,6 +80,10 @@ void main() {
     );
     expect(find.text('N\u1EA1p ti\u1EC1n \u0111ang ch\u1EDD'), findsWidgets);
     expect(
+      find.text('Theo d\u00F5i x\u00E1c nh\u1EADn \u00B7 Wallet'),
+      findsOneWidget,
+    );
+    expect(
       find.text('2 giao d\u1ECBch \u0111ang ch\u1EDD x\u00E1c nh\u1EADn'),
       findsOneWidget,
     );

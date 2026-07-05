@@ -394,12 +394,14 @@ class _CampaignHistoryCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    _TinyPill(
-                      label: item.bonusLabel,
-                      color: AppColors.accent,
-                      background: AppColors.accent10,
+                    Flexible(
+                      child: _TinyPill(
+                        label: item.bonusLabel,
+                        color: AppColors.accent,
+                        background: AppColors.accent10,
+                      ),
                     ),
-                    const Expanded(child: SizedBox.shrink()),
+                    const SizedBox(width: AppSpacing.x2),
                     Text(
                       '${_formatCompactInt(item.participants)} tham gia',
                       style: AppTextStyles.micro.copyWith(

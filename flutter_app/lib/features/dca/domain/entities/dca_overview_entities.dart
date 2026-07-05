@@ -84,6 +84,7 @@ class DcaDashboardSnapshot {
     required this.endpoint,
     required this.actionDraft,
     required this.supportedStates,
+    required this.screenState,
     required this.overview,
     required this.sparkline,
     required this.tools,
@@ -94,6 +95,7 @@ class DcaDashboardSnapshot {
   final String endpoint;
   final String actionDraft;
   final List<DcaScreenState> supportedStates;
+  final DcaScreenState screenState;
   final DcaOverview overview;
   final List<double> sparkline;
   final List<DcaTool> tools;

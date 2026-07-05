@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -15,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 
 part '../widgets/savings_export_config_widgets.dart';
 part '../widgets/savings_export_option_widgets.dart';
@@ -89,12 +91,32 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              ColoredBox(
+                color: AppColors.surface,
+                child: Padding(
+                  padding: AppSpacing.earnSurfaceTabsPadding,
+                  child: _ExportTabs(
+                    tabs: snapshot.tabs,
+                    active: activeTab,
+                    onChanged: (tab) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _tab = tab);
+                    },
+                  ),
+                ),
+              ),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
@@ -104,14 +126,6 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                     gap: VitContentGap.defaultGap,
                     children: [
                       _ExportHero(snapshot: snapshot),
-                      _ExportTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
                       if (activeTab == 'create') ...[
                         _SectionTitle(label: 'Loại báo cáo'),
                         _ReportTypeList(
@@ -172,16 +186,19 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                           selectedReport: selectedReport,
                           selectedFormat: selectedFormat,
                         ),
-                        _SensitiveNotice(text: snapshot.sensitiveNotice),
+                        EarnWarningBanner(
+                          text: snapshot.sensitiveNotice,
+                          lineHeight: AppSpacing.earnExportWarningLineHeight,
+                        ),
                         VitHighRiskStatePanel(
                           state: _previewReady
                               ? VitHighRiskUiState.success
                               : VitHighRiskUiState.riskReview,
                           title: _previewReady
-                              ? 'Export preview ready'
-                              : 'Export review required',
+                              ? 'Đã sẵn sàng xem trước'
+                              : 'Cần xem xét trước khi xuất',
                           message:
-                              'Masked account data, report scope, file format, fee impact and transaction period are reviewed before export.',
+                              'Dữ liệu tài khoản được che, phạm vi báo cáo, định dạng file, phí và khoảng thời gian giao dịch được xem xét trước khi xuất.',
                           contractId:
                               'savings-export-${selectedReport.name}-${selectedFormat.name}',
                         ),
@@ -197,6 +214,7 @@ class _SavingsExportPageState extends ConsumerState<SavingsExportPage> {
                         ),
                       ] else
                         _HistoryList(history: snapshot.history),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

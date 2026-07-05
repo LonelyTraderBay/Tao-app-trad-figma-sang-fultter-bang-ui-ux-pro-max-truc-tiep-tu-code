@@ -1,7 +1,7 @@
 part of 'trading_bots_page.dart';
 
-class _BotsMetricsSummary extends StatelessWidget {
-  const _BotsMetricsSummary({required this.bots});
+class _BotsHero extends StatelessWidget {
+  const _BotsHero({required this.bots});
 
   final List<TradeBot> bots;
 
@@ -10,70 +10,61 @@ class _BotsMetricsSummary extends StatelessWidget {
     final running = bots
         .where((bot) => bot.status == TradeBotStatus.running)
         .length;
-    final totalInvestment = bots.fold(0.0, (sum, bot) => sum + bot.investment);
     final totalProfit = bots.fold(0.0, (sum, bot) => sum + bot.profit);
+    final profitColor = totalProfit >= 0 ? AppColors.buy : AppColors.sell;
+
     return VitCard(
-      variant: VitCardVariant.inner,
-      padding: VitDensity.compact.cardPadding,
+      padding: AppSpacing.cardPaddingCompact,
       child: Row(
         children: [
           Expanded(
-            child: _CompactStat(
-              value: '$running',
-              label: 'Bot đang chạy',
-              valueColor: AppColors.buy,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Đang chạy',
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+                const SizedBox(height: AppSpacing.x1),
+                Text(
+                  '$running',
+                  style: AppTextStyles.heroNumber.copyWith(
+                    color: AppColors.buy,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
+                ),
+              ],
             ),
           ),
-          Expanded(
-            child: _CompactStat(
-              value: '\$${_formatWholeNumber(totalInvestment)}',
-              label: 'Tổng đầu tư',
-              valueColor: AppColors.text1,
-            ),
+          Container(
+            width: 1,
+            height: AppSpacing.x6,
+            color: AppColors.border,
           ),
           Expanded(
-            child: _CompactStat(
-              value: _formatSignedMoney(totalProfit),
-              label: 'Lãi nhuận',
-              valueColor: totalProfit >= 0 ? AppColors.buy : AppColors.sell,
+            child: Padding(
+              padding: const EdgeInsets.only(left: AppSpacing.x4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Lãi/lỗ',
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    _formatSignedMoney(totalProfit),
+                    style: AppTextStyles.heroNumber.copyWith(
+                      color: profitColor,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _CompactStat extends StatelessWidget {
-  const _CompactStat({
-    required this.value,
-    required this.label,
-    required this.valueColor,
-  });
-
-  final String value;
-  final String label;
-  final Color valueColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          value,
-          style: AppTextStyles.numericCode.copyWith(
-            color: valueColor,
-            fontFeatures: AppTextStyles.tabularFigures,
-            height: AppSpacing.tradeBotLineHeightTight,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.x1),
-        Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-        ),
-      ],
     );
   }
 }
@@ -135,31 +126,16 @@ class _MyBotsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (bots.isEmpty) {
-      return VitTradeSection(
-        title: 'Bot của tôi',
-        child: _EmptyBots(onAdd: onAdd),
-      );
+      return _EmptyBots(onAdd: onAdd);
     }
-    return VitTradeSection(
-      title: 'Bot của tôi',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final bot in bots) ...[
-            _BotCard(bot: bot, onToggle: onToggle, onDelete: onDelete),
-            if (bot != bots.last) const SizedBox(height: AppSpacing.x3),
-          ],
-          const SizedBox(height: AppSpacing.x3),
-          VitCtaButton(
-            key: TradingBotsPage.addBotKey,
-            onPressed: onAdd,
-            height: AppSpacing.inputHeight,
-            variant: VitCtaButtonVariant.secondary,
-            leading: const Icon(Icons.add_rounded),
-            child: const Text('Thêm Bot mới'),
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final bot in bots) ...[
+          _BotCard(bot: bot, onToggle: onToggle, onDelete: onDelete),
+          if (bot != bots.last) const SizedBox(height: AppSpacing.x3),
         ],
-      ),
+      ],
     );
   }
 }

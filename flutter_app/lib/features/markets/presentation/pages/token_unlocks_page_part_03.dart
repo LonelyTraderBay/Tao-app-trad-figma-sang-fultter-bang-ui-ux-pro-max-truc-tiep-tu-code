@@ -67,42 +67,12 @@ class _UnlockWarningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      borderColor: AppColors.warn.withValues(alpha: .16),
-      padding: AppSpacing.tokenUnlocksWarningPadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.tokenUnlocksWarningIcon,
-          ),
-          const SizedBox(width: AppSpacing.tokenUnlocksWarningIconGap),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Lưu ý quan trọng',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: _unlockWarningTitleGap),
-                Text(
-                  'Token unlock không đồng nghĩa token sẽ bị bán. Tuy nhiên, unlock lớn thường tạo áp lực bán tiềm ẩn. Dữ liệu chỉ mang tính tham khảo.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                    height: _unlockWarningLineHeight,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return const VitBanner(
+      variant: VitBannerVariant.warning,
+      icon: Icons.warning_amber_rounded,
+      message: 'Lưu ý quan trọng',
+      detail:
+          'Token unlock không đồng nghĩa token sẽ bị bán. Tuy nhiên, unlock lớn thường tạo áp lực bán tiềm ẩn. Dữ liệu chỉ mang tính tham khảo.',
     );
   }
 }

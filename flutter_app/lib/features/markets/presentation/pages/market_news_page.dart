@@ -15,7 +15,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
-import '../widgets/market_body_review_widgets.dart';
 
 part '../widgets/market_news_page_sections.dart';
 part '../widgets/market_news_page_common.dart';
@@ -74,6 +73,7 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tin thị trường',
+            subtitle: 'Tin tức · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -143,17 +143,12 @@ class _MarketNewsPageState extends ConsumerState<MarketNewsPage> {
                               ),
                             ),
                           ),
-                        const MarketBodyReviewSection(
-                          title: 'News state review',
-                          message: 'Market news data reviewed',
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.info_outline_rounded,
+                          message: 'Tin tức chỉ mang tính tham khảo',
                           detail:
-                              'Breaking, category, sentiment, saved, empty, and refresh states remain visible for news scanning.',
-                          primary:
-                              'Category and sentiment filters keep the active news context explicit.',
-                          secondary:
-                              'Saved and expanded stories preserve article context without changing tabs.',
-                          tertiary:
-                              'Token links keep market navigation separate from editorial reading state.',
+                              'Nội dung biên tập không phải khuyến nghị giao dịch. Kiểm tra nguồn trước khi quyết định.',
                         ),
                       ],
                     ),

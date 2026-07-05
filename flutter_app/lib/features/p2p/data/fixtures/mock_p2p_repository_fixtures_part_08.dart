@@ -275,31 +275,31 @@ const List<P2PBlacklistEntryDraft> _p2pBlacklistEntries = [
 const List<P2PNotificationSettingDraft> _p2pNotificationSettings = [
   P2PNotificationSettingDraft(
     id: 'order_updates',
-    label: 'Order Updates',
+    label: 'Cập nhật đơn hàng',
     description: 'Cập nhật trạng thái đơn hàng',
     channels: {'push': true, 'email': true, 'sms': false},
   ),
   P2PNotificationSettingDraft(
     id: 'payment_received',
-    label: 'Payment Received',
+    label: 'Đã nhận thanh toán',
     description: 'Thông báo khi nhận thanh toán',
     channels: {'push': true, 'email': true, 'sms': true},
   ),
   P2PNotificationSettingDraft(
     id: 'release_reminder',
-    label: 'Release Reminder',
-    description: 'Nhắc release escrow',
+    label: 'Nhắc release',
+    description: 'Nhắc giải phóng escrow đúng hạn',
     channels: {'push': true, 'email': false, 'sms': false},
   ),
   P2PNotificationSettingDraft(
     id: 'security_alerts',
-    label: 'Security Alerts',
-    description: 'Cảnh báo bảo mật',
+    label: 'Cảnh báo bảo mật',
+    description: 'Đăng nhập lạ, đổi phương thức thanh toán',
     channels: {'push': true, 'email': true, 'sms': true},
   ),
   P2PNotificationSettingDraft(
     id: 'kyc_updates',
-    label: 'KYC Updates',
+    label: 'Cập nhật KYC',
     description: 'Cập nhật xác minh KYC',
     channels: {'push': true, 'email': true, 'sms': false},
   ),

@@ -63,40 +63,27 @@ class _BotPerformanceAnalyticsPageState
         .getBotPerformanceAnalytics();
     return VitTradeHubScaffold(
       title: 'Performance Analytics',
+      subtitle: 'Phân tích hiệu suất bot theo thời gian',
       semanticLabel: 'SC-124 BotPerformanceAnalyticsPage',
       contentKey: BotPerformanceAnalyticsPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Lãi/lỗ',
+          primaryValue:
+              '${snapshot.metrics.totalPnl >= 0 ? '+' : ''}\$${snapshot.metrics.totalPnl.toStringAsFixed(0)}',
+          primaryColor: snapshot.metrics.totalPnl >= 0
+              ? _analyticsGreen
+              : _analyticsRed,
+          secondaryLabel: 'Tỷ lệ thắng',
+          secondaryValue: '${snapshot.metrics.winRate.toStringAsFixed(1)}%',
+          secondaryColor: _analyticsGreen,
+        ),
         VitTradeSection(
           title: 'Key metrics',
           child: _KeyMetricsCard(metrics: snapshot.metrics),
-        ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.tradeBotCardPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Bot analytics review',
-                  message:
-                      'PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.',
-                  contractId: 'bot-performance-analytics-review',
-                  density: VitDensity.compact,
-                ),
-                SizedBox(height: _analyticsSpace),
-                VitStatusPill(
-                  label: 'Risk-aware analytics',
-                  status: VitStatusPillStatus.info,
-                  size: VitStatusPillSize.sm,
-                ),
-              ],
-            ),
-          ),
         ),
         VitTradeSection(
           title: 'Timeframe',
@@ -132,6 +119,13 @@ class _BotPerformanceAnalyticsPageState
           child: _PerformanceSummaryCard(metrics: snapshot.metrics),
         ),
         VitTradeSection(title: 'Rating', child: const _RatingCard()),
+        const VitBotRiskReviewFooter(
+          title: 'Bot analytics review',
+          message:
+              'PnL, win/loss distribution, strategy mix, duration and risk rating are reviewed before bot changes.',
+          contractId: 'bot-performance-analytics-review',
+          statusLabel: 'Risk-aware analytics',
+        ),
       ],
     );
   }

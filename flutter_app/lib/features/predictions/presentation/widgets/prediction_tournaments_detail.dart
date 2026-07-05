@@ -130,33 +130,13 @@ class _TournamentDetailHero extends StatelessWidget {
           ),
           if (tournament.isJoined && tournament.myRank != null) ...[
             const SizedBox(height: AppSpacing.x2),
-            Material(
-              color: AppColors.buy.withValues(alpha: .08),
-              borderRadius: AppRadii.cardRadius,
-              child: Padding(
-                padding: AppSpacing.predictionTournamentInfoPadding,
-                child: Row(
-                  children: [
-                    Text(
-                      'Your rank',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text2,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    Expanded(
-                      child: Text(
-                        '#${tournament.myRank} - ${tournament.myScore} pts',
-                        textAlign: TextAlign.end,
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.buy,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            VitAnnouncementBanner(
+              message:
+                  'Hạng #${tournament.myRank} · ${tournament.myScore} điểm — '
+                  'P/L và vị thế tách biệt khỏi Arena Points.',
+              icon: Icons.emoji_events_outlined,
+              accentColor: AppColors.buy,
+              variant: VitAnnouncementBannerVariant.compact,
             ),
           ],
         ],

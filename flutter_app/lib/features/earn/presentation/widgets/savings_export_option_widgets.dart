@@ -44,13 +44,13 @@ class _FormatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? AppColors.buy : AppColors.text3;
+    final color = selected ? AppModuleAccents.earn : AppColors.text3;
 
     return VitCard(
       key: SavingsExportPage.formatKey(format.id),
       variant: selected ? VitCardVariant.inner : VitCardVariant.standard,
       radius: VitCardRadius.standard,
-      borderColor: selected ? AppColors.buy : AppColors.cardBorder,
+      borderColor: selected ? AppModuleAccents.earn : AppColors.cardBorder,
       onTap: onTap,
       padding: AppSpacing.earnCardPaddingX4,
       child: Column(
@@ -64,7 +64,7 @@ class _FormatCard extends StatelessWidget {
           Text(
             format.label,
             style: _captionBold.copyWith(
-              color: selected ? AppColors.buy : AppColors.text2,
+              color: selected ? AppModuleAccents.earn : AppColors.text2,
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -97,18 +97,17 @@ class _PeriodChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return VitPresetChipRow<SavingsExportPeriod>(
       key: SavingsExportPage.periodsKey,
-      spacing: AppSpacing.x3,
-      runSpacing: AppSpacing.x3,
-      children: [
+      accentColor: AppModuleAccents.earn,
+      selectedValue: selected,
+      onTap: onChanged,
+      items: [
         for (final period in periods)
-          _ChoicePill(
-            key: SavingsExportPage.periodKey(period.id),
+          VitPresetChipItem(
+            value: period.id,
             label: period.label,
-            selected: period.id == selected,
-            icon: null,
-            onTap: () => onChanged(period.id),
+            key: SavingsExportPage.periodKey(period.id),
           ),
       ],
     );
@@ -128,46 +127,19 @@ class _ScopeChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return VitPresetChipRow<SavingsExportScope>(
       key: SavingsExportPage.scopesKey,
-      spacing: AppSpacing.x3,
-      runSpacing: AppSpacing.x3,
-      children: [
+      accentColor: AppModuleAccents.earn,
+      selectedValue: selected,
+      onTap: onChanged,
+      items: [
         for (final scope in scopes)
-          _ChoicePill(
-            key: SavingsExportPage.scopeKey(scope.id),
+          VitPresetChipItem(
+            value: scope.id,
             label: scope.label,
-            selected: scope.id == selected,
-            icon: _iconFor(scope.iconKey),
-            onTap: () => onChanged(scope.id),
+            key: SavingsExportPage.scopeKey(scope.id),
           ),
       ],
-    );
-  }
-}
-
-class _ChoicePill extends StatelessWidget {
-  const _ChoicePill({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.icon,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final IconData? icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      padding: AppSpacing.earnPillPaddingLarge,
-      leading: icon == null ? null : Icon(icon),
     );
   }
 }
@@ -214,7 +186,7 @@ class _OptionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = enabled ? AppColors.buy : AppColors.text3;
+    final color = enabled ? AppModuleAccents.earn : AppColors.text3;
 
     return VitCard(
       key: SavingsExportPage.optionKey(option.id),
@@ -247,8 +219,8 @@ class _OptionRow extends StatelessWidget {
           Switch(
             value: enabled,
             onChanged: (_) => onTap(),
-            activeThumbColor: AppColors.buy,
-            activeTrackColor: AppColors.buy20,
+            activeThumbColor: AppModuleAccents.earn,
+            activeTrackColor: AppModuleAccents.earn.withValues(alpha: 0.2),
             inactiveThumbColor: AppColors.text3,
             inactiveTrackColor: AppColors.toggleTrackOff,
           ),

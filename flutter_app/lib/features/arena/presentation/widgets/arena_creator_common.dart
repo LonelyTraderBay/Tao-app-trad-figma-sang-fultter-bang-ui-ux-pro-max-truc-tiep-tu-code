@@ -5,11 +5,15 @@ class _CompactStateCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.message,
+    this.actionLabel,
+    this.onAction,
   });
 
   final IconData icon;
   final String title;
   final String message;
+  final String? actionLabel;
+  final VoidCallback? onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,15 @@ class _CompactStateCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
+          if (actionLabel != null && onAction != null) ...[
+            const SizedBox(height: AppSpacing.x4),
+            VitCtaButton(
+              onPressed: onAction,
+              variant: VitCtaButtonVariant.secondary,
+              density: VitDensity.compact,
+              child: Text(actionLabel!),
+            ),
+          ],
         ],
       ),
     );

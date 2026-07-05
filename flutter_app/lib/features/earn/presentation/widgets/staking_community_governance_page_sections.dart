@@ -147,7 +147,7 @@ class _ActiveProposal extends StatelessWidget {
                   ),
                   _Pill(
                     label: proposal.badge,
-                    color: AppColors.primarySoft,
+                    color: AppModuleAccents.earn,
                     emphasis: true,
                   ),
                 ],

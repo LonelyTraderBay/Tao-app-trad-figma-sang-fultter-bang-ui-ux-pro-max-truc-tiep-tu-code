@@ -72,7 +72,11 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [
-                  _TradeToggle(tradeType: _tradeType, onChanged: _setTradeType),
+                  _ExpressHero(tradeType: _tradeType),
+                  _ExpressTradeTabs(
+                    tradeType: _tradeType,
+                    onChanged: _setTradeType,
+                  ),
                   _AssetCard(
                     tradeType: _tradeType,
                     selectedAsset: selectedAsset,
@@ -198,96 +202,102 @@ class _P2PExpressPageState extends ConsumerState<P2PExpressPage> {
   }
 }
 
-class _TradeToggle extends StatelessWidget {
-  const _TradeToggle({required this.tradeType, required this.onChanged});
+class _ExpressHero extends StatelessWidget {
+  const _ExpressHero({required this.tradeType});
 
   final P2PTradeType tradeType;
-  final ValueChanged<P2PTradeType> onChanged;
 
   @override
   Widget build(BuildContext context) {
+    final color = tradeType == P2PTradeType.buy
+        ? AppColors.buy
+        : AppColors.sell;
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
       padding: AppSpacing.p2pExpressCompactCardPadding,
       background: const VitHeroGlow(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Row(
         children: [
-          Row(
-            children: [
-              SizedBox.square(
-                dimension: _p2pExpressIconBox,
-                child: Material(
-                  color: AppColors.primary12,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: Icon(
-                    tradeType == P2PTradeType.buy
-                        ? Icons.flash_on_outlined
-                        : Icons.swap_vert_rounded,
-                    color: tradeType == P2PTradeType.buy
-                        ? AppColors.buy
-                        : AppColors.sell,
-                    size: AppSpacing.iconSm,
-                  ),
-                ),
+          SizedBox.square(
+            dimension: _p2pExpressIconBox,
+            child: Material(
+              color: color.withValues(alpha: .12),
+              shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+              child: Icon(
+                Icons.bolt_outlined,
+                color: color,
+                size: AppSpacing.iconSm,
               ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Giao dịch P2P tức thì',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    Text(
-                      'Chọn chiều giao dịch, nhập VND và xác nhận offer an toàn.',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: AppSpacing.x3),
-          VitSegmentedChoice<P2PTradeType>(
-            selected: tradeType,
-            onChanged: onChanged,
-            height: _p2pExpressToggleHeight,
-            options: [
-              VitSegmentedChoiceOption(
-                key: P2PExpressPage.buyToggleKey,
-                value: P2PTradeType.buy,
-                label: 'MUA NHANH',
-                accentColor: AppColors.buy,
-                leading: const Icon(Icons.bolt_outlined),
-                semanticLabel: 'P2P express MUA NHANH',
-              ),
-              VitSegmentedChoiceOption(
-                key: P2PExpressPage.sellToggleKey,
-                value: P2PTradeType.sell,
-                label: 'BÁN NHANH',
-                accentColor: AppColors.sell,
-                leading: const Icon(Icons.bolt_outlined),
-                semanticLabel: 'P2P express BÁN NHANH',
-              ),
-            ],
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Giao dịch P2P tức thì',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                Text(
+                  'Nhập VND, chọn thanh toán, xác nhận escrow trước khi khớp.',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                ),
+              ],
+            ),
+          ),
+          const VitStatusPill(
+            label: 'Escrow',
+            status: VitStatusPillStatus.success,
+            icon: Icons.lock_outline_rounded,
+            size: VitStatusPillSize.sm,
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ExpressTradeTabs extends StatelessWidget {
+  const _ExpressTradeTabs({required this.tradeType, required this.onChanged});
+
+  final P2PTradeType tradeType;
+  final ValueChanged<P2PTradeType> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitSegmentedChoice<P2PTradeType>(
+      selected: tradeType,
+      onChanged: onChanged,
+      height: _p2pExpressToggleHeight,
+      borderRadius: AppRadii.lgRadius,
+      options: [
+        VitSegmentedChoiceOption(
+          key: P2PExpressPage.buyToggleKey,
+          value: P2PTradeType.buy,
+          label: 'MUA NHANH',
+          accentColor: AppColors.buy,
+          leading: const Icon(Icons.bolt_outlined),
+          semanticLabel: 'P2P express MUA NHANH',
+        ),
+        VitSegmentedChoiceOption(
+          key: P2PExpressPage.sellToggleKey,
+          value: P2PTradeType.sell,
+          label: 'BÁN NHANH',
+          accentColor: AppColors.sell,
+          leading: const Icon(Icons.bolt_outlined),
+          semanticLabel: 'P2P express BÁN NHANH',
+        ),
+      ],
     );
   }
 }

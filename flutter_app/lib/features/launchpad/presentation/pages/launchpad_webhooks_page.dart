@@ -147,6 +147,7 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
               semanticLabel: 'SC-310 LaunchpadWebhooksPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'Webhook tích hợp · Chỉ dùng cho developer',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
               ),

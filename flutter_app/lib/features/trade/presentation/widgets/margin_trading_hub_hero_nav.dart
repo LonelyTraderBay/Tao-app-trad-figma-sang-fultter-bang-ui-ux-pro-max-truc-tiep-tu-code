@@ -34,7 +34,7 @@ class _HeroCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Margin Trading Suite',
+                      'Bộ công cụ ký quỹ',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.onAccent,
                         fontWeight: AppTextStyles.bold,
@@ -42,7 +42,7 @@ class _HeroCard extends StatelessWidget {
                     ),
                     const SizedBox(height: _hubTinySpace),
                     Text(
-                      'Margin tools with leverage limits and compliance checks',
+                      'Công cụ ký quỹ với hạn đòn bẩy và kiểm tra tuân thủ',
                       style: AppTextStyles.body.copyWith(
                         color: AppColors.onAccent.withValues(alpha: .72),
                         fontWeight: AppTextStyles.medium,
@@ -134,7 +134,7 @@ class _NavigationCard extends StatelessWidget {
               const SizedBox(width: _hubSpace),
               Expanded(
                 child: Text(
-                  'Margin Trading Suite',
+                  'Bộ công cụ ký quỹ',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.sectionTitle.copyWith(
@@ -147,7 +147,7 @@ class _NavigationCard extends StatelessWidget {
           ),
           const SizedBox(height: _hubSpace),
           Text(
-            'Margin trading controls with risk limits, liquidation context, fee disclosure, and market intelligence.',
+            'Điều khiển ký quỹ với hạn rủi ro, ngữ cảnh thanh lý, công bố phí và thông tin thị trường.',
             style: AppTextStyles.body.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: _hubSpace),

@@ -10,6 +10,8 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -29,8 +31,6 @@ TextStyle get _baseBold =>
 TextStyle get _smBold =>
     AppTextStyles.body.copyWith(fontWeight: AppTextStyles.bold);
 
-const double _savingsRebalanceVisualNavClearance = 112;
-const double _savingsRebalanceNativeNavClearance = 88;
 const double _savingsRebalanceRingExtent = 104;
 const double _savingsRebalanceAssetBadge = AppSpacing.x6;
 const double _savingsRebalanceIconBox = AppSpacing.inputHeight;
@@ -82,11 +82,11 @@ class _SavingsAutoRebalancePageState
     final strategy = _activeStrategy(snapshot);
     final drift = _totalDrift(snapshot.positions, strategy);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navClearance = mode.usesVisualQaFrame
-        ? _savingsRebalanceVisualNavClearance
-        : _savingsRebalanceNativeNavClearance;
-    final scrollEndPadding =
-        navClearance + MediaQuery.paddingOf(context).bottom;
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -98,7 +98,7 @@ class _SavingsAutoRebalancePageState
             VitAutoHideHeaderScaffold(
               header: VitHeader(
                 title: snapshot.title,
-                subtitle: snapshot.subtitle,
+                subtitle: kSavingsToolsHeaderSubtitle,
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
               ),
@@ -135,12 +135,7 @@ class _SavingsAutoRebalancePageState
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const ClampingScrollPhysics(),
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                        AppSpacing.contentPad,
-                        AppSpacing.x3,
-                        AppSpacing.contentPad,
-                        scrollEndPadding,
-                      ),
+                      padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                       child: VitPageContent(
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,
@@ -189,11 +184,12 @@ class _SavingsAutoRebalancePageState
                           const VitHighRiskStatePanel(
                             density: VitDensity.compact,
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Savings rebalance review',
+                            title: 'Xem lại tái cân bằng Savings',
                             message:
-                                'Target allocation, drift threshold, locked-position handling, estimated trade amount, preview sheet, confirmation, and result feedback are reviewed before auto-rebalance changes run.',
+                                'Phân bổ mục tiêu, ngưỡng lệch, xử lý vị thế khóa, số tiền giao dịch ước tính, xem trước, xác nhận và phản hồi kết quả được rà soát trước khi chạy tái cân bằng tự động.',
                             contractId: 'SC-344',
                           ),
+                          const SavingsToolsYieldFooter(),
                         ],
                       ),
                     ),

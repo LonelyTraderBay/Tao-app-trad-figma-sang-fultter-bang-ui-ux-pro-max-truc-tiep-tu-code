@@ -7,12 +7,10 @@ class _HeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitModuleHeroCard(
       key: LaunchpadPage.heroKey,
-      variant: VitCardVariant.hero,
-      radius: VitCardRadius.large,
+      accentColor: AppModuleAccents.launchpad,
       padding: VitDensity.compact.cardPadding,
-      borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -22,15 +20,19 @@ class _HeroCard extends StatelessWidget {
                 dimension: AppSpacing.x7,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: AppColors.accent12,
+                    color: AppModuleAccents.launchpad.withValues(alpha: .12),
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadii.lgRadius,
-                      side: const BorderSide(color: AppColors.accent30),
+                      side: BorderSide(
+                        color: AppModuleAccents.launchpad.withValues(
+                          alpha: .28,
+                        ),
+                      ),
                     ),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.rocket_launch_outlined,
-                    color: AppColors.accent,
+                    color: AppModuleAccents.launchpad,
                     size: AppSpacing.iconLg,
                   ),
                 ),
@@ -41,47 +43,20 @@ class _HeroCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'VitLaunch',
+                      'Khám phá dự án token mới',
                       style: AppTextStyles.sectionTitle.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.extraBold,
                       ),
                     ),
                     Text(
-                      'Ra mắt token an toàn & uy tín',
+                      '$activeCount dự án đang diễn ra',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.portfolioTextDim,
+                        fontFeatures: AppTextStyles.tabularFigures,
                       ),
                     ),
                   ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Row(
-            children: [
-              const Expanded(
-                child: _HeroMetric(
-                  icon: Icons.rocket_launch_outlined,
-                  label: 'Dự án',
-                  value: '47',
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              const Expanded(
-                child: _HeroMetric(
-                  icon: Icons.groups_2_outlined,
-                  label: 'Người tham gia',
-                  value: '280K+',
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: _HeroMetric(
-                  icon: Icons.trending_up_rounded,
-                  label: 'Đang hoạt động',
-                  value: '$activeCount',
                 ),
               ),
             ],
@@ -93,49 +68,6 @@ class _HeroCard extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: AppColors.portfolioTextMuted,
               height: _launchpadLineHeightDense,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HeroMetric extends StatelessWidget {
-  const _HeroMetric({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  final IconData icon;
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCardStat(
-      padding: AppSpacing.launchpadMetricCardPadding,
-      child: Column(
-        children: [
-          Icon(icon, color: AppColors.accent, size: AppSpacing.iconSm),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.baseMedium.copyWith(
-              color: AppColors.text1,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
-              height: _launchpadLineHeightBody,
             ),
           ),
         ],

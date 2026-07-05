@@ -86,28 +86,14 @@ class StakingTaxTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: AppSpacing.stakingTaxTabsMinHeight,
-      ),
-      child: ColoredBox(
-        color: AppColors.surface2,
-        child: Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: AppSpacing.earnHorizontalPaddingX4,
-            child: VitTabBar(
-              variant: VitTabBarVariant.underline,
-              activeKey: active,
-              onChanged: onChanged,
-              tabs: [
-                for (final tab in tabs)
-                  VitTabItem(key: tab.id, label: tab.label, icon: null),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(key: tab.id, label: tab.label),
+      ],
     );
   }
 }

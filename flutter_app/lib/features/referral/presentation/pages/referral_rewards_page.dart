@@ -33,6 +33,7 @@ class ReferralRewardsPage extends ConsumerStatefulWidget {
   static const tabsKey = Key('sc287_referral_rewards_tabs');
   static const sortKey = Key('sc287_referral_rewards_sort');
   static const ledgerKey = Key('sc287_referral_rewards_ledger');
+  static const emptyKey = Key('sc287_referral_rewards_empty');
   static const exportKey = Key('sc287_export_report');
   static const disputeHistoryKey = Key('sc287_dispute_history');
 

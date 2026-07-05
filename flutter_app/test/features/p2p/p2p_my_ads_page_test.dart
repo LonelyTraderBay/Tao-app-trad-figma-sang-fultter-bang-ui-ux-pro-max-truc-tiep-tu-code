@@ -79,9 +79,8 @@ void main() {
     expect(find.text('25.360'), findsOneWidget);
     expect(find.text('25.250'), findsOneWidget);
     expect(find.text('3,000.00 USDT'), findsOneWidget);
-    expect(find.text('Analytics'), findsWidgets);
+    expect(find.text('Phân tích'), findsNothing);
     expect(find.text('Dừng'), findsWidgets);
-    expect(find.text('Sửa'), findsWidgets);
 
     await tester.drag(
       find.byKey(P2PMyAdsPage.contentKey),
@@ -114,6 +113,8 @@ void main() {
 
     await tester.tap(find.text('Tất cả (3)'));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(P2PMyAdsPage.adMenuKey('myad001')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(P2PMyAdsPage.deleteKey('myad001')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Xóa'));
@@ -128,6 +129,8 @@ void main() {
   ) async {
     await pumpP2PMyAds(tester);
 
+    await tester.tap(find.byKey(P2PMyAdsPage.adMenuKey('myad001')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(P2PMyAdsPage.analyticsKey('myad001')));
     await tester.pumpAndSettle();
     expect(find.byType(P2PAdAnalyticsPage), findsOneWidget);

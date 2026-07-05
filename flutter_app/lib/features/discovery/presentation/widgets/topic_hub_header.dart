@@ -70,12 +70,30 @@ class _TopicChip extends StatelessWidget {
 }
 
 class _TopicContent extends StatelessWidget {
-  const _TopicContent({required this.snapshot});
+  const _TopicContent({required this.snapshot, required this.onRetry});
 
   final TopicHubSnapshot snapshot;
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
+    if (snapshot.currentState == DiscoveryScreenState.loading) {
+      return const VitSkeletonList(
+        key: TopicHubPage.loadingKey,
+        rows: 5,
+      );
+    }
+
+    if (snapshot.currentState == DiscoveryScreenState.error) {
+      return VitErrorState(
+        key: TopicHubPage.errorKey,
+        title: 'Không tải được chủ đề',
+        message: snapshot.staleMessage,
+        actionLabel: 'Thử lại',
+        onAction: onRetry,
+      );
+    }
+
     if (!snapshot.hasContent) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

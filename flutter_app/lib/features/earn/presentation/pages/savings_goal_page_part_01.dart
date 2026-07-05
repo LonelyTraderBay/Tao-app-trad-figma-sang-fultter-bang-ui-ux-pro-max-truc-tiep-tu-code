@@ -27,7 +27,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
-            subtitle: snapshot.subtitle,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -85,6 +85,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
                           ],
                         ],
                       ),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

@@ -1,5 +1,14 @@
 part of 'wallet_page_sections.dart';
 
+double walletPortfolioChange24h(List<WalletAsset> assets) {
+  final total = assets.fold<double>(0, (sum, asset) => sum + asset.usdValue);
+  if (total <= 0) return 0;
+  return assets.fold<double>(
+    0,
+    (sum, asset) => sum + asset.change24h * (asset.usdValue / total),
+  );
+}
+
 class WalletAllocationCard extends StatelessWidget {
   const WalletAllocationCard({super.key, required this.assets});
 

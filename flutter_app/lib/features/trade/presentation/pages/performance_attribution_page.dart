@@ -72,9 +72,9 @@ class _PerformanceAttributionPageState
           child: const VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             density: VitDensity.compact,
-            title: 'Review performance attribution risk',
+            title: 'Xem lại phân bổ hiệu suất',
             message:
-                'Confirm drawdown, exposure, limits, and next steps before adjusting copy-trading allocation.',
+                'Xác nhận drawdown, mức phơi nhiễm, giới hạn và bước tiếp theo trước khi điều chỉnh phân bổ copy.',
           ),
         ),
         VitTradeSection(

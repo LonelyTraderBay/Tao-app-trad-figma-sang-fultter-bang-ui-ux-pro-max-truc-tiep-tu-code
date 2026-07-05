@@ -252,6 +252,8 @@ class _CreatePlanSheet extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const VitSheetHandle(),
+                    const SizedBox(height: AppSpacing.x2),
                     Row(
                       children: [
                         SizedBox.square(
@@ -307,49 +309,5 @@ class _CreatePlanSheet extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _SparklinePainter extends CustomPainter {
-  const _SparklinePainter({
-    required this.values,
-    required this.lineColor,
-    required this.fillColor,
-  });
-
-  final List<double> values;
-  final Color lineColor;
-  final Color fillColor;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (values.length < 2) return;
-    final path = _buildLinePath(values, size);
-    final fillPath = Path.from(path)
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-    canvas.drawPath(fillPath, Paint()..color = fillColor);
-    canvas.drawPath(
-      path,
-      Paint()
-        ..color = lineColor
-        ..strokeWidth = 2
-        ..style = PaintingStyle.stroke
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round,
-    );
-    canvas.drawCircle(
-      Offset(size.width, _yForValue(values.last, values, size)),
-      4,
-      Paint()..color = lineColor,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant _SparklinePainter oldDelegate) {
-    return oldDelegate.values != values ||
-        oldDelegate.lineColor != lineColor ||
-        oldDelegate.fillColor != fillColor;
   }
 }

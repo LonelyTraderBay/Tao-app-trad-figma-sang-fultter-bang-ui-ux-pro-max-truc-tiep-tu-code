@@ -13,25 +13,27 @@ class _FeaturedGasCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadGasTrackerPage.heroKey,
       variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
+      borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.local_gas_station_outlined,
-                color: AppColors.portfolioTextMuted,
+                color: AppModuleAccents.launchpad,
                 size: AppSpacing.launchpadIconLg,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(
-                  '${price.chain} Gas',
+                  'Gas ${price.chain}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
-                    color: AppColors.portfolioTextDim,
+                    color: AppColors.text3,
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
@@ -68,9 +70,9 @@ class _FeaturedGasCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              '${price.unit} - Updated ${price.lastUpdated}',
+              '${price.unit} · Cập nhật ${price.lastUpdated}',
               style: AppTextStyles.micro.copyWith(
-                color: AppColors.portfolioTextMuted,
+                color: AppColors.text3,
               ),
             ),
           ),
@@ -109,7 +111,7 @@ class _TierValue extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
-              color: AppColors.portfolioTextMuted,
+              color: AppColors.text3,
               height: AppSpacing.launchpadLineHeightTight,
             ),
           ),

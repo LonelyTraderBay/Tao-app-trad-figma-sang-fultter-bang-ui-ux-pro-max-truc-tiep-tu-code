@@ -135,6 +135,7 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                         : VitPageContent(
                             padding: VitContentPadding.compact,
                             density: VitDensity.compact,
+                            gap: VitContentGap.tight,
                             children: [
                               ArenaReportReviewStateCard(
                                 key: ArenaReportCasePage.reviewStateKey,

@@ -77,68 +77,73 @@ class P2PDisputeEscalationCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x4),
-          VitCard(
-            variant: VitCardVariant.inner,
-            borderColor: color.withValues(alpha: .18),
-            padding: AppSpacing.p2pDisputeCompactCardPadding,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Material(
-                  color: color,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.smRadius,
-                  ),
-                  child: SizedBox(
-                    width: AppSpacing.x6,
-                    height: AppSpacing.x6,
-                    child: Icon(
-                      p2pDisputeLevelIcon(currentLevelData.iconKey),
-                      color: AppColors.onAccent,
-                      size: AppSpacing.iconSm,
+          Material(
+            color: color.withValues(alpha: .06),
+            shape: RoundedRectangleBorder(
+              borderRadius: AppRadii.inputRadius,
+              side: BorderSide(color: color.withValues(alpha: .18)),
+            ),
+            child: Padding(
+              padding: AppSpacing.p2pDisputeCompactCardPadding,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Material(
+                    color: color,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                    ),
+                    child: SizedBox(
+                      width: AppSpacing.x6,
+                      height: AppSpacing.x6,
+                      child: Icon(
+                        p2pDisputeLevelIcon(currentLevelData.iconKey),
+                        color: AppColors.onAccent,
+                        size: AppSpacing.iconSm,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Cấp $currentLevel: ${currentLevelData.shortLabel}',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.text1,
-                          fontWeight: AppTextStyles.bold,
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Cấp $currentLevel: ${currentLevelData.shortLabel}',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.text1,
+                            fontWeight: AppTextStyles.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        currentLevelData.description,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.x2),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.schedule_rounded,
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          currentLevelData.description,
+                          style: AppTextStyles.micro.copyWith(
                             color: AppColors.text3,
-                            size: AppSpacing.p2pDisputeMetaIcon,
                           ),
-                          const SizedBox(width: AppSpacing.x1),
-                          Text(
-                            'Dự kiến: ${currentLevelData.avgTime}',
-                            style: AppTextStyles.micro.copyWith(
+                        ),
+                        const SizedBox(height: AppSpacing.x2),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.schedule_rounded,
                               color: AppColors.text3,
+                              size: AppSpacing.p2pDisputeMetaIcon,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            const SizedBox(width: AppSpacing.x1),
+                            Text(
+                              'Dự kiến: ${currentLevelData.avgTime}',
+                              style: AppTextStyles.micro.copyWith(
+                                color: AppColors.text3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           if (nextLevel != null) ...[

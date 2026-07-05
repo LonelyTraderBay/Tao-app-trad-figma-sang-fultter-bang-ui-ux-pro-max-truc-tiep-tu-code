@@ -75,9 +75,11 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
         .getBotTermsOfService();
     return VitTradeHubScaffold(
       title: 'Trading Bots Terms',
+      subtitle: 'Điều khoản sử dụng bot giao dịch',
       semanticLabel: 'SC-117 BotTermsOfServicePage',
       contentKey: BotTermsOfServicePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
         VitTradeSection(
@@ -112,20 +114,11 @@ class _BotTermsOfServicePageState extends ConsumerState<BotTermsOfServicePage> {
           title: 'Compliance',
           child: _ComplianceNote(snapshot: snapshot),
         ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.tradeBotInnerPanelPadding,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Terms acceptance review',
-              message:
-                  'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
-              contractId: 'bot-terms-acceptance-review',
-              density: VitDensity.compact,
-            ),
-          ),
+        const VitBotRiskReviewFooter(
+          title: 'Terms acceptance review',
+          message:
+              'Read-to-end status, agreement checkbox, suitability limits and confirmation next step are reviewed before bot access is enabled.',
+          contractId: 'bot-terms-acceptance-review',
         ),
       ],
     );

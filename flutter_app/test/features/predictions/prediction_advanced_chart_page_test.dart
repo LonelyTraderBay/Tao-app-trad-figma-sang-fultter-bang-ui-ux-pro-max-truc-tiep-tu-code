@@ -77,6 +77,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Advanced Chart'), findsOneWidget);
+    expect(find.text('Biểu đồ · Prediction'), findsOneWidget);
     expect(find.text('Bieu do'), findsOneWidget);
     expect(find.text('Chi bao'), findsOneWidget);
     expect(find.text('Phan tich'), findsOneWidget);

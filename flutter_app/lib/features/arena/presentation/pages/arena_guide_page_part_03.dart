@@ -19,7 +19,7 @@ class _SafetyCenterCard extends StatelessWidget {
             child: const DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
               ),
               child: Center(
                 child: Icon(
@@ -71,7 +71,7 @@ class _FaqHeader extends StatelessWidget {
       children: [
         const Icon(
           Icons.help_outline,
-          color: AppModuleAccents.arena,
+          color: _arenaAccent,
           size: AppSpacing.arenaGuideChevron,
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -84,7 +84,7 @@ class _FaqHeader extends StatelessWidget {
             ),
           ),
         ),
-        _SmallBadge(label: '$total', color: AppModuleAccents.arena),
+        _SmallBadge(label: '$total', color: _arenaAccent),
       ],
     );
   }
@@ -115,7 +115,7 @@ class _FaqList extends StatelessWidget {
               icon: Icons.help_outline,
               title: items[index].question,
               description: items[index].answer,
-              badgeColor: AppModuleAccents.arena,
+              badgeColor: _arenaAccent,
               open: expandedIndex == index,
               onTap: () => onToggle(index),
             ),
@@ -143,7 +143,7 @@ class _SupportCard extends StatelessWidget {
             child: const DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
               ),
               child: Center(
                 child: Icon(
@@ -436,7 +436,7 @@ class _LegendDot extends StatelessWidget {
 
 Color _toneColor(ArenaGuideTone tone) {
   return switch (tone) {
-    ArenaGuideTone.arena => AppModuleAccents.arena,
+    ArenaGuideTone.arena => _arenaAccent,
     ArenaGuideTone.info => AppColors.accent,
     ArenaGuideTone.success => AppColors.buy,
     ArenaGuideTone.warning => AppColors.warn,

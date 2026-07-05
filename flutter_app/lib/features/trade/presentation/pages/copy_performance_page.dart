@@ -65,24 +65,19 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
       onBack: () => context.go(AppRoutePaths.trade),
       children: [
         VitTradeSection(
-          title: 'Tổng quan',
-          child: _PerformanceSummary(snapshot: snapshot),
+          title: 'Đánh giá rủi ro',
+          child: VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Xem lại hiệu suất copy',
+            message:
+                'PnL, phí, drawdown, lịch sử lệnh và chỉ số rủi ro được xem lại trước khi thay đổi phân bổ copy.',
+            contractId: 'copy-performance-${widget.copyId}',
+            density: VitDensity.compact,
+          ),
         ),
         VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitCard(
-            variant: VitCardVariant.inner,
-            density: VitDensity.compact,
-            padding: AppSpacing.cardPaddingCompact,
-            child: VitHighRiskStatePanel(
-              state: VitHighRiskUiState.riskReview,
-              title: 'Copy performance review',
-              message:
-                  'PnL, fees, drawdown, trade history, risk metrics and next steps are reviewed before copy allocation changes.',
-              contractId: 'copy-performance-${widget.copyId}',
-              density: VitDensity.compact,
-            ),
-          ),
+          title: 'Tổng quan',
+          child: _PerformanceSummary(snapshot: snapshot),
         ),
         VitTradeSection(
           title: 'Phân tích',
@@ -102,6 +97,19 @@ class _CopyPerformancePageState extends ConsumerState<CopyPerformancePage> {
               else
                 _MetricsTab(snapshot: snapshot),
             ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.symmetric(
+            horizontal: AppSpacing.x2,
+          ),
+          child: Text(
+            'Hiệu suất quá khứ không đảm bảo kết quả tương lai. Chênh lệch so với provider là bình thường.',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: _performanceInfoLineHeight,
+            ),
           ),
         ),
       ],

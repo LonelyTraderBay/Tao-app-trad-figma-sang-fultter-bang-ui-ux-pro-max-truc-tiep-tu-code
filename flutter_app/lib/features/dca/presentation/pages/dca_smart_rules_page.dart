@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -55,6 +56,7 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
       child: VitAutoHideHeaderScaffold(
         header: VitHeader(
           title: 'Smart DCA Rules',
+          subtitle: 'Quy tắc tự động · DCA',
           showBack: true,
           onBack: _close,
         ),
@@ -100,6 +102,7 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
       _StatsCard(snapshot: snapshot),
       VitPageSection(
         label: 'Cac luat hien co',
+        accentColor: AppModuleAccents.dca,
         children: [
           for (final rule in snapshot.smartRules)
             _RuleCard(

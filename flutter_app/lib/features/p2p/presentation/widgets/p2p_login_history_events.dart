@@ -209,12 +209,12 @@ class _ExpandedDetails extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: _DetailValue(label: 'IP Address', value: event.ip),
+                    child: _DetailValue(label: 'Địa chỉ IP', value: event.ip),
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
                     child: _DetailValue(
-                      label: 'Login Method',
+                      label: 'Phương thức đăng nhập',
                       value: event.methodLabel,
                     ),
                   ),

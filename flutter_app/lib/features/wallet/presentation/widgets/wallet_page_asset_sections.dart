@@ -175,12 +175,43 @@ class WalletAssetList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (assets.isEmpty) {
-      return const VitCard(
+      return VitCard(
         alignment: Alignment.center,
         variant: VitCardVariant.standard,
-        child: VitEmptyState(
-          title: 'Kh\u00F4ng t\u00ECm th\u1EA5y t\u00E0i s\u1EA3n',
-          icon: Icons.account_balance_wallet_outlined,
+        padding: VitDensity.compact.cardPadding,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const VitEmptyState(
+              title: 'Ch\u01B0a c\u00F3 t\u00E0i s\u1EA3n',
+              message:
+                  'N\u1EA1p ho\u1EB7c mua crypto \u0111\u1EC3 b\u1EAFt \u0111\u1EA7u qu\u1EA3n l\u00FD danh m\u1EE5c.',
+              icon: Icons.account_balance_wallet_outlined,
+            ),
+            const SizedBox(height: AppSpacing.x3),
+            Row(
+              children: [
+                Expanded(
+                  child: VitCtaButton(
+                    density: VitDensity.compact,
+                    onPressed: () => onNavigate('/wallet/deposit/USDT'),
+                    leading: const Icon(Icons.file_download_outlined),
+                    child: const Text('N\u1EA1p ti\u1EC1n'),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.x2),
+                Expanded(
+                  child: VitCtaButton(
+                    density: VitDensity.compact,
+                    variant: VitCtaButtonVariant.secondary,
+                    onPressed: () => onNavigate('/wallet/buy-crypto'),
+                    leading: const Icon(Icons.shopping_cart_outlined),
+                    child: const Text('Mua crypto'),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       );
     }
@@ -219,7 +250,7 @@ class _AssetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(asset.colorHex);
-    final changeColor = asset.change24h >= 0 ? _walletGreen : _walletRed;
+
     return VitCard(
       key: Key('sc135_wallet_asset_${asset.id}'),
       variant: VitCardVariant.ghost,
@@ -245,31 +276,18 @@ class _AssetRow extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            Text(
-                              asset.symbol,
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.x1),
-                            Text(
-                              _formatPct(asset.change24h),
-                              style: AppTextStyles.numericMicro.copyWith(
-                                color: changeColor,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        asset.symbol,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
                       const SizedBox(height: _walletAssetTextGap),
                       Text(
                         asset.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
                         ),

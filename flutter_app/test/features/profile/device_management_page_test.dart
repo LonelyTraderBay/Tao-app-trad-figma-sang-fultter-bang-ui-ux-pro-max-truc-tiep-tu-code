@@ -61,7 +61,7 @@ void main() {
     );
     expect(find.text('Qu\u1EA3n l\u00FD thi\u1EBFt b\u1ECB'), findsOneWidget);
     expect(find.byKey(DeviceManagementPage.summaryKey), findsOneWidget);
-    expect(find.text('B\u1EA3o m\u1EADt thi\u1EBFt b\u1ECB'), findsWidgets);
+    expect(find.text('B\u1EA3o m\u1EADt thi\u1EBFt b\u1ECB'), findsOneWidget);
     expect(
       find.byKey(DeviceManagementPage.deviceCardKey('dev001')),
       findsOneWidget,

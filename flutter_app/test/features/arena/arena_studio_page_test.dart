@@ -70,7 +70,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Arena Studio'), findsOneWidget);
-    expect(find.text('Tạo challenge mới'), findsOneWidget);
+    expect(find.text('Tạo challenge · Points only'), findsOneWidget);
     expect(find.text('Phí vận hành platform'), findsOneWidget);
     expect(find.text('Chọn template'), findsOneWidget);
     expect(find.text('Prediction'), findsOneWidget);
@@ -125,7 +125,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(ArenaSmartRuleBuilderPage), findsOneWidget);
-    expect(find.text('Smart Rule Builder'), findsOneWidget);
+    expect(find.text('Luật chơi — Smart Builder'), findsOneWidget);
   });
 
   testWidgets('SC-185 first viewport reaches template choice', (tester) async {
@@ -197,6 +197,6 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.byType(ArenaSmartRuleBuilderPage), findsOneWidget);
-    expect(find.text('Smart Rule Builder'), findsOneWidget);
+    expect(find.text('Luật chơi — Smart Builder'), findsOneWidget);
   });
 }

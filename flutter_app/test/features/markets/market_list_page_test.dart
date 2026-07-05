@@ -68,7 +68,7 @@ void main() {
     expect(find.text('Giảm mạnh'), findsOneWidget);
     expect(find.text('Cặp giao dịch'), findsOneWidget);
     expect(find.text('BTC'), findsWidgets);
-    expect(find.text('USDT'), findsWidgets);
+    expect(find.textContaining('Vol \$'), findsWidgets);
   });
 
   testWidgets('SC-008 supports search empty state and reset', (tester) async {

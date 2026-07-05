@@ -5,12 +5,14 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -105,18 +107,18 @@ class _P2PLargeTransactionJustificationPageState
                     padding: AppSpacing.p2pLargeTransactionScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _LargeTransactionHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.x3),
                         Text(
                           snapshot.purposeTitle,
                           style: AppTextStyles.baseMedium.copyWith(
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         _PurposeList(
                           purposes: snapshot.purposes,
                           selectedPurpose: _purpose,
@@ -125,8 +127,7 @@ class _P2PLargeTransactionJustificationPageState
                             setState(() => _purpose = purpose);
                           },
                         ),
-                        if (needsCustomPurpose) ...[
-                          const SizedBox(height: AppSpacing.x3),
+                        if (needsCustomPurpose)
                           VitInput(
                             controller: _customPurposeController,
                             fieldKey: P2PLargeTransactionJustificationPage
@@ -136,8 +137,6 @@ class _P2PLargeTransactionJustificationPageState
                             textInputAction: TextInputAction.next,
                             onChanged: (_) => setState(() {}),
                           ),
-                        ],
-                        const SizedBox(height: AppSpacing.x3),
                         VitInput(
                           controller: _detailsController,
                           fieldKey: P2PLargeTransactionJustificationPage
@@ -147,7 +146,6 @@ class _P2PLargeTransactionJustificationPageState
                           textInputAction: TextInputAction.done,
                           onChanged: (_) => setState(() {}),
                         ),
-                        const SizedBox(height: AppSpacing.x3),
                         VitCtaButton(
                           key: P2PLargeTransactionJustificationPage.ctaKey,
                           onPressed: canSubmit
@@ -179,57 +177,63 @@ class _LargeTransactionHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return Material(
       key: P2PLargeTransactionJustificationPage.heroKey,
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pFinancialSafetyCardPadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          VitCard(
-            width: AppSpacing.p2pFinancialSafetyIconBox,
-            height: AppSpacing.p2pFinancialSafetyIconBox,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
-            background: const ColoredBox(color: AppColors.warn15),
-            clip: true,
-            child: const Icon(
-              Icons.error_outline_rounded,
-              color: AppColors.warn,
-              size: AppSpacing.iconMd,
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  snapshot.heroTitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.sectionTitle.copyWith(
-                    color: AppColors.warn,
-                    fontWeight: AppTextStyles.bold,
-                    fontFeatures: AppTextStyles.tabularFigures,
-                  ),
+      color: AppColors.warn15,
+      shape: const RoundedRectangleBorder(
+        borderRadius: AppRadii.cardLargeRadius,
+        side: BorderSide(color: AppColors.warningBorder),
+      ),
+      child: Padding(
+        padding: AppSpacing.p2pFinancialSafetyCardPadding,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Material(
+              color: AppColors.warn.withValues(alpha: .16),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadii.lgRadius,
+              ),
+              child: SizedBox(
+                width: AppSpacing.p2pFinancialSafetyIconBox,
+                height: AppSpacing.p2pFinancialSafetyIconBox,
+                child: const Icon(
+                  Icons.error_outline_rounded,
+                  color: AppColors.warn,
+                  size: AppSpacing.iconMd,
                 ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  snapshot.heroSubtitle,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.p2pFinancialSafetyBodyLineHeight,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(width: AppSpacing.x3),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    snapshot.heroTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.warn,
+                      fontWeight: AppTextStyles.bold,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x1),
+                  Text(
+                    snapshot.heroSubtitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.text2,
+                      height: AppSpacing.p2pFinancialSafetyBodyLineHeight,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

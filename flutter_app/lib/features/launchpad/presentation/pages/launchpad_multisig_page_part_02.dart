@@ -20,14 +20,14 @@ class _HistorySection extends StatelessWidget {
     return KeyedSubtree(
       key: LaunchpadMultisigPage.historyKey,
       child: VitPageSection(
-        label: 'Giao dich da hoan tat',
+        label: 'Giao dịch đã hoàn tất',
         accentColor: AppColors.buy,
         children: [
           if (txs.isEmpty)
             const VitEmptyState(
               icon: Icons.history_rounded,
-              title: 'Chua co lich su',
-              message: 'Giao dich da thuc hien se hien thi tai day.',
+              title: 'Chưa có lịch sử',
+              message: 'Giao dịch đã thực hiện sẽ hiển thị tại đây.',
             )
           else
             for (final tx in txs)
@@ -61,7 +61,7 @@ class _OwnersSection extends StatelessWidget {
       key: LaunchpadMultisigPage.ownersKey,
       child: VitPageSection(
         label: 'Owners & Signers',
-        accentColor: AppColors.accent,
+        accentColor: AppModuleAccents.launchpad,
         children: [
           for (final owner in safe.owners)
             VitCard(
@@ -73,7 +73,7 @@ class _OwnersSection extends StatelessWidget {
                         ? Icons.verified_user_outlined
                         : Icons.group_outlined,
                     color: owner.role == LaunchpadMultisigSignerRole.owner
-                        ? AppColors.accent
+                        ? AppModuleAccents.launchpad
                         : AppColors.primary,
                     size: AppSpacing.launchpadBox36,
                   ),
@@ -93,12 +93,12 @@ class _OwnersSection extends StatelessWidget {
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            _MiniPill(
+                            VitAccentPill(
                               label: owner.role.name,
-                              color:
+                              accentColor:
                                   owner.role ==
                                       LaunchpadMultisigSignerRole.owner
-                                  ? AppColors.accent
+                                  ? AppModuleAccents.launchpad
                                   : AppColors.primary,
                             ),
                           ],
@@ -199,9 +199,10 @@ class _TxCard extends StatelessWidget {
                                       fontWeight: AppTextStyles.bold,
                                     ),
                                   ),
-                                  _MiniPill(
+                                  VitStatusPill(
                                     label: status.label,
-                                    color: status.color,
+                                    status: _statusPillStatus(tx.status),
+                                    size: VitStatusPillSize.sm,
                                   ),
                                 ],
                               ),
@@ -215,7 +216,10 @@ class _TxCard extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: AppSpacing.x2),
-                                  _MiniPill(label: tx.chain, color: tx.accent),
+                                  VitAccentPill(
+                                    label: tx.chain,
+                                    accentColor: tx.accent,
+                                  ),
                                   const SizedBox(width: AppSpacing.x2),
                                   Text(
                                     '#${tx.nonce}',
@@ -347,7 +351,7 @@ class _TxDetails extends StatelessWidget {
                     key: LaunchpadMultisigPage.signKey,
                     variant: VitCtaButtonVariant.warning,
                     onPressed: onSign,
-                    child: const Text('Ky giao dich'),
+                    child: const Text('Ký giao dịch'),
                   ),
                 ],
                 if (tx.status == LaunchpadMultisigTxStatus.ready &&
@@ -357,7 +361,7 @@ class _TxDetails extends StatelessWidget {
                     key: LaunchpadMultisigPage.executeKey,
                     variant: VitCtaButtonVariant.success,
                     onPressed: onExecute,
-                    child: const Text('Thuc hien giao dich'),
+                    child: const Text('Thực hiện giao dịch'),
                   ),
                 ],
               ],

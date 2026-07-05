@@ -67,7 +67,7 @@ class WithdrawPreviewSheet extends StatelessWidget {
               Expanded(
                 child: WithdrawConfirmActionButton(
                   key: withdrawCancelConfirmKey,
-                  label: 'Cancel',
+                  label: 'Hủy',
                   onTap: () => Navigator.of(context).pop(),
                 ),
               ),
@@ -75,7 +75,7 @@ class WithdrawPreviewSheet extends StatelessWidget {
               Expanded(
                 child: WithdrawConfirmActionButton(
                   key: withdrawConfirmWithdrawKey,
-                  label: 'Confirm withdraw',
+                  label: 'Xác nhận rút',
                   primary: true,
                   onTap: () => Navigator.of(context).pop(),
                 ),

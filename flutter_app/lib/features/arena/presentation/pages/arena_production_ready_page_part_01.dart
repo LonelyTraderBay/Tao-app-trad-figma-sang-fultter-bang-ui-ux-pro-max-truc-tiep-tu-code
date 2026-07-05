@@ -45,9 +45,10 @@ class _ArenaProductionReadyPageState
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
+                      padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
-                        _ProductionHero(),
+                        const _ProductionHero(),
                         _SectionTabs(
                           active: _activeSection,
                           onChanged: (section) {
@@ -89,38 +90,58 @@ class _ArenaProductionReadyPageState
 }
 
 class _ProductionHero extends StatelessWidget {
+  const _ProductionHero();
+
   @override
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
-      accentColor: AppColors.primary,
-      padding: VitDensity.compact.cardPadding,
+      accentColor: AppModuleAccents.arena,
+      density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
-            Icons.shield_outlined,
-            color: AppColors.primary,
-            size: AppSpacing.iconSm,
+          const _TintIcon(
+            icon: Icons.shield_outlined,
+            color: AppModuleAccents.arena,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '08 - Open Arena Release Readiness',
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.primary,
-                    fontWeight: AppTextStyles.bold,
-                    height: AppTextStyles.numericMicro.height,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '08 - Open Arena Release Readiness',
+                        style: AppTextStyles.body.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                          height: AppSpacing.arenaProductionTitleLineHeight,
+                        ),
+                      ),
+                    ),
+                    const VitStatusPill(
+                      label: 'INTERNAL',
+                      status: VitStatusPillStatus.info,
+                      size: VitStatusPillSize.sm,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'QA/Dev handoff dashboard. Internal-only release checks, not an end-user production claim.',
+                  'QA/Dev handoff pack',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppTextStyles.numericMicro.height,
+                    height: AppSpacing.arenaProductionMetricLineHeight,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.x3),
+                Text(
+                  'QA/Dev handoff — kiểm tra release Open Arena. Chỉ điểm Arena, không phải claim production end-user.',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text2,
+                    height: AppSpacing.arenaProductionBodyLineHeight,
                   ),
                 ),
               ],
@@ -179,7 +200,7 @@ class _SectionTabPill extends StatelessWidget {
       label: config.label,
       icon: config.icon,
       status: active ? VitStatusPillStatus.info : VitStatusPillStatus.neutral,
-      size: VitStatusPillSize.sm,
+      size: VitStatusPillSize.md,
       outline: !active,
       onTap: onTap,
     );
@@ -274,22 +295,68 @@ class _ScreensSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final liveCount = screens
+        .where((s) => s.status == ArenaProductionScreenStatus.live)
+        .length;
+
     return VitPageSection(
+      label: 'A - Canonical Screens (vFinal)',
+      accentColor: AppModuleAccents.arena,
       density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'A - Canonical Screens (vFinal)',
-          accentColor: AppColors.accent,
-        ),
         Text(
           '7 core screens đã được consolidate thành bản vFinal. Mỗi screen đã audit: trust-first, accessibility, states đầy đủ.',
           style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppTextStyles.numericMicro.height,
+            color: AppColors.text2,
+            height: AppSpacing.arenaProductionHeroLineHeight,
           ),
         ),
         for (final screen in screens)
           _ProductionScreenCard(screen: screen, onRoute: onRoute),
+        VitCard(
+          borderColor: AppModuleAccents.arena.withValues(alpha: .22),
+          density: VitDensity.compact,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.check_circle_outline,
+                    color: AppModuleAccents.arena,
+                    size: AppSpacing.arenaProductionHandoffIcon,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Expanded(
+                    child: Text(
+                      'Summary',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppModuleAccents.arena,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Row(
+                children: [
+                  _SummaryMetric(
+                    label: 'Total screens',
+                    value: '${screens.length}',
+                  ),
+                  _SummaryMetric(
+                    label: 'Implemented',
+                    value: '$liveCount',
+                  ),
+                  _SummaryMetric(
+                    label: 'States covered',
+                    value: '${ArenaProductionScreenState.values.length}',
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -313,51 +380,48 @@ class _ProductionScreenCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        screen.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.body.copyWith(
-                          fontWeight: AppTextStyles.bold,
-                          height: AppTextStyles.numericMicro.height,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.x2),
-                    _StatusPill(status: screen.status),
-                  ],
+                child: Text(
+                  screen.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                    height: AppSpacing.arenaProductionTitleLineHeight,
+                  ),
                 ),
               ),
-              Text(
-                screen.version,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.accent,
-                  fontWeight: AppTextStyles.bold,
+              _StatusPill(status: screen.status),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          Row(
+            children: [
+              _MiniPill(label: screen.version, color: AppColors.accent),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  screen.route,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: AppTextStyles.bold,
+                    fontFeatures: AppTextStyles.tabularFigures,
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            screen.route,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.primary,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x3),
           Text(
             screen.notes,
             style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              height: AppTextStyles.numericMicro.height,
+              color: AppColors.text2,
+              height: AppSpacing.arenaProductionBodyLineHeight,
             ),
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x3),
           Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -365,6 +429,27 @@ class _ProductionScreenCard extends StatelessWidget {
               for (final state in screen.states)
                 _StateMiniPill(label: _stateLabel(state)),
             ],
+          ),
+          const SizedBox(height: AppSpacing.x2),
+          VitCtaButton(
+            fullWidth: false,
+            height: VitDensity.compact.controlHeight,
+            variant: VitCtaButtonVariant.ghost,
+            padding: const EdgeInsetsDirectional.symmetric(
+              horizontal: AppSpacing.x2,
+            ),
+            leading: const Icon(
+              Icons.open_in_new_rounded,
+              color: AppColors.primary,
+            ),
+            onPressed: () => onRoute(screen.route),
+            child: Text(
+              'Mở trang',
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.primary,
+                fontWeight: AppTextStyles.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -382,17 +467,15 @@ class _StatesSection extends StatelessWidget {
     final states = ArenaProductionScreenState.values;
 
     return VitPageSection(
+      label: 'B - State Matrix',
+      accentColor: AppColors.warn,
       density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'B - State Matrix',
-          accentColor: AppColors.warn,
-        ),
         Text(
           'Lưới states cho từng core screen. Chỉ hiển thị states thực sự áp dụng.',
           style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppTextStyles.numericMicro.height,
+            color: AppColors.text2,
+            height: AppSpacing.arenaProductionHeroLineHeight,
           ),
         ),
         VitCard(
@@ -415,6 +498,7 @@ class _StatesSection extends StatelessWidget {
                 Text(
                   screen.name,
                   style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -447,17 +531,15 @@ class _FlowsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
+      label: 'C - End-to-End Flows',
+      accentColor: AppColors.primary,
       density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'C - End-to-End Flows',
-          accentColor: AppColors.primary,
-        ),
         Text(
           'Các flow chính có prototype link thật. Tap step để navigate bằng route canonical.',
           style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppTextStyles.numericMicro.height,
+            color: AppColors.text2,
+            height: AppSpacing.arenaProductionHeroLineHeight,
           ),
         ),
         for (final flow in flows) _FlowCard(flow: flow, onRoute: onRoute),

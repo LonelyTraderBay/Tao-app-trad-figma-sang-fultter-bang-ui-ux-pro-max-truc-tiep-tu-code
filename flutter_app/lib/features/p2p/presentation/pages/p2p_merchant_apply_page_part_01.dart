@@ -31,11 +31,13 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pMerchantApplyProvider);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final navClearance = mode.usesVisualQaFrame
-        ? _p2pMerchantApplyVisualNavClearance
-        : _p2pMerchantApplyNativeNavClearance;
     final scrollEndPadding =
-        navClearance + MediaQuery.paddingOf(context).bottom;
+        (mode.usesVisualQaFrame
+            ? _p2pMerchantApplyVisualNavClearance +
+                AppSpacing.p2pMerchantApplyBottomInsetVisual
+            : _p2pMerchantApplyNativeNavClearance +
+                AppSpacing.p2pMerchantApplyBottomInsetNative) +
+        MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -62,10 +64,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                   child: SingleChildScrollView(
                     key: P2PMerchantApplyPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                      AppSpacing.contentPad,
-                      AppSpacing.x3,
-                      AppSpacing.contentPad,
+                    padding: AppSpacing.p2pMerchantApplyScrollPadding(
                       scrollEndPadding,
                     ),
                     child: _submitted

@@ -1,4 +1,4 @@
-enum SupportScreenState { loading, empty, error, offline }
+enum SupportScreenState { loading, empty, error, offline, ready }
 
 enum SupportTicketStatus { open, inProgress, resolved, closed }
 
@@ -20,6 +20,7 @@ final class SupportHubSnapshot {
     required this.tickets,
     required this.faqItems,
     required this.contractNotes,
+    required this.screenState,
     required this.supportedStates,
   });
 
@@ -35,6 +36,7 @@ final class SupportHubSnapshot {
   final List<SupportTicketDraft> tickets;
   final List<SupportFaqDraft> faqItems;
   final String contractNotes;
+  final SupportScreenState screenState;
   final Set<SupportScreenState> supportedStates;
 }
 
@@ -98,6 +100,7 @@ final class HelpCenterSnapshot {
     required this.categories,
     required this.articles,
     required this.contractNotes,
+    required this.screenState,
     required this.supportedStates,
   });
 
@@ -114,6 +117,7 @@ final class HelpCenterSnapshot {
   final List<HelpCategoryDraft> categories;
   final List<HelpArticleDraft> articles;
   final String contractNotes;
+  final SupportScreenState screenState;
   final Set<SupportScreenState> supportedStates;
 }
 
@@ -164,6 +168,7 @@ final class AnnouncementsSnapshot {
     required this.filters,
     required this.announcements,
     required this.contractNotes,
+    required this.screenState,
     required this.supportedStates,
   });
 
@@ -175,6 +180,7 @@ final class AnnouncementsSnapshot {
   final List<AnnouncementFilterDraft> filters;
   final List<AnnouncementDraft> announcements;
   final String contractNotes;
+  final SupportScreenState screenState;
   final Set<SupportScreenState> supportedStates;
 }
 

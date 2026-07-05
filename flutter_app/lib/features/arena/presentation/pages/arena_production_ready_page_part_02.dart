@@ -11,30 +11,34 @@ class _FlowCard extends StatelessWidget {
     final color = _flowColor(flow.id);
 
     return VitCard(
+      borderColor: color.withValues(alpha: .22),
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                _flowIcon(flow.id),
-                color: color,
-                size: AppSpacing.arenaProductionFlowIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
+              _TintIcon(icon: _flowIcon(flow.id), color: color, small: true),
+              const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: Text(
-                  flow.name,
-                  style: AppTextStyles.body.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      flow.name,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      '${flow.steps.length} steps',
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                width: AppSpacing.x4,
-                height: AppSpacing.x1,
-                child: Material(color: color, borderRadius: AppRadii.xsRadius),
               ),
             ],
           ),
@@ -83,12 +87,14 @@ class _FlowStepRow extends StatelessWidget {
               children: [
                 SizedBox.square(
                   dimension: AppSpacing.arenaProductionFlowDot,
-                  child: Material(
-                    color: first ? color : AppColors.transparent,
-                    shape: CircleBorder(
-                      side: BorderSide(
-                        color: color,
-                        width: AppSpacing.dividerHairline,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: first ? color.withValues(alpha: .18) : AppColors.surface2,
+                      shape: CircleBorder(
+                        side: BorderSide(
+                          color: color,
+                          width: AppSpacing.arenaProductionFlowBorderWidth,
+                        ),
                       ),
                     ),
                   ),
@@ -108,30 +114,35 @@ class _FlowStepRow extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: VitCard(
+            child: Material(
               key: ArenaProductionReadyPage.flowStepKey(flowId, step.label),
-              variant: VitCardVariant.ghost,
-              radius: VitCardRadius.standard,
-              padding: AppSpacing.arenaProductionFlowStepPadding(last),
-              onTap: () => onRoute(step.route),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    step.label,
-                    style: AppTextStyles.caption.copyWith(
-                      fontWeight: AppTextStyles.bold,
-                    ),
+              color: AppColors.transparent,
+              child: InkWell(
+                onTap: () => onRoute(step.route),
+                borderRadius: AppRadii.inputRadius,
+                child: Padding(
+                  padding: AppSpacing.arenaProductionFlowStepPadding(last),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        step.label,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.x1),
+                      Text(
+                        step.description,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                          height: AppSpacing.arenaProductionCheckLineHeight,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: AppSpacing.x1),
-                  Text(
-                    step.description,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                      height: AppTextStyles.numericMicro.height,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -149,17 +160,15 @@ class _RegistrySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageSection(
+      label: 'D - Live vs Release-gated vs QA',
+      accentColor: AppColors.buy,
       density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'D - Live vs Release-gated vs QA',
-          accentColor: AppColors.buy,
-        ),
         Text(
           'Clear labels: Live = implemented local UI, Release-gated = not user-available, QA = internal only.',
           style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppTextStyles.numericMicro.height,
+            color: AppColors.text2,
+            height: AppSpacing.arenaProductionHeroLineHeight,
           ),
         ),
         VitCard(
@@ -203,7 +212,7 @@ class _StatusMetric extends StatelessWidget {
           style: AppTextStyles.sectionTitle.copyWith(
             color: color,
             fontWeight: AppTextStyles.heavy,
-            height: AppTextStyles.microTiny.height,
+            height: AppSpacing.arenaProductionMetricLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -235,10 +244,7 @@ class _StatusGroup extends StatelessWidget {
       children: [
         Row(
           children: [
-            SizedBox.square(
-              dimension: AppSpacing.arenaProductionStatusDot,
-              child: Material(color: color, shape: const CircleBorder()),
-            ),
+            _TintIcon(icon: Icons.circle, color: color, small: true),
             const SizedBox(width: AppSpacing.x2),
             Text(
               '${_statusLabel(status)} (${items.length})',
@@ -252,6 +258,8 @@ class _StatusGroup extends StatelessWidget {
         const SizedBox(height: AppSpacing.x2),
         VitCard(
           padding: AppSpacing.zeroInsets,
+          borderColor: color.withValues(alpha: .18),
+          density: VitDensity.compact,
           child: Column(
             children: [
               for (var i = 0; i < items.length; i++)
@@ -294,6 +302,7 @@ class _RegistryRow extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
+                    color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -342,23 +351,22 @@ class _HandoffSection extends StatelessWidget {
     ];
 
     return VitPageSection(
+      label: 'E - Dev Handoff Pack',
+      accentColor: AppColors.sell,
       density: VitDensity.compact,
       children: [
-        const VitModuleSectionHeader(
-          title: 'E - Dev Handoff Pack',
-          accentColor: AppColors.sell,
-        ),
         Text(
           '4 handoff boards: Route Registry, Component Registry, Trust & Governance Rules, Points Ledger / Resolution Dictionary.',
           style: AppTextStyles.micro.copyWith(
-            color: AppColors.text3,
-            height: AppTextStyles.numericMicro.height,
+            color: AppColors.text2,
+            height: AppSpacing.arenaProductionHeroLineHeight,
           ),
         ),
-        _HandoffBoard(
+        _HandoffCard(
           icon: Icons.map_outlined,
           color: AppColors.accent,
           title: '1. Route Registry',
+          subtitle: '${allScreens.length} routes',
           child: Column(
             children: [
               for (final screen in allScreens)
@@ -366,10 +374,11 @@ class _HandoffSection extends StatelessWidget {
             ],
           ),
         ),
-        _HandoffBoard(
+        _HandoffCard(
           icon: Icons.layers_outlined,
           color: AppColors.primary,
           title: '2. Component Registry (${snapshot.components.length})',
+          subtitle: 'Shared Arena UI components',
           child: Column(
             children: [
               for (final component in snapshot.components)
@@ -379,10 +388,11 @@ class _HandoffSection extends StatelessWidget {
         ),
         for (final dictionary in snapshot.dictionaries)
           _DictionaryBoard(dictionary: dictionary),
-        _HandoffBoard(
+        _HandoffCard(
           icon: Icons.check_circle_outline,
           color: AppColors.buy,
           title: 'QA Checklist - Pre-ship',
+          subtitle: '${snapshot.qaItems.length} checks',
           child: Column(
             children: [
               for (final item in snapshot.qaItems) _ChecklistLine(label: item),
@@ -394,40 +404,49 @@ class _HandoffSection extends StatelessWidget {
   }
 }
 
-class _HandoffBoard extends StatelessWidget {
-  const _HandoffBoard({
+class _HandoffCard extends StatelessWidget {
+  const _HandoffCard({
     required this.icon,
     required this.color,
     required this.title,
+    required this.subtitle,
     required this.child,
   });
 
   final IconData icon;
   final Color color;
   final String title;
+  final String subtitle;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      borderColor: color.withValues(alpha: .18),
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(
-                icon,
-                color: color,
-                size: AppSpacing.arenaProductionHandoffIcon,
-              ),
+              _TintIcon(icon: icon, color: color, small: true),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
-                child: Text(
-                  title,
-                  style: AppTextStyles.body.copyWith(
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    Text(
+                      subtitle,
+                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -109,7 +109,7 @@ void main() {
       find.byKey(LaunchpadBridgeOrderPage.eventLogKey),
       220,
     );
-    await tester.tap(find.text('Event Log'));
+    await tester.tap(find.text('Nhật ký sự kiện'));
     await tester.pumpAndSettle();
 
     expect(

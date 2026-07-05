@@ -1,65 +1,41 @@
 part of '../pages/transaction_history_page.dart';
 
-class _ExportBar extends StatelessWidget {
-  const _ExportBar({required this.count, required this.onExport});
+class _HistorySummaryBar extends StatelessWidget {
+  const _HistorySummaryBar({required this.count, this.exportNotice});
 
   final int count;
-  final VoidCallback onExport;
+  final String? exportNotice;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              '$count giao dịch',
-              style: AppTextStyles.badge.copyWith(color: AppColors.text3),
-            ),
-          ),
-          VitStatusPill(
-            key: TransactionHistoryPage.exportKey,
-            label: 'Yêu cầu CSV',
-            icon: Icons.cloud_download_outlined,
-            status: VitStatusPillStatus.info,
-            size: VitStatusPillSize.md,
-            onTap: onExport,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ExportNotice extends StatelessWidget {
-  const _ExportNotice({required this.message});
-
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      density: VitDensity.compact,
-      borderColor: AppColors.primary20,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: _historyPrimary,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              message,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          '$count giao dịch',
+          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+        ),
+        if (exportNotice != null) ...[
+          const SizedBox(height: AppSpacing.x2),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.info_outline_rounded,
+                color: _historyPrimary,
+                size: AppSpacing.iconSm,
+              ),
+              const SizedBox(width: AppSpacing.x2),
+              Expanded(
+                child: Text(
+                  exportNotice!,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+                ),
+              ),
+            ],
           ),
         ],
-      ),
+      ],
     );
   }
 }
@@ -255,10 +231,10 @@ class _TransactionInfo extends StatelessWidget {
         if (tx.txHash != null) ...[
           const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
           Text(
-            tx.txHash!,
+            _maskTxHash(tx.txHash!),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: _historyPrimary),
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],
       ],

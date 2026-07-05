@@ -77,9 +77,9 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Margin Trading Hub'), findsOneWidget);
-    expect(find.text('Enterprise Features'), findsOneWidget);
-    expect(find.text('Margin Trading Suite'), findsWidgets);
+    expect(find.text('Hub ký quỹ'), findsOneWidget);
+    expect(find.text('Công cụ · Tuân thủ'), findsOneWidget);
+    expect(find.text('Bộ công cụ ký quỹ'), findsWidgets);
     expect(find.text('27'), findsOneWidget);
     expect(find.text('Market Analytics'), findsOneWidget);
     expect(find.text('Regulatory & Safety'), findsOneWidget);
@@ -120,7 +120,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.byType(LiveMarketDataAnalyticsPage), findsOneWidget);
-    expect(find.text('Live Market Analytics'), findsOneWidget);
+    expect(find.text('Phân tích trực tiếp'), findsOneWidget);
 
     await pumpMarginHub(tester);
     await tester.ensureVisible(
@@ -129,7 +129,7 @@ void main() {
     await tester.tap(MarginTradingHubPage.menuKey('ai-advanced').asFinder());
     await tester.pumpAndSettle();
     expect(find.byType(AdvancedAnalyticsPage), findsOneWidget);
-    expect(find.text('Advanced Analytics'), findsOneWidget);
+    expect(find.text('Phân tích nâng cao'), findsOneWidget);
   });
 }
 

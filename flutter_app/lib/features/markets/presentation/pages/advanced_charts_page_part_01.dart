@@ -30,6 +30,7 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Phân tích kỹ thuật',
+            subtitle: 'Biểu đồ · Markets',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),
@@ -47,11 +48,10 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: AdvancedChartsPage.contentKey,
-                    padding: EdgeInsetsDirectional.only(
-                      bottom: scrollEndClearance,
-                    ),
+                    padding: AppSpacing.marketScrollPadding(scrollEndClearance),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,
+                      gap: VitContentGap.tight,
                       density: VitDensity.compact,
                       children: [
                         if (_tab == 'indicators') ...[
@@ -105,10 +105,17 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                           ),
                           const _TipsCard(),
                         ] else ...[
-                          const _SignalDisclaimerCard(),
                           for (final signal in snapshot.signalSummaries)
                             _SignalSummaryCard(signal: signal),
                         ],
+                        const VitBanner(
+                          variant: VitBannerVariant.info,
+                          icon: Icons.info_outline_rounded,
+                          message:
+                              'Tín hiệu kỹ thuật chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư.',
+                          detail:
+                              'Chỉ báo và công cụ vẽ hỗ trợ phân tích — không thay thế quyết định giao dịch.',
+                        ),
                       ],
                     ),
                   ),
@@ -155,88 +162,37 @@ class _AdvancedChartsTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.surface,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: _advancedTabsHeight,
-            child: Row(
-              children: [
-                _UnderlinedTab(
-                  key: AdvancedChartsPage.indicatorsTabKey,
-                  label: 'Chỉ báo',
-                  value: 'indicators',
-                  active: activeTab == 'indicators',
-                  onChanged: onChanged,
-                ),
-                _UnderlinedTab(
-                  key: AdvancedChartsPage.drawingTabKey,
-                  label: 'Công cụ vẽ',
-                  value: 'drawing',
-                  active: activeTab == 'drawing',
-                  onChanged: onChanged,
-                ),
-                _UnderlinedTab(
-                  key: AdvancedChartsPage.signalsTabKey,
-                  label: 'Tín hiệu kỹ thuật',
-                  value: 'signals',
-                  active: activeTab == 'signals',
-                  onChanged: onChanged,
-                ),
-              ],
-            ),
-          ),
-          const Divider(height: AppSpacing.dividerHairline),
-        ],
-      ),
-    );
-  }
-}
-
-class _UnderlinedTab extends StatelessWidget {
-  const _UnderlinedTab({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.active,
-    required this.onChanged,
-  });
-
-  final String label;
-  final String value;
-  final bool active;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: VitCard(
-        onTap: () => onChanged(value),
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: EdgeInsets.zero,
-        borderColor: AppColors.transparent,
+      child: SizedBox(
+        height: AppSpacing.marketDepthTabsHeight,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(
-              child: Center(
-                child: Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.caption.copyWith(
-                    color: active ? _marketPrimary : AppColors.text3,
-                    fontWeight: AppTextStyles.medium,
+              child: VitTabBar(
+                activeKey: activeTab,
+                variant: VitTabBarVariant.underline,
+                onChanged: onChanged,
+                tabs: const [
+                  VitTabItem(
+                    key: 'indicators',
+                    label: 'Chỉ báo',
+                    widgetKey: AdvancedChartsPage.indicatorsTabKey,
                   ),
-                ),
+                  VitTabItem(
+                    key: 'drawing',
+                    label: 'Công cụ vẽ',
+                    widgetKey: AdvancedChartsPage.drawingTabKey,
+                  ),
+                  VitTabItem(
+                    key: 'signals',
+                    label: 'Tín hiệu kỹ thuật',
+                    widgetKey: AdvancedChartsPage.signalsTabKey,
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: _advancedTabIndicatorHeight,
-              child: FractionallySizedBox(
-                widthFactor: active ? 1 : 0,
-                child: const ColoredBox(color: _marketPrimary),
-              ),
+            const Divider(
+              height: AppSpacing.dividerHairline,
+              color: AppColors.divider,
             ),
           ],
         ),

@@ -1,30 +1,5 @@
 part of 'token_unlocks_page.dart';
 
-class _UnlockEmptyState extends StatelessWidget {
-  const _UnlockEmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: AppSpacing.tokenUnlocksEmptyPadding,
-      child: Column(
-        children: [
-          Icon(
-            Icons.lock_outline_rounded,
-            size: AppSpacing.tokenUnlocksEmptyIcon,
-            color: AppColors.text3.withValues(alpha: .4),
-          ),
-          const SizedBox(height: _unlockEmptyGap),
-          Text(
-            'Không có unlock phù hợp',
-            style: AppTextStyles.body.copyWith(color: AppColors.text3),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 String _countdownLabel(TokenUnlockDraft unlock) {
   if (unlock.daysUntil == 0) return '(Hôm nay)';
   return '(${unlock.daysUntil} ngày)';

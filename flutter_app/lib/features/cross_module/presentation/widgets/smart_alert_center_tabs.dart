@@ -13,70 +13,30 @@ class _SmartAlertTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.surface,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: AppSpacing.crossModuleTabBarPadding,
-            child: Row(
-              children: [
-                for (final tab in tabs)
-                  Expanded(
-                    child: VitCard(
-                      key: SmartAlertCenter.tabKey(tab.tab),
-                      onTap: () => onChanged(tab.tab),
-                      variant: VitCardVariant.ghost,
-                      radius: VitCardRadius.standard,
-                      padding: EdgeInsets.zero,
-                      borderColor: AppColors.transparent,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: AppSpacing.crossModuleTabLabelPadding,
-                            child: Text(
-                              tab.label,
-                              style: AppTextStyles.caption.copyWith(
-                                color: tab.tab == active
-                                    ? AppColors.primary
-                                    : AppColors.text3,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: AppSpacing.buttonHero,
-                            height: AppSpacing.x1,
-                            child: TweenAnimationBuilder<double>(
-                              tween: Tween<double>(
-                                end: tab.tab == active ? 1 : 0,
-                              ),
-                              duration: const Duration(milliseconds: 160),
-                              builder: (context, value, child) =>
-                                  Transform.scale(scaleX: value, child: child),
-                              child: const DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  color: AppColors.primary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: AppRadii.xlRadius,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: AppSpacing.dividerHairline,
-            child: ColoredBox(color: AppColors.divider),
-          ),
-        ],
+    final tabItems = [
+      for (final tab in tabs)
+        VitTabItem(
+          key: tab.tab.name,
+          label: tab.label,
+          widgetKey: SmartAlertCenter.tabKey(tab.tab),
+        ),
+    ];
+
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
+        color: AppColors.surface,
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: Padding(
+        padding: AppSpacing.crossModuleTabBarPadding,
+        child: VitSegmentedTabBar(
+          tabs: tabItems,
+          activeKey: active.name,
+          onChanged: (key) {
+            final selected = tabs.firstWhere((tab) => tab.tab.name == key);
+            onChanged(selected.tab);
+          },
+        ),
       ),
     );
   }
@@ -106,7 +66,6 @@ class _ActiveAlertsTab extends StatelessWidget {
         _InfoPanel(
           icon: Icons.info_outline_rounded,
           color: AppColors.primary,
-          background: AppColors.primary08,
           border: AppColors.primary20,
           text:
               'Smart alerts work across all modules. Set conditions and get notified via push, email, or SMS.',

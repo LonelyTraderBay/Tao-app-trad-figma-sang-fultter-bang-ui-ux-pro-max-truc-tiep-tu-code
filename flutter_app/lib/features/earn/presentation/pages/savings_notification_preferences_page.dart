@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_not
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_notification_preferences_delivery.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_notification_preferences_events.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_notification_preferences_summary.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -86,12 +87,29 @@ class _SavingsNotificationPreferencesPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              ColoredBox(
+                color: AppColors.surface,
+                child: SavingsNotificationTabs(
+                  tabs: snapshot.tabs,
+                  active: activeTab,
+                  onChanged: (tab) {
+                    HapticFeedback.selectionClick();
+                    setState(() => _tab = tab);
+                  },
+                ),
+              ),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
@@ -136,14 +154,6 @@ class _SavingsNotificationPreferencesPageState
                         digestFrequency: snapshot.digestFrequency,
                         quietHours: snapshot.quietHours,
                       ),
-                      SavingsNotificationTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
                       if (activeTab == 'events')
                         SavingsNotificationEventsTab(
                           alerts: _alerts,
@@ -161,6 +171,7 @@ class _SavingsNotificationPreferencesPageState
                           quietHours: snapshot.quietHours,
                           onToggle: _toggleChannel,
                         ),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

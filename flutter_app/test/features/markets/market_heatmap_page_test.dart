@@ -73,8 +73,8 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
-    expect(find.text('Market Heatmap'), findsOneWidget);
-    expect(find.text('Bản đồ · Markets'), findsOneWidget);
+    expect(find.text('Bản đồ thị trường'), findsOneWidget);
+    expect(find.text('Quét biến động · Markets'), findsOneWidget);
     expect(find.text(r'$2,018.43B'), findsOneWidget);
     expect(find.text('+1.28%'), findsOneWidget);
     expect(find.text('20'), findsOneWidget);

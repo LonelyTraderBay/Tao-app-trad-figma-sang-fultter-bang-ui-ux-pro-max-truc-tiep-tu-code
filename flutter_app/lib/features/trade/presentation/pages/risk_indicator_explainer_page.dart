@@ -48,8 +48,15 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
       onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
       children: [
         VitTradeSection(
-          title: 'Product SRI',
-          child: _ProductSriCard(snapshot: snapshot),
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Risk indicator review',
+            message:
+                'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
+            contractId: 'risk-indicator-review',
+            density: VitDensity.compact,
+          ),
         ),
         VitTradeComplianceSection(
           title: 'Risk review',
@@ -68,6 +75,10 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
               value: '${snapshot.levels.length} defined',
             ),
           ],
+        ),
+        VitTradeSection(
+          title: 'Product SRI',
+          child: _ProductSriCard(snapshot: snapshot),
         ),
         VitTradeSection(
           title: 'What is the Summary Risk Indicator?',
@@ -94,14 +105,6 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _AdditionalRisksCard(risks: snapshot.additionalRisks),
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'Risk indicator review',
-                message:
-                    'SRI level, holding period, additional risks, liquidity limits and next steps are reviewed before product action.',
-                contractId: 'risk-indicator-review',
-                density: VitDensity.compact,
-              ),
             ],
           ),
         ),

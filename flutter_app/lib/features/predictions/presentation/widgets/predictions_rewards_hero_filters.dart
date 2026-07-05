@@ -89,76 +89,14 @@ class _HowItWorksNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: _predictionPrimary.withValues(alpha: .07),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.cardRadius,
-        side: BorderSide(color: _predictionPrimary.withValues(alpha: .18)),
-      ),
-      child: Padding(
-        padding: VitDensity.compact.cardPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.info_outline_rounded,
-              color: _predictionPrimary,
-              size: AppSpacing.predictionRewardsNoteIcon,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Expanded(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    const TextSpan(text: 'How it works:'),
-                    TextSpan(
-                      text: ' Place a ',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        height: 1.35,
-                        fontWeight: AppTextStyles.normal,
-                      ),
-                    ),
-                    const TextSpan(text: 'limit order'),
-                    TextSpan(
-                      text: ' (not market order) within the ',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        height: 1.35,
-                        fontWeight: AppTextStyles.normal,
-                      ),
-                    ),
-                    const TextSpan(text: 'Max Spread'),
-                    TextSpan(
-                      text: ' and hold at least ',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        height: 1.35,
-                        fontWeight: AppTextStyles.normal,
-                      ),
-                    ),
-                    const TextSpan(text: 'Min Shares'),
-                    TextSpan(
-                      text:
-                          '. Rewards are distributed daily in USDT at 00:00 UTC.',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text2,
-                        height: 1.35,
-                        fontWeight: AppTextStyles.normal,
-                      ),
-                    ),
-                  ],
-                ),
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text2,
-                  height: 1.35,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return VitAnnouncementBanner(
+      message:
+          'Đặt lệnh limit (không phải market) trong Max Spread và giữ tối thiểu '
+          'Min Shares. Phần thưởng phân phối hàng ngày lúc 00:00 UTC — không '
+          'phải lợi nhuận đảm bảo.',
+      icon: Icons.info_outline_rounded,
+      accentColor: _predictionPrimary,
+      variant: VitAnnouncementBannerVariant.compact,
     );
   }
 }

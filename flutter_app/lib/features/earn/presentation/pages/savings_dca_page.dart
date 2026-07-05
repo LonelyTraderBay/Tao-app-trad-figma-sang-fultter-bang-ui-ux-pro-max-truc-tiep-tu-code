@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 part '../widgets/savings_dca_summary.dart';
 part '../widgets/savings_dca_plans.dart';
 part '../widgets/savings_dca_history_sheet.dart';
@@ -53,10 +54,10 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
     final snapshot = ref.watch(savingsDcaRepositoryProvider).getDca();
     final activeTab = _tab ?? snapshot.defaultTab;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -67,21 +68,39 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              ColoredBox(
+                color: AppColors.surface,
+                child: Padding(
+                  padding: AppSpacing.earnSurfaceTabsPadding,
+                  child: _DcaTabs(
+                    tabs: snapshot.tabs,
+                    active: activeTab,
+                    onChanged: (tab) {
+                      HapticFeedback.selectionClick();
+                      setState(() => _tab = tab);
+                    },
+                  ),
+                ),
+              ),
+              const Divider(
+                height: AppSpacing.dividerHairline,
+                thickness: AppSpacing.dividerHairline,
+                color: AppColors.divider,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
-                    gap: VitContentGap.tight,
+                    gap: VitContentGap.defaultGap,
                     children: [
                       _DcaSummaryCard(
                         snapshot: snapshot,
@@ -89,15 +108,7 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
                         onPlans: () => setState(() => _tab = 'plans'),
                         onHistory: () => setState(() => _tab = 'history'),
                       ),
-                      _InfoBanner(text: snapshot.infoText),
-                      _DcaTabs(
-                        tabs: snapshot.tabs,
-                        active: activeTab,
-                        onChanged: (tab) {
-                          HapticFeedback.selectionClick();
-                          setState(() => _tab = tab);
-                        },
-                      ),
+                      EarnInfoBanner(text: snapshot.infoText),
                       if (activeTab == 'plans')
                         _PlansList(
                           plans: snapshot.plans,
@@ -106,6 +117,7 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
                         )
                       else
                         _HistoryList(executions: snapshot.executions),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

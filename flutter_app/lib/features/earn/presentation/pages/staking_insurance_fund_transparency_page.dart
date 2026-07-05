@@ -12,8 +12,8 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_ins
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_insurance_fund_history.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_insurance_fund_overview.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
@@ -64,8 +64,10 @@ class _StakingInsuranceFundTransparencyPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Quỹ bảo hiểm — không cam kết bồi thường 100%',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),

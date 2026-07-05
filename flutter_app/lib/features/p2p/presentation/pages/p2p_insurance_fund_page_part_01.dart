@@ -38,10 +38,8 @@ class _FundSummaryCard extends StatelessWidget {
       radius: VitCardRadius.large,
       borderColor: AppColors.warningBorder,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -114,10 +112,8 @@ class _EligibilityCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _CardTitle(
             icon: Icons.check_circle_outline_rounded,
@@ -154,10 +150,8 @@ class _FundHealthCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -207,16 +201,19 @@ class _FundHealthCard extends StatelessWidget {
             onTap: () => context.go(snapshot.certificateRoute),
             child: Row(
               children: [
-                const VitCard(
-                  width: _p2pInsuranceIconBox,
-                  height: _p2pInsuranceIconBox,
-                  variant: VitCardVariant.inner,
-                  radius: VitCardRadius.standard,
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Icons.verified_user_outlined,
-                    color: AppModuleAccents.p2p,
-                    size: AppSpacing.iconMd,
+                SizedBox.square(
+                  dimension: _p2pInsuranceIconBox,
+                  child: Material(
+                    color: AppColors.primary12,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                      side: const BorderSide(color: AppColors.primary20),
+                    ),
+                    child: const Icon(
+                      Icons.verified_user_outlined,
+                      color: AppModuleAccents.p2p,
+                      size: AppSpacing.iconMd,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -225,7 +222,7 @@ class _FundHealthCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Proof of Reserves',
+                        'Chứng minh dự trữ',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
@@ -265,10 +262,8 @@ class _FundChartCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       padding: AppSpacing.p2pTrustProgressCompactPadding,
-      child: VitPageContent(
-        padding: VitContentPadding.none,
-        fullBleed: true,
-        density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -355,7 +350,7 @@ class _CoverageCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
-          _TwoColumnInfo(label: 'Tier merchant', value: snapshot.tierName),
+          _TwoColumnInfo(label: 'Hạng merchant', value: snapshot.tierName),
           _TwoColumnInfo(
             label: 'Đóng góp/giao dịch',
             value: snapshot.contributionRate,

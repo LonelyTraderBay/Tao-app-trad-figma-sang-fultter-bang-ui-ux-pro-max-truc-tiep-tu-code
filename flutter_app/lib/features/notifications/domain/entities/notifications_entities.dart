@@ -1,4 +1,4 @@
-enum NotificationsScreenState { loading, empty, error, offline }
+enum NotificationsScreenState { loading, empty, error, offline, ready }
 
 enum AppNotificationType {
   trade,
@@ -21,6 +21,7 @@ final class NotificationsSnapshot {
     required this.backRoute,
     required this.notifications,
     required this.contractNotes,
+    required this.screenState,
     required this.supportedStates,
   });
 
@@ -31,6 +32,7 @@ final class NotificationsSnapshot {
   final String backRoute;
   final List<AppNotificationDraft> notifications;
   final String contractNotes;
+  final NotificationsScreenState screenState;
   final Set<NotificationsScreenState> supportedStates;
 }
 

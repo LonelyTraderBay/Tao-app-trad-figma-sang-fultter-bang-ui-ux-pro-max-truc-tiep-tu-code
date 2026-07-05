@@ -174,7 +174,7 @@ class _MethodIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.primary12,
-      shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: SizedBox(
         width: AppSpacing.x6,
         height: AppSpacing.x6,

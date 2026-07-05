@@ -99,9 +99,9 @@ void main() {
     expect(find.text('10,200.00 USDT'), findsOneWidget);
     expect(find.byKey(WithdrawPage.supportKey), findsOneWidget);
     expect(find.text('TRC20 (TRON)'), findsOneWidget);
-    expect(find.text('Địa chỉ ví nhận'), findsOneWidget);
+    expect(find.text('Địa chỉ nhận'), findsOneWidget);
     expect(find.text('Ví lạnh cá nhân'), findsOneWidget);
-    expect(find.text('Số lượng rút'), findsOneWidget);
+    expect(find.text('Số lượng'), findsOneWidget);
     expect(find.text('Tiếp tục →'), findsOneWidget);
   });
 
@@ -185,6 +185,8 @@ void main() {
     expect(find.text('TXYZ12...cdef'), findsOneWidget);
     expect(find.byKey(WithdrawPage.cancelConfirmKey), findsOneWidget);
     expect(find.byKey(WithdrawPage.confirmWithdrawKey), findsOneWidget);
+    expect(find.text('Hủy'), findsOneWidget);
+    expect(find.text('Xác nhận rút'), findsOneWidget);
   });
 
   testWidgets('SC-139 support opens contextual withdrawal support', (

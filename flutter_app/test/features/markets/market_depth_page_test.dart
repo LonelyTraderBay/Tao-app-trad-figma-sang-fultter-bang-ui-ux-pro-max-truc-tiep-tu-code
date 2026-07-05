@@ -103,7 +103,7 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
-    expect(find.text('BTC Depth'), findsOneWidget);
+    expect(find.text('Độ sâu BTC'), findsOneWidget);
     expect(find.text('BTC/USDT'), findsOneWidget);
     expect(find.text(r'$67,543.21'), findsOneWidget);
     expect(find.text('Spread'), findsOneWidget);
@@ -186,7 +186,7 @@ void main() {
     expect(find.byType(MarketDepthPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('BTC Depth'), findsOneWidget);
+    expect(find.text('Độ sâu BTC'), findsOneWidget);
     expect(find.text('BTC/USDT'), findsOneWidget);
     expect(find.text(r'$67,543.21'), findsOneWidget);
     expect(find.text('Mua 53.8%'), findsOneWidget);

@@ -64,6 +64,7 @@ void main() {
     expect(find.text('Chi tiết quyết định'), findsOneWidget);
     expect(find.text('Số tiền hoàn trả'), findsOneWidget);
     expect(find.text('24.000.000'), findsOneWidget);
+    expect(find.text('Trọng tài'), findsOneWidget);
     expect(find.text('Support Team #A5'), findsOneWidget);
     expect(find.text('2026-03-05 16:00'), findsOneWidget);
     expect(find.text('Quyền kháng cáo'), findsOneWidget);

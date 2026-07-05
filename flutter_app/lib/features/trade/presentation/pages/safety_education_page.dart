@@ -57,17 +57,17 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
       onBack: () => context.go(AppRoutePaths.tradeCopyTrading),
       children: [
         VitTradeSection(
-          title: 'Review',
+          title: 'Đánh giá rủi ro',
           child: const VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             density: VitDensity.compact,
-            title: 'Review copy-trading safety signals',
+            title: 'Xem lại tín hiệu an toàn copy trading',
             message:
-                'Confirm scam indicators, provider verification, reporting limits, and next steps before copying.',
+                'Xác nhận dấu hiệu lừa đảo, xác minh provider, giới hạn báo cáo và bước tiếp theo trước khi copy.',
           ),
         ),
         VitTradeComplianceSection(
-          title: 'Safety review',
+          title: 'An toàn copy trading',
           statusPill: VitStatusPill(
             label: 'Tab: $_activeTabId',
             status: VitStatusPillStatus.warning,
@@ -75,17 +75,17 @@ class _SafetyEducationPageState extends ConsumerState<SafetyEducationPage> {
           ),
           items: [
             VitTradeComplianceItem(
-              label: 'Scams tracked',
+              label: 'Lừa đảo theo dõi',
               value: '${snapshot.scams.length}',
             ),
             VitTradeComplianceItem(
-              label: 'Red flags',
+              label: 'Cảnh báo đỏ',
               value: '${snapshot.redFlags.length}',
             ),
           ],
         ),
         VitTradeSection(
-          title: 'Education',
+          title: 'Giáo dục',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

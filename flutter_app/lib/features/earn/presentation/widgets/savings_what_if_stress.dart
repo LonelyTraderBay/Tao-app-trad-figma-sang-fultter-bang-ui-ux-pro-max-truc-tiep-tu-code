@@ -161,10 +161,10 @@ class _StressTab extends StatelessWidget {
           color: AppColors.primary,
           title: 'Gợi ý tăng kháng chịu',
           text:
-              'Đa dạng hóa tài sản và pha trộn sản phẩm linh hoạt với cố định giúp giảm rủi ro trong kịch bản bất lợi. Cân nhắc tăng tỷ trọng stablecoin để đảm bảo ổn định.',
+              'Đa dạng hóa tài sản và pha trộn sản phẩm linh hoạt với cố định giúp giảm rủi ro trong kịch bản bất lợi. Cân nhắc tăng tỷ trọng stablecoin để hỗ trợ ổn định danh mục.',
         ),
         const SizedBox(height: AppSpacing.x3),
-        _Disclaimer(text: snapshot.stressDisclaimer, tone: AppColors.warn),
+        EarnWarningBanner(text: snapshot.stressDisclaimer),
       ],
     );
   }

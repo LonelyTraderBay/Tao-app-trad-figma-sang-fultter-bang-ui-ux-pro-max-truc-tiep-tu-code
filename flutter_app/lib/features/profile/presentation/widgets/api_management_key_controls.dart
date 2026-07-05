@@ -23,10 +23,8 @@ class _ToggleSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return GestureDetector(
       onTap: onTap,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
       child: VitTogglePill(
         enabled: active,
         width: AppSpacing.profileApiToggleWidth,
@@ -59,46 +57,40 @@ class _SecretRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: _apiPanel2,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: redBorder
-            ? BorderSide(color: _apiRed.withValues(alpha: .1))
-            : BorderSide.none,
+    return VitCard(
+      density: VitDensity.compact,
+      variant: VitCardVariant.inner,
+      borderColor: redBorder ? _apiRed.withValues(alpha: .1) : AppColors.transparent,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
       ),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: AppSpacing.x3,
-          vertical: AppSpacing.x2,
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: AppSpacing.x6 + AppSpacing.x4,
-              child: Text(
-                label,
-                style: AppTextStyles.micro.copyWith(
-                  color: labelColor,
-                  fontWeight: AppTextStyles.extraBold,
-                ),
+      child: Row(
+        children: [
+          SizedBox(
+            width: AppSpacing.x6 + AppSpacing.x4,
+            child: Text(
+              label,
+              style: AppTextStyles.micro.copyWith(
+                color: labelColor,
+                fontWeight: AppTextStyles.extraBold,
               ),
             ),
-            Expanded(
-              child: Text(
-                value,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.text1,
-                  fontWeight: AppTextStyles.extraBold,
-                ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.micro.copyWith(
+                color: AppColors.text1,
+                fontWeight: AppTextStyles.extraBold,
               ),
             ),
-            const SizedBox(width: AppSpacing.x2),
-            trailing,
-          ],
-        ),
+          ),
+          const SizedBox(width: AppSpacing.x2),
+          trailing,
+        ],
       ),
     );
   }
@@ -106,24 +98,26 @@ class _SecretRow extends StatelessWidget {
 
 class _IconTap extends StatelessWidget {
   const _IconTap({
-    super.key,
+    this.buttonKey,
     required this.icon,
-    required this.color,
     required this.onTap,
+    this.tooltip = 'Sao ch\u00E9p',
   });
 
+  final Key? buttonKey;
   final IconData icon;
-  final Color color;
   final VoidCallback onTap;
+  final String tooltip;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      onTap: onTap,
-      variant: VitCardVariant.ghost,
-      borderColor: AppColors.transparent,
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
-      child: Icon(icon, color: color, size: AppSpacing.profileApiIconAction),
+    return VitIconButton(
+      key: buttonKey,
+      icon: icon,
+      tooltip: tooltip,
+      onPressed: onTap,
+      variant: VitIconButtonVariant.ghost,
+      size: VitIconButtonSize.sm,
     );
   }
 }
@@ -140,64 +134,21 @@ class _PermissionBadges extends StatelessWidget {
       runSpacing: AppSpacing.profileApiPermissionRunSpacing,
       children: [
         for (final permission in apiKey.permissions)
-          _SmallBadge(
+          VitAccentPill(
             label: _permissionLabel(permission),
-            color: _permissionColor(permission),
+            accentColor: _permissionColor(permission),
           ),
         if (apiKey.ipWhitelist.isNotEmpty)
-          _SmallBadge(
+          VitAccentPill(
             label: '${apiKey.ipWhitelist.length} IPs',
-            color: _apiGreen,
-            icon: Icons.language_rounded,
+            accentColor: _apiGreen,
           )
         else
-          const _SmallBadge(
+          const VitAccentPill(
             label: 'Kh\u00F4ng gi\u1EDBi h\u1EA1n IP',
-            color: _apiAmber,
-            icon: Icons.warning_amber_rounded,
+            accentColor: _apiAmber,
           ),
       ],
-    );
-  }
-}
-
-class _SmallBadge extends StatelessWidget {
-  const _SmallBadge({required this.label, required this.color, this.icon});
-
-  final String label;
-  final Color color;
-  final IconData? icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .12),
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.smRadius,
-        side: BorderSide(color: color.withValues(alpha: .24)),
-      ),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: color, size: AppSpacing.iconSm),
-              const SizedBox(width: AppSpacing.x1),
-            ],
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.extraBold,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

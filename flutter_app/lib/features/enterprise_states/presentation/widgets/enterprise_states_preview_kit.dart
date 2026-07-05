@@ -28,22 +28,18 @@ class _StateKitSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x5),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: const ClampingScrollPhysics(),
-            child: Row(
-              children: [
-                for (final state in snapshot.previewStates) ...[
-                  _PreviewStateChip(
-                    state: state,
-                    active: state.state == activeState,
-                    onTap: () => onStateChanged(state.state),
-                  ),
-                  if (state != snapshot.previewStates.last)
-                    const SizedBox(width: AppSpacing.x3),
-                ],
-              ],
-            ),
+          VitPresetChipRow<EnterprisePreviewState>(
+            items: [
+              for (final state in snapshot.previewStates)
+                VitPresetChipItem(
+                  value: state.state,
+                  label: state.label,
+                  key: EnterpriseStatesPage.stateKey(state.state),
+                ),
+            ],
+            selectedValue: activeState,
+            onTap: onStateChanged,
+            accentColor: AppModuleAccents.enterpriseStates,
           ),
           const SizedBox(height: AppSpacing.x6),
           _PreviewFrame(
@@ -66,31 +62,6 @@ class _StateKitSection extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
           ],
         ],
-    );
-  }
-}
-
-class _PreviewStateChip extends StatelessWidget {
-  const _PreviewStateChip({
-    required this.state,
-    required this.active,
-    required this.onTap,
-  });
-
-  final EnterprisePreviewStateDraft state;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitStatusPill(
-      key: EnterpriseStatesPage.stateKey(state.state),
-      label: state.label,
-      icon: _previewIcon(state.state),
-      status: _pillStatus(state.state),
-      size: VitStatusPillSize.lg,
-      outline: !active,
-      onTap: onTap,
     );
   }
 }
@@ -295,38 +266,46 @@ class _GatePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: AppSpacing.enterpriseStatesPreviewPadding,
-      child: VitCard(
-        variant: VitCardVariant.inner,
-        padding: AppSpacing.enterpriseStatesPreviewPadding,
-        child: Column(
-          children: [
-            const Icon(
-              Icons.verified_user_outlined,
-              color: AppColors.warn,
-              size: AppSpacing.iconLg,
-            ),
-            const SizedBox(height: AppSpacing.x4),
-            Text(
-              'Cần KYC để tiếp tục',
-              style: AppTextStyles.baseMedium.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: AppColors.surface2,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadii.cardRadius,
+            side: const BorderSide(color: AppColors.divider),
+          ),
+        ),
+        child: Padding(
+          padding: AppSpacing.enterpriseStatesPreviewPadding,
+          child: Column(
+            children: [
+              const Icon(
+                Icons.verified_user_outlined,
+                color: AppColors.warn,
+                size: AppSpacing.iconLg,
               ),
-            ),
-            const SizedBox(height: AppSpacing.x2),
-            Text(
-              'Hoàn tất xác minh danh tính để mở khóa tính năng này.',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-            const SizedBox(height: AppSpacing.x5),
-            VitCtaButton(
-              key: EnterpriseStatesPage.kycCtaKey,
-              onPressed: onKyc,
-              leading: const Icon(Icons.arrow_forward_rounded),
-              child: const Text('Đi tới KYC'),
-            ),
-          ],
+              const SizedBox(height: AppSpacing.x4),
+              Text(
+                'Cần KYC để tiếp tục',
+                style: AppTextStyles.baseMedium.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x2),
+              Text(
+                'Hoàn tất xác minh danh tính để mở khóa tính năng này.',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
+              ),
+              const SizedBox(height: AppSpacing.x5),
+              VitCtaButton(
+                key: EnterpriseStatesPage.kycCtaKey,
+                onPressed: onKyc,
+                leading: const Icon(Icons.arrow_forward_rounded),
+                child: const Text('Đi tới KYC'),
+              ),
+            ],
+          ),
         ),
       ),
     );

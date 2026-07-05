@@ -1,167 +1,5 @@
 part of 'arena_guide_page.dart';
 
-class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
-  _GuideTab _tab = _GuideTab.guide;
-  _GuideMode _mode = _GuideMode.create;
-  int? _expandedTip;
-  int? _expandedFaq;
-  bool _showAllTips = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(arenaReadModelControllerProvider)
-        .getArenaGuide();
-    final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final footerPadding = arenaFooterPadding(
-      context,
-      mode,
-      visualExtra: AppSpacing.x3,
-      nativeExtra: AppSpacing.x2,
-    );
-
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
-      semanticLabel: 'SC-209 ArenaGuidePage',
-      child: Material(
-        type: MaterialType.transparency,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: 'Hướng dẫn Arena',
-            subtitle: 'Hướng dẫn - Open Arena',
-            showBack: true,
-            onBack: () => _close(context),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _GuideTabs(active: _tab, onChanged: _setTab),
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: ScrollConfiguration.of(
-                    context,
-                  ).copyWith(scrollbars: false),
-                  child: SingleChildScrollView(
-                    key: ArenaGuidePage.contentKey,
-                    physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
-                    child: VitPageContent(
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.tight,
-                      children: _tabChildren(context, snapshot),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _tabChildren(BuildContext context, ArenaGuideSnapshot snapshot) {
-    return switch (_tab) {
-      _GuideTab.guide => [
-        _GuideHero(snapshot: snapshot),
-        _ModeSwitch(mode: _mode, onChanged: _setMode),
-        _StepsTimeline(
-          steps: _mode == _GuideMode.create
-              ? snapshot.createSteps
-              : snapshot.joinSteps,
-        ),
-        _StartCard(mode: _mode, onPressed: () => _openPrimary(context)),
-        if (_mode == _GuideMode.create)
-          _ExampleSection(examples: snapshot.examples),
-        _ConceptSection(concepts: snapshot.keyConcepts),
-      ],
-      _GuideTab.tips => [
-        _TipsHeader(total: snapshot.proTips.length),
-        _ImpactLegend(),
-        _TipsList(
-          tips: _showAllTips
-              ? snapshot.proTips
-              : snapshot.proTips.take(5).toList(),
-          expandedIndex: _expandedTip,
-          onToggle: _toggleTip,
-        ),
-        if (!_showAllTips && snapshot.proTips.length > 5)
-          _ShowMoreTipsButton(
-            remaining: snapshot.proTips.length - 5,
-            onPressed: () {
-              HapticFeedback.selectionClick();
-              setState(() => _showAllTips = true);
-            },
-          ),
-        _ChecklistCard(items: snapshot.checklist),
-        VitCtaButton(
-          onPressed: () => context.go(AppRoutePaths.arenaStudio),
-          leading: const Icon(
-            Icons.auto_awesome,
-            size: AppSpacing.arenaGuideCtaIcon,
-          ),
-          child: const Text('Áp dụng ngay - Tạo Challenge'),
-        ),
-      ],
-      _GuideTab.safety => [
-        _SafetyHero(),
-        _PointsOnlyBanner(),
-        _SafetyTipList(items: snapshot.safetyTips),
-        _SafetyCenterCard(
-          onPressed: () => context.go(AppRoutePaths.arenaSafety),
-        ),
-      ],
-      _GuideTab.faq => [
-        _FaqHeader(total: snapshot.faqs.length),
-        _FaqList(
-          items: snapshot.faqs,
-          expandedIndex: _expandedFaq,
-          onToggle: _toggleFaq,
-        ),
-        _SupportCard(onPressed: () => context.go(AppRoutePaths.support)),
-      ],
-    };
-  }
-
-  void _setTab(_GuideTab tab) {
-    HapticFeedback.selectionClick();
-    setState(() => _tab = tab);
-  }
-
-  void _setMode(_GuideMode mode) {
-    HapticFeedback.selectionClick();
-    setState(() => _mode = mode);
-  }
-
-  void _toggleTip(int index) {
-    HapticFeedback.selectionClick();
-    setState(() => _expandedTip = _expandedTip == index ? null : index);
-  }
-
-  void _toggleFaq(int index) {
-    HapticFeedback.selectionClick();
-    setState(() => _expandedFaq = _expandedFaq == index ? null : index);
-  }
-
-  void _openPrimary(BuildContext context) {
-    HapticFeedback.mediumImpact();
-    context.go(
-      _mode == _GuideMode.create
-          ? AppRoutePaths.arenaStudio
-          : AppRoutePaths.arena,
-    );
-  }
-
-  static void _close(BuildContext context) {
-    HapticFeedback.selectionClick();
-    if (context.canPop()) {
-      context.pop();
-      return;
-    }
-    context.go(AppRoutePaths.arena);
-  }
-}
-
 class _GuideTabs extends StatelessWidget {
   const _GuideTabs({required this.active, required this.onChanged});
 
@@ -186,21 +24,25 @@ class _GuideTabs extends StatelessWidget {
               tabs: [
                 VitTabItem(
                   key: _GuideTab.guide.name,
+                  widgetKey: ArenaGuidePage.tabKey('guide'),
                   label: 'Hướng dẫn',
                   icon: Icons.menu_book_outlined,
                 ),
                 VitTabItem(
                   key: _GuideTab.tips.name,
+                  widgetKey: ArenaGuidePage.tabKey('tips'),
                   label: 'Mẹo hay',
                   icon: Icons.lightbulb_outline,
                 ),
                 VitTabItem(
                   key: _GuideTab.safety.name,
+                  widgetKey: ArenaGuidePage.tabKey('safety'),
                   label: 'An toàn',
                   icon: Icons.shield_outlined,
                 ),
                 VitTabItem(
                   key: _GuideTab.faq.name,
+                  widgetKey: ArenaGuidePage.tabKey('faq'),
                   label: 'FAQ',
                   icon: Icons.help_outline,
                 ),
@@ -226,40 +68,30 @@ class _GuideHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
-      accentColor: AppModuleAccents.arena,
-      padding: AppSpacing.arenaPaddingX5,
+      accentColor: _arenaAccent,
+      padding: AppSpacing.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.menu_book_outlined,
-                color: AppModuleAccents.arena,
-                size: AppSpacing.arenaGuideHeroIcon,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
-                'HƯỚNG DẪN NHANH',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppModuleAccents.arena,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x3),
           Text(
-            snapshot.heroTitle,
+            'Hướng dẫn - Open Arena',
             style: AppTextStyles.sectionTitle.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
             ),
           ),
+          const SizedBox(height: AppSpacing.x2),
+          Text(
+            snapshot.heroTitle,
+            style: AppTextStyles.body.copyWith(
+              color: AppColors.text1,
+              fontWeight: AppTextStyles.medium,
+            ),
+          ),
           const SizedBox(height: AppSpacing.x1),
           Text(
             snapshot.heroSubtitle,
-            style: AppTextStyles.body.copyWith(color: AppColors.text2),
+            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
         ],
       ),
@@ -275,60 +107,35 @@ class _ModeSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.arenaGuideModeSwitchPadding,
-      child: Row(
-        children: [
-          Expanded(
-            child: _ModeButton(
-              key: ArenaGuidePage.modeCreateKey,
-              label: 'Tạo Challenge',
-              icon: Icons.auto_awesome,
-              active: mode == _GuideMode.create,
-              onPressed: () => onChanged(_GuideMode.create),
-            ),
-          ),
-          Expanded(
-            child: _ModeButton(
-              key: ArenaGuidePage.modeJoinKey,
-              label: 'Tham gia',
-              icon: Icons.play_arrow_outlined,
-              active: mode == _GuideMode.join,
-              onPressed: () => onChanged(_GuideMode.join),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ModeButton extends StatelessWidget {
-  const _ModeButton({
-    super.key,
-    required this.label,
-    required this.icon,
-    required this.active,
-    required this.onPressed,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool active;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onPressed,
-      accentColor: AppColors.primary,
-      fullWidth: true,
+    return VitSegmentedChoice.withPrimaryAccent(
+      selected: mode,
+      onChanged: onChanged,
       height: _guideActionExtent,
-      leading: Icon(icon, size: AppSpacing.arenaGuideModeIcon),
+      accentColor: _arenaAccent,
+      options: [
+        VitSegmentedChoiceOption(
+          key: ArenaGuidePage.modeCreateKey,
+          activeKey: ArenaGuidePage.modeCreateKey,
+          value: _GuideMode.create,
+          label: 'Tạo Challenge',
+          leading: Icon(
+            Icons.auto_awesome,
+            size: AppSpacing.arenaGuideModeIcon,
+          ),
+          semanticLabel: 'Chế độ tạo challenge',
+        ),
+        VitSegmentedChoiceOption(
+          key: ArenaGuidePage.modeJoinKey,
+          activeKey: ArenaGuidePage.modeJoinKey,
+          value: _GuideMode.join,
+          label: 'Tham gia',
+          leading: Icon(
+            Icons.play_arrow_outlined,
+            size: AppSpacing.arenaGuideModeIcon,
+          ),
+          semanticLabel: 'Chế độ tham gia challenge',
+        ),
+      ],
     );
   }
 }
@@ -441,6 +248,26 @@ class _StepRow extends StatelessWidget {
   }
 }
 
+class _GuideFooter extends StatelessWidget {
+  const _GuideFooter({required this.onRules});
+
+  final VoidCallback onRules;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        VitCommunityRulesLink(onTap: onRules),
+        const SizedBox(height: AppSpacing.x2),
+        Text(
+          'Arena Points chỉ dùng trong Open Arena — completion và fair play, không phải tài sản tài chính.',
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+      ],
+    );
+  }
+}
+
 class _StartCard extends StatelessWidget {
   const _StartCard({required this.mode, required this.onPressed});
 
@@ -464,7 +291,7 @@ class _StartCard extends StatelessWidget {
                   decoration: ShapeDecoration(
                     color: AppColors.primary12,
                     shape: RoundedRectangleBorder(
-                      borderRadius: AppRadii.mdRadius,
+                      borderRadius: AppRadii.smRadius,
                     ),
                   ),
                   child: Center(

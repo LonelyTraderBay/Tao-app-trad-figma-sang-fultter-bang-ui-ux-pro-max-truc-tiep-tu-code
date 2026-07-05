@@ -265,7 +265,8 @@ class _SignalChips extends StatelessWidget {
         const SizedBox(width: AppSpacing.x3),
         _SignalChip(
           icon: Icons.star_rounded,
-          label: _fixed(snapshot.ad.merchantRating ?? 4.8),
+          label:
+              '${_fixed(snapshot.ad.merchantRating ?? 4.8)} · ${snapshot.ad.completedOrders} GD',
           color: AppColors.warn,
         ),
       ],

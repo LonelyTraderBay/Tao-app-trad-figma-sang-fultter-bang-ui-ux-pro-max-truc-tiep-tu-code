@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_goal_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
@@ -70,7 +71,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Mục tiêu tiết kiệm'), findsOneWidget);
-    expect(find.text('Đặt mục tiêu & theo dõi tiến độ'), findsOneWidget);
+    expect(find.text(kSavingsToolsHeaderSubtitle), findsOneWidget);
     expect(find.byKey(SavingsGoalPage.summaryKey), findsOneWidget);
     expect(find.text('\$4,950.00'), findsOneWidget);
     expect(find.text('mục tiêu \$8,000.00'), findsOneWidget);

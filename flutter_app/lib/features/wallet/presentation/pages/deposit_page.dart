@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/vit_wallet_detail_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 part '../widgets/deposit_page_sections.dart';
@@ -22,8 +23,6 @@ part '../widgets/deposit_page_common.dart';
 const _depositPrimary = AppColors.primary;
 const _depositGreen = AppColors.buy;
 const _depositRed = AppColors.sell;
-const _depositNativeBottomClearance = 88.0;
-const _depositVisualBottomClearance = 112.0;
 const _depositGap = 8.0;
 const _depositTinyGap = 4.0;
 const _depositInlineGap = 8.0;
@@ -32,13 +31,6 @@ const _depositQrSize = 132.0;
 const _depositStatusDotSize = AppSpacing.x2 - AppSpacing.dividerHairline * 2;
 const _depositCopyButtonHeight = 44.0;
 const _depositRefreshHeight = 44.0;
-
-double _depositScrollBottomInset(BuildContext context, ShellRenderMode mode) {
-  return (mode.usesVisualQaFrame
-          ? _depositVisualBottomClearance
-          : _depositNativeBottomClearance) +
-      MediaQuery.paddingOf(context).bottom;
-}
 
 class DepositPage extends ConsumerStatefulWidget {
   const DepositPage({
@@ -76,7 +68,6 @@ class _DepositPageState extends ConsumerState<DepositPage> {
     );
     final selected = _selectedNetwork(snapshot.networks);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset = _depositScrollBottomInset(context, mode);
 
     return VitWalletDetailScaffold(
       title: 'Nạp ${snapshot.asset}',
@@ -85,7 +76,8 @@ class _DepositPageState extends ConsumerState<DepositPage> {
           ? 'SC-138 DepositPage Asset'
           : 'SC-137 DepositPage',
       contentKey: DepositPage.contentKey,
-      bottomInset: bottomInset,
+      contentGap: VitContentGap.tight,
+      shellRenderMode: mode,
       onBack: () => context.go(AppRoutePaths.wallet),
       children: [
         const VitSectionHeader(
@@ -124,10 +116,7 @@ class _DepositPageState extends ConsumerState<DepositPage> {
           iconColor: _depositPrimary,
           accentColor: _depositPrimary,
         ),
-        _DepositInfoCard(
-          asset: snapshot.asset,
-          network: selected,
-        ),
+        _DepositInfoCard(asset: snapshot.asset, network: selected),
         _RefreshButton(onTap: _refreshDepositIntent),
       ],
     );

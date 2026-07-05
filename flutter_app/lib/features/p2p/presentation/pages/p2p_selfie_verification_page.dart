@@ -63,16 +63,20 @@ class _P2PSelfieVerificationPageState
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(p2pSelfieVerificationProvider);
+    final routePath = GoRouterState.of(context).uri.path;
+    final isFaceMatchRoute = routePath.startsWith('/p2p/kyc/face-match');
+    final screenContract = isFaceMatchRoute ? 'SC-403' : 'SC-251';
     final title = switch (_step) {
-      _SelfieStep.guide => 'Selfie Verification',
-      _SelfieStep.capture => 'Chụp ảnh Selfie',
-      _SelfieStep.liveness => 'Liveness Detection',
+      _SelfieStep.guide =>
+        isFaceMatchRoute ? 'So khớp khuôn mặt' : 'Xác minh selfie',
+      _SelfieStep.capture => 'Chụp ảnh selfie',
+      _SelfieStep.liveness => 'Nhận diện sống',
       _SelfieStep.result => 'Kết quả xác minh',
     };
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-251 P2PSelfieVerificationPage',
+      semanticLabel: '$screenContract P2PSelfieVerificationPage',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(

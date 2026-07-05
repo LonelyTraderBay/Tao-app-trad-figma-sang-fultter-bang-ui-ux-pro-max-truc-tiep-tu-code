@@ -55,6 +55,20 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
   String? _category;
   String _searchQuery = '';
 
+  bool get _hasActiveFilters =>
+      _filter != PredictionFilterTab.trending ||
+      _category != null ||
+      _searchQuery.isNotEmpty;
+
+  void _clearFilters() {
+    setState(() {
+      _searchController.clear();
+      _searchQuery = '';
+      _category = null;
+      _filter = PredictionFilterTab.trending;
+    });
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -63,13 +77,13 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final snapshot = ref
-        .watch(predictionsReadModelControllerProvider)
-        .getHome(
-          filter: _filter,
-          category: _category,
-          searchQuery: _searchQuery,
-        );
+    final controller = ref.watch(predictionsReadModelControllerProvider);
+    final snapshot = controller.getHome(
+      filter: _filter,
+      category: _category,
+      searchQuery: _searchQuery,
+    );
+    final hubTotals = controller.getHome();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
         ? DeviceMetrics.bottomChrome
@@ -78,6 +92,7 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
         navClearance +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame ? 54 : AppSpacing.contentPad);
+    final showDiscoveryExtras = _searchQuery.isEmpty;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -88,7 +103,7 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
           header: VitTopChrome(
             type: VitTopChromeType.rootModule,
             title: 'Prediction Markets',
-            subtitle: 'Thị trường dự đoán',
+            subtitle: 'Xác suất và sự kiện đang mở',
             showBack: true,
             onBack: () => goBackOrFallback(
               context,
@@ -120,6 +135,12 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                     child: VitPageContent(
                       density: VitDensity.compact,
                       children: [
+                        _PredictionsHero(
+                          openEventCount: hubTotals.events.length,
+                          openPositionCount: snapshot.openPositionCount,
+                          onPositionsTap: () =>
+                              context.go(AppRoutePaths.profilePredictions),
+                        ),
                         _SearchField(
                           controller: _searchController,
                           onChanged: (value) => setState(() {
@@ -140,21 +161,11 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                           categories: snapshot.categories,
                           activeCategory: _category,
                           onSelected: (value) => setState(() {
-                            _category = value;
+                            _category = _category == value ? null : value;
                           }),
                         ),
-                        if (_searchQuery.isEmpty) ...[
-                          _PredictionCtaCard(
-                            key: PredictionsHomePage.myPredictionsKey,
-                            title: 'My Predictions',
-                            subtitle:
-                                '${snapshot.openPositionCount} open positions',
-                            color: AppColors.accent,
-                            icon: Icons.work_outline_rounded,
-                            onTap: () =>
-                                context.go(AppRoutePaths.profilePredictions),
-                          ),
-                          _BreakingMoversCard(
+                        if (showDiscoveryExtras) ...[
+                          _BreakingMoversStrip(
                             snapshot: snapshot,
                             onTap: () => context.go(
                               AppRoutePaths.marketsPredictionsBreaking,
@@ -167,13 +178,19 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                         if (snapshot.highRiskContractId != null)
                           VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
-                            title: 'Prediction market states active',
+                            title: 'Trạng thái thị trường dự đoán',
                             message:
-                                'Event setup, risk preview, confirmation, receipt, portfolio and support use the shared high-risk flow contract.',
+                                'Thiết lập sự kiện, xem trước rủi ro, xác nhận, biên lai, danh mục và hỗ trợ dùng luồng high-risk chung.',
                             contractId: snapshot.highRiskContractId,
                           ),
                         if (snapshot.events.isEmpty)
-                          const _PredictionsEmptyState()
+                          _PredictionsEmptyState(
+                            hasActiveFilters: _hasActiveFilters,
+                            onClearFilters: _clearFilters,
+                            onBreaking: () => context.go(
+                              AppRoutePaths.marketsPredictionsBreaking,
+                            ),
+                          )
                         else
                           for (final event in snapshot.events)
                             _PredictionEventCard(
@@ -183,6 +200,7 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                                 AppRoutePaths.marketsPredictionEvent(event.id),
                               ),
                             ),
+                        const _RiskDisclaimer(),
                       ],
                     ),
                   ),

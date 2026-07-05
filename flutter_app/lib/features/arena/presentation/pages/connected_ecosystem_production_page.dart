@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -25,8 +26,6 @@ part 'connected_ecosystem_production_page_part_03.dart';
 
 enum _EcosystemSection { canonical, states, flows, registry, handoff }
 
-const _ecosystemVisualNavClearance = 114.0;
-const _ecosystemNativeNavClearance = 88.0;
 const _ecosystemIntroLineHeight = 1.16;
 const _ecosystemTitleLineHeight = 1.12;
 const _ecosystemBodyLineHeight = 1.22;
@@ -65,10 +64,12 @@ class _ConnectedEcosystemProductionPageState
         .getConnectedEcosystemProduction();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final navClearance = mode.usesVisualQaFrame
-        ? _ecosystemVisualNavClearance
-        : _ecosystemNativeNavClearance;
+        ? DeviceMetrics.bottomChrome
+        : DeviceMetrics.nativeBottomChrome;
     final scrollEndPadding =
-        navClearance + MediaQuery.paddingOf(context).bottom;
+        navClearance +
+        MediaQuery.paddingOf(context).bottom +
+        (mode.usesVisualQaFrame ? AppSpacing.x6 : AppSpacing.x4);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -93,8 +94,8 @@ class _ConnectedEcosystemProductionPageState
                   child: SingleChildScrollView(
                     key: ConnectedEcosystemProductionPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.only(
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.arenaBottomScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.compact,

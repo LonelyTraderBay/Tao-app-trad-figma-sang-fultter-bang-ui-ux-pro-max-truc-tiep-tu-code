@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -22,18 +21,9 @@ part 'margin_trading_page_part_01.dart';
 part 'margin_trading_page_part_02.dart';
 part 'margin_trading_page_part_03.dart';
 part 'margin_trading_page_part_04.dart';
-part '../widgets/margin_trading_price_pair.dart';
-part '../widgets/margin_trading_order_controls.dart';
-part '../widgets/margin_trading_order_inputs.dart';
 part '../widgets/margin_trading_order_summary.dart';
-part '../widgets/margin_trading_risk_cards.dart';
 part '../widgets/margin_trading_positions_orders.dart';
 
-const _marginCard = AppColors.surface;
-const _marginPanel = AppColors.surface2;
-const _marginHero = AppColors.surface;
-const _marginHeroBorder = AppColors.primary20;
-const _marginPrimary = AppColors.primary;
 const _marginGreen = AppColors.buy;
 const _marginAmber = AppColors.caution;
 const _marginRed = AppColors.sell;
@@ -161,6 +151,10 @@ class _MarginTradingPageState extends ConsumerState<MarginTradingPage> {
                 title: 'Tài sản của bạn',
                 child: _PositionsTab(positions: modePositions),
               ),
+            Text(
+              'Giá thị trường có thể thay đổi trước khi lệnh khớp.',
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+            ),
           ],
         ),
         if (_notice != null)

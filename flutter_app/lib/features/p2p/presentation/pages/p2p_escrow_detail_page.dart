@@ -146,16 +146,12 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
                         const SizedBox(height: _p2pEscrowSectionGap),
                         _OrderLink(orderId: widget.orderId),
                         const SizedBox(height: _p2pEscrowTightGap),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pEscrowDetailInnerPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Escrow detail review',
-                            message:
-                                'Masked escrow address, reveal/copy action, multisig state, order link, timeline and next safe step are reviewed before fund action.',
-                            contractId: 'p2p-escrow-detail-review',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Xem lại chi tiết escrow',
+                          message:
+                              'Địa chỉ escrow đã che, thao tác hiện/copy, trạng thái multisig, liên kết đơn, timeline và bước an toàn tiếp theo được xem lại trước thao tác tiền.',
+                          contractId: 'p2p-escrow-detail-review',
                         ),
                       ],
                     ),

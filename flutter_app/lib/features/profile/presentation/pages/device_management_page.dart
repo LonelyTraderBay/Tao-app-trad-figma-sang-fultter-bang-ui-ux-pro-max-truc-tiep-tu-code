@@ -104,11 +104,12 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                       ),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review device sessions',
+                        title:
+                            'R\u00E0 so\u00E1t phi\u00EAn thi\u1EBFt b\u1ECB',
                         message:
                             'Ch\u1EC9 tin c\u1EADy thi\u1EBFt b\u1ECB b\u1EA1n s\u1EDF h\u1EEFu; \u0111\u0103ng xu\u1EA5t c\u00E1c phi\u00EAn l\u1EA1 ho\u1EB7c kh\u00F4ng c\u00F2n s\u1EED d\u1EE5ng.',
                         contractId:
-                            'Trusted devices: $_trustedCount/${_devices.length}',
+                            'Thi\u1EBFt b\u1ECB tin c\u1EADy: $_trustedCount/${_devices.length}',
                         density: VitDensity.compact,
                       ),
                       if (currentDevice != null) ...[
@@ -150,13 +151,6 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                             onLogout: () => _logoutDevice(device.id),
                           ),
                       ],
-                      _SecuritySummaryCard(
-                        totalDevices: _devices.length,
-                        trustedCount: _trustedCount,
-                        untrustedCount: _untrustedCount,
-                        activeCount: _activeCount,
-                        compactBorder: true,
-                      ),
                     ],
                   ),
                 ),

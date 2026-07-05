@@ -33,6 +33,10 @@ class OnboardingFlow extends ConsumerStatefulWidget {
   static const nextButtonKey = Key('sc397_onboarding_next');
   static const backButtonKey = Key('sc397_onboarding_back');
   static const homeButtonKey = Key('sc397_onboarding_home');
+  static const loadingKey = Key('sc397_onboarding_loading');
+  static const emptyKey = Key('sc397_onboarding_empty');
+  static const errorKey = Key('sc397_onboarding_error');
+  static const offlineKey = Key('sc397_onboarding_offline');
   static Key featureKey(String id) => Key('sc397_feature_$id');
   static Key moduleDotKey(String id) => Key('sc397_module_dot_$id');
   static Key boundaryKey(String id) => Key('sc397_boundary_$id');

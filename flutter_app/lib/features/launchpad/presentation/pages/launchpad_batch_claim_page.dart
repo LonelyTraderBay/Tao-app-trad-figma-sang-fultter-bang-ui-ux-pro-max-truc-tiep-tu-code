@@ -101,7 +101,10 @@ class _LaunchpadBatchClaimPageState
                   customGap: AppSpacing.x4,
                   children: [
                     if (_step == _BatchClaimStep.select) ...[
-                      _BatchSummaryHero(summary: selectedSummary),
+                      _BatchSummaryHero(
+                        summary: selectedSummary,
+                        positionCount: _selectedIds.length,
+                      ),
                       _GasSavingsBanner(summary: selectedSummary),
                       _SelectionHeader(
                         selected: _selectedIds.length,

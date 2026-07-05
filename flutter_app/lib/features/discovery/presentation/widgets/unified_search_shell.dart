@@ -89,31 +89,17 @@ class _TrendingChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    final accent = _accentForKey(query.iconKey);
+    return VitChoicePill(
       key: UnifiedSearchPage.trendingQueryKey(query.label),
+      label: query.label,
+      selected: false,
       onTap: onTap,
-      variant: VitCardVariant.inner,
-      borderColor: AppColors.borderSolid,
-      padding: AppSpacing.discoveryChipHorizontalPadding,
+      accentColor: accent,
+      tone: VitChoicePillTone.neutral,
       height: AppSpacing.buttonCompact,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            _iconForKey(query.iconKey),
-            color: _accentForKey(query.iconKey),
-            size: 13,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Text(
-            query.label,
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.medium,
-            ),
-          ),
-        ],
-      ),
+      padding: AppSpacing.discoveryChipHorizontalPadding,
+      leading: Icon(_iconForKey(query.iconKey), color: accent, size: 13),
     );
   }
 }

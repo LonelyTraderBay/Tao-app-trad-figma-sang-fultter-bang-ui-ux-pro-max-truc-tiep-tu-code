@@ -107,49 +107,51 @@ class _FaqCard extends StatelessWidget {
     return VitCard(
       clip: true,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          VitCard(
-            key: ReferralRulesPage.faqToggleKey(index),
-            onTap: onTap,
-            variant: VitCardVariant.ghost,
-            borderColor: AppColors.transparent,
-            padding: AppSpacing.referralCardPadding,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.help_outline_rounded,
-                  color: AppColors.accent,
-                  size: AppSpacing.iconMd,
-                ),
-                const SizedBox(width: AppSpacing.x3),
-                Expanded(
-                  child: Text(
-                    faq.question,
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.text1,
-                      fontWeight: AppTextStyles.bold,
+          Material(
+            color: AppColors.transparent,
+            child: InkWell(
+              key: ReferralRulesPage.faqToggleKey(index),
+              onTap: onTap,
+              child: Padding(
+                padding: AppSpacing.referralCardPadding,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.help_outline_rounded,
+                      color: AppColors.accent,
+                      size: AppSpacing.iconMd,
                     ),
-                  ),
+                    const SizedBox(width: AppSpacing.x3),
+                    Expanded(
+                      child: Text(
+                        faq.question,
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.text1,
+                          fontWeight: AppTextStyles.bold,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      open
+                          ? Icons.expand_less_rounded
+                          : Icons.expand_more_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ],
                 ),
-                Icon(
-                  open ? Icons.expand_less_rounded : Icons.expand_more_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconMd,
-                ),
-              ],
+              ),
             ),
           ),
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
               padding: AppSpacing.referralFaqAnswerPadding,
-              child: VitCard(
-                variant: VitCardVariant.inner,
-                padding: AppSpacing.referralCardPadding,
-                child: Text(
-                  faq.answer,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
+              child: Text(
+                faq.answer,
+                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
             ),
             crossFadeState: open
@@ -170,27 +172,12 @@ class _Disclaimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return VitBanner(
       key: ReferralRulesPage.disclaimerKey,
-      borderColor: AppColors.warn15,
-      padding: AppSpacing.referralCardPadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.iconMd,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              snapshot.disclaimer,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-            ),
-          ),
-        ],
-      ),
+      variant: VitBannerVariant.warning,
+      icon: Icons.info_outline_rounded,
+      message: 'Lưu ý chương trình',
+      detail: snapshot.disclaimer,
     );
   }
 }

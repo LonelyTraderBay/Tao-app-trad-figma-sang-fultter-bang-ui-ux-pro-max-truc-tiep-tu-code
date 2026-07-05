@@ -74,6 +74,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Portfolio Analyzer'), findsOneWidget);
+    expect(find.text('Phân tích · Prediction'), findsOneWidget);
     expect(find.text('Tong quan'), findsOneWidget);
     expect(find.text('Hieu suat'), findsOneWidget);
     expect(find.text('Rui ro'), findsOneWidget);

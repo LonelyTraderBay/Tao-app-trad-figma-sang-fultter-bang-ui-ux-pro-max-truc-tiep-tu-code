@@ -41,9 +41,8 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                     physics: const ClampingScrollPhysics(),
                     padding: AppSpacing.referralPageScrollPadding(bottomInset),
                     child: VitPageContent(
-                      padding: VitContentPadding.none,
+                      padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
-                      fullBleed: true,
                       children: [
                         _RewardHero(
                           snapshot: snapshot,
@@ -51,7 +50,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                           onDisputes: () =>
                               _showDisputeHistorySheet(context, snapshot),
                         ),
-                        _SectionTitle(
+                        _ReferralSectionHeader(
                           title: 'Hoa hồng theo tháng',
                           trailing:
                               '+${_formatUsd(snapshot.thisMonthCommission)} tháng này',
@@ -127,7 +126,12 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                   runSpacing: AppSpacing.x3,
                   children: [
                     for (final range in snapshot.exportRanges)
-                      _TinyPill(label: range.label),
+                      VitAccentPill(
+                        label: range.label,
+                        accentColor: AppColors.text2,
+                        size: VitStatusPillSize.sm,
+                        semanticStatus: VitStatusPillStatus.neutral,
+                      ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.x5),
@@ -248,55 +252,68 @@ class _RewardHero extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: AppSpacing.referralCardPadding,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Text(
-                  'Tổng phần thưởng',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.portfolioTextMuted,
-                    fontWeight: AppTextStyles.medium,
+              const SizedBox.square(
+                dimension: AppSpacing.iconLg + AppSpacing.x3,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: AppColors.primary12,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.smRadius,
+                    ),
                   ),
+                  child: Center(
+                    child: Icon(
+                      Icons.card_giftcard_rounded,
+                      color: AppModuleAccents.referral,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Tổng phần thưởng',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      _formatUsd(snapshot.totalCommission),
+                      style: AppTextStyles.heroNumber.copyWith(
+                        color: AppColors.text1,
+                        fontFeatures: AppTextStyles.tabularFigures,
+                      ),
+                    ),
+                    Text(
+                      'USDT · Đã cộng vào ví',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text3,
+                        fontWeight: AppTextStyles.medium,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               _TierPill(snapshot: snapshot),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            _formatUsd(snapshot.totalCommission),
-            style: AppTextStyles.heroNumber.copyWith(
-              color: AppColors.portfolioTextDim,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            'USDT · Đã cộng vào ví',
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.portfolioTextMuted,
-              fontWeight: AppTextStyles.medium,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              const Icon(
-                Icons.schedule_rounded,
-                color: AppColors.warn,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Text(
+          const SizedBox(height: AppSpacing.x3),
+          VitBanner(
+            variant: VitBannerVariant.warning,
+            icon: Icons.schedule_rounded,
+            message:
                 '+${_formatUsd(snapshot.pendingCommission)} đang chờ xử lý',
-                style: AppTextStyles.micro.copyWith(
-                  color: AppColors.warn,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ],
           ),
           const SizedBox(height: AppSpacing.x4),
           Row(
@@ -359,35 +376,12 @@ class _TierPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const ShapeDecoration(
-        color: AppColors.portfolioBtnGhost,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: AppColors.portfolioBtnGhostBorder),
-          borderRadius: AppRadii.mdRadius,
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.referralCompactPillPadding,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.workspace_premium_rounded,
-              color: AppColors.primarySoft,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x2),
-            Text(
-              '${snapshot.tierName} (${snapshot.tierNameEn})',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.portfolioTextDim,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return VitStatusPill(
+      label: '${snapshot.tierName} (${snapshot.tierNameEn})',
+      icon: Icons.workspace_premium_rounded,
+      status: VitStatusPillStatus.info,
+      size: VitStatusPillSize.sm,
+      outline: true,
     );
   }
 }
@@ -409,7 +403,7 @@ class _HeroStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      borderColor: AppColors.portfolioBtnGhostBorder,
+      density: VitDensity.compact,
       padding: AppSpacing.referralInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -423,7 +417,7 @@ class _HeroStat extends StatelessWidget {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text2),
+                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ),
             ],
@@ -443,40 +437,32 @@ class _HeroStat extends StatelessWidget {
   }
 }
 
-class _SectionTitle extends StatelessWidget {
-  const _SectionTitle({required this.title, required this.trailing});
+class _ReferralSectionHeader extends StatelessWidget {
+  const _ReferralSectionHeader({required this.title, this.trailing});
 
   final String title;
-  final String trailing;
+  final String? trailing;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(
-          width: AppSpacing.x1,
-          height: AppSpacing.x5,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
+        Expanded(
+          child: VitModuleSectionHeader(
+            title: title,
+            accentColor: AppModuleAccents.referral,
+            density: VitDensity.compact,
+          ),
+        ),
+        if (trailing != null)
+          Text(
+            trailing!,
+            style: AppTextStyles.caption.copyWith(
               color: AppColors.buy,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
+              fontWeight: AppTextStyles.bold,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: Text(
-            title,
-            style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
-          ),
-        ),
-        Text(
-          trailing,
-          style: AppTextStyles.caption.copyWith(
-            color: AppColors.buy,
-            fontWeight: AppTextStyles.bold,
-          ),
-        ),
       ],
     );
   }

@@ -16,11 +16,6 @@ class _NetworkSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Chọn mạng lưới',
-          style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-        ),
-        const SizedBox(height: _depositTinyGap),
         VitCard(
           key: DepositPage.networkSelectorKey,
           variant: VitCardVariant.inner,
@@ -103,60 +98,46 @@ class _WarningCard extends StatelessWidget {
       'Cần ${network.confirmations} xác nhận blockchain',
     ];
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        VitHighRiskStatePanel(
-          state: VitHighRiskUiState.riskReview,
-          title: 'Review deposit network',
-          message:
-              'Use only ${network.name} for $asset. Wrong network deposits may be unrecoverable.',
-          contractId:
-              'Min ${_formatDeposit(network.minDeposit)} $asset / ${network.confirmations} confirmations',
-        ),
-        const SizedBox(height: _depositGap),
-        VitCard(
-          constraints: const BoxConstraints(minHeight: 0),
-          density: VitDensity.compact,
-          borderColor: _depositRed.withValues(alpha: .38),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.warning_amber_rounded,
-                color: _depositRed,
-                size: AppSpacing.iconMd,
-              ),
-              const SizedBox(width: _depositInlineGap),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Quan trọng — Đọc trước khi nạp',
-                      style: AppTextStyles.body.copyWith(
-                        color: _depositRed,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    const SizedBox(height: _depositTinyGap),
-                    for (final item in warningItems) ...[
-                      Text(
-                        '• $item',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.sell,
-                          fontWeight: AppTextStyles.medium,
-                        ),
-                      ),
-                      const SizedBox(height: _depositTinyGap),
-                    ],
-                  ],
-                ),
-              ),
-            ],
+    return VitCard(
+      constraints: const BoxConstraints(minHeight: 0),
+      density: VitDensity.compact,
+      borderColor: _depositRed.withValues(alpha: .38),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: _depositRed,
+            size: AppSpacing.iconMd,
           ),
-        ),
-      ],
+          const SizedBox(width: _depositInlineGap),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Quan trọng — Đọc trước khi nạp',
+                  style: AppTextStyles.body.copyWith(
+                    color: _depositRed,
+                    fontWeight: AppTextStyles.bold,
+                  ),
+                ),
+                const SizedBox(height: _depositTinyGap),
+                for (final item in warningItems) ...[
+                  Text(
+                    '• $item',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.sell,
+                      fontWeight: AppTextStyles.medium,
+                    ),
+                  ),
+                  const SizedBox(height: _depositTinyGap),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -188,13 +169,14 @@ class _QrAddressCard extends StatelessWidget {
           ),
           const SizedBox(height: _depositTinyGap),
           Text(
-            network.address,
+            _maskDepositAddress(network.address),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
+              fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
           const SizedBox(height: _depositGap),

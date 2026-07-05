@@ -26,7 +26,6 @@ part 'arena_home_page_part_03.dart';
 const _arenaAccent = AppModuleAccents.arena;
 const _arenaHomeVisualNavClearance = 114.0;
 const _arenaHomeNativeNavClearance = 88.0;
-const _arenaHomeIntroLineHeight = 1.16;
 const _arenaHomeHeroTitleLineHeight = 1.06;
 const _arenaHomeTemplateTitleLineHeight = 1.12;
 const _arenaHomeTemplateDescriptionLineHeight = 1.18;

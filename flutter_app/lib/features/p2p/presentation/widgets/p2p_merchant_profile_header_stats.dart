@@ -75,6 +75,17 @@ class _ProfileHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.x2),
                   Text(
+                    '${merchant.positiveRate.toStringAsFixed(1)}% tích cực · '
+                    '${_formatInt(merchant.totalTrades)} giao dịch',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.text3,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.x2),
+                  Text(
                     merchant.isOnline ? 'Đang hoạt động' : merchant.lastActive,
                     style: AppTextStyles.caption.copyWith(
                       color: merchant.isOnline

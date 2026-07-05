@@ -60,7 +60,7 @@ void main() {
     expect(find.byType(P2PPaymentMethodHistoryPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Payment History'), findsOneWidget);
+    expect(find.text('Lịch sử thanh toán'), findsOneWidget);
     expect(find.text('Thanh toán · P2P'), findsOneWidget);
     expect(find.text('45'), findsOneWidget);
     expect(find.text('Giao dịch'), findsWidgets);

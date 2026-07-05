@@ -1,13 +1,15 @@
 part of '../pages/profile_page.dart';
 
 class _VipCard extends StatelessWidget {
-  const _VipCard({required this.vip});
+  const _VipCard({required this.vip, required this.onTap});
 
   final ProfileVipProgress vip;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return VitCard(
+      onTap: onTap,
       density: VitDensity.compact,
       borderColor: _profileBorder,
       child: Column(
@@ -16,7 +18,7 @@ class _VipCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'VIP Progress',
+                'Ti\u1EBFn \u0111\u1ED9 VIP',
                 style: AppTextStyles.control.copyWith(color: AppColors.text2),
               ),
               const SizedBox(width: AppSpacing.profileModuleStatGap),

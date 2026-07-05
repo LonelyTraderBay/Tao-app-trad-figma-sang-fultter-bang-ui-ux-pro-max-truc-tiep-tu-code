@@ -94,6 +94,7 @@ class _PredictionDataIntegrationPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Data Integration',
+            subtitle: 'Dữ liệu · Prediction',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),

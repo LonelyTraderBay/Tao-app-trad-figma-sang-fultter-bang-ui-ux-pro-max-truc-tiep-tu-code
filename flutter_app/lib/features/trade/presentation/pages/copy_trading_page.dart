@@ -18,15 +18,12 @@ part '../widgets/copy_trading_hero.dart';
 part '../widgets/copy_trading_metrics_common.dart';
 
 CopyTradingListKeys get _copyListKeys => CopyTradingListKeys(
-      traderKey: CopyTradingPage.traderKey,
-      detailKey: CopyTradingPage.detailKey,
-      sortKey: CopyTradingPage.sortKey,
-    );
+  traderKey: CopyTradingPage.traderKey,
+  detailKey: CopyTradingPage.detailKey,
+  sortKey: CopyTradingPage.sortKey,
+);
 
 const _copyPrimary = AppColors.primary;
-const _copySpace = AppSpacing.x2;
-const _copyCardSpace = AppSpacing.tradePageContentGap;
-const _copyWeeklyChartHeight = AppSpacing.copyTradingWeeklyChartHeight;
 const _copyTextLineHeight = 1.24;
 
 class CopyTradingPage extends ConsumerStatefulWidget {
@@ -53,7 +50,7 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
 
     return VitTradeHubScaffold(
       title: 'Copy Trading',
-      subtitle: 'Sao chép · Trade',
+      subtitle: 'Sao chép chiến lược có kiểm soát',
       semanticLabel: 'SC-063 CopyTradingPage',
       contentKey: CopyTradingPage.contentKey,
       shellRenderMode: widget.shellRenderMode,
@@ -65,57 +62,48 @@ class _CopyTradingPageState extends ConsumerState<CopyTradingPage> {
         mode: BackNavigationMode.historyThenFallback,
       ),
       children: [
-        VitTradeSection(
-          title: 'Tổng quan',
-          child: _CopyHeroCard(snapshot: snapshot),
-        ),
+        _CopyHeroCard(snapshot: snapshot),
         CopyTradingRiskWarningCard(
           title: snapshot.riskWarningTitle,
           message: snapshot.riskWarningText,
         ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitHighRiskStatePanel(
-            state: VitHighRiskUiState.riskReview,
-            title: 'Review copy trading risk',
-            message:
-                'Compare provider drawdown, copier concentration, fees, and stop rules before copying any strategy.',
-            contractId: 'Providers available: ${traders.length}',
-            density: VitDensity.compact,
+        VitHighRiskStatePanel(
+          state: VitHighRiskUiState.riskReview,
+          title: 'Đánh giá trước khi copy',
+          message:
+              'So sánh drawdown tối đa, mức tập trung copier, phí và quy tắc dừng lỗ trước khi sao chép bất kỳ chiến lược nào.',
+          contractId: 'Có ${traders.length} nhà cung cấp',
+          density: VitDensity.compact,
+        ),
+        VitCtaButton(
+          onPressed: () => context.go(AppRoutePaths.tradeCopyEducation),
+          height: AppSpacing.inputHeight,
+          leading: const Icon(Icons.menu_book_outlined),
+          child: const Text('Tìm hiểu rủi ro copy trading'),
+        ),
+        CopyTradingSortChips(
+          options: snapshot.sortOptions,
+          selected: _sortBy,
+          onChanged: (value) => setState(() => _sortBy = value),
+          keys: _copyListKeys,
+        ),
+        if (traders.isEmpty)
+          VitEmptyState(
+            title: 'Không có nhà cung cấp',
+            message: 'Không tìm thấy provider phù hợp với bộ lọc hiện tại.',
+            icon: Icons.groups_outlined,
+            actionLabel: 'Đặt lại sắp xếp',
+            onAction: () =>
+                setState(() => _sortBy = snapshot.sortOptions.first),
+          )
+        else
+          CopyTradingTraderList(
+            traders: traders,
+            onOpen: (trader) =>
+                context.go(AppRoutePaths.tradeCopyProvider(trader.id)),
+            keys: _copyListKeys,
           ),
-        ),
-        VitTradeSection(
-          title: 'Nhà cung cấp',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CopyTradingSortChips(
-                options: snapshot.sortOptions,
-                selected: _sortBy,
-                onChanged: (value) => setState(() => _sortBy = value),
-                keys: _copyListKeys,
-              ),
-              if (traders.isEmpty)
-                const VitEmptyState(
-                  title: 'No copy providers',
-                  message:
-                      'Providers matching this sort will appear here when available.',
-                  icon: Icons.groups_outlined,
-                )
-              else
-                CopyTradingTraderList(
-                  traders: traders,
-                  onOpen: (trader) =>
-                      context.go(AppRoutePaths.tradeCopyProvider(trader.id)),
-                  keys: _copyListKeys,
-                ),
-            ],
-          ),
-        ),
-        VitTradeSection(
-          title: 'Lưu ý',
-          child: _Disclaimer(text: snapshot.disclaimer),
-        ),
+        _Disclaimer(text: snapshot.disclaimer),
       ],
     );
   }

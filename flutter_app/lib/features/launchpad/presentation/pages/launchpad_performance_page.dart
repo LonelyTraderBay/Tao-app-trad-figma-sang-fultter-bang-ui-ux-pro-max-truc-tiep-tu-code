@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -19,13 +20,18 @@ part '../widgets/launchpad_performance_overview.dart';
 part '../widgets/launchpad_performance_projects.dart';
 part '../widgets/launchpad_performance_chart_common.dart';
 
-const double _launchpadPerformanceVisualNavClearance = 112;
-const double _launchpadPerformanceNativeNavClearance = 88;
-const double _launchpadPerformanceLineHeightTight = 1.0;
-const double _launchpadPerformanceLineHeightCompact = 1.1;
-const double _launchpadPerformanceLineHeightLabel = 1.05;
-const double _launchpadPerformanceLineHeightBody = 1.25;
-const double _launchpadPerformanceLineHeightReadable = 1.35;
+const double _launchpadPerformanceVisualNavClearance =
+    DeviceMetrics.bottomChrome + AppSpacing.x3;
+const double _launchpadPerformanceNativeNavClearance =
+    DeviceMetrics.nativeBottomChrome + AppSpacing.x3;
+const double _launchpadPerformanceLineHeightTight =
+    AppSpacing.launchpadLineHeightTight;
+const double _launchpadPerformanceLineHeightLabel =
+    AppSpacing.launchpadLineHeightLabel;
+const double _launchpadPerformanceLineHeightBody =
+    AppSpacing.launchpadLineHeightReadable;
+const double _launchpadPerformanceLineHeightReadable =
+    AppSpacing.launchpadLineHeightReadable;
 const double _launchpadPerformanceChartHeight = 176;
 const double _launchpadPerformanceSparklineHeight = 164;
 const double _launchpadPerformanceAxisLabelWidth = AppSpacing.inputHeight;

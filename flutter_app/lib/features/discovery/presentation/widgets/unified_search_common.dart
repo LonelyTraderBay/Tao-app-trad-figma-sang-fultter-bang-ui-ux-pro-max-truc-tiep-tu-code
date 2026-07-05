@@ -1,5 +1,45 @@
 part of '../pages/unified_search_page.dart';
 
+class _UnifiedSearchBody extends StatelessWidget {
+  const _UnifiedSearchBody({
+    required this.snapshot,
+    required this.onQuerySelected,
+    required this.onRetry,
+  });
+
+  final UnifiedSearchSnapshot snapshot;
+  final ValueChanged<String> onQuerySelected;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (snapshot.currentState) {
+      DiscoveryScreenState.loading => const VitSkeletonList(
+        key: UnifiedSearchPage.loadingKey,
+        rows: 4,
+      ),
+      DiscoveryScreenState.error => VitErrorState(
+        key: UnifiedSearchPage.errorKey,
+        title: 'Không tải được dữ liệu khám phá',
+        message: snapshot.staleMessage,
+        actionLabel: 'Thử lại',
+        onAction: onRetry,
+      ),
+      DiscoveryScreenState.empty when !snapshot.hasCachedContent =>
+        const VitEmptyState(
+          icon: Icons.explore_rounded,
+          title: 'Chưa có gợi ý khám phá',
+          message: 'Hãy thử lại sau hoặc tìm kiếm trực tiếp.',
+        ),
+      _ when snapshot.hasQuery => _ResultsState(snapshot: snapshot),
+      _ => _NoQueryState(
+        snapshot: snapshot,
+        onQuerySelected: onQuerySelected,
+      ),
+    };
+  }
+}
+
 class _BoundaryDisclosure extends StatelessWidget {
   const _BoundaryDisclosure({required this.notes});
 

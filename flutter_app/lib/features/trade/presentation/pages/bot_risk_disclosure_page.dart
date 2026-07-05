@@ -52,41 +52,23 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
         .getBotRiskDisclosure();
     return VitTradeHubScaffold(
       title: 'Risk Disclosure',
+      subtitle: 'Công bố rủi ro trước khi dùng bot',
       semanticLabel: 'SC-118 BotRiskDisclosurePage',
       contentKey: BotRiskDisclosurePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Nhóm rủi ro',
+          primaryValue: '${snapshot.categories.length}',
+          secondaryLabel: 'Xác nhận',
+          secondaryValue: _acknowledged ? 'Đã đọc' : 'Chưa đọc',
+          secondaryColor: _acknowledged ? _botRiskGreen : _botRiskAmber,
+        ),
         VitTradeSection(
           title: 'High risk notice',
           child: _HighRiskBanner(snapshot: snapshot),
-        ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: const VitCard(
-            variant: VitCardVariant.inner,
-            density: VitDensity.compact,
-            padding: AppSpacing.cardPaddingCompact,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Bot risk disclosure review',
-                  message:
-                      'Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.',
-                  contractId: 'bot-risk-disclosure-review',
-                  density: VitDensity.compact,
-                ),
-                SizedBox(height: _riskSpace),
-                VitStatusPill(
-                  label: 'Acknowledgment required',
-                  status: VitStatusPillStatus.error,
-                  size: VitStatusPillSize.sm,
-                ),
-              ],
-            ),
-          ),
         ),
         VitTradeSection(
           title: 'Past performance',
@@ -131,6 +113,14 @@ class _BotRiskDisclosurePageState extends ConsumerState<BotRiskDisclosurePage> {
         VitTradeSection(
           title: 'Help',
           child: _HelpCard(snapshot: snapshot),
+        ),
+        const VitBotRiskReviewFooter(
+          title: 'Bot risk disclosure review',
+          message:
+              'Past performance, category risks, regulatory notice, acknowledgment and next steps are reviewed before bot access.',
+          contractId: 'bot-risk-disclosure-review',
+          statusLabel: 'Acknowledgment required',
+          status: VitStatusPillStatus.error,
         ),
       ],
     );

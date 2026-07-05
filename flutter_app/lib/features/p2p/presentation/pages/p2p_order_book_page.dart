@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -27,8 +28,6 @@ const double _p2pOrderBookNativeClearance = AppSpacing.x2;
 const double _p2pOrderBookSectionGap = AppSpacing.x2;
 const double _p2pOrderBookRefreshExtent = AppSpacing.buttonCompact;
 const double _p2pOrderBookAssetChipMinWidth = 96;
-const double _p2pOrderBookAssetChipMinExtent =
-    AppSpacing.searchBarCompactHeight;
 const double _p2pOrderBookDepthChartExtent = 112;
 const double _p2pOrderBookOrderRowExtent = AppSpacing.x5 - AppSpacing.x1;
 const double _p2pOrderBookLegendDot = AppSpacing.x3;
@@ -91,8 +90,10 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                     padding: AppSpacing.p2pOrderBookScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _AssetSelector(
                           snapshot: snapshot,
@@ -102,28 +103,25 @@ class _P2POrderBookPageState extends ConsumerState<P2POrderBookPage> {
                             setState(() => _selectedAsset = asset);
                           },
                         ),
-                        const SizedBox(height: _p2pOrderBookSectionGap),
                         _MarketTicker(
                           snapshot: snapshot,
                           isRefreshing: _isRefreshing,
                           onRefresh: _refresh,
                         ),
-                        const SizedBox(height: _p2pOrderBookSectionGap),
                         _DepthChartCard(snapshot: snapshot),
-                        const SizedBox(height: _p2pOrderBookSectionGap),
                         _BestPriceCards(snapshot: snapshot),
-                        const SizedBox(height: _p2pOrderBookSectionGap),
                         _OrderBookLists(snapshot: snapshot),
-                        const SizedBox(height: _p2pOrderBookSectionGap),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pOrderBookCompactPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Order book liquidity review',
-                            message:
-                                'Selected asset, refresh state, depth chart, best bid/ask, liquidity risk and next ad step are reviewed before taking a P2P order.',
-                            contractId: 'p2p-order-book-review',
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Xem lại thanh khoản sổ lệnh',
+                          message:
+                              'Tài sản, làm mới dữ liệu, biểu đồ độ sâu, giá bid/ask tốt nhất và rủi ro thanh khoản được xem lại trước khi khớp lệnh P2P.',
+                          contractId: 'p2p-order-book-review',
+                        ),
+                        Text(
+                          snapshot.contractNotes,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
                           ),
                         ),
                       ],

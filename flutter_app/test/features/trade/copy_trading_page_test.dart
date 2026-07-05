@@ -74,10 +74,11 @@ void main() {
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Copy Trading'), findsWidgets);
-    expect(find.text('Sao chép · Trade'), findsOneWidget);
-    expect(find.text('ASSET UNDER MANAGEMENT'), findsOneWidget);
+    expect(find.text('Sao chép chiến lược có kiểm soát'), findsOneWidget);
+    expect(find.text('Tổng AUM'), findsOneWidget);
     expect(find.text(r'$19.25M'), findsOneWidget);
     expect(find.text('Cảnh báo rủi ro'), findsOneWidget);
+    expect(find.text('Đánh giá trước khi copy'), findsOneWidget);
     expect(find.text('RiskMaster_88'), findsWidgets);
     expect(find.text('AlphaHunter_VN'), findsOneWidget);
     expect(find.text('WhaleWatcher'), findsOneWidget);

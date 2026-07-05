@@ -117,7 +117,7 @@ class _ArenaGovernanceGatePageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Arena Studio',
-            subtitle: '10C — Governance Gate',
+            subtitle: 'Xác nhận trước publish · Points only',
             showBack: true,
             onBack: _close,
           ),

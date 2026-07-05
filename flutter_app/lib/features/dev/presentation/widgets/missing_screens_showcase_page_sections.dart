@@ -1,46 +1,5 @@
 part of '../pages/missing_screens_showcase_page.dart';
 
-class _ShowcaseTitle extends StatelessWidget {
-  const _ShowcaseTitle({required this.snapshot});
-
-  final MissingScreensShowcaseSnapshot snapshot;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const _IconBadge(
-          icon: Icons.layers_outlined,
-          color: AppColors.onAccent,
-          background: AppColors.primary,
-        ),
-        const SizedBox(width: AppSpacing.x3),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                snapshot.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.sectionTitleXs.copyWith(
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-              Text(
-                snapshot.subtitle,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.captionSm.copyWith(color: AppColors.text2),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _NewScreensSection extends StatelessWidget {
   const _NewScreensSection({required this.snapshot});
 

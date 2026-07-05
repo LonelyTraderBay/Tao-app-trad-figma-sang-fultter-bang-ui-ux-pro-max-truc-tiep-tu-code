@@ -4,15 +4,21 @@ import 'package:vit_trade_flutter/shared/layout/vit_header_action_button.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 
 class MarketListHeader extends StatelessWidget {
-  const MarketListHeader({super.key, required this.onNavigate});
+  const MarketListHeader({
+    super.key,
+    required this.onNavigate,
+    required this.lastUpdatedLabel,
+  });
 
   final ValueChanged<String> onNavigate;
+  final String lastUpdatedLabel;
 
   @override
   Widget build(BuildContext context) {
     return VitTopChrome(
       type: VitTopChromeType.rootModule,
       title: 'Th\u1ECB tr\u01B0\u1EDDng',
+      subtitle: 'Theo d\u00F5i th\u1ECB tr\u01B0\u1EDDng \u00B7 C\u1EADp nh\u1EADt $lastUpdatedLabel',
       actions: [
         VitHeaderActionItem(
           type: VitHeaderActionType.overview,

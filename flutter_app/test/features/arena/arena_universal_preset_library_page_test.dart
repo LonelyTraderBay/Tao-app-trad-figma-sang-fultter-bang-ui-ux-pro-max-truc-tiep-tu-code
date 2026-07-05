@@ -66,8 +66,8 @@ void main() {
     expect(find.byType(ArenaUniversalPresetLibraryPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Universal Rule Presets'), findsOneWidget);
-    expect(find.text('10B — Preset Library'), findsOneWidget);
+    expect(find.text('Preset Library'), findsOneWidget);
+    expect(find.text('Preset an toàn · Points only'), findsOneWidget);
     expect(find.text('Domain Packs'), findsWidgets);
     expect(find.text('10 lĩnh vực bao phủ mọi loại challenge'), findsOneWidget);
     expect(find.text('Thể thao'), findsOneWidget);

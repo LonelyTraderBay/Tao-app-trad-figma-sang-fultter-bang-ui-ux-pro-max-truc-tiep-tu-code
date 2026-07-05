@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -77,30 +78,19 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                       gap: VitContentGap.tight,
                       children: [
                         _ComplianceHero(snapshot: snapshot),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Compliance Checklist',
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.text1,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Compliance Checklist',
+                          style: AppTextStyles.baseMedium.copyWith(
+                            fontWeight: AppTextStyles.bold,
+                          ),
                         ),
                         _ComplianceChecklist(items: snapshot.items),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding:
-                              AppSpacing.p2pComplianceOverviewCompactPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Compliance checklist review',
-                            message:
-                                'Checklist status, route targets, incomplete requirements and next compliance action are reviewed before opening P2P flows.',
-                            contractId: 'p2p-compliance-overview-review',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Compliance checklist review',
+                          message:
+                              'Checklist status, route targets, incomplete requirements and next compliance action are reviewed before opening P2P flows.',
+                          contractId: 'p2p-compliance-overview-review',
                         ),
                       ],
                     ),
@@ -124,10 +114,10 @@ class _ComplianceHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       key: P2PComplianceOverviewPage.heroKey,
-      color: AppColors.buy,
+      color: AppModuleAccents.p2p,
       shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.cardLargeRadius,
-        side: BorderSide(color: AppColors.buy),
+        side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
         padding: AppSpacing.p2pComplianceOverviewHeroPadding,
@@ -158,7 +148,7 @@ class _ComplianceHero extends StatelessWidget {
                     snapshot.heroTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.caption.copyWith(
+                    style: AppTextStyles.sectionTitle.copyWith(
                       color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
                     ),
@@ -218,62 +208,67 @@ class _ComplianceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
+    return Material(
       key: P2PComplianceOverviewPage.itemKey(item.id),
-      onTap: () {
-        HapticFeedback.selectionClick();
-        context.go(item.route);
-      },
-      variant: VitCardVariant.ghost,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pComplianceOverviewItemPadding,
-      child: Row(
-        children: [
-          Material(
-            color: AppColors.buy15,
-            shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.lgRadius,
-            ),
-            child: SizedBox(
-              width: _p2pComplianceIconBox,
-              height: _p2pComplianceIconBox,
-              child: Icon(
-                _iconFor(item.iconKey),
-                color: AppColors.buy,
-                size: AppSpacing.iconSm,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    fontWeight: AppTextStyles.bold,
+      color: AppColors.transparent,
+      child: InkWell(
+        onTap: () {
+          HapticFeedback.selectionClick();
+          context.go(item.route);
+        },
+        child: Padding(
+          padding: AppSpacing.p2pComplianceOverviewItemPadding,
+          child: Row(
+            children: [
+              Material(
+                color: AppModuleAccents.p2p.withValues(alpha: .14),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadii.lgRadius,
+                ),
+                child: SizedBox(
+                  width: _p2pComplianceIconBox,
+                  height: _p2pComplianceIconBox,
+                  child: Icon(
+                    _iconFor(item.iconKey),
+                    color: AppModuleAccents.p2p,
+                    size: AppSpacing.iconSm,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  item.value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.caption.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      item.value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              const Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.text3,
+                size: AppSpacing.iconMd,
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.x3),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: AppColors.text3,
-            size: AppSpacing.iconMd,
-          ),
-        ],
+        ),
       ),
     );
   }

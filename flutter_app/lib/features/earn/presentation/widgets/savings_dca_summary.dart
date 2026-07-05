@@ -239,39 +239,6 @@ class _HeroAction extends StatelessWidget {
   }
 }
 
-class _InfoBanner extends StatelessWidget {
-  const _InfoBanner({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
-      borderColor: AppColors.primary20,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.primary,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _DcaTabs extends StatelessWidget {
   const _DcaTabs({
     required this.tabs,

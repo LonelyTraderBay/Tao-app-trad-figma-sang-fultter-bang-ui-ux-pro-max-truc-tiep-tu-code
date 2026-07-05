@@ -77,7 +77,12 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
                         _SummaryGrid(snapshot: snapshot),
                         const _SectionTitle(title: 'Tất cả A/B Tests'),
                         if (snapshot.tests.isEmpty)
-                          const _EmptyTestsCard()
+                          const AdminInlineEmptyState(
+                            icon: Icons.science_outlined,
+                            title: 'Chưa có A/B test nào',
+                            message:
+                                'Tạo test mới để bắt đầu thử nghiệm',
+                          )
                         else
                           for (final test in snapshot.tests) ...[
                             _ABTestCard(

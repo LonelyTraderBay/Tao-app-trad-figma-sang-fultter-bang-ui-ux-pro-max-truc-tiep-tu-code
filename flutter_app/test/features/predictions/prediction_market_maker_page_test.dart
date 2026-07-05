@@ -76,6 +76,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Market Maker'), findsOneWidget);
+    expect(find.text('Thanh khoản · Prediction'), findsOneWidget);
     expect(find.text('Cung cap'), findsOneWidget);
     expect(find.text('Vi the'), findsOneWidget);
     expect(find.text('Thu nhap'), findsOneWidget);

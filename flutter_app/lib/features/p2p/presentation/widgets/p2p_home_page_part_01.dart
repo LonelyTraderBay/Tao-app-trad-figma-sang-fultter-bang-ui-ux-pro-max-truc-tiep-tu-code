@@ -94,6 +94,14 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                       fullBleed: true,
                       gap: VitContentGap.tight,
                       children: [
+                        if (snapshot.highRiskContractId != null)
+                          VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'P2P escrow states active',
+                            message:
+                                'Offer browse, order placement, payment proof, and dispute flows are tracked as one P2P escrow contract.',
+                            contractId: snapshot.highRiskContractId,
+                          ),
                         if (showOfflineWithCache) ...[
                           Padding(
                             key: P2PHomePage.offlineKey,
@@ -105,23 +113,8 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                             ),
                           ),
                         ],
+                        _KycComplianceBanner(snapshot: snapshot),
                         _QuickHub(snapshot: snapshot),
-                        if (snapshot.highRiskContractId != null) ...[
-                          VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Escrow trade states active',
-                            message:
-                                'KYC, payment readiness, preview, confirmation, order status, dispute and support states are bound to one P2P contract.',
-                            contractId: snapshot.highRiskContractId,
-                          ),
-                        ],
-                        _TradeTabs(
-                          active: _tradeType,
-                          onChanged: (value) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _tradeType = value);
-                          },
-                        ),
                         _AssetFiatRail(
                           snapshot: snapshot,
                           selectedAsset: _asset,
@@ -133,6 +126,13 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                           onFiat: (value) {
                             HapticFeedback.selectionClick();
                             setState(() => _fiat = value);
+                          },
+                        ),
+                        _TradeTabs(
+                          active: _tradeType,
+                          onChanged: (value) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _tradeType = value);
                           },
                         ),
                         VitSearchBar(
@@ -179,6 +179,18 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                                 AppRoutePaths.p2pReport(ad.merchantId),
                               ),
                             ),
+                        Padding(
+                          key: P2PHomePage.escrowDisclaimerKey,
+                          padding: const EdgeInsetsDirectional.only(
+                            top: AppSpacing.x2,
+                          ),
+                          child: Text(
+                            snapshot.contractNotes,
+                            style: AppTextStyles.micro.copyWith(
+                              color: AppColors.text3,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -223,6 +235,36 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
   }
 }
 
+class _KycComplianceBanner extends StatelessWidget {
+  const _KycComplianceBanner({required this.snapshot});
+
+  final P2PHomeSnapshot snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      key: P2PHomePage.kycBannerKey,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitBanner(
+          variant: VitBannerVariant.warning,
+          icon: Icons.verified_user_outlined,
+          message: 'P2P yêu cầu xác minh KYC trước khi giao dịch',
+          detail: 'Hoàn tất xác minh để mua/bán an toàn qua Escrow.',
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        VitCtaButton(
+          onPressed: () => context.go(snapshot.tradingLevelRoute),
+          variant: VitCtaButtonVariant.secondary,
+          fullWidth: true,
+          height: AppSpacing.buttonCompact,
+          child: const Text('Xác minh KYC'),
+        ),
+      ],
+    );
+  }
+}
+
 class _QuickHub extends StatelessWidget {
   const _QuickHub({required this.snapshot});
 
@@ -235,29 +277,69 @@ class _QuickHub extends StatelessWidget {
       key: P2PHomePage.quickHubKey,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.p2p.withValues(alpha: .22),
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
+      padding: const EdgeInsetsDirectional.all(AppSpacing.x3),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               _AccentIcon(
-                icon: Icons.auto_awesome_rounded,
+                icon: Icons.shield_outlined,
                 color: AppModuleAccents.p2p,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
-                child: Text(
-                  'Thao tác nhanh',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Escrow bảo vệ mọi giao dịch',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.x1),
+                    Text(
+                      'Thao tác nhanh',
+                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                    ),
+                  ],
                 ),
               ),
-              const _LivePill(),
+              VitStatusPill(
+                label: 'Escrow',
+                status: VitStatusPillStatus.success,
+                icon: Icons.lock_outline_rounded,
+                size: VitStatusPillSize.sm,
+              ),
             ],
           ),
-          const SizedBox(height: AppSpacing.x2),
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              Expanded(
+                child: _HubStat(
+                  icon: Icons.account_balance_wallet_outlined,
+                  label: 'Escrow',
+                  value: _compactVnd(stats.escrowProtected),
+                  caption: 'đang bảo vệ',
+                  color: AppColors.buy,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: _HubStat(
+                  icon: Icons.trending_up_rounded,
+                  label: 'Hoàn tất',
+                  value: '${stats.avgCompletionRate.toStringAsFixed(1)}%',
+                  caption: stats.avgCompletionTime,
+                  color: AppColors.warn,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.x3),
           Row(
             children: [
               for (
@@ -266,138 +348,28 @@ class _QuickHub extends StatelessWidget {
                 index++
               ) ...[
                 Expanded(
-                  child: _QuickActionCard(action: snapshot.quickActions[index]),
+                  child: VitCtaButton(
+                    key: P2PHomePage.actionKey(snapshot.quickActions[index].id),
+                    onPressed: () =>
+                        context.go(snapshot.quickActions[index].route),
+                    variant: snapshot.quickActions[index].toneKey == 'buy'
+                        ? VitCtaButtonVariant.success
+                        : VitCtaButtonVariant.primary,
+                    fullWidth: true,
+                    height: AppSpacing.buttonCompact,
+                    leading: Icon(
+                      snapshot.quickActions[index].iconKey == 'bolt'
+                          ? Icons.bolt_rounded
+                          : Icons.add_rounded,
+                      size: AppSpacing.iconSm,
+                    ),
+                    child: Text(snapshot.quickActions[index].title),
+                  ),
                 ),
                 if (index != snapshot.quickActions.length - 1)
                   const SizedBox(width: AppSpacing.x2),
               ],
             ],
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              Expanded(
-                child: _HubStat(
-                  icon: Icons.show_chart_rounded,
-                  label: 'Volume 24h',
-                  value: _compactVnd(stats.volume24h),
-                  caption: '+${stats.volume24hChange.toStringAsFixed(2)}%',
-                  color: AppColors.buy,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _HubStat(
-                  icon: Icons.group_outlined,
-                  label: 'Online',
-                  value: _formatInt(stats.onlineTraders),
-                  caption: 'traders',
-                  color: AppColors.buy,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: _HubStat(
-                  icon: Icons.trending_up_rounded,
-                  label: 'Completion',
-                  value: '${stats.avgCompletionRate.toStringAsFixed(1)}%',
-                  caption: 'avg ${stats.avgCompletionTime}',
-                  color: AppColors.warn,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          const Divider(
-            height: AppSpacing.dividerHairline,
-            color: AppColors.divider,
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Row(
-            children: [
-              _SmallIconBox(
-                icon: Icons.bar_chart_rounded,
-                color: AppColors.accent,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Text(
-                  '${_formatInt(stats.totalTrades24h)} trades · '
-                  '${stats.activeMerchants} merchants',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    fontWeight: AppTextStyles.medium,
-                  ),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              _EscrowPill(
-                label: '${_compactVnd(stats.escrowProtected)} Escrow',
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _QuickActionCard extends StatelessWidget {
-  const _QuickActionCard({required this.action});
-
-  final P2PHomeQuickActionDraft action;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = action.toneKey == 'buy' ? AppColors.buy : AppColors.primary;
-    final icon = action.iconKey == 'bolt'
-        ? Icons.bolt_rounded
-        : Icons.add_rounded;
-    return VitCard(
-      key: P2PHomePage.actionKey(action.id),
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      borderColor: color.withValues(alpha: .28),
-      onTap: () => context.go(action.route),
-      padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
-      child: Row(
-        children: [
-          _ActionIcon(icon: icon, color: color),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  action.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  action.subtitle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-              ],
-            ),
-          ),
-          Icon(
-            Icons.arrow_forward_rounded,
-            color: color,
-            size: AppSpacing.iconSm,
           ),
         ],
       ),

@@ -8,9 +8,10 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -19,8 +20,6 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 part '../widgets/staking_suitability_assessment_page_sections.dart';
 part '../widgets/staking_suitability_assessment_page_common.dart';
 
-const double _stakingSuitabilityVisualNavClearance = 112;
-const double _stakingSuitabilityNativeNavClearance = 88;
 const double _stakingSuitabilityFooterVisualClearance = 72;
 const double _stakingSuitabilityFooterNativeClearance = 56;
 const double _stakingSuitabilityScoreRing = 104;
@@ -76,11 +75,12 @@ class _StakingSuitabilityAssessmentPageState
     final snapshot = controller.state.snapshot;
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final safeAreaEnd = MediaQuery.paddingOf(context).bottom;
-    final scrollEndPadding =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? _stakingSuitabilityVisualNavClearance
-            : _stakingSuitabilityNativeNavClearance) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         safeAreaEnd;
+    final scrollEndPadding = bottomInset;
     final footerEndPadding =
         (mode.usesVisualQaFrame
             ? _stakingSuitabilityFooterVisualClearance
@@ -93,8 +93,10 @@ class _StakingSuitabilityAssessmentPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: _showResult ? snapshot.resultTitle : snapshot.title,
+            subtitle: 'Đánh giá phù hợp trước khi stake',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -104,12 +106,7 @@ class _StakingSuitabilityAssessmentPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppSpacing.contentPad,
-                    AppSpacing.x3,
-                    AppSpacing.contentPad,
-                    scrollEndPadding,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(scrollEndPadding),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
@@ -130,9 +127,9 @@ class _StakingSuitabilityAssessmentPageState
                             VitHighRiskStatePanel(
                               density: VitDensity.compact,
                               state: VitHighRiskUiState.riskReview,
-                              title: 'Suitability review active',
+                              title: 'Đánh giá phù hợp sản phẩm',
                               message:
-                                  'Answers are checked against experience, liquidity, income, allocation and knowledge limits before any staking action.',
+                                  'Câu trả lời được đối chiếu với kinh nghiệm, thanh khoản, thu nhập, phân bổ và giới hạn kiến thức trước khi stake.',
                               contractId: 'staking-suitability-assessment',
                             ),
                             _QuestionCard(

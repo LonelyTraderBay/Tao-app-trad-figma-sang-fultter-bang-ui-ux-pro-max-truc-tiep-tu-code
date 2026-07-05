@@ -77,7 +77,7 @@ void main() {
     expect(find.text('Multi-sig'), findsOneWidget);
     expect(find.text('Team Treasury'), findsOneWidget);
     expect(find.text('Operations Fund'), findsOneWidget);
-    expect(find.text('Tao giao dich moi'), findsOneWidget);
+    expect(find.text('Tạo giao dịch mới'), findsOneWidget);
     expect(find.text('Withdraw staking rewards'), findsOneWidget);
     expect(find.text('Approve bridge router'), findsOneWidget);
   });
@@ -110,14 +110,14 @@ void main() {
 
     await tester.tap(find.byKey(LaunchpadMultisigPage.signKey));
     await tester.pumpAndSettle();
-    expect(find.text('San sang'), findsWidgets);
+    expect(find.text('Sẵn sàng'), findsWidgets);
     expect(find.byKey(LaunchpadMultisigPage.executeKey), findsOneWidget);
 
     await tester.tap(find.byKey(LaunchpadMultisigPage.executeKey));
     await tester.pumpAndSettle();
     expect(find.text('Withdraw staking rewards'), findsNothing);
 
-    await tester.tap(find.text('history'));
+    await tester.tap(find.text('Lịch sử'));
     await tester.pumpAndSettle();
     expect(find.byKey(LaunchpadMultisigPage.historyKey), findsOneWidget);
     expect(find.text('Withdraw staking rewards'), findsOneWidget);
@@ -134,12 +134,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Transfer operations reserve'), findsOneWidget);
 
-    await tester.tap(find.text('safes'));
+    await tester.tap(find.text('Safes'));
     await tester.pumpAndSettle();
     expect(find.byKey(LaunchpadMultisigPage.ownersKey), findsOneWidget);
     expect(find.text('Owners & Signers'), findsOneWidget);
     expect(find.text('CFO'), findsOneWidget);
-    expect(find.text('Thong tin Safe'), findsOneWidget);
+    expect(find.text('Thông tin Safe'), findsOneWidget);
   });
 
   testWidgets('SC-313 create transaction sheet opens', (tester) async {
@@ -149,7 +149,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(LaunchpadMultisigPage.createSheetKey), findsOneWidget);
-    expect(find.text('Tao giao dich Multi-sig'), findsOneWidget);
+    expect(find.text('Tạo giao dịch Multi-sig'), findsOneWidget);
     expect(find.text('Contract Address'), findsOneWidget);
     expect(find.byKey(LaunchpadMultisigPage.submitCreateKey), findsOneWidget);
 

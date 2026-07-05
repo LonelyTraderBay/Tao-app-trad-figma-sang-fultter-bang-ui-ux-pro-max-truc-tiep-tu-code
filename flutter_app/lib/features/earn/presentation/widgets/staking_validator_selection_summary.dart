@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
@@ -32,19 +33,12 @@ class StakingValidatorSelectionInfoBanner extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: AppSpacing.stakingValidatorSelectionBodyLineHeight,
-                  ),
-                ),
-              ],
+            child: Text(
+              snapshot.infoBody,
+              style: AppTextStyles.caption.copyWith(
+                color: AppColors.text2,
+                height: AppSpacing.stakingValidatorSelectionBodyLineHeight,
+              ),
             ),
           ),
         ],
@@ -83,10 +77,11 @@ class StakingValidatorSelectionStatsSummary extends StatelessWidget {
           Expanded(
             child: _SummaryMetric(
               icon: Icons.trending_up_rounded,
-              label: 'APY tốt nhất',
+              label: 'APY uoc tinh (cao nhat)',
               value: '${top.apy.toStringAsFixed(2)}%',
               detail: top.name,
-              color: AppColors.buy,
+              color: AppModuleAccents.earn,
+              caption: 'Tham khao, co the thay doi',
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -122,6 +117,7 @@ class _SummaryMetric extends StatelessWidget {
     required this.value,
     required this.detail,
     required this.color,
+    this.caption,
   });
 
   final IconData icon;
@@ -129,6 +125,7 @@ class _SummaryMetric extends StatelessWidget {
   final String value;
   final String detail;
   final Color color;
+  final String? caption;
 
   @override
   Widget build(BuildContext context) {
@@ -161,6 +158,15 @@ class _SummaryMetric extends StatelessWidget {
             ),
           ),
         ),
+        if (caption != null) ...[
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            caption!,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+        ],
         if (detail.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.x1),
           Text(

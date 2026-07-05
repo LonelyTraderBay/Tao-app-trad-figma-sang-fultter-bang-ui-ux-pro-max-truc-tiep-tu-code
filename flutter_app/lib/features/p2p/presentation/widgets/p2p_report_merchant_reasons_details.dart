@@ -23,20 +23,17 @@ class _ReasonCard extends StatelessWidget {
       background: ColoredBox(
         color: selected ? tone.withValues(alpha: 0.10) : AppColors.surface2,
       ),
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      padding: AppSpacing.p2pRiskControlsReasonPadding,
       onTap: onTap,
       clip: true,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.x6,
+            dimension: AppSpacing.p2pRiskControlsReasonIconBox,
             child: Material(
               color: tone.withValues(alpha: 0.12),
               shape: const RoundedRectangleBorder(
-                borderRadius: AppRadii.mdRadius,
+                borderRadius: AppRadii.smRadius,
               ),
               child: Icon(
                 _reasonIcon(reason.iconKey),

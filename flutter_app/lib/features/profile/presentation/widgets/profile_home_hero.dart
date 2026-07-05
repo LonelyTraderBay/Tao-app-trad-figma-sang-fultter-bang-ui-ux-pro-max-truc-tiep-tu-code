@@ -85,23 +85,25 @@ class _ProfileHero extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.profileHeroInfoGap),
               Expanded(
-                child: VitCard(
-                  key: ProfilePage.copyReferralKey,
-                  onTap: onCopyReferral,
-                  variant: VitCardVariant.ghost,
-                  borderColor: AppColors.transparent,
-                  child: _HeroInfoBox(
-                    label: 'M\u00E3 gi\u1EDBi thi\u1EC7u',
-                    value: user.referralCode,
-                    valueColor: AppColors.primarySoft,
-                    trailing: Icon(
-                      copiedReferral
-                          ? Icons.check_circle_outline_rounded
-                          : Icons.copy_rounded,
-                      color: copiedReferral
-                          ? _profileGreen
-                          : AppColors.primarySoft,
-                      size: AppSpacing.profileModuleIcon,
+                child: Material(
+                  color: AppColors.transparent,
+                  child: InkWell(
+                    key: ProfilePage.copyReferralKey,
+                    onTap: onCopyReferral,
+                    borderRadius: AppRadii.cardRadius,
+                    child: _HeroInfoBox(
+                      label: 'M\u00E3 gi\u1EDBi thi\u1EC7u',
+                      value: user.referralCode,
+                      valueColor: AppColors.primarySoft,
+                      trailing: Icon(
+                        copiedReferral
+                            ? Icons.check_circle_outline_rounded
+                            : Icons.copy_rounded,
+                        color: copiedReferral
+                            ? _profileGreen
+                            : AppColors.primarySoft,
+                        size: AppSpacing.profileModuleIcon,
+                      ),
                     ),
                   ),
                 ),

@@ -204,9 +204,10 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitFinancialSafetySummary(
-      title: 'API key safety review',
+      title: 'Xem l\u1EA1i an to\u00E0n API key',
       contractId: 'profile.api.create',
-      footer: 'Review permissions, IP whitelist, and expiry before creating.',
+      footer:
+          'Ki\u1EC3m tra quy\u1EC1n, IP whitelist v\u00E0 th\u1EDDi h\u1EA1n tr\u01B0\u1EDBc khi t\u1EA1o.',
       items: [
         for (final row in rows)
           VitFinancialSafetyItem(label: row.label, value: row.value),

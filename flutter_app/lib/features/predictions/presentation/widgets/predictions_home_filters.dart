@@ -16,7 +16,7 @@ class _SearchField extends StatelessWidget {
     return VitSearchBar(
       key: PredictionsHomePage.searchFieldKey,
       controller: controller,
-      placeholder: 'Search events...',
+      placeholder: 'Tìm sự kiện...',
       onChanged: onChanged,
       onClear: onClear,
     );
@@ -36,37 +36,36 @@ class _FilterTabs extends StatelessWidget {
       child: VitTabBar(
         variant: VitTabBarVariant.pill,
         activeKey: active.name,
-        onChanged: (key) =>
-            onSelected(PredictionFilterTab.values.byName(key)),
+        onChanged: (key) => onSelected(PredictionFilterTab.values.byName(key)),
         tabs: const [
           VitTabItem(
             key: 'trending',
-            label: 'Trending',
-            icon: Icons.local_fire_department_outlined,
+            label: 'Xu hướng',
+            icon: Icons.trending_up_outlined,
             widgetKey: PredictionsHomePage.trendingFilterKey,
           ),
           VitTabItem(
             key: 'newEvents',
-            label: 'New',
-            icon: Icons.auto_awesome_rounded,
+            label: 'Mới',
+            icon: Icons.fiber_new_outlined,
             widgetKey: PredictionsHomePage.newFilterKey,
           ),
           VitTabItem(
             key: 'popular',
-            label: 'Popular',
+            label: 'Phổ biến',
             icon: Icons.group_outlined,
             widgetKey: Key('sc027_filter_popular'),
           ),
           VitTabItem(
             key: 'liquid',
-            label: 'Liquid',
-            icon: Icons.bar_chart_rounded,
+            label: 'Thanh khoản',
+            icon: Icons.bar_chart_outlined,
             widgetKey: Key('sc027_filter_liquid'),
           ),
           VitTabItem(
             key: 'ending',
-            label: 'Ending Soon',
-            icon: Icons.schedule_rounded,
+            label: 'Sắp đóng',
+            icon: Icons.schedule_outlined,
             widgetKey: Key('sc027_filter_ending'),
           ),
         ],
@@ -94,7 +93,7 @@ class _CategoryChips extends StatelessWidget {
         children: [
           _CategoryChip(
             key: PredictionsHomePage.categoryAllKey,
-            label: 'All',
+            label: 'Tất cả',
             active: activeCategory == null,
             onTap: () => onSelected(null),
           ),

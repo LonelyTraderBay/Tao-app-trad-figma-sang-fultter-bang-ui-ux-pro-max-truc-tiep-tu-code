@@ -44,16 +44,17 @@ class _LeaderboardRow extends StatelessWidget {
               height: _leaderboardRowAvatar,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
-                  color: (rising ? AppColors.warn : AppColors.accent)
-                      .withValues(alpha: .14),
+                  color: (rising ? AppColors.warn : _arenaAccent).withValues(
+                    alpha: .14,
+                  ),
                   shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.mdRadius,
+                    borderRadius: AppRadii.smRadius,
                   ),
                 ),
                 child: Center(
                   child: Icon(
                     _leaderboardIcon(entry.icon),
-                    color: rising ? AppColors.warn : AppColors.accent,
+                    color: rising ? AppColors.warn : _arenaAccent,
                     size: _leaderboardRowIcon,
                   ),
                 ),
@@ -193,7 +194,7 @@ class _ArenaFooter extends StatelessWidget {
             children: [
               const Icon(
                 Icons.shield_outlined,
-                color: AppColors.accent,
+                color: _arenaAccent,
                 size: _leaderboardFooterShieldIcon,
               ),
               const SizedBox(width: AppSpacing.x3),

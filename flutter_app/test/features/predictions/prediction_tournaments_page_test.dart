@@ -69,6 +69,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Tournaments'), findsOneWidget);
+    expect(find.text('Giải đấu · Prediction'), findsOneWidget);
     expect(find.text('Dang dien ra'), findsOneWidget);
     expect(find.text('Cua toi'), findsOneWidget);
     expect(find.text('Ket thuc'), findsOneWidget);

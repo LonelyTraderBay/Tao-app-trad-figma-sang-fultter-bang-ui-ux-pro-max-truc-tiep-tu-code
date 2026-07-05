@@ -91,18 +91,15 @@ class _ArenaModeDetailPageState extends ConsumerState<ArenaModeDetailPage> {
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
-                        VitCard(
-                          padding: AppSpacing.zeroInsets,
-                          child: ArenaModeHero(
-                            creatorKey: ArenaModeDetailPage.creatorKey,
-                            trustKey: ArenaModeDetailPage.trustKey,
-                            snapshot: snapshot,
-                            onCreator: () => _go(
-                              AppRoutePaths.arenaCreator(snapshot.creator.id),
-                            ),
-                            onTrust: () => _go(
-                              AppRoutePaths.arenaTrust(snapshot.creator.id),
-                            ),
+                        ArenaModeHero(
+                          creatorKey: ArenaModeDetailPage.creatorKey,
+                          trustKey: ArenaModeDetailPage.trustKey,
+                          snapshot: snapshot,
+                          onCreator: () => _go(
+                            AppRoutePaths.arenaCreator(snapshot.creator.id),
+                          ),
+                          onTrust: () => _go(
+                            AppRoutePaths.arenaTrust(snapshot.creator.id),
                           ),
                         ),
                         ArenaModeActions(

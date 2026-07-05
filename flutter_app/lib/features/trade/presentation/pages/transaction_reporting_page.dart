@@ -16,8 +16,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-import '../widgets/trade_body_review_widgets.dart';
-
 class TransactionReportingPage extends ConsumerStatefulWidget {
   const TransactionReportingPage({super.key, this.shellRenderMode});
 
@@ -132,18 +130,6 @@ class _TransactionReportingPageState
                       onArmStatus: () => context.go(
                         AppRoutePaths.tradeCopyArmIntegrationStatus,
                       ),
-                    ),
-                    const TradeBodyReviewSection(
-                      title: 'Reporting queue review',
-                      message: 'Transaction reporting body reviewed',
-                      detail:
-                          'Queue, search, retry, copy, XML, notice, empty, and result states stay visible.',
-                      primary:
-                          'Compliance notice remains above queue and retry controls.',
-                      secondary:
-                          'Report actions keep message ID and status context visible.',
-                      tertiary:
-                          'Quick actions stay after queue state, not before required review.',
                     ),
                   ],
                 ),

@@ -13,10 +13,10 @@ class _StakingProofOfReservesPageState
         .watch(stakingProofOfReservesRepositoryProvider)
         .getProofOfReserves();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -25,8 +25,10 @@ class _StakingProofOfReservesPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Minh bạch dự trữ — kiểm tra độc lập',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -36,9 +38,7 @@ class _StakingProofOfReservesPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,

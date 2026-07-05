@@ -77,11 +77,15 @@ void main() {
     expect(find.text('Lv.3 · P2P Trading'), findsOneWidget);
     expect(find.byKey(P2PHomePage.quickHubKey), findsOneWidget);
     expect(find.text('Thao tác nhanh'), findsOneWidget);
+    expect(find.text('Escrow bảo vệ mọi giao dịch'), findsOneWidget);
     expect(find.text('Express Trade'), findsOneWidget);
     expect(find.text('Đăng offer'), findsOneWidget);
-    expect(find.text('₫12.85B'), findsOneWidget);
-    expect(find.text('1.892'), findsOneWidget);
+    expect(find.text('₫45.20B'), findsOneWidget);
     expect(find.text('94.5%'), findsOneWidget);
+    expect(find.byKey(P2PHomePage.kycBannerKey), findsOneWidget);
+    expect(find.text('P2P yêu cầu xác minh KYC trước khi giao dịch'), findsOneWidget);
+    expect(find.text('Xác minh KYC'), findsOneWidget);
+    expect(find.byKey(P2PHomePage.escrowDisclaimerKey), findsOneWidget);
     expect(find.byKey(P2PHomePage.tradeTabsKey), findsOneWidget);
     expect(find.text('MUA'), findsOneWidget);
     expect(find.text('BÁN'), findsOneWidget);
@@ -125,7 +129,7 @@ void main() {
     );
     expect(
       tester.getSize(find.byKey(P2PHomePage.quickHubKey)).height,
-      lessThanOrEqualTo(220),
+      lessThanOrEqualTo(200),
       reason: 'P2P quick hub should not consume the first viewport.',
     );
   });

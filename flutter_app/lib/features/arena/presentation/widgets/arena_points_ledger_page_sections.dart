@@ -7,40 +7,64 @@ class _BalanceSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.arenaPointsLedgerCardPadding,
-      child: Row(
+    return VitModuleHeroCard(
+      accentColor: _arenaAccent,
+      density: VitDensity.compact,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Số dư hiện tại',
-                  style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  '${formatArenaPoints(summary.currentBalance)} pts',
-                  style: AppTextStyles.sectionTitle.copyWith(
+          Row(
+            children: [
+              Expanded(
+                child: _LedgerHeroKpi(
+                  label: 'Số dư hiện tại',
+                  value: '${formatArenaPoints(summary.currentBalance)} pts',
+                  valueStyle: AppTextStyles.heroNumber.copyWith(
                     color: AppColors.text1,
+                    letterSpacing: 0,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
-              ],
-            ),
+              ),
+              Container(
+                width: 1,
+                height: AppSpacing.x6,
+                color: AppColors.border,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: AppSpacing.x3,
+                  ),
+                  child: _LedgerHeroKpi(
+                    label: 'Đã nhận',
+                    value: '+${formatArenaPoints(summary.pointsEarned)}',
+                    valueStyle: AppTextStyles.sectionTitle.copyWith(
+                      color: AppColors.buy,
+                      fontFeatures: AppTextStyles.tabularFigures,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: AppSpacing.x4),
-          _BalanceDelta(
-            value: '+${formatArenaPoints(summary.pointsEarned)}',
-            label: 'Đã nhận',
-            color: AppColors.buy,
-          ),
-          const SizedBox(width: AppSpacing.x4),
-          _BalanceDelta(
-            value: '-${formatArenaPoints(summary.pointsSpent)}',
-            label: 'Đã dùng',
-            color: AppColors.sell,
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              Text(
+                'Đã dùng',
+                style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+              ),
+              const Spacer(),
+              Text(
+                '-${formatArenaPoints(summary.pointsSpent)}',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.sell,
+                  fontWeight: AppTextStyles.bold,
+                  fontFeatures: AppTextStyles.tabularFigures,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -48,34 +72,35 @@ class _BalanceSummary extends StatelessWidget {
   }
 }
 
-class _BalanceDelta extends StatelessWidget {
-  const _BalanceDelta({
-    required this.value,
+class _LedgerHeroKpi extends StatelessWidget {
+  const _LedgerHeroKpi({
     required this.label,
-    required this.color,
+    required this.value,
+    required this.valueStyle,
   });
 
-  final String value;
   final String label;
-  final Color color;
+  final String value;
+  final TextStyle valueStyle;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          value,
-          style: AppTextStyles.micro.copyWith(
-            color: color,
-            fontWeight: AppTextStyles.bold,
-            fontFeatures: AppTextStyles.tabularFigures,
+          label,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text3,
+            fontWeight: AppTextStyles.medium,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(
-          label,
-          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: valueStyle,
         ),
       ],
     );

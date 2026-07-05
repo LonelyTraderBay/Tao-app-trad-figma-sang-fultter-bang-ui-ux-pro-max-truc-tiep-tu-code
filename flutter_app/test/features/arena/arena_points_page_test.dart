@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/arena/data/arena_repository.dart';
-import 'package:vit_trade_flutter/features/arena/presentation/pages/arena_points_page.dart';
 import 'package:vit_trade_flutter/features/referral/presentation/pages/referral_home_page.dart';
+import 'package:vit_trade_flutter/features/rewards/presentation/pages/rewards_hub_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
 import '../../helpers/first_viewport_test_utils.dart';
@@ -66,14 +66,14 @@ void main() {
   ) async {
     await pumpArenaPoints(tester);
 
-    expect(find.byType(ArenaPointsPage), findsOneWidget);
+    expect(find.byType(RewardsHubPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.textContaining('Rewards'), findsWidgets);
-    expect(find.textContaining('Points'), findsWidgets);
+    expect(find.text('Trung tâm Phần thưởng'), findsOneWidget);
+    expect(find.text('Phần thưởng · Rewards'), findsOneWidget);
     expect(find.text('Arena Points'), findsOneWidget);
     expect(find.textContaining('Check-in'), findsOneWidget);
-    expect(find.byKey(ArenaPointsPage.claimAllKey), findsOneWidget);
+    expect(find.byKey(RewardsHubPage.claimAllKey), findsOneWidget);
   });
 
   testWidgets('SC-196 first viewport reaches Arena points claim action', (
@@ -88,7 +88,7 @@ void main() {
     );
     expectActionableInFirstViewport(
       tester,
-      find.byKey(ArenaPointsPage.claimAllKey),
+      find.byKey(RewardsHubPage.claimAllKey),
       routeName: 'SC-196 ArenaPointsPage',
       actionLabel: 'the claim all Arena points action',
     );
@@ -100,16 +100,16 @@ void main() {
   ) async {
     await pumpArenaPoints(tester);
 
-    await tester.tap(find.byKey(ArenaPointsPage.claimAllKey));
+    await tester.tap(find.byKey(RewardsHubPage.claimAllKey));
     await tester.pumpAndSettle();
-    expect(find.text('All pending rewards claimed'), findsOneWidget);
+    expect(find.text('Đã nhận hết phần thưởng chờ'), findsOneWidget);
 
     await tester.drag(
-      find.byKey(ArenaPointsPage.contentKey),
+      find.byKey(RewardsHubPage.contentKey),
       const Offset(0, -280),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(ArenaPointsPage.filterKey('Flash')));
+    await tester.tap(find.byKey(RewardsHubPage.filterKey('Flash')));
     await tester.pumpAndSettle();
     expect(find.textContaining('Flash: Mua BTC'), findsOneWidget);
     expect(find.textContaining('Flash 3'), findsOneWidget);
@@ -121,8 +121,8 @@ void main() {
   ) async {
     await pumpArenaPoints(tester);
 
-    await tester.ensureVisible(find.byKey(ArenaPointsPage.referralKey));
-    await tester.tap(find.byKey(ArenaPointsPage.referralKey));
+    await tester.ensureVisible(find.byKey(RewardsHubPage.referralKey));
+    await tester.tap(find.byKey(RewardsHubPage.referralKey));
     await tester.pumpAndSettle();
     expect(find.byType(ReferralHomePage), findsOneWidget);
   });

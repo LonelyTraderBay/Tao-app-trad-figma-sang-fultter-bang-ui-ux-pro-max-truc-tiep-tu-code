@@ -8,9 +8,9 @@ class _BridgeDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rows = [
-      _DetailRow('Du an', order.projectName),
+      _DetailRow('Dự án', order.projectName),
       _DetailRow('Route', order.routeProvider),
-      _DetailRow('Hops', '${order.routeHops} buoc'),
+      _DetailRow('Hops', '${order.routeHops} bước'),
       _DetailRow('Slippage', '${_trimDouble(order.slippage)}%'),
       _DetailRow(
         'Price Impact',
@@ -18,7 +18,7 @@ class _BridgeDetails extends StatelessWidget {
         color: order.priceImpact > 1 ? AppColors.warn : AppColors.buy,
       ),
       _DetailRow('Gas', order.gasCost),
-      _DetailRow('Tong phi', order.totalFee),
+      _DetailRow('Tổng phí', order.totalFee),
       _DetailRow('Source Tx', order.sourceTxHash, monospace: true),
     ];
 
@@ -38,7 +38,7 @@ class _BridgeDetails extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
-                'Chi tiet don',
+                'Chi tiết đơn',
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
@@ -117,34 +117,28 @@ class _SimulationDisclosure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return VitCard(
       key: LaunchpadBridgeOrderPage.safetyKey,
-      decoration: ShapeDecoration(
-        color: AppColors.primary.withValues(alpha: .08),
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: AppColors.primary.withValues(alpha: .16)),
-          borderRadius: AppRadii.lgRadius,
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadPaddingX4,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.info_outline_rounded,
-              color: AppColors.primary,
-              size: AppSpacing.iconSm,
+      variant: VitCardVariant.inner,
+      radius: VitCardRadius.large,
+      borderColor: AppColors.primary.withValues(alpha: .16),
+      padding: AppSpacing.launchpadPaddingX4,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.info_outline_rounded,
+            color: AppColors.primary,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              'Đây là chế độ mô phỏng. Trạng thái được cập nhật tự động mỗi vài giây. Giao dịch không được gửi lên blockchain thật.',
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                'Đây là chế độ mô phỏng. Trạng thái được cập nhật tự động mỗi vài giây. Giao dịch không được gửi lên blockchain thật.',
-                style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -176,7 +170,7 @@ class _BridgeSupportAction extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Can ho tro bridge?',
+                  'Cần hỗ trợ bridge?',
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
@@ -184,7 +178,7 @@ class _BridgeSupportAction extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x1),
                 Text(
-                  'Mo ho so support kem tx, route va trang thai bridge.',
+                  'Mở hồ sơ support kèm tx, route và trạng thái bridge.',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -197,7 +191,7 @@ class _BridgeSupportAction extends StatelessWidget {
             padding: AppSpacing.launchpadSupportButtonPadding,
             onPressed: () => context.go(supportRoute),
             trailing: const Icon(Icons.chevron_right_rounded),
-            child: const Text('Support'),
+            child: const Text('Hỗ trợ'),
           ),
         ],
       ),

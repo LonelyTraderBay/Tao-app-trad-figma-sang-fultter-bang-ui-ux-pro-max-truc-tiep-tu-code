@@ -30,7 +30,7 @@ class _InfoBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Text(
-                  'Smart Scheduling tự động điều chỉnh thời gian DCA dựa trên điều kiện thị trường, giúp tối ưu chi phí và giảm rủi ro.',
+                  'Tự động điều chỉnh thời điểm DCA theo volatility, gas hoặc khối lượng — giữ kỷ luật mua định kỳ.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.captionSm.copyWith(

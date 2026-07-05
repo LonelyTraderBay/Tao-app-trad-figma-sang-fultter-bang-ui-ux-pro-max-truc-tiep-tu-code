@@ -115,6 +115,7 @@ class _LaunchpadSwapAggregatorPageState
                   'SC-314 LaunchpadSwapAggregatorPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'So sánh swap · Xác nhận route trước khi đổi',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
               ),

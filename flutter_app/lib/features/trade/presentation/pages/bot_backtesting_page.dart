@@ -86,6 +86,7 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
           children: [
             VitHeader(
               title: 'Backtest Strategy',
+              subtitle: 'Mô phỏng chiến lược trên dữ liệu lịch sử',
               showBack: true,
               onBack: () => context.go(AppRoutePaths.tradeBots),
             ),
@@ -100,19 +101,12 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
                     context: context,
                     activeProductId: 'bots',
                     children: [
-                      VitTradeSection(
-                      title: 'Đánh giá rủi ro',
-                      child: const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.cardPaddingCompact,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Review backtest assumptions',
-                          message:
-                              'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
-                        ),
+                      VitBotSubpageHero(
+                        primaryLabel: 'Chiến lược',
+                        primaryValue: '${snapshot.strategies.length}',
+                        secondaryLabel: 'Cặp giao dịch',
+                        secondaryValue: '${snapshot.pairs.length}',
                       ),
-                    ),
                     VitTradeSection(
                       title: 'Strategy Selection',
                       child: _StrategyGrid(
@@ -164,6 +158,11 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
                           'Selected strategy, pair, and range stay visible before running.',
                       tertiary:
                           'Backtest output is framed as simulation, not guaranteed performance.',
+                    ),
+                    const VitBotRiskReviewFooter(
+                      title: 'Review backtest assumptions',
+                      message:
+                          'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
                     ),
                     ],
                   ),

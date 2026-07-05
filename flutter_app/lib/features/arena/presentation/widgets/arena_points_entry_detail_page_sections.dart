@@ -13,9 +13,11 @@ class _AmountHero extends StatelessWidget {
         : entry.amount < 0
         ? AppColors.sell
         : AppColors.text1;
-    return VitCard(
-      padding: AppSpacing.arenaPointsEntryHeroPadding,
+    return VitModuleHeroCard(
+      accentColor: _arenaAccent,
+      density: VitDensity.compact,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             '${positive
@@ -31,8 +33,9 @@ class _AmountHero extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x1),
           Text(
-            'pts',
-            style: AppTextStyles.base.copyWith(color: AppColors.text2),
+            'Arena Points',
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
           const SizedBox(height: AppSpacing.x3),
           Wrap(
@@ -69,13 +72,17 @@ class _EntryDetails extends StatelessWidget {
       title: 'Chi tiết',
       accentColor: AppColors.accent,
       child: VitCard(
-        padding: AppSpacing.arenaPointsEntryCardPadding,
+        padding: AppSpacing.zeroInsets,
+        clip: true,
         child: Column(
           children: [
             _DetailRow(label: 'Mô tả', value: entry.note),
+            const Divider(height: 1, color: AppColors.divider),
             _DetailRow(label: 'Mã lý do', value: entry.reasonCode),
+            const Divider(height: 1, color: AppColors.divider),
             _DetailRow(label: 'Thời gian', value: entry.time),
-            if (entry.linkedChallengeId != null)
+            if (entry.linkedChallengeId != null) ...[
+              const Divider(height: 1, color: AppColors.divider),
               _LinkedRow(
                 key: ArenaPointsEntryDetailPage.challengeLinkKey,
                 label: 'Challenge liên quan',
@@ -84,7 +91,9 @@ class _EntryDetails extends StatelessWidget {
                   AppRoutePaths.arenaChallenge(entry.linkedChallengeId!),
                 ),
               ),
-            if (entry.linkedModeId != null)
+            ],
+            if (entry.linkedModeId != null) ...[
+              const Divider(height: 1, color: AppColors.divider),
               _LinkedRow(
                 key: ArenaPointsEntryDetailPage.modeLinkKey,
                 label: 'Mode liên quan',
@@ -92,6 +101,7 @@ class _EntryDetails extends StatelessWidget {
                 onTap: () =>
                     context.go(AppRoutePaths.arenaMode(entry.linkedModeId!)),
               ),
+            ],
           ],
         ),
       ),
@@ -180,30 +190,15 @@ class _ReferenceCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: AppSpacing.x3),
-            VitCard(
+            VitStatusPill(
               key: ArenaPointsEntryDetailPage.copyRefKey,
-              variant: VitCardVariant.inner,
-              radius: VitCardRadius.standard,
+              label: copied ? 'Đã chép' : 'Sao chép',
+              icon: copied ? Icons.check_rounded : Icons.copy_rounded,
+              status: copied
+                  ? VitStatusPillStatus.success
+                  : VitStatusPillStatus.neutral,
+              size: VitStatusPillSize.md,
               onTap: onCopy,
-              padding: AppSpacing.arenaPointsEntryCopyPadding,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    copied ? Icons.check_rounded : Icons.copy_rounded,
-                    size: AppSpacing.arenaPointsSmallIcon,
-                    color: copied ? AppColors.buy : AppColors.text2,
-                  ),
-                  const SizedBox(width: AppSpacing.x1),
-                  Text(
-                    copied ? 'Đã chép' : 'Sao chép',
-                    style: AppTextStyles.micro.copyWith(
-                      color: copied ? AppColors.buy : AppColors.text2,
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),

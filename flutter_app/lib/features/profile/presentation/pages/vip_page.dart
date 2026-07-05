@@ -36,6 +36,10 @@ class VIPPage extends ConsumerStatefulWidget {
   const VIPPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc164_vip_content');
+  static const loadingKey = Key('sc164_vip_loading');
+  static const errorKey = Key('sc164_vip_error');
+  static const offlineKey = Key('sc164_vip_offline');
+  static const emptyKey = Key('sc164_vip_empty');
   static const tradeCtaKey = Key('sc164_vip_trade_cta');
   static Key tabKey(String id) => Key('sc164_vip_tab_$id');
   static Key tierRowKey(int level) => Key('sc164_vip_tier_$level');
@@ -86,14 +90,12 @@ class _VIPPageState extends ConsumerState<VIPPage> {
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [
-                      _VipHero(snapshot: snapshot),
-                      _VipTabs(
-                        active: _selectedTab,
-                        onChanged: (tab) => setState(() => _selectedTab = tab),
-                      ),
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 180),
-                        child: _tabContent(snapshot),
+                      _VipBody(
+                        snapshot: snapshot,
+                        selectedTab: _selectedTab,
+                        onTabChanged: (tab) =>
+                            setState(() => _selectedTab = tab),
+                        onTrade: _openTrade,
                       ),
                     ],
                   ),
@@ -104,24 +106,6 @@ class _VIPPageState extends ConsumerState<VIPPage> {
         ),
       ),
     );
-  }
-
-  Widget _tabContent(ProfileVipSnapshot snapshot) {
-    return switch (_selectedTab) {
-      _VipTab.overview => _OverviewTab(
-        key: const ValueKey('overview'),
-        snapshot: snapshot,
-      ),
-      _VipTab.benefits => _BenefitsTab(
-        key: const ValueKey('benefits'),
-        snapshot: snapshot,
-        onTrade: _openTrade,
-      ),
-      _VipTab.history => VipHistoryTab(
-        key: const ValueKey('history'),
-        snapshot: snapshot,
-      ),
-    };
   }
 
   void _openTrade() {

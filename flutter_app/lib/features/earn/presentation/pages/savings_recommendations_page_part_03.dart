@@ -130,7 +130,7 @@ class _AllocationDetailRow extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${_formatPercent(item.apy)} APY',
+                    '${_formatPercent(item.apy)} APY ước tính',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.buy,
                       fontWeight: AppTextStyles.bold,

@@ -109,7 +109,7 @@ void main() {
     expect(find.text('USDT Linh hoạt'), findsOneWidget);
     expect(find.text('Dự báo'), findsWidgets);
 
-    await tester.tap(find.text('Tín hiệu').last);
+    await tester.tap(find.text('Tín hiệu').first);
     await tester.pumpAndSettle();
 
     expect(
@@ -147,6 +147,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.scrollUntilVisible(
+      find.byKey(SavingsPage.smartSuggestionsInsightKey),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.byKey(SavingsPage.smartSuggestionsInsightKey));
     await tester.pumpAndSettle();
 

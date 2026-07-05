@@ -68,7 +68,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Provider Not Found'), findsOneWidget);
+    expect(find.text('Không tìm thấy provider'), findsOneWidget);
     expect(find.byKey(CopyProviderDetailPage.notFoundKey), findsOneWidget);
   });
 

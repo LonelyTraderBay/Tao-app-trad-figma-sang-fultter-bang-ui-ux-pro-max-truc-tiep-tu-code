@@ -34,6 +34,8 @@ class TopicHubPage extends ConsumerStatefulWidget {
   static const contentKey = Key('sc284_topic_hub_content');
   static const topicRailKey = Key('sc284_topic_hub_rail');
   static const offlineKey = Key('sc284_topic_hub_offline');
+  static const loadingKey = Key('sc284_topic_hub_loading');
+  static const errorKey = Key('sc284_topic_hub_error');
   static const heroKey = Key('sc284_topic_hub_hero');
   static const predictionsSectionKey = Key('sc284_topic_hub_predictions');
   static const roomsSectionKey = Key('sc284_topic_hub_rooms');
@@ -133,7 +135,12 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,
-                      children: [_TopicContent(snapshot: snapshot)],
+                      children: [
+                        _TopicContent(
+                          snapshot: snapshot,
+                          onRetry: () => setState(() {}),
+                        ),
+                      ],
                     ),
                   ),
                 ),

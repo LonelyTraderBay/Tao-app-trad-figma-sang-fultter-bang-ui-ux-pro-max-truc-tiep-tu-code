@@ -162,7 +162,6 @@ class _AlertSettingsTab extends StatelessWidget {
         _InfoPanel(
           icon: Icons.warning_amber_rounded,
           color: AppColors.warn,
-          background: AppColors.warn08,
           border: AppColors.warn15,
           text:
               'SMS alerts may incur additional charges. Check with your mobile provider.',

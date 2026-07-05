@@ -19,7 +19,7 @@ class _NextPurchaseRow extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
                 shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
+                  borderRadius: AppRadii.smRadius,
                   side: const BorderSide(color: AppColors.primary20),
                 ),
               ),
@@ -123,17 +123,10 @@ class _AdvancedTools extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return VitPageSection(
+      label: 'Công cụ nâng cao',
+      accentColor: AppModuleAccents.dca,
       children: [
-        Text(
-          'Công cụ nâng cao',
-          style: AppTextStyles.body.copyWith(
-            fontWeight: AppTextStyles.bold,
-            color: AppColors.text1,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.x2),
         Row(
           children: [
             Expanded(
@@ -151,7 +144,6 @@ class _AdvancedTools extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.x2),
         Row(
           children: [
             Expanded(
@@ -197,7 +189,7 @@ class _ToolCard extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .13),
                 shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.mdRadius,
+                  borderRadius: AppRadii.smRadius,
                   side: BorderSide(color: color.withValues(alpha: .2)),
                 ),
               ),
@@ -265,13 +257,33 @@ class _DcaTabs extends StatelessWidget {
 }
 
 class _PlansList extends StatelessWidget {
-  const _PlansList({super.key, required this.plans, required this.onPause});
+  const _PlansList({
+    super.key,
+    required this.plans,
+    required this.onPause,
+    required this.onCreate,
+  });
 
   final List<DcaPlan> plans;
   final VoidCallback onPause;
+  final VoidCallback onCreate;
 
   @override
   Widget build(BuildContext context) {
+    if (plans.isEmpty) {
+      return VitCard(
+        density: VitDensity.compact,
+        child: VitEmptyState(
+          title: 'Chưa có kế hoạch DCA',
+          message: 'Tạo kế hoạch mua định kỳ để đầu tư có kỷ luật.',
+          icon: Icons.sync_rounded,
+          actionLabel: 'Tạo kế hoạch',
+          actionKey: DCAPage.overviewCreateKey,
+          onAction: onCreate,
+        ),
+      );
+    }
+
     return Column(
       children: [
         for (var index = 0; index < plans.length; index++) ...[

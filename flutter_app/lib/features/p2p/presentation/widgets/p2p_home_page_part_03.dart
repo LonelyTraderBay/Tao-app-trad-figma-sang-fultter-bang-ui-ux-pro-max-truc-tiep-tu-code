@@ -69,99 +69,10 @@ class _AccentIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: color.withValues(alpha: .16),
-      borderRadius: AppRadii.mdRadius,
+      borderRadius: AppRadii.inputRadius,
       child: Padding(
         padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
         child: Icon(icon, color: color, size: AppSpacing.iconMd),
-      ),
-    );
-  }
-}
-
-class _ActionIcon extends StatelessWidget {
-  const _ActionIcon({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .18),
-      borderRadius: AppRadii.mdRadius,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
-      ),
-    );
-  }
-}
-
-class _SmallIconBox extends StatelessWidget {
-  const _SmallIconBox({required this.icon, required this.color});
-
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: .14),
-      borderRadius: AppRadii.xsRadius,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.all(AppSpacing.x1),
-        child: Icon(icon, color: color, size: AppSpacing.iconSm),
-      ),
-    );
-  }
-}
-
-class _LivePill extends StatelessWidget {
-  const _LivePill();
-
-  @override
-  Widget build(BuildContext context) {
-    return const VitAccentPill(label: 'Live', accentColor: AppColors.buy);
-  }
-}
-
-class _EscrowPill extends StatelessWidget {
-  const _EscrowPill({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.buy10,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadii.inputRadius,
-        side: const BorderSide(color: AppColors.buy20),
-      ),
-      child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(
-          horizontal: AppSpacing.x2,
-          vertical: AppSpacing.x1,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.shield_outlined,
-              color: AppColors.buy,
-              size: AppSpacing.iconSm,
-            ),
-            const SizedBox(width: AppSpacing.x1),
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.buy,
-                fontWeight: AppTextStyles.bold,
-                height: AppTextStyles.numericMicro.height,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -216,8 +127,6 @@ String _formatVnd(num value) {
   }
   return buffer.toString();
 }
-
-String _formatInt(int value) => _formatVnd(value);
 
 String _compactVnd(int value) {
   if (value >= 1000000000) {

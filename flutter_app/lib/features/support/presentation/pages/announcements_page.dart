@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/providers/support_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -27,6 +28,9 @@ class AnnouncementsPage extends ConsumerStatefulWidget {
   static const pinnedKey = Key('sc293_announcements_pinned');
   static const listKey = Key('sc293_announcements_list');
   static const emptyKey = Key('sc293_announcements_empty');
+  static const loadingKey = Key('sc293_announcements_loading');
+  static const errorKey = Key('sc293_announcements_error');
+  static const offlineKey = Key('sc293_announcements_offline');
 
   static Key filterKey(String id) => Key('sc293_announcement_filter_$id');
   static Key announcementKey(String id) => Key('sc293_announcement_$id');
@@ -60,6 +64,9 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
             ? AppSpacing.x7 + AppSpacing.x6
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
+    final showOfflineBanner =
+        snapshot.screenState == SupportScreenState.offline &&
+        snapshot.announcements.isNotEmpty;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -76,6 +83,20 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (showOfflineBanner)
+                Padding(
+                  key: AnnouncementsPage.offlineKey,
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.contentPad,
+                    AppSpacing.x3,
+                    AppSpacing.contentPad,
+                    0,
+                  ),
+                  child: const VitOfflineBanner(
+                    message: 'Đang ngoại tuyến',
+                    detail: 'Hiển thị thông báo đã lưu gần nhất.',
+                  ),
+                ),
               Expanded(
                 child: ScrollConfiguration(
                   behavior: ScrollConfiguration.of(
@@ -91,23 +112,20 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
                       padding: VitContentPadding.none,
                       gap: VitContentGap.tight,
                       fullBleed: true,
+                      density: VitDensity.compact,
                       children: [
                         _FilterRail(
                           filters: snapshot.filters,
                           activeFilterId: _activeFilterId,
                           onChanged: _setFilter,
                         ),
-                        if (pinned.isNotEmpty)
-                          _PinnedSection(
-                            announcements: pinned,
-                            expandedId: _expandedId,
-                            onToggle: _toggleExpanded,
-                          ),
-                        _AnnouncementList(
-                          announcements: regular,
-                          showEmpty: pinned.isEmpty && regular.isEmpty,
+                        _AnnouncementsBody(
+                          screenState: snapshot.screenState,
+                          pinned: pinned,
+                          regular: regular,
                           expandedId: _expandedId,
                           onToggle: _toggleExpanded,
+                          onRetry: () => setState(() {}),
                         ),
                       ],
                     ),

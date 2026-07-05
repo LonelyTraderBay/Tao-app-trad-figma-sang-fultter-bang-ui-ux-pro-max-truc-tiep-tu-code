@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/vit_trade_app.dart';
 import 'package:vit_trade_flutter/features/earn/data/earn_repository.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_analytics_page.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_bottom_nav.dart';
 
@@ -60,7 +61,7 @@ void main() {
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('Phân tích Tiết kiệm'), findsOneWidget);
-    expect(find.text('Yield, compound & phân bổ'), findsOneWidget);
+    expect(find.text(kSavingsToolsHeaderSubtitle), findsOneWidget);
     expect(find.byKey(SavingsAnalyticsPage.summaryKey), findsOneWidget);
     expect(find.text('\$10,340.86'), findsOneWidget);
     expect(find.text('+\$174.36'), findsOneWidget);

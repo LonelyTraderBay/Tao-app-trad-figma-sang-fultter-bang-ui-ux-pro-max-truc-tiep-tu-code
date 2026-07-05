@@ -30,23 +30,11 @@ class _ActionsRow extends StatelessWidget {
         if (complete) ...[
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: DecoratedBox(
-              decoration: const ShapeDecoration(
-                color: AppColors.buy10,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadii.inputRadius,
-                ),
-              ),
-              child: Padding(
-                padding: AppSpacing.devVerticalPaddingX4,
-                child: Text(
-                  'All Routes Tested',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.buy,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
+            child: Center(
+              child: VitAccentPill(
+                label: 'All Routes Tested',
+                accentColor: AppColors.buy,
+                semanticStatus: VitStatusPillStatus.success,
               ),
             ),
           ),
@@ -124,7 +112,7 @@ class _PhaseStatTile extends StatelessWidget {
     return DecoratedBox(
       decoration: const ShapeDecoration(
         color: AppColors.surface2,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
         padding: AppSpacing.devTinyPadding,
@@ -175,33 +163,26 @@ class _InternalNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: AppColors.primary08,
-        shape: const RoundedRectangleBorder(
-          borderRadius: AppRadii.cardRadius,
-          side: BorderSide(color: AppColors.primary20),
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.devCompactPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.admin_panel_settings_outlined,
-              color: AppColors.primary,
-              size: AppSpacing.iconSm,
+    return VitCard(
+      padding: AppSpacing.devCompactPadding,
+      borderColor: AppColors.primary20,
+      background: const ColoredBox(color: AppColors.primary08),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.admin_panel_settings_outlined,
+            color: AppColors.primary,
+            size: AppSpacing.iconSm,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -225,7 +206,7 @@ class _IconBadge extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: background,
-          shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
         ),
         child: Icon(icon, color: color, size: AppSpacing.iconSm),
       ),

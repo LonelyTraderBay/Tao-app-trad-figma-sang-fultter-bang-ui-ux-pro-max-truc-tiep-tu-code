@@ -19,45 +19,51 @@ class _BridgeEventLog extends StatelessWidget {
       key: LaunchpadBridgeOrderPage.eventLogKey,
       radius: VitCardRadius.large,
       padding: AppSpacing.zeroInsets,
+      clip: true,
       child: Column(
         children: [
-          VitCard(
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
-            padding: AppSpacing.launchpadPaddingX4,
-            onTap: onToggle,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.terminal_rounded,
-                  color: AppColors.accent,
-                  size: AppSpacing.iconSm,
+          Material(
+            color: AppColors.transparent,
+            child: InkWell(
+              onTap: onToggle,
+              child: Padding(
+                padding: AppSpacing.launchpadPaddingX4,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.terminal_rounded,
+                      color: AppColors.accent,
+                      size: AppSpacing.iconSm,
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    Text(
+                      'Nhật ký sự kiện',
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.x2),
+                    _ConnectionBadge(state: order.connectionState),
+                    const SizedBox(width: AppSpacing.x2),
+                    Expanded(
+                      child: Text(
+                        '${events.length} sự kiện',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      expanded
+                          ? Icons.keyboard_arrow_up_rounded
+                          : Icons.keyboard_arrow_down_rounded,
+                      color: AppColors.text3,
+                      size: AppSpacing.iconMd,
+                    ),
+                  ],
                 ),
-                const SizedBox(width: AppSpacing.x2),
-                Text(
-                  'Event Log',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                _ConnectionBadge(state: order.connectionState),
-                const SizedBox(width: AppSpacing.x2),
-                Expanded(
-                  child: Text(
-                    '${events.length} events',
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-                  ),
-                ),
-                Icon(
-                  expanded
-                      ? Icons.keyboard_arrow_up_rounded
-                      : Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.text3,
-                  size: AppSpacing.iconMd,
-                ),
-              ],
+              ),
             ),
           ),
           if (expanded) ...[
@@ -212,7 +218,7 @@ class _ConnectionBadge extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.x1),
             Text(
-              connected ? 'Connected' : 'Connecting',
+              connected ? 'Đã kết nối' : 'Đang kết nối',
               style: AppTextStyles.micro.copyWith(
                 color: connected ? AppColors.buy : AppColors.warn,
                 fontWeight: AppTextStyles.bold,

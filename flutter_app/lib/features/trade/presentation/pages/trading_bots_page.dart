@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
@@ -16,8 +16,6 @@ part 'trading_bots_page_part_01.dart';
 part 'trading_bots_page_part_02.dart';
 part 'trading_bots_page_part_03.dart';
 part 'trading_bots_page_part_04.dart';
-
-const _botPrimary = AppColors.primary;
 
 enum _TradingBotsTab { myBots, strategies }
 
@@ -65,7 +63,7 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
       children: [
         VitTradeHubScaffold(
           title: 'Trading Bots',
-          subtitle: 'Bot giao dịch · Trade',
+          subtitle: 'Tự động hóa giao dịch theo chiến lược',
           semanticLabel: 'SC-059 TradingBotsPage',
           contentKey: TradingBotsPage.contentKey,
           backKey: TradingBotsPage.backKey,
@@ -76,23 +74,24 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
             mode: BackNavigationMode.historyThenFallback,
           ),
           children: [
-            VitTradeSection(
-              title: 'Tổng quan bot',
-              child: _BotsMetricsSummary(bots: _bots),
+            _BotsHero(bots: _bots),
+            VitCtaButton(
+              key: TradingBotsPage.addBotKey,
+              onPressed: () => setState(() => _tab = _TradingBotsTab.strategies),
+              height: AppSpacing.inputHeight,
+              leading: const Icon(Icons.add_rounded),
+              child: const Text('Khám phá chiến lược'),
             ),
-            VitTradeSection(
-              title: 'Danh mục',
-              child: _BotsTabs(
-                active: _tab,
-                botCount: _bots.length,
-                onChanged: (tab) => setState(() => _tab = tab),
-              ),
+            _BotsTabs(
+              active: _tab,
+              botCount: _bots.length,
+              onChanged: (tab) => setState(() => _tab = tab),
             ),
             if (_tab == _TradingBotsTab.myBots)
               _MyBotsTab(
                 bots: _bots,
                 onToggle: _toggleBot,
-                onDelete: _deleteBot,
+                onDelete: _confirmDeleteBot,
                 onAdd: () => setState(() => _tab = _TradingBotsTab.strategies),
               )
             else
@@ -100,6 +99,7 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
                 strategies: snapshot.strategies,
                 onCreate: _openCreateSheet,
               ),
+            const _RiskDisclaimer(),
           ],
         ),
         if (_showSuccess)
@@ -139,6 +139,27 @@ class _TradingBotsPageState extends ConsumerState<TradingBotsPage> {
     ref
         .read(tradeBotsControllerProvider)
         .submitAction(botId: botId, action: 'delete');
+  }
+
+  Future<void> _confirmDeleteBot(String botId) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Xóa bot?'),
+        content: const Text('Bot sẽ dừng hoạt động và bị xóa khỏi danh sách.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Hủy'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Xóa'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && mounted) _deleteBot(botId);
   }
 
   Future<void> _openCreateSheet(TradeBotStrategy strategy) async {

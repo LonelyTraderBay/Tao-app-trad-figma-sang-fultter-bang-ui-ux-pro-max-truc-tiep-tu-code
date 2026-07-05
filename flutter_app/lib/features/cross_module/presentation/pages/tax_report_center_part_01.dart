@@ -20,84 +20,58 @@ class _TaxReportCenterState extends ConsumerState<TaxReportCenter> {
             : AppSpacing.x7) +
         MediaQuery.paddingOf(context).bottom;
 
-    return VitPageLayout(
-      variant: VitPageVariant.flush,
+    return CrossModuleTabbedPageShell(
       semanticLabel: 'SC-324 TaxReportCenter',
-      child: Material(
-        color: AppColors.bg,
-        child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
-            title: snapshot.title,
-            showBack: true,
-            onBack: () => context.go(snapshot.backRoute),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _TaxTabs(
-                tabs: snapshot.tabs,
-                active: _activeTab,
-                onChanged: (tab) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _activeTab = tab);
-                },
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  key: TaxReportCenter.contentKey,
-                  physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.crossModuleScrollPadding(
-                    scrollEndClearance,
-                  ),
-                  child: VitPageContent(
-                    gap: VitContentGap.tight,
-                    children: [
-                      if (_activeTab == TaxReportTab.generate)
-                        _GenerateTaxReportTab(
-                          snapshot: snapshot,
-                          startDate: _startDate,
-                          endDate: _endDate,
-                          format: _format,
-                          jurisdictionId: _jurisdictionId,
-                          exportQueued: _exportQueued,
-                          onPresetSelected: (start, end) {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              _startDate = start;
-                              _endDate = end;
-                            });
-                          },
-                          onFormatChanged: (format) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _format = format);
-                          },
-                          onJurisdictionChanged: (id) {
-                            HapticFeedback.selectionClick();
-                            setState(() => _jurisdictionId = id);
-                          },
-                          onGenerate: () {
-                            HapticFeedback.mediumImpact();
-                            setState(() => _exportQueued = true);
-                          },
-                        )
-                      else if (_activeTab == TaxReportTab.reports)
-                        _ReportsTab(snapshot: snapshot)
-                      else
-                        _TaxSettingsTab(
-                          includeArena: _includeArena,
-                          onToggleArena: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _includeArena = !_includeArena);
-                          },
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+      contentKey: TaxReportCenter.contentKey,
+      title: snapshot.title,
+      onBack: () => context.go(snapshot.backRoute),
+      scrollEndClearance: scrollEndClearance,
+      tabs: _TaxTabs(
+        tabs: snapshot.tabs,
+        active: _activeTab,
+        onChanged: (tab) {
+          HapticFeedback.selectionClick();
+          setState(() => _activeTab = tab);
+        },
       ),
+      contentGap: VitContentGap.tight,
+      body: _activeTab == TaxReportTab.generate
+          ? _GenerateTaxReportTab(
+              snapshot: snapshot,
+              startDate: _startDate,
+              endDate: _endDate,
+              format: _format,
+              jurisdictionId: _jurisdictionId,
+              exportQueued: _exportQueued,
+              onPresetSelected: (start, end) {
+                HapticFeedback.selectionClick();
+                setState(() {
+                  _startDate = start;
+                  _endDate = end;
+                });
+              },
+              onFormatChanged: (format) {
+                HapticFeedback.selectionClick();
+                setState(() => _format = format);
+              },
+              onJurisdictionChanged: (id) {
+                HapticFeedback.selectionClick();
+                setState(() => _jurisdictionId = id);
+              },
+              onGenerate: () {
+                HapticFeedback.mediumImpact();
+                setState(() => _exportQueued = true);
+              },
+            )
+          : _activeTab == TaxReportTab.reports
+          ? _ReportsTab(snapshot: snapshot)
+          : _TaxSettingsTab(
+              includeArena: _includeArena,
+              onToggleArena: () {
+                HapticFeedback.selectionClick();
+                setState(() => _includeArena = !_includeArena);
+              },
+            ),
     );
   }
 }
@@ -115,70 +89,30 @@ class _TaxTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.surface,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: AppSpacing.crossModuleTabBarPadding,
-            child: Row(
-              children: [
-                for (final tab in tabs)
-                  Expanded(
-                    child: VitCard(
-                      key: TaxReportCenter.tabKey(tab.tab),
-                      onTap: () => onChanged(tab.tab),
-                      variant: VitCardVariant.ghost,
-                      radius: VitCardRadius.standard,
-                      padding: EdgeInsets.zero,
-                      borderColor: AppColors.transparent,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: AppSpacing.crossModuleTabLabelPadding,
-                            child: Text(
-                              tab.label,
-                              style: AppTextStyles.caption.copyWith(
-                                color: tab.tab == active
-                                    ? AppColors.primary
-                                    : AppColors.text3,
-                                fontWeight: AppTextStyles.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: AppSpacing.buttonHero,
-                            height: AppSpacing.x1,
-                            child: TweenAnimationBuilder<double>(
-                              tween: Tween<double>(
-                                end: tab.tab == active ? 1 : 0,
-                              ),
-                              duration: const Duration(milliseconds: 160),
-                              builder: (context, value, child) =>
-                                  Transform.scale(scaleX: value, child: child),
-                              child: const DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  color: AppColors.primary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: AppRadii.xlRadius,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: AppSpacing.dividerHairline,
-            child: ColoredBox(color: AppColors.divider),
-          ),
-        ],
+    final tabItems = [
+      for (final tab in tabs)
+        VitTabItem(
+          key: tab.tab.name,
+          label: tab.label,
+          widgetKey: TaxReportCenter.tabKey(tab.tab),
+        ),
+    ];
+
+    return DecoratedBox(
+      decoration: const ShapeDecoration(
+        color: AppColors.surface,
+        shape: Border(bottom: BorderSide(color: AppColors.divider)),
+      ),
+      child: Padding(
+        padding: AppSpacing.crossModuleTabBarPadding,
+        child: VitSegmentedTabBar(
+          tabs: tabItems,
+          activeKey: active.name,
+          onChanged: (key) {
+            final selected = tabs.firstWhere((tab) => tab.tab.name == key);
+            onChanged(selected.tab);
+          },
+        ),
       ),
     );
   }
@@ -253,7 +187,6 @@ class _GenerateTaxReportTab extends StatelessWidget {
           const _InfoPanel(
             icon: Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            background: AppColors.buy10,
             border: AppColors.buy20,
             text:
                 'Export request queued locally. Production wiring will post to /exports with the selected period and format.',
@@ -263,7 +196,6 @@ class _GenerateTaxReportTab extends StatelessWidget {
         const _InfoPanel(
           icon: Icons.warning_amber_rounded,
           color: AppColors.warn,
-          background: AppColors.warn08,
           border: AppColors.warn15,
           text:
               'Tax reports are for reference only. Consult a tax professional for accurate filing. We are not tax advisors.',

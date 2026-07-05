@@ -12,7 +12,7 @@ class _BridgeStatusHero extends StatelessWidget {
       key: LaunchpadBridgeOrderPage.heroKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      borderColor: order.accent.withValues(alpha: .22),
+      borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
       padding: AppSpacing.launchpadPaddingX5,
       child: Column(
         children: [
@@ -50,7 +50,7 @@ class _BridgeStatusHero extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _AmountColumn(
-                label: 'Ban',
+                label: 'Bán',
                 value: _formatUsd(order.inputAmount),
                 token: order.inputToken,
               ),
@@ -62,7 +62,7 @@ class _BridgeStatusHero extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
               _AmountColumn(
-                label: 'Nhan',
+                label: 'Nhận',
                 value: _formatNumber(order.expectedOutput),
                 token: order.outputToken,
                 color: AppColors.buy,

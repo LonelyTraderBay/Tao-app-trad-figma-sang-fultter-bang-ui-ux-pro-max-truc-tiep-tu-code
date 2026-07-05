@@ -8,7 +8,6 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_formatters.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_confirm_sheet.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_side_switch.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_preset_chip_row.dart';
@@ -54,6 +53,11 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
   final Key? submitKey;
   final Key Function(int pct)? pctKeyBuilder;
 
+  String get _submitLabel {
+    if (!canSubmit) return 'Nhập số lượng để tiếp tục';
+    return side == TradeOrderSide.buy ? 'Xác nhận MUA' : 'Đặt lệnh BÁN';
+  }
+
   Future<void> _openConfirm(BuildContext context) async {
     if (!canSubmit) return;
     final sideLabel = side == TradeOrderSide.buy ? 'MUA' : 'BÁN';
@@ -63,7 +67,10 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
       lines: [
         VitTradeConfirmLine(label: 'Cặp', value: pair.symbol),
         VitTradeConfirmLine(label: 'Loại', value: sideLabel),
-        VitTradeConfirmLine(label: 'Giá', value: 'Giá thị trường · $marketPriceLabel'),
+        VitTradeConfirmLine(
+          label: 'Giá',
+          value: 'Giá thị trường · $marketPriceLabel',
+        ),
         VitTradeConfirmLine(
           label: 'Số lượng',
           value: '${amountController.text} ${pair.baseAsset}',
@@ -85,100 +92,65 @@ class VitTradeSimpleOrderForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final available = side == TradeOrderSide.buy
-        ? balances.usdtAvailable
-        : balances.baseAvailable;
-    final availableAsset = side == TradeOrderSide.buy ? 'USDT' : pair.baseAsset;
     final baseAsset = pair.baseAsset;
     final actionVerb = side == TradeOrderSide.buy ? 'mua' : 'bán';
 
-    return VitCard(
-      density: VitDensity.compact,
-      padding: AppSpacing.cardPaddingCompact,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'Bước 1 · Chọn hướng',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          VitTradeSpotSideSwitch(
-            side: side,
-            onChanged: onSideChanged,
-            buyKey: buyKey,
-            sellKey: sellKey,
-            activeBuyKey: const Key('sc048_trade_active_buy_side'),
-            activeSellKey: const Key('sc048_trade_active_sell_side'),
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Text(
-            'Bước 2 · Số lượng',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            'Khả dụng: ${formatTradeMoney(available)} $availableAsset',
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          VitInput(
-            key: amountFieldKey,
-            label: 'Bạn muốn $actionVerb bao nhiêu? ($baseAsset)',
-            controller: amountController,
-            onChanged: (_) => onChanged(),
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          VitPresetChipRow.percentBalance(
-            onTap: onPct,
-            keyFor: pctKeyBuilder ?? (pct) => Key('sc048_pct_$pct'),
-            accentColor: _tradePrimary,
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          Text(
-            'Bước 3 · Xác nhận',
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          VitCard(
-            variant: VitCardVariant.inner,
-            density: VitDensity.compact,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _SummaryRow(
-                  label: 'Giá thị trường',
-                  value: marketPriceLabel,
-                ),
-                const SizedBox(height: AppSpacing.x2),
-                _SummaryRow(
-                  label: 'Phí ước tính',
-                  value: formatTradeMoney(preview.fee),
-                ),
-                const SizedBox(height: AppSpacing.x2),
-                _SummaryRow(
-                  label: 'Tổng thanh toán',
-                  value: '${formatTradeMoney(preview.total)} USDT',
-                  emphasized: true,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          VitCtaButton(
-            key: submitKey,
-            onPressed: canSubmit ? () => _openConfirm(context) : null,
-            density: VitDensity.compact,
-            variant: side == TradeOrderSide.buy
-                ? VitCtaButtonVariant.success
-                : VitCtaButtonVariant.danger,
-            child: Text(
-              canSubmit ? 'Xem lại & xác nhận' : 'Nhập số lượng để tiếp tục',
-            ),
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitTradeSpotSideSwitch(
+          side: side,
+          onChanged: onSideChanged,
+          buyKey: buyKey,
+          sellKey: sellKey,
+          activeBuyKey: const Key('sc048_trade_active_buy_side'),
+          activeSellKey: const Key('sc048_trade_active_sell_side'),
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        VitInput(
+          key: amountFieldKey,
+          label: 'Số lượng $actionVerb ($baseAsset)',
+          controller: amountController,
+          onChanged: (_) => onChanged(),
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        VitPresetChipRow.percentBalance(
+          onTap: onPct,
+          keyFor: pctKeyBuilder ?? (pct) => Key('sc048_pct_$pct'),
+          accentColor: _tradePrimary,
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        const Divider(height: 1, color: AppColors.border),
+        const SizedBox(height: AppSpacing.x3),
+        _SummaryRow(label: 'Giá thị trường', value: marketPriceLabel),
+        const SizedBox(height: AppSpacing.x2),
+        _SummaryRow(
+          label: 'Phí ước tính',
+          value: formatTradeMoney(preview.fee),
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        _SummaryRow(
+          label: 'Tổng thanh toán',
+          value: '${formatTradeMoney(preview.total)} USDT',
+          emphasized: true,
+        ),
+        const SizedBox(height: AppSpacing.x2),
+        Text(
+          'Giá thị trường có thể thay đổi',
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x3),
+        VitCtaButton(
+          key: submitKey,
+          onPressed: canSubmit ? () => _openConfirm(context) : null,
+          density: VitDensity.compact,
+          variant: side == TradeOrderSide.buy
+              ? VitCtaButtonVariant.success
+              : VitCtaButtonVariant.danger,
+          child: Text(_submitLabel),
+        ),
+      ],
     );
   }
 }

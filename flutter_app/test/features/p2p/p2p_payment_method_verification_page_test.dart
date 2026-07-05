@@ -86,7 +86,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Micro-deposit Verification'), findsOneWidget);
+    expect(find.text('Xác minh micro-deposit'), findsOneWidget);
     expect(find.text('Xác minh qua Micro-deposit'), findsOneWidget);
     expect(find.text('Số tiền nhận được (VND)'), findsOneWidget);
     expect(find.text('Xác nhận số tiền'), findsOneWidget);

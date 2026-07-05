@@ -99,18 +99,11 @@ class _OptionGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final children = values.map((value) {
-      final isSelected = value == selected;
-      final chip = _OptionChip(
-        group: group,
+      return VitPresetChipItem<String>(
         value: value,
         label: '$value$suffix',
-        selected: isSelected,
-        onTap: () {
-          HapticFeedback.selectionClick();
-          onChanged(value);
-        },
+        key: P2PSettingsPage.optionKey(group, value),
       );
-      return expanded ? Expanded(child: chip) : chip;
     }).toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,44 +116,17 @@ class _OptionGroup extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.x2),
-        Row(
-          children: [
-            for (var index = 0; index < children.length; index++) ...[
-              children[index],
-              if (index != children.length - 1)
-                const SizedBox(width: AppSpacing.x3),
-            ],
-          ],
+        VitPresetChipRow<String>(
+          items: children,
+          selectedValue: selected,
+          onTap: (value) {
+            HapticFeedback.selectionClick();
+            onChanged(value);
+          },
+          fullWidth: expanded,
+          accentColor: AppColors.primary,
         ),
       ],
-    );
-  }
-}
-
-class _OptionChip extends StatelessWidget {
-  const _OptionChip({
-    required this.group,
-    required this.value,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String group;
-  final String value;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: P2PSettingsPage.optionKey(group, value),
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      padding: AppSpacing.p2pSettingsOptionChipPadding,
-      semanticLabel: '$group $label',
     );
   }
 }

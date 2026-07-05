@@ -69,8 +69,9 @@ void main() {
     expect(find.text('Danh sách chặn'), findsOneWidget);
     expect(find.text('An toàn · P2P'), findsOneWidget);
     expect(find.byKey(P2PBlacklistPage.summaryKey), findsOneWidget);
-    expect(find.text('5 người dùng'), findsOneWidget);
-    expect(find.text('0 chặn trong 30 ngày qua'), findsOneWidget);
+    expect(find.text('5'), findsWidgets);
+    expect(find.text('Đã chặn'), findsOneWidget);
+    expect(find.text('30 ngày qua'), findsOneWidget);
     expect(find.byKey(P2PBlacklistPage.searchKey), findsOneWidget);
     expect(find.text('Tất cả (5)'), findsOneWidget);
     expect(find.text('Lừa đảo (1)'), findsOneWidget);
@@ -148,7 +149,7 @@ void main() {
     await tester.tap(find.byKey(P2PBlacklistPage.unblockKey('bl001')));
     await tester.pumpAndSettle();
 
-    expect(find.text('4 người dùng'), findsOneWidget);
+    expect(find.text('4 kết quả'), findsOneWidget);
     expect(find.text('FakeTrader88'), findsNothing);
   });
 

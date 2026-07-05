@@ -77,7 +77,7 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
-    expect(find.text('Event Detail'), findsOneWidget);
+    expect(find.text('Chi tiết sự kiện'), findsOneWidget);
     expect(
       find.text('Bitcoin reaches \$150K before July 2026?'),
       findsOneWidget,
@@ -171,6 +171,9 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
+    expect(find.byType(PredictionsHomePage), findsOneWidget);
+
+    await pumpDetail(tester);
     await tester.ensureVisible(
       find.byKey(PredictionEventDetailPage.globalActivityKey),
     );
@@ -180,6 +183,8 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));
     await tester.pumpAndSettle();
+
+    await pumpDetail(tester);
     await tester.ensureVisible(
       find.byKey(PredictionEventDetailPage.arenaCreateKey),
     );

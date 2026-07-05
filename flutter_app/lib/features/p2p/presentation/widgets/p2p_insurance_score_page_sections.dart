@@ -34,36 +34,40 @@ class _ScoreOverviewCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.x2),
-          VitCard(
-            variant: VitCardVariant.inner,
-            radius: VitCardRadius.large,
-            borderColor: AppColors.buy20,
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: AppSpacing.x3,
-              vertical: AppSpacing.x2,
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.buy12,
+              borderRadius: AppRadii.inputRadius,
+              border: Border.all(color: AppColors.buy20),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.trending_up_rounded,
-                  color: AppColors.buy,
-                  size: AppSpacing.iconSm,
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                Flexible(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      '+${snapshot.potentialGain} điểm có thể cải thiện',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.buy,
-                        fontWeight: AppTextStyles.bold,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: AppSpacing.x3,
+                vertical: AppSpacing.x2,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.trending_up_rounded,
+                    color: AppColors.buy,
+                    size: AppSpacing.iconSm,
+                  ),
+                  const SizedBox(width: AppSpacing.x2),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        '+${snapshot.potentialGain} điểm có thể cải thiện',
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.buy,
+                          fontWeight: AppTextStyles.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -185,7 +189,7 @@ class _ScoreFactorRow extends StatelessWidget {
           children: [
             Material(
               color: color.withValues(alpha: .12),
-              borderRadius: AppRadii.mdRadius,
+              borderRadius: AppRadii.smRadius,
               child: Padding(
                 padding: const EdgeInsetsDirectional.all(AppSpacing.x2),
                 child: Icon(

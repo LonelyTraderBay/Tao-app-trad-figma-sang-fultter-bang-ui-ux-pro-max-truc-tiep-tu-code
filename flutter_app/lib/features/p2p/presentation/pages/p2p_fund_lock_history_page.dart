@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -121,19 +122,17 @@ class _FundLockHero extends StatelessWidget {
       clip: true,
       child: Row(
         children: [
-          VitCard(
-            width: AppSpacing.p2pFinancialSafetyIconBox,
-            height: AppSpacing.p2pFinancialSafetyIconBox,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
-            background: ColoredBox(
-              color: AppColors.onAccent.withValues(alpha: .20),
-            ),
-            clip: true,
-            child: const Icon(
-              Icons.lock_outline_rounded,
-              color: AppColors.onAccent,
-              size: AppSpacing.iconMd,
+          Material(
+            color: AppColors.onAccent.withValues(alpha: .20),
+            borderRadius: AppRadii.smRadius,
+            child: SizedBox(
+              width: AppSpacing.p2pFinancialSafetyIconBox,
+              height: AppSpacing.p2pFinancialSafetyIconBox,
+              child: const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.onAccent,
+                size: AppSpacing.iconMd,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -203,17 +202,17 @@ class _FundLockRecordCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          VitCard(
-            width: AppSpacing.p2pFinancialSafetyIconBox,
-            height: AppSpacing.p2pFinancialSafetyIconBox,
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.large,
-            background: ColoredBox(color: color.withValues(alpha: .14)),
-            clip: true,
-            child: Icon(
-              isLock ? Icons.lock_outline_rounded : Icons.lock_open_rounded,
-              color: color,
-              size: AppSpacing.iconSm,
+          Material(
+            color: color.withValues(alpha: .14),
+            borderRadius: AppRadii.smRadius,
+            child: SizedBox(
+              width: AppSpacing.p2pFinancialSafetyIconBox,
+              height: AppSpacing.p2pFinancialSafetyIconBox,
+              child: Icon(
+                isLock ? Icons.lock_outline_rounded : Icons.lock_open_rounded,
+                color: color,
+                size: AppSpacing.iconSm,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),

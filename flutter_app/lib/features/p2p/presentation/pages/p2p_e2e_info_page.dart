@@ -102,6 +102,18 @@ class P2PE2EInfoPage extends ConsumerWidget {
                         _HowItWorks(steps: snapshot.steps),
                         const SizedBox(height: AppSpacing.x2),
                         _ServerInfo(snapshot: snapshot),
+                        const SizedBox(height: AppSpacing.x2),
+                        const VitCard(
+                          variant: VitCardVariant.inner,
+                          padding: AppSpacing.p2pWalletNoticePadding,
+                          child: VitHighRiskStatePanel(
+                            state: VitHighRiskUiState.riskReview,
+                            title: 'Rà soát mã hóa đầu cuối',
+                            message:
+                                'Sơ đồ mã hóa, mã xác minh bảo mật, các bước hoạt động và lưu ý máy chủ vẫn hiển thị trước khi tin tưởng phiên chat P2P.',
+                            contractId: 'SC-259',
+                          ),
+                        ),
                       ],
                     ),
                   ),

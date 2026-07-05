@@ -35,9 +35,9 @@ void main() {
 
     expect(snapshot.endpoint, '/api/mobile/p2p/p2p-settings-notifications');
     expect(snapshot.actionDraft, contains('PATCH /user/settings'));
-    expect(snapshot.title, 'P2P Notifications');
+    expect(snapshot.title, 'Thông báo P2P');
     expect(snapshot.subtitle, 'Thông báo · P2P');
-    expect(snapshot.heroTitle, 'Notification Settings');
+    expect(snapshot.heroTitle, 'Cài đặt thông báo');
     expect(snapshot.settings, hasLength(5));
     expect(snapshot.settings.first.id, 'order_updates');
     expect(snapshot.settings.first.channels['push'], isTrue);
@@ -63,15 +63,15 @@ void main() {
     expect(find.byType(P2PNotificationsSettingsPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('P2P Notifications'), findsOneWidget);
+    expect(find.text('Thông báo P2P'), findsOneWidget);
     expect(find.text('Thông báo · P2P'), findsOneWidget);
     expect(find.byKey(P2PNotificationsSettingsPage.heroKey), findsOneWidget);
-    expect(find.text('Notification Settings'), findsOneWidget);
-    expect(find.text('Order Updates'), findsOneWidget);
-    expect(find.text('Payment Received'), findsOneWidget);
-    expect(find.text('Release Reminder'), findsOneWidget);
-    expect(find.text('Security Alerts'), findsOneWidget);
-    expect(find.text('KYC Updates'), findsOneWidget);
+    expect(find.text('Cài đặt thông báo'), findsOneWidget);
+    expect(find.text('Cập nhật đơn hàng'), findsOneWidget);
+    expect(find.text('Đã nhận thanh toán'), findsOneWidget);
+    expect(find.text('Nhắc release'), findsOneWidget);
+    expect(find.text('Cảnh báo bảo mật'), findsOneWidget);
+    expect(find.text('Cập nhật KYC'), findsOneWidget);
     expect(
       find.byKey(
         P2PNotificationsSettingsPage.channelKey('order_updates', 'push'),

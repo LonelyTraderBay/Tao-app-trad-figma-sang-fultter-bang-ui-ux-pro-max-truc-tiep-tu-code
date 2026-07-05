@@ -74,7 +74,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Chi tiết lệnh'), findsOneWidget);
-    expect(find.text('Biên lai · Prediction'), findsOneWidget);
+    expect(find.text('Biên lai · phí · tiến trình'), findsOneWidget);
     expect(find.text('Không tìm thấy'), findsOneWidget);
     expect(find.text('Lệnh không tồn tại hoặc đã bị xoá'), findsOneWidget);
     expect(find.text('Prediction Receipt'), findsNothing);

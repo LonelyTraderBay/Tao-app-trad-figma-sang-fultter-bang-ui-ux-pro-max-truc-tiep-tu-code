@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
@@ -136,9 +137,9 @@ class _P2PEscrowBalancePageState extends ConsumerState<P2PEscrowBalancePage> {
                         const SizedBox(height: _p2pEscrowBalanceTightGap),
                         const VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
-                          title: 'Escrow balance state review',
+                          title: 'Xem lại số dư escrow',
                           message:
-                              'Selected asset, locked balance, open orders, empty state, and help guidance remain visible before any P2P escrow decision.',
+                              'Tài sản, số tiền đang giữ, đơn mở, trạng thái rỗng và hướng dẫn escrow được xem lại trước quyết định P2P.',
                           contractId: 'SC-245',
                         ),
                       ],

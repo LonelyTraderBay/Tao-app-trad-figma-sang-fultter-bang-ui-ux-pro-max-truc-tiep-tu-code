@@ -68,7 +68,7 @@ void main() {
     expect(find.byType(P2PKycRequirementsPage), findsOneWidget);
     expect(find.byType(VitBottomNav), findsOneWidget);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('P2P KYC Requirements'), findsOneWidget);
+    expect(find.text('Yêu cầu KYC'), findsOneWidget);
     expect(find.text('KYC · P2P'), findsOneWidget);
     expect(find.byKey(P2PKycRequirementsPage.heroKey), findsOneWidget);
     expect(find.text('P2P KYC Verification'), findsOneWidget);
@@ -122,7 +122,7 @@ void main() {
     await tester.tap(find.byKey(P2PKycRequirementsPage.upgradeKey(2)));
     await tester.pumpAndSettle();
     expect(find.byType(P2PIdentityVerificationPage), findsOneWidget);
-    expect(find.text('Identity Verification'), findsOneWidget);
+    expect(find.text('Xác minh danh tính'), findsNWidgets(2));
 
     await pumpP2PKycRequirements(tester);
 

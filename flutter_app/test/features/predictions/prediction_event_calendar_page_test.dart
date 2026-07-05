@@ -73,7 +73,7 @@ void main() {
       find.byKey(const Key('vit_bottom_nav_active_markets')),
       findsOneWidget,
     );
-    expect(find.text('Event Calendar'), findsOneWidget);
+    expect(find.text('Lịch sự kiện'), findsOneWidget);
     expect(find.text('Lich'), findsOneWidget);
     expect(find.text('Sap toi'), findsOneWidget);
     expect(find.text('Thong bao'), findsOneWidget);

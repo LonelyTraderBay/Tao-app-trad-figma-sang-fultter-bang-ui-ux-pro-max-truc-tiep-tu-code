@@ -102,6 +102,18 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                         ),
                         if (_step == _P2POrderUiStep.payment)
                           _TextActionButton(
+                            key: P2POrderPage.disputeKey,
+                            onPressed: () =>
+                                context.go(AppRoutePaths.p2pDispute(order.id)),
+                            icon: const Icon(
+                              Icons.gavel_outlined,
+                              size: AppSpacing.iconSm,
+                            ),
+                            label: 'Mở khiếu nại',
+                            color: AppColors.warn,
+                          ),
+                        if (_step == _P2POrderUiStep.payment)
+                          _TextActionButton(
                             key: P2POrderPage.cancelKey,
                             onPressed: () => context.go(
                               AppRoutePaths.p2pOrderCancel(order.id),
@@ -381,83 +393,73 @@ class _EscrowBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.buy10,
-      borderRadius: AppRadii.mdRadius,
-      child: VitCard(
-        key: P2POrderPage.escrowKey,
-        onTap: onTap,
-        variant: VitCardVariant.ghost,
-        radius: VitCardRadius.standard,
-        padding: AppSpacing.zeroInsets,
-        child: VitCard(
-          variant: VitCardVariant.ghost,
-          borderColor: AppColors.buy20,
-          padding: const EdgeInsetsDirectional.symmetric(
-            horizontal: AppSpacing.x3,
-            vertical: AppSpacing.x2,
+    return VitCard(
+      key: P2POrderPage.escrowKey,
+      onTap: onTap,
+      borderColor: AppColors.buy20,
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: AppSpacing.x3,
+        vertical: AppSpacing.x2,
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.lock_outline_rounded,
+            color: AppColors.buy,
+            size: AppSpacing.iconSm,
           ),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.lock_outline_rounded,
-                color: AppColors.buy,
-                size: AppSpacing.iconSm,
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Escrow: ${_formatCrypto(order.escrowAmount)} ${order.asset} đã khóa',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.buy,
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    Text(
-                      'Tài sản được bảo vệ cho đến khi xác nhận thanh toán',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        height: AppTextStyles.numericMicro.height,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: AppSpacing.x2),
-              Material(
-                color: AppColors.buy10,
-                borderRadius: AppRadii.inputRadius,
-                child: Padding(
-                  padding: AppSpacing.p2pOrderEscrowActionPadding,
-                  child: Row(
-                    children: [
-                      Text(
-                        'Chi tiết',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.buy,
-                          fontWeight: AppTextStyles.bold,
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.x1),
-                      const Icon(
-                        Icons.chevron_right_rounded,
-                        color: AppColors.buy,
-                        size: AppSpacing.iconSm,
-                      ),
-                    ],
+          const SizedBox(width: AppSpacing.x2),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Escrow: ${_formatCrypto(order.escrowAmount)} ${order.asset} đã khóa',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.buy,
+                    fontWeight: AppTextStyles.bold,
                   ),
                 ),
-              ),
-            ],
+                Text(
+                  'Tài sản được bảo vệ cho đến khi xác nhận thanh toán',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: AppTextStyles.numericMicro.height,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+          const SizedBox(width: AppSpacing.x2),
+          Material(
+            color: AppColors.buy10,
+            borderRadius: AppRadii.inputRadius,
+            child: Padding(
+              padding: AppSpacing.p2pOrderEscrowActionPadding,
+              child: Row(
+                children: [
+                  Text(
+                    'Chi tiết',
+                    style: AppTextStyles.micro.copyWith(
+                      color: AppColors.buy,
+                      fontWeight: AppTextStyles.bold,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.x1),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: AppColors.buy,
+                    size: AppSpacing.iconSm,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

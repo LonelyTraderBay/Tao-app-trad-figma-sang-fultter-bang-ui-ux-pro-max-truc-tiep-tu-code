@@ -10,8 +10,9 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -41,10 +42,10 @@ class StakingRiskDashboardPage extends ConsumerWidget {
         .watch(stakingRiskDashboardRepositoryProvider)
         .getRiskDashboard();
     final mode = shellRenderMode ?? defaultShellRenderMode();
-    final scrollTailReserve =
+    final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x3
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x3) +
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -53,8 +54,11 @@ class StakingRiskDashboardPage extends ConsumerWidget {
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle:
+                'Tổng quan rủi ro earn — APY ước tính có thể thay đổi',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -64,9 +68,7 @@ class StakingRiskDashboardPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
@@ -75,7 +77,7 @@ class StakingRiskDashboardPage extends ConsumerWidget {
                       VitPageSection(
                         key: metricsKey,
                         label: 'Risk Breakdown',
-                        accentColor: AppColors.primarySoft,
+                        accentColor: AppModuleAccents.earn,
                         children: [
                           for (final metric in snapshot.riskMetrics)
                             _RiskMetricCard(metric: metric),
@@ -84,7 +86,7 @@ class StakingRiskDashboardPage extends ConsumerWidget {
                       VitPageSection(
                         key: exposureKey,
                         label: 'Exposure by Asset',
-                        accentColor: AppColors.primarySoft,
+                        accentColor: AppModuleAccents.earn,
                         children: [
                           _ExposureCard(exposures: snapshot.exposures),
                         ],
@@ -92,7 +94,7 @@ class StakingRiskDashboardPage extends ConsumerWidget {
                       VitPageSection(
                         key: eventsKey,
                         label: 'Recent Risk Events',
-                        accentColor: AppColors.primarySoft,
+                        accentColor: AppModuleAccents.earn,
                         children: [
                           for (final event in snapshot.events)
                             _RiskEventCard(event: event),
@@ -101,7 +103,7 @@ class StakingRiskDashboardPage extends ConsumerWidget {
                       VitPageSection(
                         key: actionsKey,
                         label: 'Risk Management Actions',
-                        accentColor: AppColors.primarySoft,
+                        accentColor: AppModuleAccents.earn,
                         children: [_ActionsGrid(actions: snapshot.actions)],
                       ),
                       _FooterNote(note: snapshot.footerNote),

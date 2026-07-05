@@ -13,7 +13,7 @@ class _SupplyCard extends StatelessWidget {
       child: Column(
         children: [
           _MetricLine(
-            label: 'Luu hanh',
+            label: 'Lưu hành',
             value:
                 '${_formatCompact(fundamentals.circulatingSupply)} ${fundamentals.symbol}',
           ),
@@ -47,7 +47,7 @@ class _SupplyCard extends StatelessWidget {
           ],
           const SizedBox(height: _tokenInfoMetricGap),
           _MetricLine(
-            label: 'Tong cung',
+            label: 'Tổng cung',
             value:
                 '${_formatCompact(fundamentals.totalSupply)} ${fundamentals.symbol}',
             muted: true,

@@ -59,6 +59,34 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
     super.dispose();
   }
 
+  String get _routePath => GoRouterState.of(context).uri.path;
+
+  String get _headerSubtitle {
+    if (_routePath == AppRoutePaths.settingsSecurityBiometric) {
+      return 'Sinh tr\u1EAFc h\u1ECDc \u00B7 C\u00E0i \u0111\u1EB7t';
+    }
+    if (_routePath == AppRoutePaths.settingsSecurityChangePassword) {
+      return 'M\u1EADt kh\u1EA9u \u00B7 C\u00E0i \u0111\u1EB7t';
+    }
+    if (_routePath.startsWith(AppRoutePaths.settingsSecurity)) {
+      return 'C\u00E0i \u0111\u1EB7t \u00B7 Profile';
+    }
+    return 'B\u1EA3o m\u1EADt \u00B7 Profile';
+  }
+
+  String get _semanticLabel {
+    if (_routePath == AppRoutePaths.settingsSecurityBiometric) {
+      return 'SC-405 SettingsSecurityBiometric';
+    }
+    if (_routePath == AppRoutePaths.settingsSecurityChangePassword) {
+      return 'SC-406 SettingsSecurityChangePassword';
+    }
+    if (_routePath == AppRoutePaths.settingsSecurity) {
+      return 'SC-413 SettingsSecurity';
+    }
+    return 'SC-158 SecurityPage';
+  }
+
   @override
   Widget build(BuildContext context) {
     final snapshot = ref.watch(profileControllerProvider).getSecurity();
@@ -73,13 +101,13 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-158 SecurityPage',
+      semanticLabel: _semanticLabel,
       child: Material(
         color: _securityBackground,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'B\u1EA3o m\u1EADt',
-            subtitle: 'B\u1EA3o m\u1EADt \u00B7 Profile',
+            subtitle: _headerSubtitle,
             showBack: true,
             onBack: _close,
           ),
@@ -96,15 +124,17 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
                     density: VitDensity.compact,
                     fullBleed: true,
                     children: [
+                      _ScoreCard(snapshot: snapshot),
                       VitHighRiskStatePanel(
                         state: VitHighRiskUiState.riskReview,
-                        title: 'Review account security',
+                        title:
+                            'R\u00E0 so\u00E1t b\u1EA3o m\u1EADt t\u00E0i kho\u1EA3n',
                         message:
-                            'Confirm 2FA, anti-phishing code, device sessions, and password changes before sensitive account actions.',
-                        contractId: 'Security score: ${snapshot.score}/4',
+                            'X\u00E1c nh\u1EADn 2FA, m\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o, phi\u00EAn thi\u1EBFt b\u1ECB v\u00E0 \u0111\u1ED5i m\u1EADt kh\u1EA9u tr\u01B0\u1EDBc c\u00E1c thao t\u00E1c nh\u1EA1y c\u1EA3m.',
+                        contractId:
+                            '\u0110i\u1EC3m b\u1EA3o m\u1EADt: ${snapshot.score}/4',
                         density: VitDensity.compact,
                       ),
-                      _ScoreCard(snapshot: snapshot),
                       _SecurityList(
                         items: snapshot.items,
                         onItemTap: _handleItemTap,
@@ -149,6 +179,9 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
   }
 
   void _close() {
-    goBackOrFallback(context, fallbackPath: AppRoutePaths.profile);
+    final fallback = _routePath.startsWith(AppRoutePaths.settingsSecurity)
+        ? AppRoutePaths.profileSettings
+        : AppRoutePaths.profile;
+    goBackOrFallback(context, fallbackPath: fallback);
   }
 }

@@ -70,7 +70,7 @@ class P2PSecurityCenterPage extends ConsumerWidget {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Security Center',
+            title: 'Trung tâm bảo mật',
             subtitle: 'Bảo mật · P2P',
             showBack: true,
             onBack: () => context.go(snapshot.parentRoute),
@@ -183,9 +183,9 @@ class P2PSecurityCenterPage extends ConsumerWidget {
 class P2PWhitelistModePage extends ConsumerWidget {
   const P2PWhitelistModePage({super.key, this.shellRenderMode});
 
-  static const contentKey = Key('sc253_p2p_whitelist_mode_content');
-  static const devicesKey = Key('sc253_p2p_whitelist_devices');
-  static const antiPhishingKey = Key('sc253_p2p_whitelist_anti_phishing');
+  static const contentKey = Key('sc404_p2p_whitelist_mode_content');
+  static const devicesKey = Key('sc404_p2p_whitelist_devices');
+  static const antiPhishingKey = Key('sc404_p2p_whitelist_anti_phishing');
 
   final ShellRenderMode? shellRenderMode;
 
@@ -207,13 +207,13 @@ class P2PWhitelistModePage extends ConsumerWidget {
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
-      semanticLabel: 'SC-253 P2PWhitelistModePage',
+      semanticLabel: 'SC-404 P2PWhitelistModePage',
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Whitelist Mode',
-            subtitle: 'Security Center · P2P',
+            title: 'Chế độ whitelist',
+            subtitle: 'Bảo mật · P2P',
             showBack: true,
             onBack: () => context.go('/p2p/security/center'),
           ),
@@ -245,12 +245,12 @@ class P2PWhitelistModePage extends ConsumerWidget {
                             ),
                             const SizedBox(height: AppSpacing.x3),
                             Text(
-                              'Trusted device whitelist',
+                              'Danh sách thiết bị tin cậy',
                               style: AppTextStyles.sectionTitle,
                             ),
                             const SizedBox(height: AppSpacing.x2),
                             Text(
-                              'Only reviewed devices and protected payment sessions can continue sensitive P2P actions.',
+                              'Chỉ thiết bị đã rà soát và phiên thanh toán được bảo vệ mới tiếp tục các thao tác P2P nhạy cảm.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
                                 height: _p2pSecurityBodyLine,
@@ -263,9 +263,9 @@ class P2PWhitelistModePage extends ConsumerWidget {
                       _WhitelistAction(
                         key: devicesKey,
                         icon: Icons.desktop_windows_rounded,
-                        title: 'Review trusted devices',
+                        title: 'Rà soát thiết bị tin cậy',
                         body:
-                            'Check recent devices before enabling stricter P2P allow-lists.',
+                            'Kiểm tra thiết bị gần đây trước khi bật whitelist P2P nghiêm ngặt hơn.',
                         onTap: () {
                           HapticFeedback.selectionClick();
                           context.go(trustedDevicesRoute);
@@ -275,9 +275,9 @@ class P2PWhitelistModePage extends ConsumerWidget {
                       _WhitelistAction(
                         key: antiPhishingKey,
                         icon: Icons.gpp_good_outlined,
-                        title: 'Confirm anti-phishing code',
+                        title: 'Xác nhận mã chống phishing',
                         body:
-                            'Keep payment and escrow messages recognizable before changing whitelist rules.',
+                            'Giữ tin nhắn thanh toán và escrow dễ nhận biết trước khi đổi quy tắc whitelist.',
                         onTap: () {
                           HapticFeedback.selectionClick();
                           context.go(antiPhishingRoute);
@@ -290,7 +290,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                           HapticFeedback.selectionClick();
                           context.go('/p2p/security/center');
                         },
-                        child: const Text('Back to Security Center'),
+                        child: const Text('Quay lại Trung tâm bảo mật'),
                       ),
                       VitPageContent(
                         padding: VitContentPadding.compact,
@@ -302,7 +302,7 @@ class P2PWhitelistModePage extends ConsumerWidget {
                             title: 'Whitelist mode state review',
                             message:
                                 'Trusted-device path, anti-phishing route, whitelist scope, and return action remain visible before enforcing stricter P2P device access.',
-                            contractId: 'SC-253',
+                            contractId: 'SC-404',
                           ),
                         ],
                       ),

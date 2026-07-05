@@ -74,6 +74,7 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
           children: [
             VitHeader(
               title: 'Emergency Stop',
+              subtitle: 'Dừng khẩn cấp tất cả bot đang chạy',
               showBack: true,
               onBack: () => context.go(AppRoutePaths.tradeBots),
             ),
@@ -88,6 +89,15 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                     context: context,
                     activeProductId: 'bots',
                     children: [
+                      VitBotSubpageHero(
+                        primaryLabel: 'Bot cần dừng',
+                        primaryValue: '${snapshot.bots.length}',
+                        primaryColor: _stopRed,
+                        secondaryLabel: 'Lý do',
+                        secondaryValue: _reasonId == null ? '—' : 'Đã chọn',
+                        secondaryColor:
+                            _reasonId == null ? AppColors.text3 : _stopGreen,
+                      ),
                       VitTradeSection(
                         title: 'Cảnh báo khẩn cấp',
                       child: _WarningBanner(snapshot: snapshot),
@@ -144,19 +154,11 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                       title: 'Hỗ trợ',
                       child: _SupportNotice(snapshot: snapshot),
                     ),
-                    VitTradeSection(
-                      title: 'Đánh giá rủi ro',
-                      child: const VitCard(
-                        variant: VitCardVariant.inner,
-                        padding: AppSpacing.tradeBotInnerPanelPadding,
-                        child: VitHighRiskStatePanel(
-                          state: VitHighRiskUiState.riskReview,
-                          title: 'Emergency stop review',
-                          message:
-                              'Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.',
-                          contractId: 'bot-emergency-stop-review',
-                        ),
-                      ),
+                    const VitBotRiskReviewFooter(
+                      title: 'Emergency stop review',
+                      message:
+                          'Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.',
+                      contractId: 'bot-emergency-stop-review',
                     ),
                     ],
                   ),

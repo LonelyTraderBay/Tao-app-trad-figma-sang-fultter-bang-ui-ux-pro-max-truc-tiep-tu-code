@@ -52,7 +52,7 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
-            title: 'Cooling Period',
+            title: 'Thời gian chờ',
             subtitle: 'Thanh toán · P2P',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.p2pPaymentMethods),
@@ -132,7 +132,7 @@ class _CoolingHero extends StatelessWidget {
             children: [
               const Material(
                 color: AppColors.warn15,
-                shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
+                shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
                 child: SizedBox(
                   width: AppSpacing.x7,
                   height: AppSpacing.x7,
@@ -170,7 +170,7 @@ class _CoolingHero extends StatelessWidget {
           Material(
             color: AppColors.warn15,
             shape: const RoundedRectangleBorder(
-              borderRadius: AppRadii.mdRadius,
+              borderRadius: AppRadii.smRadius,
             ),
             child: Padding(
               padding: AppSpacing.p2pPaymentCoolingHeroCountdownPadding,

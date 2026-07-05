@@ -15,6 +15,7 @@ final class MockNotificationsRepository implements NotificationsRepository {
       notifications: _notifications,
       contractNotes:
           'Notifications feed supports read/delete/filter local state. Backend should return notificationsReferenceData and screenState; read/delete actions become PATCH user settings or notification state.',
+      screenState: NotificationsScreenState.ready,
       supportedStates: {
         NotificationsScreenState.loading,
         NotificationsScreenState.empty,

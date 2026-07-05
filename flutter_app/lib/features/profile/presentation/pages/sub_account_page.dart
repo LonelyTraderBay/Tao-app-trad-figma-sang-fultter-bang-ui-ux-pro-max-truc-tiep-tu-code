@@ -29,6 +29,10 @@ class SubAccountPage extends ConsumerStatefulWidget {
   const SubAccountPage({super.key, this.shellRenderMode});
 
   static const contentKey = Key('sc166_sub_accounts_content');
+  static const loadingKey = Key('sc166_sub_accounts_loading');
+  static const errorKey = Key('sc166_sub_accounts_error');
+  static const offlineKey = Key('sc166_sub_accounts_offline');
+  static const emptyKey = Key('sc166_sub_accounts_empty');
   static const summaryKey = Key('sc166_sub_accounts_summary');
   static const createButtonKey = Key('sc166_sub_accounts_create_button');
   static const createFormKey = Key('sc166_sub_accounts_create_form');
@@ -88,47 +92,15 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
                     density: VitDensity.compact,
                     fullBleed: true,
                     children: [
-                      _SubAccountSummaryCard(
+                      _SubAccountBody(
                         snapshot: snapshot,
                         isBalanceHidden: _isBalanceHidden,
+                        showCreate: _showCreate,
+                        expandedId: _expandedId,
                         onToggleBalance: _toggleBalance,
+                        onToggleCreateForm: _toggleCreateForm,
+                        onToggleExpanded: _toggleExpanded,
                       ),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review sub-account permissions',
-                        message:
-                            'Ki\u1EC3m tra quy\u1EC1n chuy\u1EC3n, r\u00FAt, API key v\u00E0 gi\u1EDBi h\u1EA1n tr\u01B0\u1EDBc khi t\u1EA1o ho\u1EB7c m\u1EDF r\u1ED9ng t\u00E0i kho\u1EA3n ph\u1EE5.',
-                        contractId: 'Sub accounts: ${snapshot.accounts.length}',
-                        density: VitDensity.compact,
-                      ),
-                      _CreateSubAccountButton(
-                        isOpen: _showCreate,
-                        onTap: _toggleCreateForm,
-                      ),
-                      if (_showCreate) const _CreateSubAccountForm(),
-                      VitSectionHeader(
-                        title:
-                            'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
-                        density: VitDensity.compact,
-                      ),
-                      if (snapshot.accounts.isEmpty)
-                        const VitEmptyState(
-                          title:
-                              'Ch\u01B0a c\u00F3 t\u00E0i kho\u1EA3n ph\u1EE5',
-                          message:
-                              'T\u1EA1o t\u00E0i kho\u1EA3n ph\u1EE5 \u0111\u1EC3 t\u00E1ch quy\u1EC1n, API v\u00E0 v\u00ED giao d\u1ECBch.',
-                          icon: Icons.groups_outlined,
-                        )
-                      else ...[
-                        for (final account in snapshot.accounts)
-                          _SubAccountCard(
-                            account: account,
-                            isExpanded: _expandedId == account.id,
-                            isBalanceHidden: _isBalanceHidden,
-                            onTap: () => _toggleExpanded(account.id),
-                          ),
-                      ],
-                      const _SubAccountInfoNote(),
                     ],
                   ),
                 ),

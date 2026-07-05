@@ -18,7 +18,6 @@ import 'package:vit_trade_flutter/features/auth/presentation/pages/otp_page.dart
 part '../widgets/register_page_sections.dart';
 
 const _authPrimary = AppColors.primary;
-const _authSegmentActive = AppColors.primary20;
 
 enum _RegisterContactType { email, phone }
 
@@ -184,52 +183,56 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                   child: VitPageContent(
                     customGap: AppSpacing.authPageContentGap,
                     children: [
-                      VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: _RegisterSegmentedControl(
-                          contactType: _contactType,
-                          onChanged: _setContactType,
-                        ),
-                      ),
-                      VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: VitInput(
-                          controller: _nameController,
-                          fieldKey: RegisterPage.nameFieldKey,
-                          label: 'Họ và tên',
-                          hintText: 'Nguyễn Văn A',
-                          prefix: const Icon(Icons.person_outline_rounded),
-                          errorText: _errors['name'],
-                          keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.next,
-                          autofillHints: const [AutofillHints.name],
-                          onChanged: (_) => _clearError('name'),
-                        ),
-                      ),
-                      VitCard(
-                        padding: AppSpacing.zeroInsets,
-                        child: VitInput(
-                          controller: _contactController,
-                          fieldKey: RegisterPage.contactFieldKey,
-                          label: isEmail ? 'Email' : 'Số điện thoại',
-                          hintText: isEmail
-                              ? 'you@example.com'
-                              : '+84 912 345 678',
-                          prefix: Icon(
-                            isEmail
-                                ? Icons.mail_outline_rounded
-                                : Icons.phone_iphone_rounded,
+                      VitSegmentedChoice.withPrimaryAccent(
+                        selected: _contactType,
+                        onChanged: _setContactType,
+                        height: AppSpacing.authSegmentedHeight,
+                        options: [
+                          VitSegmentedChoiceOption(
+                            value: _RegisterContactType.email,
+                            label: 'Email',
+                            key: RegisterPage.emailTabKey,
                           ),
-                          errorText: _errors['contact'],
-                          keyboardType: isEmail
-                              ? TextInputType.emailAddress
-                              : TextInputType.phone,
-                          textInputAction: TextInputAction.next,
-                          autofillHints: isEmail
-                              ? const [AutofillHints.email]
-                              : const [AutofillHints.telephoneNumber],
-                          onChanged: (_) => _clearError('contact'),
+                          VitSegmentedChoiceOption(
+                            value: _RegisterContactType.phone,
+                            label: 'Điện thoại',
+                            key: RegisterPage.phoneTabKey,
+                          ),
+                        ],
+                      ),
+                      VitInput(
+                        controller: _nameController,
+                        fieldKey: RegisterPage.nameFieldKey,
+                        label: 'Họ và tên',
+                        hintText: 'Nguyễn Văn A',
+                        prefix: const Icon(Icons.person_outline_rounded),
+                        errorText: _errors['name'],
+                        keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
+                        autofillHints: const [AutofillHints.name],
+                        onChanged: (_) => _clearError('name'),
+                      ),
+                      VitInput(
+                        controller: _contactController,
+                        fieldKey: RegisterPage.contactFieldKey,
+                        label: isEmail ? 'Email' : 'Số điện thoại',
+                        hintText: isEmail
+                            ? 'you@example.com'
+                            : '+84 912 345 678',
+                        prefix: Icon(
+                          isEmail
+                              ? Icons.mail_outline_rounded
+                              : Icons.phone_iphone_rounded,
                         ),
+                        errorText: _errors['contact'],
+                        keyboardType: isEmail
+                            ? TextInputType.emailAddress
+                            : TextInputType.phone,
+                        textInputAction: TextInputAction.next,
+                        autofillHints: isEmail
+                            ? const [AutofillHints.email]
+                            : const [AutofillHints.telephoneNumber],
+                        onChanged: (_) => _clearError('contact'),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -307,12 +310,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         },
                       ),
                       if (_errors['form'] case final formError?)
-                        Text(
-                          formError,
-                          style: AppTextStyles.micro.copyWith(
-                            color: AppColors.sell,
-                          ),
-                        ),
+                        _authInlineErrorBanner(formError),
                       VitCtaButton(
                         key: RegisterPage.submitKey,
                         onPressed: _submitting ? null : _handleRegister,
@@ -358,4 +356,33 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       ),
     );
   }
+}
+
+Widget _authInlineErrorBanner(String error) {
+  return Material(
+    color: AppColors.sell10,
+    shape: const RoundedRectangleBorder(
+      borderRadius: AppRadii.inputRadius,
+      side: BorderSide(color: AppColors.sell20),
+    ),
+    child: Padding(
+      padding: AppSpacing.authErrorBannerPaddingSm,
+      child: Row(
+        children: [
+          const Icon(
+            Icons.error_outline_rounded,
+            color: AppColors.sell,
+            size: AppSpacing.authErrorIcon,
+          ),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              error,
+              style: AppTextStyles.caption.copyWith(color: AppColors.sell),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

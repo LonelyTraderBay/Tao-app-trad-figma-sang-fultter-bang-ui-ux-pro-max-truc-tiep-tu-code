@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
 
 class P2POrderCancelPage extends ConsumerStatefulWidget {
   const P2POrderCancelPage({
@@ -359,41 +360,16 @@ class _CancelWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      radius: VitCardRadius.large,
-      variant: VitCardVariant.inner,
+    return P2PNoticeCard(
+      icon: Icons.warning_amber_rounded,
+      title: title,
+      message: message,
+      iconColor: AppColors.warn,
+      titleColor: AppColors.warn,
+      messageColor: AppColors.warn,
       borderColor: AppColors.warningBorder,
+      radius: VitCardRadius.large,
       padding: AppSpacing.p2pRiskControlsInnerPadding,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.micro.copyWith(
-                    color: AppColors.warn,
-                    fontWeight: AppTextStyles.bold,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x1),
-                Text(
-                  message,
-                  style: AppTextStyles.micro.copyWith(color: AppColors.warn),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

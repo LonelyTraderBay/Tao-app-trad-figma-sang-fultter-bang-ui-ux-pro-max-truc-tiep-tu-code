@@ -6,13 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
@@ -28,7 +28,6 @@ const double _p2pMyOrdersVisualClearance = AppSpacing.x3;
 const double _p2pMyOrdersNativeClearance = AppSpacing.x2;
 const double _p2pMyOrdersSectionGap = AppSpacing.x3;
 const double _p2pMyOrdersTightGap = AppSpacing.x2;
-const double _p2pMyOrdersSortHeight = AppSpacing.buttonCompact;
 const double _p2pMyOrdersDividerHeight = AppSpacing.dividerHairline;
 
 enum _OrdersSort { date, amount }
@@ -42,6 +41,7 @@ class P2PMyOrdersPage extends ConsumerStatefulWidget {
   static const searchKey = Key('sc281_p2p_my_orders_search');
   static const sortKey = Key('sc281_p2p_my_orders_sort');
   static const emptyKey = Key('sc281_p2p_my_orders_empty');
+  static const guideKey = Key('sc281_p2p_my_orders_guide');
 
   static Key tabKey(String id) => Key('sc281_p2p_my_orders_tab_$id');
   static Key orderKey(String id) => Key('sc281_p2p_my_orders_order_$id');
@@ -111,11 +111,12 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                     padding: AppSpacing.p2pMyOrdersScrollPadding(
                       scrollEndPadding,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: VitPageContent(
+                      padding: VitContentPadding.none,
+                      fullBleed: true,
+                      gap: VitContentGap.tight,
                       children: [
                         _StatsRow(snapshot: snapshot),
-                        const SizedBox(height: _p2pMyOrdersSectionGap),
                         _OrderTabs(
                           snapshot: snapshot,
                           active: _tab,
@@ -124,7 +125,6 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                             setState(() => _tab = value);
                           },
                         ),
-                        const SizedBox(height: _p2pMyOrdersSectionGap),
                         _SearchSortRow(
                           hint: snapshot.searchHint,
                           controller: _searchController,
@@ -140,26 +140,30 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                             });
                           },
                         ),
-                        const SizedBox(height: _p2pMyOrdersSectionGap),
                         if (orders.isEmpty)
                           _EmptyOrders(snapshot: snapshot, activeTab: _tab)
                         else
-                          for (final order in orders) ...[
+                          for (final order in orders)
                             _OrderCard(
                               order: order,
                               onTap: () => _openOrder(context, order),
+                              onDispute: order.status == 'disputed'
+                                  ? () => context.go(
+                                      AppRoutePaths.p2pDisputeDetail(order.id),
+                                    )
+                                  : null,
                             ),
-                            const SizedBox(height: _p2pMyOrdersTightGap),
-                          ],
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pMyOrdersCompactPadding,
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'P2P order list review',
-                            message:
-                                'Pending, completed and disputed orders keep status, amount, merchant, detail route and next settlement step visible before navigation.',
-                            contractId: 'p2p-my-orders-review',
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Xem lại danh sách đơn P2P',
+                          message:
+                              'Đơn chờ, hoàn tất và tranh chấp giữ trạng thái, số tiền, merchant, route chi tiết và bước thanh toán tiếp theo trước khi điều hướng.',
+                          contractId: 'p2p-my-orders-review',
+                        ),
+                        Text(
+                          snapshot.contractNotes,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
                           ),
                         ),
                       ],

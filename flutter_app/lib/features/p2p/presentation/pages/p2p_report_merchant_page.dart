@@ -98,11 +98,8 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                   child: SingleChildScrollView(
                     key: P2PReportMerchantPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: EdgeInsetsDirectional.only(
-                      start: AppSpacing.contentPad,
-                      top: AppSpacing.x2,
-                      end: AppSpacing.contentPad,
-                      bottom: scrollEndPadding,
+                    padding: AppSpacing.p2pRiskControlsReportScrollPadding(
+                      scrollEndPadding,
                     ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
@@ -137,17 +134,14 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                           },
                         ),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(
-                              'Báo cáo vi phạm',
-                              style: AppTextStyles.sectionTitleXs.copyWith(
-                                color: AppColors.text1,
-                              ),
+                            VitModuleSectionHeader(
+                              title: 'Báo cáo vi phạm',
+                              accentColor: AppModuleAccents.p2p,
                             ),
-                            const SizedBox(height: AppSpacing.x1),
                             Text(
-                              'Chọn lý do báo cáo. Đội ngũ VitTrade sẽ xem xét trong 24-48h.',
+                              'Chọn lý do báo cáo. Đội ngũ VitTrade sẽ xem xét trong 24–48h.',
                               style: AppTextStyles.micro.copyWith(
                                 color: AppColors.text3,
                                 height: 1.25,

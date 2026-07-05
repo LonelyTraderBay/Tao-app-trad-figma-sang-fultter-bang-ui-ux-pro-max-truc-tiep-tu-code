@@ -85,7 +85,7 @@ void main() {
     expect(find.byType(VitPhoneFrame), findsNothing);
     expect(find.byType(VitStatusBar), findsNothing);
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
-    expect(find.text('Risk Management'), findsOneWidget);
+    expect(find.text('Quản lý rủi ro'), findsOneWidget);
     expect(find.text('Phase 1: Risk Management Foundation'), findsOneWidget);
     expect(find.text('OCO Orders'), findsWidgets);
     expect(find.text('Position Dashboard'), findsWidgets);

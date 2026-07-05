@@ -47,7 +47,7 @@ class _EcosystemHero extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x3),
                 Text(
-                  'Release-readiness handoff for Open Arena x Prediction Markets. The modules may share content/topic context while keeping financial surfaces fully separated.',
+                  'Handoff nội bộ: bridge topic/context giữa Open Arena và Prediction Markets — điểm Arena và ví tách biệt hoàn toàn.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     height: _ecosystemBodyLineHeight,

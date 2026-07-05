@@ -91,11 +91,11 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Prediction Markets'), findsOneWidget);
-    expect(find.text('Search events...'), findsOneWidget);
-    expect(find.text('Trending'), findsOneWidget);
+    expect(find.text('Tìm sự kiện...'), findsOneWidget);
+    expect(find.text('Xu hướng'), findsOneWidget);
     expect(find.text('Live Crypto'), findsWidgets);
-    expect(find.text('My Predictions'), findsOneWidget);
-    expect(find.text('Breaking movers (24h)'), findsOneWidget);
+    expect(find.text('Vị thế của tôi'), findsOneWidget);
+    expect(find.text('Biến động 24h'), findsOneWidget);
     expect(find.text('Arena Points only'), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
     expect(find.text('Tesla stock above \$400 by mid-2026?'), findsOneWidget);
@@ -158,7 +158,7 @@ void main() {
       find.byKey(PredictionsHomePage.eventCardKey('pred-1')),
       findsNothing,
     );
-    expect(find.text('My Predictions'), findsNothing);
+    expect(find.text('Biến động 24h'), findsNothing);
   });
 
   testWidgets(
@@ -168,14 +168,14 @@ void main() {
 
       await tester.tap(find.byKey(PredictionsHomePage.searchActionKey));
       await tester.pumpAndSettle();
-      expect(find.text('Search Events'), findsOneWidget);
+      expect(find.text('Tìm sự kiện'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.chevron_left_rounded));
       await tester.pumpAndSettle();
 
       await tester.tap(find.byKey(PredictionsHomePage.breakingMoversKey));
       await tester.pumpAndSettle();
-      expect(find.text('Breaking Movers'), findsOneWidget);
+      expect(find.text('Biến động'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.chevron_left_rounded));
       await tester.pumpAndSettle();
@@ -200,7 +200,7 @@ void main() {
     await tester.tap(find.byKey(PredictionsHomePage.eventCardKey('pred-5')));
     await tester.pumpAndSettle();
     expect(find.byType(PredictionEventDetailPage), findsOneWidget);
-    expect(find.text('Event Detail'), findsOneWidget);
+    expect(find.text('Chi tiết sự kiện'), findsOneWidget);
     expect(find.text('Apple releases AR glasses in 2026?'), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.chevron_left_rounded));

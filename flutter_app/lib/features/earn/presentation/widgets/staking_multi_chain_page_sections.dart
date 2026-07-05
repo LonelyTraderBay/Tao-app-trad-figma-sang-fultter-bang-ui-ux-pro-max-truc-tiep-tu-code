@@ -10,28 +10,21 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       key: StakingMultiChainPage.infoKey,
       variant: VitCardVariant.inner,
-      borderColor: AppColors.accent30,
+      borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
       padding: AppSpacing.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.public_rounded,
-            color: AppColors.accent,
+            color: AppModuleAccents.earn,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(snapshot.infoTitle, style: AppTextStyles.baseMedium),
-                const SizedBox(height: AppSpacing.x2),
-                Text(
-                  snapshot.infoBody,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-                ),
-              ],
+            child: Text(
+              snapshot.infoBody,
+              style: AppTextStyles.caption.copyWith(color: AppColors.text2),
             ),
           ),
         ],
@@ -82,13 +75,14 @@ class _TotalStats extends StatelessWidget {
                 child: _MiniMetric(
                   label: '24h Rewards',
                   value: '+\$${snapshot.totalRewards24h.toStringAsFixed(2)}',
-                  valueColor: AppColors.buy,
+                  valueColor: AppModuleAccents.earn,
                 ),
               ),
               Expanded(
                 child: _MiniMetric(
-                  label: 'Avg APY',
+                  label: 'APY uoc tinh TB',
                   value: '${snapshot.avgApy}%',
+                  valueColor: AppModuleAccents.earn,
                 ),
               ),
               Expanded(

@@ -104,9 +104,9 @@ class _P2PInsuranceCertificatePageState
                         const SizedBox(height: _p2pInsuranceTightGap),
                         const VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
-                          title: 'Insurance certificate state review',
+                          title: 'Xem lại chứng nhận bảo hiểm',
                           message:
-                              'Certificate identity, coverage disclosure, download and share feedback, and policy limits remain visible before exporting P2P insurance proof.',
+                              'Thông tin chứng nhận, phạm vi bảo hiểm, tải xuống/chia sẻ và giới hạn chính sách được xem lại trước khi xuất chứng minh P2P.',
                           contractId: 'SC-239',
                         ),
                       ],

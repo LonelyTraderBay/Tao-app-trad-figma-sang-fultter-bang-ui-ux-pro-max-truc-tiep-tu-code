@@ -70,6 +70,7 @@ class _PredictionTournamentsPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tournaments',
+            subtitle: 'Giải đấu · Prediction',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),

@@ -7,40 +7,43 @@ class _MovementSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      padding: AppSpacing.cardPaddingCompact,
-      child: Row(
-        children: [
-          const Icon(
-            Icons.bolt_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.x4,
-          ),
-          const SizedBox(width: _breakingSpace),
-          Expanded(
-            child: Text(
-              '24h Movement',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text1,
-                fontWeight: AppTextStyles.bold,
+    return Material(
+      color: AppColors.surface2,
+      borderRadius: AppRadii.inputRadius,
+      child: Padding(
+        padding: AppSpacing.predictionHomeCategoryPadding,
+        child: Row(
+          children: [
+            const Icon(
+              Icons.bolt_outlined,
+              color: AppColors.warn,
+              size: AppSpacing.predictionHomeHighlightIcon,
+            ),
+            const SizedBox(width: _breakingSpace),
+            Expanded(
+              child: Text(
+                'Biến động 24h',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.text1,
+                  fontWeight: AppTextStyles.bold,
+                ),
               ),
             ),
-          ),
-          _MovementCount(
-            icon: Icons.trending_up_rounded,
-            label: '${snapshot.upCount} up',
-            color: AppColors.buy,
-          ),
-          const SizedBox(width: _breakingSpace),
-          _MovementCount(
-            icon: Icons.trending_down_rounded,
-            label: '${snapshot.downCount} down',
-            color: AppColors.sell,
-          ),
-        ],
+            _MovementCount(
+              icon: Icons.trending_up_rounded,
+              label: '${snapshot.upCount} tăng',
+              color: AppColors.buy,
+            ),
+            const SizedBox(width: _breakingSpace),
+            _MovementCount(
+              icon: Icons.trending_down_rounded,
+              label: '${snapshot.downCount} giảm',
+              color: AppColors.sell,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -90,7 +93,7 @@ class _CategoryTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      (id: null, label: 'All', key: PredictionsBreakingPage.allTabKey),
+      (id: null, label: 'Tất cả', key: PredictionsBreakingPage.allTabKey),
       for (final category in categories)
         (
           id: category,
@@ -140,10 +143,8 @@ class _CategoryTabButton extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _predictionPrimary,
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.x3,
-        vertical: AppSpacing.x2,
-      ),
+      height: VitDensity.compact.controlHeight - AppSpacing.x3,
+      padding: AppSpacing.predictionHomeCategoryPadding,
     );
   }
 }

@@ -154,9 +154,10 @@ class _VestingMiniRow extends StatelessWidget {
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  _StatusBadge(
+                  VitStatusPill(
                     label: _vestingLabel(entry.status),
-                    color: color,
+                    status: _vestingPillStatus(entry.status),
+                    size: VitStatusPillSize.sm,
                   ),
                 ],
               ),

@@ -74,16 +74,12 @@ class P2PInsuranceScorePage extends ConsumerWidget {
                         _QuickActionsCard(actions: snapshot.quickActions),
                         _TierPathCard(snapshot: snapshot),
                         _DisclosureCard(text: snapshot.disclosure),
-                        const VitCard(
-                          variant: VitCardVariant.inner,
-                          padding: EdgeInsetsDirectional.all(AppSpacing.x3),
-                          child: VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Insurance score state review',
-                            message:
-                                'Protection score, factor breakdown, quick actions, tier path, and disclosure remain visible before changing P2P insurance readiness.',
-                            contractId: 'SC-240',
-                          ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Xem lại điểm bảo vệ',
+                          message:
+                              'Điểm bảo vệ, yếu tố ảnh hưởng, hành động nhanh, lộ trình hạng và cảnh báo được xem lại trước khi thay đổi mức bảo hiểm P2P.',
+                          contractId: 'SC-240',
                         ),
                       ],
                     ),

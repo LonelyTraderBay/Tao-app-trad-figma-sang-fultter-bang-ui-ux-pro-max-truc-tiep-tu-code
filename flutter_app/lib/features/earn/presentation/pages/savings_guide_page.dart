@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_guide_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_guide_glossary.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_guide_tabs.dart';
@@ -61,6 +62,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: snapshot.title,
+            subtitle: kSavingsToolsHeaderSubtitle,
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -101,6 +103,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                           padding: AppSpacing.zeroInsets,
                           child: SavingsGuideGlossaryTab(snapshot: snapshot),
                         ),
+                      const SavingsToolsYieldFooter(),
                     ],
                   ),
                 ),

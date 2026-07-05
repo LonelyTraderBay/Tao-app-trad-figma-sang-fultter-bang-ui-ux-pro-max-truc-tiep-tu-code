@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 part '../widgets/staking_earnings_summary_tabs.dart';
 part '../widgets/staking_earnings_calendar_grid.dart';
@@ -121,6 +122,11 @@ class _StakingEarningsCalendarPageState
                         const _LegendCard(),
                       ] else
                         _UpcomingList(events: upcoming),
+                      const EarnDisclaimerBanner(
+                        text:
+                            'APY là ước tính tham khảo và có thể thay đổi. '
+                            'Giá tài sản và APY có thể biến động; DeFi có rủi ro smart contract.',
+                      ),
                       _InfoBanner(snapshot: snapshot),
                     ],
                   ),

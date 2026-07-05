@@ -66,7 +66,7 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Phân tích Danh mục'), findsOneWidget);
-    expect(find.text('Phân tích · Wallet'), findsOneWidget);
+    expect(find.text('Tổng quan tài sản · không hype'), findsOneWidget);
     expect(find.text('\$57,664.00'), findsOneWidget);
     expect(find.text('Tổng quan'), findsOneWidget);
     expect(find.text('1M'), findsOneWidget);

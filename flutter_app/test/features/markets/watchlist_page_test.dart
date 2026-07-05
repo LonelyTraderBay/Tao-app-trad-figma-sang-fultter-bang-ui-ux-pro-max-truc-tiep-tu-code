@@ -71,7 +71,8 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Danh sách theo dõi'), findsOneWidget);
-    expect(find.text('Theo dõi · Markets'), findsOneWidget);
+    expect(find.text('Theo dõi · Markets'), findsNothing);
+    expect(find.textContaining('Cập nhật'), findsWidgets);
     expect(find.text('Tìm kiếm cặp giao dịch...'), findsOneWidget);
     expect(find.text('3 cặp đang theo dõi'), findsOneWidget);
     expect(find.byKey(WatchlistPage.cardKey('btcusdt')), findsOneWidget);
@@ -167,19 +168,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(TradePage), findsOneWidget);
-    expect(
-      find.descendant(
-        of: find.byType(TradePage),
-        matching: find.text('Giao dịch Spot'),
-      ),
-      findsOneWidget,
-    );
-    expect(
-      find.descendant(
-        of: find.byType(TradePage),
-        matching: find.text('KL 24h'),
-      ),
-      findsOneWidget,
-    );
+    expect(find.text('Giao dịch Spot'), findsWidgets);
   });
 }

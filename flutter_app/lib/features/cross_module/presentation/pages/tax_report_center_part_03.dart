@@ -140,7 +140,6 @@ class _TaxSettingsTab extends StatelessWidget {
         const _InfoPanel(
           icon: Icons.info_outline_rounded,
           color: AppColors.primary,
-          background: AppColors.primary08,
           border: AppColors.primary20,
           text:
               'Tax reports aggregate data from all modules. Each transaction includes timestamp, type, amount, and gain/loss calculation.',
@@ -349,42 +348,33 @@ class _InfoPanel extends StatelessWidget {
   const _InfoPanel({
     required this.icon,
     required this.color,
-    required this.background,
     required this.border,
     required this.text,
   });
 
   final IconData icon;
   final Color color;
-  final Color background;
   final Color border;
   final String text;
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: background,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: border),
-          borderRadius: AppRadii.cardRadius,
-        ),
-      ),
-      child: Padding(
-        padding: AppSpacing.crossModulePanelPadding,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: AppSpacing.iconSm),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: Text(
-                text,
-                style: AppTextStyles.micro.copyWith(color: AppColors.text2),
-              ),
+    return VitCard(
+      variant: VitCardVariant.inner,
+      borderColor: border,
+      padding: AppSpacing.crossModulePanelPadding,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: color, size: AppSpacing.iconSm),
+          const SizedBox(width: AppSpacing.x3),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text2),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

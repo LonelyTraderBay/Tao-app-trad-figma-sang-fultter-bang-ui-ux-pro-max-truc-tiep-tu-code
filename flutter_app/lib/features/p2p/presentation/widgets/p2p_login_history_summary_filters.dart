@@ -104,52 +104,30 @@ class _FilterTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const filters = [
-      ('all', 'Tất cả'),
-      ('success', 'Thành công'),
-      ('suspicious', 'Đáng ngờ'),
-    ];
-
-    return Wrap(
+    return VitSegmentedChoice<String>(
       key: P2PLoginHistoryPage.filtersKey,
-      spacing: AppSpacing.x2,
-      runSpacing: AppSpacing.x2,
-      children: [
-        for (final filter in filters)
-          _FilterPill(
-            key: P2PLoginHistoryPage.filterKey(filter.$1),
-            label: filter.$2,
-            selected: activeFilter == filter.$1,
-            onTap: () => onChanged(filter.$1),
-          ),
+      selected: activeFilter,
+      onChanged: onChanged,
+      options: [
+        VitSegmentedChoiceOption(
+          value: 'all',
+          label: 'Tất cả',
+          key: P2PLoginHistoryPage.filterKey('all'),
+          accentColor: AppModuleAccents.p2p,
+        ),
+        VitSegmentedChoiceOption(
+          value: 'success',
+          label: 'Thành công',
+          key: P2PLoginHistoryPage.filterKey('success'),
+          accentColor: AppModuleAccents.p2p,
+        ),
+        VitSegmentedChoiceOption(
+          value: 'suspicious',
+          label: 'Đáng ngờ',
+          key: P2PLoginHistoryPage.filterKey('suspicious'),
+          accentColor: AppModuleAccents.p2p,
+        ),
       ],
-    );
-  }
-}
-
-class _FilterPill extends StatelessWidget {
-  const _FilterPill({
-    Key? key,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  }) : widgetKey = key;
-
-  final Key? widgetKey;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      key: widgetKey,
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      padding: AppSpacing.p2pLoginHistoryFilterPadding,
-      accentColor: AppModuleAccents.p2p,
-      semanticLabel: 'Login history filter $label',
     );
   }
 }

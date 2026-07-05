@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -13,8 +14,6 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
-
-import '../widgets/trade_body_review_widgets.dart';
 
 const _trackingBorder = AppColors.borderSolid;
 const _trackingPrimary = AppColors.primary;
@@ -56,8 +55,14 @@ class ComplaintTrackingPage extends ConsumerWidget {
       onBack: () => context.go(AppRoutePaths.tradeCopyComplaintsHandling),
       children: [
         VitTradeSection(
-          title: 'Status',
-          child: _StatusCard(snapshot: snapshot),
+          title: 'Review',
+          child: const VitHighRiskStatePanel(
+            state: VitHighRiskUiState.riskReview,
+            title: 'Review complaint case status',
+            message:
+                'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
+            density: VitDensity.compact,
+          ),
         ),
         VitTradeComplianceSection(
           title: 'Case review',
@@ -78,33 +83,18 @@ class ComplaintTrackingPage extends ConsumerWidget {
           ],
         ),
         VitTradeSection(
+          title: 'Status',
+          child: _StatusCard(snapshot: snapshot),
+        ),
+        VitTradeSection(
           title: 'Investigation Timeline',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _TimelineList(steps: snapshot.timeline),
               _DeadlineNotice(snapshot: snapshot),
-              const VitHighRiskStatePanel(
-                state: VitHighRiskUiState.riskReview,
-                title: 'Review complaint case status',
-                message:
-                    'Confirm evidence, response deadline, escalation limits, and next steps before adding information.',
-                density: VitDensity.compact,
-              ),
               for (final action in snapshot.actions)
                 _TrackingActionButton(action: action),
-              const TradeBodyReviewSection(
-                title: 'Complaint status review',
-                message: 'Complaint tracking body reviewed',
-                detail:
-                    'Case status, deadline, timeline, action, empty, and result states stay visible for complaint follow-up.',
-                primary:
-                    'Status and response deadline remain above the investigation timeline.',
-                secondary:
-                    'Escalation actions stay after evidence and next-step context.',
-                tertiary:
-                    'Review copy keeps the flow regulatory and avoids trading execution language.',
-              ),
             ],
           ),
         ),
@@ -120,66 +110,67 @@ class _StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Card(
-      child: Column(
+    return VitCard(
+      density: VitDensity.compact,
+      padding: AppSpacing.cardPaddingCompact,
+      borderColor: _trackingBorder.withValues(alpha: .76),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              VitCard(
-                width: _trackingIconTile,
-                height: _trackingIconTile,
-                variant: VitCardVariant.ghost,
-                density: VitDensity.compact,
-                padding: AppSpacing.zeroInsets,
-                borderColor: _trackingAmber.withValues(alpha: .24),
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.schedule_rounded,
-                  color: _trackingAmber,
-                  size: AppSpacing.x4,
-                ),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.surface2,
+              borderRadius: AppRadii.smRadius,
+              border: Border.all(color: _trackingAmber.withValues(alpha: .24)),
+            ),
+            child: SizedBox(
+              width: _trackingIconTile,
+              height: _trackingIconTile,
+              child: const Icon(
+                Icons.schedule_rounded,
+                color: _trackingAmber,
+                size: AppSpacing.x4,
               ),
-              const SizedBox(width: _trackingSpace),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ),
+          const SizedBox(width: _trackingSpace),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Status',
+                  style: AppTextStyles.micro.copyWith(
+                    color: AppColors.text3,
+                    height: _trackingLineBody,
+                  ),
+                ),
+                const SizedBox(height: _trackingTinySpace),
+                Text(
+                  snapshot.statusLabel,
+                  style: AppTextStyles.base.copyWith(
+                    color: AppColors.text1,
+                    fontWeight: AppTextStyles.bold,
+                    height: _trackingLineTight,
+                  ),
+                ),
+                const SizedBox(height: _trackingTinySpace),
+                Wrap(
+                  spacing: _trackingSpace,
+                  runSpacing: _trackingTinySpace,
                   children: [
-                    Text(
-                      'Status',
-                      style: AppTextStyles.micro.copyWith(
-                        color: AppColors.text3,
-                        height: _trackingLineBody,
-                      ),
+                    _StatusMetricInline(
+                      label: 'Submitted',
+                      value: snapshot.submittedLabel,
                     ),
-                    const SizedBox(height: _trackingTinySpace),
-                    Text(
-                      snapshot.statusLabel,
-                      style: AppTextStyles.base.copyWith(
-                        color: AppColors.text1,
-                        fontWeight: AppTextStyles.bold,
-                        height: _trackingLineTight,
-                      ),
-                    ),
-                    const SizedBox(height: _trackingTinySpace),
-                    Wrap(
-                      spacing: _trackingSpace,
-                      runSpacing: _trackingTinySpace,
-                      children: [
-                        _StatusMetricInline(
-                          label: 'Submitted',
-                          value: snapshot.submittedLabel,
-                        ),
-                        _StatusMetricInline(
-                          label: 'Response Due',
-                          value: snapshot.responseDueLabel,
-                        ),
-                      ],
+                    _StatusMetricInline(
+                      label: 'Response Due',
+                      value: snapshot.responseDueLabel,
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -405,22 +396,6 @@ class _TrackingActionButton extends StatelessWidget {
           height: _trackingLineTight,
         ),
       ),
-    );
-  }
-}
-
-class _Card extends StatelessWidget {
-  const _Card({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      density: VitDensity.compact,
-      padding: AppSpacing.cardPaddingCompact,
-      borderColor: _trackingBorder.withValues(alpha: .76),
-      child: child,
     );
   }
 }

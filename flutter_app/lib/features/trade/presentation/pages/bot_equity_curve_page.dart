@@ -52,39 +52,25 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
         .getBotEquityCurve();
     return VitTradeHubScaffold(
       title: 'Equity Curve',
+      subtitle: 'Đường cong vốn và so sánh thị trường',
       semanticLabel: 'SC-130 BotEquityCurvePage',
       contentKey: BotEquityCurvePage.contentKey,
       shellRenderMode: widget.shellRenderMode,
+      activeProductId: 'bots',
       onBack: () => context.go(AppRoutePaths.tradeBots),
       children: [
+        VitBotSubpageHero(
+          primaryLabel: 'Lợi nhuận bot',
+          primaryValue:
+              '+${snapshot.summary.botReturnPct.toStringAsFixed(1)}%',
+          primaryColor: _equityGreen,
+          secondaryLabel: 'Alpha',
+          secondaryValue: '+${snapshot.summary.alphaPct.toStringAsFixed(1)}%',
+          secondaryColor: _equityPrimary,
+        ),
         VitTradeSection(
           title: 'Summary',
           child: _SummaryRow(summary: snapshot.summary),
-        ),
-        VitTradeSection(
-          title: 'Đánh giá rủi ro',
-          child: VitCard(
-            variant: VitCardVariant.inner,
-            padding: AppSpacing.tradeBotCompactCardPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                VitHighRiskStatePanel(
-                  state: VitHighRiskUiState.riskReview,
-                  title: 'Equity curve review',
-                  message:
-                      'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
-                  contractId: 'bot-equity-curve-review',
-                ),
-                SizedBox(height: AppSpacing.x2),
-                VitStatusPill(
-                  label: 'Performance is not guaranteed',
-                  status: VitStatusPillStatus.warning,
-                  size: VitStatusPillSize.sm,
-                ),
-              ],
-            ),
-          ),
         ),
         VitTradeSection(
           title: 'View',
@@ -115,6 +101,14 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
         VitTradeSection(
           title: 'Analysis',
           child: _AnalysisCard(items: snapshot.analysisItems),
+        ),
+        const VitBotRiskReviewFooter(
+          title: 'Equity curve review',
+          message:
+              'Equity trend, alpha, drawdown, Sharpe context and risk next steps are reviewed before bot changes.',
+          contractId: 'bot-equity-curve-review',
+          statusLabel: 'Performance is not guaranteed',
+          status: VitStatusPillStatus.warning,
         ),
       ],
     );

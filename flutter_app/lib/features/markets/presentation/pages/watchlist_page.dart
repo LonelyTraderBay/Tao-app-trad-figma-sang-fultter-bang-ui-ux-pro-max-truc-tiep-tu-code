@@ -173,7 +173,8 @@ class _WatchlistPageState extends ConsumerState<WatchlistPage> {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Danh sách theo dõi',
-            subtitle: 'Theo dõi · Markets',
+            subtitle:
+                'Theo dõi cặp yêu thích · Cập nhật ${snapshot.lastUpdatedLabel}',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),

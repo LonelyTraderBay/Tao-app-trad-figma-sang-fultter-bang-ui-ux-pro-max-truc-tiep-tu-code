@@ -69,12 +69,12 @@ void main() {
     expect(find.byKey(const Key('vit_bottom_nav_trade')), findsOneWidget);
     expect(find.text('BTC/USDT'), findsOneWidget);
     expect(find.text('67,543.21'), findsOneWidget);
-    expect(find.text('Bieu do'), findsOneWidget);
-    expect(find.text('So lenh'), findsOneWidget);
-    expect(find.text('Giao dich'), findsOneWidget);
-    expect(find.text('Mua dinh ky BTC'), findsOneWidget);
-    expect(find.text('Thong tin BTC'), findsOneWidget);
-    expect(find.text('Do sau thi truong'), findsOneWidget);
+    expect(find.byKey(PairDetailPage.chartTabKey), findsOneWidget);
+    expect(find.byKey(PairDetailPage.orderBookTabKey), findsOneWidget);
+    expect(find.byKey(PairDetailPage.tradesTabKey), findsOneWidget);
+    expect(find.text('Mua định kỳ BTC'), findsOneWidget);
+    expect(find.text('Thông tin BTC'), findsOneWidget);
+    expect(find.text('Độ sâu thị trường'), findsOneWidget);
   });
 
   testWidgets('SC-044 first viewport reaches the pair chart', (tester) async {
@@ -101,13 +101,13 @@ void main() {
 
     await tester.tap(find.byKey(PairDetailPage.orderBookTabKey));
     await tester.pumpAndSettle();
-    expect(find.text('So lenh BTC/USDT'), findsOneWidget);
+    expect(find.text('Sổ lệnh BTC/USDT'), findsOneWidget);
     expect(find.textContaining('Mid'), findsOneWidget);
 
     await tester.tap(find.byKey(PairDetailPage.tradesTabKey));
     await tester.pumpAndSettle();
-    expect(find.text('Gia'), findsOneWidget);
-    expect(find.text('Khoi luong'), findsOneWidget);
+    expect(find.text('Giá'), findsOneWidget);
+    expect(find.text('Khối lượng'), findsOneWidget);
     expect(find.text('23:29:14'), findsOneWidget);
   });
 

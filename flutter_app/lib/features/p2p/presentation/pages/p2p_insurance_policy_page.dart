@@ -70,9 +70,9 @@ class P2PInsurancePolicyPage extends ConsumerWidget {
                         _PrivacyNoticeCard(text: snapshot.privacyNotice),
                         const VitHighRiskStatePanel(
                           state: VitHighRiskUiState.riskReview,
-                          title: 'P2P insurance policy state review',
+                          title: 'Xem lại điều khoản bảo hiểm',
                           message:
-                              'Policy version, coverage notice, section terms, privacy handling, and current policy state stay visible before insurance decisions.',
+                              'Phiên bản chính sách, thông báo phạm vi, điều khoản từng mục, quyền riêng tư và trạng thái hiện tại được xem lại trước quyết định bảo hiểm.',
                           contractId: 'SC-241',
                         ),
                       ],

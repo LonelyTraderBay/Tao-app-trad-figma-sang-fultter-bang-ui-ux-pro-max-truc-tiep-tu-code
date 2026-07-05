@@ -77,35 +77,39 @@ class _ProgressLine extends StatelessWidget {
   }
 }
 
-class _MiniStatCard extends StatelessWidget {
-  const _MiniStatCard({required this.label, required this.value});
+class _MiniStatTile extends StatelessWidget {
+  const _MiniStatTile({required this.label, required this.value});
 
   final String label;
   final String value;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            value,
-            style: AppTextStyles.sectionTitle.copyWith(
-              color: AppColors.buy,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: AppColors.surface2,
+        shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
+      ),
+      child: Padding(
+        padding: AppSpacing.p2pClaimCompactCardPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.x1),
+            Text(
+              value,
+              style: AppTextStyles.sectionTitle.copyWith(
+                color: AppColors.buy,
+                fontWeight: AppTextStyles.bold,
+                fontFeatures: AppTextStyles.tabularFigures,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -121,16 +125,13 @@ class _DescriptionCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.descriptionKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
+      padding: AppSpacing.p2pClaimCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'MÔ TẢ',
-            style: AppTextStyles.micro.copyWith(
-              color: AppColors.text3,
-              fontWeight: AppTextStyles.bold,
-            ),
+          const VitSectionHeader(
+            title: 'Mô tả',
+            density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.x3),
           Text(
@@ -378,7 +379,7 @@ class _EvidenceFileCard extends StatelessWidget {
             height: _p2pClaimIconBoxExtent,
             child: Material(
               color: isImage ? AppColors.accent12 : AppColors.primary12,
-              borderRadius: AppRadii.mdRadius,
+              borderRadius: AppRadii.smRadius,
               child: Icon(
                 isImage ? Icons.image_outlined : Icons.description_outlined,
                 color: isImage ? AppColors.accent : AppModuleAccents.p2p,

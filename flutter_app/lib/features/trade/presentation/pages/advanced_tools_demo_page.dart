@@ -77,7 +77,8 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
             type: MaterialType.transparency,
             child: VitAutoHideHeaderScaffold(
               header: VitHeader(
-                title: 'Advanced Trading Tools',
+                title: 'Công cụ nâng cao',
+                subtitle: 'Thang giá · Hàng loạt · Phím tắt',
                 showBack: true,
                 onBack: () => context.go(AppRoutePaths.trade),
               ),
@@ -97,6 +98,30 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                           context: context,
                           children: [
                             const _IntroCard(),
+                          const VitCard(
+                            variant: VitCardVariant.inner,
+                            density: VitDensity.compact,
+                            padding: AppSpacing.cardPaddingCompact,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                VitHighRiskStatePanel(
+                                  state: VitHighRiskUiState.riskReview,
+                                  title: 'Xem lại công cụ lệnh nâng cao',
+                                  message:
+                                      'Thang giá, hủy hàng loạt và phím tắt giữ xem trước lệnh, xác nhận, số lệnh bị ảnh hưởng và bước tiếp theo trước khi thực thi.',
+                                  contractId: 'advanced-tools-review',
+                                  density: VitDensity.compact,
+                                ),
+                                SizedBox(height: _toolsSpace),
+                                VitStatusPill(
+                                  label: 'Xem trước khi gửi lệnh',
+                                  status: VitStatusPillStatus.info,
+                                  size: VitStatusPillSize.sm,
+                                ),
+                              ],
+                            ),
+                          ),
                           for (final feature in snapshot.features)
                             _FeatureCard(
                               feature: feature,
@@ -146,30 +171,6 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
                               ],
                               onOpen: _openShortcutsSheet,
                             ),
-                          const VitCard(
-                            variant: VitCardVariant.inner,
-                            density: VitDensity.compact,
-                            padding: AppSpacing.cardPaddingCompact,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                VitHighRiskStatePanel(
-                                  state: VitHighRiskUiState.riskReview,
-                                  title: 'Advanced order tool review',
-                                  message:
-                                      'Ladder, bulk cancel and shortcut actions keep order preview, confirmation, affected count, result toast and next step visible before execution.',
-                                  contractId: 'advanced-tools-review',
-                                  density: VitDensity.compact,
-                                ),
-                                SizedBox(height: _toolsSpace),
-                                VitStatusPill(
-                                  label: 'Preview before submit',
-                                  status: VitStatusPillStatus.info,
-                                  size: VitStatusPillSize.sm,
-                                ),
-                              ],
-                            ),
-                          ),
                           ],
                         ),
                       ),
@@ -181,9 +182,11 @@ class _AdvancedToolsDemoPageState extends ConsumerState<AdvancedToolsDemoPage> {
           ),
           if (_successMessage != null)
             Positioned(
-              left: 20,
-              right: 20,
-              top: mode.usesVisualQaFrame ? 80 : 24,
+              left: AppSpacing.contentPad,
+              right: AppSpacing.contentPad,
+              top: mode.usesVisualQaFrame
+                  ? AppSpacing.buttonHero
+                  : AppSpacing.x5,
               child: _SuccessToast(
                 message: _successMessage!,
                 onClose: () => setState(() => _successMessage = null),

@@ -177,93 +177,105 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
     final rewards = (_amount * apy / 100) / 365 * _days / pool.rewardTokenPrice;
     final nextTier = _nextTier(pool.tiers, _amount);
 
-    return VitCard(
-      key: LaunchpadStakingPage.calculatorKey,
-      radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
+    final activePools = widget.pools
+        .where((pool) => pool.status == LaunchpoolPoolStatus.active)
+        .toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        VitTabBar(
+          tabs: [
+            for (final candidate in activePools)
+              VitTabItem(key: candidate.id, label: candidate.projectSymbol),
+          ],
+          activeKey: _poolId,
+          onChanged: (id) => setState(() => _poolId = id),
+          variant: VitTabBarVariant.segment,
+        ),
+        const SizedBox(height: AppSpacing.x4),
+        VitCard(
+          key: LaunchpadStakingPage.calculatorKey,
+          radius: VitCardRadius.large,
+          padding: AppSpacing.launchpadPaddingX5,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(
-                Icons.calculate_outlined,
-                color: AppColors.primary,
-                size: AppSpacing.iconMd,
-              ),
-              const SizedBox(width: AppSpacing.x3),
-              Expanded(
-                child: Text(
-                  'Tính toán phần thưởng',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.baseMedium.copyWith(
-                    color: AppColors.text1,
-                    fontWeight: AppTextStyles.bold,
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calculate_outlined,
+                    color: AppColors.primary,
+                    size: AppSpacing.iconMd,
                   ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          VitTabBar(
-            tabs: [
-              for (final candidate in widget.pools.where(
-                (pool) => pool.status == LaunchpoolPoolStatus.active,
-              ))
-                VitTabItem(key: candidate.id, label: candidate.projectSymbol),
-            ],
-            activeKey: _poolId,
-            onChanged: (id) => setState(() => _poolId = id),
-            variant: VitTabBarVariant.segment,
-          ),
-          const SizedBox(height: AppSpacing.x5),
-          _StepperField(
-            label: 'Số tiền stake',
-            value: _formatUsd(_amount),
-            onMinus: () => setState(
-              () => _amount = (_amount - 500).clamp(100, 20000).toDouble(),
-            ),
-            onPlus: () => setState(
-              () => _amount = (_amount + 500).clamp(100, 20000).toDouble(),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          _StepperField(
-            label: 'Thời gian',
-            value: '$_days ngày',
-            onMinus: () =>
-                setState(() => _days = (_days - 7).clamp(7, 90).toInt()),
-            onPlus: () =>
-                setState(() => _days = (_days + 7).clamp(7, 90).toInt()),
-          ),
-          const SizedBox(height: AppSpacing.x5),
-          VitCard(
-            variant: VitCardVariant.inner,
-            borderColor: pool.accent.withValues(alpha: .24),
-            padding: AppSpacing.launchpadPaddingX4,
-            child: Column(
-              children: [
-                _ResultRow(label: 'APY hiệu lực', value: '${_formatApy(apy)}%'),
-                const SizedBox(height: AppSpacing.x3),
-                _ResultRow(
-                  label: 'Phần thưởng ước tính',
-                  value: '${_formatToken(rewards)} ${pool.rewardToken}',
-                  valueColor: AppColors.warn,
-                ),
-                if (nextTier != null) ...[
-                  const SizedBox(height: AppSpacing.x3),
-                  Text(
-                    'Stake thêm ${_formatUsd(nextTier.minStake - _amount)} để lên ${nextTier.label} (+${_formatApy(nextTier.apyBonus)}%).',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                  const SizedBox(width: AppSpacing.x3),
+                  Expanded(
+                    child: Text(
+                      'Tính toán phần thưởng',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        color: AppColors.text1,
+                        fontWeight: AppTextStyles.bold,
+                      ),
+                    ),
                   ),
                 ],
-              ],
-            ),
+              ),
+              const SizedBox(height: AppSpacing.x5),
+              _StepperField(
+                label: 'Số tiền stake',
+                value: _formatUsd(_amount),
+                onMinus: () => setState(
+                  () => _amount = (_amount - 500).clamp(100, 20000).toDouble(),
+                ),
+                onPlus: () => setState(
+                  () => _amount = (_amount + 500).clamp(100, 20000).toDouble(),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.x3),
+              _StepperField(
+                label: 'Thời gian',
+                value: '$_days ngày',
+                onMinus: () =>
+                    setState(() => _days = (_days - 7).clamp(7, 90).toInt()),
+                onPlus: () =>
+                    setState(() => _days = (_days + 7).clamp(7, 90).toInt()),
+              ),
+              const SizedBox(height: AppSpacing.x5),
+              VitCard(
+                variant: VitCardVariant.inner,
+                borderColor: pool.accent.withValues(alpha: .24),
+                padding: AppSpacing.launchpadPaddingX4,
+                child: Column(
+                  children: [
+                    _ResultRow(
+                      label: 'APY hiệu lực',
+                      value: '${_formatApy(apy)}%',
+                    ),
+                    const SizedBox(height: AppSpacing.x3),
+                    _ResultRow(
+                      label: 'Phần thưởng ước tính',
+                      value: '${_formatToken(rewards)} ${pool.rewardToken}',
+                      valueColor: AppColors.warn,
+                    ),
+                    if (nextTier != null) ...[
+                      const SizedBox(height: AppSpacing.x3),
+                      Text(
+                        'Stake thêm ${_formatUsd(nextTier.minStake - _amount)} để lên ${nextTier.label} (+${_formatApy(nextTier.apyBonus)}%).',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.micro.copyWith(
+                          color: AppColors.text3,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -444,7 +456,7 @@ class _CapacityBar extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                'Pool capacity',
+                'Dung lượng pool',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text3),

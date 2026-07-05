@@ -108,6 +108,7 @@ class _PredictionMarketMakerPageState
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Market Maker',
+            subtitle: 'Thanh khoản · Prediction',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.marketsPredictions),
           ),

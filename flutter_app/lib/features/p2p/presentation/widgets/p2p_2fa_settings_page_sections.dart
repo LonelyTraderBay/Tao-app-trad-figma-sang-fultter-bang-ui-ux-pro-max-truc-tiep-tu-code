@@ -11,52 +11,50 @@ class _TwoFactorStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return VitCard(
       key: P2P2FASettingsPage.statusKey,
-      type: MaterialType.transparency,
-      color: AppColors.buy.withValues(alpha: .9),
-      borderRadius: AppRadii.lgRadius,
-      child: Padding(
-        padding: AppSpacing.p2pTwoFactorCardPadding,
-        child: Row(
-          children: [
-            SizedBox.square(
-              dimension: _p2pTwoFactorHeroIconBox,
-              child: Material(
-                type: MaterialType.transparency,
-                color: AppColors.onAccent.withValues(alpha: .18),
-                borderRadius: AppRadii.lgRadius,
-                child: const Icon(
-                  Icons.shield_outlined,
-                  color: AppColors.onAccent,
-                  size: AppSpacing.iconLg,
+      radius: VitCardRadius.large,
+      padding: AppSpacing.p2pTwoFactorCardPadding,
+      borderColor: AppColors.buy,
+      background: ColoredBox(color: AppColors.buy.withValues(alpha: .9)),
+      child: Row(
+        children: [
+          SizedBox.square(
+            dimension: _p2pTwoFactorHeroIconBox,
+            child: Material(
+              type: MaterialType.transparency,
+              color: AppColors.onAccent.withValues(alpha: .18),
+              borderRadius: AppRadii.inputRadius,
+              child: const Icon(
+                Icons.shield_outlined,
+                color: AppColors.onAccent,
+                size: AppSpacing.iconLg,
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.x4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '2FA đã bật ($enabledMethods phương thức)',
+                  style: AppTextStyles.sectionTitle.copyWith(
+                    color: AppColors.onAccent,
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.x4),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '2FA đã bật ($enabledMethods phương thức)',
-                    style: AppTextStyles.sectionTitle.copyWith(
-                      color: AppColors.onAccent,
-                    ),
+                const SizedBox(height: AppSpacing.x2),
+                Text(
+                  'Phương thức chính: $primaryMethod',
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.onAccent.withValues(alpha: .9),
+                    fontWeight: AppTextStyles.bold,
                   ),
-                  const SizedBox(height: AppSpacing.x2),
-                  Text(
-                    'Phương thức chính: $primaryMethod',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.onAccent.withValues(alpha: .9),
-                      fontWeight: AppTextStyles.bold,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

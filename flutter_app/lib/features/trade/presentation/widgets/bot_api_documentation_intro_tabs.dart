@@ -31,9 +31,9 @@ class _IntroCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.x2),
                 Text(
-                  'Programmatically create, manage, and monitor trading '
-                  'bots using our REST API and WebSocket connections. '
-                  'Available for Enterprise tier users.',
+                  'Tạo, quản lý và giám sát bot qua REST API và WebSocket. '
+                  'Dành cho người dùng Enterprise — đọc kỹ xác thực và '
+                  'giới hạn tần suất trước khi tích hợp.',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],

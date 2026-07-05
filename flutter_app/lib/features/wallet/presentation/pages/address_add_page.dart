@@ -15,7 +15,6 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
-import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 
 class AddressAddPage extends ConsumerStatefulWidget {
@@ -75,10 +74,6 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
   Widget build(BuildContext context) {
     final controller = ref.watch(addressAddControllerProvider);
     final snapshot = controller.state.snapshot;
-    final selectedNetwork = snapshot.networks.firstWhere(
-      (network) => network.id == _networkId,
-      orElse: () => snapshot.networks.first,
-    );
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
 
     if (_saved) {
@@ -137,14 +132,6 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
                         onAgreementChanged: () =>
                             setState(() => _agreed = !_agreed),
                         onInputChanged: () => setState(() {}),
-                      ),
-                      VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Review withdrawal address safety',
-                        message:
-                            'Confirm the wallet address, network, asset, whitelist setting, and masked preview before saving.',
-                        contractId: 'Network: ${selectedNetwork.label}',
-                        density: VitDensity.compact,
                       ),
                       AddressPrimaryActionButton(
                         key: AddressAddPage.saveKey,

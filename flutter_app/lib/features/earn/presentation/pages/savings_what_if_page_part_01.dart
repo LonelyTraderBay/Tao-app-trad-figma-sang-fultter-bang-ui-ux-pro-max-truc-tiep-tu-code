@@ -29,7 +29,7 @@ class _WhatIfHero extends StatelessWidget {
             children: [
               const Icon(
                 Icons.show_chart_rounded,
-                color: AppColors.primary,
+                color: AppModuleAccents.earn,
                 size: AppSpacing.savingsWhatIfHeroIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -60,9 +60,9 @@ class _WhatIfHero extends StatelessWidget {
             children: [
               Expanded(
                 child: _HeroStat(
-                  label: 'APY hiện tại',
+                  label: 'APY ước tính hiện tại',
                   value: '${weightedApy.toStringAsFixed(1)}%',
-                  valueColor: AppColors.buy,
+                  valueColor: AppModuleAccents.earn,
                 ),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -136,18 +136,13 @@ class _WhatIfTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.earnHorizontalPaddingX3,
-      child: VitTabBar(
-        variant: VitTabBarVariant.underline,
-        activeKey: active,
-        onChanged: onChanged,
-        tabs: [
-          for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
-        ],
-      ),
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
+      ],
     );
   }
 }
@@ -360,16 +355,16 @@ class _SliderRow extends StatelessWidget {
             ),
             Text(
               display,
-              style: _captionBold.copyWith(color: AppColors.primary),
+              style: _captionBold.copyWith(color: AppModuleAccents.earn),
             ),
           ],
         ),
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            activeTrackColor: AppColors.primary,
+            activeTrackColor: AppModuleAccents.earn,
             inactiveTrackColor: AppColors.surface3,
-            thumbColor: AppColors.primary,
-            overlayColor: AppColors.primary20,
+            thumbColor: AppModuleAccents.earn,
+            overlayColor: AppModuleAccents.earn.withValues(alpha: 0.2),
           ),
           child: Slider(
             value: value.clamp(min, max),
@@ -442,7 +437,7 @@ class _PortfolioRow extends StatelessWidget {
             Text(
               '${position.currentApyPct.toStringAsFixed(1)}%',
               style: _captionBold.copyWith(
-                color: AppColors.buy,
+                color: AppModuleAccents.earn,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),

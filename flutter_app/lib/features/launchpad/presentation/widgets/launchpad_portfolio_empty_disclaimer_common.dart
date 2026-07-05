@@ -1,42 +1,28 @@
 part of '../pages/launchpad_portfolio_page.dart';
 
 class _EmptyPortfolio extends StatelessWidget {
-  const _EmptyPortfolio({required this.route});
+  const _EmptyPortfolio({
+    required this.route,
+    required this.filtered,
+    required this.onShowAll,
+  });
 
   final String route;
+  final bool filtered;
+  final VoidCallback onShowAll;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      padding: AppSpacing.launchpadPaddingX5,
-      child: Column(
-        children: [
-          const Icon(
-            Icons.business_center_outlined,
-            color: AppColors.text3,
-            size: AppSpacing.iconLg,
-          ),
-          const SizedBox(height: AppSpacing.x3),
-          Text(
-            'Chưa có dự án nào',
-            style: AppTextStyles.baseMedium.copyWith(
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.x2),
-          Text(
-            'Bạn chưa tham gia dự án Launchpad nào. Khám phá ngay.',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.caption.copyWith(color: AppColors.text2),
-          ),
-          const SizedBox(height: AppSpacing.x4),
-          VitCtaButton(
-            onPressed: () => context.go(route),
-            leading: const Icon(Icons.rocket_launch_outlined),
-            child: const Text('Khám phá Launchpad'),
-          ),
-        ],
-      ),
+    return VitEmptyState(
+      icon: Icons.business_center_outlined,
+      title: filtered
+          ? 'Không có dự án trong tab này'
+          : 'Chưa có dự án nào',
+      message: filtered
+          ? 'Thử xem tất cả hoặc chọn tab khác.'
+          : 'Bạn chưa tham gia dự án Launchpad nào. Khám phá ngay.',
+      actionLabel: filtered ? 'Xem tất cả' : 'Khám phá Launchpad',
+      onAction: filtered ? onShowAll : () => context.go(route),
     );
   }
 }
@@ -82,11 +68,11 @@ enum _PortfolioTab {
   final String label;
 }
 
-final class _StatusStyle {
-  const _StatusStyle({required this.label, required this.color});
+final class _SubscriptionStatus {
+  const _SubscriptionStatus({required this.label, required this.pillStatus});
 
   final String label;
-  final Color color;
+  final VitStatusPillStatus pillStatus;
 }
 
 List<LaunchpadSubscriptionDraft> _subscriptionsFor(
@@ -122,27 +108,27 @@ List<LaunchpadSubscriptionDraft> _subscriptionsFor(
   };
 }
 
-_StatusStyle _statusStyle(LaunchpadSubscriptionStatus status) {
+_SubscriptionStatus _subscriptionStatus(LaunchpadSubscriptionStatus status) {
   return switch (status) {
-    LaunchpadSubscriptionStatus.pending => const _StatusStyle(
+    LaunchpadSubscriptionStatus.pending => const _SubscriptionStatus(
       label: 'Chờ phân bổ',
-      color: AppColors.warn,
+      pillStatus: VitStatusPillStatus.warning,
     ),
-    LaunchpadSubscriptionStatus.allocated => const _StatusStyle(
+    LaunchpadSubscriptionStatus.allocated => const _SubscriptionStatus(
       label: 'Đã phân bổ',
-      color: AppColors.buy,
+      pillStatus: VitStatusPillStatus.success,
     ),
-    LaunchpadSubscriptionStatus.partiallyAllocated => const _StatusStyle(
+    LaunchpadSubscriptionStatus.partiallyAllocated => const _SubscriptionStatus(
       label: 'Phân bổ 1 phần',
-      color: AppColors.primary,
+      pillStatus: VitStatusPillStatus.info,
     ),
-    LaunchpadSubscriptionStatus.claimed => const _StatusStyle(
+    LaunchpadSubscriptionStatus.claimed => const _SubscriptionStatus(
       label: 'Đã nhận',
-      color: AppColors.buy,
+      pillStatus: VitStatusPillStatus.success,
     ),
-    LaunchpadSubscriptionStatus.refunded => const _StatusStyle(
+    LaunchpadSubscriptionStatus.refunded => const _SubscriptionStatus(
       label: 'Đã hoàn tiền',
-      color: AppColors.text2,
+      pillStatus: VitStatusPillStatus.neutral,
     ),
   };
 }

@@ -71,7 +71,7 @@ class _StrategyCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'APY',
+                    'APY ước tính',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
@@ -261,41 +261,6 @@ class _QuickLinks extends StatelessWidget {
   }
 }
 
-class _Disclaimer extends StatelessWidget {
-  const _Disclaimer({required this.text});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      borderColor: AppColors.warn15,
-      padding: AppSpacing.earnPaddingX3,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.warn,
-            size: AppSpacing.iconSm,
-          ),
-          const SizedBox(width: AppSpacing.x2),
-          Expanded(
-            child: Text(
-              text,
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text2,
-                height: AppTextStyles.micro.height,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _StrategyDetailSheet extends StatelessWidget {
   const _StrategyDetailSheet({
     required this.strategy,
@@ -350,7 +315,7 @@ class _StrategyDetailSheet extends StatelessWidget {
           child: Column(
             children: [
               _SheetMetric(
-                label: 'APY trung bình',
+                label: 'APY ước tính TB',
                 value: _formatPercent(strategy.expectedApy),
                 color: AppColors.buy,
               ),
@@ -454,7 +419,7 @@ class _CompareSheet extends StatelessWidget {
           header: true,
         ),
         _CompareRow(
-          label: 'APY',
+          label: 'APY ước tính',
           values: [
             for (final strategy in strategies)
               _formatPercent(strategy.expectedApy),

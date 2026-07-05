@@ -38,6 +38,9 @@ class _OverallRiskCard extends StatelessWidget {
     final color = _riskColor(project.level);
     return VitCard(
       key: LaunchpadRiskAnalyticsPage.scoreKey,
+      variant: VitCardVariant.hero,
+      radius: VitCardRadius.large,
+      borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
       padding: AppSpacing.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +53,7 @@ class _OverallRiskCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Overall Risk Score',
+                      'Diem rui ro tong the',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
                       ),
@@ -89,7 +92,7 @@ class _OverallRiskCard extends StatelessWidget {
           _ScoreProgress(value: project.score.overall, color: color),
           const SizedBox(height: AppSpacing.x2),
           Text(
-            'Based on 6 metrics: Team, Audit, Tokenomics, Community, Security, Liquidity',
+            'Dua tren 6 chi so: Team, Audit, Tokenomics, Community, Security, Liquidity',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ],

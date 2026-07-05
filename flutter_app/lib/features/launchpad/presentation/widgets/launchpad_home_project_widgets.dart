@@ -8,21 +8,46 @@ class _LaunchpadTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return VitTabBar(
       key: LaunchpadPage.tabsKey,
-      spacing: AppSpacing.x3,
-      runSpacing: AppSpacing.x3,
-      children: [
+      variant: VitTabBarVariant.segment,
+      activeKey: activeTab.id,
+      onChanged: (id) {
+        final tab = _LaunchpadTab.values.firstWhere((tab) => tab.id == id);
+        onChanged(tab);
+      },
+      tabs: [
         for (final tab in _LaunchpadTab.values)
-          VitChoicePill(
-            key: LaunchpadPage.tabKey(tab.id),
+          VitTabItem(
+            key: tab.id,
             label: tab.label,
-            selected: tab == activeTab,
-            onTap: () => onChanged(tab),
-            accentColor: AppColors.primary,
-            padding: AppSpacing.launchpadPaddingX3,
+            widgetKey: LaunchpadPage.tabKey(tab.id),
           ),
       ],
+    );
+  }
+}
+
+class _ProjectsEmptyState extends StatelessWidget {
+  const _ProjectsEmptyState({required this.filtered, required this.onShowAll});
+
+  final bool filtered;
+  final VoidCallback onShowAll;
+
+  @override
+  Widget build(BuildContext context) {
+    return VitEmptyState(
+      key: LaunchpadPage.emptyKey,
+      icon: Icons.rocket_launch_outlined,
+      title: filtered
+          ? 'Không có dự án trong tab này'
+          : 'Chưa có dự án Launchpad',
+      message: filtered
+          ? 'Thử xem tất cả dự án hoặc chọn tab khác.'
+          : 'Quay lại sau khi có dự án mới được niêm yết.',
+      actionLabel: filtered ? 'Xem tất cả' : null,
+      actionKey: filtered ? LaunchpadPage.emptyActionKey : null,
+      onAction: filtered ? onShowAll : null,
     );
   }
 }
@@ -39,96 +64,71 @@ class _ProjectCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadPage.projectKey(project.id),
       radius: VitCardRadius.standard,
-      clip: true,
+      padding: VitDensity.compact.cardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          VitCard(
-            variant: VitCardVariant.ghost,
-            radius: VitCardRadius.standard,
-            padding: VitDensity.compact.cardPadding,
-            onTap: () => context.go(AppRoutePaths.launchpadSample),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _ProjectAvatar(project: project),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _ProjectAvatar(project: project),
-                    const SizedBox(width: AppSpacing.x3),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: AppSpacing.x2,
-                            runSpacing: AppSpacing.x1,
-                            children: [
-                              Text(
-                                project.name,
-                                style: AppTextStyles.baseMedium.copyWith(
-                                  fontWeight: AppTextStyles.bold,
-                                  height: _launchpadLineHeightLabel,
-                                ),
-                              ),
-                              _MiniPill(
-                                label: typeStyle.label,
-                                color: typeStyle.color,
-                                background: typeStyle.background,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: AppSpacing.x1),
-                          _InlineIconLabel(
-                            icon: Icons.circle,
-                            label: statusStyle.label,
-                            color: statusStyle.color,
-                          ),
-                        ],
+                    Text(
+                      project.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.baseMedium.copyWith(
+                        fontWeight: AppTextStyles.bold,
+                        height: _launchpadLineHeightLabel,
                       ),
                     ),
-                    if (project.roi != null) ...[
-                      const SizedBox(width: AppSpacing.x2),
-                      _RoiBadge(value: project.roi!),
-                    ],
+                    const SizedBox(height: AppSpacing.x2),
+                    Wrap(
+                      spacing: AppSpacing.x2,
+                      runSpacing: AppSpacing.x1,
+                      children: [
+                        VitStatusPill(
+                          label: statusStyle.label,
+                          status: _statusPillStatus(project.status),
+                          size: VitStatusPillSize.sm,
+                        ),
+                        _MiniPill(
+                          label: typeStyle.label,
+                          color: typeStyle.color,
+                          background: typeStyle.background,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.x3),
-                Text(
-                  project.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                    height: _launchpadLineHeightReadable,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.x3),
-                Wrap(
-                  spacing: AppSpacing.x2,
-                  runSpacing: AppSpacing.x2,
-                  children: [
-                    for (final tag in project.tags)
-                      _SoftChip(label: tag, color: AppColors.text2),
-                    _SoftChip(label: project.chain, color: project.accent),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.x3),
-                _ProjectInfoGrid(project: project),
-                if (project.status != LaunchpadProjectStatus.upcoming) ...[
-                  const SizedBox(height: AppSpacing.x3),
-                  _ProjectProgress(project: project),
-                ],
-                const SizedBox(height: AppSpacing.x3),
-                _TimelineLine(project: project),
-                const SizedBox(height: AppSpacing.x3),
-                _ProjectBadges(project: project),
-              ],
-            ),
+              ),
+            ],
           ),
-          Padding(
-            padding: VitDensity.compact.cardPadding,
-            child: _ProjectActions(project: project),
+          const SizedBox(height: AppSpacing.x3),
+          Row(
+            children: [
+              Expanded(
+                child: _KpiColumn(label: 'Hard Cap', value: project.hardCap),
+              ),
+              const SizedBox(width: AppSpacing.x3),
+              Expanded(
+                child: _KpiColumn(
+                  label: 'Đã huy động',
+                  value: project.totalRaise,
+                ),
+              ),
+            ],
           ),
+          if (project.status != LaunchpadProjectStatus.upcoming) ...[
+            const SizedBox(height: AppSpacing.x3),
+            _ProjectProgressBar(project: project),
+          ],
+          const SizedBox(height: AppSpacing.x3),
+          _ProjectPrimaryAction(project: project),
         ],
       ),
     );
@@ -166,93 +166,41 @@ class _ProjectAvatar extends StatelessWidget {
   }
 }
 
-class _ProjectInfoGrid extends StatelessWidget {
-  const _ProjectInfoGrid({required this.project});
-
-  final LaunchpadProjectDraft project;
-
-  @override
-  Widget build(BuildContext context) {
-    final rows = [
-      ('Giá token', '\$${_formatPrice(project.price)} ${project.priceUnit}'),
-      ('Hard Cap', project.hardCap),
-      ('Đã huy động', project.totalRaise),
-      (
-        'Người tham gia',
-        project.participants == 0 ? '—' : _formatInt(project.participants),
-      ),
-    ];
-
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: _InfoTile(label: rows[0].$1, value: rows[0].$2),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: _InfoTile(label: rows[1].$1, value: rows[1].$2),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.x3),
-        Row(
-          children: [
-            Expanded(
-              child: _InfoTile(label: rows[2].$1, value: rows[2].$2),
-            ),
-            const SizedBox(width: AppSpacing.x3),
-            Expanded(
-              child: _InfoTile(label: rows[3].$1, value: rows[3].$2),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _InfoTile extends StatelessWidget {
-  const _InfoTile({required this.label, required this.value});
+class _KpiColumn extends StatelessWidget {
+  const _KpiColumn({required this.label, required this.value});
 
   final String label;
   final String value;
 
   @override
   Widget build(BuildContext context) {
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: AppSpacing.launchpadPaddingX3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+        ),
+        const SizedBox(height: AppSpacing.x1),
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
+            fontFeatures: AppTextStyles.tabularFigures,
           ),
-          const SizedBox(height: AppSpacing.x1),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.caption.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-              fontFeatures: AppTextStyles.tabularFigures,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
-class _ProjectProgress extends StatelessWidget {
-  const _ProjectProgress({required this.project});
+class _ProjectProgressBar extends StatelessWidget {
+  const _ProjectProgressBar({required this.project});
 
   final LaunchpadProjectDraft project;
 
@@ -303,111 +251,35 @@ class _ProjectProgress extends StatelessWidget {
   }
 }
 
-class _TimelineLine extends StatelessWidget {
-  const _TimelineLine({required this.project});
+class _ProjectPrimaryAction extends StatelessWidget {
+  const _ProjectPrimaryAction({required this.project});
 
   final LaunchpadProjectDraft project;
 
   @override
   Widget build(BuildContext context) {
-    if (project.status == LaunchpadProjectStatus.upcoming) {
-      return const _InlineIconLabel(
-        icon: Icons.schedule_rounded,
-        label: 'Bắt đầu sau',
-        color: AppColors.warn,
-      );
-    }
-    if (project.status == LaunchpadProjectStatus.active) {
-      return const _InlineIconLabel(
-        icon: Icons.check_circle_outline_rounded,
-        label: 'Đã kết thúc',
-        color: AppColors.buy,
-      );
-    }
-    return _InlineIconLabel(
-      icon: Icons.schedule_rounded,
-      label: 'Đã kết thúc: ${project.endDate}',
-      color: AppColors.text3,
+    final isActive = project.status == LaunchpadProjectStatus.active;
+    return VitCtaButton(
+      key: isActive ? LaunchpadPage.joinKey(project.id) : null,
+      onPressed: isActive
+          ? HapticFeedback.selectionClick
+          : () => context.go(AppRoutePaths.launchpadSample),
+      density: VitDensity.compact,
+      variant: isActive
+          ? VitCtaButtonVariant.primary
+          : VitCtaButtonVariant.secondary,
+      leading: Icon(
+        isActive ? Icons.rocket_launch_outlined : Icons.chevron_right_rounded,
+      ),
+      child: Text(isActive ? 'Tham gia' : 'Xem chi tiết'),
     );
   }
 }
 
-class _ProjectBadges extends StatelessWidget {
-  const _ProjectBadges({required this.project});
-
-  final LaunchpadProjectDraft project;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: AppSpacing.x2,
-      runSpacing: AppSpacing.x2,
-      children: [
-        if (project.kyc)
-          _Badge(
-            icon: Icons.verified_user_outlined,
-            label: 'KYC cấp ${project.kycLevel}',
-            color: AppColors.buy,
-            background: AppColors.buy10,
-          ),
-        if (project.whitelist)
-          const _Badge(
-            icon: Icons.workspace_premium_outlined,
-            label: 'Whitelist',
-            color: AppColors.warn,
-            background: AppColors.warn10,
-          ),
-        if (project.auditStatus == LaunchpadAuditStatus.passed)
-          _Badge(
-            icon: Icons.military_tech_outlined,
-            label: project.audit,
-            color: AppColors.primary,
-            background: AppColors.primary12,
-          ),
-      ],
-    );
-  }
-}
-
-class _ProjectActions extends StatelessWidget {
-  const _ProjectActions({required this.project});
-
-  final LaunchpadProjectDraft project;
-
-  @override
-  Widget build(BuildContext context) {
-    if (project.status == LaunchpadProjectStatus.active) {
-      return Row(
-        children: [
-          Expanded(
-            child: _GhostButton(
-              label: 'Chi tiết',
-              icon: Icons.chevron_right_rounded,
-              onTap: () => context.go(AppRoutePaths.launchpadSample),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.x3),
-          Expanded(
-            child: VitCtaButton(
-              key: LaunchpadPage.joinKey(project.id),
-              onPressed: HapticFeedback.selectionClick,
-              density: VitDensity.compact,
-              leading: const Icon(Icons.rocket_launch_outlined),
-              child: const Text('Tham gia'),
-            ),
-          ),
-        ],
-      );
-    }
-
-    final isUpcoming = project.status == LaunchpadProjectStatus.upcoming;
-    return _GhostButton(
-      label: 'Xem chi tiết',
-      icon: isUpcoming ? Icons.schedule_rounded : Icons.chevron_right_rounded,
-      onTap: () => context.go(AppRoutePaths.launchpadSample),
-      color: isUpcoming ? AppColors.warn : AppColors.text2,
-      background: isUpcoming ? AppColors.warn08 : AppColors.surface2,
-      border: isUpcoming ? AppColors.warningBorder : AppColors.cardBorder,
-    );
-  }
+VitStatusPillStatus _statusPillStatus(LaunchpadProjectStatus status) {
+  return switch (status) {
+    LaunchpadProjectStatus.upcoming => VitStatusPillStatus.warning,
+    LaunchpadProjectStatus.active => VitStatusPillStatus.success,
+    LaunchpadProjectStatus.ended => VitStatusPillStatus.neutral,
+  };
 }

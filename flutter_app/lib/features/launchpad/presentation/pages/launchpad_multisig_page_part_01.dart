@@ -34,6 +34,7 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
     final historyTxs = _historyTxs(selectedSafe.address);
 
     return VitPageLayout(
+      variant: VitPageVariant.flush,
       semanticLabel: 'SC-313 LaunchpadMultisigPage',
       child: Material(
         type: MaterialType.transparency,
@@ -44,67 +45,89 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
               semanticLabel: 'SC-313 LaunchpadMultisigPage scroll surface',
               header: VitHeader(
                 title: snapshot.title,
+                subtitle: 'Hàng đợi multisig · Xác nhận đa chữ ký',
                 showBack: true,
                 onBack: () => context.go(snapshot.backRoute),
               ),
-              child: SingleChildScrollView(
-                key: LaunchpadMultisigPage.contentKey,
-                physics: const ClampingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _SafeSelector(
-                      safes: snapshot.safes,
-                      selectedAddress: _selectedSafeAddress,
-                      onChanged: (address) {
-                        setState(() {
-                          _selectedSafeAddress = address;
-                          _expandedTxId = null;
-                        });
-                      },
-                    ),
-                    _StatsStrip(safe: selectedSafe, pending: queueTxs.length),
-                    _Tabs(
-                      activeTab: _activeTab,
-                      onChanged: (tab) => setState(() => _activeTab = tab),
-                    ),
-                    VitPageContent(
-                      padding: VitContentPadding.compact,
-                      gap: VitContentGap.tight,
+              child: Column(
+                children: [
+                  _SafeSelector(
+                    safes: snapshot.safes,
+                    selectedAddress: _selectedSafeAddress,
+                    onChanged: (address) {
+                      setState(() {
+                        _selectedSafeAddress = address;
+                        _expandedTxId = null;
+                      });
+                    },
+                  ),
+                  _StatsStrip(safe: selectedSafe, pending: queueTxs.length),
+                  ColoredBox(
+                    key: LaunchpadMultisigPage.tabsKey,
+                    color: AppColors.surface,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (_activeTab == _MultisigTab.queue) ...[
-                          _CreateTxCard(
-                            onTap: () => setState(() => _showCreate = true),
+                        const Divider(height: AppSpacing.hairlineStroke),
+                        Padding(
+                          padding: AppSpacing.launchpadHorizontalContentPadding,
+                          child: _Tabs(
+                            activeTab: _activeTab,
+                            onChanged: (tab) =>
+                                setState(() => _activeTab = tab),
                           ),
-                          _QueueSection(
-                            txs: queueTxs,
-                            expandedTxId: _expandedTxId,
-                            copiedField: _copiedField,
-                            onToggle: _toggleTx,
-                            onCopy: _copyField,
-                            onSign: _signTx,
-                            onExecute: _executeTx,
-                          ),
-                        ] else if (_activeTab == _MultisigTab.history) ...[
-                          _HistorySection(
-                            txs: historyTxs,
-                            expandedTxId: _expandedTxId,
-                            copiedField: _copiedField,
-                            onToggle: _toggleTx,
-                            onCopy: _copyField,
-                          ),
-                        ] else ...[
-                          _OwnersSection(
-                            safe: selectedSafe,
-                            copiedField: _copiedField,
-                            onCopy: _copyField,
-                          ),
-                        ],
-                        _SecurityNotice(safe: selectedSafe),
+                        ),
+                        const Divider(height: AppSpacing.hairlineStroke),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(
+                        context,
+                      ).copyWith(scrollbars: false),
+                      child: SingleChildScrollView(
+                        key: LaunchpadMultisigPage.contentKey,
+                        physics: const ClampingScrollPhysics(),
+                        child: VitPageContent(
+                          padding: VitContentPadding.compact,
+                          gap: VitContentGap.tight,
+                          children: [
+                            if (_activeTab == _MultisigTab.queue) ...[
+                              _CreateTxCard(
+                                onTap: () => setState(() => _showCreate = true),
+                              ),
+                              _QueueSection(
+                                txs: queueTxs,
+                                expandedTxId: _expandedTxId,
+                                copiedField: _copiedField,
+                                onToggle: _toggleTx,
+                                onCopy: _copyField,
+                                onSign: _signTx,
+                                onExecute: _executeTx,
+                              ),
+                            ] else if (_activeTab == _MultisigTab.history) ...[
+                              _HistorySection(
+                                txs: historyTxs,
+                                expandedTxId: _expandedTxId,
+                                copiedField: _copiedField,
+                                onToggle: _toggleTx,
+                                onCopy: _copyField,
+                              ),
+                            ] else ...[
+                              _OwnersSection(
+                                safe: selectedSafe,
+                                copiedField: _copiedField,
+                                onCopy: _copyField,
+                              ),
+                            ],
+                            _SecurityNotice(safe: selectedSafe),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             if (_showCreate)
@@ -216,7 +239,7 @@ class _SafeSelector extends StatelessWidget {
                     ? VitCardVariant.standard
                     : VitCardVariant.inner,
                 borderColor: selectedAddress == safe.address
-                    ? safe.accent.withValues(alpha: .34)
+                    ? AppModuleAccents.launchpad.withValues(alpha: .34)
                     : AppColors.cardBorder,
                 padding: AppSpacing.launchpadPaddingX3,
                 onTap: () => onChanged(safe.address),
@@ -227,7 +250,9 @@ class _SafeSelector extends StatelessWidget {
                       children: [
                         _IconBubble(
                           icon: Icons.shield_outlined,
-                          color: safe.accent,
+                          color: selectedAddress == safe.address
+                              ? AppModuleAccents.launchpad
+                              : safe.accent,
                           size: AppSpacing.launchpadIcon5xl,
                         ),
                         const SizedBox(width: AppSpacing.x2),
@@ -297,24 +322,24 @@ class _StatsStrip extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: _StatChip(
-              label: 'Threshold',
+            child: _StatTile(
+              label: 'Ngưỡng',
               value: '${safe.threshold}/${safe.owners.length}',
-              color: AppColors.accent,
+              color: AppModuleAccents.launchpad,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
-            child: _StatChip(
-              label: 'Pending',
+            child: _StatTile(
+              label: 'Đang chờ',
               value: '$pending',
               color: AppColors.primary,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
-            child: _StatChip(
-              label: 'Total Tx',
+            child: _StatTile(
+              label: 'Tổng tx',
               value: '${safe.txCount}',
               color: AppColors.buy,
             ),
@@ -325,8 +350,8 @@ class _StatsStrip extends StatelessWidget {
   }
 }
 
-class _StatChip extends StatelessWidget {
-  const _StatChip({
+class _StatTile extends StatelessWidget {
+  const _StatTile({
     required this.label,
     required this.value,
     required this.color,
@@ -338,28 +363,34 @@ class _StatChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: color.withValues(alpha: .08),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
-      ),
-      child: Padding(
-        padding: AppSpacing.launchpadVerticalPaddingX2,
-        child: Column(
-          children: [
-            Text(
-              value,
-              style: AppTextStyles.numericCode.copyWith(
-                color: color,
-                fontWeight: AppTextStyles.bold,
-              ),
+    return VitCard(
+      variant: VitCardVariant.ghost,
+      radius: VitCardRadius.standard,
+      borderColor: color.withValues(alpha: .22),
+      background: ColoredBox(color: color.withValues(alpha: .08)),
+      padding: AppSpacing.launchpadVerticalPaddingX2,
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: AppTextStyles.numericCode.copyWith(
+              color: color,
+              fontWeight: AppTextStyles.bold,
+              height: AppSpacing.launchpadLineHeightTight,
+              fontFeatures: AppTextStyles.tabularFigures,
             ),
-            Text(
-              label,
-              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+          ),
+          const SizedBox(height: AppSpacing.x1),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.micro.copyWith(
+              color: AppColors.text3,
+              height: AppSpacing.launchpadLineHeightShort,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -373,22 +404,15 @@ class _Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      key: LaunchpadMultisigPage.tabsKey,
-      color: AppColors.surface,
-      child: Padding(
-        padding: AppSpacing.launchpadHorizontalContentPadding,
-        child: VitTabBar(
-          tabs: const [
-            VitTabItem(key: 'queue', label: 'queue'),
-            VitTabItem(key: 'history', label: 'history'),
-            VitTabItem(key: 'safes', label: 'safes'),
-          ],
-          activeKey: activeTab.name,
-          onChanged: (key) => onChanged(_MultisigTab.values.byName(key)),
-          variant: VitTabBarVariant.underline,
-        ),
-      ),
+    return VitTabBar(
+      tabs: const [
+        VitTabItem(key: 'queue', label: 'Hàng đợi'),
+        VitTabItem(key: 'history', label: 'Lịch sử'),
+        VitTabItem(key: 'safes', label: 'Safes'),
+      ],
+      activeKey: activeTab.name,
+      onChanged: (key) => onChanged(_MultisigTab.values.byName(key)),
+      variant: VitTabBarVariant.underline,
     );
   }
 }
@@ -403,14 +427,14 @@ class _CreateTxCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadMultisigPage.createKey,
       variant: VitCardVariant.inner,
-      borderColor: AppColors.accent30,
+      borderColor: AppModuleAccents.launchpad.withValues(alpha: .28),
       padding: AppSpacing.launchpadPaddingX3,
       onTap: onTap,
       child: Row(
         children: [
           _IconBubble(
             icon: Icons.add_rounded,
-            color: AppColors.accent,
+            color: AppModuleAccents.launchpad,
             size: AppSpacing.launchpadBox40,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -419,14 +443,14 @@ class _CreateTxCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Tao giao dich moi',
+                  'Tạo giao dịch mới',
                   style: AppTextStyles.caption.copyWith(
-                    color: AppColors.accent,
+                    color: AppModuleAccents.launchpad,
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
                 Text(
-                  'Tao tx can nhieu chu ky',
+                  'Tạo tx cần nhiều chữ ký',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
               ],
@@ -462,14 +486,14 @@ class _QueueSection extends StatelessWidget {
     return KeyedSubtree(
       key: LaunchpadMultisigPage.queueKey,
       child: VitPageSection(
-        label: 'Hang doi giao dich',
-        accentColor: AppColors.primary,
+        label: 'Hàng đợi giao dịch',
+        accentColor: AppModuleAccents.launchpad,
         children: [
           if (txs.isEmpty)
             const VitEmptyState(
               icon: Icons.group_outlined,
-              title: 'Khong co giao dich cho xu ly',
-              message: 'Tao giao dich moi de bat dau.',
+              title: 'Không có giao dịch chờ xử lý',
+              message: 'Tạo giao dịch mới để bắt đầu.',
             )
           else
             for (final tx in txs)

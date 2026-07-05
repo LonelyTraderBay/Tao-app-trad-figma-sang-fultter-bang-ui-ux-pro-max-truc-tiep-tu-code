@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
-import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
-import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
 
 part '../widgets/launchpad_bridge_order_hero.dart';
 part '../widgets/launchpad_bridge_order_timeline.dart';
 part '../widgets/launchpad_bridge_order_events.dart';
 part '../widgets/launchpad_bridge_order_details.dart';
+
+const double _launchpadBridgeOrderVisualNavClearance = 112;
+const double _launchpadBridgeOrderNativeNavClearance = 88;
 
 class LaunchpadBridgeOrderPage extends ConsumerStatefulWidget {
   const LaunchpadBridgeOrderPage({
@@ -56,11 +60,11 @@ class _LaunchpadBridgeOrderPageState
         .watch(launchpadControllerProvider)
         .getBridgeOrder(widget.txId);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final bottomInset =
-        (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.x6
-            : DeviceMetrics.nativeBottomChrome + AppSpacing.x4) +
-        MediaQuery.paddingOf(context).bottom;
+    final navClearance = mode.usesVisualQaFrame
+        ? _launchpadBridgeOrderVisualNavClearance
+        : _launchpadBridgeOrderNativeNavClearance;
+    final scrollEndPadding =
+        navClearance + MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -68,40 +72,47 @@ class _LaunchpadBridgeOrderPageState
       child: Material(
         type: MaterialType.transparency,
         child: VitAutoHideHeaderScaffold(
-          bottomInset: bottomInset,
           semanticLabel: 'SC-303 LaunchpadBridgeOrderPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
+            subtitle: '${snapshot.order.sourceChain} → ${snapshot.order.targetChain}',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
-          child: SingleChildScrollView(
-            key: LaunchpadBridgeOrderPage.contentKey,
-            physics: const ClampingScrollPhysics(),
-            child: VitPageContent(
-              padding: VitContentPadding.defaultPadding,
-              customGap: AppSpacing.x4,
-              children: [
-                _BridgeStatusHero(order: snapshot.order),
-                if (snapshot.highRiskContractId != null)
-                  VitHighRiskStatePanel(
-                    state: VitHighRiskUiState.success,
-                    title: 'Bridge order state tracked',
-                    message:
-                        'Eligibility, contract preview, confirmation, submitted status, receipt and support are bound to the Launchpad high-risk contract.',
-                    contractId: snapshot.highRiskContractId,
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(
+              context,
+            ).copyWith(scrollbars: false),
+            child: SingleChildScrollView(
+              key: LaunchpadBridgeOrderPage.contentKey,
+              physics: const ClampingScrollPhysics(),
+              padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
+              child: VitPageContent(
+                padding: VitContentPadding.compact,
+                density: VitDensity.compact,
+                children: [
+                  _BridgeStatusHero(order: snapshot.order),
+                  if (snapshot.highRiskContractId != null)
+                    VitHighRiskStatePanel(
+                      state: VitHighRiskUiState.success,
+                      title: 'Đã theo dõi trạng thái bridge',
+                      message:
+                          'Điều kiện, xem trước hợp đồng, xác nhận, trạng thái gửi, biên lai và hỗ trợ gắn với hợp đồng rủi ro cao Launchpad.',
+                      contractId: snapshot.highRiskContractId,
+                    ),
+                  _BridgeTimeline(order: snapshot.order),
+                  _BridgeEventLog(
+                    order: snapshot.order,
+                    events: snapshot.events,
+                    expanded: _logExpanded,
+                    onToggle: () =>
+                        setState(() => _logExpanded = !_logExpanded),
                   ),
-                _BridgeTimeline(order: snapshot.order),
-                _BridgeEventLog(
-                  order: snapshot.order,
-                  events: snapshot.events,
-                  expanded: _logExpanded,
-                  onToggle: () => setState(() => _logExpanded = !_logExpanded),
-                ),
-                _BridgeDetails(order: snapshot.order),
-                const _SimulationDisclosure(),
-                _BridgeSupportAction(supportRoute: snapshot.supportRoute),
-              ],
+                  _BridgeDetails(order: snapshot.order),
+                  const _SimulationDisclosure(),
+                  _BridgeSupportAction(supportRoute: snapshot.supportRoute),
+                ],
+              ),
             ),
           ),
         ),

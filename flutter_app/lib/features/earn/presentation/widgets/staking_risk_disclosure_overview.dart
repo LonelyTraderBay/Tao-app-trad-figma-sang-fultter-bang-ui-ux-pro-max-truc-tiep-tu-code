@@ -75,26 +75,18 @@ class _RiskTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: _stakingRiskTabsMinHeight),
-      child: Material(
-        color: AppColors.surface2,
-        child: Padding(
-          padding: AppSpacing.earnHorizontalPaddingX4,
-          child: Align(
-            alignment: Alignment.center,
-            child: VitTabBar(
-              variant: VitTabBarVariant.underline,
-              activeKey: active,
-              onChanged: onChanged,
-              tabs: [
-                for (final tab in tabs)
-                  VitTabItem(key: tab.id, label: tab.label, icon: null),
-              ],
-            ),
+    return VitTabBar(
+      variant: VitTabBarVariant.underline,
+      activeKey: active,
+      onChanged: onChanged,
+      tabs: [
+        for (final tab in tabs)
+          VitTabItem(
+            key: tab.id,
+            label: tab.label,
+            widgetKey: StakingRiskDisclosurePage.tabKey(tab.id),
           ),
-        ),
-      ),
+      ],
     );
   }
 }

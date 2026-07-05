@@ -88,7 +88,7 @@ void main() {
     expect(find.text('Final Response'), findsOneWidget);
   });
 
-  testWidgets('SC-111 first viewport reaches complaint categories', (
+  testWidgets('SC-111 first viewport reaches complaint review panel', (
     tester,
   ) async {
     await pumpComplaints(tester);
@@ -100,12 +100,12 @@ void main() {
     );
     expectFirstViewportVisible(
       tester,
-      find.text('Trade Execution'),
+      find.text('Complaint process review'),
       minVisibleHeight: 18,
-      targetLabel: 'first complaint category',
+      targetLabel: 'complaint process review panel',
       reason:
-          'Complaints handling must expose the first category above bottom '
-          'navigation after rights, review, stats, action, and tabs.',
+          'Complaints handling must expose the regulated review panel above '
+          'bottom navigation before rights and complaint workflow content.',
     );
   });
 

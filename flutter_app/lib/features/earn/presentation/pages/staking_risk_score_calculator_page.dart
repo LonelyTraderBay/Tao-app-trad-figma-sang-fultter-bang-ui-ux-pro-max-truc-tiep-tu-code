@@ -11,8 +11,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
-import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
+import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -75,11 +75,11 @@ class _StakingRiskScoreCalculatorPageState
         .watch(stakingRiskScoreCalculatorRepositoryProvider)
         .getCalculator();
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
-    final safeBottom = MediaQuery.paddingOf(context).bottom;
-    final navInset = mode.usesVisualQaFrame
-        ? DeviceMetrics.bottomChrome
-        : DeviceMetrics.nativeBottomChrome;
-    final scrollTailReserve = navInset + safeBottom + AppSpacing.x4;
+    final bottomInset =
+        (mode.usesVisualQaFrame
+            ? DeviceMetrics.bottomChrome + AppSpacing.x7
+            : DeviceMetrics.nativeBottomChrome + AppSpacing.x5) +
+        MediaQuery.paddingOf(context).bottom;
     final riskScore = _riskScore;
     final riskColor = _riskColor(riskScore);
 
@@ -89,8 +89,10 @@ class _StakingRiskScoreCalculatorPageState
       child: Material(
         color: AppColors.bg,
         child: VitAutoHideHeaderScaffold(
-          header: VitHeader(
+          header: VitTopChrome(
+            type: VitTopChromeType.detail,
             title: snapshot.title,
+            subtitle: 'Điểm rủi ro ước tính — không cam kết',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),
@@ -100,9 +102,7 @@ class _StakingRiskScoreCalculatorPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: EdgeInsetsDirectional.only(
-                    bottom: scrollTailReserve,
-                  ),
+                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
                   child: VitPageContent(
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
