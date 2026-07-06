@@ -169,7 +169,8 @@ class _LevelCard extends StatelessWidget {
                             requirement,
                             style: AppTextStyles.caption.copyWith(
                               color: locked ? AppColors.text3 : AppColors.text2,
-                              height: AppSpacing.p2pTradingLevelRequirementLineHeight,
+                              height: AppSpacing
+                                  .p2pTradingLevelRequirementLineHeight,
                             ),
                           ),
                         ),

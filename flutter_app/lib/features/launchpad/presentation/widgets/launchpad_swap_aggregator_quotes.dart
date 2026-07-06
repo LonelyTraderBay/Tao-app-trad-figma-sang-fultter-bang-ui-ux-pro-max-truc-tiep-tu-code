@@ -196,7 +196,7 @@ class _DexLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitAssetAvatar(
       label: quote.symbol,
-      accentColor: quote.accent,
+      accentColor: quote.accent.resolve(),
       size: AppSpacing.buttonCompact + AppSpacing.x1,
       radius: AppRadii.smRadius,
       border: true,

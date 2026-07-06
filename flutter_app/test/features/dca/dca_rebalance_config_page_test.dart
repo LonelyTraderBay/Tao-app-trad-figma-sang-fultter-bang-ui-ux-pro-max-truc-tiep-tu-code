@@ -35,7 +35,7 @@ void main() {
   }
 
   test('SC-170 mock repository exposes rebalance config BE draft', () {
-    final snapshot = const DcaRepository().getRebalanceConfig();
+    final snapshot = const MockDcaRepository().getRebalanceConfig();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-rebalance-config');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

@@ -121,22 +121,22 @@ final List<PredictionEventDraft> _predictionEvents = [
       PredictionOutcomeDraft(
         label: 'Real Madrid',
         chance: 28,
-        color: AppColors.warn,
+        tone: AccentTone.warn,
       ),
       PredictionOutcomeDraft(
         label: 'Man City',
         chance: 24,
-        color: AppColors.info,
+        tone: AccentTone.info,
       ),
       PredictionOutcomeDraft(
         label: 'Bayern',
         chance: 18,
-        color: AppColors.sell,
+        tone: AccentTone.sell,
       ),
       PredictionOutcomeDraft(
         label: 'Other',
         chance: 30,
-        color: AppColors.accent,
+        tone: AccentTone.accent,
       ),
     ],
     volume24h: 1250000,
@@ -309,8 +309,8 @@ final List<PredictionEventDraft> _predictionEvents = [
 
 List<PredictionOutcomeDraft> _yesNo(int yes, int no) {
   return [
-    PredictionOutcomeDraft(label: 'Yes', chance: yes, color: AppColors.buy),
-    PredictionOutcomeDraft(label: 'No', chance: no, color: AppColors.sell),
+    PredictionOutcomeDraft(label: 'Yes', chance: yes, tone: AccentTone.buy),
+    PredictionOutcomeDraft(label: 'No', chance: no, tone: AccentTone.sell),
   ];
 }
 

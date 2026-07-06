@@ -125,11 +125,15 @@ class _MetricChips extends StatelessWidget {
       child: Row(
         children: [
           for (final chip in chips) ...[
-            _FilterChipButton(
+            VitFilterChip(
               label: chip.label,
-              icon: _leaderboardIcon(chip.icon),
+              leading: Icon(
+                _leaderboardIcon(chip.icon),
+                size: _leaderboardFilterIcon,
+              ),
               active: chip.id == activeMetric,
-              accentColor: _arenaAccent,
+              color: _arenaAccent,
+              padding: _leaderboardFilterPadding,
               onTap: () => onChanged(chip.id),
             ),
             if (chip != chips.last) const SizedBox(width: AppSpacing.x2),
@@ -164,34 +168,6 @@ class _SeasonFilters extends StatelessWidget {
           if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
         ],
       ],
-    );
-  }
-}
-
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    required this.label,
-    required this.icon,
-    required this.active,
-    required this.accentColor,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final bool active;
-  final Color accentColor;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: accentColor,
-      padding: _leaderboardFilterPadding,
-      leading: Icon(icon, size: _leaderboardFilterIcon),
     );
   }
 }

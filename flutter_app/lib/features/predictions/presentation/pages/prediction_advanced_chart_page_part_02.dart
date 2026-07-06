@@ -142,6 +142,7 @@ class _IndicatorCard extends StatelessWidget {
       'Moderate' => .50,
       _ => .25,
     };
+    final color = indicator.tone.resolve();
     return VitCard(
       density: VitDensity.compact,
       child: Column(
@@ -169,7 +170,7 @@ class _IndicatorCard extends StatelessWidget {
                   ],
                 ),
               ),
-              _SignalBadge(label: indicator.signal, color: indicator.color),
+              _SignalBadge(label: indicator.signal, color: color),
             ],
           ),
           const SizedBox(height: AppSpacing.x2),
@@ -184,7 +185,7 @@ class _IndicatorCard extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: FractionallySizedBox(
                         widthFactor: widthFactor,
-                        child: ColoredBox(color: indicator.color),
+                        child: ColoredBox(color: color),
                       ),
                     ),
                   ),

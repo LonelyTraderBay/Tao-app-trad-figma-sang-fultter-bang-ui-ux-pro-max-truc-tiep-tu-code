@@ -114,12 +114,11 @@ class _OutcomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isYes = outcome.label == 'Yes';
+    final color = outcome.tone.resolve();
     return VitCard(
       onTap: onTap,
-      borderColor: outcome.color.withValues(alpha: selected ? .42 : .18),
-      background: ColoredBox(
-        color: outcome.color.withValues(alpha: isYes ? .08 : .07),
-      ),
+      borderColor: color.withValues(alpha: selected ? .42 : .18),
+      background: ColoredBox(color: color.withValues(alpha: isYes ? .08 : .07)),
       clip: true,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
@@ -132,16 +131,13 @@ class _OutcomeCard extends StatelessWidget {
             children: [
               SizedBox.square(
                 dimension: AppSpacing.predictionDetailOutcomeDot,
-                child: Material(
-                  color: outcome.color,
-                  shape: const CircleBorder(),
-                ),
+                child: Material(color: color, shape: const CircleBorder()),
               ),
               const SizedBox(width: AppSpacing.predictionDetailOutcomeLabelGap),
               Text(
                 outcome.label,
                 style: AppTextStyles.body.copyWith(
-                  color: outcome.color,
+                  color: color,
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -151,7 +147,7 @@ class _OutcomeCard extends StatelessWidget {
           Text(
             '${outcome.chance}%',
             style: AppTextStyles.sectionTitle.copyWith(
-              color: outcome.color,
+              color: color,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -233,15 +229,16 @@ class _MultiOutcomeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = outcome.tone.resolve();
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: selected
-          ? outcome.color.withValues(alpha: .34)
+          ? color.withValues(alpha: .34)
           : AppColors.cardBorder,
       background: selected
-          ? ColoredBox(color: outcome.color.withValues(alpha: .12))
+          ? ColoredBox(color: color.withValues(alpha: .12))
           : null,
       clip: selected,
       padding: const EdgeInsetsDirectional.symmetric(
@@ -252,7 +249,7 @@ class _MultiOutcomeRow extends StatelessWidget {
         children: [
           SizedBox.square(
             dimension: AppSpacing.predictionDetailMultiOutcomeDot,
-            child: Material(color: outcome.color, shape: const CircleBorder()),
+            child: Material(color: color, shape: const CircleBorder()),
           ),
           const SizedBox(width: AppSpacing.predictionDetailMultiOutcomeGap),
           Expanded(
@@ -267,7 +264,7 @@ class _MultiOutcomeRow extends StatelessWidget {
           Text(
             '${outcome.chance}%',
             style: AppTextStyles.body.copyWith(
-              color: outcome.color,
+              color: color,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -294,11 +291,11 @@ class _ProbabilityBar extends StatelessWidget {
           children: [
             Expanded(
               flex: yes.chance,
-              child: ColoredBox(color: yes.color),
+              child: ColoredBox(color: yes.tone.resolve()),
             ),
             Expanded(
               flex: no.chance,
-              child: ColoredBox(color: no.color),
+              child: ColoredBox(color: no.tone.resolve()),
             ),
           ],
         ),

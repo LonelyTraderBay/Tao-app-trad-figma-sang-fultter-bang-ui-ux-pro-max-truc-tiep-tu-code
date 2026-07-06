@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -73,7 +74,7 @@ class _StrategyCard extends StatelessWidget {
       key: cardKey,
       variant: active ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: active
-          ? strategy.accent.withValues(alpha: .38)
+          ? strategy.accent.resolve().withValues(alpha: .38)
           : AppColors.cardBorder,
       padding: AppSpacing.launchpadPaddingX3,
       onTap: onTap,
@@ -83,14 +84,14 @@ class _StrategyCard extends StatelessWidget {
             dimension: AppSpacing.launchpadBox28,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: strategy.accent.withValues(alpha: .14),
+                color: strategy.accent.resolve().withValues(alpha: .14),
                 shape: const RoundedRectangleBorder(
                   borderRadius: AppRadii.mdRadius,
                 ),
               ),
               child: Icon(
                 Icons.shield_outlined,
-                color: strategy.accent,
+                color: strategy.accent.resolve(),
                 size: AppSpacing.launchpadIconLg,
               ),
             ),
@@ -101,7 +102,7 @@ class _StrategyCard extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.caption.copyWith(
-              color: active ? strategy.accent : AppColors.text1,
+              color: active ? strategy.accent.resolve() : AppColors.text1,
               fontWeight: AppTextStyles.bold,
             ),
           ),

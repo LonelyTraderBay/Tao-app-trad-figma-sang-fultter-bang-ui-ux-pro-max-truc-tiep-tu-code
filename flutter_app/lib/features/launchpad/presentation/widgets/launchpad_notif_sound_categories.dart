@@ -102,7 +102,7 @@ class _CategoryCard extends StatelessWidget {
               children: [
                 _IconBubble(
                   icon: _categoryIcon(category.iconKey),
-                  accent: category.accent,
+                  accent: category.accent.resolve(),
                   small: true,
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -215,7 +215,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                       categoryId: category.id,
                       soundType: soundType,
                       active: state.soundType == soundType.value,
-                      accent: category.accent,
+                      accent: category.accent.resolve(),
                       onTap: () => onSoundType(soundType.value),
                     ),
                 ],
@@ -243,10 +243,12 @@ class _ExpandedCategorySettings extends StatelessWidget {
               ),
               SliderTheme(
                 data: SliderTheme.of(context).copyWith(
-                  activeTrackColor: category.accent,
+                  activeTrackColor: category.accent.resolve(),
                   inactiveTrackColor: AppColors.surface2,
-                  thumbColor: category.accent,
-                  overlayColor: category.accent.withValues(alpha: .12),
+                  thumbColor: category.accent.resolve(),
+                  overlayColor: category.accent.resolve().withValues(
+                    alpha: .12,
+                  ),
                   trackHeight: AppSpacing.launchpadGapXxs,
                 ),
                 child: Slider(
@@ -269,7 +271,9 @@ class _ExpandedCategorySettings extends StatelessWidget {
                       playingPreview
                           ? Icons.check_circle_outline_rounded
                           : Icons.play_arrow_rounded,
-                      color: playingPreview ? AppColors.buy : category.accent,
+                      color: playingPreview
+                          ? AppColors.buy
+                          : category.accent.resolve(),
                       size: AppSpacing.iconSm,
                     ),
                     const SizedBox(width: AppSpacing.x2),
@@ -294,7 +298,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                               height: barHeight,
                               child: DecoratedBox(
                                 decoration: ShapeDecoration(
-                                  color: category.accent,
+                                  color: category.accent.resolve(),
                                   shape: const RoundedRectangleBorder(
                                     borderRadius: AppRadii.xsRadius,
                                   ),

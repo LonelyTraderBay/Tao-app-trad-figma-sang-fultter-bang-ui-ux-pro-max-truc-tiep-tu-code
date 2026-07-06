@@ -30,7 +30,9 @@ void main() {
   }
 
   test('SC-171 mock repository exposes missing-config BE draft', () {
-    final snapshot = const DcaRepository().getRebalanceDashboard('config001');
+    final snapshot = const MockDcaRepository().getRebalanceDashboard(
+      'config001',
+    );
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-rebalance-config001');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');
@@ -76,7 +78,9 @@ void main() {
     expect(find.byKey(DCARebalanceDashboard.configureKey), findsOneWidget);
   });
 
-  testWidgets('SC-171 configure CTA opens rebalance config edge', (tester) async {
+  testWidgets('SC-171 configure CTA opens rebalance config edge', (
+    tester,
+  ) async {
     await pumpRebalanceDashboard(tester);
 
     await tester.tap(find.byKey(DCARebalanceDashboard.configureKey));

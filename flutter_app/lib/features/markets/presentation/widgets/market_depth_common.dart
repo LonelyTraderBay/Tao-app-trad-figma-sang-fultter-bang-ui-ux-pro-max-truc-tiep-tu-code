@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
@@ -28,7 +29,9 @@ class MarketDepthPairSummary extends StatelessWidget {
       child: Row(
         children: [
           Material(
-            color: pair.logoColor.withValues(alpha: .16),
+            color: AppAssetColors.forSymbol(
+              pair.baseAsset,
+            ).withValues(alpha: .16),
             shape: const CircleBorder(),
             child: SizedBox.square(
               dimension: AppSpacing.marketDepthAvatar,
@@ -36,7 +39,7 @@ class MarketDepthPairSummary extends StatelessWidget {
                 child: Text(
                   pair.baseAsset.substring(0, 2),
                   style: AppTextStyles.caption.copyWith(
-                    color: pair.logoColor,
+                    color: AppAssetColors.forSymbol(pair.baseAsset),
                     fontWeight: AppTextStyles.bold,
                     height: AppSpacing.marketLineHeightTight,
                   ),

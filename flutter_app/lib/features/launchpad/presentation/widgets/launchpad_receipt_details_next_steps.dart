@@ -18,11 +18,11 @@ class _ProjectReceiptCard extends StatelessWidget {
             dimension: AppSpacing.launchpadBox48,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: subscription.accent.withValues(alpha: .12),
+                color: subscription.accent.resolve().withValues(alpha: .12),
                 shape: RoundedRectangleBorder(
                   borderRadius: AppRadii.lgRadius,
                   side: BorderSide(
-                    color: subscription.accent.withValues(alpha: .35),
+                    color: subscription.accent.resolve().withValues(alpha: .35),
                   ),
                 ),
               ),
@@ -30,7 +30,7 @@ class _ProjectReceiptCard extends StatelessWidget {
                 child: Text(
                   subscription.projectLogo,
                   style: AppTextStyles.caption.copyWith(
-                    color: subscription.accent,
+                    color: subscription.accent.resolve(),
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),

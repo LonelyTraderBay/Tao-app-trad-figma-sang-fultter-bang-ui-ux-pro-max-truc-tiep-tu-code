@@ -85,7 +85,6 @@ class _HowItWorksTab extends StatelessWidget {
   }
 }
 
-
 class _StepRow extends StatelessWidget {
   const _StepRow({required this.step});
 

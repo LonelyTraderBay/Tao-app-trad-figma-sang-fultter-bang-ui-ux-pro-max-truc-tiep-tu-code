@@ -135,12 +135,12 @@ void main() {
     test('Arena release-gated surfaces avoid placeholder readiness copy', () {
       final source = asciiFold(
         [
-          'lib/features/arena/data/fixtures/mock_arena_repository_methods_part_03.dart',
-          'lib/features/arena/data/fixtures/mock_arena_repository_methods_part_04.dart',
-          'lib/features/arena/data/fixtures/mock_arena_repository_methods_part_05.dart',
-          'lib/features/arena/data/fixtures/mock_arena_repository_methods_part_08.dart',
-          'lib/features/arena/data/fixtures/mock_arena_repository_methods_part_09.dart',
-          'lib/features/arena/data/fixtures/mock_arena_repository_methods_part_10.dart',
+          'lib/features/arena/data/fixtures/arena_mode_challenge_detail_repository_methods.dart',
+          'lib/features/arena/data/fixtures/arena_creator_trust_repository_methods.dart',
+          'lib/features/arena/data/fixtures/arena_points_repository_methods.dart',
+          'lib/features/arena/data/fixtures/arena_flow_map_repository_methods.dart',
+          'lib/features/arena/data/fixtures/arena_production_ecosystem_repository_methods.dart',
+          'lib/features/arena/data/fixtures/arena_connected_guide_repository_methods.dart',
           'lib/features/arena/presentation/pages/verified_challenges_page.dart',
           'lib/features/arena/presentation/pages/arena_production_ready_page_part_01.dart',
           'lib/features/arena/presentation/pages/arena_production_ready_page_part_02.dart',

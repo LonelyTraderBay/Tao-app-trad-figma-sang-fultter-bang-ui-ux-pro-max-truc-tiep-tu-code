@@ -135,7 +135,7 @@ class _DistributionCard extends StatelessWidget {
                         Icon(
                           Icons.circle,
                           size: _tokenInfoDistributionDot,
-                          color: item.color,
+                          color: item.color.resolve(),
                         ),
                         const SizedBox(width: _tokenInfoDistributionDotGap),
                         Expanded(
@@ -185,7 +185,7 @@ class _DonutPainter extends CustomPainter {
         start,
         sweep,
         false,
-        paint..color = item.color,
+        paint..color = item.color.resolve(),
       );
       start += sweep;
     }

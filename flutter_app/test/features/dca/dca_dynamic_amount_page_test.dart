@@ -36,7 +36,7 @@ void main() {
   }
 
   test('SC-175 mock repository exposes dynamic amount BE draft', () {
-    final snapshot = const DcaRepository().getDynamicAmount();
+    final snapshot = const MockDcaRepository().getDynamicAmount();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-dynamic-amount');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

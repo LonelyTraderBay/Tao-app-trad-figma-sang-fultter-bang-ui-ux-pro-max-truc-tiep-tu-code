@@ -27,7 +27,7 @@ void main() {
   }
 
   test('SC-176 mock repository exposes backtester BE draft', () {
-    final snapshot = const DcaRepository().getBacktester();
+    final snapshot = const MockDcaRepository().getBacktester();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-backtester');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

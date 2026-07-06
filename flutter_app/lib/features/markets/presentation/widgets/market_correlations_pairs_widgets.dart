@@ -105,14 +105,20 @@ class _PairCorrelationRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.marketCorrelationsRankGap),
-                _AssetDot(symbol: pair.assetA, color: pair.colorA),
+                _AssetDot(
+                  symbol: pair.assetA,
+                  color: AppAssetColors.forSymbol(pair.assetA),
+                ),
                 const SizedBox(width: AppSpacing.marketCorrelationsAssetDotGap),
                 Text(
                   '↔',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(width: AppSpacing.marketCorrelationsAssetDotGap),
-                _AssetDot(symbol: pair.assetB, color: pair.colorB),
+                _AssetDot(
+                  symbol: pair.assetB,
+                  color: AppAssetColors.forSymbol(pair.assetB),
+                ),
                 const SizedBox(width: AppSpacing.marketCorrelationsPairGap),
                 Expanded(
                   child: Text(

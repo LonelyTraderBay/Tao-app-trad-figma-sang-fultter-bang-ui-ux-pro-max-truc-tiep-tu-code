@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -57,7 +58,7 @@ class _StrategyCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _TrendIcon(accent: strategy.accent),
+              _TrendIcon(accent: strategy.accent.resolve()),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: Column(

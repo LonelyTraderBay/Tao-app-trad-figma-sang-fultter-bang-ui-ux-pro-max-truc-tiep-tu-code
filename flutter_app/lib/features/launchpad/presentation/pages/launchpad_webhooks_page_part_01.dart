@@ -380,7 +380,10 @@ class _SubscriptionSummary extends StatelessWidget {
           runSpacing: AppSpacing.x1,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            _MiniPill(label: subscription.chain, color: subscription.accent),
+            _MiniPill(
+              label: subscription.chain,
+              color: subscription.accent.resolve(),
+            ),
             Text(
               '${subscription.eventTypes.length} events',
               style: AppTextStyles.micro.copyWith(
@@ -414,14 +417,14 @@ class _ChainIcon extends StatelessWidget {
       height: _launchpadWebhooksPrimaryIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: subscription.accent.withValues(alpha: .15),
+          color: subscription.accent.resolve().withValues(alpha: .15),
           shape: const RoundedRectangleBorder(
             borderRadius: AppRadii.cardRadius,
           ),
         ),
         child: Icon(
           Icons.hub_outlined,
-          color: subscription.accent,
+          color: subscription.accent.resolve(),
           size: _launchpadWebhooksIcon2xl,
         ),
       ),

@@ -85,10 +85,7 @@ class _WatchlistCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.x2),
           SizedBox(
             height: _watchlistSparklineExtent,
-            child: VitSparkline(
-              values: pair.sparklineData,
-              color: changeColor,
-            ),
+            child: VitSparkline(values: pair.sparklineData, color: changeColor),
           ),
           if (entry.note != null) ...[
             const SizedBox(height: AppSpacing.x3),
@@ -147,7 +144,7 @@ class _AssetAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitAssetAvatar(
       label: pair.baseAsset,
-      accentColor: pair.logoColor,
+      accentColor: AppAssetColors.forSymbol(pair.baseAsset),
       size: AppSpacing.watchlistAvatar,
       radius: AppRadii.pillRadius,
     );

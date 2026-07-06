@@ -64,6 +64,8 @@ class _BinaryOutcomeBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final yes = outcomes.first;
     final no = outcomes.last;
+    final yesColor = yes.tone.resolve();
+    final noColor = no.tone.resolve();
     return Column(
       children: [
         Row(
@@ -72,14 +74,14 @@ class _BinaryOutcomeBar extends StatelessWidget {
             Text(
               '${yes.label} ${yes.chance}%',
               style: AppTextStyles.badge.copyWith(
-                color: yes.color,
+                color: yesColor,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
             Text(
               '${no.label} ${no.chance}%',
               style: AppTextStyles.badge.copyWith(
-                color: no.color,
+                color: noColor,
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
@@ -94,11 +96,11 @@ class _BinaryOutcomeBar extends StatelessWidget {
               children: [
                 Expanded(
                   flex: yes.chance,
-                  child: ColoredBox(color: yes.color),
+                  child: ColoredBox(color: yesColor),
                 ),
                 Expanded(
                   flex: no.chance,
-                  child: ColoredBox(color: no.color),
+                  child: ColoredBox(color: noColor),
                 ),
               ],
             ),
@@ -124,7 +126,7 @@ class _MultiOutcomeRow extends StatelessWidget {
           Text(
             '${outcome.label} ${outcome.chance}%',
             style: AppTextStyles.badge.copyWith(
-              color: outcome.color,
+              color: outcome.tone.resolve(),
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),

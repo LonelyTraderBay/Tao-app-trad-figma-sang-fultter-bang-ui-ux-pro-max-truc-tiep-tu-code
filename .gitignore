@@ -6,7 +6,8 @@
 build/
 flutter_app/.dart_tool/
 flutter_app/build/
-flutter_app/run-artifacts/
+flutter_app/run-artifacts/*
+!flutter_app/run-artifacts/README.md
 flutter_app/tmp/
 flutter_app/*.log
 
@@ -25,6 +26,10 @@ scripts/headroom/vittrade.headroom.local.env
 .headroom/
 .tokensave/
 .gitnexus/
+.kilo/
+
+# Root-level scratch files
+/tmp_*
 
 # Retired web tooling / generated artifacts
 node_modules/

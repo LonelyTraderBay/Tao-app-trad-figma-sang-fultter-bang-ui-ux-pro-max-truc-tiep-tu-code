@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sparkline.dart';
@@ -116,91 +115,7 @@ class VitMarketPairRow extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-
-    if (onTap == null) return content;
-    return InkWell(onTap: onTap, child: content);
-  }
-}
-
-class VitRankedAssetRow extends StatelessWidget {
-  const VitRankedAssetRow({
-    super.key,
-    required this.rank,
-    required this.leading,
-    required this.title,
-    required this.badgeLabel,
-    required this.trend,
-    this.highlightRank = false,
-    this.onTap,
-  });
-
-  final int rank;
-  final Widget leading;
-  final String title;
-  final String badgeLabel;
-  final VitTrendDirection trend;
-  final bool highlightRank;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final content = Padding(
-      padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.homeSectionHorizontalPadding,
-        vertical: AppSpacing.homeSectionVerticalPadding,
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: AppSpacing.homeRankedRowRankChipWidth,
-            child: Text(
-              '$rank',
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption.copyWith(
-                color: highlightRank ? AppColors.warn : AppColors.text3,
-                fontWeight: AppTextStyles.bold,
-              ),
-            ),
-          ),
-          const SizedBox(width: AppSpacing.homeMarketIconGap),
-          const SizedBox(width: AppSpacing.homeMarketIconGap),
-          leading,
-          const SizedBox(width: AppSpacing.homeMarketIconGap),
-          Expanded(
-            child: Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.body.copyWith(
-                fontWeight: AppTextStyles.medium,
-              ),
-            ),
-          ),
-          DecoratedBox(
-            decoration: ShapeDecoration(
-              color: trend.background,
-              shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
-            ),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.symmetric(
-                horizontal: AppSpacing.homeRankedRowBadgePaddingHorizontal,
-                vertical: AppSpacing.homeRankedRowBadgePaddingVertical,
-              ),
-              child: Text(
-                badgeLabel,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.caption.copyWith(
-                  color: trend.foreground,
-                  fontWeight: AppTextStyles.bold,
-                ),
-              ),
-            ),
+\            ),
           ),
         ],
       ),

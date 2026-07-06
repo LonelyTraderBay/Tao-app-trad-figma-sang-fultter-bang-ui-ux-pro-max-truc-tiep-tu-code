@@ -104,7 +104,7 @@ String _retryLabel(LaunchpadWebhookRetryPolicy retryPolicy) {
 
 Color _eventColor(String type, List<LaunchpadWebhookEventDraft> eventTypes) {
   for (final event in eventTypes) {
-    if (event.type == type) return event.accent;
+    if (event.type == type) return event.accent.resolve();
   }
   return AppColors.text3;
 }

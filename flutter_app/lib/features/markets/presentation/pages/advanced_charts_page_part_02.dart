@@ -34,7 +34,7 @@ class _IndicatorCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Material(
-                      color: indicator.color.withValues(alpha: .08),
+                      color: indicator.color.resolve().withValues(alpha: .08),
                       shape: const RoundedRectangleBorder(
                         borderRadius: AppRadii.smRadius,
                       ),
@@ -46,7 +46,7 @@ class _IndicatorCard extends StatelessWidget {
                                 ? indicator.shortName
                                 : indicator.shortName.substring(0, 3),
                             style: AppTextStyles.micro.copyWith(
-                              color: indicator.color,
+                              color: indicator.color.resolve(),
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
@@ -87,7 +87,7 @@ class _IndicatorCard extends StatelessWidget {
                     _IndicatorToggle(
                       key: AdvancedChartsPage.indicatorToggleKey(indicator.id),
                       active: active,
-                      color: indicator.color,
+                      color: indicator.color.resolve(),
                       onTap: onToggleActive,
                     ),
                   ],
@@ -148,7 +148,7 @@ class _CategoryBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = category?.color ?? AppColors.text3;
+    final color = category?.color.resolve() ?? AppColors.text3;
     return Material(
       color: color.withValues(alpha: .08),
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
@@ -348,7 +348,7 @@ class _DrawingToolsGrid extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  tool.icon,
+                  MarketIconTokens.icon(tool.icon),
                   size: _advancedToolIcon,
                   color: AppColors.text1,
                 ),
@@ -435,4 +435,3 @@ class _TipsCard extends StatelessWidget {
     );
   }
 }
-

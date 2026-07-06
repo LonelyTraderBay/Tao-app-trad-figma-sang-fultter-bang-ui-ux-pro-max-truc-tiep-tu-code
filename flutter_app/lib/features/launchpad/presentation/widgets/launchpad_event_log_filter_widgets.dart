@@ -62,12 +62,14 @@ class _LevelFilterBar extends StatelessWidget {
                     : events
                           .where((event) => event.level.value == value)
                           .length;
-                return _FilterChipButton(
+                return VitFilterChip(
                   key: LaunchpadEventLogPage.levelKey(value),
                   label: value == 'all' ? 'Tat ca' : level!.label,
                   count: count,
+                  semanticCountSuffix: 'events',
                   active: activeValue == value,
                   color: level?.color ?? AppModuleAccents.launchpad,
+                  padding: AppSpacing.launchpadPillPadding,
                   onTap: () => onChanged(value),
                 );
               },
@@ -167,11 +169,12 @@ class _SourceFilterCard extends StatelessWidget {
             runSpacing: AppSpacing.x2,
             children: [
               for (final source in sources)
-                _FilterChipButton(
+                VitFilterChip(
                   key: LaunchpadEventLogPage.sourceKey(source),
                   label: source == 'all' ? 'Tat ca' : source,
                   active: activeValue == source,
                   color: AppModuleAccents.launchpad,
+                  padding: AppSpacing.launchpadPillPadding,
                   onTap: () => onChanged(source),
                 ),
             ],

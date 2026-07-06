@@ -77,7 +77,7 @@ class _TradeSection extends StatelessWidget {
                             label: option.label,
                             selected: option.label == selectedOutcome,
                             onTap: () => onOutcomeChanged(option.label),
-                            accentColor: option.color,
+                            accentColor: option.tone.resolve(),
                             padding:
                                 AppSpacing.predictionDetailToggleChipPadding,
                           ),

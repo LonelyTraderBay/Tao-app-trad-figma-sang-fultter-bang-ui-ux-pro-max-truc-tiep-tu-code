@@ -31,10 +31,13 @@ class MarketListSortSheet extends StatelessWidget {
         runSpacing: AppSpacing.marketFilterGap,
         children: [
           for (final option in sortOptions)
-            _FilterChipButton(
+            VitFilterChip(
               label: option.label,
               active: option.id == activeSort,
               onTap: () => onSelected(option.id),
+              color: marketListPrimary,
+              height: _marketCategoryCompactHeight,
+              padding: _marketFilterCompactPadding,
             ),
         ],
       ),
@@ -66,12 +69,13 @@ class MarketListCategoryTabs extends StatelessWidget {
             const SizedBox(width: _marketCategoryCompactGap),
         itemBuilder: (context, index) {
           final category = categories[index];
-          return _FilterChipButton(
+          return VitFilterChip(
             key: MarketListKeys.category(category),
             label: category,
             active: category == activeCategory,
-            activeColor: marketListPrimary,
-            minHeight: _marketCategoryCompactHeight,
+            color: marketListPrimary,
+            height: _marketCategoryCompactHeight,
+            padding: _marketFilterCompactPadding,
             onTap: () => onSelected(category),
           );
         },
@@ -80,36 +84,3 @@ class MarketListCategoryTabs extends StatelessWidget {
   }
 }
 
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-    this.activeColor = marketListPrimary,
-    this.minHeight = _marketCategoryCompactHeight,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-  final Color activeColor;
-  final double minHeight;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      selected: active,
-      label: label,
-      child: VitChoicePill(
-        label: label,
-        selected: active,
-        onTap: onTap,
-        accentColor: activeColor,
-        height: minHeight,
-        padding: _marketFilterCompactPadding,
-      ),
-    );
-  }
-}

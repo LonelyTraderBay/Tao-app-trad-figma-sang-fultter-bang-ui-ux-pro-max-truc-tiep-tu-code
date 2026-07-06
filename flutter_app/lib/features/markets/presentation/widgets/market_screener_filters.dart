@@ -63,7 +63,7 @@ class _PresetScroller extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        preset.icon,
+                        MarketIconTokens.icon(preset.icon),
                         size: _presetIconSize,
                         color: active ? _marketPrimary : AppColors.text2,
                       ),

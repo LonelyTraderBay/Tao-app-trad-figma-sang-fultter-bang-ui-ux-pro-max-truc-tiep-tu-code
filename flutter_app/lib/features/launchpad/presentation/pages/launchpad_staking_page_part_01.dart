@@ -245,7 +245,7 @@ class _PoolCard extends StatelessWidget {
             children: [
               _LogoBadge(
                 label: pool.projectLogo,
-                color: pool.accent,
+                color: pool.accent.resolve(),
                 size: AppSpacing.x7,
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -292,7 +292,7 @@ class _PoolCard extends StatelessWidget {
                   Text(
                     '${_formatApy(pool.effectiveApy)}%',
                     style: AppTextStyles.sectionTitle.copyWith(
-                      color: pool.accent,
+                      color: pool.accent.resolve(),
                       fontWeight: AppTextStyles.extraBold,
                     ),
                   ),

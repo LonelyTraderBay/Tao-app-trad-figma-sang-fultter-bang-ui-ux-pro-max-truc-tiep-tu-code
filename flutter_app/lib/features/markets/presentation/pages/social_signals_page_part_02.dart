@@ -59,8 +59,8 @@ class _SignalCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.marketSocialCompactGap),
                     _TinyBadge(
                       label: tierConfig.label,
-                      color: tierConfig.color,
-                      background: tierConfig.background,
+                      color: tierConfig.color.resolve(),
+                      background: tierConfig.background.resolve(),
                     ),
                     const SizedBox(width: AppSpacing.marketSocialGap),
                     Text(
@@ -106,8 +106,10 @@ class _SignalCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.marketSocialGap),
                     _TinyBadge(
                       label: statusConfig.label,
-                      color: statusConfig.color,
-                      background: statusConfig.color.withValues(alpha: .12),
+                      color: statusConfig.color.resolve(),
+                      background: statusConfig.color.resolve().withValues(
+                        alpha: .12,
+                      ),
                     ),
                     const SizedBox(width: AppSpacing.marketSocialCompactGap),
                     _TinyBadge(
@@ -398,11 +400,13 @@ class _ProviderCard extends StatelessWidget {
             children: [
               Material(
                 color: rank <= 3
-                    ? tierConfig.color.withValues(alpha: .15)
+                    ? tierConfig.color.resolve().withValues(alpha: .15)
                     : AppColors.surface2,
                 shape: CircleBorder(
                   side: BorderSide(
-                    color: rank <= 3 ? tierConfig.color : AppColors.borderSolid,
+                    color: rank <= 3
+                        ? tierConfig.color.resolve()
+                        : AppColors.borderSolid,
                   ),
                 ),
                 child: SizedBox.square(
@@ -411,7 +415,9 @@ class _ProviderCard extends StatelessWidget {
                     child: Text(
                       '$rank',
                       style: AppTextStyles.micro.copyWith(
-                        color: rank <= 3 ? tierConfig.color : AppColors.text3,
+                        color: rank <= 3
+                            ? tierConfig.color.resolve()
+                            : AppColors.text3,
                         fontWeight: AppTextStyles.bold,
                         fontFeatures: AppTextStyles.tabularFigures,
                         height: AppTextStyles.numericMicro.height,
@@ -452,8 +458,8 @@ class _ProviderCard extends StatelessWidget {
                         ),
                         _TinyBadge(
                           label: tierConfig.label,
-                          color: tierConfig.color,
-                          background: tierConfig.background,
+                          color: tierConfig.color.resolve(),
+                          background: tierConfig.background.resolve(),
                         ),
                       ],
                     ),

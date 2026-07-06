@@ -80,7 +80,7 @@ class _CorrelationHeatmapPainter extends CustomPainter {
       textPainter.text = TextSpan(
         text: asset.symbol,
         style: AppTextStyles.chartLabelTiny.copyWith(
-          color: asset.color,
+          color: AppAssetColors.forSymbol(asset.symbol),
           fontWeight: AppTextStyles.bold,
         ),
       );
@@ -96,7 +96,7 @@ class _CorrelationHeatmapPainter extends CustomPainter {
       textPainter.text = TextSpan(
         text: asset.symbol,
         style: AppTextStyles.chartLabelTiny.copyWith(
-          color: asset.color,
+          color: AppAssetColors.forSymbol(asset.symbol),
           fontWeight: AppTextStyles.bold,
         ),
       );

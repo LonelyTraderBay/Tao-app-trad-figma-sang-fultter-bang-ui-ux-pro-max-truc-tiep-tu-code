@@ -164,7 +164,8 @@ class _StatusBreakdown extends StatelessWidget {
                       Expanded(
                         flex: entry.value,
                         child: ColoredBox(
-                          color: snapshot.statusConfigs[entry.key]!.color,
+                          color: snapshot.statusConfigs[entry.key]!.color
+                              .resolve(),
                         ),
                       ),
                 ],
@@ -179,7 +180,7 @@ class _StatusBreakdown extends StatelessWidget {
               for (final entry in counts.entries)
                 if (entry.value > 0)
                   _LegendItem(
-                    color: snapshot.statusConfigs[entry.key]!.color,
+                    color: snapshot.statusConfigs[entry.key]!.color.resolve(),
                     label:
                         '${snapshot.statusConfigs[entry.key]!.label}: ${entry.value}',
                   ),

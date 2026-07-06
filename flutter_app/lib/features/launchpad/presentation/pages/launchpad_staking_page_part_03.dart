@@ -11,12 +11,12 @@ class _TierChip extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: selected
-            ? tier.accent.withValues(alpha: .12)
+            ? tier.accent.resolve().withValues(alpha: .12)
             : AppColors.surface2,
         shape: RoundedRectangleBorder(
           side: BorderSide(
             color: selected
-                ? tier.accent.withValues(alpha: .34)
+                ? tier.accent.resolve().withValues(alpha: .34)
                 : AppColors.cardBorder,
           ),
           borderRadius: AppRadii.smRadius,
@@ -31,7 +31,7 @@ class _TierChip extends StatelessWidget {
               child: Text(
                 tier.label,
                 style: AppTextStyles.micro.copyWith(
-                  color: tier.accent,
+                  color: tier.accent.resolve(),
                   fontWeight: AppTextStyles.bold,
                   height: AppSpacing.launchpadLineHeightTight,
                 ),
@@ -61,7 +61,7 @@ class _UserStakeSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      borderColor: pool.accent.withValues(alpha: .18),
+      borderColor: pool.accent.resolve().withValues(alpha: .18),
       padding: AppSpacing.launchpadPaddingX4,
       child: Row(
         children: [

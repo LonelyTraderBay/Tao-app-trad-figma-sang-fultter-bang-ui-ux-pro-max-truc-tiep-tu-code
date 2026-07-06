@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/router/app_router.dart';
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
@@ -12,6 +13,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
+import 'package:vit_trade_flutter/app/theme/market_icon_tokens.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -67,7 +69,8 @@ class MarketOverviewPage extends ConsumerWidget {
         child: VitAutoHideHeaderScaffold(
           header: VitHeader(
             title: 'Tổng quan thị trường',
-            subtitle: 'Dữ liệu tham khảo · Cập nhật ${snapshot.lastUpdatedLabel}',
+            subtitle:
+                'Dữ liệu tham khảo · Cập nhật ${snapshot.lastUpdatedLabel}',
             showBack: true,
             onBack: () => context.go(AppRoutePaths.markets),
           ),

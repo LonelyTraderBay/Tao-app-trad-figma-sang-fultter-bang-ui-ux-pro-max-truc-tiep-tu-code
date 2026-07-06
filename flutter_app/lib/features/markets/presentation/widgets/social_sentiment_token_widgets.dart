@@ -31,11 +31,13 @@ class _SentimentRow extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: _sentimentAvatarLg / 2,
-            backgroundColor: token.color.withValues(alpha: .16),
+            backgroundColor: AppAssetColors.forSymbol(
+              token.symbol,
+            ).withValues(alpha: .16),
             child: Text(
               token.symbol.substring(0, math.min(2, token.symbol.length)),
               style: AppTextStyles.caption.copyWith(
-                color: token.color,
+                color: AppAssetColors.forSymbol(token.symbol),
                 fontWeight: AppTextStyles.bold,
               ),
             ),
@@ -166,11 +168,13 @@ class _TokenDetailCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: _sentimentAvatarMd / 2,
-                backgroundColor: token.color.withValues(alpha: .16),
+                backgroundColor: AppAssetColors.forSymbol(
+                  token.symbol,
+                ).withValues(alpha: .16),
                 child: Text(
                   token.symbol.substring(0, math.min(2, token.symbol.length)),
                   style: AppTextStyles.caption.copyWith(
-                    color: token.color,
+                    color: AppAssetColors.forSymbol(token.symbol),
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),

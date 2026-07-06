@@ -167,15 +167,13 @@ class _TokenBadge extends StatelessWidget {
         ? AppTextStyles.numericMicro
         : AppTextStyles.captionSm;
 
+    final color = AppAssetColors.forSymbol(holding.symbol);
     return CircleAvatar(
       radius: size / 2,
-      backgroundColor: holding.color.withValues(alpha: .14),
+      backgroundColor: color.withValues(alpha: .14),
       child: Text(
         holding.symbol.substring(0, math.min(2, holding.symbol.length)),
-        style: textStyle.copyWith(
-          color: holding.color,
-          fontWeight: AppTextStyles.bold,
-        ),
+        style: textStyle.copyWith(color: color, fontWeight: AppTextStyles.bold),
       ),
     );
   }
@@ -201,7 +199,9 @@ class _AllocationDonutPainter extends CustomPainter {
 
     for (final holding in holdings) {
       final sweep = (holding.allocation / 100) * math.pi * 2;
-      paint.color = holding.color.withValues(alpha: .86);
+      paint.color = AppAssetColors.forSymbol(
+        holding.symbol,
+      ).withValues(alpha: .86);
       canvas.drawArc(rect, start, sweep, false, paint);
       start += sweep;
     }

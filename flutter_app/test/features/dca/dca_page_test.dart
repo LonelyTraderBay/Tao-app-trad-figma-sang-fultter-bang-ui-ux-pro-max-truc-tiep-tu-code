@@ -30,7 +30,7 @@ void main() {
   }
 
   test('SC-169 mock repository exposes DCA BE draft', () {
-    final snapshot = const DcaRepository().getDashboard();
+    final snapshot = const MockDcaRepository().getDashboard();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

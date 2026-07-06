@@ -291,7 +291,7 @@ final class PredictionSocialSnapshot {
         orElse: () => const PredictionSentimentDraft(
           name: 'Bullish',
           value: 0,
-          color: AppColors.buy,
+          tone: AccentTone.buy,
         ),
       )
       .value;
@@ -331,12 +331,12 @@ final class PredictionSentimentDraft {
   const PredictionSentimentDraft({
     required this.name,
     required this.value,
-    required this.color,
+    required this.tone,
   });
 
   final String name;
   final int value;
-  final Color color;
+  final AccentTone tone;
 }
 
 final class PredictionContributorDraft {
@@ -434,14 +434,14 @@ final class PredictionIndicatorSignalDraft {
     required this.name,
     required this.signal,
     required this.strength,
-    required this.color,
+    required this.tone,
     required this.description,
   });
 
   final String name;
   final String signal;
   final String strength;
-  final Color color;
+  final AccentTone tone;
   final String description;
 }
 

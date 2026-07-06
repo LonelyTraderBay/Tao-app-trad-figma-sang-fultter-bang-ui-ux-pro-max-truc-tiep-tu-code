@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_colors.dart';
+import 'package:vit_trade_flutter/core/utils/accent_tone.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/domain/repositories/market_repository.dart';
 

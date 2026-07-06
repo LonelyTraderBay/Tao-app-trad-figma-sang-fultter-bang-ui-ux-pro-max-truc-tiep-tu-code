@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -35,7 +36,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                 child: _DonutBlock(
                   label: 'Hien tai',
                   values: [for (final asset in assets) asset.currentPercent],
-                  colors: [for (final asset in assets) asset.accent],
+                  colors: [for (final asset in assets) asset.accent.resolve()],
                 ),
               ),
               const Icon(
@@ -47,7 +48,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                 child: _DonutBlock(
                   label: 'Muc tieu',
                   values: [for (final asset in assets) asset.targetPercent],
-                  colors: [for (final asset in assets) asset.accent],
+                  colors: [for (final asset in assets) asset.accent.resolve()],
                 ),
               ),
             ],
@@ -67,7 +68,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                       height: AppSpacing.launchpadDotMd,
                       child: DecoratedBox(
                         decoration: ShapeDecoration(
-                          color: asset.accent,
+                          color: asset.accent.resolve(),
                           shape: RoundedRectangleBorder(
                             borderRadius: AppRadii.xsRadius,
                           ),

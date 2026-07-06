@@ -42,10 +42,10 @@ class _HistoricalProjectCard extends StatelessWidget {
                 dimension: _launchpadPerformanceProjectIconBox,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: project.accent.withValues(alpha: .12),
+                    color: project.accent.resolve().withValues(alpha: .12),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
-                        color: project.accent.withValues(alpha: .30),
+                        color: project.accent.resolve().withValues(alpha: .30),
                       ),
                       borderRadius: AppRadii.lgRadius,
                     ),
@@ -54,7 +54,7 @@ class _HistoricalProjectCard extends StatelessWidget {
                     child: Text(
                       project.symbol.substring(0, 2),
                       style: AppTextStyles.caption.copyWith(
-                        color: project.accent,
+                        color: project.accent.resolve(),
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -82,7 +82,10 @@ class _HistoricalProjectCard extends StatelessWidget {
                   ],
                 ),
               ),
-              _TinyPill(label: project.type, status: VitStatusPillStatus.purple),
+              _TinyPill(
+                label: project.type,
+                status: VitStatusPillStatus.purple,
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.x3),

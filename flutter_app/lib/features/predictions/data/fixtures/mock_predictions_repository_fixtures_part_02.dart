@@ -421,9 +421,9 @@ const List<PredictionSocialCommentDraft> _predictionSocialComments = [
 ];
 
 const List<PredictionSentimentDraft> _predictionSocialSentiment = [
-  PredictionSentimentDraft(name: 'Bullish', value: 58, color: AppColors.buy),
-  PredictionSentimentDraft(name: 'Bearish', value: 22, color: AppColors.sell),
-  PredictionSentimentDraft(name: 'Neutral', value: 20, color: AppColors.text3),
+  PredictionSentimentDraft(name: 'Bullish', value: 58, tone: AccentTone.buy),
+  PredictionSentimentDraft(name: 'Bearish', value: 22, tone: AccentTone.sell),
+  PredictionSentimentDraft(name: 'Neutral', value: 20, tone: AccentTone.text3),
 ];
 
 const List<PredictionContributorDraft> _predictionSocialContributors = [

@@ -1,14 +1,10 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -18,13 +14,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
-
-part 'earn_backtest_page.dart';
-
-TextStyle get _captionBold =>
-    AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold);
-TextStyle get _microBold =>
-    AppTextStyles.micro.copyWith(fontWeight: AppTextStyles.bold);
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_compare.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_formatters.dart'
+    as backtest_fmt;
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_hero.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_results.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_setup.dart';
 
 class SavingsBacktestPage extends ConsumerStatefulWidget {
   const SavingsBacktestPage({super.key, this.shellRenderMode});
@@ -80,9 +75,9 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
     final activeTab = _tab ?? snapshot.defaultTab;
     final selectedPreset = _preset ?? snapshot.defaultPreset;
     final selectedPeriod = _period ?? snapshot.defaultPeriod;
-    final preset = _presetById(snapshot, selectedPreset);
-    final period = _periodById(snapshot, selectedPeriod);
-    final weightedApy = _weightedApy(preset.slots);
+    final preset = backtest_fmt.presetById(snapshot, selectedPreset);
+    final period = backtest_fmt.periodById(snapshot, selectedPeriod);
+    final weightedApy = backtest_fmt.weightedApy(preset.slots);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
@@ -112,7 +107,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
-                      _BacktestHero(
+                      BacktestHero(
                         snapshot: snapshot,
                         amountUsd: _amountUsd,
                         preset: preset,
@@ -121,7 +116,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
                         hasRun: _hasRun,
                         result: snapshot.result,
                       ),
-                      _BacktestTabs(
+                      BacktestTabs(
                         tabs: snapshot.tabs,
                         active: activeTab,
                         onChanged: (tab) {
@@ -138,7 +133,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
                         )
                       else if (activeTab == 'results')
                         if (_hasRun)
-                          _ResultsTab(
+                          ResultsTab(
                             snapshot: snapshot,
                             amountUsd: _amountUsd,
                             period: period,
@@ -148,11 +143,11 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
                                 context.go(snapshot.recommendationsRoute),
                           )
                         else
-                          _NoResults(
+                          NoResults(
                             onSetup: () => setState(() => _tab = 'setup'),
                           )
                       else
-                        _CompareTab(snapshot: snapshot, amountUsd: _amountUsd),
+                        CompareTab(snapshot: snapshot, amountUsd: _amountUsd),
                     ],
                   ),
                 ),
@@ -171,8 +166,8 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
     double weightedApy,
   ) {
     return [
-      _SectionTitle(label: 'Vốn ban đầu (USD)'),
-      _AmountField(
+      SectionTitle(label: 'Vốn ban đầu (USD)'),
+      AmountField(
         controller: _amountController,
         quickAmounts: snapshot.quickAmounts,
         amountUsd: _amountUsd,
@@ -185,8 +180,8 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
           });
         },
       ),
-      _SectionTitle(label: 'Thời gian mô phỏng'),
-      _PeriodRow(
+      SectionTitle(label: 'Thời gian mô phỏng'),
+      PeriodRow(
         periods: snapshot.periods,
         selected: selectedPeriod,
         onChanged: (period) {
@@ -197,8 +192,8 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
           });
         },
       ),
-      _SectionTitle(label: 'Chiến lược phân bổ'),
-      _PresetList(
+      SectionTitle(label: 'Chiến lược phân bổ'),
+      PresetList(
         presets: snapshot.presets,
         selected: preset.id,
         onChanged: (preset) {
@@ -209,8 +204,8 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
           });
         },
       ),
-      _SectionTitle(label: 'Phân bổ hiện tại'),
-      _AllocationCard(
+      SectionTitle(label: 'Phân bổ hiện tại'),
+      AllocationCard(
         preset: preset,
         weightedApy: weightedApy,
         amountUsd: _amountUsd,

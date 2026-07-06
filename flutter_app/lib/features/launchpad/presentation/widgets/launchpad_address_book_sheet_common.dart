@@ -196,16 +196,18 @@ class _ChainIcon extends StatelessWidget {
       dimension: AppSpacing.launchpadBox44,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: address.accent.withValues(alpha: .16),
+          color: address.accent.resolve().withValues(alpha: .16),
           shape: RoundedRectangleBorder(
             borderRadius: AppRadii.lgRadius,
-            side: BorderSide(color: address.accent.withValues(alpha: .28)),
+            side: BorderSide(
+              color: address.accent.resolve().withValues(alpha: .28),
+            ),
           ),
         ),
         child: Center(
           child: Icon(
             _chainIcon(address.iconKey),
-            color: address.accent,
+            color: address.accent.resolve(),
             size: AppSpacing.launchpadIcon3xl,
           ),
         ),

@@ -34,9 +34,9 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
     final scrollEndPadding =
         (mode.usesVisualQaFrame
             ? _p2pMerchantApplyVisualNavClearance +
-                AppSpacing.p2pMerchantApplyBottomInsetVisual
+                  AppSpacing.p2pMerchantApplyBottomInsetVisual
             : _p2pMerchantApplyNativeNavClearance +
-                AppSpacing.p2pMerchantApplyBottomInsetNative) +
+                  AppSpacing.p2pMerchantApplyBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(

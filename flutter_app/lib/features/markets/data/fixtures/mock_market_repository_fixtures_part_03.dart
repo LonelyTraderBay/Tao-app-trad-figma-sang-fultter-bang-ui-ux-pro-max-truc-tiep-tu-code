@@ -5,7 +5,6 @@ const List<TokenUnlockDraft> _tokenUnlocks = [
     id: 'u1',
     symbol: 'ARB',
     name: 'Arbitrum',
-    color: AppAssetColors.arb,
     unlockDate: '2026-03-16',
     unlockDateLabel: '16 Th3 2026',
     daysUntil: 5,
@@ -44,7 +43,6 @@ const List<TokenUnlockDraft> _tokenUnlocks = [
     id: 'u2',
     symbol: 'OP',
     name: 'Optimism',
-    color: AppAssetColors.op,
     unlockDate: '2026-03-20',
     unlockDateLabel: '20 Th3 2026',
     daysUntil: 9,
@@ -87,7 +85,6 @@ const List<TokenUnlockDraft> _tokenUnlocks = [
     id: 'u3',
     symbol: 'APT',
     name: 'Aptos',
-    color: AppAssetColors.tealBrightChain,
     unlockDate: '2026-03-12',
     unlockDateLabel: '12 Th3 2026',
     daysUntil: 1,
@@ -118,7 +115,6 @@ const List<TokenUnlockDraft> _tokenUnlocks = [
     id: 'u4',
     symbol: 'SUI',
     name: 'Sui',
-    color: AppAssetColors.blueBrightChain,
     unlockDate: '2026-04-01',
     unlockDateLabel: '01 Th4 2026',
     daysUntil: 21,
@@ -153,7 +149,6 @@ const List<TokenUnlockDraft> _tokenUnlocks = [
     id: 'u5',
     symbol: 'TIA',
     name: 'Celestia',
-    color: AppAssetColors.violetBrightChain,
     unlockDate: '2026-03-25',
     unlockDateLabel: '25 Th3 2026',
     daysUntil: 14,
@@ -188,7 +183,6 @@ const List<TokenUnlockDraft> _tokenUnlocks = [
     id: 'u6',
     symbol: 'STRK',
     name: 'Starknet',
-    color: AppAssetColors.orangeChain,
     unlockDate: '2026-04-15',
     unlockDateLabel: '15 Th4 2026',
     daysUntil: 35,
@@ -228,37 +222,37 @@ const MarketScreenFilters _marketSocialSignalsFilters = MarketScreenFilters(
 const Map<TradingSignalProviderTier, SignalTierConfig> _signalTierConfigs = {
   TradingSignalProviderTier.gold: SignalTierConfig(
     label: 'Vàng',
-    color: AppColors.warn,
-    background: AppColors.warn10,
+    color: AccentTone.warn,
+    background: AccentTone.warn10,
   ),
   TradingSignalProviderTier.silver: SignalTierConfig(
     label: 'Bạc',
-    color: AppColors.medalSilverBlue,
-    background: AppColors.medalSilverBlue10,
+    color: AccentTone.medalSilverBlue,
+    background: AccentTone.medalSilverBlue10,
   ),
   TradingSignalProviderTier.bronze: SignalTierConfig(
     label: 'Đồng',
-    color: AppColors.medalBronzeMuted,
-    background: AppColors.medalBronzeMuted10,
+    color: AccentTone.medalBronzeMuted,
+    background: AccentTone.medalBronzeMuted10,
   ),
 };
 
 const Map<TradingSignalStatus, SignalStatusConfig> _signalStatusConfigs = {
   TradingSignalStatus.active: SignalStatusConfig(
     label: 'Đang hoạt động',
-    color: AppColors.info,
+    color: AccentTone.info,
   ),
   TradingSignalStatus.targetHit: SignalStatusConfig(
     label: 'Đạt mục tiêu',
-    color: AppColors.buy,
+    color: AccentTone.buy,
   ),
   TradingSignalStatus.stopped: SignalStatusConfig(
     label: 'Dừng lỗ',
-    color: AppColors.sell,
+    color: AccentTone.sell,
   ),
   TradingSignalStatus.expired: SignalStatusConfig(
     label: 'Hết hạn',
-    color: AppAssetColors.neutralChain,
+    color: AccentTone.text3,
   ),
 };
 
@@ -453,14 +447,14 @@ const MarketScreenFilters _marketCorrelationFilters = MarketScreenFilters(
 );
 
 const List<CorrelationAsset> _correlationAssets = [
-  CorrelationAsset(symbol: 'BTC', color: AppAssetColors.btc),
-  CorrelationAsset(symbol: 'ETH', color: AppAssetColors.eth),
-  CorrelationAsset(symbol: 'SOL', color: AppAssetColors.sol),
-  CorrelationAsset(symbol: 'BNB', color: AppAssetColors.bnb),
-  CorrelationAsset(symbol: 'XRP', color: AppAssetColors.xrp),
-  CorrelationAsset(symbol: 'ADA', color: AppAssetColors.ada),
-  CorrelationAsset(symbol: 'AVAX', color: AppAssetColors.avax),
-  CorrelationAsset(symbol: 'LINK', color: AppAssetColors.link),
+  CorrelationAsset(symbol: 'BTC'),
+  CorrelationAsset(symbol: 'ETH'),
+  CorrelationAsset(symbol: 'SOL'),
+  CorrelationAsset(symbol: 'BNB'),
+  CorrelationAsset(symbol: 'XRP'),
+  CorrelationAsset(symbol: 'ADA'),
+  CorrelationAsset(symbol: 'AVAX'),
+  CorrelationAsset(symbol: 'LINK'),
 ];
 
 const List<List<double>> _corrMatrix7d = [
@@ -540,21 +534,17 @@ const MarketScreenFilters _marketNewsFilters = MarketScreenFilters(
 );
 
 const List<MarketNewsCategory> _marketNewsCategories = [
+  MarketNewsCategory(id: 'all', label: 'Tất cả', color: AccentTone.text3),
+  MarketNewsCategory(id: 'breaking', label: 'Nóng', color: AccentTone.sell),
+  MarketNewsCategory(id: 'bitcoin', label: 'Bitcoin', color: AccentTone.warn),
+  MarketNewsCategory(id: 'altcoin', label: 'Altcoin', color: AccentTone.accent),
+  MarketNewsCategory(id: 'defi', label: 'DeFi', color: AccentTone.info),
+  MarketNewsCategory(id: 'macro', label: 'Vĩ mô', color: AccentTone.text3),
   MarketNewsCategory(
-    id: 'all',
-    label: 'Tất cả',
-    color: AppAssetColors.neutralChain,
+    id: 'regulation',
+    label: 'Pháp lý',
+    color: AccentTone.warn,
   ),
-  MarketNewsCategory(id: 'breaking', label: 'Nóng', color: AppColors.sell),
-  MarketNewsCategory(
-    id: 'bitcoin',
-    label: 'Bitcoin',
-    color: AppAssetColors.btc,
-  ),
-  MarketNewsCategory(id: 'altcoin', label: 'Altcoin', color: AppColors.accent),
-  MarketNewsCategory(id: 'defi', label: 'DeFi', color: AppColors.info),
-  MarketNewsCategory(id: 'macro', label: 'Vĩ mô', color: AppColors.text3),
-  MarketNewsCategory(id: 'regulation', label: 'Pháp lý', color: AppColors.warn),
-  MarketNewsCategory(id: 'analysis', label: 'Phân tích', color: AppColors.buy),
-  MarketNewsCategory(id: 'nft', label: 'NFT', color: AppAssetColors.pinkChain),
+  MarketNewsCategory(id: 'analysis', label: 'Phân tích', color: AccentTone.buy),
+  MarketNewsCategory(id: 'nft', label: 'NFT', color: AccentTone.accent),
 ];

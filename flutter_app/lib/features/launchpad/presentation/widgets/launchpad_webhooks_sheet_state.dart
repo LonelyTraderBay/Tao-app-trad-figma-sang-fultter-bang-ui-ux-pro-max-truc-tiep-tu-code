@@ -132,7 +132,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
                             _SelectablePill(
                               key: LaunchpadWebhooksPage.eventKey(event.type),
                               label: event.label,
-                              color: event.accent,
+                              color: event.accent.resolve(),
                               active: _selectedEvents.contains(event.type),
                               onTap: () => setState(() {
                                 if (!_selectedEvents.add(event.type)) {
@@ -181,7 +181,7 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
         label: _labelController.text.trim(),
         contractAddress: _contractController.text.trim(),
         chain: _chain,
-        accent: _chainColor(_chain),
+        accent: _chainAccent(_chain),
         eventTypes: _selectedEvents.toList(),
         webhookUrl: _urlController.text.trim(),
         status: LaunchpadWebhookStatus.pending,
@@ -194,4 +194,14 @@ class _CreateWebhookSheetState extends State<_CreateWebhookSheet> {
       ),
     );
   }
+}
+
+AccentTone _chainAccent(String value) {
+  return switch (value) {
+    'BSC' => AccentTone.warn,
+    'Ethereum' => AccentTone.primary,
+    'Polygon' => AccentTone.accent,
+    'Arbitrum' => AccentTone.primarySoft,
+    _ => AccentTone.text3,
+  };
 }

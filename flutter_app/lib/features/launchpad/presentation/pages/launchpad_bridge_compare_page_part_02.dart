@@ -25,7 +25,7 @@ class _RouteCard extends StatelessWidget {
       key: LaunchpadBridgeComparePage.routeKey(route.id),
       radius: VitCardRadius.large,
       borderColor: selected
-          ? route.accent.withValues(alpha: .48)
+          ? route.accent.resolve().withValues(alpha: .48)
           : route.recommended
           ? AppColors.primary.withValues(alpha: .24)
           : AppColors.cardBorder,
@@ -76,7 +76,9 @@ class _RouteCard extends StatelessWidget {
                   selected
                       ? Icons.check_circle_rounded
                       : Icons.radio_button_unchecked_rounded,
-                  color: selected ? route.accent : AppColors.borderSolid,
+                  color: selected
+                      ? route.accent.resolve()
+                      : AppColors.borderSolid,
                   size: AppSpacing.iconMd,
                 ),
               ],
@@ -133,7 +135,7 @@ class _RankedProviderBadge extends StatelessWidget {
       children: [
         _ProviderBadge(
           label: route.providerIcon,
-          accent: route.accent,
+          accent: route.accent.resolve(),
           size: AppSpacing.launchpadBox40,
         ),
         if (rank == 1)

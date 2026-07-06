@@ -24,8 +24,8 @@ final class MarketNewsItem {
   final String category;
   final MarketNewsSentiment sentiment;
   final List<String> relatedTokens;
-  final IconData icon;
-  final Color iconColor;
+  final String icon;
+  final AccentTone iconColor;
   final String readTime;
   final bool isBreaking;
 }
@@ -39,14 +39,14 @@ final class MarketNewsCategory {
 
   final String id;
   final String label;
-  final Color color;
+  final AccentTone color;
 }
 
 final class MarketNewsSentimentBadge {
   const MarketNewsSentimentBadge({required this.label, required this.color});
 
   final String label;
-  final Color color;
+  final AccentTone color;
 }
 
 enum MarketNewsSentiment { bullish, bearish, neutral }
@@ -108,7 +108,6 @@ final class PortfolioHolding {
     required this.id,
     required this.symbol,
     required this.name,
-    required this.color,
     required this.quantity,
     required this.avgBuyPrice,
     required this.currentPrice,
@@ -123,7 +122,6 @@ final class PortfolioHolding {
   final String id;
   final String symbol;
   final String name;
-  final Color color;
   final double quantity;
   final double avgBuyPrice;
   final double currentPrice;
@@ -201,7 +199,6 @@ final class SocialSentimentToken {
     required this.id,
     required this.symbol,
     required this.name,
-    required this.color,
     required this.sentimentScore,
     required this.sentimentLabel,
     required this.mentions24h,
@@ -221,7 +218,6 @@ final class SocialSentimentToken {
   final String id;
   final String symbol;
   final String name;
-  final Color color;
   final int sentimentScore;
   final String sentimentLabel;
   final double mentions24h;
@@ -412,7 +408,6 @@ final class DerivativePair {
     required this.shortRatio,
     required this.longLiquidations24h,
     required this.shortLiquidations24h,
-    required this.color,
     required this.maxLeverage,
   });
 
@@ -432,7 +427,6 @@ final class DerivativePair {
   final double shortRatio;
   final double longLiquidations24h;
   final double shortLiquidations24h;
-  final Color color;
   final int maxLeverage;
 
   double get totalLiquidations24h => longLiquidations24h + shortLiquidations24h;
@@ -500,7 +494,6 @@ final class MarketCalendarEvent {
     required this.description,
     required this.confirmed,
     this.symbol,
-    this.symbolColor,
     this.source,
   });
 
@@ -512,6 +505,5 @@ final class MarketCalendarEvent {
   final String description;
   final bool confirmed;
   final String? symbol;
-  final Color? symbolColor;
   final String? source;
 }

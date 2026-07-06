@@ -69,7 +69,7 @@ class _BatchPositionCard extends StatelessWidget {
       key: LaunchpadBatchClaimPage.positionKey(position.positionId),
       radius: VitCardRadius.large,
       borderColor: selected
-          ? position.accent.withValues(alpha: .42)
+          ? position.accent.resolve().withValues(alpha: .42)
           : AppColors.cardBorder,
       padding: AppSpacing.launchpadPaddingX4,
       onTap: onToggle,
@@ -81,7 +81,7 @@ class _BatchPositionCard extends StatelessWidget {
                 ? Icons.check_box_rounded
                 : Icons.check_box_outline_blank_rounded,
             key: LaunchpadBatchClaimPage.checkboxKey(position.positionId),
-            color: selected ? position.accent : AppColors.text3,
+            color: selected ? position.accent.resolve() : AppColors.text3,
             size: AppSpacing.iconMd,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -92,7 +92,7 @@ class _BatchPositionCard extends StatelessWidget {
                   children: [
                     _TokenAvatar(
                       label: _avatarLabel(position.projectSymbol),
-                      color: position.accent,
+                      color: position.accent.resolve(),
                     ),
                     const SizedBox(width: AppSpacing.x3),
                     Expanded(

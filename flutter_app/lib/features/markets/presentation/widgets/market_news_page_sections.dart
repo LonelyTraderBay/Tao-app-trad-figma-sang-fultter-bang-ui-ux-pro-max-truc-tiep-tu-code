@@ -151,7 +151,7 @@ class _CategoryChip extends StatelessWidget {
       label: category.label,
       selected: active,
       onTap: onTap,
-      accentColor: category.color,
+      accentColor: category.color.resolve(),
       padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.x2,
         AppSpacing.x1,
@@ -221,7 +221,7 @@ class _SentimentChip extends StatelessWidget {
       label: badge.label,
       selected: active,
       onTap: onTap,
-      accentColor: badge.color,
+      accentColor: badge.color.resolve(),
       leading: Icon(_sentimentIcon(sentiment), size: AppSpacing.x3),
       padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.x2,

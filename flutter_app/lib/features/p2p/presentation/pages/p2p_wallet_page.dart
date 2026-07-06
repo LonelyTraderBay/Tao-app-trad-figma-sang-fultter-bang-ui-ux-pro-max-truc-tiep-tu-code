@@ -109,7 +109,9 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pWalletScrollPadding(scrollEndPadding),
+                    padding: AppSpacing.p2pWalletScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       padding: VitContentPadding.none,
                       fullBleed: true,

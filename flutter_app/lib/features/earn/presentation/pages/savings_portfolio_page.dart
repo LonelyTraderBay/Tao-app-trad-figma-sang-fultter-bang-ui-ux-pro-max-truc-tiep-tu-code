@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,9 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -17,23 +12,15 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
-import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_formatters.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_overview.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_positions.dart';
 
 part 'earn_portfolio_page.dart';
 
 enum _PortfolioTab { overview, positions, earnings }
 
-enum _PositionFilter { all, flexible, locked }
-
-const double _savingsPortfolioVisualNavClearance = 112;
-const double _savingsPortfolioNativeNavClearance = 88;
-const double _savingsPortfolioDonutExtent = 118;
-const double _savingsPortfolioSectionMarkerExtent =
-    AppSpacing.iconSm + AppSpacing.x1;
-const double _savingsPortfolioSecondaryButtonExtent = 36;
-const double _savingsPortfolioDaysLineHeight = 1.05;
-const EdgeInsetsDirectional _savingsPortfolioCardPadding =
-    EdgeInsetsDirectional.all(AppSpacing.x3);
+enum PositionFilter { all, flexible, locked }
 
 class SavingsPortfolioPage extends ConsumerStatefulWidget {
   const SavingsPortfolioPage({super.key, this.shellRenderMode});

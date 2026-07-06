@@ -143,7 +143,7 @@ class _SelectedRouteFooter extends StatelessWidget {
             children: [
               _ProviderBadge(
                 label: route.providerIcon,
-                accent: route.accent,
+                accent: route.accent.resolve(),
                 size: AppSpacing.launchpadIcon7xl,
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -258,7 +258,7 @@ class _RouteConfirmOverlay extends StatelessWidget {
                       const SizedBox(height: AppSpacing.x3),
                       _ProviderBadge(
                         label: route.providerIcon,
-                        accent: route.accent,
+                        accent: route.accent.resolve(),
                         size: AppSpacing.launchpadBox56,
                       ),
                       const SizedBox(height: AppSpacing.x3),

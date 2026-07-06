@@ -2,10 +2,12 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/market_icon_tokens.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -34,13 +36,13 @@ class MarketSectorCard extends StatelessWidget {
           Row(
             children: [
               Material(
-                color: sector.color.withValues(alpha: 0.16),
+                color: sector.color.resolve().withValues(alpha: 0.16),
                 shape: const CircleBorder(),
                 child: SizedBox.square(
                   dimension: AppSpacing.marketSectorCardIcon,
                   child: Icon(
-                    sector.icon,
-                    color: sector.color,
+                    MarketIconTokens.icon(sector.icon),
+                    color: sector.color.resolve(),
                     size: AppSpacing.marketSectorCardIconGlyph,
                   ),
                 ),
@@ -138,7 +140,7 @@ class MarketSectorDominanceBar extends StatelessWidget {
           minHeight: AppSpacing.marketSectorDominanceHeight,
           borderRadius: AppRadii.pillRadius,
           backgroundColor: AppColors.surface3,
-          color: sector.color,
+          color: sector.color.resolve(),
         ),
         const SizedBox(height: AppSpacing.marketSectorDominanceLabelGap),
         Text(

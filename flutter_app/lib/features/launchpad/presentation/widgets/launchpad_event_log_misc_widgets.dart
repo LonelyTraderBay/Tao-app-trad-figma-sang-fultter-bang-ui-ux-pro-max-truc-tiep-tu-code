@@ -1,34 +1,5 @@
 part of '../pages/launchpad_event_log_page.dart';
 
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.color,
-    required this.onTap,
-    this.count,
-  });
-
-  final String label;
-  final int? count;
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: count == null ? label : '$label ($count)',
-      selected: active,
-      onTap: onTap,
-      accentColor: color,
-      padding: AppSpacing.launchpadPillPadding,
-      semanticLabel: count == null ? label : '$label, $count events',
-    );
-  }
-}
-
 class _SmallActionButton extends StatelessWidget {
   const _SmallActionButton({
     super.key,

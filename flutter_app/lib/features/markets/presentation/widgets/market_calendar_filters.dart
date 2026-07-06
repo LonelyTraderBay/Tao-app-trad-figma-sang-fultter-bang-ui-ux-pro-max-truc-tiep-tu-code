@@ -191,11 +191,13 @@ class MarketCalendarTypeFilters extends StatelessWidget {
       child: Row(
         children: [
           for (final filter in marketCalendarTypeFilters) ...[
-            _FilterChipButton(
+            VitFilterChip(
               key: MarketCalendarKeys.typeFilter(filter.label),
               label: filter.label,
               active: filter.label == active.label,
-              activeColor: marketCalendarPrimary,
+              color: marketCalendarPrimary,
+              height: AppSpacing.marketCalendarFilterChipHeight,
+              padding: AppSpacing.marketCalendarFilterChipPadding,
               onTap: () => onSelected(filter),
             ),
             const SizedBox(width: AppSpacing.marketCalendarFilterGap),
@@ -230,33 +232,6 @@ class MarketCalendarImpactFilters extends StatelessWidget {
           const SizedBox(width: AppSpacing.marketCalendarFilterGap),
         ],
       ],
-    );
-  }
-}
-
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.activeColor,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final Color activeColor;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: activeColor,
-      height: AppSpacing.marketCalendarFilterChipHeight,
-      padding: AppSpacing.marketCalendarFilterChipPadding,
     );
   }
 }

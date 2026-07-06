@@ -110,12 +110,16 @@ class _NewsIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: category.color.withValues(alpha: .08),
+      color: category.color.resolve().withValues(alpha: .08),
       borderRadius: AppRadii.mdRadius,
       child: SizedBox(
         width: _newsIconSize,
         height: _newsIconSize,
-        child: Icon(item.icon, size: _newsIconGlyph, color: item.iconColor),
+        child: Icon(
+          MarketIconTokens.icon(item.icon),
+          size: _newsIconGlyph,
+          color: item.iconColor.resolve(),
+        ),
       ),
     );
   }
@@ -140,10 +144,14 @@ class _NewsTags extends StatelessWidget {
       children: [
         if (news.isBreaking)
           _TagPill(label: 'NÓNG', color: AppColors.sell, strong: true),
-        _TagPill(label: category.label, color: category.color, strong: true),
+        _TagPill(
+          label: category.label,
+          color: category.color.resolve(),
+          strong: true,
+        ),
         _TagPill(
           label: sentimentBadge.label,
-          color: sentimentBadge.color,
+          color: sentimentBadge.color.resolve(),
           icon: _sentimentIcon(news.sentiment),
         ),
       ],

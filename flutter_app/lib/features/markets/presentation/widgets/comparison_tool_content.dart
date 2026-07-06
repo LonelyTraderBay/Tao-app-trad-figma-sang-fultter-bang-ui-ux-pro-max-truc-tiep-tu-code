@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -52,7 +53,7 @@ class ComparisonSparklineCard extends StatelessWidget {
                       Text(
                         pair.baseAsset,
                         style: AppTextStyles.micro.copyWith(
-                          color: pair.logoColor,
+                          color: AppAssetColors.forSymbol(pair.baseAsset),
                           fontWeight: AppTextStyles.bold,
                           height: AppSpacing.marketLineHeightTight,
                         ),
@@ -232,7 +233,9 @@ class ComparisonVolumeDistributionCard extends StatelessWidget {
                     Expanded(
                       flex: ((pair.volume24h / total) * 1000).round(),
                       child: ColoredBox(
-                        color: pair.logoColor.withValues(alpha: .72),
+                        color: AppAssetColors.forSymbol(
+                          pair.baseAsset,
+                        ).withValues(alpha: .72),
                         child: const SizedBox.expand(),
                       ),
                     ),
@@ -247,7 +250,7 @@ class ComparisonVolumeDistributionCard extends StatelessWidget {
             children: [
               for (final pair in pairs)
                 _LegendEntry(
-                  color: pair.logoColor,
+                  color: AppAssetColors.forSymbol(pair.baseAsset),
                   label:
                       '${pair.baseAsset} ${((pair.volume24h / total) * 100).toStringAsFixed(1)}%',
                 ),
@@ -315,7 +318,9 @@ class ComparisonMarketCapDistributionCard extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       widthFactor: pair.marketCap / total,
                       child: ColoredBox(
-                        color: pair.logoColor.withValues(alpha: .82),
+                        color: AppAssetColors.forSymbol(
+                          pair.baseAsset,
+                        ).withValues(alpha: .82),
                       ),
                     ),
                   ],

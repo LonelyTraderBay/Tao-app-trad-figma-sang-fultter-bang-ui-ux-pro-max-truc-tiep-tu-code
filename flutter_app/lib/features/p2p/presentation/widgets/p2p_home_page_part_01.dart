@@ -302,7 +302,9 @@ class _QuickHub extends StatelessWidget {
                     const SizedBox(height: AppSpacing.x1),
                     Text(
                       'Thao tác nhanh',
-                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
                     ),
                   ],
                 ),

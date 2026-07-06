@@ -3,38 +3,51 @@ import 'package:vit_trade_flutter/core/product_flow/high_risk_flow_contract.dart
 import 'package:vit_trade_flutter/features/trade/domain/entities/trade_entities.dart';
 import 'package:vit_trade_flutter/features/trade/domain/repositories/trade_repository.dart';
 
-part '../fixtures/mock_trade_repository_methods_part_01.dart';
-part '../fixtures/mock_trade_repository_methods_part_02.dart';
-part '../fixtures/mock_trade_repository_methods_part_03.dart';
-part '../fixtures/mock_trade_repository_methods_part_04.dart';
-part '../fixtures/mock_trade_repository_methods_part_05.dart';
-part '../fixtures/mock_trade_repository_methods_part_06.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_01.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_02.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_03.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_04.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_05.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_06.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_07.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_08.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_09.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_10.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_11.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_12.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_13.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_14.dart';
-part '../fixtures/mock_trade_repository_fixtures_part_15.dart';
+part '../fixtures/trade_advanced_tools_repository_methods.dart';
+part '../fixtures/trade_advanced_tools_repository_fixtures.dart';
+part '../fixtures/trade_bot_backtest_portfolio_repository_methods.dart';
+part '../fixtures/trade_bot_backtest_portfolio_repository_fixtures.dart';
+part '../fixtures/trade_bot_guide_docs_repository_fixtures.dart';
+part '../fixtures/trade_bot_lifecycle_risk_repository_methods.dart';
+part '../fixtures/trade_bot_lifecycle_risk_repository_fixtures.dart';
+part '../fixtures/trade_conversions_utilities_repository_methods.dart';
+part '../fixtures/trade_conversions_utilities_repository_fixtures.dart';
+part '../fixtures/trade_copy_configuration_repository_methods.dart';
+part '../fixtures/trade_copy_configuration_repository_fixtures.dart';
+part '../fixtures/trade_copy_lifecycle_repository_methods.dart';
+part '../fixtures/trade_copy_lifecycle_repository_fixtures.dart';
+part '../fixtures/trade_copy_provider_discovery_repository_methods.dart';
+part '../fixtures/trade_copy_provider_discovery_repository_fixtures.dart';
+part '../fixtures/trade_core_spot_repository_methods.dart';
+part '../fixtures/trade_core_spot_repository_fixtures.dart';
+part '../fixtures/trade_execution_analytics_repository_methods.dart';
+part '../fixtures/trade_execution_analytics_repository_fixtures.dart';
+part '../fixtures/trade_futures_leverage_repository_methods.dart';
+part '../fixtures/trade_futures_leverage_repository_fixtures.dart';
+part '../fixtures/trade_regulatory_costs_repository_methods.dart';
+part '../fixtures/trade_regulatory_costs_repository_fixtures.dart';
+part '../fixtures/trade_regulatory_disclosures_repository_methods.dart';
+part '../fixtures/trade_regulatory_disclosures_repository_fixtures.dart';
+part '../fixtures/trade_regulatory_disputes_repository_methods.dart';
+part '../fixtures/trade_regulatory_disputes_repository_fixtures.dart';
 
 mixin _MockTradeRepositoryBase implements TradeRepository {}
 
 final class MockTradeRepository
     with
         _MockTradeRepositoryBase,
-        _MockTradeRepositoryMethodsPart01,
-        _MockTradeRepositoryMethodsPart02,
-        _MockTradeRepositoryMethodsPart03,
-        _MockTradeRepositoryMethodsPart04,
-        _MockTradeRepositoryMethodsPart05,
-        _MockTradeRepositoryMethodsPart06 {
+        _MockTradeRepositoryAdvancedToolsMethods,
+        _MockTradeRepositoryBotBacktestPortfolioMethods,
+        _MockTradeRepositoryBotLifecycleRiskMethods,
+        _MockTradeRepositoryConversionsUtilitiesMethods,
+        _MockTradeRepositoryCopyConfigurationMethods,
+        _MockTradeRepositoryCopyLifecycleMethods,
+        _MockTradeRepositoryCopyProviderDiscoveryMethods,
+        _MockTradeRepositoryCoreSpotMethods,
+        _MockTradeRepositoryExecutionAnalyticsMethods,
+        _MockTradeRepositoryFuturesLeverageMethods,
+        _MockTradeRepositoryRegulatoryCostsMethods,
+        _MockTradeRepositoryRegulatoryDisclosuresMethods,
+        _MockTradeRepositoryRegulatoryDisputesMethods {
   const MockTradeRepository();
 }

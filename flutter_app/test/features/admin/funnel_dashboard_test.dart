@@ -30,7 +30,7 @@ void main() {
   }
 
   test('SC-183 mock repository exposes funnel BE draft', () {
-    final snapshot = const AdminRepository().getFunnels();
+    final snapshot = const MockAdminRepository().getFunnels();
 
     expect(snapshot.endpoint, '/api/mobile/admin/admin-funnels');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

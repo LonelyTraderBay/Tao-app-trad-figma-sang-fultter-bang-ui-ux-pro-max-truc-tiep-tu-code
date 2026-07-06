@@ -80,40 +80,40 @@ const MarketScreenFilters _advancedChartsFilters = MarketScreenFilters(
 );
 
 const List<AdvancedChartCategory> _advancedChartIndicatorCategories = [
-  AdvancedChartCategory(id: 'trend', label: 'Xu hướng', color: AppColors.info),
+  AdvancedChartCategory(id: 'trend', label: 'Xu hướng', color: AccentTone.info),
   AdvancedChartCategory(
     id: 'momentum',
     label: 'Động lượng',
-    color: AppColors.caution,
+    color: AccentTone.caution,
   ),
   AdvancedChartCategory(
     id: 'volatility',
     label: 'Biến động',
-    color: AppAssetColors.pinkChain,
+    color: AccentTone.accent,
   ),
   AdvancedChartCategory(
     id: 'volume',
     label: 'Khối lượng',
-    color: AppAssetColors.tealChain,
+    color: AccentTone.buy,
   ),
 ];
 
 const List<AdvancedChartCategory> _advancedChartDrawingCategories = [
-  AdvancedChartCategory(id: 'line', label: 'Đường', color: AppColors.info),
+  AdvancedChartCategory(id: 'line', label: 'Đường', color: AccentTone.info),
   AdvancedChartCategory(
     id: 'shape',
     label: 'Hình dạng',
-    color: AppColors.accent,
+    color: AccentTone.accent,
   ),
   AdvancedChartCategory(
     id: 'fib',
     label: 'Fibonacci',
-    color: AppColors.caution,
+    color: AccentTone.caution,
   ),
   AdvancedChartCategory(
     id: 'measure',
     label: 'Đo lường',
-    color: AppAssetColors.tealChain,
+    color: AccentTone.buy,
   ),
 ];
 
@@ -123,7 +123,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'Simple Moving Average',
     shortName: 'SMA',
     categoryId: 'trend',
-    color: AppColors.info,
+    color: AccentTone.info,
     description: 'Trung bình giá đóng cửa trong N kỳ',
     params: [TechnicalIndicatorParam(label: 'Chu kỳ', value: 20)],
   ),
@@ -132,7 +132,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'Exponential Moving Average',
     shortName: 'EMA',
     categoryId: 'trend',
-    color: AppColors.accent,
+    color: AccentTone.accent,
     description: 'Trung bình trọng số hàm mũ, phản ứng nhanh hơn SMA',
     params: [TechnicalIndicatorParam(label: 'Chu kỳ', value: 12)],
   ),
@@ -141,7 +141,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'Bollinger Bands',
     shortName: 'BOLL',
     categoryId: 'volatility',
-    color: AppAssetColors.pinkChain,
+    color: AccentTone.accent,
     description: 'Dải biến động quanh SMA +/- 2 độ lệch chuẩn',
     params: [
       TechnicalIndicatorParam(label: 'Chu kỳ', value: 20),
@@ -153,7 +153,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'Relative Strength Index',
     shortName: 'RSI',
     categoryId: 'momentum',
-    color: AppColors.caution,
+    color: AccentTone.caution,
     description: 'Chỉ số sức mạnh tương đối, quá mua >70, quá bán <30',
     params: [TechnicalIndicatorParam(label: 'Chu kỳ', value: 14)],
   ),
@@ -162,7 +162,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'MACD',
     shortName: 'MACD',
     categoryId: 'momentum',
-    color: AppColors.buy,
+    color: AccentTone.buy,
     description: 'Chênh lệch EMA nhanh và EMA chậm, phát hiện đảo chiều',
     params: [
       TechnicalIndicatorParam(label: 'Nhanh', value: 12),
@@ -175,7 +175,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'Stochastic Oscillator',
     shortName: 'STOCH',
     categoryId: 'momentum',
-    color: AppAssetColors.cyanChain,
+    color: AccentTone.info,
     description: 'So sánh giá đóng cửa với phạm vi giá trong kỳ',
     params: [
       TechnicalIndicatorParam(label: 'K', value: 14),
@@ -187,7 +187,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'Average True Range',
     shortName: 'ATR',
     categoryId: 'volatility',
-    color: AppColors.sell,
+    color: AccentTone.sell,
     description: 'Đo lường biến động trung bình, dùng đặt stop-loss',
     params: [TechnicalIndicatorParam(label: 'Chu kỳ', value: 14)],
   ),
@@ -196,7 +196,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'Volume Weighted Average Price',
     shortName: 'VWAP',
     categoryId: 'volume',
-    color: AppAssetColors.tealChain,
+    color: AccentTone.buy,
     description: 'Giá trung bình trọng số khối lượng trong phiên',
     params: [],
   ),
@@ -205,7 +205,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'On-Balance Volume',
     shortName: 'OBV',
     categoryId: 'volume',
-    color: AppAssetColors.violetChain,
+    color: AccentTone.accent,
     description: 'Tích lũy khối lượng theo chiều giá, phát hiện phân kỳ',
     params: [],
   ),
@@ -214,7 +214,7 @@ const List<TechnicalIndicator> _advancedChartIndicators = [
     name: 'Ichimoku Cloud',
     shortName: 'ICHI',
     categoryId: 'trend',
-    color: AppColors.buyDark,
+    color: AccentTone.buyDark,
     description: 'Hệ thống đa chỉ số: xu hướng, hỗ trợ/kháng cự, động lượng',
     params: [
       TechnicalIndicatorParam(label: 'Tenkan', value: 9),
@@ -228,73 +228,73 @@ const List<AdvancedDrawingTool> _advancedChartDrawingTools = [
   AdvancedDrawingTool(
     id: 'trendline',
     name: 'Đường xu hướng',
-    icon: Icons.timeline_rounded,
+    icon: 'timeline',
     categoryId: 'line',
   ),
   AdvancedDrawingTool(
     id: 'hline',
     name: 'Đường ngang',
-    icon: Icons.horizontal_rule_rounded,
+    icon: 'horizontalRule',
     categoryId: 'line',
   ),
   AdvancedDrawingTool(
     id: 'channel',
     name: 'Kênh giá',
-    icon: Icons.stacked_line_chart_rounded,
+    icon: 'stackedLineChart',
     categoryId: 'line',
   ),
   AdvancedDrawingTool(
     id: 'ray',
     name: 'Tia',
-    icon: Icons.trending_up_rounded,
+    icon: 'trendingUp',
     categoryId: 'line',
   ),
   AdvancedDrawingTool(
     id: 'rect',
     name: 'Hình chữ nhật',
-    icon: Icons.crop_square_rounded,
+    icon: 'cropSquare',
     categoryId: 'shape',
   ),
   AdvancedDrawingTool(
     id: 'circle',
     name: 'Hình tròn',
-    icon: Icons.circle_outlined,
+    icon: 'circleOutlined',
     categoryId: 'shape',
   ),
   AdvancedDrawingTool(
     id: 'text',
     name: 'Ghi chú',
-    icon: Icons.notes_rounded,
+    icon: 'notes',
     categoryId: 'shape',
   ),
   AdvancedDrawingTool(
     id: 'fib_ret',
     name: 'Fibonacci Retracement',
-    icon: Icons.format_list_numbered_rounded,
+    icon: 'formatListNumbered',
     categoryId: 'fib',
   ),
   AdvancedDrawingTool(
     id: 'fib_ext',
     name: 'Fibonacci Extension',
-    icon: Icons.bar_chart_rounded,
+    icon: 'barChart',
     categoryId: 'fib',
   ),
   AdvancedDrawingTool(
     id: 'fib_fan',
     name: 'Fibonacci Fan',
-    icon: Icons.radar_rounded,
+    icon: 'radar',
     categoryId: 'fib',
   ),
   AdvancedDrawingTool(
     id: 'measure',
     name: 'Đo khoảng cách',
-    icon: Icons.straighten_rounded,
+    icon: 'straighten',
     categoryId: 'measure',
   ),
   AdvancedDrawingTool(
     id: 'daterange',
     name: 'Đo thời gian',
-    icon: Icons.date_range_rounded,
+    icon: 'dateRange',
     categoryId: 'measure',
   ),
 ];
@@ -373,37 +373,37 @@ const MarketScreenFilters _tokenUnlockFilters = MarketScreenFilters(
 const Map<MarketUnlockImpact, UnlockImpactConfig> _unlockImpactConfigs = {
   MarketUnlockImpact.high: UnlockImpactConfig(
     label: 'Cao',
-    color: AppColors.sell,
+    color: AccentTone.sell,
   ),
   MarketUnlockImpact.medium: UnlockImpactConfig(
     label: 'Trung bình',
-    color: AppColors.warn,
+    color: AccentTone.warn,
   ),
   MarketUnlockImpact.low: UnlockImpactConfig(
     label: 'Thấp',
-    color: AppColors.buy,
+    color: AccentTone.buy,
   ),
 };
 
 const Map<MarketUnlockCategory, UnlockCategoryConfig> _unlockCategoryConfigs = {
   MarketUnlockCategory.team: UnlockCategoryConfig(
     label: 'Team',
-    color: AppColors.info,
+    color: AccentTone.info,
   ),
   MarketUnlockCategory.investor: UnlockCategoryConfig(
     label: 'Nhà đầu tư',
-    color: AppColors.sell,
+    color: AccentTone.sell,
   ),
   MarketUnlockCategory.ecosystem: UnlockCategoryConfig(
     label: 'Hệ sinh thái',
-    color: AppColors.buy,
+    color: AccentTone.buy,
   ),
   MarketUnlockCategory.community: UnlockCategoryConfig(
     label: 'Cộng đồng',
-    color: AppColors.warn,
+    color: AccentTone.warn,
   ),
   MarketUnlockCategory.foundation: UnlockCategoryConfig(
     label: 'Quỹ',
-    color: AppColors.accent,
+    color: AccentTone.accent,
   ),
 };

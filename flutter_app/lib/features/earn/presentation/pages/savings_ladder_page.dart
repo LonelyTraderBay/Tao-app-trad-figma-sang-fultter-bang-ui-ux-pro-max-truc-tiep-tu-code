@@ -9,7 +9,6 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
@@ -18,26 +17,19 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_analysis.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_builder_config.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_common.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_formatters.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_hero.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_rung_manager.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_timeline.dart';
 
-part 'earn_ladder_page.dart';
-
-const _today = '09/03/2026';
 const _visualNavClearance = 90.0;
 const _nativeNavClearance = 72.0;
 const _visualScrollExtra = 28.0;
 const _nativeScrollExtra = 20.0;
-const _templateLineHeight = 1.18;
-const _timelineBarHeight = 20.0;
-const _maturityBadgeHeight = 44.0;
-const _liquidityRingSize = 56.0;
-const _liquidityLineHeight = 1.22;
-const _sectionMarkerHeight = 12.0;
 const _disclaimerLineHeight = 1.22;
-
-TextStyle get _captionBold =>
-    AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold);
-TextStyle get _microBold =>
-    AppTextStyles.micro.copyWith(fontWeight: AppTextStyles.bold);
 
 class SavingsLadderPage extends ConsumerStatefulWidget {
   const SavingsLadderPage({super.key, this.shellRenderMode});
@@ -74,14 +66,14 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
     final activeTab = _tab ?? snapshot.defaultTab;
     final selectedPreset = _preset ?? snapshot.defaultPreset;
     final amountUsd = _amountUsd ?? snapshot.defaultAmountUsd;
-    final template = _templateById(snapshot, selectedPreset);
+    final template = savingsLadderTemplateById(snapshot, selectedPreset);
     final rungs = selectedPreset == SavingsLadderPreset.custom
         ? (_customRungs ?? const <SavingsLadderRungDraft>[])
-        : _generateRungs(template, amountUsd);
-    final totalAllocated = _totalAllocated(rungs);
-    final weightedApy = _weightedApy(rungs);
-    final annualInterest = _annualInterest(rungs);
-    final liquidityScore = _liquidityScore(rungs);
+        : savingsLadderGenerateRungs(template, amountUsd);
+    final totalAllocated = savingsLadderTotalAllocated(rungs);
+    final weightedApy = savingsLadderWeightedApy(rungs);
+    final annualInterest = savingsLadderAnnualInterest(rungs);
+    final liquidityScore = savingsLadderLiquidityScore(rungs);
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final scrollEndPadding =
         (mode.usesVisualQaFrame
@@ -110,7 +102,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                   child: VitPageContent(
                     density: VitDensity.compact,
                     children: [
-                      _LadderHero(
+                      LadderHero(
                         snapshot: snapshot,
                         amountUsd: amountUsd,
                         annualInterest: annualInterest,
@@ -118,7 +110,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                         weightedApy: weightedApy,
                         liquidityScore: liquidityScore,
                       ),
-                      _LadderTabs(
+                      LadderTabs(
                         tabs: snapshot.tabs,
                         active: activeTab,
                         onChanged: (tab) {
@@ -135,9 +127,9 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                           totalAllocated,
                         )
                       else if (activeTab == 'timeline')
-                        _TimelineTab(snapshot: snapshot, rungs: rungs)
+                        TimelineTab(snapshot: snapshot, rungs: rungs)
                       else
-                        _AnalysisTab(
+                        AnalysisTab(
                           snapshot: snapshot,
                           rungs: rungs,
                           amountUsd: amountUsd,
@@ -173,8 +165,8 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
   ) {
     final unallocated = amountUsd - totalAllocated;
     return [
-      const _SectionTitle(label: 'Tổng vốn (USD)'),
-      _AmountSelector(
+      const SectionTitle(label: 'Tổng vốn (USD)'),
+      AmountSelector(
         amountUsd: amountUsd,
         quickAmounts: snapshot.quickAmounts,
         onChanged: (value) {
@@ -182,8 +174,8 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
           setState(() => _amountUsd = value);
         },
       ),
-      const _SectionTitle(label: 'Chiến lược ladder'),
-      _TemplateList(
+      const SectionTitle(label: 'Chiến lược ladder'),
+      TemplateList(
         templates: snapshot.templates,
         selected: selectedPreset,
         amountUsd: amountUsd,
@@ -192,24 +184,24 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
           setState(() {
             _preset = preset;
             _customRungs = preset == SavingsLadderPreset.custom
-                ? _generateRungs(
-                    _templateById(snapshot, selectedPreset),
+                ? savingsLadderGenerateRungs(
+                    savingsLadderTemplateById(snapshot, selectedPreset),
                     amountUsd,
                   )
                 : null;
           });
         },
       ),
-      _SectionTitle(label: 'Các bậc ladder (${rungs.length})'),
-      _RungList(
+      SectionTitle(label: 'Các bậc ladder (${rungs.length})'),
+      RungList(
         rungs: rungs,
         onToggleRenew: _toggleAutoRenew,
         onRemove: _removeRung,
       ),
-      _AddRungButton(
+      AddRungButton(
         onTap: () => _addProduct(snapshot.availableProducts.first, rungs),
       ),
-      _AllocationStatus(
+      AllocationStatus(
         amountUsd: amountUsd,
         totalAllocated: totalAllocated,
         unallocated: unallocated,
@@ -234,7 +226,10 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
     final preset = _preset ?? snapshot.defaultPreset;
     final current = preset == SavingsLadderPreset.custom
         ? (_customRungs ?? const <SavingsLadderRungDraft>[])
-        : _generateRungs(_templateById(snapshot, preset), amountUsd);
+        : savingsLadderGenerateRungs(
+            savingsLadderTemplateById(snapshot, preset),
+            amountUsd,
+          );
     HapticFeedback.mediumImpact();
     setState(() {
       _preset = SavingsLadderPreset.custom;
@@ -248,7 +243,10 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
     final preset = _preset ?? snapshot.defaultPreset;
     final current = preset == SavingsLadderPreset.custom
         ? (_customRungs ?? const <SavingsLadderRungDraft>[])
-        : _generateRungs(_templateById(snapshot, preset), amountUsd);
+        : savingsLadderGenerateRungs(
+            savingsLadderTemplateById(snapshot, preset),
+            amountUsd,
+          );
     HapticFeedback.selectionClick();
     setState(() {
       _preset = SavingsLadderPreset.custom;
@@ -278,7 +276,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
     List<SavingsLadderRungDraft> current,
   ) {
     final amountUsd = _amountUsd ?? 10000;
-    final allocated = _totalAllocated(current);
+    final allocated = savingsLadderTotalAllocated(current);
     final amount = math.max(100, amountUsd - allocated).toDouble();
     HapticFeedback.mediumImpact();
     setState(() {
@@ -293,8 +291,11 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
           lockDays: product.lockDays,
           apyPct: product.apyPct,
           amountUsd: amount,
-          startDate: _today,
-          maturityDate: _addDays(_today, product.lockDays),
+          startDate: savingsLadderToday,
+          maturityDate: savingsLadderAddDays(
+            savingsLadderToday,
+            product.lockDays,
+          ),
           autoRenew: true,
         ),
       ];
@@ -323,34 +324,42 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                 children: [
                   Row(
                     children: [
-                      const _RoundIcon(
+                      const RoundIcon(
                         icon: Icons.layers_rounded,
                         color: AppColors.primary,
                       ),
                       const SizedBox(width: AppSpacing.x3),
                       Expanded(
-                        child: Text('Xác nhận ladder', style: _captionBold),
+                        child: Text(
+                          'Xác nhận ladder',
+                          style: savingsLadderCaptionBoldStyle,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.x4),
-                  _DetailRow(label: 'Tổng vốn', value: _money(amountUsd)),
-                  _DetailRow(label: 'Số bậc', value: '${rungs.length}'),
-                  _DetailRow(
+                  DetailRow(
+                    label: 'Tổng vốn',
+                    value: savingsLadderMoney(amountUsd),
+                  ),
+                  DetailRow(label: 'Số bậc', value: '${rungs.length}'),
+                  DetailRow(
                     label: 'APY bình quân',
-                    value: '${_weightedApy(rungs).toStringAsFixed(1)}%',
+                    value:
+                        '${savingsLadderWeightedApy(rungs).toStringAsFixed(1)}%',
                     color: AppColors.buy,
                   ),
-                  _DetailRow(
+                  DetailRow(
                     label: 'Lãi dự kiến/năm',
-                    value: '+${_money(_annualInterest(rungs))}',
+                    value:
+                        '+${savingsLadderMoney(savingsLadderAnnualInterest(rungs))}',
                     color: AppColors.buy,
                   ),
                   const SizedBox(height: AppSpacing.x4),
                   EarnDisclaimerBanner(
-        text: snapshot.disclaimer,
-        lineHeight: _disclaimerLineHeight,
-      ),
+                    text: snapshot.disclaimer,
+                    lineHeight: _disclaimerLineHeight,
+                  ),
                   const SizedBox(height: AppSpacing.x4),
                   VitCtaButton(
                     onPressed: () {

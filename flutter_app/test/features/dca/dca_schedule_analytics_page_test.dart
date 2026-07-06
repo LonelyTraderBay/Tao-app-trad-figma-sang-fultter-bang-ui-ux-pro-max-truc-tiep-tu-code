@@ -27,7 +27,9 @@ void main() {
   }
 
   test('SC-173 mock repository exposes missing-config BE draft', () {
-    final snapshot = const DcaRepository().getScheduleAnalytics('config001');
+    final snapshot = const MockDcaRepository().getScheduleAnalytics(
+      'config001',
+    );
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-schedule-config001');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

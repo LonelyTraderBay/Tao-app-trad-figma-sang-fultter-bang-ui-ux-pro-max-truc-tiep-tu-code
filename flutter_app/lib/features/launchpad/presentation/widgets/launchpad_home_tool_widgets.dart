@@ -99,7 +99,7 @@ class _ToolTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      borderColor: tool.accent.withValues(alpha: .18),
+      borderColor: tool.accent.resolve().withValues(alpha: .18),
       onTap: () => context.go(tool.route),
       padding: VitDensity.compact.cardPadding,
       child: Column(
@@ -109,12 +109,12 @@ class _ToolTile extends StatelessWidget {
             dimension: AppSpacing.x6,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: tool.accent.withValues(alpha: .12),
+                color: tool.accent.resolve().withValues(alpha: .12),
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
               ),
               child: Icon(
                 _toolIcon(tool.iconKey),
-                color: tool.accent,
+                color: tool.accent.resolve(),
                 size: AppSpacing.iconMd,
               ),
             ),

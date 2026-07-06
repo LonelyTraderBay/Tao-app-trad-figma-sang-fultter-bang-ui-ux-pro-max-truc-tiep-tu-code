@@ -87,7 +87,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         VitSectionHeader(
           title: 'Thống kê thị trường',
-          accentColor: pair.logoColor,
+          accentColor: AppAssetColors.forSymbol(pair.baseAsset),
           variant: VitSectionHeaderVariant.accentBar,
         ),
         _InfoCard(
@@ -181,7 +181,10 @@ class _HeroCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              _TokenAvatar(symbol: pair.baseAsset, color: pair.logoColor),
+              _TokenAvatar(
+                symbol: pair.baseAsset,
+                color: AppAssetColors.forSymbol(pair.baseAsset),
+              ),
               const SizedBox(width: _tokenInfoHeroAvatarGap),
               Expanded(
                 child: Column(

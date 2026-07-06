@@ -149,12 +149,12 @@ class _MarketRow extends StatelessWidget {
     return VitMarketPairRow(
       leading: VitAssetAvatar(
         label: pair.baseAsset,
-        accentColor: pair.logoColor,
+        accentColor: AppAssetColors.forSymbol(pair.baseAsset),
       ),
       title: pair.symbol,
       subtitle: 'Vol \$${_formatBillions(pair.volume24h)}B',
-      price: _formatUsd(pair.price),
-      changeLabel: _formatPct(pair.change24h),
+      price: formatUsd(pair.price),
+      changeLabel: formatPct(pair.change24h),
       trend: trend,
       sparkline: pair.sparkline,
       showSparkline: showSparkline,

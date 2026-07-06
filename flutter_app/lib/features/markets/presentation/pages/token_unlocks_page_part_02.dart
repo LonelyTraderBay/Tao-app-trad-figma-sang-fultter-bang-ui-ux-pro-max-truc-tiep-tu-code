@@ -56,12 +56,12 @@ class _UnlockCard extends StatelessWidget {
                           ),
                           _TinyBadge(
                             label: impactConfig.label,
-                            color: impactConfig.color,
+                            color: impactConfig.color.resolve(),
                             bold: true,
                           ),
                           _TinyBadge(
                             label: categoryConfig.label,
-                            color: categoryConfig.color,
+                            color: categoryConfig.color.resolve(),
                           ),
                         ],
                       ),
@@ -318,18 +318,20 @@ class _ImpactStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      borderColor: config.color.withValues(alpha: .10),
+      borderColor: config.color.resolve().withValues(alpha: .10),
       padding: AppSpacing.tokenUnlocksImpactStatPadding,
       child: Column(
         children: [
           Text(
             '$count',
-            style: AppTextStyles.sectionTitle.copyWith(color: config.color),
+            style: AppTextStyles.sectionTitle.copyWith(
+              color: config.color.resolve(),
+            ),
           ),
           Text(
             config.label,
             style: AppTextStyles.micro.copyWith(
-              color: config.color,
+              color: config.color.resolve(),
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -369,7 +371,7 @@ class _CategoryBreakdown extends StatelessWidget {
           for (final entry in snapshot.categoryConfigs.entries) ...[
             _CategoryBar(
               label: entry.value.label,
-              color: entry.value.color,
+              color: entry.value.color.resolve(),
               value: totals[entry.key] ?? 0,
               maxValue: maxTotal,
             ),

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
@@ -147,49 +148,49 @@ class _LaunchpadClaimReceiptPageState
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
                           children: [
-                          _RewardHero(receipt: receipt),
-                          if (_activeTab == _ClaimReceiptTab.overview) ...[
-                            _ClaimableBanner(
-                              receipt: receipt,
-                              onClaim: () => setState(
-                                () => _claimEntry = receipt.vestingSchedule
-                                    .firstWhere(
-                                      (entry) =>
-                                          entry.status ==
-                                              LaunchpadVestingEntryStatus
-                                                  .claimable ||
-                                          entry.status ==
-                                              LaunchpadVestingEntryStatus
-                                                  .unlocking,
-                                      orElse: () =>
-                                          receipt.vestingSchedule.first,
-                                    ),
+                            _RewardHero(receipt: receipt),
+                            if (_activeTab == _ClaimReceiptTab.overview) ...[
+                              _ClaimableBanner(
+                                receipt: receipt,
+                                onClaim: () => setState(
+                                  () => _claimEntry = receipt.vestingSchedule
+                                      .firstWhere(
+                                        (entry) =>
+                                            entry.status ==
+                                                LaunchpadVestingEntryStatus
+                                                    .claimable ||
+                                            entry.status ==
+                                                LaunchpadVestingEntryStatus
+                                                    .unlocking,
+                                        orElse: () =>
+                                            receipt.vestingSchedule.first,
+                                      ),
+                                ),
                               ),
-                            ),
-                            _NextUnlockCard(receipt: receipt),
-                            _ReceiptDetailsCard(receipt: receipt),
-                            _VestingPreviewCard(
-                              receipt: receipt,
-                              onOpenAll: () => setState(
-                                () => _activeTab = _ClaimReceiptTab.vesting,
+                              _NextUnlockCard(receipt: receipt),
+                              _ReceiptDetailsCard(receipt: receipt),
+                              _VestingPreviewCard(
+                                receipt: receipt,
+                                onOpenAll: () => setState(
+                                  () => _activeTab = _ClaimReceiptTab.vesting,
+                                ),
                               ),
-                            ),
-                          ] else if (_activeTab == _ClaimReceiptTab.vesting)
-                            _VestingTimelineCard(
-                              receipt: receipt,
-                              onClaim: (entry) =>
-                                  setState(() => _claimEntry = entry),
-                            )
-                          else
-                            _ClaimHistoryCard(receipt: receipt),
-                          const _RiskDisclosureTile(),
-                        ],
+                            ] else if (_activeTab == _ClaimReceiptTab.vesting)
+                              _VestingTimelineCard(
+                                receipt: receipt,
+                                onClaim: (entry) =>
+                                    setState(() => _claimEntry = entry),
+                              )
+                            else
+                              _ClaimHistoryCard(receipt: receipt),
+                            const _RiskDisclosureTile(),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
             ),
             if (_claimEntry != null)
               _ClaimSheet(

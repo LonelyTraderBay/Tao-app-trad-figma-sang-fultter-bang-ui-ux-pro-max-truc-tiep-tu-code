@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -126,7 +127,7 @@ class _ComparisonRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: highlighted
-          ? sector.color.withValues(alpha: 0.10)
+          ? sector.color.resolve().withValues(alpha: 0.10)
           : AppColors.transparent,
       borderRadius: AppRadii.smRadius,
       child: SizedBox(
@@ -139,7 +140,7 @@ class _ComparisonRow extends StatelessWidget {
                 child: Row(
                   children: [
                     Material(
-                      color: sector.color,
+                      color: sector.color.resolve(),
                       shape: const CircleBorder(),
                       child: const SizedBox.square(
                         dimension: AppSpacing.marketSectorComparisonMarker,

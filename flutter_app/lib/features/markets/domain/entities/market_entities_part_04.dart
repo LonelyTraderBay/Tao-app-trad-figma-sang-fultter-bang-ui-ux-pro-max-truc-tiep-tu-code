@@ -48,8 +48,8 @@ final class MarketSector {
   final String id;
   final String name;
   final String nameVi;
-  final Color color;
-  final IconData icon;
+  final AccentTone color;
+  final String icon;
   final double totalMarketCap;
   final double change24h;
   final double change7d;
@@ -74,7 +74,6 @@ final class MarketMover {
     required this.marketCap,
     required this.marketCapRank,
     required this.category,
-    required this.color,
     required this.sparkline,
     this.isNew = false,
     this.listingDate,
@@ -92,7 +91,6 @@ final class MarketMover {
   final double marketCap;
   final int marketCapRank;
   final String category;
-  final Color color;
   final List<double> sparkline;
   final bool isNew;
   final String? listingDate;
@@ -112,7 +110,6 @@ final class MarketPair {
     required this.volume24h,
     required this.marketCap,
     required this.sparklineData,
-    required this.logoColor,
     required this.isFavorite,
     required this.category,
   });
@@ -129,7 +126,6 @@ final class MarketPair {
   final double volume24h;
   final double marketCap;
   final List<double> sparklineData;
-  final Color logoColor;
   final bool isFavorite;
   final String category;
 }
@@ -272,7 +268,7 @@ final class SupplyDistributionDraft {
 
   final String label;
   final double percentage;
-  final Color color;
+  final AccentTone color;
 }
 
 final class ContractAddressDraft {

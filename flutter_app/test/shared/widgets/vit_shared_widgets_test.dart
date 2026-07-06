@@ -819,7 +819,6 @@ void main() {
     var sectionTaps = 0;
     var tileTaps = 0;
     var marketTaps = 0;
-    var rankedTaps = 0;
     var productTaps = 0;
 
     await tester.pumpWidget(
@@ -881,17 +880,6 @@ void main() {
                 sparkline: const [1, 1.4, 1.2, 1.8],
                 onTap: () => marketTaps++,
               ),
-              VitRankedAssetRow(
-                rank: 1,
-                leading: const VitAssetAvatar(
-                  label: 'ETH',
-                  accentColor: AppColors.accent,
-                ),
-                title: 'ETH/USDT',
-                badgeLabel: '-1.30%',
-                trend: VitTrendDirection.negative,
-                onTap: () => rankedTaps++,
-              ),
               const SizedBox(height: 8),
               VitCompactProductCard(
                 icon: Icons.account_balance_wallet_outlined,
@@ -913,7 +901,6 @@ void main() {
     expect(find.text('Live'), findsOneWidget);
     expect(find.byType(VitSparkline), findsWidgets);
     expect(find.text('BTC/USDT'), findsOneWidget);
-    expect(find.text('ETH/USDT'), findsOneWidget);
     expect(find.text('Recent'), findsOneWidget);
     expect(find.byType(VitTogglePill), findsOneWidget);
 
@@ -922,8 +909,6 @@ void main() {
     await tester.tap(find.text('Swap'));
     await tester.ensureVisible(find.text('BTC/USDT'));
     await tester.tap(find.text('BTC/USDT'));
-    await tester.ensureVisible(find.text('ETH/USDT'));
-    await tester.tap(find.text('ETH/USDT'));
     await tester.ensureVisible(find.text('Recent'));
     await tester.tap(find.text('Recent'));
     await tester.pump();
@@ -931,7 +916,6 @@ void main() {
     expect(sectionTaps, 1);
     expect(tileTaps, 1);
     expect(marketTaps, 1);
-    expect(rankedTaps, 1);
     expect(productTaps, 1);
   });
 

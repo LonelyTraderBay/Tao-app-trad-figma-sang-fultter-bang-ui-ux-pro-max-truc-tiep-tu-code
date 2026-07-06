@@ -146,17 +146,19 @@ class _ProjectAvatar extends StatelessWidget {
       dimension: AppSpacing.x7,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: project.accent.withValues(alpha: .12),
+          color: project.accent.resolve().withValues(alpha: .12),
           shape: RoundedRectangleBorder(
             borderRadius: AppRadii.lgRadius,
-            side: BorderSide(color: project.accent.withValues(alpha: .35)),
+            side: BorderSide(
+              color: project.accent.resolve().withValues(alpha: .35),
+            ),
           ),
         ),
         child: Center(
           child: Text(
             project.logo,
             style: AppTextStyles.baseMedium.copyWith(
-              color: project.accent,
+              color: project.accent.resolve(),
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -207,7 +209,7 @@ class _ProjectProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final complete = project.progress >= 100;
-    final color = complete ? AppColors.buy : project.accent;
+    final color = complete ? AppColors.buy : project.accent.resolve();
     return Column(
       children: [
         Row(

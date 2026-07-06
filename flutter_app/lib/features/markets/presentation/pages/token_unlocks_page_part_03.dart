@@ -140,7 +140,7 @@ class _ScheduleCard extends StatelessWidget {
                         const SizedBox(width: _unlockScheduleGap),
                         _TinyBadge(
                           label: _shortVestingTypeLabel(unlock.vestingType),
-                          color: categoryConfig.color,
+                          color: categoryConfig.color.resolve(),
                         ),
                       ],
                     ),
@@ -200,7 +200,9 @@ class _ScheduleCard extends StatelessWidget {
               value: supplyPct,
               minHeight: _unlockCategoryProgressHeight,
               backgroundColor: AppColors.surface2,
-              valueColor: AlwaysStoppedAnimation<Color>(unlock.color),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                AppAssetColors.forSymbol(unlock.symbol),
+              ),
             ),
           ),
           const SizedBox(height: _unlockScheduleTitleGap),
@@ -215,7 +217,7 @@ class _ScheduleCard extends StatelessWidget {
           for (var index = 0; index < unlock.vestingSchedule.length; index += 1)
             _VestingEventRow(
               event: unlock.vestingSchedule[index],
-              color: unlock.color,
+              color: AppAssetColors.forSymbol(unlock.symbol),
               isFirst: index == 0,
               isLast: index == unlock.vestingSchedule.length - 1,
             ),
@@ -321,13 +323,14 @@ class _TokenAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = AppAssetColors.forSymbol(unlock.symbol);
     return CircleAvatar(
       radius: size / 2,
-      backgroundColor: unlock.color.withValues(alpha: .14),
+      backgroundColor: color.withValues(alpha: .14),
       child: Text(
         unlock.symbol.substring(0, 2),
         style: AppTextStyles.caption.copyWith(
-          color: unlock.color,
+          color: color,
           fontWeight: AppTextStyles.bold,
         ),
       ),

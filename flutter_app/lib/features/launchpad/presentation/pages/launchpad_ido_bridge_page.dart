@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -174,7 +175,7 @@ class _BridgeProjectHero extends StatelessWidget {
             height: AppSpacing.x7,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: project.accent.withValues(alpha: .12),
+                color: project.accent.resolve().withValues(alpha: .12),
                 shape: const RoundedRectangleBorder(
                   borderRadius: AppRadii.smRadius,
                 ),
@@ -183,7 +184,7 @@ class _BridgeProjectHero extends StatelessWidget {
                 child: Text(
                   project.logo,
                   style: AppTextStyles.caption.copyWith(
-                    color: project.accent,
+                    color: project.accent.resolve(),
                     fontWeight: AppTextStyles.extraBold,
                   ),
                 ),
@@ -254,7 +255,7 @@ class _BridgeNetworksSection extends StatelessWidget {
                   height: AppSpacing.x6,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
-                      color: network.accent.withValues(alpha: .12),
+                      color: network.accent.resolve().withValues(alpha: .12),
                       shape: const RoundedRectangleBorder(
                         borderRadius: AppRadii.smRadius,
                       ),
@@ -263,7 +264,7 @@ class _BridgeNetworksSection extends StatelessWidget {
                       child: Text(
                         network.logo,
                         style: AppTextStyles.micro.copyWith(
-                          color: network.accent,
+                          color: network.accent.resolve(),
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),

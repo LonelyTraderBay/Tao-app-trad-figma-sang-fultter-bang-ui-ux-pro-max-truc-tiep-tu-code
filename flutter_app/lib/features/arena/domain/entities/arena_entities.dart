@@ -1,5 +1,10 @@
-part 'arena_entities_part_01.dart';
-part 'arena_entities_part_02.dart';
-part 'arena_entities_part_03.dart';
-part 'arena_entities_part_04.dart';
-part 'arena_entities_part_05.dart';
+part 'arena_connected_guide_entities.dart';
+part 'arena_creator_trust_entities.dart';
+part 'arena_flow_map_entities.dart';
+part 'arena_home_studio_entities.dart';
+part 'arena_mode_challenge_detail_entities.dart';
+part 'arena_my_arena_entities.dart';
+part 'arena_points_entities.dart';
+part 'arena_production_ecosystem_entities.dart';
+part 'arena_rule_builder_entities.dart';
+part 'arena_safety_reports_entities.dart';

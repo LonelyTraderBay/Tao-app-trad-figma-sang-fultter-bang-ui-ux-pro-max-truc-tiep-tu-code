@@ -34,7 +34,7 @@ void main() {
   }
 
   test('SC-174 mock repository exposes portfolio optimizer BE draft', () {
-    final snapshot = const DcaRepository().getPortfolioOptimizer();
+    final snapshot = const MockDcaRepository().getPortfolioOptimizer();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-portfolio-optimizer');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

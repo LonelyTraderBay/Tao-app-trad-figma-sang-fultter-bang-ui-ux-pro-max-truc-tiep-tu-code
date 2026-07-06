@@ -23,11 +23,13 @@ class _MoverTabs extends StatelessWidget {
         child: Row(
           children: [
             for (final tab in tabs) ...[
-              _FilterChipButton(
+              VitFilterChip(
                 key: _tabKey(tab),
                 label: tab,
                 active: tab == activeTab,
-                minHeight: _marketMoverFilterMinHeight,
+                color: _marketPrimary,
+                height: _marketMoverFilterMinHeight,
+                padding: AppSpacing.marketFilterChipPadding,
                 onTap: () => onSelected(tab),
               ),
               if (tab != tabs.last)
@@ -81,13 +83,15 @@ class _TimeframeSelector extends StatelessWidget {
                   const SizedBox(width: AppSpacing.marketFilterGap),
               itemBuilder: (context, index) {
                 final timeframe = timeframes[index];
-                return _FilterChipButton(
+                return VitFilterChip(
                   key: timeframe == '24h'
                       ? MarketMoversPage.timeframe24hKey
                       : Key('sc010_timeframe_$timeframe'),
                   label: timeframe,
                   active: timeframe == activeTimeframe,
-                  minHeight: _marketMoverFilterMinHeight,
+                  color: _marketPrimary,
+                  height: _marketMoverFilterMinHeight,
+                  padding: AppSpacing.marketFilterChipPadding,
                   onTap: () => onSelected(timeframe),
                 );
               },
@@ -173,10 +177,13 @@ class _CategoryPicker extends StatelessWidget {
       runSpacing: AppSpacing.marketFilterGap,
       children: [
         for (final category in categories)
-          _FilterChipButton(
+          VitFilterChip(
             key: Key('sc010_category_$category'),
             label: category,
             active: category == activeCategory,
+            color: _marketPrimary,
+            height: _marketMoverFilterMinHeight,
+            padding: AppSpacing.marketFilterChipPadding,
             onTap: () => onSelected(category),
           ),
       ],
@@ -202,11 +209,13 @@ class _SortSelector extends StatelessWidget {
       runSpacing: AppSpacing.marketFilterGap,
       children: [
         for (final option in options)
-          _FilterChipButton(
+          VitFilterChip(
             key: _sortKey(option.id),
             label: option.label,
             active: option.id == activeSort,
-            minHeight: _marketMoverFilterMinHeight,
+            color: _marketPrimary,
+            height: _marketMoverFilterMinHeight,
+            padding: AppSpacing.marketFilterChipPadding,
             onTap: () => onSelected(option.id),
           ),
       ],
@@ -261,29 +270,3 @@ class _ResultSummary extends StatelessWidget {
   }
 }
 
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.onTap,
-    this.minHeight = _marketMoverFilterMinHeight,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-  final double minHeight;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: _marketPrimary,
-      height: minHeight,
-      padding: AppSpacing.marketFilterChipPadding,
-    );
-  }
-}

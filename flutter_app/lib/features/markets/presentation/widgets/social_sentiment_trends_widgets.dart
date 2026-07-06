@@ -57,7 +57,7 @@ class _SentimentHeatmap extends StatelessWidget {
                 Text(
                   token.symbol,
                   style: AppTextStyles.caption.copyWith(
-                    color: token.color,
+                    color: AppAssetColors.forSymbol(token.symbol),
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
@@ -148,7 +148,7 @@ class _LeaderboardColumn extends StatelessWidget {
                   child: Text(
                     tokens[index].symbol,
                     style: AppTextStyles.caption.copyWith(
-                      color: tokens[index].color,
+                      color: AppAssetColors.forSymbol(tokens[index].symbol),
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -196,7 +196,7 @@ class _MentionVelocity extends StatelessWidget {
                   child: Text(
                     token.symbol,
                     style: AppTextStyles.caption.copyWith(
-                      color: token.color,
+                      color: AppAssetColors.forSymbol(token.symbol),
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),

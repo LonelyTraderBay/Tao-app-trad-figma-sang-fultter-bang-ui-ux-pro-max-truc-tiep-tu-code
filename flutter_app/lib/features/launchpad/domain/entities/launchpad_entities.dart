@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:vit_trade_flutter/core/utils/accent_tone.dart';
 
 part 'launchpad_entities_part_01.dart';
 part 'launchpad_entities_part_02.dart';

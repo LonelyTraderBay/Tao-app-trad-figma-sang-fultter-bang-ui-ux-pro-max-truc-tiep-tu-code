@@ -80,7 +80,7 @@ final class LaunchpadMultisigSafeDraft {
   final String address;
   final String label;
   final String chain;
-  final Color accent;
+  final AccentTone accent;
   final int threshold;
   final List<LaunchpadMultisigSignerDraft> owners;
   final String balance;
@@ -117,7 +117,7 @@ final class LaunchpadMultisigTxDraft {
   final String description;
   final String contractAddress;
   final String chain;
-  final Color accent;
+  final AccentTone accent;
   final String functionName;
   final Map<String, String> params;
   final String value;
@@ -222,7 +222,7 @@ final class LaunchpadSwapDexQuoteDraft {
   final String id;
   final String name;
   final String symbol;
-  final Color accent;
+  final AccentTone accent;
   final double price;
   final double priceImpact;
   final double gas;
@@ -324,7 +324,7 @@ final class LaunchpadLimitOrderDraft {
   final String expiresAt;
   final String createdAt;
   final bool partialFill;
-  final Color accent;
+  final AccentTone accent;
 
   double get distancePercent =>
       (currentPrice - targetPrice) / targetPrice * 100;
@@ -415,7 +415,7 @@ final class LaunchpadDcaStrategyDraft {
   final LaunchpadDcaStrategyStatus status;
   final int executedOrders;
   final double remainingBudget;
-  final Color accent;
+  final AccentTone accent;
 
   double get pnl => currentValue - totalInvested;
 

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 enum HomeAnnouncementType { info, campaign, security, risk }
 
 extension HomeAnnouncementTypeX on HomeAnnouncementType {
@@ -32,14 +30,14 @@ final class HomeQuickAction {
     required this.icon,
     required this.label,
     required this.routePath,
-    required this.accentColor,
+    required this.accentKey,
     this.stateLabel,
   });
 
-  final IconData icon;
+  final String icon;
   final String label;
   final String routePath;
-  final Color accentColor;
+  final String accentKey;
   final String? stateLabel;
 }
 
@@ -50,16 +48,16 @@ final class HomeNextAction {
     required this.subtitle,
     required this.routePath,
     required this.ctaLabel,
-    required this.accentColor,
+    required this.accentKey,
     required this.stateLabel,
   });
 
-  final IconData icon;
+  final String icon;
   final String title;
   final String subtitle;
   final String routePath;
   final String ctaLabel;
-  final Color accentColor;
+  final String accentKey;
   final String stateLabel;
 }
 
@@ -70,16 +68,16 @@ final class HomeRecentProduct {
     required this.label,
     required this.contextLabel,
     required this.routePath,
-    required this.accentColor,
+    required this.accentKey,
     required this.stateLabel,
   });
 
   final String id;
-  final IconData icon;
+  final String icon;
   final String label;
   final String contextLabel;
   final String routePath;
-  final Color accentColor;
+  final String accentKey;
   final String stateLabel;
 }
 
@@ -92,7 +90,6 @@ final class HomeCryptoPair {
     required this.change24h,
     required this.volume24h,
     required this.sparkline,
-    required this.logoColor,
     required this.isFavorite,
   });
 
@@ -103,7 +100,6 @@ final class HomeCryptoPair {
   final double change24h;
   final double volume24h;
   final List<double> sparkline;
-  final Color logoColor;
   final bool isFavorite;
 }
 

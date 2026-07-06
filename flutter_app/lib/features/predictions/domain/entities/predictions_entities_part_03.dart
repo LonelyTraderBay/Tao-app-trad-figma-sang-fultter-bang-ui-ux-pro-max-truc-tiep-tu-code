@@ -403,12 +403,12 @@ final class PredictionOutcomeDraft {
   const PredictionOutcomeDraft({
     required this.label,
     required this.chance,
-    required this.color,
+    required this.tone,
   });
 
   final String label;
   final int chance;
-  final Color color;
+  final AccentTone tone;
 }
 
 final class PredictionPositionDraft {

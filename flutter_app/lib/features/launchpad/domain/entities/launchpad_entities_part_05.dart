@@ -101,7 +101,7 @@ final class LaunchpadBridgeOrderDraft {
   final String projectId;
   final String projectName;
   final String projectSymbol;
-  final Color accent;
+  final AccentTone accent;
   final String sourceChain;
   final String targetChain;
   final String inputToken;

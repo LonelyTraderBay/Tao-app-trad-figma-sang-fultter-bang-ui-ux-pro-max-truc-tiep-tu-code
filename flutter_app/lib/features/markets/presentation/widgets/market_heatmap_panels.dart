@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_data_viz_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -87,9 +88,15 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
           Row(
             children: [
               Material(
-                color: coin.color.withValues(alpha: .14),
+                color: AppAssetColors.forSymbol(
+                  coin.symbol,
+                ).withValues(alpha: .14),
                 shape: CircleBorder(
-                  side: BorderSide(color: coin.color.withValues(alpha: .28)),
+                  side: BorderSide(
+                    color: AppAssetColors.forSymbol(
+                      coin.symbol,
+                    ).withValues(alpha: .28),
+                  ),
                 ),
                 child: SizedBox.square(
                   dimension: AppSpacing.marketHeatmapAvatar,
@@ -99,7 +106,7 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
                           ? coin.symbol
                           : coin.symbol.substring(0, 3),
                       style: AppTextStyles.micro.copyWith(
-                        color: coin.color,
+                        color: AppAssetColors.forSymbol(coin.symbol),
                         fontWeight: AppTextStyles.bold,
                         height: AppSpacing.marketLineHeightTight,
                       ),

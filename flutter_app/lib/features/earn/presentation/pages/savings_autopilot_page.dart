@@ -4,9 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
-import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
@@ -16,12 +14,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 
-part 'earn_autopilot_page.dart';
-
-TextStyle get _captionBold =>
-    AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold);
-TextStyle get _microBold =>
-    AppTextStyles.micro.copyWith(fontWeight: AppTextStyles.bold);
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_autopilot_actions.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_autopilot_formatters.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_autopilot_hero.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_autopilot_overview.dart';
+import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_autopilot_settings.dart';
 
 class SavingsAutoPilotPage extends ConsumerStatefulWidget {
   const SavingsAutoPilotPage({super.key, this.shellRenderMode});
@@ -67,7 +64,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
     final status = _status ?? snapshot.config.status;
     final selectedMode = _mode ?? snapshot.config.mode;
     final monthlyBudget = _monthlyBudgetUsd ?? snapshot.config.monthlyBudgetUsd;
-    final mode = _modeById(snapshot, selectedMode);
+    final mode = modeById(snapshot, selectedMode);
     final pendingCount = _pendingCount(snapshot);
     final executedCount = _executedCount(snapshot);
     final modeRender = widget.shellRenderMode ?? defaultShellRenderMode();
@@ -101,7 +98,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [
-                      _AutoPilotHero(
+                      AutoPilotHero(
                         snapshot: snapshot,
                         mode: mode,
                         status: status,
@@ -110,7 +107,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
                         pendingCount: pendingCount,
                         onToggleStatus: _toggleStatus,
                       ),
-                      _AutoPilotTabs(
+                      AutoPilotTabs(
                         tabs: snapshot.tabs,
                         active: activeTab,
                         onChanged: (tab) {
@@ -119,7 +116,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
                         },
                       ),
                       if (activeTab == 'overview')
-                        _OverviewTab(
+                        OverviewTab(
                           snapshot: snapshot,
                           moduleStates: _moduleStates,
                           onOpenModule: (route) => context.go(route),
@@ -129,7 +126,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
                               _showActionDetail(context, action),
                         )
                       else if (activeTab == 'actions')
-                        _ActionsTab(
+                        ActionsTab(
                           snapshot: snapshot,
                           actionStatusFor: _actionStatus,
                           onOpenAction: (action) =>
@@ -138,7 +135,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
                           onSkip: _skipAction,
                         )
                       else
-                        _SettingsTab(
+                        SettingsTab(
                           snapshot: snapshot,
                           mode: selectedMode,
                           monthlyBudgetUsd: monthlyBudget,
@@ -247,7 +244,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
     showVitBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.transparent,
-      builder: (context) => _ActionDetailSheet(
+      builder: (context) => ActionDetailSheet(
         action: action,
         status: status,
         onApprove: status == SavingsAutoPilotActionStatus.needsApproval

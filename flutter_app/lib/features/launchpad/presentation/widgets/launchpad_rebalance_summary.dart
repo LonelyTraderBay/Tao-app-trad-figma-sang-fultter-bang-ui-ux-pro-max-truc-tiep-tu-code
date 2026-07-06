@@ -52,7 +52,7 @@ class LaunchpadRebalanceSummaryCard extends StatelessWidget {
           LaunchpadRebalanceSummaryRow(
             label: 'Muc rui ro',
             value: launchpadRebalanceRiskLabel(strategy.riskLevel),
-            color: strategy.accent,
+            color: strategy.accent.resolve(),
           ),
         ],
       ),

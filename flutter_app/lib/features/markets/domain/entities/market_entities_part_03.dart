@@ -115,7 +115,7 @@ final class MarketScreenerPreset {
   final String id;
   final String name;
   final String description;
-  final IconData icon;
+  final String icon;
   final MarketScreenerQuery query;
 }
 
@@ -288,7 +288,6 @@ final class HeatmapCoin {
     required this.marketCap,
     required this.volume24h,
     required this.category,
-    required this.color,
   });
 
   final String id;
@@ -300,7 +299,6 @@ final class HeatmapCoin {
   final double marketCap;
   final double volume24h;
   final String category;
-  final Color color;
 }
 
 final class MarketWatchlistSnapshot {

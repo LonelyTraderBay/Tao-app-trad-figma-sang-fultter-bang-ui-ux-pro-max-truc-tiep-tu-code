@@ -8,7 +8,7 @@ import 'package:vit_trade_flutter/features/admin/data/admin_repository.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 
 void main() {
-  const repository = AdminRepository();
+  const repository = MockAdminRepository();
 
   Future<void> pumpAdminWidget(WidgetTester tester, Widget child) async {
     tester.view.devicePixelRatio = 1;

@@ -37,14 +37,14 @@ class _ChainBadge extends StatelessWidget {
       dimension: AppSpacing.launchpadBox32,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: price.accent.withValues(alpha: .14),
+          color: price.accent.resolve().withValues(alpha: .14),
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: Center(
           child: Text(
             price.chainIcon,
             style: AppTextStyles.micro.copyWith(
-              color: price.accent,
+              color: price.accent.resolve(),
               fontWeight: AppTextStyles.bold,
             ),
           ),

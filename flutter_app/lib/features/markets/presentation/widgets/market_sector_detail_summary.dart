@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/market_icon_tokens.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_card.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
@@ -20,20 +22,20 @@ class MarketSectorDetailSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: AppSpacing.marketSectorCardPadding,
-      borderColor: sector.color.withValues(alpha: 0.22),
+      borderColor: sector.color.resolve().withValues(alpha: 0.22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               Material(
-                color: sector.color.withValues(alpha: 0.16),
+                color: sector.color.resolve().withValues(alpha: 0.16),
                 shape: const CircleBorder(),
                 child: SizedBox.square(
                   dimension: AppSpacing.marketSectorDetailIcon,
                   child: Icon(
-                    sector.icon,
-                    color: sector.color,
+                    MarketIconTokens.icon(sector.icon),
+                    color: sector.color.resolve(),
                     size: AppSpacing.marketSectorDetailIconGlyph,
                   ),
                 ),
@@ -105,7 +107,7 @@ class MarketSectorTopCoinsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitPageSection(
       label: 'Coin nổi bật',
-      accentColor: sector.color,
+      accentColor: sector.color.resolve(),
       children: [
         VitCard(
           padding: AppSpacing.marketSectorTopCoinsPadding,

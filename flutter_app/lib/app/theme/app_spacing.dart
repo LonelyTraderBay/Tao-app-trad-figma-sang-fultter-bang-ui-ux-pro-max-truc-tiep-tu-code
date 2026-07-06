@@ -166,7 +166,6 @@ final class AppSpacing {
 
   // Module-prefixed screen tokens — migrate to features/<module>/ (finding #15).
 
-
   static const double walletHorizontalPadding = 20;
   static const double walletAssetHeroHeight = 238;
   static const double walletAssetHeroPaddingTop = 16;
@@ -1244,6 +1243,7 @@ final class AppSpacing {
     horizontal: tradeHorizontalPadding,
   );
   static const EdgeInsets tradeRiskPanelPadding = tradeMarketPanelPadding;
+
   /// Home-aligned section rhythm for L2 trade pages (8px).
   static const double tradePageContentGap = x3;
 
@@ -4683,6 +4683,9 @@ final class AppSpacing {
   );
   static const EdgeInsets vitChoicePillComfortablePadding =
       EdgeInsets.symmetric(horizontal: x4);
+  static const EdgeInsets vitFilterChipPadding = EdgeInsets.symmetric(
+    horizontal: x3,
+  );
   static const EdgeInsets marketFilterSheetPadding = EdgeInsets.all(12);
   static const double marketFilterGap = 8;
   static const double marketCategoryGap = 9;

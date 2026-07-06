@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -126,7 +127,9 @@ class _EventCard extends StatelessWidget {
                           if (event.symbol != null)
                             _TinyBadge(
                               label: event.symbol!,
-                              color: event.symbolColor ?? type.color,
+                              color: event.symbol != null
+                                  ? AppAssetColors.forSymbol(event.symbol!)
+                                  : type.color,
                             ),
                           _TinyBadge(label: type.label, color: type.color),
                         ],

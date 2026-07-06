@@ -261,10 +261,12 @@ class _ActiveIndicatorChips extends StatelessWidget {
       children: [
         for (final indicator in indicators)
           Material(
-            color: indicator.color.withValues(alpha: .08),
+            color: indicator.color.resolve().withValues(alpha: .08),
             shape: RoundedRectangleBorder(
               borderRadius: AppRadii.smRadius,
-              side: BorderSide(color: indicator.color.withValues(alpha: .22)),
+              side: BorderSide(
+                color: indicator.color.resolve().withValues(alpha: .22),
+              ),
             ),
             child: Padding(
               padding: _advancedActiveChipPadding,
@@ -274,7 +276,7 @@ class _ActiveIndicatorChips extends StatelessWidget {
                   Text(
                     indicator.shortName,
                     style: AppTextStyles.micro.copyWith(
-                      color: indicator.color,
+                      color: indicator.color.resolve(),
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
@@ -290,7 +292,7 @@ class _ActiveIndicatorChips extends StatelessWidget {
                     child: Icon(
                       Icons.close_rounded,
                       size: _advancedChipRemoveIcon,
-                      color: indicator.color,
+                      color: indicator.color.resolve(),
                     ),
                   ),
                 ],
@@ -320,23 +322,25 @@ class _IndicatorCategoryFilter extends StatelessWidget {
       clipBehavior: Clip.none,
       child: Row(
         children: [
-          _FilterChipButton(
+          VitFilterChip(
             key: AdvancedChartsPage.categoryAllKey,
             label: 'Tất cả',
             active: activeCategory == 'all',
             color: _marketPrimary,
             onTap: () => onSelected('all'),
+            padding: _advancedFilterChipPadding,
           ),
           const SizedBox(width: _advancedCompactGap),
           for (final category in categories) ...[
-            _FilterChipButton(
+            VitFilterChip(
               key: category.id == 'trend'
                   ? AdvancedChartsPage.categoryTrendKey
                   : null,
               label: category.label,
               active: activeCategory == category.id,
-              color: category.color,
+              color: category.color.resolve(),
               onTap: () => onSelected(category.id),
+              padding: _advancedFilterChipPadding,
             ),
             if (category != categories.last)
               const SizedBox(width: _advancedCompactGap),
@@ -365,15 +369,16 @@ class _DrawingCategoryFilter extends StatelessWidget {
       clipBehavior: Clip.none,
       child: Row(
         children: [
-          _FilterChipButton(
+          VitFilterChip(
             label: 'Tất cả',
             active: activeCategory == 'all',
             color: _marketPrimary,
             onTap: () => onSelected('all'),
+            padding: _advancedFilterChipPadding,
           ),
           const SizedBox(width: _advancedCompactGap),
           for (final category in categories) ...[
-            _FilterChipButton(
+            VitFilterChip(
               key: category.id == 'line'
                   ? AdvancedChartsPage.drawingLineKey
                   : null,
@@ -381,6 +386,7 @@ class _DrawingCategoryFilter extends StatelessWidget {
               active: activeCategory == category.id,
               color: _marketPrimary,
               onTap: () => onSelected(category.id),
+              padding: _advancedFilterChipPadding,
             ),
             if (category != categories.last)
               const SizedBox(width: _advancedCompactGap),
@@ -391,29 +397,3 @@ class _DrawingCategoryFilter extends StatelessWidget {
   }
 }
 
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: color,
-      padding: _advancedFilterChipPadding,
-      semanticLabel: label,
-    );
-  }
-}

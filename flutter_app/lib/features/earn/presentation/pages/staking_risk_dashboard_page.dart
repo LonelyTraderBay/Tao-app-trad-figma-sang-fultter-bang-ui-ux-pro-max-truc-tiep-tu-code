@@ -57,8 +57,7 @@ class StakingRiskDashboardPage extends ConsumerWidget {
           header: VitTopChrome(
             type: VitTopChromeType.detail,
             title: snapshot.title,
-            subtitle:
-                'Tổng quan rủi ro earn — APY ước tính có thể thay đổi',
+            subtitle: 'Tổng quan rủi ro earn — APY ước tính có thể thay đổi',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),

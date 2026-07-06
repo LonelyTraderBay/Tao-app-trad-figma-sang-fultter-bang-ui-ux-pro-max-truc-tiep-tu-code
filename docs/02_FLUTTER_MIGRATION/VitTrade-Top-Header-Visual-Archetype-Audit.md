@@ -6,7 +6,7 @@ Generated from `flutter_app/tool/top_header_visual_archetype_audit.dart`.
 total_routed_screens=414
 strict_visual_issues=0
 screen_level_mismatches=0
-uses_vit_top_chrome=64
+uses_vit_top_chrome=63
 status_banner_in_header=0
 hard_coded_offline_banner=0
 ```
@@ -212,7 +212,7 @@ hard_coded_offline_banner=0
 | earn | `AppRoutePaths.earnVotingProposalRoute` | `StakingVotingPage` | auto_hide_header | vit_top_chrome_detail | detail | L2_detail | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/earn/presentation/pages/staking_voting_page.dart` |
 | earn | `AppRoutePaths.earnWebhooks` | `StakingWebhooksPage` | auto_hide_header | vit_top_chrome_detail | detail | L2_detail | detail | no | no | yes | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/earn/presentation/pages/staking_webhooks_page.dart` |
 | enterprise_states | `AppRoutePaths.enterpriseStates` | `EnterpriseStatesPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | content | state_driven | offlineNoCache | 0 | - | - | `flutter_app/lib/features/enterprise_states/presentation/pages/enterprise_states_page.dart` |
-| home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | vit_top_chrome_rootBrand | rootBrand | L0_homeRoot | rootBrand | no | no | yes | `_HomeHeader` | - | none | none | none | 2 | - | - | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
+| home | `AppRoutePaths.home` | `HomePage` | auto_hide_header | shared_auto_hide_scaffold | rootBrand | L0_homeRoot | rootBrand | no | no | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/home/presentation/pages/home_page.dart` |
 | launchpad | `AppRoutePaths.launchpad` | `LaunchpadPage` | auto_hide_header | vit_top_chrome_rootModule | rootModule | L1_productModuleHub | rootModule | no | no | yes | `-` | - | none | none | none | 3 | - | - | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAbiDiff` | `LaunchpadAbiDiffPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L2_detail | detail | no | yes | no | `-` | - | none | none | none | 0 | - | - | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_abi_diff_page.dart` |
 | launchpad | `AppRoutePaths.launchpadAddressBook` | `LaunchpadAddressBookPage` | auto_hide_header | shared_auto_hide_scaffold | detail | L3_transactionFlow | detail | no | yes | no | `-` | - | none | none | none | 1 | - | - | `flutter_app/lib/features/launchpad/presentation/pages/launchpad_address_book_page.dart` |

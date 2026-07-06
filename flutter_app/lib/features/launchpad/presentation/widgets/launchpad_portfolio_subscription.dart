@@ -135,17 +135,19 @@ class _SubscriptionAvatar extends StatelessWidget {
       dimension: AppSpacing.x7,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: subscription.accent.withValues(alpha: .12),
+          color: subscription.accent.resolve().withValues(alpha: .12),
           shape: RoundedRectangleBorder(
             borderRadius: AppRadii.lgRadius,
-            side: BorderSide(color: subscription.accent.withValues(alpha: .35)),
+            side: BorderSide(
+              color: subscription.accent.resolve().withValues(alpha: .35),
+            ),
           ),
         ),
         child: Center(
           child: Text(
             subscription.projectLogo,
             style: AppTextStyles.baseMedium.copyWith(
-              color: subscription.accent,
+              color: subscription.accent.resolve(),
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -233,9 +235,7 @@ class _VestingProgress extends StatelessWidget {
                     0.0,
                     1.0,
                   ),
-                  child: ColoredBox(
-                    color: AppModuleAccents.launchpad,
-                  ),
+                  child: ColoredBox(color: AppModuleAccents.launchpad),
                 ),
               ],
             ),

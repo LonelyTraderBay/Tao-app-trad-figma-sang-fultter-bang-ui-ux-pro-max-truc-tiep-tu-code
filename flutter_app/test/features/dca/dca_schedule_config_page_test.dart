@@ -33,7 +33,7 @@ void main() {
   }
 
   test('SC-172 mock repository exposes schedule config BE draft', () {
-    final snapshot = const DcaRepository().getScheduleConfig();
+    final snapshot = const MockDcaRepository().getScheduleConfig();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-schedule-config');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

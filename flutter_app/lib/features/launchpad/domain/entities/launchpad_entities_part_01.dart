@@ -86,7 +86,7 @@ final class LaunchpadProjectDraft {
   final String name;
   final String symbol;
   final String logo;
-  final Color accent;
+  final AccentTone accent;
   final String description;
   final LaunchpadProjectType type;
   final LaunchpadProjectStatus status;
@@ -152,7 +152,7 @@ final class LaunchpadToolDraft {
   final String description;
   final String route;
   final String iconKey;
-  final Color accent;
+  final AccentTone accent;
 }
 
 final class LaunchpadPortfolioSnapshot {
@@ -204,7 +204,7 @@ final class LaunchpadSubscriptionDraft {
   final String projectName;
   final String projectSymbol;
   final String projectLogo;
-  final Color accent;
+  final AccentTone accent;
   final double amount;
   final int tokensAllocated;
   final LaunchpadSubscriptionStatus status;
@@ -324,7 +324,7 @@ final class LaunchpadHistoricalProjectDraft {
   final int roiCurrent;
   final int participants;
   final String totalRaised;
-  final Color accent;
+  final AccentTone accent;
 }
 
 final class LaunchpadPerformancePointDraft {
@@ -412,7 +412,7 @@ final class LaunchpoolPoolDraft {
   final String projectName;
   final String projectSymbol;
   final String projectLogo;
-  final Color accent;
+  final AccentTone accent;
   final String stakeToken;
   final String rewardToken;
   final double baseApy;
@@ -450,7 +450,7 @@ final class LaunchpadStakingTierDraft {
   final double minStake;
   final String label;
   final double apyBonus;
-  final Color accent;
+  final AccentTone accent;
 }
 
 final class LaunchpadStakePositionDraft {
@@ -475,7 +475,7 @@ final class LaunchpadStakePositionDraft {
   final String poolId;
   final String projectName;
   final String projectSymbol;
-  final Color accent;
+  final AccentTone accent;
   final String stakeToken;
   final String rewardToken;
   final double stakedAmount;

@@ -1,8 +1,10 @@
 import 'package:vit_trade_flutter/features/admin/domain/entities/admin_entities.dart';
+import 'package:vit_trade_flutter/features/admin/domain/repositories/admin_repository.dart';
 
-class AdminRepository {
-  const AdminRepository();
+final class MockAdminRepository implements AdminRepository {
+  const MockAdminRepository();
 
+  @override
   AdminHomeSnapshot getHome() {
     return const AdminHomeSnapshot(
       endpoint: '/api/mobile/admin/admin',
@@ -99,6 +101,7 @@ class AdminRepository {
     );
   }
 
+  @override
   AdminAnalyticsSnapshot getAnalytics() {
     return const AdminAnalyticsSnapshot(
       endpoint: '/api/mobile/admin/admin-analytics',
@@ -154,6 +157,7 @@ class AdminRepository {
     );
   }
 
+  @override
   AdminAbTestsSnapshot getAbTests() {
     return const AdminAbTestsSnapshot(
       endpoint: '/api/mobile/admin/admin-abtests',
@@ -349,6 +353,7 @@ class AdminRepository {
     );
   }
 
+  @override
   AdminFunnelsSnapshot getFunnels() {
     return const AdminFunnelsSnapshot(
       endpoint: '/api/mobile/admin/admin-funnels',

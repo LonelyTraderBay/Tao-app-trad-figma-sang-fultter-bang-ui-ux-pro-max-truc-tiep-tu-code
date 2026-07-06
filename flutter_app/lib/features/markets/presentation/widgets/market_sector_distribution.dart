@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -77,7 +78,7 @@ class MarketSectorDistributionCard extends StatelessWidget {
                         1,
                         (_allocation(sector, total) * 10).round(),
                       ),
-                      child: ColoredBox(color: sector.color),
+                      child: ColoredBox(color: sector.color.resolve()),
                     ),
                 ],
               ),
@@ -91,7 +92,7 @@ class MarketSectorDistributionCard extends StatelessWidget {
               children: [
                 for (final sector in visible)
                   _LegendItem(
-                    color: sector.color,
+                    color: sector.color.resolve(),
                     label:
                         '${sector.nameVi} ${_allocation(sector, total).toStringAsFixed(1)}%',
                   ),

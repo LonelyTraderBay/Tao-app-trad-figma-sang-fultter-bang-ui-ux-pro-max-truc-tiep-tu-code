@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 
@@ -96,7 +98,7 @@ MarketSectorCoin _coinForSymbol(
         name: pair.baseAsset,
         priceLabel: formatMarketSectorPrice(pair.price),
         change24h: pair.change24h,
-        color: pair.logoColor,
+        color: AppAssetColors.forSymbol(pair.baseAsset),
       );
     }
   }
@@ -107,7 +109,7 @@ MarketSectorCoin _coinForSymbol(
     name: sector.name,
     priceLabel: '--',
     change24h: sector.change24h,
-    color: sector.color,
+    color: sector.color.resolve(),
   );
 }
 

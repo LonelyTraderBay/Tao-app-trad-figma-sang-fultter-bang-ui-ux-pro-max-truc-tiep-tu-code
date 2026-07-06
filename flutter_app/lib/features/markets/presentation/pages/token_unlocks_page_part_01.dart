@@ -252,26 +252,29 @@ class _UnlockFilters extends StatelessWidget {
           clipBehavior: Clip.none,
           child: Row(
             children: [
-              _FilterChipButton(
+              VitFilterChip(
                 label: 'Gần nhất',
                 active: sortBy == MarketUnlockSort.nearest,
                 color: _marketPrimary,
                 onTap: () => onSortSelected(MarketUnlockSort.nearest),
+                padding: AppSpacing.tokenUnlocksFilterPadding,
               ),
               const SizedBox(width: _unlockFilterGap),
-              _FilterChipButton(
+              VitFilterChip(
                 key: TokenUnlocksPage.sortValueKey,
                 label: 'Giá trị cao',
                 active: sortBy == MarketUnlockSort.value,
                 color: _marketPrimary,
                 onTap: () => onSortSelected(MarketUnlockSort.value),
+                padding: AppSpacing.tokenUnlocksFilterPadding,
               ),
               const SizedBox(width: _unlockFilterGap),
-              _FilterChipButton(
+              VitFilterChip(
                 label: 'Tác động',
                 active: sortBy == MarketUnlockSort.impact,
                 color: _marketPrimary,
                 onTap: () => onSortSelected(MarketUnlockSort.impact),
+                padding: AppSpacing.tokenUnlocksFilterPadding,
               ),
             ],
           ),
@@ -282,22 +285,24 @@ class _UnlockFilters extends StatelessWidget {
           clipBehavior: Clip.none,
           child: Row(
             children: [
-              _FilterChipButton(
+              VitFilterChip(
                 label: 'Tất cả',
                 active: impactFilter == null,
                 color: AppColors.text3,
                 onTap: onAllImpacts,
+                padding: AppSpacing.tokenUnlocksFilterPadding,
               ),
               const SizedBox(width: _unlockFilterGap),
               for (final entry in impactConfigs.entries) ...[
-                _FilterChipButton(
+                VitFilterChip(
                   key: entry.key == MarketUnlockImpact.high
                       ? TokenUnlocksPage.impactHighKey
                       : null,
                   label: entry.value.label,
                   active: impactFilter == entry.key,
-                  color: entry.value.color,
+                  color: entry.value.color.resolve(),
                   onTap: () => onImpactSelected(entry.key),
+                  padding: AppSpacing.tokenUnlocksFilterPadding,
                 ),
                 if (entry.key != impactConfigs.keys.last)
                   const SizedBox(width: _unlockFilterGap),
@@ -306,33 +311,6 @@ class _UnlockFilters extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    super.key,
-    required this.label,
-    required this.active,
-    required this.color,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool active;
-  final Color color;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: active,
-      onTap: onTap,
-      accentColor: color,
-      padding: AppSpacing.tokenUnlocksFilterPadding,
-      semanticLabel: label,
     );
   }
 }

@@ -31,12 +31,12 @@ const TokenFundamentalsDraft _btcFundamentals = TokenFundamentalsDraft(
     SupplyDistributionDraft(
       label: 'Luu hanh',
       percentage: 93.5,
-      color: AppAssetColors.btc,
+      color: AccentTone.buy,
     ),
     SupplyDistributionDraft(
       label: 'Chua dao',
       percentage: 6.5,
-      color: AppAssetColors.brownChain,
+      color: AccentTone.text3,
     ),
   ],
   contractAddresses: [],

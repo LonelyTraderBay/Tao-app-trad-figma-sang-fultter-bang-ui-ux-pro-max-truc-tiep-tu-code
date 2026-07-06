@@ -7,7 +7,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.listing,
     dateIso: '2026-03-11T18:00:00Z',
     symbol: 'WLD',
-    symbolColor: AppAssetColors.wld,
     impact: MarketCalendarImpact.medium,
     description: 'Worldcoin (WLD) sẽ được list trên Coinbase với cặp WLD/USD.',
     source: 'Coinbase Blog',
@@ -19,7 +18,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.unlock,
     dateIso: '2026-03-12T08:00:00Z',
     symbol: 'ARB',
-    symbolColor: AppAssetColors.arb,
     impact: MarketCalendarImpact.high,
     description:
         '92.65M ARB mở khóa từ investor và team, khoảng 3.49% tổng cung.',
@@ -43,7 +41,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.unlock,
     dateIso: '2026-03-13T08:00:00Z',
     symbol: 'MATIC',
-    symbolColor: AppAssetColors.matic,
     impact: MarketCalendarImpact.medium,
     description: '200M MATIC mở khóa từ quỹ phát triển ecosystem.',
     source: 'TokenUnlocks.app',
@@ -55,7 +52,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.airdrop,
     dateIso: '2026-03-14T00:00:00Z',
     symbol: 'PYTH',
-    symbolColor: AppAssetColors.violetDeepChain,
     impact: MarketCalendarImpact.medium,
     description: 'Đợt phát hành airdrop thứ 2 cho người dùng DeFi và staker.',
     source: 'pyth.network',
@@ -67,7 +63,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.upgrade,
     dateIso: '2026-03-15T14:00:00Z',
     symbol: 'ETH',
-    symbolColor: AppAssetColors.eth,
     impact: MarketCalendarImpact.high,
     description: 'Nâng cấp Pectra bao gồm EIP-7251 và EIP-7702.',
     source: 'ethereum.org',
@@ -79,7 +74,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.burn,
     dateIso: '2026-03-18T12:00:00Z',
     symbol: 'BNB',
-    symbolColor: AppAssetColors.bnb,
     impact: MarketCalendarImpact.medium,
     description: 'Đợt BNB định kỳ hàng quý, ước tính 1.5M BNB sẽ bị đốt.',
     source: 'bnbchain.org',
@@ -102,7 +96,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.upgrade,
     dateIso: '2026-03-20T16:00:00Z',
     symbol: 'SOL',
-    symbolColor: AppAssetColors.sol,
     impact: MarketCalendarImpact.high,
     description:
         'Client Firedancer ra mắt mainnet, tập trung cải thiện hiệu suất mạng.',
@@ -126,7 +119,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.unlock,
     dateIso: '2026-03-25T08:00:00Z',
     symbol: 'OP',
-    symbolColor: AppAssetColors.op,
     impact: MarketCalendarImpact.high,
     description: '31.3M OP mở khóa từ core contributors và investors.',
     source: 'TokenUnlocks.app',
@@ -138,7 +130,6 @@ const List<MarketCalendarEvent> _marketEvents = [
     type: MarketCalendarEventType.upgrade,
     dateIso: '2026-03-28T14:00:00Z',
     symbol: 'LINK',
-    symbolColor: AppAssetColors.link,
     impact: MarketCalendarImpact.medium,
     description:
         'Cross-Chain Interoperability Protocol v2 hỗ trợ hơn 20 chains.',
@@ -200,7 +191,6 @@ const List<DerivativePair> _derivativePairs = [
     shortRatio: 45.8,
     longLiquidations24h: 23456000,
     shortLiquidations24h: 18901000,
-    color: AppAssetColors.btc,
     maxLeverage: 125,
   ),
   DerivativePair(
@@ -220,7 +210,6 @@ const List<DerivativePair> _derivativePairs = [
     shortRatio: 52.2,
     longLiquidations24h: 12345000,
     shortLiquidations24h: 8901000,
-    color: AppAssetColors.eth,
     maxLeverage: 100,
   ),
   DerivativePair(
@@ -240,7 +229,6 @@ const List<DerivativePair> _derivativePairs = [
     shortRatio: 37.7,
     longLiquidations24h: 5678000,
     shortLiquidations24h: 15432000,
-    color: AppAssetColors.sol,
     maxLeverage: 75,
   ),
   DerivativePair(
@@ -260,7 +248,6 @@ const List<DerivativePair> _derivativePairs = [
     shortRatio: 44.9,
     longLiquidations24h: 2345000,
     shortLiquidations24h: 3456000,
-    color: AppAssetColors.bnb,
     maxLeverage: 75,
   ),
   DerivativePair(
@@ -280,7 +267,6 @@ const List<DerivativePair> _derivativePairs = [
     shortRatio: 56.5,
     longLiquidations24h: 4567000,
     shortLiquidations24h: 1234000,
-    color: AppAssetColors.xrp,
     maxLeverage: 75,
   ),
   DerivativePair(
@@ -300,7 +286,6 @@ const List<DerivativePair> _derivativePairs = [
     shortRatio: 32.2,
     longLiquidations24h: 1234000,
     shortLiquidations24h: 5678000,
-    color: AppAssetColors.goldChain,
     maxLeverage: 50,
   ),
   DerivativePair(
@@ -320,7 +305,6 @@ const List<DerivativePair> _derivativePairs = [
     shortRatio: 41.6,
     longLiquidations24h: 890000,
     shortLiquidations24h: 2345000,
-    color: AppAssetColors.avax,
     maxLeverage: 50,
   ),
   DerivativePair(
@@ -340,7 +324,6 @@ const List<DerivativePair> _derivativePairs = [
     shortRatio: 58.8,
     longLiquidations24h: 3456000,
     shortLiquidations24h: 678000,
-    color: AppAssetColors.link,
     maxLeverage: 50,
   ),
 ];

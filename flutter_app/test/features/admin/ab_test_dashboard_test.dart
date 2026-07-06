@@ -28,7 +28,7 @@ void main() {
   }
 
   test('SC-182 mock repository exposes A/B tests BE draft', () {
-    final snapshot = const AdminRepository().getAbTests();
+    final snapshot = const MockAdminRepository().getAbTests();
 
     expect(snapshot.endpoint, '/api/mobile/admin/admin-abtests');
     expect(snapshot.actionDraft, 'read-only or local navigation action');

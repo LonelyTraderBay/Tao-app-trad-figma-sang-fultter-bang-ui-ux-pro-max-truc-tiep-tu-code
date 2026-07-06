@@ -8,8 +8,6 @@ List<CorrelationPairDraft> _correlationPairs() {
         CorrelationPairDraft(
           assetA: _correlationAssets[i].symbol,
           assetB: _correlationAssets[j].symbol,
-          colorA: _correlationAssets[i].color,
-          colorB: _correlationAssets[j].color,
           correlation7d: _corrMatrix7d[i][j],
           correlation30d: _corrMatrix30d[i][j],
           correlation90d: _corrMatrix90d[i][j],
@@ -475,7 +473,7 @@ const List<MarketScreenerPreset> _screenerPresets = [
     id: 'large-cap',
     name: 'Large Cap',
     description: 'Dòng tiền vốn hóa lớn, ổn định',
-    icon: Icons.account_balance_rounded,
+    icon: 'accountBalance',
     query: MarketScreenerQuery(
       minMarketCap: 10000000000,
       sortBy: MarketScreenerSort.marketCap,
@@ -486,7 +484,7 @@ const List<MarketScreenerPreset> _screenerPresets = [
     id: 'high-volume',
     name: 'Volume Cao',
     description: 'Khối lượng giao dịch lớn trong 24h',
-    icon: Icons.bar_chart_rounded,
+    icon: 'barChart',
     query: MarketScreenerQuery(
       minVolume24h: 1000000000,
       sortBy: MarketScreenerSort.volume,
@@ -497,7 +495,7 @@ const List<MarketScreenerPreset> _screenerPresets = [
     id: 'gainers',
     name: 'Tăng Mạnh',
     description: 'Dòng tiền tăng giá mạnh nhất 24h',
-    icon: Icons.rocket_launch_rounded,
+    icon: 'rocketLaunch',
     query: MarketScreenerQuery(
       minChange24h: 3,
       sortBy: MarketScreenerSort.change24h,
@@ -508,7 +506,7 @@ const List<MarketScreenerPreset> _screenerPresets = [
     id: 'bargains',
     name: 'Giá Thấp',
     description: 'Dòng tiền dưới 1 USD với volume tốt',
-    icon: Icons.diamond_rounded,
+    icon: 'diamond',
     query: MarketScreenerQuery(
       maxPrice: 1,
       minVolume24h: 100000000,
@@ -520,7 +518,7 @@ const List<MarketScreenerPreset> _screenerPresets = [
     id: 'defi-gems',
     name: 'DeFi Gems',
     description: 'Token DeFi đang tăng',
-    icon: Icons.account_balance_wallet_rounded,
+    icon: 'accountBalanceWallet',
     query: MarketScreenerQuery(
       categories: ['DeFi'],
       minChange24h: 0,
@@ -532,7 +530,7 @@ const List<MarketScreenerPreset> _screenerPresets = [
     id: 'l2-watch',
     name: 'L2 Watch',
     description: 'Token Layer 2 tiềm năng',
-    icon: Icons.link_rounded,
+    icon: 'link',
     query: MarketScreenerQuery(
       categories: ['Layer 2'],
       sortBy: MarketScreenerSort.marketCap,

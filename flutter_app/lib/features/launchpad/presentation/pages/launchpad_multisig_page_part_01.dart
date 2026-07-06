@@ -252,7 +252,7 @@ class _SafeSelector extends StatelessWidget {
                           icon: Icons.shield_outlined,
                           color: selectedAddress == safe.address
                               ? AppModuleAccents.launchpad
-                              : safe.accent,
+                              : safe.accent.resolve(),
                           size: AppSpacing.launchpadIcon5xl,
                         ),
                         const SizedBox(width: AppSpacing.x2),
@@ -275,7 +275,7 @@ class _SafeSelector extends StatelessWidget {
                         Text(
                           safe.chain,
                           style: AppTextStyles.micro.copyWith(
-                            color: safe.accent,
+                            color: safe.accent.resolve(),
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),

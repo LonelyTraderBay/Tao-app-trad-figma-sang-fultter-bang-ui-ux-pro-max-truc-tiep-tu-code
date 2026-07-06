@@ -24,18 +24,14 @@ import 'package:vit_trade_flutter/shared/widgets/vit_skeleton.dart';
 void main() {
   test('SC-007 Home keeps the shared component foundation contract', () {
     final source = [
-      File(
-        'lib/features/home/presentation/pages/home_page.dart',
-      ).readAsStringSync(),
-      File(
-        'lib/features/home/presentation/pages/home_page_part_01.dart',
-      ).readAsStringSync(),
-      File(
-        'lib/features/home/presentation/pages/home_page_part_02.dart',
-      ).readAsStringSync(),
-      File(
-        'lib/features/home/presentation/pages/home_page_part_03.dart',
-      ).readAsStringSync(),
+      for (final entity in Directory(
+        'lib/features/home/presentation/pages',
+      ).listSync().whereType<File>())
+        entity.readAsStringSync(),
+      for (final entity in Directory(
+        'lib/features/home/presentation/widgets',
+      ).listSync().whereType<File>())
+        entity.readAsStringSync(),
     ].join('\n');
 
     expect(source, contains('VitAutoHideHeaderScaffold'));
@@ -492,7 +488,9 @@ void main() {
     expect(find.byKey(HomePage.nextActionKey), findsNothing);
   });
 
-  testWidgets('SC-007 hides next action when snapshot has none', (tester) async {
+  testWidgets('SC-007 hides next action when snapshot has none', (
+    tester,
+  ) async {
     await pumpHome(tester, snapshot: _homeSnapshotWithoutNextAction());
 
     expect(find.byKey(HomePage.nextActionKey), findsNothing);
@@ -540,9 +538,7 @@ void main() {
       ProviderScope(
         overrides: [
           homeRepositoryProvider.overrideWithValue(
-            const MockHomeRepository(
-              loadDelay: Duration(milliseconds: 500),
-            ),
+            const MockHomeRepository(loadDelay: Duration(milliseconds: 500)),
           ),
         ],
         child: VitTradeApp(
@@ -567,9 +563,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          homeRepositoryProvider.overrideWithValue(flakyRepository),
-        ],
+        overrides: [homeRepositoryProvider.overrideWithValue(flakyRepository)],
         child: VitTradeApp(
           routerConfig: createAppRouter(initialLocation: AppRoutePaths.home),
         ),

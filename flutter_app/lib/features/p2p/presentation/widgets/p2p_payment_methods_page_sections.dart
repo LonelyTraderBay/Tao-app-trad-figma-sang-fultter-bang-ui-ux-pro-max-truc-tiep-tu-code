@@ -21,7 +21,10 @@ class _ComplianceLinksRow extends StatelessWidget {
             variant: VitCtaButtonVariant.secondary,
             onPressed: () =>
                 context.go(AppRoutePaths.p2pPaymentMethodCoolingPeriod),
-            leading: const Icon(Icons.schedule_rounded, size: AppSpacing.iconSm),
+            leading: const Icon(
+              Icons.schedule_rounded,
+              size: AppSpacing.iconSm,
+            ),
             child: const Text('Thời gian chờ'),
           ),
         ),

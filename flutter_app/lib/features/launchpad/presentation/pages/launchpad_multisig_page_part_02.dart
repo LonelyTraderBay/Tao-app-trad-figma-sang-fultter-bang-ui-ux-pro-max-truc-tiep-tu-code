@@ -218,7 +218,7 @@ class _TxCard extends StatelessWidget {
                                   const SizedBox(width: AppSpacing.x2),
                                   VitAccentPill(
                                     label: tx.chain,
-                                    accentColor: tx.accent,
+                                    accentColor: tx.accent.resolve(),
                                   ),
                                   const SizedBox(width: AppSpacing.x2),
                                   Text(

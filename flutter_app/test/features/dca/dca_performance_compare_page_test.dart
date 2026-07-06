@@ -29,7 +29,7 @@ void main() {
   }
 
   test('SC-178 mock repository exposes performance compare BE draft', () {
-    final snapshot = const DcaRepository().getPerformanceCompare();
+    final snapshot = const MockDcaRepository().getPerformanceCompare();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-performance-compare');
     expect(

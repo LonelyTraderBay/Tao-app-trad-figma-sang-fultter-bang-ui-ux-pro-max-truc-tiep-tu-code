@@ -6,7 +6,7 @@ const _launchpadProjects = [
     name: 'NexaAI Protocol',
     symbol: 'NEXA',
     logo: 'NA',
-    accent: AppColors.accent,
+    accent: AccentTone.accent,
     description:
         'AI-powered DeFi protocol tối ưu lợi suất tự động với Machine Learning trên-chain.',
     type: LaunchpadProjectType.ieo,
@@ -31,7 +31,7 @@ const _launchpadProjects = [
     name: 'MetaVerse Land',
     symbol: 'MVL',
     logo: 'MV',
-    accent: AppColors.accent,
+    accent: AccentTone.accent,
     description:
         'Nền tảng metaverse đất ảo kết hợp NFT và gaming với cộng đồng 5M người dùng.',
     type: LaunchpadProjectType.ido,
@@ -56,7 +56,7 @@ const _launchpadProjects = [
     name: 'GreenChain Eco',
     symbol: 'GCE',
     logo: 'GC',
-    accent: AppColors.buy,
+    accent: AccentTone.buy,
     description:
         'Blockchain carbon credit trading platform giúp các doanh nghiệp offset khí thải CO2.',
     type: LaunchpadProjectType.launchpool,
@@ -81,7 +81,7 @@ const _launchpadProjects = [
     name: 'ZetaPay Finance',
     symbol: 'ZPF',
     logo: 'ZP',
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
     description:
         'Layer 2 payment protocol cho phép giao dịch USDT tức thì với phí gần bằng 0.',
     type: LaunchpadProjectType.ieo,
@@ -107,7 +107,7 @@ const _launchpadProjects = [
     name: 'OmniDEX',
     symbol: 'OMX',
     logo: 'OM',
-    accent: AppColors.primary,
+    accent: AccentTone.primary,
     description:
         'Cross-chain DEX aggregator kết nối tất cả blockchain với routing thông minh nhất.',
     type: LaunchpadProjectType.ido,
@@ -137,7 +137,7 @@ const _advancedTools = [
     description: 'Cài đặt âm thanh & rung',
     route: '/launchpad/notif-sound',
     iconKey: 'bell',
-    accent: AppColors.accent,
+    accent: AccentTone.accent,
   ),
   LaunchpadToolDraft(
     id: 'event-log',
@@ -145,7 +145,7 @@ const _advancedTools = [
     description: 'Xuất log giao dịch',
     route: '/launchpad/event-log',
     iconKey: 'event',
-    accent: AppColors.primary,
+    accent: AccentTone.primary,
   ),
   LaunchpadToolDraft(
     id: 'abi-diff',
@@ -153,7 +153,7 @@ const _advancedTools = [
     description: 'So sánh proxy upgrade',
     route: '/launchpad/abi-diff/contract001',
     iconKey: 'compare',
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
   ),
   LaunchpadToolDraft(
     id: 'address-book',
@@ -161,7 +161,7 @@ const _advancedTools = [
     description: 'Quản lý ví đa mạng',
     route: '/launchpad/address-book',
     iconKey: 'book',
-    accent: AppColors.buy,
+    accent: AccentTone.buy,
   ),
   LaunchpadToolDraft(
     id: 'webhooks',
@@ -169,7 +169,7 @@ const _advancedTools = [
     description: 'Đăng ký event contract',
     route: '/launchpad/webhooks',
     iconKey: 'webhook',
-    accent: AppColors.accent,
+    accent: AccentTone.accent,
   ),
   LaunchpadToolDraft(
     id: 'gas-tracker',
@@ -177,7 +177,7 @@ const _advancedTools = [
     description: 'Theo dõi gas đa mạng',
     route: '/launchpad/gas-tracker',
     iconKey: 'fuel',
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
   ),
   LaunchpadToolDraft(
     id: 'rebalance',
@@ -185,7 +185,7 @@ const _advancedTools = [
     description: 'Cân bằng portfolio',
     route: '/launchpad/rebalance',
     iconKey: 'pie',
-    accent: AppColors.primary,
+    accent: AccentTone.primary,
   ),
   LaunchpadToolDraft(
     id: 'multisig',
@@ -193,7 +193,7 @@ const _advancedTools = [
     description: 'Giao dịch nhiều chữ ký',
     route: '/launchpad/multisig',
     iconKey: 'lock',
-    accent: AppColors.accent,
+    accent: AccentTone.accent,
   ),
 ];
 
@@ -204,7 +204,7 @@ const _riskTools = [
     description: 'So sánh giá DEX',
     route: '/launchpad/swap-aggregator',
     iconKey: 'swap',
-    accent: AppColors.primary,
+    accent: AccentTone.primary,
   ),
   LaunchpadToolDraft(
     id: 'limit-orders',
@@ -212,7 +212,7 @@ const _riskTools = [
     description: 'Lệnh tự động',
     route: '/launchpad/limit-orders',
     iconKey: 'clock',
-    accent: AppColors.buy,
+    accent: AccentTone.buy,
   ),
   LaunchpadToolDraft(
     id: 'dca-builder',
@@ -220,7 +220,7 @@ const _riskTools = [
     description: 'Chiến lược DCA',
     route: '/launchpad/dca-builder',
     iconKey: 'money',
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
   ),
   LaunchpadToolDraft(
     id: 'risk-analytics',
@@ -228,7 +228,7 @@ const _riskTools = [
     description: 'Phân tích rủi ro',
     route: '/launchpad/risk-analytics',
     iconKey: 'shield',
-    accent: AppColors.sell,
+    accent: AccentTone.sell,
   ),
 ];
 
@@ -238,7 +238,7 @@ const _launchpadSubscriptions = [
     projectName: 'NexaAI Protocol',
     projectSymbol: 'NEXA',
     projectLogo: 'NA',
-    accent: AppColors.accent,
+    accent: AccentTone.accent,
     amount: 500,
     tokensAllocated: 7500,
     status: LaunchpadSubscriptionStatus.partiallyAllocated,
@@ -255,7 +255,7 @@ const _launchpadSubscriptions = [
     projectName: 'ZetaPay Finance',
     projectSymbol: 'ZPF',
     projectLogo: 'ZP',
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
     amount: 1000,
     tokensAllocated: 50000,
     status: LaunchpadSubscriptionStatus.claimed,
@@ -272,7 +272,7 @@ const _launchpadSubscriptions = [
     projectName: 'OmniDEX',
     projectSymbol: 'OMX',
     projectLogo: 'OM',
-    accent: AppColors.primary,
+    accent: AccentTone.primary,
     amount: 2000,
     tokensAllocated: 13333,
     status: LaunchpadSubscriptionStatus.allocated,
@@ -300,7 +300,7 @@ const _historicalProjects = [
     roiCurrent: 190,
     participants: 51000,
     totalRaised: r'$6,000,000',
-    accent: AppColors.buy,
+    accent: AccentTone.buy,
   ),
   LaunchpadHistoricalProjectDraft(
     id: 'hp1',
@@ -315,7 +315,7 @@ const _historicalProjects = [
     roiCurrent: 260,
     participants: 45230,
     totalRaised: r'$5,000,000',
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
   ),
   LaunchpadHistoricalProjectDraft(
     id: 'hp3',
@@ -330,7 +330,7 @@ const _historicalProjects = [
     roiCurrent: 230,
     participants: 28900,
     totalRaised: r'$2,000,000',
-    accent: AppColors.buy,
+    accent: AccentTone.buy,
   ),
   LaunchpadHistoricalProjectDraft(
     id: 'hp4',
@@ -345,7 +345,7 @@ const _historicalProjects = [
     roiCurrent: 20,
     participants: 19500,
     totalRaised: r'$1,500,000',
-    accent: AppColors.accent,
+    accent: AccentTone.accent,
   ),
   LaunchpadHistoricalProjectDraft(
     id: 'hp7',
@@ -360,7 +360,7 @@ const _historicalProjects = [
     roiCurrent: 120,
     participants: 15800,
     totalRaised: r'$2,500,000',
-    accent: AppColors.primary,
+    accent: AccentTone.primary,
   ),
   LaunchpadHistoricalProjectDraft(
     id: 'hp5',
@@ -375,7 +375,7 @@ const _historicalProjects = [
     roiCurrent: 68,
     participants: 22100,
     totalRaised: r'$4,000,000',
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
   ),
   LaunchpadHistoricalProjectDraft(
     id: 'hp2',
@@ -390,7 +390,7 @@ const _historicalProjects = [
     roiCurrent: 135,
     participants: 31200,
     totalRaised: r'$3,200,000',
-    accent: AppColors.primary,
+    accent: AccentTone.primary,
   ),
   LaunchpadHistoricalProjectDraft(
     id: 'hp8',
@@ -405,7 +405,7 @@ const _historicalProjects = [
     roiCurrent: -55,
     participants: 8900,
     totalRaised: r'$800,000',
-    accent: AppColors.sell,
+    accent: AccentTone.sell,
   ),
 ];
 
@@ -424,25 +424,25 @@ const _greenChainTiers = [
     minStake: 50,
     label: 'Bronze',
     apyBonus: 0,
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
   ),
   LaunchpadStakingTierDraft(
     minStake: 500,
     label: 'Silver',
     apyBonus: 5,
-    accent: AppColors.text2,
+    accent: AccentTone.text2,
   ),
   LaunchpadStakingTierDraft(
     minStake: 2000,
     label: 'Gold',
     apyBonus: 12,
-    accent: AppColors.primarySoft,
+    accent: AccentTone.primarySoft,
   ),
   LaunchpadStakingTierDraft(
     minStake: 10000,
     label: 'Platinum',
     apyBonus: 22.5,
-    accent: AppColors.text1,
+    accent: AccentTone.text1,
   ),
 ];
 
@@ -451,25 +451,25 @@ const _nexaTiers = [
     minStake: 100,
     label: 'Bronze',
     apyBonus: 0,
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
   ),
   LaunchpadStakingTierDraft(
     minStake: 1000,
     label: 'Silver',
     apyBonus: 4,
-    accent: AppColors.text2,
+    accent: AccentTone.text2,
   ),
   LaunchpadStakingTierDraft(
     minStake: 5000,
     label: 'Gold',
     apyBonus: 10,
-    accent: AppColors.primarySoft,
+    accent: AccentTone.primarySoft,
   ),
   LaunchpadStakingTierDraft(
     minStake: 20000,
     label: 'Platinum',
     apyBonus: 17,
-    accent: AppColors.text1,
+    accent: AccentTone.text1,
   ),
 ];
 
@@ -478,24 +478,24 @@ const _omniTiers = [
     minStake: 50,
     label: 'Bronze',
     apyBonus: 0,
-    accent: AppColors.warn,
+    accent: AccentTone.warn,
   ),
   LaunchpadStakingTierDraft(
     minStake: 500,
     label: 'Silver',
     apyBonus: 3,
-    accent: AppColors.text2,
+    accent: AccentTone.text2,
   ),
   LaunchpadStakingTierDraft(
     minStake: 3000,
     label: 'Gold',
     apyBonus: 7,
-    accent: AppColors.primarySoft,
+    accent: AccentTone.primarySoft,
   ),
   LaunchpadStakingTierDraft(
     minStake: 15000,
     label: 'Platinum',
     apyBonus: 12,
-    accent: AppColors.text1,
+    accent: AccentTone.text1,
   ),
 ];

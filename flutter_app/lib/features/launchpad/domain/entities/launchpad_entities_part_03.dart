@@ -138,7 +138,7 @@ final class LaunchpadWalletAddressDraft {
   final String label;
   final String address;
   final String chain;
-  final Color accent;
+  final AccentTone accent;
   final String iconKey;
   final bool isDefault;
   final bool isFavorite;
@@ -216,7 +216,7 @@ final class LaunchpadWebhookEventDraft {
   final String type;
   final String label;
   final String description;
-  final Color accent;
+  final AccentTone accent;
 }
 
 final class LaunchpadWebhookFilterDraft {
@@ -256,7 +256,7 @@ final class LaunchpadWebhookSubscriptionDraft {
   final String label;
   final String contractAddress;
   final String chain;
-  final Color accent;
+  final AccentTone accent;
   final List<String> eventTypes;
   final String webhookUrl;
   final String? secret;
@@ -373,7 +373,7 @@ final class LaunchpadGasPriceDraft {
   });
 
   final String chain;
-  final Color accent;
+  final AccentTone accent;
   final String chainIcon;
   final double slow;
   final double standard;
@@ -428,7 +428,7 @@ final class LaunchpadGasAlertDraft {
 
   final String id;
   final String chain;
-  final Color accent;
+  final AccentTone accent;
   final double threshold;
   final LaunchpadGasAlertDirection direction;
   final String unit;
@@ -497,7 +497,7 @@ final class LaunchpadRebalanceAssetDraft {
   final String id;
   final String symbol;
   final String name;
-  final Color accent;
+  final AccentTone accent;
   final double currentAmount;
   final double currentValue;
   final double currentPercent;
@@ -537,7 +537,7 @@ final class LaunchpadRebalanceStrategyDraft {
   final String name;
   final String description;
   final LaunchpadRebalanceRisk riskLevel;
-  final Color accent;
+  final AccentTone accent;
   final List<LaunchpadRebalanceTargetDraft> targets;
 }
 

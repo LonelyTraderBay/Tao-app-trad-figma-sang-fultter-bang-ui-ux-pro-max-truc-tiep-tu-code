@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -277,7 +278,7 @@ class _PickerQuickChip extends StatelessWidget {
       label: pair.baseAsset,
       selected: true,
       onTap: onTap,
-      accentColor: pair.logoColor,
+      accentColor: AppAssetColors.forSymbol(pair.baseAsset),
       height: AppSpacing.comparisonToolPickerQuickHeight,
       padding: AppSpacing.comparisonToolPickerQuickPadding,
     );

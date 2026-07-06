@@ -79,7 +79,7 @@ class _RelatedMarketCard extends StatelessWidget {
                 SizedBox.square(
                   dimension: AppSpacing.predictionDetailRelatedDot,
                   child: Material(
-                    color: top.color,
+                    color: top.tone.resolve(),
                     shape: const CircleBorder(),
                   ),
                 ),
@@ -87,7 +87,7 @@ class _RelatedMarketCard extends StatelessWidget {
                 Text(
                   '${top.chance}%',
                   style: AppTextStyles.body.copyWith(
-                    color: top.color,
+                    color: top.tone.resolve(),
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),

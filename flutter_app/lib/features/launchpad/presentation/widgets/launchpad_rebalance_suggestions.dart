@@ -131,14 +131,14 @@ class _AssetBadge extends StatelessWidget {
       dimension: AppSpacing.launchpadBox34,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: asset.accent.withValues(alpha: .14),
+          color: asset.accent.resolve().withValues(alpha: .14),
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: Center(
           child: Text(
             asset.symbol.substring(0, math.min(2, asset.symbol.length)),
             style: AppTextStyles.micro.copyWith(
-              color: asset.accent,
+              color: asset.accent.resolve(),
               fontWeight: AppTextStyles.bold,
             ),
           ),

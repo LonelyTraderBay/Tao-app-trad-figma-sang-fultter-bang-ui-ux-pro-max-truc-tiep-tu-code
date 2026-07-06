@@ -223,9 +223,7 @@ class _MyAdCard extends StatelessWidget {
                     variant: VitCtaButtonVariant.secondary,
                     height: _p2pMyAdsActionExtent,
                     leading: Icon(
-                      active
-                          ? Icons.pause_rounded
-                          : Icons.play_arrow_rounded,
+                      active ? Icons.pause_rounded : Icons.play_arrow_rounded,
                       size: AppSpacing.iconSm,
                     ),
                     child: Text(active ? 'Dừng' : 'Bật'),

@@ -81,7 +81,6 @@ class _SmallReasonPill extends StatelessWidget {
   }
 }
 
-
 class _TinyStat extends StatelessWidget {
   const _TinyStat({required this.value, required this.label, this.color});
 

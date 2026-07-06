@@ -165,7 +165,7 @@ class _ScreenerAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitAssetAvatar(
       label: pair.baseAsset,
-      accentColor: pair.logoColor,
+      accentColor: AppAssetColors.forSymbol(pair.baseAsset),
       size: _rowAvatarSize,
     );
   }

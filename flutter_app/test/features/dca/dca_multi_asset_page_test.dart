@@ -29,7 +29,7 @@ void main() {
   }
 
   test('SC-177 mock repository exposes multi-asset BE draft', () {
-    final snapshot = const DcaRepository().getMultiAsset();
+    final snapshot = const MockDcaRepository().getMultiAsset();
 
     expect(snapshot.endpoint, '/api/mobile/dca/dca-multi-asset');
     expect(snapshot.actionDraft, 'POST /dca/plans|rebalance|schedule');

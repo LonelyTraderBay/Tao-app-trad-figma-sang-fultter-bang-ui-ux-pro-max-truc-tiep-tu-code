@@ -61,9 +61,7 @@ class _P2PClaimDetailPageState extends ConsumerState<P2PClaimDetailPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pClaimScrollPadding(
-                      scrollEndPadding,
-                    ),
+                    padding: AppSpacing.p2pClaimScrollPadding(scrollEndPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

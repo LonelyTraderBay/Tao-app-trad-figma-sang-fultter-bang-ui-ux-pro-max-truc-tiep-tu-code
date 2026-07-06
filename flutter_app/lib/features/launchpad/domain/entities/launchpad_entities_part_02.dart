@@ -30,7 +30,7 @@ final class LaunchpadRewardClaimReceiptDraft {
   final String poolId;
   final String projectName;
   final String projectSymbol;
-  final Color accent;
+  final AccentTone accent;
   final String rewardToken;
   final double rewardTokenPrice;
   final double totalEarned;
@@ -157,7 +157,7 @@ final class LaunchpadBatchClaimPositionDraft {
   final String poolId;
   final String projectName;
   final String projectSymbol;
-  final Color accent;
+  final AccentTone accent;
   final String rewardToken;
   final double rewardTokenPrice;
   final double claimableAmount;
@@ -236,7 +236,7 @@ final class LaunchpadBridgeNetworkDraft {
   final String id;
   final String name;
   final String symbol;
-  final Color accent;
+  final AccentTone accent;
   final String logo;
   final String nativeCoin;
   final String gasEstimate;
@@ -370,7 +370,7 @@ final class LaunchpadBridgeRouteOptionDraft {
   final String id;
   final String provider;
   final String providerIcon;
-  final Color accent;
+  final AccentTone accent;
   final String sourceChain;
   final String targetChain;
   final String inputToken;
@@ -456,7 +456,7 @@ final class LaunchpadNotifSoundCategoryDraft {
   final String label;
   final String description;
   final String iconKey;
-  final Color accent;
+  final AccentTone accent;
   final bool enabled;
   final String soundType;
   final int volume;

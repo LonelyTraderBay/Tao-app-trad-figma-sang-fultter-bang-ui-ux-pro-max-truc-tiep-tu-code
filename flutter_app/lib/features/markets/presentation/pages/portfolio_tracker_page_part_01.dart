@@ -428,7 +428,11 @@ class _AllocationLegendRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.circle, size: _portfolioLegendDot, color: holding.color),
+        Icon(
+          Icons.circle,
+          size: _portfolioLegendDot,
+          color: AppAssetColors.forSymbol(holding.symbol),
+        ),
         const SizedBox(width: _portfolioLegendGap),
         Expanded(
           child: Text(

@@ -24,7 +24,7 @@ class _PositionCard extends StatelessWidget {
                 label: position.projectSymbol.length > 2
                     ? position.projectSymbol.substring(0, 2)
                     : position.projectSymbol,
-                color: position.accent,
+                color: position.accent.resolve(),
                 size: AppSpacing.x7,
               ),
               const SizedBox(width: AppSpacing.x4),
@@ -245,7 +245,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
               const SizedBox(height: AppSpacing.x5),
               VitCard(
                 variant: VitCardVariant.inner,
-                borderColor: pool.accent.withValues(alpha: .24),
+                borderColor: pool.accent.resolve().withValues(alpha: .24),
                 padding: AppSpacing.launchpadPaddingX4,
                 child: Column(
                   children: [
@@ -479,7 +479,7 @@ class _CapacityBar extends StatelessWidget {
             minHeight: AppSpacing.x2,
             value: percentage / 100,
             backgroundColor: AppColors.surface3,
-            valueColor: AlwaysStoppedAnimation<Color>(pool.accent),
+            valueColor: AlwaysStoppedAnimation<Color>(pool.accent.resolve()),
           ),
         ),
       ],

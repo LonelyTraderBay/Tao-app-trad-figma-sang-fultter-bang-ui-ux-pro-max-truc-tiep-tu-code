@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -158,11 +159,13 @@ class MarketDerivativesPairLogo extends StatelessWidget {
         : AppTextStyles.captionSm;
     return CircleAvatar(
       radius: size / 2,
-      backgroundColor: pair.color.withValues(alpha: .16),
+      backgroundColor: AppAssetColors.forSymbol(
+        pair.symbol,
+      ).withValues(alpha: .16),
       child: Text(
         base.length <= 2 ? base : base.substring(0, 2),
         style: labelStyle.copyWith(
-          color: pair.color,
+          color: AppAssetColors.forSymbol(pair.symbol),
           fontWeight: AppTextStyles.bold,
         ),
       ),

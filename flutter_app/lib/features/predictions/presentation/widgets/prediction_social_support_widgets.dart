@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
@@ -92,13 +93,14 @@ class PredictionSocialSentimentLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = item.tone.resolve();
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Material(
-              color: item.color,
+              color: color,
               borderRadius: AppRadii.hairlineRadius,
               child: const SizedBox.square(
                 dimension: AppSpacing.predictionSocialLegendSwatch,
@@ -115,7 +117,7 @@ class PredictionSocialSentimentLegend extends StatelessWidget {
         Text(
           '${item.value}%',
           style: AppTextStyles.baseMedium.copyWith(
-            color: item.color,
+            color: color,
             fontWeight: AppTextStyles.bold,
           ),
         ),
@@ -143,7 +145,7 @@ class PredictionSocialSentimentPiePainter extends CustomPainter {
     var start = 0.0;
     for (final item in data) {
       final sweep = -(item.value / total) * math.pi * 2;
-      paint.color = item.color;
+      paint.color = item.tone.resolve();
       canvas.drawArc(rect, start, sweep + .025, false, paint);
       start += sweep;
     }

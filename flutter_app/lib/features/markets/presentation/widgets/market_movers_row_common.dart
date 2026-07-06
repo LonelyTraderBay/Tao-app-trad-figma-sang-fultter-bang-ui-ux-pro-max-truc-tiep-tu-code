@@ -159,7 +159,7 @@ class _CoinAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitAssetAvatar(
       label: mover.symbol,
-      accentColor: mover.color,
+      accentColor: AppAssetColors.forSymbol(mover.symbol),
       size: AppSpacing.marketMoverAvatar,
       radius: AppRadii.pillRadius,
       border: true,

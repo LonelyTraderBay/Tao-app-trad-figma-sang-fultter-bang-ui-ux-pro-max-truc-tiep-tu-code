@@ -276,7 +276,7 @@ class _SafeSheetBadge extends StatelessWidget {
           children: [
             Icon(
               Icons.shield_outlined,
-              color: safe.accent,
+              color: safe.accent.resolve(),
               size: AppSpacing.launchpadIconLg,
             ),
             const SizedBox(width: AppSpacing.x2),
@@ -291,7 +291,7 @@ class _SafeSheetBadge extends StatelessWidget {
             ),
             Text(
               '${safe.threshold}/${safe.owners.length}',
-              style: AppTextStyles.micro.copyWith(color: safe.accent),
+              style: AppTextStyles.micro.copyWith(color: safe.accent.resolve()),
             ),
           ],
         ),

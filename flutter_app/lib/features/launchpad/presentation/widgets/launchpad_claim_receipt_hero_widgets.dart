@@ -106,7 +106,7 @@ class _RewardHero extends StatelessWidget {
                   FractionallySizedBox(
                     alignment: Alignment.centerLeft,
                     widthFactor: receipt.vestedRatio.clamp(0, 1),
-                    child: ColoredBox(color: receipt.accent),
+                    child: ColoredBox(color: receipt.accent.resolve()),
                   ),
                   FractionallySizedBox(
                     alignment: Alignment.centerLeft,
@@ -132,7 +132,7 @@ class _RewardHero extends StatelessWidget {
               Text(
                 'Đã vest $vestedPct%',
                 style: AppTextStyles.micro.copyWith(
-                  color: receipt.accent,
+                  color: receipt.accent.resolve(),
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
@@ -183,9 +183,11 @@ class _TokenAvatar extends StatelessWidget {
       dimension: AppSpacing.launchpadBox48,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: receipt.accent.withValues(alpha: .12),
+          color: receipt.accent.resolve().withValues(alpha: .12),
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: receipt.accent.withValues(alpha: .38)),
+            side: BorderSide(
+              color: receipt.accent.resolve().withValues(alpha: .38),
+            ),
             borderRadius: AppRadii.lgRadius,
           ),
         ),
@@ -193,7 +195,7 @@ class _TokenAvatar extends StatelessWidget {
           child: Text(
             receipt.projectSymbol.substring(0, 2),
             style: AppTextStyles.caption.copyWith(
-              color: receipt.accent,
+              color: receipt.accent.resolve(),
               fontWeight: AppTextStyles.bold,
             ),
           ),

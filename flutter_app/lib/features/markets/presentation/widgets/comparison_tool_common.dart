@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
@@ -36,7 +37,7 @@ class ComparisonAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitAssetAvatar(
       label: pair.baseAsset,
-      accentColor: pair.logoColor,
+      accentColor: AppAssetColors.forSymbol(pair.baseAsset),
       size: size,
       radius: AppRadii.pillRadius,
     );

@@ -44,7 +44,7 @@ class _PairHeader extends StatelessWidget {
               children: [
                 VitAssetAvatar(
                   label: pair.baseAsset,
-                  accentColor: pair.logoColor,
+                  accentColor: AppAssetColors.forSymbol(pair.baseAsset),
                   size: AppSpacing.pairHeaderLogo,
                   radius: AppRadii.pillRadius,
                 ),

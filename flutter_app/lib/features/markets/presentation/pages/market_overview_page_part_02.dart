@@ -269,7 +269,7 @@ class _QuickMoverRow extends StatelessWidget {
     return Row(
       children: [
         Material(
-          color: mover.color.withValues(alpha: 0.18),
+          color: AppAssetColors.forSymbol(mover.symbol).withValues(alpha: 0.18),
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
           child: SizedBox.square(
             dimension: AppSpacing.marketOverviewMoverAvatar,
@@ -277,7 +277,7 @@ class _QuickMoverRow extends StatelessWidget {
               child: Text(
                 mover.symbol.substring(0, math.min(3, mover.symbol.length)),
                 style: AppTextStyles.micro.copyWith(
-                  color: mover.color,
+                  color: AppAssetColors.forSymbol(mover.symbol),
                   fontWeight: AppTextStyles.bold,
                   height: AppTextStyles.numericMicro.height,
                 ),
@@ -417,8 +417,8 @@ class _SectorRow extends StatelessWidget {
               child: Row(
                 children: [
                   _IconBubble(
-                    icon: sector.icon,
-                    color: sector.color,
+                    icon: MarketIconTokens.icon(sector.icon),
+                    color: sector.color.resolve(),
                     size: AppSpacing.marketOverviewSectorIcon,
                     iconSize: AppSpacing.marketOverviewSectorGlyph,
                   ),

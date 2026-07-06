@@ -124,7 +124,8 @@ class _SearchSortRow extends StatelessWidget {
             color: AppColors.text2,
             size: AppSpacing.iconSm,
           ),
-          semanticLabel: 'Sắp xếp theo ${sort == _OrdersSort.date ? 'ngày' : 'số tiền'}',
+          semanticLabel:
+              'Sắp xếp theo ${sort == _OrdersSort.date ? 'ngày' : 'số tiền'}',
         ),
       ],
     );
@@ -132,11 +133,7 @@ class _SearchSortRow extends StatelessWidget {
 }
 
 class _OrderCard extends StatelessWidget {
-  const _OrderCard({
-    required this.order,
-    required this.onTap,
-    this.onDispute,
-  });
+  const _OrderCard({required this.order, required this.onTap, this.onDispute});
 
   final P2PMyOrderDraft order;
   final VoidCallback onTap;

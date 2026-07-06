@@ -210,14 +210,14 @@ class _AlertCard extends StatelessWidget {
             dimension: AppSpacing.launchpadBox34,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: alert.accent.withValues(alpha: .12),
+                color: alert.accent.resolve().withValues(alpha: .12),
                 shape: const RoundedRectangleBorder(
                   borderRadius: AppRadii.mdRadius,
                 ),
               ),
               child: Icon(
                 trendIcon,
-                color: alert.accent,
+                color: alert.accent.resolve(),
                 size: AppSpacing.launchpadIconXl + AppSpacing.hairlineStroke,
               ),
             ),
@@ -388,7 +388,7 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                               price.chain,
                             ),
                             label: price.chain,
-                            color: price.accent,
+                            color: price.accent.resolve(),
                             active: _chain == price.chain,
                             onTap: () => setState(() => _chain = price.chain),
                           ),

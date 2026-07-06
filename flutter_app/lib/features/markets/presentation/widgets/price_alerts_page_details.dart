@@ -21,7 +21,10 @@ class _AlertCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = (alert.currentPrice / alert.targetPrice).clamp(0.0, 1.0);
     final conditionColor = _isAbove ? AppColors.buy : AppColors.sell;
-    final avatarColor = pair?.logoColor ?? _marketPrimary;
+    final currentPair = pair;
+    final avatarColor = currentPair != null
+        ? AppAssetColors.forSymbol(currentPair.baseAsset)
+        : _marketPrimary;
     final avatarLabel = alert.symbol.split('/').first;
 
     return VitCard(

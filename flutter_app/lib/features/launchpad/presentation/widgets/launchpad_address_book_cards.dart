@@ -24,7 +24,7 @@ class _AddressCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadAddressBookPage.cardKey(address.id),
       borderColor: address.isDefault
-          ? address.accent.withValues(alpha: .42)
+          ? address.accent.resolve().withValues(alpha: .42)
           : null,
       padding: AppSpacing.zeroInsets,
       clip: true,
@@ -87,7 +87,10 @@ class _AddressCard extends StatelessWidget {
                         spacing: AppSpacing.x1,
                         runSpacing: AppSpacing.x1,
                         children: [
-                          _Badge(label: address.chain, color: address.accent),
+                          _Badge(
+                            label: address.chain,
+                            color: address.accent.resolve(),
+                          ),
                           for (final tag in address.tags.take(2))
                             _Badge(label: tag, color: AppColors.text3),
                         ],

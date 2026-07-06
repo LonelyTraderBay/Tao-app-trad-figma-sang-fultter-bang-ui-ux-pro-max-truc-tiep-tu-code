@@ -11,7 +11,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 1324567890000,
     volume24h: 23456789000,
     category: 'Layer 1',
-    color: AppAssetColors.btc,
   ),
   HeatmapCoin(
     id: 'eth',
@@ -23,7 +22,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 423456789000,
     volume24h: 8765432000,
     category: 'Layer 1',
-    color: AppAssetColors.eth,
   ),
   HeatmapCoin(
     id: 'bnb',
@@ -35,7 +33,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 63456789000,
     volume24h: 1234567000,
     category: 'Layer 1',
-    color: AppAssetColors.bnb,
   ),
   HeatmapCoin(
     id: 'sol',
@@ -47,7 +44,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 78456789000,
     volume24h: 3456789000,
     category: 'Layer 1',
-    color: AppAssetColors.sol,
   ),
   HeatmapCoin(
     id: 'xrp',
@@ -59,7 +55,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 34567890000,
     volume24h: 1876543000,
     category: 'Payment',
-    color: AppAssetColors.xrp,
   ),
   HeatmapCoin(
     id: 'ada',
@@ -71,7 +66,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 16234567000,
     volume24h: 654321000,
     category: 'Layer 1',
-    color: AppAssetColors.ada,
   ),
   HeatmapCoin(
     id: 'avax',
@@ -83,7 +77,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 15678901000,
     volume24h: 567890000,
     category: 'Layer 1',
-    color: AppAssetColors.avax,
   ),
   HeatmapCoin(
     id: 'dot',
@@ -95,7 +88,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 10345678000,
     volume24h: 432109000,
     category: 'DeFi',
-    color: AppAssetColors.dot,
   ),
   HeatmapCoin(
     id: 'matic',
@@ -107,7 +99,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 8912345000,
     volume24h: 789012000,
     category: 'Layer 2',
-    color: AppAssetColors.matic,
   ),
   HeatmapCoin(
     id: 'link',
@@ -119,7 +110,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 8123456000,
     volume24h: 345678000,
     category: 'DeFi',
-    color: AppAssetColors.link,
   ),
   HeatmapCoin(
     id: 'uni',
@@ -131,7 +121,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 5612345000,
     volume24h: 234567000,
     category: 'DeFi',
-    color: AppAssetColors.uni,
   ),
   HeatmapCoin(
     id: 'atom',
@@ -143,7 +132,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 3456789000,
     volume24h: 189012000,
     category: 'Layer 1',
-    color: AppAssetColors.atom,
   ),
   HeatmapCoin(
     id: 'near',
@@ -155,7 +143,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 5890123000,
     volume24h: 456789000,
     category: 'Layer 1',
-    color: AppAssetColors.near,
   ),
   HeatmapCoin(
     id: 'arb',
@@ -167,7 +154,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 4321098000,
     volume24h: 567890000,
     category: 'Layer 2',
-    color: AppAssetColors.arb,
   ),
   HeatmapCoin(
     id: 'op',
@@ -179,7 +165,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 3789012000,
     volume24h: 321098000,
     category: 'Layer 2',
-    color: AppAssetColors.op,
   ),
   HeatmapCoin(
     id: 'apt',
@@ -191,7 +176,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 3210987000,
     volume24h: 234567000,
     category: 'Layer 1',
-    color: AppAssetColors.apt,
   ),
   HeatmapCoin(
     id: 'inj',
@@ -203,7 +187,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 2876543000,
     volume24h: 345678000,
     category: 'DeFi',
-    color: AppAssetColors.inj,
   ),
   HeatmapCoin(
     id: 'sei',
@@ -215,7 +198,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 1234567000,
     volume24h: 189012000,
     category: 'Layer 1',
-    color: AppAssetColors.sei,
   ),
   HeatmapCoin(
     id: 'stx',
@@ -227,7 +209,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 2345678000,
     volume24h: 123456000,
     category: 'Layer 2',
-    color: AppAssetColors.stx,
   ),
   HeatmapCoin(
     id: 'wld',
@@ -239,7 +220,6 @@ const List<HeatmapCoin> _heatmapCoins = [
     marketCap: 1890123000,
     volume24h: 345678000,
     category: 'AI',
-    color: AppAssetColors.wld,
   ),
 ];
 
@@ -269,8 +249,8 @@ const List<MarketSector> _marketSectors = [
     id: 'layer1',
     name: 'Layer 1',
     nameVi: 'Layer 1',
-    color: AppColors.info,
-    icon: Icons.diamond_rounded,
+    color: AccentTone.info,
+    icon: 'diamond',
     totalMarketCap: 1856234567000,
     change24h: 2.87,
     change7d: 5.43,
@@ -284,8 +264,8 @@ const List<MarketSector> _marketSectors = [
     id: 'defi',
     name: 'DeFi',
     nameVi: 'DeFi',
-    color: AppColors.accent,
-    icon: Icons.account_balance_rounded,
+    color: AccentTone.accent,
+    icon: 'accountBalance',
     totalMarketCap: 89234567000,
     change24h: -1.23,
     change7d: 3.21,
@@ -299,8 +279,8 @@ const List<MarketSector> _marketSectors = [
     id: 'layer2',
     name: 'Layer 2',
     nameVi: 'Layer 2',
-    color: AppAssetColors.cyanChain,
-    icon: Icons.link_rounded,
+    color: AccentTone.info,
+    icon: 'link',
     totalMarketCap: 34567890000,
     change24h: 4.56,
     change7d: 9.87,
@@ -314,8 +294,8 @@ const List<MarketSector> _marketSectors = [
     id: 'ai',
     name: 'AI',
     nameVi: 'Trí tuệ nhân tạo',
-    color: AppColors.caution,
-    icon: Icons.smart_toy_rounded,
+    color: AccentTone.caution,
+    icon: 'smartToy',
     totalMarketCap: 23456789000,
     change24h: 6.78,
     change7d: 15.43,
@@ -329,8 +309,8 @@ const List<MarketSector> _marketSectors = [
     id: 'meme',
     name: 'Meme',
     nameVi: 'Meme',
-    color: AppColors.sell,
-    icon: Icons.pets_rounded,
+    color: AccentTone.sell,
+    icon: 'pets',
     totalMarketCap: 56789012000,
     change24h: -3.45,
     change7d: -2.10,
@@ -344,8 +324,8 @@ const List<MarketSector> _marketSectors = [
     id: 'payment',
     name: 'Payment',
     nameVi: 'Thanh toán',
-    color: AppColors.buy,
-    icon: Icons.credit_card_rounded,
+    color: AccentTone.buy,
+    icon: 'creditCard',
     totalMarketCap: 45678901000,
     change24h: -0.87,
     change7d: 1.23,
@@ -359,8 +339,8 @@ const List<MarketSector> _marketSectors = [
     id: 'gaming',
     name: 'Gaming',
     nameVi: 'Trò chơi',
-    color: AppAssetColors.pinkChain,
-    icon: Icons.sports_esports_rounded,
+    color: AccentTone.accent,
+    icon: 'sportsEsports',
     totalMarketCap: 12345678000,
     change24h: 3.21,
     change7d: 7.89,
@@ -374,8 +354,8 @@ const List<MarketSector> _marketSectors = [
     id: 'privacy',
     name: 'Privacy',
     nameVi: 'Bảo mật',
-    color: AppAssetColors.indigoChain,
-    icon: Icons.lock_rounded,
+    color: AccentTone.primary,
+    icon: 'lock',
     totalMarketCap: 5678901000,
     change24h: 1.45,
     change7d: 4.56,

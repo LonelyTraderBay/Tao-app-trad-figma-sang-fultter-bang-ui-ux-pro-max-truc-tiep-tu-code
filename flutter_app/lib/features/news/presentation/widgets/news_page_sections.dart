@@ -121,20 +121,24 @@ class _NewsFilterBar extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           padding: AppSpacing.newsFilterBarPadding,
           children: [
-            _FilterChipButton(
+            VitFilterChip(
               key: NewsPage.filterAllKey,
               label: 'Tất cả',
-              selected: activeType == null,
-              selectedColor: AppColors.primary,
+              active: activeType == null,
+              color: AppColors.primary,
+              height: AppSpacing.newsFilterChipHeight,
+              padding: AppSpacing.newsFilterChipPadding,
               onTap: () => onSelected(null),
             ),
             const SizedBox(width: AppSpacing.x3),
             for (final type in filters) ...[
-              _FilterChipButton(
+              VitFilterChip(
                 key: NewsPage.filterKey(type),
                 label: '${type.emoji}  ${type.label}',
-                selected: activeType == type,
-                selectedColor: type.color,
+                active: activeType == type,
+                color: type.color,
+                height: AppSpacing.newsFilterChipHeight,
+                padding: AppSpacing.newsFilterChipPadding,
                 onTap: () => onSelected(type),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -142,34 +146,6 @@ class _NewsFilterBar extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _FilterChipButton extends StatelessWidget {
-  const _FilterChipButton({
-    super.key,
-    required this.label,
-    required this.selected,
-    required this.selectedColor,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final Color selectedColor;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return VitChoicePill(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-      height: AppSpacing.newsFilterChipHeight,
-      accentColor: selectedColor,
-      padding: AppSpacing.newsFilterChipPadding,
-      semanticLabel: label,
     );
   }
 }

@@ -129,10 +129,7 @@ class _DescriptionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const VitSectionHeader(
-            title: 'Mô tả',
-            density: VitDensity.compact,
-          ),
+          const VitSectionHeader(title: 'Mô tả', density: VitDensity.compact),
           const SizedBox(height: AppSpacing.x3),
           Text(
             description,

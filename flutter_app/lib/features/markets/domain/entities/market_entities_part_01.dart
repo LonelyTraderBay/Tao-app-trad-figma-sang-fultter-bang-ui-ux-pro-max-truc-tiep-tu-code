@@ -33,18 +33,15 @@ final class MarketCorrelationsSnapshot {
 }
 
 final class CorrelationAsset {
-  const CorrelationAsset({required this.symbol, required this.color});
+  const CorrelationAsset({required this.symbol});
 
   final String symbol;
-  final Color color;
 }
 
 final class CorrelationPairDraft {
   const CorrelationPairDraft({
     required this.assetA,
     required this.assetB,
-    required this.colorA,
-    required this.colorB,
     required this.correlation7d,
     required this.correlation30d,
     required this.correlation90d,
@@ -52,8 +49,6 @@ final class CorrelationPairDraft {
 
   final String assetA;
   final String assetB;
-  final Color colorA;
-  final Color colorB;
   final double correlation7d;
   final double correlation30d;
   final double correlation90d;
@@ -210,15 +205,15 @@ final class SignalTierConfig {
   });
 
   final String label;
-  final Color color;
-  final Color background;
+  final AccentTone color;
+  final AccentTone background;
 }
 
 final class SignalStatusConfig {
   const SignalStatusConfig({required this.label, required this.color});
 
   final String label;
-  final Color color;
+  final AccentTone color;
 }
 
 enum TradingSignalProviderTier { gold, silver, bronze }
@@ -272,7 +267,6 @@ final class TokenUnlockDraft {
     required this.id,
     required this.symbol,
     required this.name,
-    required this.color,
     required this.unlockDate,
     required this.unlockDateLabel,
     required this.daysUntil,
@@ -294,7 +288,6 @@ final class TokenUnlockDraft {
   final String id;
   final String symbol;
   final String name;
-  final Color color;
   final String unlockDate;
   final String unlockDateLabel;
   final int daysUntil;
@@ -329,14 +322,14 @@ final class UnlockImpactConfig {
   const UnlockImpactConfig({required this.label, required this.color});
 
   final String label;
-  final Color color;
+  final AccentTone color;
 }
 
 final class UnlockCategoryConfig {
   const UnlockCategoryConfig({required this.label, required this.color});
 
   final String label;
-  final Color color;
+  final AccentTone color;
 }
 
 enum MarketUnlockSort { nearest, value, impact }
@@ -392,7 +385,7 @@ final class AdvancedChartCategory {
 
   final String id;
   final String label;
-  final Color color;
+  final AccentTone color;
 }
 
 final class TechnicalIndicator {
@@ -410,7 +403,7 @@ final class TechnicalIndicator {
   final String name;
   final String shortName;
   final String categoryId;
-  final Color color;
+  final AccentTone color;
   final String description;
   final List<TechnicalIndicatorParam> params;
 }
@@ -432,7 +425,7 @@ final class AdvancedDrawingTool {
 
   final String id;
   final String name;
-  final IconData icon;
+  final String icon;
   final String categoryId;
 }
 

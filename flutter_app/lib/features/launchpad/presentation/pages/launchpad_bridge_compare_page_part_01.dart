@@ -60,9 +60,7 @@ class _InputSummaryHero extends StatelessWidget {
                   ),
                   Text(
                     'bridge',
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text3,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ],
               ),
@@ -281,7 +279,7 @@ class _MetricBarRow extends StatelessWidget {
         ? AppColors.buy
         : metric == _BridgeMetric.fee
         ? AppColors.sell
-        : route.accent;
+        : route.accent.resolve();
     return Padding(
       padding: AppSpacing.launchpadBottomPaddingX2,
       child: Row(

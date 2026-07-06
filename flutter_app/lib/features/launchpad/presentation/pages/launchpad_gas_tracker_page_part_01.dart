@@ -71,9 +71,7 @@ class _FeaturedGasCard extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Text(
               '${price.unit} · Cập nhật ${price.lastUpdated}',
-              style: AppTextStyles.micro.copyWith(
-                color: AppColors.text3,
-              ),
+              style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
         ],
@@ -243,7 +241,7 @@ class _ChainSelector extends StatelessWidget {
             _SelectablePill(
               key: LaunchpadGasTrackerPage.chainKey(price.chain),
               label: price.chain,
-              color: price.accent,
+              color: price.accent.resolve(),
               active: selectedChain == price.chain,
               onTap: () => onSelected(price.chain),
             ),
@@ -423,7 +421,7 @@ class _ChainComparisonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: selected
-          ? price.accent.withValues(alpha: .35)
+          ? price.accent.resolve().withValues(alpha: .35)
           : AppColors.cardBorder,
       padding: AppSpacing.launchpadPaddingX3,
       onTap: onTap,

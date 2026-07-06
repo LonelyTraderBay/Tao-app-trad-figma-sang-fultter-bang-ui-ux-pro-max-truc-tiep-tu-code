@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/accent_tone_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
@@ -64,7 +65,7 @@ class _DeviationRow extends StatelessWidget {
                 _DeviationBar(
                   value: asset.currentPercent,
                   maxValue: maxPercent,
-                  color: asset.accent,
+                  color: asset.accent.resolve(),
                 ),
                 const SizedBox(height: AppSpacing.launchpadGapXs),
                 _DeviationBar(
