@@ -35,7 +35,7 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                   key: AdvancedAnalyticsPage.contentKey,
                   bottomInset: scrollClearance,
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: tradeShellWithProductTabs(
@@ -43,40 +43,41 @@ class _AdvancedAnalyticsPageState extends ConsumerState<AdvancedAnalyticsPage> {
                       children: [
                         VitTradeSection(
                           title: 'Tổng quan',
-                        child: _HeroCard(stats: snapshot.stats),
-                      ),
-                      const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        density: VitDensity.compact,
-                        title: 'Xem lại phân tích nâng cao',
-                        message:
-                            'Tín hiệu AI, sizing và nhật ký chỉ hỗ trợ quyết định. Xác nhận giới hạn rủi ro trước khi dùng cho lệnh thật.',
-                        contractId: 'SC-092',
-                      ),
-                      _UnderlineTabs(
-                        activeId: _tab,
-                        onChanged: (id) => setState(() => _tab = id),
-                      ),
-                      if (_tab == 'ai')
-                        _AiSignalsTab(
-                          snapshot: snapshot,
-                          activeFilter: _filter,
-                          onFilterChanged: (id) => setState(() => _filter = id),
-                        )
-                      else if (_tab == 'risk')
-                        _RiskAnalysisTab(snapshot: snapshot)
-                      else if (_tab == 'journal')
-                        _TradeJournalTab(snapshot: snapshot)
-                      else
-                        _PositionSizingTab(snapshot: snapshot),
-                      VitTradeSection(
-                        title: 'Model info',
-                        child: _ModelInfoCard(),
-                      ),
-                      VitTradeSection(
-                        title: 'Features',
-                        child: _FeaturesCard(features: snapshot.features),
-                      ),
+                          child: _HeroCard(stats: snapshot.stats),
+                        ),
+                        const VitHighRiskStatePanel(
+                          state: VitHighRiskUiState.riskReview,
+                          density: VitDensity.compact,
+                          title: 'Xem lại phân tích nâng cao',
+                          message:
+                              'Tín hiệu AI, sizing và nhật ký chỉ hỗ trợ quyết định. Xác nhận giới hạn rủi ro trước khi dùng cho lệnh thật.',
+                          contractId: 'SC-092',
+                        ),
+                        _UnderlineTabs(
+                          activeId: _tab,
+                          onChanged: (id) => setState(() => _tab = id),
+                        ),
+                        if (_tab == 'ai')
+                          _AiSignalsTab(
+                            snapshot: snapshot,
+                            activeFilter: _filter,
+                            onFilterChanged: (id) =>
+                                setState(() => _filter = id),
+                          )
+                        else if (_tab == 'risk')
+                          _RiskAnalysisTab(snapshot: snapshot)
+                        else if (_tab == 'journal')
+                          _TradeJournalTab(snapshot: snapshot)
+                        else
+                          _PositionSizingTab(snapshot: snapshot),
+                        VitTradeSection(
+                          title: 'Model info',
+                          child: _ModelInfoCard(),
+                        ),
+                        VitTradeSection(
+                          title: 'Features',
+                          child: _FeaturesCard(features: snapshot.features),
+                        ),
                       ],
                     ),
                   ),

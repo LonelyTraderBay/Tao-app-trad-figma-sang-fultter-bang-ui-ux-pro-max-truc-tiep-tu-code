@@ -11,7 +11,11 @@ class _MiniHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: _arenaAccent, size: AppSpacing.arenaGovernanceIcon),
+        Icon(
+          icon,
+          color: _arenaAccent,
+          size: ArenaSpacingTokens.arenaGovernanceIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -37,7 +41,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaGovernanceSummaryRowPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceSummaryRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -94,7 +98,9 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: AppSpacing.arenaGovernancePillPadding(compact: compact),
+        padding: ArenaSpacingTokens.arenaGovernancePillPadding(
+          compact: compact,
+        ),
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -117,13 +123,13 @@ class _NextActionChip extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent20,
-      padding: AppSpacing.arenaGovernanceNextActionPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceNextActionPadding,
       child: Row(
         children: [
           const Icon(
             Icons.add_rounded,
             color: AppColors.accent,
-            size: AppSpacing.arenaGovernanceAddIcon,
+            size: ArenaSpacingTokens.arenaGovernanceAddIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -149,14 +155,14 @@ class _ModerationNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent20,
-      padding: AppSpacing.arenaGovernanceInnerPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.accent,
-            size: AppSpacing.arenaGovernanceIcon,
+            size: ArenaSpacingTokens.arenaGovernanceIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

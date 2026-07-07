@@ -12,7 +12,7 @@ class _SuggestedFallbackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaGovernanceCardPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,17 +24,17 @@ class _SuggestedFallbackCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final item in suggestions)
             Padding(
-              padding: AppSpacing.arenaGovernanceListItemPadding,
+              padding: ArenaSpacingTokens.arenaGovernanceListItemPadding,
               child: VitCard(
                 variant: VitCardVariant.inner,
-                padding: AppSpacing.arenaGovernanceInnerPadding,
+                padding: ArenaSpacingTokens.arenaGovernanceInnerPadding,
                 onTap: () => onTap(item),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.auto_fix_high_rounded,
                       color: _arenaAccent,
-                      size: AppSpacing.arenaGovernanceIcon,
+                      size: ArenaSpacingTokens.arenaGovernanceIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -62,7 +62,7 @@ class _SuggestedFallbackCard extends StatelessWidget {
                     const Icon(
                       Icons.chevron_right_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.arenaGovernanceIcon,
+                      size: ArenaSpacingTokens.arenaGovernanceIcon,
                     ),
                   ],
                 ),
@@ -84,7 +84,7 @@ class _EligibilityPanel extends StatelessWidget {
     final color = _tierColor(result.tier);
     return VitCard(
       borderColor: _tierBorder(result.tier),
-      padding: AppSpacing.arenaGovernanceCardPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -93,7 +93,7 @@ class _EligibilityPanel extends StatelessWidget {
               Icon(
                 _tierIcon(result.tier),
                 color: color,
-                size: AppSpacing.arenaGovernanceIcon,
+                size: ArenaSpacingTokens.arenaGovernanceIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -111,7 +111,7 @@ class _EligibilityPanel extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final check in result.checks)
             Padding(
-              padding: AppSpacing.arenaGovernanceListItemPadding,
+              padding: ArenaSpacingTokens.arenaGovernanceListItemPadding,
               child: Row(
                 children: [
                   Icon(
@@ -119,7 +119,7 @@ class _EligibilityPanel extends StatelessWidget {
                         ? Icons.check_circle_rounded
                         : Icons.radio_button_unchecked_rounded,
                     color: check.passed ? AppColors.buy : AppColors.text3,
-                    size: AppSpacing.arenaGovernanceLargeIcon,
+                    size: ArenaSpacingTokens.arenaGovernanceLargeIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(

@@ -20,7 +20,7 @@ class _PairHeader extends StatelessWidget {
     return VitTopChrome(
       type: VitTopChromeType.instrument,
       leading: SizedBox(
-        width: AppSpacing.pairHeaderLeadingWidth,
+        width: MarketsSpacingTokens.pairHeaderLeadingWidth,
         child: Align(
           alignment: Alignment.centerLeft,
           child: VitHeaderActionButton(
@@ -37,7 +37,7 @@ class _PairHeader extends StatelessWidget {
           child: VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
-            padding: AppSpacing.pairHeaderSymbolPadding,
+            padding: MarketsSpacingTokens.pairHeaderSymbolPadding,
             onTap: onPairTap,
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -45,10 +45,10 @@ class _PairHeader extends StatelessWidget {
                 VitAssetAvatar(
                   label: pair.baseAsset,
                   accentColor: AppAssetColors.forSymbol(pair.baseAsset),
-                  size: AppSpacing.pairHeaderLogo,
+                  size: MarketsSpacingTokens.pairHeaderLogo,
                   radius: AppRadii.pillRadius,
                 ),
-                const SizedBox(width: AppSpacing.pairHeaderSymbolGap),
+                const SizedBox(width: MarketsSpacingTokens.pairHeaderSymbolGap),
                 Flexible(
                   child: Text(
                     pair.symbol,
@@ -58,11 +58,13 @@ class _PairHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.pairHeaderChevronGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.pairHeaderChevronGap,
+                ),
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text2,
-                  size: AppSpacing.pairHeaderChevron,
+                  size: MarketsSpacingTokens.pairHeaderChevron,
                 ),
               ],
             ),
@@ -70,7 +72,7 @@ class _PairHeader extends StatelessWidget {
         ),
       ),
       trailing: SizedBox(
-        width: AppSpacing.pairHeaderTrailingWidth,
+        width: MarketsSpacingTokens.pairHeaderTrailingWidth,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -83,7 +85,7 @@ class _PairHeader extends StatelessWidget {
                   : 'Theo d\u00F5i ${pair.symbol}',
               onPressed: onFavorite,
             ),
-            const SizedBox(width: AppSpacing.pairHeaderTrailingGap),
+            const SizedBox(width: MarketsSpacingTokens.pairHeaderTrailingGap),
             const VitHeaderActionButton(
               type: VitHeaderActionType.share,
               onPressed: _noop,
@@ -109,7 +111,7 @@ class _PriceOverview extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: AppSpacing.pairPriceOverviewPadding,
+          padding: MarketsSpacingTokens.pairPriceOverviewPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -126,7 +128,9 @@ class _PriceOverview extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.pairPriceChangeGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.pairPriceChangeGap,
+                  ),
                   VitAccentPill(
                     label:
                         '${positive ? '\u25B2' : '\u25BC'} ${pair.change24h.abs().toStringAsFixed(2)}%',

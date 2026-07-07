@@ -27,13 +27,17 @@ class _SmallActionButton extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: active ? AppColors.primary30 : AppColors.cardBorder,
       padding: compact
-          ? AppSpacing.launchpadInlinePillPadding
-          : AppSpacing.launchpadPillPadding,
+          ? LaunchpadSpacingTokens.launchpadInlinePillPadding
+          : LaunchpadSpacingTokens.launchpadPillPadding,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
+            Icon(
+              icon,
+              color: color,
+              size: LaunchpadSpacingTokens.launchpadIconMd,
+            ),
             const SizedBox(width: AppSpacing.x1),
           ],
           Text(
@@ -47,7 +51,11 @@ class _SmallActionButton extends StatelessWidget {
           ),
           if (trailing != null) ...[
             const SizedBox(width: AppSpacing.x1),
-            Icon(trailing, color: color, size: AppSpacing.launchpadIconMd),
+            Icon(
+              trailing,
+              color: color,
+              size: LaunchpadSpacingTokens.launchpadIconMd,
+            ),
           ],
         ],
       ),
@@ -71,8 +79,8 @@ class _SelectBox extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      width: AppSpacing.launchpadBox18,
-      height: AppSpacing.launchpadBox18,
+      width: LaunchpadSpacingTokens.launchpadBox18,
+      height: LaunchpadSpacingTokens.launchpadBox18,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
       borderColor: selected ? color : AppColors.borderSolid,
@@ -83,7 +91,7 @@ class _SelectBox extends StatelessWidget {
               child: Icon(
                 Icons.check_rounded,
                 color: AppColors.onAccent,
-                size: AppSpacing.launchpadIconSm,
+                size: LaunchpadSpacingTokens.launchpadIconSm,
               ),
             )
           : const SizedBox.shrink(),
@@ -99,7 +107,7 @@ class _EventIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox30,
+      dimension: LaunchpadSpacingTokens.launchpadBox30,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: level.color.withValues(alpha: .16),
@@ -108,7 +116,7 @@ class _EventIcon extends StatelessWidget {
         child: Icon(
           level.icon,
           color: level.color,
-          size: AppSpacing.launchpadIconXl,
+          size: LaunchpadSpacingTokens.launchpadIconXl,
         ),
       ),
     );
@@ -128,7 +136,7 @@ class _LevelBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadTinyChipPadding,
+        padding: LaunchpadSpacingTokens.launchpadTinyChipPadding,
         child: Text(
           level.label.toUpperCase(),
           style: AppTextStyles.micro.copyWith(
@@ -154,7 +162,7 @@ class _TagPill extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadLiveBadgePadding,
+        padding: LaunchpadSpacingTokens.launchpadLiveBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),

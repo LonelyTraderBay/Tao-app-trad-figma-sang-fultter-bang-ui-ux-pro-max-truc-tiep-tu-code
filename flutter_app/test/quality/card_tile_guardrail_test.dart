@@ -56,7 +56,8 @@ void main() {
       for (final block in _addedVitCardBlocks(addedLines)) {
         if (block.contains('card-tile: allow-start')) continue;
         final params = _vitCardParams(block);
-        final fixed = params.contains('height:') ||
+        final fixed =
+            params.contains('height:') ||
             RegExp(r'minHeight:\s*[^0\s,)]').hasMatch(params);
         if (!fixed) continue;
         if (!params.contains('contentAlign: VitCardContentAlign.center')) {
@@ -153,7 +154,12 @@ List<String> _collectAddedLines(String path, bool isUntracked) {
     return File(path).readAsLinesSync();
   }
 
-  final result = Process.runSync('git', ['diff', 'HEAD', '--', path], runInShell: Platform.isWindows);
+  final result = Process.runSync('git', [
+    'diff',
+    'HEAD',
+    '--',
+    path,
+  ], runInShell: Platform.isWindows);
   if (result.exitCode != 0) return [];
 
   final added = <String>[];

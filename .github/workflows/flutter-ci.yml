@@ -79,6 +79,25 @@ jobs:
       - name: Design token consistency guardrails
         run: flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 
+      - name: Home reference consistency artifact is current
+        run: dart run tool/home_reference_consistency_audit.dart --check
+
+      - name: Upload home reference consistency reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: home-reference-consistency-audit
+          path: |
+            docs/02_FLUTTER_MIGRATION/VitTrade-Home-Reference-Consistency-Audit.md
+            docs/02_FLUTTER_MIGRATION/VitTrade-Home-Reference-Consistency-Audit.csv
+          if-no-files-found: error
+
+      - name: Home reference consistency guardrails
+        run: flutter test test/quality/home_reference_consistency_guardrail_test.dart --reporter=compact
+
+      - name: Home golden tests
+        run: flutter test test/features/home/golden/ --reporter=compact
+
       - name: Page rhythm audit artifact is current
         run: dart run tool/page_rhythm_audit.dart --check --strict-full
 

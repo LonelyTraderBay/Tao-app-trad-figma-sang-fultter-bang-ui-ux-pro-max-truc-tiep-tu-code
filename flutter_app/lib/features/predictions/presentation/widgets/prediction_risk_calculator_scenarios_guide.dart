@@ -216,15 +216,15 @@ class _RiskMetricRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: compact
-          ? AppSpacing.predictionRiskMetricCompactPadding
-          : AppSpacing.predictionRiskMetricPadding,
+          ? PredictionsSpacingTokens.predictionRiskMetricCompactPadding
+          : PredictionsSpacingTokens.predictionRiskMetricPadding,
       child: Row(
         children: [
           if (icon != null) ...[
             Icon(
               icon,
               color: iconColor,
-              size: AppSpacing.predictionRiskMetricIcon,
+              size: PredictionsSpacingTokens.predictionRiskMetricIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
           ],

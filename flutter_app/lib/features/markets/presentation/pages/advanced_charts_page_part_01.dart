@@ -48,7 +48,9 @@ class _AdvancedChartsPageState extends ConsumerState<AdvancedChartsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: AdvancedChartsPage.contentKey,
-                    padding: AppSpacing.marketScrollPadding(scrollEndClearance),
+                    padding: MarketsSpacingTokens.marketScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.flush,
                       padding: VitContentPadding.compact,
@@ -164,7 +166,7 @@ class _AdvancedChartsTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDepthTabsHeight,
+        height: MarketsSpacingTokens.marketDepthTabsHeight,
         child: Column(
           children: [
             Expanded(
@@ -399,4 +401,3 @@ class _DrawingCategoryFilter extends StatelessWidget {
     );
   }
 }
-

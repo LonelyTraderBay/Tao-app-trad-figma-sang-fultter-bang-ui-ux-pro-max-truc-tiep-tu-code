@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketHeatmapTreemap extends StatelessWidget {
   const MarketHeatmapTreemap({
@@ -28,7 +29,7 @@ class MarketHeatmapTreemap extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      height: AppSpacing.marketHeatmapTreemapHeight,
+      height: MarketsSpacingTokens.marketHeatmapTreemapHeight,
       clip: true,
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -59,9 +60,9 @@ class MarketHeatmapTreemap extends StatelessWidget {
     List<HeatmapCoin> sorted,
     double width,
   ) {
-    const columns = AppSpacing.marketHeatmapTreemapColumns;
-    const cellHeight = AppSpacing.marketHeatmapTreemapCellHeight;
-    const gap = AppSpacing.marketHeatmapTreemapGap;
+    const columns = MarketsSpacingTokens.marketHeatmapTreemapColumns;
+    const cellHeight = MarketsSpacingTokens.marketHeatmapTreemapCellHeight;
+    const gap = MarketsSpacingTokens.marketHeatmapTreemapGap;
     final cellWidth = (width - (columns - 1) * gap) / columns;
     final occupied = <List<bool>>[];
     final placements = <MarketHeatmapTilePlacement>[];
@@ -176,8 +177,8 @@ class _HeatmapTile extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: AppColors.transparent,
       padding: large
-          ? AppSpacing.marketHeatmapTilePaddingLarge
-          : AppSpacing.marketHeatmapTilePaddingSmall,
+          ? MarketsSpacingTokens.marketHeatmapTilePaddingLarge
+          : MarketsSpacingTokens.marketHeatmapTilePaddingSmall,
       background: DecoratedBox(
         decoration: ShapeDecoration(
           color: marketHeatmapColor(change),
@@ -209,10 +210,12 @@ class _HeatmapTile extends StatelessWidget {
                           color: AppColors.onAccent,
                           fontWeight: AppTextStyles.bold,
                           shadows: marketHeatmapTextShadow,
-                          height: AppSpacing.marketLineHeightShort,
+                          height: MarketsSpacingTokens.marketLineHeightShort,
                         ),
               ),
-              const SizedBox(height: AppSpacing.marketAnalyticsMicroGap),
+              const SizedBox(
+                height: MarketsSpacingTokens.marketAnalyticsMicroGap,
+              ),
               Text(
                 marketHeatmapFormatPercent(change),
                 style: (large ? AppTextStyles.caption : AppTextStyles.micro)
@@ -221,11 +224,13 @@ class _HeatmapTile extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                       fontFeatures: AppTextStyles.tabularFigures,
                       shadows: marketHeatmapTextShadow,
-                      height: AppSpacing.marketLineHeightTight,
+                      height: MarketsSpacingTokens.marketLineHeightTight,
                     ),
               ),
               if (large) ...[
-                const SizedBox(height: AppSpacing.marketOverviewMiniHeaderGap),
+                const SizedBox(
+                  height: MarketsSpacingTokens.marketOverviewMiniHeaderGap,
+                ),
                 Text(
                   marketHeatmapFormatCompact(coin.marketCap),
                   style: AppTextStyles.micro.copyWith(
@@ -233,7 +238,7 @@ class _HeatmapTile extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
                     shadows: marketHeatmapTextShadow,
-                    height: AppSpacing.marketLineHeightTight,
+                    height: MarketsSpacingTokens.marketLineHeightTight,
                   ),
                 ),
               ],

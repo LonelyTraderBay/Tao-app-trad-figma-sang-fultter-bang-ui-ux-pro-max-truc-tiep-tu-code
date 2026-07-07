@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class ExecutionQualitySlippageSheet extends StatefulWidget {
   const ExecutionQualitySlippageSheet({required this.settings, super.key});
@@ -43,11 +44,11 @@ class ExecutionQualityExecutionSheet extends StatelessWidget {
             label: 'Savings',
             value: '\$${report.savingsVsSingleVenue.toStringAsFixed(2)}',
           ),
-          const SizedBox(height: AppSpacing.tradeToolIconGap),
+          const SizedBox(height: TradeSpacingTokens.tradeToolIconGap),
           for (final fill in report.fills) ...[
             _FillTile(fill: fill),
             if (fill != report.fills.last)
-              const SizedBox(height: AppSpacing.tradeToolInlineGap),
+              const SizedBox(height: TradeSpacingTokens.tradeToolInlineGap),
           ],
         ],
       ),
@@ -106,7 +107,7 @@ class _ExecutionQualitySlippageSheetState
             'Set max slippage tolerance before the order is rejected.',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeToolPageTopGap),
+          const SizedBox(height: TradeSpacingTokens.tradeToolPageTopGap),
           Row(
             children: [
               for (final value in const [.1, .5, 1.0]) ...[
@@ -118,7 +119,7 @@ class _ExecutionQualitySlippageSheetState
                   ),
                 ),
                 if (value != 1.0)
-                  const SizedBox(width: AppSpacing.tradeToolInlineGap),
+                  const SizedBox(width: TradeSpacingTokens.tradeToolInlineGap),
               ],
             ],
           ),
@@ -174,7 +175,7 @@ class _ToleranceChip extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: executionQualityToleranceKey(value),
-      height: AppSpacing.tradeToolRiskTabHeight,
+      height: TradeSpacingTokens.tradeToolRiskTabHeight,
       alignment: Alignment.center,
       onTap: onTap,
       variant: active ? VitCardVariant.standard : VitCardVariant.inner,
@@ -198,7 +199,7 @@ class _FillTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeToolMetricRowPadding,
+      padding: TradeSpacingTokens.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
       child: Row(
         children: [
@@ -237,7 +238,7 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.tradeToolSheetRowPadding,
+      padding: TradeSpacingTokens.tradeToolSheetRowPadding,
       child: Row(
         children: [
           Expanded(

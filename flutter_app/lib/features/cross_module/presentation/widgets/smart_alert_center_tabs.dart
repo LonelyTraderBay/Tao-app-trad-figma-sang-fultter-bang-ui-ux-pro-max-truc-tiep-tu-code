@@ -28,7 +28,7 @@ class _SmartAlertTabs extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: AppSpacing.crossModuleTabBarPadding,
+        padding: CrossModuleSpacingTokens.crossModuleTabBarPadding,
         child: VitSegmentedTabBar(
           tabs: tabItems,
           activeKey: active.name,
@@ -83,7 +83,7 @@ class _SmartAlertSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

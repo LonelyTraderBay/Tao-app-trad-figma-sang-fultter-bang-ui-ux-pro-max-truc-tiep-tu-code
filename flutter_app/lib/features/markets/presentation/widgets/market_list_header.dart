@@ -18,7 +18,8 @@ class MarketListHeader extends StatelessWidget {
     return VitTopChrome(
       type: VitTopChromeType.rootModule,
       title: 'Th\u1ECB tr\u01B0\u1EDDng',
-      subtitle: 'Theo d\u00F5i th\u1ECB tr\u01B0\u1EDDng \u00B7 C\u1EADp nh\u1EADt $lastUpdatedLabel',
+      subtitle:
+          'Theo d\u00F5i th\u1ECB tr\u01B0\u1EDDng \u00B7 C\u1EADp nh\u1EADt $lastUpdatedLabel',
       actions: [
         VitHeaderActionItem(
           type: VitHeaderActionType.overview,

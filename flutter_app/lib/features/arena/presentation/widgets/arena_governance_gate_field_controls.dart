@@ -64,7 +64,7 @@ class _MiniOptionChip extends StatelessWidget {
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.warn : AppColors.borderSolid,
       radius: VitCardRadius.large,
-      padding: AppSpacing.arenaGovernanceOptionChipPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceOptionChipPadding,
       onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -72,12 +72,12 @@ class _MiniOptionChip extends StatelessWidget {
           Icon(
             icon,
             color: selected ? AppColors.warn : AppColors.text3,
-            size: AppSpacing.arenaGovernanceSmallIcon,
+            size: ArenaSpacingTokens.arenaGovernanceSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x1),
           ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: AppSpacing.arenaGovernanceOptionMaxWidth,
+              maxWidth: ArenaSpacingTokens.arenaGovernanceOptionMaxWidth,
             ),
             child: Text(
               label,
@@ -147,7 +147,7 @@ class _EdgeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaGovernanceEdgeFieldPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceEdgeFieldPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -191,7 +191,7 @@ class _DropdownCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: hasValue ? AppColors.accent20 : AppColors.borderSolid,
-      padding: AppSpacing.arenaGovernanceDropdownPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceDropdownPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -211,7 +211,7 @@ class _DropdownCard extends StatelessWidget {
           const Icon(
             Icons.keyboard_arrow_down_rounded,
             color: AppColors.text3,
-            size: AppSpacing.arenaGovernanceLargeIcon,
+            size: ArenaSpacingTokens.arenaGovernanceLargeIcon,
           ),
         ],
       ),
@@ -235,7 +235,7 @@ class _SwitchRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaGovernanceSwitchRowPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceSwitchRowPadding,
       child: Row(
         children: [
           Expanded(

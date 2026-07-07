@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketSectorControls extends StatelessWidget {
   const MarketSectorControls({
@@ -38,19 +38,21 @@ class MarketSectorControls extends StatelessWidget {
                   selected: timeframe == activeTimeframe,
                   onTap: () => onTimeframeSelected(timeframe),
                   accentColor: marketSectorPrimary,
-                  height: AppSpacing.marketSectorControlHeight,
-                  padding: AppSpacing.marketSectorControlChipPadding,
+                  height: MarketsSpacingTokens.marketSectorControlHeight,
+                  padding: MarketsSpacingTokens.marketSectorControlChipPadding,
                 ),
               ),
               if (timeframe != timeframes.last)
-                const SizedBox(width: AppSpacing.marketSectorControlChipGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.marketSectorControlChipGap,
+                ),
             ],
           ],
         ),
-        const SizedBox(width: AppSpacing.marketSectorControlGroupGap),
+        const SizedBox(width: MarketsSpacingTokens.marketSectorControlGroupGap),
         Expanded(
           child: SizedBox(
-            height: AppSpacing.marketSectorControlHeight,
+            height: MarketsSpacingTokens.marketSectorControlHeight,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               reverse: true,
@@ -64,13 +66,14 @@ class MarketSectorControls extends StatelessWidget {
                         selected: option.id == activeSort,
                         onTap: () => onSortSelected(option.id),
                         accentColor: marketSectorPrimary,
-                        height: AppSpacing.marketSectorControlHeight,
-                        padding: AppSpacing.marketSectorControlChipPadding,
+                        height: MarketsSpacingTokens.marketSectorControlHeight,
+                        padding:
+                            MarketsSpacingTokens.marketSectorControlChipPadding,
                       ),
                     ),
                     if (option != sortOptions.first)
                       const SizedBox(
-                        width: AppSpacing.marketSectorControlChipGap,
+                        width: MarketsSpacingTokens.marketSectorControlChipGap,
                       ),
                   ],
                 ],

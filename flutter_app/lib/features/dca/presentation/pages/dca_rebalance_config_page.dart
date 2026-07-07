@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 
 part 'dca_rebalance_config_page_part_01.dart';
 part 'dca_rebalance_config_page_part_02.dart';
@@ -30,10 +31,12 @@ const _dcaRebalanceNativeNavClearance = 88.0;
 const _dcaRebalancePreviewNavClearance = 72.0;
 const _dcaRebalanceStrategyChipWidth = 156.0;
 const _dcaRebalanceSummaryRingSize = 104.0;
-const _dcaRebalanceBodyLineHeight = AppSpacing.dcaRebalanceBodyLineHeight;
-const _dcaRebalanceCompactLineHeight = AppSpacing.dcaRebalanceCompactLineHeight;
-const _dcaRebalanceTightLineHeight = AppSpacing.dcaRebalanceTightLineHeight;
-const _dcaRebalanceToggleHeight = AppSpacing.dcaRebalanceToggleHeight;
+const _dcaRebalanceBodyLineHeight = DcaSpacingTokens.dcaRebalanceBodyLineHeight;
+const _dcaRebalanceCompactLineHeight =
+    DcaSpacingTokens.dcaRebalanceCompactLineHeight;
+const _dcaRebalanceTightLineHeight =
+    DcaSpacingTokens.dcaRebalanceTightLineHeight;
+const _dcaRebalanceToggleHeight = DcaSpacingTokens.dcaRebalanceToggleHeight;
 const _dcaRebalanceHeroPadding = EdgeInsetsDirectional.all(AppSpacing.x4);
 const _dcaRebalanceCardPadding = EdgeInsetsDirectional.all(AppSpacing.x3);
 
@@ -108,7 +111,7 @@ class _DCARebalanceConfigState extends ConsumerState<DCARebalanceConfig> {
                   physics: const ClampingScrollPhysics(),
                   bottomInset: scrollEndPadding,
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [

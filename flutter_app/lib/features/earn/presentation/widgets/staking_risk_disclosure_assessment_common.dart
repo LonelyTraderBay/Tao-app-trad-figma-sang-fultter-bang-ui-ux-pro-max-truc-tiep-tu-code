@@ -50,7 +50,9 @@ class _AssessmentTab extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const Padding(padding: AppSpacing.earnTopPaddingX1),
+                        const Padding(
+                          padding: EarnSpacingTokens.earnTopPaddingX1,
+                        ),
                         Text(
                           snapshot.assessmentSubtitle,
                           style: AppTextStyles.caption.copyWith(
@@ -109,7 +111,8 @@ class _AssessmentTab extends StatelessWidget {
               ],
             ),
           ),
-          if (faq != snapshot.faqs.last) const SizedBox(height: AppSpacing.rowGap),
+          if (faq != snapshot.faqs.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -163,7 +166,7 @@ class _RiskLevelBadge extends StatelessWidget {
       borderRadius: AppRadii.mdRadius,
       color: _riskTint(level),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3X2,
+        padding: EarnSpacingTokens.earnCardPaddingX3X2,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

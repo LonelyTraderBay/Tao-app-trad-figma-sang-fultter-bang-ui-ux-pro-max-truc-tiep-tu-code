@@ -22,11 +22,11 @@ class _QuickActions extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount:
-                AppSpacing.p2pSecurityCenterQuickActionCrossAxisCount,
+                P2PSpacingTokens.p2pSecurityCenterQuickActionCrossAxisCount,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
             childAspectRatio:
-                AppSpacing.p2pSecurityCenterQuickActionAspectRatio,
+                P2PSpacingTokens.p2pSecurityCenterQuickActionAspectRatio,
           ),
           itemBuilder: (context, index) {
             final action = actions[index];
@@ -156,7 +156,7 @@ class _SecurityEventRow extends StatelessWidget {
                     const Icon(
                       Icons.access_time_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.p2pSecurityCenterTimeIcon,
+                      size: P2PSpacingTokens.p2pSecurityCenterTimeIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(

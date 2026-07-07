@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 part '../widgets/funnel_dashboard_selector_metrics.dart';
 part '../widgets/funnel_dashboard_waterfall_details.dart';
@@ -77,8 +78,11 @@ class _FunnelDashboardState extends ConsumerState<FunnelDashboard> {
               child: SingleChildScrollView(
                 key: FunnelDashboard.contentKey,
                 physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.adminScrollPadding(scrollEndClearance),
-                child: VitPageContent(rhythm: VitPageRhythm.standard, 
+                padding: AdminSpacingTokens.adminScrollPadding(
+                  scrollEndClearance,
+                ),
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
                   gap: VitContentGap.tight,
                   children: [
                     AdminDashboardStateContent(

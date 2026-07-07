@@ -92,15 +92,16 @@ class _DCAPageState extends ConsumerState<DCAPage> {
                               ),
                             ],
                             DcaScreenState.offline
-                                when snapshot.plans.isEmpty => [
-                              VitEmptyState(
-                                key: DCAPage.offlineKey,
-                                icon: Icons.wifi_off_rounded,
-                                title: 'Đang ngoại tuyến',
-                                message:
-                                    'Kết nối lại để xem kế hoạch DCA mới nhất.',
-                              ),
-                            ],
+                                when snapshot.plans.isEmpty =>
+                              [
+                                VitEmptyState(
+                                  key: DCAPage.offlineKey,
+                                  icon: Icons.wifi_off_rounded,
+                                  title: 'Đang ngoại tuyến',
+                                  message:
+                                      'Kết nối lại để xem kế hoạch DCA mới nhất.',
+                                ),
+                              ],
                             _ => [
                               _DcaOverviewCard(
                                 snapshot: snapshot,
@@ -234,7 +235,7 @@ class _DcaOverviewCard extends StatelessWidget {
               const Icon(
                 Icons.visibility_outlined,
                 color: AppColors.portfolioTextMuted,
-                size: AppSpacing.dcaMainInlineIcon,
+                size: DcaSpacingTokens.dcaMainInlineIcon,
               ),
             ],
           ),
@@ -255,7 +256,7 @@ class _DcaOverviewCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               SizedBox(
-                width: AppSpacing.dcaMainSparklineWidth,
+                width: DcaSpacingTokens.dcaMainSparklineWidth,
                 height: VitDensity.compact.controlHeight,
                 child: VitSparkline(
                   values: snapshot.sparkline,

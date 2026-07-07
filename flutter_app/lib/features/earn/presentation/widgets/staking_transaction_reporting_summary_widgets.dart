@@ -186,7 +186,9 @@ class _ReportingTabs extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     SizedBox(
                       width: AppSpacing.buttonHero,
                       height: _transactionReportingIndicatorExtent,
@@ -263,7 +265,9 @@ class _SummaryTab extends StatelessWidget {
                   for (final reward in summary.rewardsByAsset) ...[
                     _RewardAssetRow(reward: reward),
                     if (reward != summary.rewardsByAsset.last)
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                   ],
                 ],
               ),

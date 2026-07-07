@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 final class StakingTaxGuideKeys {
   const StakingTaxGuideKeys._();
@@ -35,14 +36,14 @@ class StakingTaxWarningNote extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: EarnSpacingTokens.earnCardPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.warning_amber_rounded,
               color: AppColors.warn,
-              size: AppSpacing.stakingTaxWarningIcon,
+              size: EarnSpacingTokens.stakingTaxWarningIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -50,7 +51,7 @@ class StakingTaxWarningNote extends StatelessWidget {
                 text,
                 style: AppTextStyles.micro.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingTaxWarningLineHeight,
+                  height: EarnSpacingTokens.stakingTaxWarningLineHeight,
                 ),
               ),
             ),
@@ -71,13 +72,13 @@ class StakingTaxFooterCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingTaxFooterLineHeight,
+          height: EarnSpacingTokens.stakingTaxFooterLineHeight,
         ),
       ),
     );
@@ -99,10 +100,10 @@ class StakingTaxCodeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = large
-        ? AppSpacing.stakingTaxCodeBadgeLarge
+        ? EarnSpacingTokens.stakingTaxCodeBadgeLarge
         : (small
-              ? AppSpacing.stakingTaxCodeBadgeSmall
-              : AppSpacing.stakingTaxCodeBadgeRegular);
+              ? EarnSpacingTokens.stakingTaxCodeBadgeSmall
+              : EarnSpacingTokens.stakingTaxCodeBadgeRegular);
     final style = small
         ? AppTextStyles.numericMicro
         : (large ? AppTextStyles.baseMedium : AppTextStyles.body);

@@ -25,9 +25,8 @@ List<Widget> _supportHubPageChildren({
         onAction: onRetry,
       ),
     ],
-    SupportScreenState.empty ||
-    SupportScreenState.offline when snapshot.tickets.isEmpty &&
-        snapshot.faqItems.isEmpty =>
+    SupportScreenState.empty || SupportScreenState.offline
+        when snapshot.tickets.isEmpty && snapshot.faqItems.isEmpty =>
       [
         const VitEmptyState(
           title: 'Chưa có nội dung hỗ trợ',
@@ -63,12 +62,12 @@ List<Widget> _supportHubReadySections({
   return [
     if (supportContext != null)
       Padding(
-        padding: AppSpacing.supportContentPadding,
+        padding: SupportSpacingTokens.supportContentPadding,
         child: _SupportContextCard(supportContext: supportContext),
       ),
     _QuickContactGrid(snapshot: snapshot),
     Padding(
-      padding: AppSpacing.supportContentPadding,
+      padding: SupportSpacingTokens.supportContentPadding,
       child: _SupportTabs(
         ticketCount: snapshot.tickets.length,
         showFaq: showFaq,
@@ -77,7 +76,7 @@ List<Widget> _supportHubReadySections({
       ),
     ),
     Padding(
-      padding: AppSpacing.supportContentPadding,
+      padding: SupportSpacingTokens.supportContentPadding,
       child: showFaq
           ? _FaqPanel(
               items: snapshot.faqItems,
@@ -101,7 +100,7 @@ class _QuickContactGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: SupportPage.quickLinksKey,
-      padding: AppSpacing.supportContentPadding,
+      padding: SupportSpacingTokens.supportContentPadding,
       child: Column(
         children: [
           Row(
@@ -182,7 +181,7 @@ class _QuickLinkCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .28),
-      padding: AppSpacing.supportQuickCardPadding,
+      padding: SupportSpacingTokens.supportQuickCardPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -205,7 +204,7 @@ class _QuickLinkCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.supportLineHeightTight,
+                    height: SupportSpacingTokens.supportLineHeightTight,
                   ),
                 ),
               ],

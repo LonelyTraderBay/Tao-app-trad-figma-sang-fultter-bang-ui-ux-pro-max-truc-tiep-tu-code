@@ -76,7 +76,9 @@ class _SocialShareButtons extends StatelessWidget {
                 color: AppColors.brandTwitter,
               ),
             ),
-            SizedBox(width: AppSpacing.predictionSocialShareButtonGap),
+            SizedBox(
+              width: PredictionsSpacingTokens.predictionSocialShareButtonGap,
+            ),
             Expanded(
               child: PredictionSocialShareButton(
                 label: 'Facebook',
@@ -127,7 +129,8 @@ class _CopyLinkCard extends StatelessWidget {
                       borderRadius: AppRadii.mdRadius,
                     ),
                     child: Padding(
-                      padding: AppSpacing.predictionSocialCopyBoxPadding,
+                      padding: PredictionsSpacingTokens
+                          .predictionSocialCopyBoxPadding,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -142,7 +145,9 @@ class _CopyLinkCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionSocialCopyButtonGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionSocialCopyButtonGap,
+              ),
               VitCtaButton(
                 key: PredictionSocialPage.copyLinkKey,
                 onPressed: onCopy,
@@ -153,7 +158,7 @@ class _CopyLinkCard extends StatelessWidget {
                 height: VitDensity.compact.controlHeight,
                 leading: Icon(
                   copied ? Icons.check_rounded : Icons.copy_rounded,
-                  size: AppSpacing.predictionSocialCopyIcon,
+                  size: PredictionsSpacingTokens.predictionSocialCopyIcon,
                 ),
                 padding: const EdgeInsetsDirectional.symmetric(
                   horizontal: AppSpacing.x3,
@@ -217,15 +222,18 @@ class _SharePreviewCard extends StatelessWidget {
                 color: _predictionPrimary,
                 borderRadius: AppRadii.mdRadius,
                 child: const SizedBox.square(
-                  dimension: AppSpacing.predictionSocialPreviewImage,
+                  dimension:
+                      PredictionsSpacingTokens.predictionSocialPreviewImage,
                   child: Icon(
                     Icons.bar_chart_rounded,
                     color: AppColors.onAccent,
-                    size: AppSpacing.predictionSocialPreviewIcon,
+                    size: PredictionsSpacingTokens.predictionSocialPreviewIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionSocialPreviewGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionSocialPreviewGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,9 +284,11 @@ class _ContributorCard extends StatelessWidget {
           Icon(
             Icons.workspace_premium_rounded,
             color: _rankColor(rank),
-            size: AppSpacing.predictionSocialContributorIcon,
+            size: PredictionsSpacingTokens.predictionSocialContributorIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionSocialContributorGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionSocialContributorGap,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,7 +302,8 @@ class _ContributorCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      width: AppSpacing.predictionSocialContributorBadgeGap,
+                      width: PredictionsSpacingTokens
+                          .predictionSocialContributorBadgeGap,
                     ),
                     _SmallBadge(
                       label: _tierLabel(contributor.tier),

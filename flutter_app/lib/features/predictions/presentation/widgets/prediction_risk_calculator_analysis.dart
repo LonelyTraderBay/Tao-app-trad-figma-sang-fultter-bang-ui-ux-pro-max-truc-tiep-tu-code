@@ -90,7 +90,7 @@ class _KellyRecommendation extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: _predictionPrimary,
-                size: AppSpacing.predictionRiskKellyIcon,
+                size: PredictionsSpacingTokens.predictionRiskKellyIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -154,7 +154,7 @@ class _RiskWarning extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: AppSpacing.predictionRiskWarningIcon,
+            size: PredictionsSpacingTokens.predictionRiskWarningIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

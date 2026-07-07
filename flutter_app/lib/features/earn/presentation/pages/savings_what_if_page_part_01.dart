@@ -21,7 +21,7 @@ class _WhatIfHero extends StatelessWidget {
       key: SavingsWhatIfPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX5,
+      padding: EarnSpacingTokens.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +30,7 @@ class _WhatIfHero extends StatelessWidget {
               const Icon(
                 Icons.show_chart_rounded,
                 color: AppModuleAccents.earn,
-                size: AppSpacing.savingsWhatIfHeroIcon,
+                size: EarnSpacingTokens.savingsWhatIfHeroIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -95,7 +95,7 @@ class _HeroStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.earnCardPaddingX3X4,
+      padding: EarnSpacingTokens.earnCardPaddingX3X4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,9 +140,7 @@ class _WhatIfTabs extends StatelessWidget {
       variant: VitTabBarVariant.underline,
       activeKey: active,
       onChanged: onChanged,
-      tabs: [
-        for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
-      ],
+      tabs: [for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label)],
     );
   }
 }
@@ -177,7 +175,8 @@ class _ScenarioList extends StatelessWidget {
             selected: selected == scenario.id,
             onTap: () => onScenarioChanged(scenario.id),
           ),
-          if (scenario != scenarios.last) const SizedBox(height: AppSpacing.rowGap),
+          if (scenario != scenarios.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
         if (selected == SavingsWhatIfScenarioId.custom) ...[
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -210,7 +209,7 @@ class _ScenarioCard extends StatelessWidget {
     return VitCard(
       key: SavingsWhatIfPage.scenarioKey(scenario.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       borderColor: selected ? color.withValues(alpha: .45) : null,
       onTap: onTap,
       child: Row(
@@ -267,7 +266,7 @@ class _ScenarioCard extends StatelessWidget {
                 ? Icons.radio_button_checked_rounded
                 : Icons.visibility_outlined,
             color: selected ? color : AppColors.text3,
-            size: AppSpacing.savingsWhatIfInlineIcon,
+            size: EarnSpacingTokens.savingsWhatIfInlineIcon,
           ),
         ],
       ),
@@ -293,7 +292,7 @@ class _CustomScenarioControls extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         children: [
           _SliderRow(
@@ -389,7 +388,7 @@ class _PortfolioList extends StatelessWidget {
     return VitCard(
       key: SavingsWhatIfPage.portfolioKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         children: [
           for (final position in positions) ...[

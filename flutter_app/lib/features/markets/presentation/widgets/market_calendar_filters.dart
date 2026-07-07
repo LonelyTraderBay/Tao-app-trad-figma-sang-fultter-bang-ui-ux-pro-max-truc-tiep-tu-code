@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_calendar_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketCalendarViewTabs extends StatelessWidget {
   const MarketCalendarViewTabs({
@@ -22,7 +22,7 @@ class MarketCalendarViewTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketCalendarViewTabHeight,
+        height: MarketsSpacingTokens.marketCalendarViewTabHeight,
         child: Row(
           children: [
             _UnderlineViewTab(
@@ -83,7 +83,7 @@ class _UnderlineViewTab extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: AppSpacing.marketCalendarViewUnderlineHeight,
+              height: MarketsSpacingTokens.marketCalendarViewUnderlineHeight,
               child: FractionallySizedBox(
                 widthFactor: active ? 1 : 0,
                 alignment: Alignment.center,
@@ -113,7 +113,7 @@ class MarketCalendarStatsSummary extends StatelessWidget {
             color: marketCalendarPrimary,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketCalendarStatsGap),
+        const SizedBox(width: MarketsSpacingTokens.marketCalendarStatsGap),
         Expanded(
           child: _MiniStat(
             label: 'Tác động cao',
@@ -121,7 +121,7 @@ class MarketCalendarStatsSummary extends StatelessWidget {
             color: AppColors.sell,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketCalendarStatsGap),
+        const SizedBox(width: MarketsSpacingTokens.marketCalendarStatsGap),
         Expanded(
           child: _MiniStat(
             label: 'Tuần này',
@@ -149,8 +149,8 @@ class _MiniStat extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      height: AppSpacing.marketCalendarMiniStatHeight,
-      padding: AppSpacing.marketCalendarMiniStatPadding,
+      height: MarketsSpacingTokens.marketCalendarMiniStatHeight,
+      padding: MarketsSpacingTokens.marketCalendarMiniStatPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -158,10 +158,12 @@ class _MiniStat extends StatelessWidget {
             value,
             style: AppTextStyles.sectionTitle.copyWith(
               color: color,
-              height: AppSpacing.marketSectorLineHeightTight,
+              height: MarketsSpacingTokens.marketSectorLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketCalendarMiniStatValueGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketCalendarMiniStatValueGap,
+          ),
           Text(
             label,
             maxLines: 1,
@@ -197,10 +199,10 @@ class MarketCalendarTypeFilters extends StatelessWidget {
               label: filter.label,
               active: filter.label == active.label,
               color: marketCalendarPrimary,
-              padding: AppSpacing.marketCalendarFilterChipPadding,
+              padding: MarketsSpacingTokens.marketCalendarFilterChipPadding,
               onTap: () => onSelected(filter),
             ),
-            const SizedBox(width: AppSpacing.marketCalendarFilterGap),
+            const SizedBox(width: MarketsSpacingTokens.marketCalendarFilterGap),
           ],
         ],
       ),
@@ -229,7 +231,7 @@ class MarketCalendarImpactFilters extends StatelessWidget {
             active: activeImpact == impact,
             onTap: () => onSelected(impact),
           ),
-          const SizedBox(width: AppSpacing.marketCalendarFilterGap),
+          const SizedBox(width: MarketsSpacingTokens.marketCalendarFilterGap),
         ],
       ],
     );
@@ -256,8 +258,11 @@ class _ImpactChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: cfg.color,
-      padding: AppSpacing.marketCalendarImpactChipPadding,
-      leading: Icon(Icons.circle, size: AppSpacing.marketCalendarImpactDot),
+      padding: MarketsSpacingTokens.marketCalendarImpactChipPadding,
+      leading: Icon(
+        Icons.circle,
+        size: MarketsSpacingTokens.marketCalendarImpactDot,
+      ),
     );
   }
 }

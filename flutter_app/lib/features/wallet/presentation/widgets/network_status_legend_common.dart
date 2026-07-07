@@ -58,7 +58,7 @@ class _DisclaimerCard extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.primary,
-            size: AppSpacing.walletTokenNoticeIcon,
+            size: WalletSpacingTokens.walletTokenNoticeIcon,
           ),
           const SizedBox(width: _networkInlineGap),
           Expanded(

@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/support_spacing_tokens.dart';
 
 part '../widgets/support_quick_contacts_tabs.dart';
 part '../widgets/support_context_card.dart';
@@ -120,11 +121,11 @@ class _SupportPageState extends ConsumerState<SupportPage> {
                   child: SingleChildScrollView(
                     key: SupportPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.supportScrollPadding(
+                    padding: SupportSpacingTokens.supportScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,

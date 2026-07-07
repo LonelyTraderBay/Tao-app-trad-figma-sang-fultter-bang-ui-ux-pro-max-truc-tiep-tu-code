@@ -272,7 +272,7 @@ class _ComparisonRowShell extends StatelessWidget {
             SizedBox(
               width: AppSpacing.buttonHero + AppSpacing.x4,
               child: Padding(
-                padding: AppSpacing.earnCardPaddingX4,
+                padding: EarnSpacingTokens.earnCardPaddingX4,
                 child: Align(alignment: Alignment.centerLeft, child: label),
               ),
             ),
@@ -283,7 +283,7 @@ class _ComparisonRowShell extends StatelessWidget {
                     shape: Border(left: BorderSide(color: AppColors.divider)),
                   ),
                   child: Padding(
-                    padding: AppSpacing.earnCardPaddingX3,
+                    padding: EarnSpacingTokens.earnCardPaddingX3,
                     child: Center(child: value),
                   ),
                 ),

@@ -14,7 +14,7 @@ class _RebalancingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -72,13 +72,13 @@ class _TokenSwitch extends StatelessWidget {
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
       padding: EdgeInsets.zero,
-      width: AppSpacing.dcaMultiToggleWidth,
-      height: AppSpacing.dcaMultiToggleHeight,
+      width: DcaSpacingTokens.dcaMultiToggleWidth,
+      height: DcaSpacingTokens.dcaMultiToggleHeight,
       borderColor: AppColors.transparent,
       clip: true,
       child: SizedBox(
-        width: AppSpacing.dcaMultiToggleWidth,
-        height: AppSpacing.dcaMultiToggleHeight,
+        width: DcaSpacingTokens.dcaMultiToggleWidth,
+        height: DcaSpacingTokens.dcaMultiToggleHeight,
         child: DecoratedBox(
           decoration: ShapeDecoration(
             color: enabled ? AppColors.primary : AppColors.surface3,
@@ -90,13 +90,13 @@ class _TokenSwitch extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: AppSpacing.dcaPaddingX1,
+            padding: DcaSpacingTokens.dcaPaddingX1,
             child: AnimatedAlign(
               duration: const Duration(milliseconds: 160),
               alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
               child: const SizedBox(
-                width: AppSpacing.dcaMultiToggleThumb,
-                height: AppSpacing.dcaMultiToggleThumb,
+                width: DcaSpacingTokens.dcaMultiToggleThumb,
+                height: DcaSpacingTokens.dcaMultiToggleThumb,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.onAccent,
@@ -120,7 +120,7 @@ class _PortfolioOverviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -166,7 +166,7 @@ class _PortfolioOverviewCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
-            height: AppSpacing.dcaMultiAllocationChartHeight,
+            height: DcaSpacingTokens.dcaMultiAllocationChartHeight,
             child: CustomPaint(
               painter: _AllocationDonutPainter(
                 allocations: snapshot.allocations,
@@ -197,14 +197,14 @@ class _AssetDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         children: [
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.dcaMultiLegendMarker,
-                height: AppSpacing.dcaMultiLegendMarker,
+                width: DcaSpacingTokens.dcaMultiLegendMarker,
+                height: DcaSpacingTokens.dcaMultiLegendMarker,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: accent,
@@ -285,14 +285,14 @@ class _GrowthCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _CardTitle('Investment Growth by Asset'),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
-            height: AppSpacing.dcaMultiGrowthChartHeight,
+            height: DcaSpacingTokens.dcaMultiGrowthChartHeight,
             width: double.infinity,
             child: CustomPaint(painter: _StackedBarsPainter(points: points)),
           ),
@@ -328,7 +328,7 @@ class _PerformanceRankRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         children: [
           SizedBox(
@@ -416,11 +416,15 @@ class _InfoCallout extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: AppSpacing.dcaMultiIcon),
+          Icon(
+            icon,
+            color: AppColors.primary,
+            size: DcaSpacingTokens.dcaMultiIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Text(
@@ -449,7 +453,7 @@ class _WarningCallout extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

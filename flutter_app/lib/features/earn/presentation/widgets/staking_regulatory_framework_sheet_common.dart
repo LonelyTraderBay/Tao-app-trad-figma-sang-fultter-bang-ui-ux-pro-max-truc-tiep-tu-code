@@ -30,7 +30,7 @@ class _LicenseDetailSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -112,7 +112,7 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnTopPaddingX2,
+      padding: EarnSpacingTokens.earnTopPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -146,7 +146,7 @@ class _InfoNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -177,7 +177,7 @@ class _WarningNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -212,7 +212,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingRegulatoryFrameworkPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -251,7 +251,7 @@ class _SmallPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,

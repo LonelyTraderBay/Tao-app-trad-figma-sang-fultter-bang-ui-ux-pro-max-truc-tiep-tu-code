@@ -32,7 +32,7 @@ class _CurrentTierCard extends StatelessWidget {
                 child: Icon(
                   Icons.shield_outlined,
                   color: tierColor,
-                  size: AppSpacing.walletTokenHeroIconGlyph,
+                  size: WalletSpacingTokens.walletTokenHeroIconGlyph,
                 ),
               ),
               const SizedBox(width: _limitsInlineGap),
@@ -266,7 +266,7 @@ class _LimitWarning extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.caution,
-            size: AppSpacing.walletAddressAddIcon,
+            size: WalletSpacingTokens.walletAddressAddIcon,
           ),
           const SizedBox(width: _limitsInlineGap),
           Expanded(

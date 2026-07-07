@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 const marketDepthPrimary = AppColors.primary;
 
@@ -25,7 +26,7 @@ class MarketDepthPairSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final positive = pair.change24h >= 0;
     return VitCard(
-      padding: AppSpacing.marketDepthPairSummaryPadding,
+      padding: MarketsSpacingTokens.marketDepthPairSummaryPadding,
       child: Row(
         children: [
           Material(
@@ -34,20 +35,20 @@ class MarketDepthPairSummary extends StatelessWidget {
             ).withValues(alpha: .16),
             shape: const CircleBorder(),
             child: SizedBox.square(
-              dimension: AppSpacing.marketDepthAvatar,
+              dimension: MarketsSpacingTokens.marketDepthAvatar,
               child: Center(
                 child: Text(
                   pair.baseAsset.substring(0, 2),
                   style: AppTextStyles.caption.copyWith(
                     color: AppAssetColors.forSymbol(pair.baseAsset),
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marketLineHeightTight,
+                    height: MarketsSpacingTokens.marketLineHeightTight,
                   ),
                 ),
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
+          const SizedBox(width: MarketsSpacingTokens.marketHeatmapSummaryGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,26 +57,30 @@ class MarketDepthPairSummary extends StatelessWidget {
                   pair.symbol,
                   style: AppTextStyles.baseMedium.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marketLineHeightCaption,
+                    height: MarketsSpacingTokens.marketLineHeightCaption,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
+                const SizedBox(
+                  height: MarketsSpacingTokens.marketAnalyticsTinyGap,
+                ),
                 Row(
                   children: [
                     Icon(
                       positive
                           ? Icons.arrow_upward_rounded
                           : Icons.arrow_downward_rounded,
-                      size: AppSpacing.marketDepthTrendIcon,
+                      size: MarketsSpacingTokens.marketDepthTrendIcon,
                       color: positive ? AppColors.buy : AppColors.sell,
                     ),
-                    const SizedBox(width: AppSpacing.marketAnalyticsTinyGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketAnalyticsTinyGap,
+                    ),
                     Text(
                       '${positive ? '+' : ''}${pair.change24h.toStringAsFixed(2)}%',
                       style: AppTextStyles.micro.copyWith(
                         color: positive ? AppColors.buy : AppColors.sell,
                         fontWeight: AppTextStyles.medium,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: MarketsSpacingTokens.marketLineHeightTight,
                       ),
                     ),
                   ],
@@ -88,7 +93,7 @@ class MarketDepthPairSummary extends StatelessWidget {
               '\$${formatMarketDepthPrice(pair.price)}',
               style: AppTextStyles.sectionTitle.copyWith(
                 fontFeatures: AppTextStyles.tabularFigures,
-                height: AppSpacing.marketLineHeightCaption,
+                height: MarketsSpacingTokens.marketLineHeightCaption,
               ),
               textAlign: TextAlign.end,
               overflow: TextOverflow.ellipsis,

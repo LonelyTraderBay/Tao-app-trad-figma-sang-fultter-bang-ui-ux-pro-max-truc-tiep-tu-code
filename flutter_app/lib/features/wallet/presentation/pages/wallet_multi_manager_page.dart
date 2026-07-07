@@ -7,7 +7,6 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
@@ -16,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_multi_manager_sections.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 const _tabAll = 'T\u1EA5t c\u1EA3';
 const _tabGroups = 'Nh\u00F3m';
@@ -23,8 +23,8 @@ const _tabActivity = 'Ho\u1EA1t \u0111\u1ED9ng';
 
 double _managerScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? AppSpacing.walletBottomInsetVisualChrome
-          : AppSpacing.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletBottomInsetVisualChrome
+          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
 }
 

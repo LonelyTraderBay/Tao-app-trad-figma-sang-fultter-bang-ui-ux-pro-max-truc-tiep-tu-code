@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class DesignSystemCaption extends StatelessWidget {
   const DesignSystemCaption(this.text, {super.key});
@@ -36,7 +37,7 @@ class DesignSystemPositiveBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.devInlinePillPadding,
+        padding: AdminSpacingTokens.devInlinePillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -62,7 +63,7 @@ class DesignSystemAccentSample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.devBottomPaddingX3,
+      padding: AdminSpacingTokens.devBottomPaddingX3,
       child: Row(
         children: [
           SizedBox(
@@ -97,7 +98,7 @@ class DesignSystemDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Divider(
-      height: AppSpacing.devDividerHeight,
+      height: AdminSpacingTokens.devDividerHeight,
       color: AppColors.divider,
     );
   }

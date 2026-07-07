@@ -11,7 +11,7 @@ class _EscrowHeroCard extends StatelessWidget {
       key: P2PEscrowBalancePage.heroKey,
       radius: VitCardRadius.large,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pEscrowBalanceLargePadding,
+      padding: P2PSpacingTokens.p2pEscrowBalanceLargePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -71,7 +71,7 @@ class _EscrowHeroCard extends StatelessWidget {
               border: Border.all(color: AppColors.cardBorder),
             ),
             child: Padding(
-              padding: AppSpacing.p2pEscrowBalanceInnerPadding,
+              padding: P2PSpacingTokens.p2pEscrowBalanceInnerPadding,
               child: Row(
                 children: [
                   const Icon(
@@ -181,7 +181,7 @@ class _EscrowOrderCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pEscrowBalanceCardPadding,
+      padding: P2PSpacingTokens.p2pEscrowBalanceCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pOrder(order.canonicalOrderId));
@@ -218,7 +218,9 @@ class _EscrowOrderCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         const Icon(
@@ -300,7 +302,7 @@ class _EscrowOrderCard extends StatelessWidget {
               variant: VitCardVariant.inner,
               radius: VitCardRadius.standard,
               borderColor: AppColors.sell20,
-              padding: AppSpacing.p2pEscrowBalanceInnerPadding,
+              padding: P2PSpacingTokens.p2pEscrowBalanceInnerPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

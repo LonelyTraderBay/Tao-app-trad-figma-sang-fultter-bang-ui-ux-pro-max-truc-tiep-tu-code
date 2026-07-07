@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketDerivativesTabs extends StatelessWidget {
   const MarketDerivativesTabs({
@@ -20,7 +20,7 @@ class MarketDerivativesTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDerivativesTabsHeight,
+        height: MarketsSpacingTokens.marketDerivativesTabsHeight,
         child: VitTabBar(
           activeKey: activeTab,
           variant: VitTabBarVariant.underline,

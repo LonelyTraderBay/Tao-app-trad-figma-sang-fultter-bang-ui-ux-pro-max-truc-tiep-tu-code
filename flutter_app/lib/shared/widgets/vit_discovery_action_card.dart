@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 enum VitDiscoveryActionCardVariant { standard, compact }
 
@@ -41,15 +42,15 @@ class VitDiscoveryActionCard extends StatelessWidget {
     return switch (variant) {
       VitDiscoveryActionCardVariant.standard => const _DiscoveryCardMetrics(
         padding: AppSpacing.cardPadding,
-        iconContainerSize: AppSpacing.homeDiscoveryIconContainer,
-        iconSize: AppSpacing.homeDiscoveryIconSize,
+        iconContainerSize: HomeSpacingTokens.homeDiscoveryIconContainer,
+        iconSize: HomeSpacingTokens.homeDiscoveryIconSize,
         titleStyle: AppTextStyles.body,
         showActionLabel: true,
       ),
       VitDiscoveryActionCardVariant.compact => const _DiscoveryCardMetrics(
-        padding: AppSpacing.homeDiscoveryCompactPadding,
-        iconContainerSize: AppSpacing.homeDiscoveryCompactIconContainer,
-        iconSize: AppSpacing.homeDiscoveryCompactIconSize,
+        padding: HomeSpacingTokens.homeDiscoveryCompactPadding,
+        iconContainerSize: HomeSpacingTokens.homeDiscoveryCompactIconContainer,
+        iconSize: HomeSpacingTokens.homeDiscoveryCompactIconSize,
         titleStyle: AppTextStyles.caption,
         showActionLabel: true,
       ),
@@ -78,7 +79,7 @@ class VitDiscoveryActionCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.homeMarketIconGap),
+          const SizedBox(width: HomeSpacingTokens.homeMarketIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +126,7 @@ class VitDiscoveryActionCard extends StatelessWidget {
           Icon(
             Icons.chevron_right_rounded,
             color: accentColor,
-            size: AppSpacing.homeSectionActionChevronSize,
+            size: HomeSpacingTokens.homeSectionActionChevronSize,
           ),
         ],
       ),

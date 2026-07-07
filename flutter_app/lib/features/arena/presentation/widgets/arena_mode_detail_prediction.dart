@@ -7,11 +7,12 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 const _modePredictionNoticeLineRatio =
-    AppSpacing.arenaModePredictionNoticeLineHeight;
+    ArenaSpacingTokens.arenaModePredictionNoticeLineHeight;
 const _modePredictionTitleLineRatio =
-    AppSpacing.arenaModePredictionTitleLineHeight;
+    ArenaSpacingTokens.arenaModePredictionTitleLineHeight;
 
 class ArenaModePredictionContext extends StatelessWidget {
   const ArenaModePredictionContext({
@@ -34,7 +35,7 @@ class ArenaModePredictionContext extends StatelessWidget {
     return VitCard(
       key: predictionKey,
       borderColor: AppColors.accent20,
-      padding: AppSpacing.arenaModePredictionCardPadding,
+      padding: ArenaSpacingTokens.arenaModePredictionCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -43,7 +44,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.accent,
-                size: AppSpacing.arenaModePredictionInfoIcon,
+                size: ArenaSpacingTokens.arenaModePredictionInfoIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -52,7 +53,8 @@ class ArenaModePredictionContext extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.accent,
                     fontWeight: AppTextStyles.bold,
-                    letterSpacing: AppSpacing.arenaModePredictionLetterSpacing,
+                    letterSpacing:
+                        ArenaSpacingTokens.arenaModePredictionLetterSpacing,
                   ),
                 ),
               ),
@@ -86,7 +88,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               const Icon(
                 Icons.track_changes_rounded,
                 color: AppColors.accent,
-                size: AppSpacing.arenaModePredictionMetricIcon,
+                size: ArenaSpacingTokens.arenaModePredictionMetricIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -108,7 +110,7 @@ class ArenaModePredictionContext extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.arenaModePredictionProgressHeight,
+              minHeight: ArenaSpacingTokens.arenaModePredictionProgressHeight,
               value: probability,
               backgroundColor: AppColors.surface3,
               color: color,
@@ -125,7 +127,7 @@ class ArenaModePredictionContext extends StatelessWidget {
               density: VitDensity.compact,
               leading: const Icon(
                 Icons.open_in_new_rounded,
-                size: AppSpacing.arenaModePredictionActionIcon,
+                size: ArenaSpacingTokens.arenaModePredictionActionIcon,
               ),
               padding: AppSpacing.zeroInsets,
               child: const Text('Xem thi truong du doan'),

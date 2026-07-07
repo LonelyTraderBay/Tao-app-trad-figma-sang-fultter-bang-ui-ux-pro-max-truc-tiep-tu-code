@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 export 'copy_trading_list.dart';
 
@@ -37,8 +38,8 @@ double copyTradingScrollBottomInset(
 }) {
   final mode = shellRenderMode ?? defaultShellRenderMode();
   final base = mode.usesVisualQaFrame
-      ? AppSpacing.copyTradingBottomInsetVisual
-      : AppSpacing.copyTradingBottomInsetNative;
+      ? TradeSpacingTokens.copyTradingBottomInsetVisual
+      : TradeSpacingTokens.copyTradingBottomInsetNative;
   return base + MediaQuery.paddingOf(context).bottom;
 }
 
@@ -52,8 +53,8 @@ double tradeTerminalScrollBottomInset(
       ? DeviceMetrics.bottomChrome
       : DeviceMetrics.nativeBottomChrome;
   final extra = mode.usesVisualQaFrame
-      ? AppSpacing.tradeBottomInsetVisual
-      : AppSpacing.tradeBottomInsetNative;
+      ? TradeSpacingTokens.tradeBottomInsetVisual
+      : TradeSpacingTokens.tradeBottomInsetNative;
   return chromeInset + MediaQuery.paddingOf(context).bottom + extra;
 }
 
@@ -124,7 +125,7 @@ class VitTradeSection extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.tradePageContentGap),
+        const SizedBox(height: TradeSpacingTokens.tradePageContentGap),
         child,
       ],
     );
@@ -172,7 +173,8 @@ class VitTradeDetailScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final resolvedInset = bottomInset ??
+    final resolvedInset =
+        bottomInset ??
         (useCopyTradingInset
             ? copyTradingScrollBottomInset(
                 context,
@@ -204,7 +206,7 @@ class VitTradeDetailScaffold extends StatelessWidget {
                 key: contentKey,
                 bottomInset: resolvedInset,
                 child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                  rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
                   children: tradeShellWithProductTabs(
@@ -269,10 +271,7 @@ class VitTradeHubScaffold extends StatelessWidget {
             context,
             shellRenderMode: shellRenderMode,
           )
-        : tradeScrollBottomInset(
-            context,
-            shellRenderMode: shellRenderMode,
-          );
+        : tradeScrollBottomInset(context, shellRenderMode: shellRenderMode);
 
     return VitPageLayout(
       variant: VitPageVariant.flush,
@@ -292,7 +291,7 @@ class VitTradeHubScaffold extends StatelessWidget {
             key: contentKey,
             bottomInset: scrollEndClearance,
             child: VitPageContent(
-             rhythm: VitPageRhythm.standard,
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
               children: tradeShellWithProductTabs(
@@ -330,7 +329,8 @@ class VitTradeWorkspaceScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final resolvedInset = bottomInset ??
+    final resolvedInset =
+        bottomInset ??
         tradeTerminalScrollBottomInset(
           context,
           shellRenderMode: shellRenderMode,
@@ -400,10 +400,10 @@ class VitBotSubpageHero extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 1,
             height: AppSpacing.x6,
-            color: AppColors.border,
+            child: ColoredBox(color: AppColors.border),
           ),
           Expanded(
             child: Padding(

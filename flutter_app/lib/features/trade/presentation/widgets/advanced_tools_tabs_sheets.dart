@@ -194,7 +194,7 @@ class _LadderLevel extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _toolsMetricRowHeight,
-      padding: AppSpacing.tradeToolMetricRowPadding,
+      padding: TradeSpacingTokens.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .35),

@@ -15,7 +15,7 @@ class LaunchpadRebalanceSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,7 +24,7 @@ class LaunchpadRebalanceSummaryCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.primary,
-                size: AppSpacing.launchpadIconMd,
+                size: LaunchpadSpacingTokens.launchpadIconMd,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -79,7 +79,7 @@ class LaunchpadRebalanceSummaryRow extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadVerticalPaddingX2,
+        padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
         child: Row(
           children: [
             Expanded(
@@ -117,14 +117,14 @@ class LaunchpadRebalanceWarningBanner extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.warning_amber_rounded,
               color: AppColors.warn,
-              size: AppSpacing.launchpadIconLg,
+              size: LaunchpadSpacingTokens.launchpadIconLg,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(

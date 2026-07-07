@@ -14,9 +14,9 @@ class _MetaItem extends StatelessWidget {
         Icon(
           icon,
           color: _devicesMuted,
-          size: AppSpacing.profileDevicesMetaIcon,
+          size: ProfileSpacingTokens.profileDevicesMetaIcon,
         ),
-        const SizedBox(width: AppSpacing.profileDevicesMetaIconGap),
+        const SizedBox(width: ProfileSpacingTokens.profileDevicesMetaIconGap),
         Text(value, style: AppTextStyles.micro.copyWith(color: _devicesMuted)),
       ],
     );
@@ -64,7 +64,7 @@ class _LogoutButton extends StatelessWidget {
       density: VitDensity.compact,
       variant: VitCtaButtonVariant.danger,
       fullWidth: false,
-      padding: AppSpacing.profileDevicesLogoutButtonPadding,
+      padding: ProfileSpacingTokens.profileDevicesLogoutButtonPadding,
       leading: const Icon(Icons.delete_outline_rounded),
       child: const Text('\u0110\u0103ng xu\u1EA5t'),
     );

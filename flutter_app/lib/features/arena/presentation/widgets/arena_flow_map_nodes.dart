@@ -239,7 +239,8 @@ class _HandoffNotes extends StatelessWidget {
               ],
             ),
           ),
-          if (note != notes.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (note != notes.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

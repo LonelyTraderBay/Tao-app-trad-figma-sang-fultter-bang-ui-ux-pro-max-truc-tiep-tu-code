@@ -29,7 +29,7 @@ class _MetricsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: AppSpacing.tradeToolRiskIntroPadding,
+      padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -65,7 +65,7 @@ class _ChoiceChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeToolMetricRowPadding,
+      padding: TradeSpacingTokens.tradeToolMetricRowPadding,
       variant: active ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: active ? AppColors.primary : null,
       child: Text(

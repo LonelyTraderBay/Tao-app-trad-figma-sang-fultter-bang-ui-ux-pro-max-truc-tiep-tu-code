@@ -135,7 +135,7 @@ class _EventMetadataPanel extends StatelessWidget {
         height: _auditMetadataConfigExtent,
         width: double.infinity,
         alignment: Alignment.centerLeft,
-        padding: AppSpacing.copyAuditMetadataConfigPadding,
+        padding: TradeSpacingTokens.copyAuditMetadataConfigPadding,
         child: Text(
           '${metadata.oldValue} → ${metadata.newValue}',
           style: AppTextStyles.micro.copyWith(
@@ -150,7 +150,7 @@ class _EventMetadataPanel extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       width: double.infinity,
-      padding: AppSpacing.copyAuditMetadataPanelPadding,
+      padding: TradeSpacingTokens.copyAuditMetadataPanelPadding,
       child: Column(
         children: [
           Row(

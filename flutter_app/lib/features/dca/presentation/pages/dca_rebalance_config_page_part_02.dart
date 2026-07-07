@@ -96,7 +96,7 @@ class _FrequencyCard extends StatelessWidget {
                 .map(
                   (option) => Expanded(
                     child: Padding(
-                      padding: AppSpacing.dcaHorizontalPaddingX1,
+                      padding: DcaSpacingTokens.dcaHorizontalPaddingX1,
                       child: _FrequencyOptionTile(
                         option: option,
                         selected: active == option.frequency,
@@ -140,12 +140,12 @@ class _FrequencyOptionTile extends StatelessWidget {
             borderRadius: AppRadii.inputRadius,
             side: BorderSide(
               color: selected ? AppColors.accent : AppColors.transparent,
-              width: AppSpacing.dcaRebalanceConnectorWidth,
+              width: DcaSpacingTokens.dcaRebalanceConnectorWidth,
             ),
           ),
         ),
         child: Padding(
-          padding: AppSpacing.dcaFrequencyTilePadding,
+          padding: DcaSpacingTokens.dcaFrequencyTilePadding,
           child: Column(
             children: [
               Text(
@@ -199,14 +199,14 @@ class _AdvancedSettings extends StatelessWidget {
           onTap: onToggleExpanded,
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.standard,
-          padding: AppSpacing.dcaVerticalPaddingX3,
+          padding: DcaSpacingTokens.dcaVerticalPaddingX3,
           borderColor: AppColors.transparent,
           child: Row(
             children: [
               const Icon(
                 Icons.settings_suggest_outlined,
                 color: AppColors.text3,
-                size: AppSpacing.dcaRebalanceIconSm,
+                size: DcaSpacingTokens.dcaRebalanceIconSm,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -224,7 +224,7 @@ class _AdvancedSettings extends StatelessWidget {
                 child: const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.dcaRebalanceIcon,
+                  size: DcaSpacingTokens.dcaRebalanceIcon,
                 ),
               ),
             ],
@@ -263,7 +263,7 @@ class _AdvancedSettings extends StatelessWidget {
                             ),
                           ),
                           child: Padding(
-                            padding: AppSpacing.dcaScoreChipPadding,
+                            padding: DcaSpacingTokens.dcaScoreChipPadding,
                             child: Text(
                               '\$${minTradeAmountUsd.toStringAsFixed(0)}',
                               style: AppTextStyles.baseMedium.copyWith(
@@ -332,16 +332,17 @@ class _AdvancedSettings extends StatelessWidget {
                             variant: VitCardVariant.ghost,
                             radius: VitCardRadius.standard,
                             padding: EdgeInsets.zero,
-                            width: AppSpacing.dcaRebalanceToggleWidth,
+                            width: DcaSpacingTokens.dcaRebalanceToggleWidth,
                             height: _dcaRebalanceToggleHeight,
                             borderColor: AppColors.transparent,
                             clip: true,
                             child: VitTogglePill(
                               enabled: autoExecute,
-                              width: AppSpacing.dcaRebalanceToggleWidth,
+                              width: DcaSpacingTokens.dcaRebalanceToggleWidth,
                               height: _dcaRebalanceToggleHeight,
-                              knobSize: AppSpacing.dcaRebalanceToggleThumb,
-                              knobMargin: AppSpacing.dcaPaddingX1,
+                              knobSize:
+                                  DcaSpacingTokens.dcaRebalanceToggleThumb,
+                              knobMargin: DcaSpacingTokens.dcaPaddingX1,
                               activeColor: AppColors.buy,
                               inactiveColor: AppColors.borderSolid,
                               activeKnobColor: AppColors.text1,
@@ -353,7 +354,9 @@ class _AdvancedSettings extends StatelessWidget {
                       ],
                     ),
                     if (autoExecute) ...[
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                       DecoratedBox(
                         decoration: ShapeDecoration(
                           color: AppColors.warningBg,
@@ -365,14 +368,14 @@ class _AdvancedSettings extends StatelessWidget {
                           ),
                         ),
                         child: Padding(
-                          padding: AppSpacing.dcaPaddingX4,
+                          padding: DcaSpacingTokens.dcaPaddingX4,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Icon(
                                 Icons.error_outline_rounded,
                                 color: AppColors.warn,
-                                size: AppSpacing.dcaRebalanceIconSm,
+                                size: DcaSpacingTokens.dcaRebalanceIconSm,
                               ),
                               const SizedBox(width: AppSpacing.x3),
                               Expanded(
@@ -567,10 +570,12 @@ class _PreviewSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         ...previews.map(
                           (preview) => Padding(
-                            padding: AppSpacing.dcaBottomPaddingX3,
+                            padding: DcaSpacingTokens.dcaBottomPaddingX3,
                             child: _PreviewRow(preview: preview),
                           ),
                         ),

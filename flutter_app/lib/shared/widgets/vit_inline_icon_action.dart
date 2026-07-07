@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 class VitInlineIconAction extends StatelessWidget {
   const VitInlineIconAction({
@@ -11,8 +11,8 @@ class VitInlineIconAction extends StatelessWidget {
     required this.tooltip,
     required this.onPressed,
     this.color = AppColors.text2,
-    this.size = AppSpacing.homePortfolioHeaderIcon,
-    this.padding = AppSpacing.homePortfolioHeaderActionPadding,
+    this.size = HomeSpacingTokens.homePortfolioHeaderIcon,
+    this.padding = HomeSpacingTokens.homePortfolioHeaderActionPadding,
     this.borderRadius = AppRadii.inputRadius,
   });
 

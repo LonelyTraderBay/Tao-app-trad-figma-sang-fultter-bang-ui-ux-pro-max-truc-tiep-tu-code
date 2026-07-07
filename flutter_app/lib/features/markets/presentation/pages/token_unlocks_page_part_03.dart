@@ -9,19 +9,24 @@ class _DilutionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tokenUnlocksDilutionRowPadding,
+      padding: MarketsSpacingTokens.tokenUnlocksDilutionRowPadding,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.tokenUnlocksDilutionRankWidth,
+            width: MarketsSpacingTokens.tokenUnlocksDilutionRankWidth,
             child: Text(
               '${index + 1}',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
           ),
-          const SizedBox(width: AppSpacing.tokenUnlocksDilutionRankGap),
-          _TokenAvatar(unlock: unlock, size: AppSpacing.tokenUnlocksAvatarSm),
-          const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
+          const SizedBox(
+            width: MarketsSpacingTokens.tokenUnlocksDilutionRankGap,
+          ),
+          _TokenAvatar(
+            unlock: unlock,
+            size: MarketsSpacingTokens.tokenUnlocksAvatarSm,
+          ),
+          const SizedBox(width: MarketsSpacingTokens.tokenUnlocksCardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +118,7 @@ class _ScheduleCard extends StatelessWidget {
     final supplyPct = unlock.circulatingSupply / unlock.totalSupply;
 
     return VitCard(
-      padding: AppSpacing.tokenUnlocksScheduleCardPadding,
+      padding: MarketsSpacingTokens.tokenUnlocksScheduleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -121,9 +126,9 @@ class _ScheduleCard extends StatelessWidget {
             children: [
               _TokenAvatar(
                 unlock: unlock,
-                size: AppSpacing.tokenUnlocksAvatarMd,
+                size: MarketsSpacingTokens.tokenUnlocksAvatarMd,
               ),
-              const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
+              const SizedBox(width: MarketsSpacingTokens.tokenUnlocksCardGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,31 +254,33 @@ class _VestingEventRow extends StatelessWidget {
           Column(
             children: [
               CircleAvatar(
-                radius: AppSpacing.tokenUnlocksVestingMarker / 2,
+                radius: MarketsSpacingTokens.tokenUnlocksVestingMarker / 2,
                 backgroundColor: isFirst ? color : color.withValues(alpha: .12),
                 child: Icon(
                   isFirst ? Icons.lock_open_rounded : Icons.lock_rounded,
                   size: isFirst
-                      ? AppSpacing.tokenUnlocksVestingIconOpen
-                      : AppSpacing.tokenUnlocksVestingIconLocked,
+                      ? MarketsSpacingTokens.tokenUnlocksVestingIconOpen
+                      : MarketsSpacingTokens.tokenUnlocksVestingIconLocked,
                   color: isFirst ? AppColors.text1 : color,
                 ),
               ),
               if (!isLast)
                 Expanded(
                   child: SizedBox(
-                    width: AppSpacing.tokenUnlocksVestingLine,
+                    width: MarketsSpacingTokens.tokenUnlocksVestingLine,
                     child: ColoredBox(color: color.withValues(alpha: .12)),
                   ),
                 ),
             ],
           ),
-          const SizedBox(width: AppSpacing.tokenUnlocksVestingContentGap),
+          const SizedBox(
+            width: MarketsSpacingTokens.tokenUnlocksVestingContentGap,
+          ),
           Expanded(
             child: Padding(
               padding: isLast
                   ? AppSpacing.zeroInsets
-                  : AppSpacing.tokenUnlocksVestingEventPadding,
+                  : MarketsSpacingTokens.tokenUnlocksVestingEventPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

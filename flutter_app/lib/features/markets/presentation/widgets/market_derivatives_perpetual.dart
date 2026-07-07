@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketDerivativesSortChips extends StatelessWidget {
   const MarketDerivativesSortChips({
@@ -30,7 +30,9 @@ class MarketDerivativesSortChips extends StatelessWidget {
               active: active == sort,
               onTap: () => onSelected(sort),
             ),
-            const SizedBox(width: AppSpacing.marketDerivativesSortGap),
+            const SizedBox(
+              width: MarketsSpacingTokens.marketDerivativesSortGap,
+            ),
           ],
         ],
       ),
@@ -69,16 +71,18 @@ class MarketDerivativesPerpetualPairCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketDerivativesPairCardPadding,
+      padding: MarketsSpacingTokens.marketDerivativesPairCardPadding,
       child: Column(
         children: [
           Row(
             children: [
               MarketDerivativesPairLogo(
                 pair: pair,
-                size: AppSpacing.marketDerivativesPairAvatarMd,
+                size: MarketsSpacingTokens.marketDerivativesPairAvatarMd,
               ),
-              const SizedBox(width: AppSpacing.marketDerivativesPairGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketDerivativesPairGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +96,8 @@ class MarketDerivativesPerpetualPairCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: AppSpacing.marketDerivativesLeverageGap,
+                          width:
+                              MarketsSpacingTokens.marketDerivativesLeverageGap,
                         ),
                         MarketDerivativesTinyPill('${pair.maxLeverage}x'),
                       ],
@@ -129,7 +134,9 @@ class MarketDerivativesPerpetualPairCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketDerivativesPerpetualMetaGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketDerivativesPerpetualMetaGap,
+          ),
           Row(
             children: [
               Expanded(
@@ -159,7 +166,9 @@ class MarketDerivativesPerpetualPairCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketDerivativesPerpetualSplitGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketDerivativesPerpetualSplitGap,
+          ),
           MarketDerivativesSplitBar(
             leftPercent: pair.longRatio,
             leftLabel: 'Long ${pair.longRatio.toStringAsFixed(1)}%',

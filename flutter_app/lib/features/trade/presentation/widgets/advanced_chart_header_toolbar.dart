@@ -8,12 +8,12 @@ class _OhlcvBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.tradeBotQuestionIconBox,
+      height: TradeSpacingTokens.tradeBotQuestionIconBox,
       child: Column(
         children: [
           Expanded(
             child: Padding(
-              padding: AppSpacing.tradeReceiptSupportPadding,
+              padding: TradeSpacingTokens.tradeReceiptSupportPadding,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: ScrollConfiguration(
@@ -32,7 +32,9 @@ class _OhlcvBar extends StatelessWidget {
                             fontFeatures: AppTextStyles.tabularFigures,
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+                        const SizedBox(
+                          width: TradeSpacingTokens.tradeBotCardIconGap,
+                        ),
                         _OhlcvToken(
                           label: 'O',
                           value: _formatRawPrice(ohlcv.open),
@@ -61,7 +63,7 @@ class _OhlcvBar extends StatelessWidget {
             ),
           ),
           const Divider(
-            height: AppSpacing.tradeBotHairline,
+            height: TradeSpacingTokens.tradeBotHairline,
             thickness: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
@@ -106,7 +108,7 @@ class _OhlcvToken extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+        const SizedBox(width: TradeSpacingTokens.tradeBotDisclosureGap),
       ],
     );
   }
@@ -134,12 +136,12 @@ class _ChartToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.tradeBotClientMetricHeight,
+      height: TradeSpacingTokens.tradeBotClientMetricHeight,
       child: Column(
         children: [
           Expanded(
             child: Padding(
-              padding: AppSpacing.tradeReceiptSupportPadding,
+              padding: TradeSpacingTokens.tradeReceiptSupportPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -163,13 +165,13 @@ class _ChartToolbar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotTinyGap),
+                  const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),
                   const SizedBox(
                     width: AppSpacing.dividerHairline,
-                    height: AppSpacing.tradeBotDisputeDropdownIcon,
+                    height: TradeSpacingTokens.tradeBotDisputeDropdownIcon,
                     child: ColoredBox(color: AppColors.borderSolid),
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotTinyGap),
+                  const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),
                   VitIconButton(
                     key: AdvancedChartPage.chartTypeKey('candle'),
                     icon: Icons.show_chart_rounded,
@@ -200,7 +202,7 @@ class _ChartToolbar extends StatelessWidget {
                         : VitIconButtonVariant.transparent,
                     size: VitIconButtonSize.sm,
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotTinyGap),
+                  const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),
                   Tooltip(
                     message: 'Open chart indicators',
                     child: Semantics(
@@ -227,7 +229,7 @@ class _ChartToolbar extends StatelessWidget {
             ),
           ),
           const Divider(
-            height: AppSpacing.tradeBotHairline,
+            height: TradeSpacingTokens.tradeBotHairline,
             thickness: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),

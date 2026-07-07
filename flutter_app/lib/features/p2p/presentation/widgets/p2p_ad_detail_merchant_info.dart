@@ -13,7 +13,7 @@ class _MerchantCard extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pMerchant(ad.merchantId));
       },
-      padding: AppSpacing.p2pAdDetailCompactCardPadding,
+      padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,
       child: Row(
         children: [
           Stack(
@@ -28,13 +28,13 @@ class _MerchantCard extends StatelessWidget {
                 right: 0,
                 bottom: 0,
                 child: SizedBox.square(
-                  dimension: AppSpacing.p2pAdDetailOnlineBadgeSize,
+                  dimension: P2PSpacingTokens.p2pAdDetailOnlineBadgeSize,
                   child: Material(
                     color: ad.isOnline ? AppColors.buy : AppColors.text3,
                     shape: const CircleBorder(
                       side: BorderSide(
                         color: AppColors.surface,
-                        width: AppSpacing.p2pAdDetailOnlineBadgeBorder,
+                        width: P2PSpacingTokens.p2pAdDetailOnlineBadgeBorder,
                       ),
                     ),
                   ),
@@ -167,7 +167,7 @@ class _InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pAdDetailCompactCardPadding,
+      padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -295,7 +295,7 @@ class _SignalChip extends StatelessWidget {
           side: BorderSide(color: color.withValues(alpha: .16)),
         ),
         child: Padding(
-          padding: AppSpacing.p2pAdDetailSignalChipPadding,
+          padding: P2PSpacingTokens.p2pAdDetailSignalChipPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/uni
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_painters.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 
 class UnifiedPortfolioAnalysis extends StatelessWidget {
   const UnifiedPortfolioAnalysis({super.key, required this.snapshot});
@@ -28,7 +29,7 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.crossModuleCardPadding,
+          padding: CrossModuleSpacingTokens.crossModuleCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -61,7 +62,7 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.crossModuleCardPadding,
+          padding: CrossModuleSpacingTokens.crossModuleCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -76,7 +77,9 @@ class UnifiedPortfolioAnalysis extends StatelessWidget {
               for (final module in modules) ...[
                 _AllocationRow(module: module, totalValue: snapshot.totalValue),
                 if (module != modules.last)
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
               ],
             ],
           ),
@@ -96,7 +99,7 @@ class _RankingRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final returnPercent = unifiedReturnPercent(module);
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Row(
         children: [
           SizedBox(

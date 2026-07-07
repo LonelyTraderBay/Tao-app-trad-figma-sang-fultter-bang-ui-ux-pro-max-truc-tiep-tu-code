@@ -19,7 +19,7 @@ class _DcaSummaryCard extends StatelessWidget {
       key: SavingsDCAPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -153,7 +153,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

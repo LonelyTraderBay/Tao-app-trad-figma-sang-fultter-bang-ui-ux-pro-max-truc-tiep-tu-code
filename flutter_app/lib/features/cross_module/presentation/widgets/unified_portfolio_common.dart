@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/cross_module/domain/entities/unified_portfolio_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 
 class UnifiedPortfolioSummaryMetric extends StatelessWidget {
   const UnifiedPortfolioSummaryMetric({
@@ -113,7 +114,7 @@ class UnifiedArenaBoundaryPill extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.crossModuleSelectorPadding,
+      padding: CrossModuleSpacingTokens.crossModuleSelectorPadding,
       child: Text(
         'Arena Points Only - Not included in portfolio value',
         style: AppTextStyles.caption.copyWith(

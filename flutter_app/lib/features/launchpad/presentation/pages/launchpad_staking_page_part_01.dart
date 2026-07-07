@@ -44,7 +44,7 @@ class _LaunchpadStakingPageState extends ConsumerState<LaunchpadStakingPage> {
                       bottom: scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -86,7 +86,7 @@ class _StakingTabs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: AppSpacing.launchpadHorizontalContentPadding,
+            padding: LaunchpadSpacingTokens.launchpadHorizontalContentPadding,
             child: VitSegmentedChoice.withPrimaryAccent<_StakingTab>(
               key: LaunchpadStakingPage.tabsKey,
               selected: activeTab,
@@ -123,7 +123,7 @@ class _StakingHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
-      padding: AppSpacing.launchpadPaddingX5,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -237,7 +237,7 @@ class _PoolCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadStakingPage.poolKey(pool.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX5,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX5,
       onTap: () => context.go(detailRoute),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -367,7 +367,7 @@ class _PositionsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     if (snapshot.positions.isEmpty) {
       return VitCard(
-        padding: AppSpacing.launchpadPaddingX6,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX6,
         child: Column(
           children: [
             const Icon(
@@ -397,7 +397,7 @@ class _PositionsTab extends StatelessWidget {
           key: LaunchpadStakingPage.batchClaimKey,
           radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
-          padding: AppSpacing.launchpadPaddingX4,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX4,
           onTap: () => context.go(snapshot.batchClaimRoute),
           child: Row(
             children: [

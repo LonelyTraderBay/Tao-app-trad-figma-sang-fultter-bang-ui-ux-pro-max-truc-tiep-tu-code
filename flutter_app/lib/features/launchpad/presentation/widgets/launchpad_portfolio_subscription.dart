@@ -223,7 +223,8 @@ class _VestingProgress extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
-          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+          child: SizedBox(
+            height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -276,7 +277,7 @@ class _InlineNotice extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: LaunchpadSpacingTokens.launchpadLineHeightShort,
             ),
           ),
         ),

@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/transaction_detail_page_sections.dart';
 part '../widgets/transaction_detail_page_common.dart';

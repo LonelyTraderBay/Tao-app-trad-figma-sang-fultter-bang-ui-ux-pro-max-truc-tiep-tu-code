@@ -9,7 +9,7 @@ class _TopTradersCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _AnalyticsCard(
       child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -106,7 +106,7 @@ class _FundingRateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _AnalyticsCard(
       child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -202,7 +202,7 @@ class _LiquidationsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final stats = snapshot.liquidationStats;
     return VitPageContent(
-   rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -323,10 +323,10 @@ class _SentimentTab extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     SizedBox.square(
-                      dimension: AppSpacing.tradeBotRiskRingSize,
+                      dimension: TradeSpacingTokens.tradeBotRiskRingSize,
                       child: CircularProgressIndicator(
                         value: sentiment.score / 100,
-                        strokeWidth: AppSpacing.tradeBotCardIconGap,
+                        strokeWidth: TradeSpacingTokens.tradeBotCardIconGap,
                         backgroundColor: _analyticsPanel2,
                         color: _analyticsAmber,
                       ),

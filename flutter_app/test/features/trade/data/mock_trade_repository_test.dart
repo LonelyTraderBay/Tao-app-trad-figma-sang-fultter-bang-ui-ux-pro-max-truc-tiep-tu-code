@@ -28,35 +28,47 @@ void main() {
         expect(repo.getTradeExport(), isA<TradeExportSnapshot>());
       });
 
-      test('getAdvancedChart / getConvert / getFutures / getFuturesLeverage', () {
-        expect(repo.getAdvancedChart(), isA<TradeAdvancedChartSnapshot>());
-        expect(
-          repo.getAdvancedChart(pairId: 'ethusdt'),
-          isA<TradeAdvancedChartSnapshot>(),
-        );
-        expect(repo.getConvert(), isA<TradeConvertSnapshot>());
-        final futures = repo.getFutures();
-        expect(futures, isA<TradeFuturesSnapshot>());
-        expect(futures.positions, hasLength(2));
-        expect(repo.getFutures(pairId: 'ethusdt'), isA<TradeFuturesSnapshot>());
-        expect(
-          repo.getFuturesLeverage(),
-          isA<TradeFuturesLeverageSnapshot>(),
-        );
-        expect(
-          repo.getFuturesLeverage(pairId: 'ethusdt'),
-          isA<TradeFuturesLeverageSnapshot>(),
-        );
-      });
+      test(
+        'getAdvancedChart / getConvert / getFutures / getFuturesLeverage',
+        () {
+          expect(repo.getAdvancedChart(), isA<TradeAdvancedChartSnapshot>());
+          expect(
+            repo.getAdvancedChart(pairId: 'ethusdt'),
+            isA<TradeAdvancedChartSnapshot>(),
+          );
+          expect(repo.getConvert(), isA<TradeConvertSnapshot>());
+          final futures = repo.getFutures();
+          expect(futures, isA<TradeFuturesSnapshot>());
+          expect(futures.positions, hasLength(2));
+          expect(
+            repo.getFutures(pairId: 'ethusdt'),
+            isA<TradeFuturesSnapshot>(),
+          );
+          expect(
+            repo.getFuturesLeverage(),
+            isA<TradeFuturesLeverageSnapshot>(),
+          );
+          expect(
+            repo.getFuturesLeverage(pairId: 'ethusdt'),
+            isA<TradeFuturesLeverageSnapshot>(),
+          );
+        },
+      );
 
-      test('getTradingBots / getRiskManagement / getExecutionQuality / getAdvancedTools', () {
-        final bots = repo.getTradingBots();
-        expect(bots, isA<TradeBotsSnapshot>());
-        expect(bots.activeBots, hasLength(3));
-        expect(repo.getRiskManagement(), isA<TradeRiskManagementSnapshot>());
-        expect(repo.getExecutionQuality(), isA<TradeExecutionQualitySnapshot>());
-        expect(repo.getAdvancedTools(), isA<TradeAdvancedToolsSnapshot>());
-      });
+      test(
+        'getTradingBots / getRiskManagement / getExecutionQuality / getAdvancedTools',
+        () {
+          final bots = repo.getTradingBots();
+          expect(bots, isA<TradeBotsSnapshot>());
+          expect(bots.activeBots, hasLength(3));
+          expect(repo.getRiskManagement(), isA<TradeRiskManagementSnapshot>());
+          expect(
+            repo.getExecutionQuality(),
+            isA<TradeExecutionQualitySnapshot>(),
+          );
+          expect(repo.getAdvancedTools(), isA<TradeAdvancedToolsSnapshot>());
+        },
+      );
 
       test('getMarginTrading / getTraderProfile / getAdvancedTradingDemo', () {
         expect(repo.getMarginTrading(), isA<TradeMarginTradingSnapshot>());
@@ -77,182 +89,296 @@ void main() {
     });
 
     group('copy trading getters', () {
-      test('getCopyTrading / getCopyTradingV2 / getCopyCardDemo / getCopyEducation', () {
-        expect(repo.getCopyTrading(), isA<TradeCopyTradingSnapshot>());
-        expect(repo.getCopyTradingV2(), isA<TradeCopyTradingV2Snapshot>());
-        expect(repo.getCopyCardDemo(), isA<TradeCopyCardDemoSnapshot>());
-        expect(repo.getCopyEducation(), isA<TradeCopyEducationSnapshot>());
-      });
+      test(
+        'getCopyTrading / getCopyTradingV2 / getCopyCardDemo / getCopyEducation',
+        () {
+          expect(repo.getCopyTrading(), isA<TradeCopyTradingSnapshot>());
+          expect(repo.getCopyTradingV2(), isA<TradeCopyTradingV2Snapshot>());
+          expect(repo.getCopyCardDemo(), isA<TradeCopyCardDemoSnapshot>());
+          expect(repo.getCopyEducation(), isA<TradeCopyEducationSnapshot>());
+        },
+      );
 
       test('getActiveCopies / getCopySettings / getCopyNotifications', () {
         expect(repo.getActiveCopies(), isA<TradeActiveCopiesSnapshot>());
         expect(repo.getCopySettings(), isA<TradeCopySettingsSnapshot>());
-        expect(repo.getCopyNotifications(), isA<TradeCopyNotificationsSnapshot>());
-      });
-
-      test('getProviderApplication / getCopyProviderDetail / getPreCopyAssessment', () {
-        expect(repo.getProviderApplication(), isA<TradeProviderApplicationSnapshot>());
-        expect(repo.getCopyProviderDetail(), isA<TradeCopyProviderDetailSnapshot>());
         expect(
-          repo.getCopyProviderDetail(providerId: 'provider002'),
-          isA<TradeCopyProviderDetailSnapshot>(),
-        );
-        expect(repo.getPreCopyAssessment(), isA<TradePreCopyAssessmentSnapshot>());
-        expect(
-          repo.getPreCopyAssessment(providerId: 'provider002'),
-          isA<TradePreCopyAssessmentSnapshot>(),
+          repo.getCopyNotifications(),
+          isA<TradeCopyNotificationsSnapshot>(),
         );
       });
 
-      test('getCopyConfiguration / getCopyConfirmation / getCopyPerformance', () {
-        expect(repo.getCopyConfiguration(), isA<TradeCopyConfigurationSnapshot>());
-        expect(
-          repo.getCopyConfiguration(providerId: 'provider002'),
-          isA<TradeCopyConfigurationSnapshot>(),
-        );
-        expect(repo.getCopyConfirmation(), isA<TradeCopyConfirmationSnapshot>());
-        expect(
-          repo.getCopyConfirmation(providerId: 'provider002'),
-          isA<TradeCopyConfirmationSnapshot>(),
-        );
-        expect(repo.getCopyPerformance(), isA<TradeCopyPerformanceSnapshot>());
-        expect(
-          repo.getCopyPerformance(copyId: 'copy002'),
-          isA<TradeCopyPerformanceSnapshot>(),
-        );
-      });
+      test(
+        'getProviderApplication / getCopyProviderDetail / getPreCopyAssessment',
+        () {
+          expect(
+            repo.getProviderApplication(),
+            isA<TradeProviderApplicationSnapshot>(),
+          );
+          expect(
+            repo.getCopyProviderDetail(),
+            isA<TradeCopyProviderDetailSnapshot>(),
+          );
+          expect(
+            repo.getCopyProviderDetail(providerId: 'provider002'),
+            isA<TradeCopyProviderDetailSnapshot>(),
+          );
+          expect(
+            repo.getPreCopyAssessment(),
+            isA<TradePreCopyAssessmentSnapshot>(),
+          );
+          expect(
+            repo.getPreCopyAssessment(providerId: 'provider002'),
+            isA<TradePreCopyAssessmentSnapshot>(),
+          );
+        },
+      );
 
-      test('getPerformanceAttribution / getProviderComparison / getCopyAuditLog', () {
-        expect(
-          repo.getPerformanceAttribution(),
-          isA<TradePerformanceAttributionSnapshot>(),
-        );
-        expect(
-          repo.getPerformanceAttribution(copyId: 'copy002'),
-          isA<TradePerformanceAttributionSnapshot>(),
-        );
-        expect(repo.getProviderComparison(), isA<TradeProviderComparisonSnapshot>());
-        expect(repo.getCopyAuditLog(), isA<TradeCopyAuditLogSnapshot>());
-        expect(
-          repo.getCopyAuditLog(copyId: 'copy002'),
-          isA<TradeCopyAuditLogSnapshot>(),
-        );
-      });
+      test(
+        'getCopyConfiguration / getCopyConfirmation / getCopyPerformance',
+        () {
+          expect(
+            repo.getCopyConfiguration(),
+            isA<TradeCopyConfigurationSnapshot>(),
+          );
+          expect(
+            repo.getCopyConfiguration(providerId: 'provider002'),
+            isA<TradeCopyConfigurationSnapshot>(),
+          );
+          expect(
+            repo.getCopyConfirmation(),
+            isA<TradeCopyConfirmationSnapshot>(),
+          );
+          expect(
+            repo.getCopyConfirmation(providerId: 'provider002'),
+            isA<TradeCopyConfirmationSnapshot>(),
+          );
+          expect(
+            repo.getCopyPerformance(),
+            isA<TradeCopyPerformanceSnapshot>(),
+          );
+          expect(
+            repo.getCopyPerformance(copyId: 'copy002'),
+            isA<TradeCopyPerformanceSnapshot>(),
+          );
+        },
+      );
 
-      test('getPortfolioRiskAnalysis / getProviderLeaderboard / getSafetyEducation', () {
-        expect(
-          repo.getPortfolioRiskAnalysis(),
-          isA<TradePortfolioRiskAnalysisSnapshot>(),
-        );
-        expect(repo.getProviderLeaderboard(), isA<TradeProviderLeaderboardSnapshot>());
-        expect(repo.getSafetyEducation(), isA<TradeSafetyEducationSnapshot>());
-      });
+      test(
+        'getPerformanceAttribution / getProviderComparison / getCopyAuditLog',
+        () {
+          expect(
+            repo.getPerformanceAttribution(),
+            isA<TradePerformanceAttributionSnapshot>(),
+          );
+          expect(
+            repo.getPerformanceAttribution(copyId: 'copy002'),
+            isA<TradePerformanceAttributionSnapshot>(),
+          );
+          expect(
+            repo.getProviderComparison(),
+            isA<TradeProviderComparisonSnapshot>(),
+          );
+          expect(repo.getCopyAuditLog(), isA<TradeCopyAuditLogSnapshot>());
+          expect(
+            repo.getCopyAuditLog(copyId: 'copy002'),
+            isA<TradeCopyAuditLogSnapshot>(),
+          );
+        },
+      );
 
-      test('getProviderGovernance / getDisputeResolution / getCopySafetyCenter', () {
-        expect(repo.getProviderGovernance(), isA<TradeProviderGovernanceSnapshot>());
-        expect(repo.getDisputeResolution(), isA<TradeDisputeResolutionSnapshot>());
-        expect(repo.getCopySafetyCenter(), isA<TradeCopySafetyCenterSnapshot>());
-      });
+      test(
+        'getPortfolioRiskAnalysis / getProviderLeaderboard / getSafetyEducation',
+        () {
+          expect(
+            repo.getPortfolioRiskAnalysis(),
+            isA<TradePortfolioRiskAnalysisSnapshot>(),
+          );
+          expect(
+            repo.getProviderLeaderboard(),
+            isA<TradeProviderLeaderboardSnapshot>(),
+          );
+          expect(
+            repo.getSafetyEducation(),
+            isA<TradeSafetyEducationSnapshot>(),
+          );
+        },
+      );
+
+      test(
+        'getProviderGovernance / getDisputeResolution / getCopySafetyCenter',
+        () {
+          expect(
+            repo.getProviderGovernance(),
+            isA<TradeProviderGovernanceSnapshot>(),
+          );
+          expect(
+            repo.getDisputeResolution(),
+            isA<TradeDisputeResolutionSnapshot>(),
+          );
+          expect(
+            repo.getCopySafetyCenter(),
+            isA<TradeCopySafetyCenterSnapshot>(),
+          );
+        },
+      );
     });
 
     group('regulatory / compliance getters', () {
-      test('getRegulatoryDisclosures / getMarketDataAnalytics / getMarginTradingHub', () {
-        expect(
-          repo.getRegulatoryDisclosures(),
-          isA<TradeRegulatoryDisclosuresSnapshot>(),
-        );
-        expect(repo.getMarketDataAnalytics(), isA<TradeMarketDataAnalyticsSnapshot>());
-        expect(repo.getMarginTradingHub(), isA<TradeMarginTradingHubSnapshot>());
-        expect(
-          repo.getLiveMarketDataAnalytics(),
-          isA<TradeMarketDataAnalyticsSnapshot>(),
-        );
-        expect(repo.getAdvancedAnalytics(), isA<TradeAdvancedAnalyticsSnapshot>());
-      });
+      test(
+        'getRegulatoryDisclosures / getMarketDataAnalytics / getMarginTradingHub',
+        () {
+          expect(
+            repo.getRegulatoryDisclosures(),
+            isA<TradeRegulatoryDisclosuresSnapshot>(),
+          );
+          expect(
+            repo.getMarketDataAnalytics(),
+            isA<TradeMarketDataAnalyticsSnapshot>(),
+          );
+          expect(
+            repo.getMarginTradingHub(),
+            isA<TradeMarginTradingHubSnapshot>(),
+          );
+          expect(
+            repo.getLiveMarketDataAnalytics(),
+            isA<TradeMarketDataAnalyticsSnapshot>(),
+          );
+          expect(
+            repo.getAdvancedAnalytics(),
+            isA<TradeAdvancedAnalyticsSnapshot>(),
+          );
+        },
+      );
 
-      test('getTransactionReporting / getRegulatoryReportsDashboard / getArmIntegrationStatus', () {
-        expect(
-          repo.getTransactionReporting(),
-          isA<TradeTransactionReportingSnapshot>(),
-        );
-        expect(
-          repo.getRegulatoryReportsDashboard(),
-          isA<TradeRegulatoryReportsDashboardSnapshot>(),
-        );
-        expect(
-          repo.getArmIntegrationStatus(),
-          isA<TradeArmIntegrationStatusSnapshot>(),
-        );
-      });
+      test(
+        'getTransactionReporting / getRegulatoryReportsDashboard / getArmIntegrationStatus',
+        () {
+          expect(
+            repo.getTransactionReporting(),
+            isA<TradeTransactionReportingSnapshot>(),
+          );
+          expect(
+            repo.getRegulatoryReportsDashboard(),
+            isA<TradeRegulatoryReportsDashboardSnapshot>(),
+          );
+          expect(
+            repo.getArmIntegrationStatus(),
+            isA<TradeArmIntegrationStatusSnapshot>(),
+          );
+        },
+      );
 
-      test('getBestExecutionReports / getExecutionVenueAnalysis / getSlippageMonitoring', () {
-        expect(
-          repo.getBestExecutionReports(),
-          isA<TradeBestExecutionReportsSnapshot>(),
-        );
-        expect(
-          repo.getExecutionVenueAnalysis(),
-          isA<TradeExecutionVenueAnalysisSnapshot>(),
-        );
-        expect(repo.getSlippageMonitoring(), isA<TradeSlippageMonitoringSnapshot>());
-      });
+      test(
+        'getBestExecutionReports / getExecutionVenueAnalysis / getSlippageMonitoring',
+        () {
+          expect(
+            repo.getBestExecutionReports(),
+            isA<TradeBestExecutionReportsSnapshot>(),
+          );
+          expect(
+            repo.getExecutionVenueAnalysis(),
+            isA<TradeExecutionVenueAnalysisSnapshot>(),
+          );
+          expect(
+            repo.getSlippageMonitoring(),
+            isA<TradeSlippageMonitoringSnapshot>(),
+          );
+        },
+      );
 
-      test('getClientCategorization / getProductGovernance / getTargetMarketDefinition', () {
-        expect(
-          repo.getClientCategorization(),
-          isA<TradeClientCategorizationSnapshot>(),
-        );
-        expect(repo.getProductGovernance(), isA<TradeProductGovernanceSnapshot>());
-        expect(
-          repo.getTargetMarketDefinition(),
-          isA<TradeTargetMarketDefinitionSnapshot>(),
-        );
-        expect(
-          repo.getTargetMarketDefinition(productId: 'prod-2'),
-          isA<TradeTargetMarketDefinitionSnapshot>(),
-        );
-      });
+      test(
+        'getClientCategorization / getProductGovernance / getTargetMarketDefinition',
+        () {
+          expect(
+            repo.getClientCategorization(),
+            isA<TradeClientCategorizationSnapshot>(),
+          );
+          expect(
+            repo.getProductGovernance(),
+            isA<TradeProductGovernanceSnapshot>(),
+          );
+          expect(
+            repo.getTargetMarketDefinition(),
+            isA<TradeTargetMarketDefinitionSnapshot>(),
+          );
+          expect(
+            repo.getTargetMarketDefinition(productId: 'prod-2'),
+            isA<TradeTargetMarketDefinitionSnapshot>(),
+          );
+        },
+      );
 
-      test('getClientMoneyProtection / getCassReconciliation / getInvestorCompensation', () {
-        expect(
-          repo.getClientMoneyProtection(),
-          isA<TradeClientMoneyProtectionSnapshot>(),
-        );
-        expect(repo.getCassReconciliation(), isA<TradeCassReconciliationSnapshot>());
-        expect(
-          repo.getInvestorCompensation(),
-          isA<TradeInvestorCompensationSnapshot>(),
-        );
-      });
+      test(
+        'getClientMoneyProtection / getCassReconciliation / getInvestorCompensation',
+        () {
+          expect(
+            repo.getClientMoneyProtection(),
+            isA<TradeClientMoneyProtectionSnapshot>(),
+          );
+          expect(
+            repo.getCassReconciliation(),
+            isA<TradeCassReconciliationSnapshot>(),
+          );
+          expect(
+            repo.getInvestorCompensation(),
+            isA<TradeInvestorCompensationSnapshot>(),
+          );
+        },
+      );
 
-      test('getExAnteCosts / getRiyCalculator / getExPostCostsReport / getKidGenerator', () {
-        expect(repo.getExAnteCosts(), isA<TradeExAnteCostsSnapshot>());
-        expect(repo.getRiyCalculator(), isA<TradeRiyCalculatorSnapshot>());
-        expect(repo.getExPostCostsReport(), isA<TradeExPostCostsReportSnapshot>());
-        expect(repo.getKidGenerator(), isA<TradeKidGeneratorSnapshot>());
-      });
+      test(
+        'getExAnteCosts / getRiyCalculator / getExPostCostsReport / getKidGenerator',
+        () {
+          expect(repo.getExAnteCosts(), isA<TradeExAnteCostsSnapshot>());
+          expect(repo.getRiyCalculator(), isA<TradeRiyCalculatorSnapshot>());
+          expect(
+            repo.getExPostCostsReport(),
+            isA<TradeExPostCostsReportSnapshot>(),
+          );
+          expect(repo.getKidGenerator(), isA<TradeKidGeneratorSnapshot>());
+        },
+      );
 
-      test('getPerformanceScenarios / getRiskIndicatorExplainer / getComplaintsHandling', () {
-        expect(
-          repo.getPerformanceScenarios(),
-          isA<TradePerformanceScenariosSnapshot>(),
-        );
-        expect(repo.getRiskIndicatorExplainer(), isA<TradeRiskIndicatorSnapshot>());
-        expect(repo.getComplaintsHandling(), isA<TradeComplaintsHandlingSnapshot>());
-      });
+      test(
+        'getPerformanceScenarios / getRiskIndicatorExplainer / getComplaintsHandling',
+        () {
+          expect(
+            repo.getPerformanceScenarios(),
+            isA<TradePerformanceScenariosSnapshot>(),
+          );
+          expect(
+            repo.getRiskIndicatorExplainer(),
+            isA<TradeRiskIndicatorSnapshot>(),
+          );
+          expect(
+            repo.getComplaintsHandling(),
+            isA<TradeComplaintsHandlingSnapshot>(),
+          );
+        },
+      );
 
-      test('getComplaintSubmission / getComplaintTracking / getOmbudsmanReferral', () {
-        expect(
-          repo.getComplaintSubmission(),
-          isA<TradeComplaintSubmissionSnapshot>(),
-        );
-        expect(repo.getComplaintTracking(), isA<TradeComplaintTrackingSnapshot>());
-        expect(
-          repo.getComplaintTracking(complaintId: 'case-003'),
-          isA<TradeComplaintTrackingSnapshot>(),
-        );
-        expect(repo.getOmbudsmanReferral(), isA<TradeOmbudsmanReferralSnapshot>());
-      });
+      test(
+        'getComplaintSubmission / getComplaintTracking / getOmbudsmanReferral',
+        () {
+          expect(
+            repo.getComplaintSubmission(),
+            isA<TradeComplaintSubmissionSnapshot>(),
+          );
+          expect(
+            repo.getComplaintTracking(),
+            isA<TradeComplaintTrackingSnapshot>(),
+          );
+          expect(
+            repo.getComplaintTracking(complaintId: 'case-003'),
+            isA<TradeComplaintTrackingSnapshot>(),
+          );
+          expect(
+            repo.getOmbudsmanReferral(),
+            isA<TradeOmbudsmanReferralSnapshot>(),
+          );
+        },
+      );
 
       test('getAuditTrail / getRegulatoryInspectionReady', () {
         expect(repo.getAuditTrail(), isA<TradeAuditTrailSnapshot>());
@@ -264,51 +390,90 @@ void main() {
     });
 
     group('bot getters', () {
-      test('getBotTermsOfService / getBotRiskDisclosure / getBotSuitabilityAssessment', () {
-        expect(repo.getBotTermsOfService(), isA<TradeBotTermsSnapshot>());
-        expect(repo.getBotRiskDisclosure(), isA<TradeBotRiskDisclosureSnapshot>());
-        expect(
-          repo.getBotSuitabilityAssessment(),
-          isA<TradeBotSuitabilityAssessmentSnapshot>(),
-        );
-      });
+      test(
+        'getBotTermsOfService / getBotRiskDisclosure / getBotSuitabilityAssessment',
+        () {
+          expect(repo.getBotTermsOfService(), isA<TradeBotTermsSnapshot>());
+          expect(
+            repo.getBotRiskDisclosure(),
+            isA<TradeBotRiskDisclosureSnapshot>(),
+          );
+          expect(
+            repo.getBotSuitabilityAssessment(),
+            isA<TradeBotSuitabilityAssessmentSnapshot>(),
+          );
+        },
+      );
 
-      test('getBotRiskDashboard / getBotEmergencyStop / getBotSecuritySettings', () {
-        expect(repo.getBotRiskDashboard(), isA<TradeBotRiskDashboardSnapshot>());
-        expect(repo.getBotEmergencyStop(), isA<TradeBotEmergencyStopSnapshot>());
-        expect(repo.getBotSecuritySettings(), isA<TradeBotSecuritySettingsSnapshot>());
-      });
+      test(
+        'getBotRiskDashboard / getBotEmergencyStop / getBotSecuritySettings',
+        () {
+          expect(
+            repo.getBotRiskDashboard(),
+            isA<TradeBotRiskDashboardSnapshot>(),
+          );
+          expect(
+            repo.getBotEmergencyStop(),
+            isA<TradeBotEmergencyStopSnapshot>(),
+          );
+          expect(
+            repo.getBotSecuritySettings(),
+            isA<TradeBotSecuritySettingsSnapshot>(),
+          );
+        },
+      );
 
-      test('getBotHistory / getBotPerformanceAnalytics / getBotBacktesting', () {
-        final history = repo.getBotHistory();
-        expect(history, isA<TradeBotHistorySnapshot>());
-        expect(history.trades, hasLength(7));
-        expect(
-          repo.getBotPerformanceAnalytics(),
-          isA<TradeBotPerformanceAnalyticsSnapshot>(),
-        );
-        expect(repo.getBotBacktesting(), isA<TradeBotBacktestingSnapshot>());
-      });
+      test(
+        'getBotHistory / getBotPerformanceAnalytics / getBotBacktesting',
+        () {
+          final history = repo.getBotHistory();
+          expect(history, isA<TradeBotHistorySnapshot>());
+          expect(history.trades, hasLength(7));
+          expect(
+            repo.getBotPerformanceAnalytics(),
+            isA<TradeBotPerformanceAnalyticsSnapshot>(),
+          );
+          expect(repo.getBotBacktesting(), isA<TradeBotBacktestingSnapshot>());
+        },
+      );
 
-      test('getBotStrategyCompare / getBotOptimization / getBotPortfolioDashboard', () {
-        expect(repo.getBotStrategyCompare(), isA<TradeBotStrategyCompareSnapshot>());
-        expect(repo.getBotOptimization(), isA<TradeBotOptimizationSnapshot>());
-        expect(
-          repo.getBotPortfolioDashboard(),
-          isA<TradeBotPortfolioDashboardSnapshot>(),
-        );
-      });
+      test(
+        'getBotStrategyCompare / getBotOptimization / getBotPortfolioDashboard',
+        () {
+          expect(
+            repo.getBotStrategyCompare(),
+            isA<TradeBotStrategyCompareSnapshot>(),
+          );
+          expect(
+            repo.getBotOptimization(),
+            isA<TradeBotOptimizationSnapshot>(),
+          );
+          expect(
+            repo.getBotPortfolioDashboard(),
+            isA<TradeBotPortfolioDashboardSnapshot>(),
+          );
+        },
+      );
 
-      test('getBotDrawdownAnalyzer / getBotEquityCurve / getBotGuide / getBotFaq', () {
-        expect(repo.getBotDrawdownAnalyzer(), isA<TradeBotDrawdownAnalyzerSnapshot>());
-        expect(repo.getBotEquityCurve(), isA<TradeBotEquityCurveSnapshot>());
-        expect(repo.getBotGuide(), isA<TradeBotGuideSnapshot>());
-        expect(repo.getBotFaq(), isA<TradeBotFaqSnapshot>());
-      });
+      test(
+        'getBotDrawdownAnalyzer / getBotEquityCurve / getBotGuide / getBotFaq',
+        () {
+          expect(
+            repo.getBotDrawdownAnalyzer(),
+            isA<TradeBotDrawdownAnalyzerSnapshot>(),
+          );
+          expect(repo.getBotEquityCurve(), isA<TradeBotEquityCurveSnapshot>());
+          expect(repo.getBotGuide(), isA<TradeBotGuideSnapshot>());
+          expect(repo.getBotFaq(), isA<TradeBotFaqSnapshot>());
+        },
+      );
 
       test('getBotTaxReporting / getBotApiDocumentation', () {
         expect(repo.getBotTaxReporting(), isA<TradeBotTaxReportingSnapshot>());
-        expect(repo.getBotApiDocumentation(), isA<TradeBotApiDocumentationSnapshot>());
+        expect(
+          repo.getBotApiDocumentation(),
+          isA<TradeBotApiDocumentationSnapshot>(),
+        );
       });
     });
 
@@ -406,8 +571,10 @@ void main() {
       test('createExPostCostsReportExport', () {
         final result = repo.createExPostCostsReportExport();
         expect(result, isA<TradeExPostCostsReportExportResult>());
-        expect(repo.createExPostCostsReportExport(year: 2024),
-            isA<TradeExPostCostsReportExportResult>());
+        expect(
+          repo.createExPostCostsReportExport(year: 2024),
+          isA<TradeExPostCostsReportExportResult>(),
+        );
       });
 
       test('previewConvert / submitConvert', () {

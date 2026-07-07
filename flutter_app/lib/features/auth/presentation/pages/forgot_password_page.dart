@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
 
 part '../widgets/forgot_password_page_sections.dart';
 
@@ -245,7 +246,7 @@ class _ForgotPasswordPageState extends ConsumerState<ForgotPasswordPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: ForgotPasswordPage.contentKey,
-                padding: AppSpacing.authScrollBottomPadding,
+                padding: AuthSpacingTokens.authScrollBottomPadding,
                 child: VitPageContent(
                   rhythm: VitPageRhythm.form,
                   children: [

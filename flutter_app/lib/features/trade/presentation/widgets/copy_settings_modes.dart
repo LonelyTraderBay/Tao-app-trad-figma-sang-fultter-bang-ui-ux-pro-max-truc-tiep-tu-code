@@ -22,7 +22,7 @@ class _SettingsSection extends StatelessWidget {
         children: [
           VitSectionHeader(
             title: label,
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             variant: showAccent
                 ? VitSectionHeaderVariant.accentBar
                 : VitSectionHeaderVariant.plain,
@@ -31,7 +31,8 @@ class _SettingsSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final child in children) ...[
             child,
-            if (child != children.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (child != children.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -64,7 +65,7 @@ class _ModeCard extends StatelessWidget {
                   ),
                 ),
                 if (mode != TradeCopySettingsMode.values.last)
-                  const SizedBox(width: AppSpacing.walletAssetPillGap),
+                  const SizedBox(width: WalletSpacingTokens.walletAssetPillGap),
               ],
             ],
           ),
@@ -152,7 +153,7 @@ class _SliderCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAssetPillGap),
+              const SizedBox(width: WalletSpacingTokens.walletAssetPillGap),
               Text(
                 valueLabel,
                 style: AppTextStyles.caption.copyWith(

@@ -7,8 +7,9 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-const _modeTrustTextLineRatio = AppSpacing.arenaModeTrustTextLineHeight;
+const _modeTrustTextLineRatio = ArenaSpacingTokens.arenaModeTrustTextLineHeight;
 
 class ArenaModeQualitySection extends StatelessWidget {
   const ArenaModeQualitySection({
@@ -37,10 +38,10 @@ class ArenaModeQualitySection extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: metrics.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.arenaModeQualityColumns,
+            crossAxisCount: ArenaSpacingTokens.arenaModeQualityColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            mainAxisExtent: AppSpacing.arenaModeQualityExtent,
+            mainAxisExtent: ArenaSpacingTokens.arenaModeQualityExtent,
           ),
           itemBuilder: (context, index) {
             final metric = metrics[index];
@@ -59,7 +60,7 @@ class ArenaModeQualitySection extends StatelessWidget {
             density: VitDensity.compact,
             leading: const Icon(
               Icons.info_outline_rounded,
-              size: AppSpacing.arenaModeQualityInfoIcon,
+              size: ArenaSpacingTokens.arenaModeQualityInfoIcon,
             ),
             padding: AppSpacing.zeroInsets,
             child: const Text('Hieu chi so nay'),
@@ -80,10 +81,14 @@ class _QualityMetricCard extends StatelessWidget {
     final color = arenaMetricColor(metric.status);
     final icon = arenaMetricIcon(metric.status, metric.label);
     return VitCard(
-      padding: AppSpacing.arenaModeQualityCardPadding,
+      padding: ArenaSpacingTokens.arenaModeQualityCardPadding,
       child: Row(
         children: [
-          Icon(icon, color: color, size: AppSpacing.arenaModeQualityIcon),
+          Icon(
+            icon,
+            color: color,
+            size: ArenaSpacingTokens.arenaModeQualityIcon,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -125,7 +130,7 @@ class ArenaModeTrustSheet extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: AppSpacing.arenaActionSheetPadding,
+        padding: ArenaSpacingTokens.arenaActionSheetPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -135,7 +140,7 @@ class ArenaModeTrustSheet extends StatelessWidget {
                 const ArenaModeActionIcon(
                   icon: Icons.shield_outlined,
                   color: AppColors.buy,
-                  size: AppSpacing.arenaModeTrustIcon,
+                  size: ArenaSpacingTokens.arenaModeTrustIcon,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -168,7 +173,7 @@ class ArenaModeTrustSheet extends StatelessWidget {
             VitCard(
               variant: VitCardVariant.inner,
               borderColor: AppColors.accent20,
-              padding: AppSpacing.arenaPaddingX3,
+              padding: ArenaSpacingTokens.arenaPaddingX3,
               child: Text(
                 'Các chỉ số dựa trên lịch sử challenge, báo cáo cộng đồng và hệ thống kiểm duyệt. Đây là tín hiệu an toàn của Open Arena, không phải chỉ số tài chính.',
                 style: AppTextStyles.caption.copyWith(
@@ -197,7 +202,7 @@ class _TrustSheetRow extends StatelessWidget {
         Icon(
           arenaMetricIcon(metric.status, metric.label),
           color: color,
-          size: AppSpacing.arenaModeQualityIcon,
+          size: ArenaSpacingTokens.arenaModeQualityIcon,
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(

@@ -133,7 +133,9 @@ class _ReceiptCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         if (receipt.tpPrice != null)

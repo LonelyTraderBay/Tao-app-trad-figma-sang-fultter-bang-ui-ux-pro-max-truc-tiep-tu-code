@@ -37,9 +37,11 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -76,8 +78,7 @@ class _SavingsGoalPageState extends ConsumerState<SavingsGoalPage> {
                         label: 'Mẹo tiết kiệm',
                         accentColor: AppColors.accent,
                         children: [
-                          for (final tip in snapshot.tips)
-                            _TipCard(tip: tip),
+                          for (final tip in snapshot.tips) _TipCard(tip: tip),
                         ],
                       ),
                       const SavingsToolsYieldFooter(),
@@ -169,7 +170,7 @@ class _GoalSummaryCard extends StatelessWidget {
       key: SavingsGoalPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: EarnSpacingTokens.earnCardPaddingX5,
       child: Column(
         children: [
           Row(
@@ -205,8 +206,8 @@ class _GoalSummaryCard extends StatelessWidget {
               _ProgressRing(
                 progress: progress,
                 color: AppColors.primary,
-                size: AppSpacing.savingsGoalHeroProgressRing,
-                strokeWidth: AppSpacing.savingsGoalHeroProgressStroke,
+                size: EarnSpacingTokens.savingsGoalHeroProgressRing,
+                strokeWidth: EarnSpacingTokens.savingsGoalHeroProgressStroke,
               ),
             ],
           ),
@@ -259,7 +260,7 @@ class _SummaryStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         children: [
           FittedBox(
@@ -305,7 +306,7 @@ class _GoalCard extends StatelessWidget {
     return VitCard(
       key: SavingsGoalPage.goalKey(goal.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -354,8 +355,8 @@ class _GoalCard extends StatelessWidget {
               _ProgressRing(
                 progress: progress,
                 color: accent,
-                size: AppSpacing.savingsGoalCardProgressRing,
-                strokeWidth: AppSpacing.savingsGoalCardProgressStroke,
+                size: EarnSpacingTokens.savingsGoalCardProgressRing,
+                strokeWidth: EarnSpacingTokens.savingsGoalCardProgressStroke,
                 centerLabel: '${(progress * 100).round()}%',
               ),
             ],
@@ -466,9 +467,9 @@ class _MilestoneRail extends StatelessWidget {
           if (milestone != goal.milestones.last)
             Expanded(
               child: Padding(
-                padding: AppSpacing.earnInlineMarginX1,
+                padding: EarnSpacingTokens.earnInlineMarginX1,
                 child: SizedBox(
-                  height: AppSpacing.savingsGoalTimelineDividerHeight,
+                  height: EarnSpacingTokens.savingsGoalTimelineDividerHeight,
                   child: ColoredBox(
                     color: milestone.unlocked ? color : AppColors.borderSolid,
                   ),

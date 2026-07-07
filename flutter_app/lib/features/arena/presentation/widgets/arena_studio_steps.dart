@@ -32,13 +32,13 @@ class _StepBody extends StatelessWidget {
           VitModuleSectionHeader(title: title, accentColor: _arenaAccent),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
-            padding: AppSpacing.arenaStudioCardPadding,
+            padding: ArenaSpacingTokens.arenaStudioCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: AppSpacing.arenaStudioStepIconBox,
-                  height: AppSpacing.arenaStudioStepIconBox,
+                  width: ArenaSpacingTokens.arenaStudioStepIconBox,
+                  height: ArenaSpacingTokens.arenaStudioStepIconBox,
                   child: DecoratedBox(
                     decoration: const ShapeDecoration(
                       color: AppColors.warn10,
@@ -75,7 +75,9 @@ class _StepBody extends StatelessWidget {
                           height: _studioDescriptionLineRatio,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                       Wrap(
                         spacing: AppSpacing.x2,
                         runSpacing: AppSpacing.x2,
@@ -97,7 +99,9 @@ class _StepBody extends StatelessWidget {
                         ],
                       ),
                       if (step == 3) ...[
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         VitCtaButton(
                           key: ArenaStudioPage.smartRuleBuilderKey,
                           onPressed: onOpenSmartRules,
@@ -120,7 +124,7 @@ class _StepBody extends StatelessWidget {
         const SizedBox(height: AppSpacing.x1),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.arenaPaddingX3,
+          padding: ArenaSpacingTokens.arenaPaddingX3,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -216,7 +220,8 @@ class _TemplateStep extends StatelessWidget {
             selected: selectedTemplateId == template.id,
             onTap: () => onTemplateSelected(template.id),
           ),
-          if (template != templates.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (template != templates.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -240,14 +245,14 @@ class _TemplateCard extends StatelessWidget {
       key: ArenaStudioPage.templateKey(template.id),
       borderColor: selected ? _arenaAccent : null,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaPaddingX3,
+      padding: ArenaSpacingTokens.arenaPaddingX3,
       onTap: template.verifiedOnly ? null : onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.arenaBridgeIconBox,
-            height: AppSpacing.arenaBridgeIconBox,
+            width: ArenaSpacingTokens.arenaBridgeIconBox,
+            height: ArenaSpacingTokens.arenaBridgeIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: _templateAccent(template.kind).withValues(alpha: .14),
@@ -259,7 +264,7 @@ class _TemplateCard extends StatelessWidget {
                 child: Icon(
                   _templateIcon(template.kind),
                   color: _templateAccent(template.kind),
-                  size: AppSpacing.arenaStudioTemplateGlyph,
+                  size: ArenaSpacingTokens.arenaStudioTemplateGlyph,
                 ),
               ),
             ),
@@ -286,13 +291,13 @@ class _TemplateCard extends StatelessWidget {
                       const Icon(
                         Icons.check_circle_rounded,
                         color: _arenaAccent,
-                        size: AppSpacing.arenaStudioSelectedIcon,
+                        size: ArenaSpacingTokens.arenaStudioSelectedIcon,
                       )
                     else if (template.verifiedOnly)
                       const Icon(
                         Icons.lock_outline_rounded,
                         color: AppColors.text3,
-                        size: AppSpacing.arenaStudioLockIcon,
+                        size: ArenaSpacingTokens.arenaStudioLockIcon,
                       ),
                   ],
                 ),

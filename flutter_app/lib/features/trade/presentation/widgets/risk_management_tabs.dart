@@ -102,7 +102,7 @@ class _PositionsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         VitCard(
-          padding: AppSpacing.tradeToolCardPadding,
+          padding: TradeSpacingTokens.tradeToolCardPadding,
           child: Row(
             children: [
               Expanded(
@@ -177,7 +177,7 @@ class _PositionTile extends StatelessWidget {
     final color = Color(position.logoColorHex);
     final pnlColor = position.pnl >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: AppSpacing.tradeToolCardPadding,
+      padding: TradeSpacingTokens.tradeToolCardPadding,
       child: Row(
         children: [
           _IconTile(
@@ -185,7 +185,7 @@ class _PositionTile extends StatelessWidget {
                 ? Icons.north_east_rounded
                 : Icons.south_east_rounded,
             color: color,
-            size: AppSpacing.tradeToolIconTileSm,
+            size: TradeSpacingTokens.tradeToolIconTileSm,
           ),
           const SizedBox(width: _riskCardSpace),
           Expanded(

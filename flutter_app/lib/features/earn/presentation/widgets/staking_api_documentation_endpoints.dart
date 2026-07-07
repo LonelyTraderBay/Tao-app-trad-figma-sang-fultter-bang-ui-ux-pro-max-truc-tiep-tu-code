@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api_documentation_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingApiDocumentationEndpointsTab extends StatelessWidget {
   const StakingApiDocumentationEndpointsTab({
@@ -50,7 +51,7 @@ class StakingApiDocumentationEndpointsTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -72,23 +73,32 @@ class StakingApiDocumentationEndpointsTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   Text(
                     selected.description,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.stakingApiEndpointBodyLineHeight,
+                      height:
+                          EarnSpacingTokens.stakingApiEndpointBodyLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   Text('Parameters', style: AppTextStyles.caption),
                   const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final param in selected.params) ...[
                     _ParameterCard(param: param),
                     if (param != selected.params.last)
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                   ],
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -133,7 +143,7 @@ class _EndpointSummaryCard extends StatelessWidget {
       key: StakingApiDocumentationKeys.endpoint(endpoint.method, endpoint.path),
       onTap: onTap,
       borderColor: selected ? AppColors.primary : null,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -160,7 +170,7 @@ class _EndpointSummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.stakingApiEndpointDescriptionLineHeight,
+              height: EarnSpacingTokens.stakingApiEndpointDescriptionLineHeight,
             ),
           ),
         ],
@@ -179,7 +189,7 @@ class _ParameterCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

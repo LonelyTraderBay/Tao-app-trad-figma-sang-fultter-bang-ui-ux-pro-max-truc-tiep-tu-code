@@ -15,7 +15,7 @@ class _LinkedRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaPointsEntryRowPadding,
+      padding: ArenaSpacingTokens.arenaPointsEntryRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -32,13 +32,13 @@ class _LinkedRow extends StatelessWidget {
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
             child: Padding(
-              padding: AppSpacing.arenaPointsEntryLinkPadding,
+              padding: ArenaSpacingTokens.arenaPointsEntryLinkPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ConstrainedBox(
                     constraints: const BoxConstraints(
-                      maxWidth: AppSpacing.arenaPointsEntryLinkMaxWidth,
+                      maxWidth: ArenaSpacingTokens.arenaPointsEntryLinkMaxWidth,
                     ),
                     child: Text(
                       value,
@@ -53,7 +53,7 @@ class _LinkedRow extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.accent,
-                    size: AppSpacing.arenaPointsSmallIcon,
+                    size: ArenaSpacingTokens.arenaPointsSmallIcon,
                   ),
                 ],
               ),

@@ -8,7 +8,7 @@ class _ArenaAnalyticsDisclosure extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,7 +23,7 @@ class _ArenaAnalyticsDisclosure extends StatelessWidget {
               'Open Arena metrics are not included in financial analytics as Arena uses points-only system. See Arena leaderboard for trust and performance metrics.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.crossModuleLineHeightBody,
+                height: CrossModuleSpacingTokens.crossModuleLineHeightBody,
               ),
             ),
           ),
@@ -41,7 +41,7 @@ class _AnalyticsInfoCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -56,7 +56,7 @@ class _AnalyticsInfoCard extends StatelessWidget {
               'Metrics calculated independently per module. Cross-module comparison helps identify best strategies.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.crossModuleLineHeightBody,
+                height: CrossModuleSpacingTokens.crossModuleLineHeightBody,
               ),
             ),
           ),

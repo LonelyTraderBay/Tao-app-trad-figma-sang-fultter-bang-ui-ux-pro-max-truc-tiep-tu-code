@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 class ArenaGovernanceStateBanner extends StatelessWidget {
   const ArenaGovernanceStateBanner({super.key, required this.state});
@@ -18,7 +19,7 @@ class ArenaGovernanceStateBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.arena.withValues(alpha: .24),
-      padding: AppSpacing.arenaStateCardPaddingCompact,
+      padding: ArenaSpacingTokens.arenaStateCardPaddingCompact,
       child: _StateRow(
         icon: Icons.rule_folder_outlined,
         title: 'Governance state',
@@ -42,7 +43,7 @@ class ArenaReportReviewStateCard extends StatelessWidget {
       borderColor: state.canAppeal
           ? AppColors.warningBorder
           : AppColors.borderSolid,
-      padding: AppSpacing.arenaStateCardPaddingCompact,
+      padding: ArenaSpacingTokens.arenaStateCardPaddingCompact,
       child: _StateRow(
         icon: Icons.gavel_outlined,
         title: state.title,
@@ -64,7 +65,7 @@ class ArenaChallengePointsReviewCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.arena.withValues(alpha: .26),
-      padding: AppSpacing.arenaStateCardPadding,
+      padding: ArenaSpacingTokens.arenaStateCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -114,11 +115,11 @@ class _StateRow extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: AppSpacing.arenaStateCardIconPadding,
+            padding: ArenaSpacingTokens.arenaStateCardIconPadding,
             child: Icon(
               icon,
               color: color,
-              size: AppSpacing.arenaStateCardIcon,
+              size: ArenaSpacingTokens.arenaStateCardIcon,
             ),
           ),
         ),
@@ -139,7 +140,7 @@ class _StateRow extends StatelessWidget {
                 description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.arenaStateCardBodyLineHeight,
+                  height: ArenaSpacingTokens.arenaStateCardBodyLineHeight,
                 ),
               ),
             ],
@@ -161,7 +162,7 @@ class _MetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaStateCardMetricPadding,
+      padding: ArenaSpacingTokens.arenaStateCardMetricPadding,
       child: Row(
         children: [
           Expanded(
@@ -203,7 +204,7 @@ class _StatePill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: AppSpacing.arenaStateCardPillPadding,
+        padding: ArenaSpacingTokens.arenaStateCardPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

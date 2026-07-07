@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 /// Home-aligned bottom scroll clearance for wallet L2 flow pages.
 double walletScrollBottomInset(
@@ -18,8 +18,8 @@ double walletScrollBottomInset(
 }) {
   final mode = shellRenderMode ?? defaultShellRenderMode();
   return (mode.usesVisualQaFrame
-          ? AppSpacing.walletBottomInsetVisualChrome
-          : AppSpacing.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletBottomInsetVisualChrome
+          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
 }
 

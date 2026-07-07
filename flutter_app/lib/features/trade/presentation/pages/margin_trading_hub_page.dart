@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/margin_trading_hub_widgets.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/margin_trading_hub_hero_nav.dart';
 part '../widgets/margin_trading_hub_cards.dart';
@@ -29,9 +30,9 @@ const _hubIconTile = 34.0;
 const _hubLineTight = 1.2;
 const _hubLineBody = 1.24;
 const _hubComplianceGridColumns =
-    AppSpacing.marginTradingHubComplianceGridColumns;
+    TradeSpacingTokens.marginTradingHubComplianceGridColumns;
 const _hubComplianceGridExtent =
-    AppSpacing.marginTradingHubComplianceGridExtent;
+    TradeSpacingTokens.marginTradingHubComplianceGridExtent;
 
 class MarginTradingHubPage extends ConsumerWidget {
   const MarginTradingHubPage({super.key, this.shellRenderMode});

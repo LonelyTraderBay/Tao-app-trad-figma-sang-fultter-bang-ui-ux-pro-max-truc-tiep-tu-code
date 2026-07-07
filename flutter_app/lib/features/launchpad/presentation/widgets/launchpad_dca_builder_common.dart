@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 enum LaunchpadDcaBuilderTab { strategies, history, create }
 
@@ -48,7 +48,7 @@ class LaunchpadDcaTabs extends StatelessWidget {
       key: tabsKey,
       color: AppColors.surface,
       child: Padding(
-        padding: AppSpacing.launchpadHorizontalContentPadding,
+        padding: LaunchpadSpacingTokens.launchpadHorizontalContentPadding,
         child: VitTabBar(
           tabs: const [
             VitTabItem(key: 'strategies', label: 'Chien luoc'),

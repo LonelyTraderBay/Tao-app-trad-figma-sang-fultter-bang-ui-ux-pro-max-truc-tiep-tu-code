@@ -8,7 +8,7 @@ class _ChainBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox32,
+      dimension: LaunchpadSpacingTokens.launchpadBox32,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: price.accent.resolve().withValues(alpha: .14),
@@ -42,7 +42,7 @@ class _TrendInline extends StatelessWidget {
         Icon(
           _trendIcon(price.trend),
           color: color,
-          size: AppSpacing.launchpadIconSm,
+          size: LaunchpadSpacingTokens.launchpadIconSm,
         ),
         const SizedBox(width: AppSpacing.x1 + AppSpacing.hairlineStroke),
         Text(
@@ -93,13 +93,13 @@ class _EmptyAlerts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX6,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX6,
       child: Column(
         children: [
           const Icon(
             Icons.notifications_none_rounded,
             color: AppColors.text3,
-            size: AppSpacing.launchpadIconHuge,
+            size: LaunchpadSpacingTokens.launchpadIconHuge,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(

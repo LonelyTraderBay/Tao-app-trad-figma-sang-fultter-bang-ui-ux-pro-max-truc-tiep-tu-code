@@ -74,6 +74,19 @@ class VitServiceTile extends StatelessWidget {
   final String? riskBadgeLabel;
   final VoidCallback? onTap;
 
+  /// Alias constructor for call sites that already have the tile's primitive
+  /// fields (icon/label/accentColor/badges) resolved, so they don't need to
+  /// depend on a feature's own domain entity to build a tile.
+  const factory VitServiceTile.fromAction({
+    required IconData icon,
+    required String label,
+    required Color accentColor,
+    VitServiceTileDensity density,
+    String? badgeLabel,
+    String? riskBadgeLabel,
+    VoidCallback? onTap,
+  }) = VitServiceTile;
+
   EdgeInsetsDirectional get _contentSafeInsets {
     return EdgeInsetsDirectional.only(
       top: badgeLabel != null ? AppSpacing.x2 : 0,
@@ -89,20 +102,17 @@ class VitServiceTile extends StatelessWidget {
 
   bool get _useCompactedBody => riskBadgeLabel != null;
 
-  double get _bodyIconContainer =>
-      _useCompactedBody
-          ? AppSpacing.serviceTileIconContainerCompact
-          : density.iconContainer;
+  double get _bodyIconContainer => _useCompactedBody
+      ? AppSpacing.serviceTileIconContainerCompact
+      : density.iconContainer;
 
-  double get _bodyIconSize =>
-      _useCompactedBody
-          ? AppSpacing.serviceTileIconSizeCompact
-          : density.iconSize;
+  double get _bodyIconSize => _useCompactedBody
+      ? AppSpacing.serviceTileIconSizeCompact
+      : density.iconSize;
 
-  double get _bodyLabelGap =>
-      _useCompactedBody
-          ? AppSpacing.serviceTileLabelGapCompact
-          : density.labelGap;
+  double get _bodyLabelGap => _useCompactedBody
+      ? AppSpacing.serviceTileLabelGapCompact
+      : density.labelGap;
 
   TextStyle get _bodyLabelStyle =>
       _useCompactedBody ? AppTextStyles.micro : density.labelStyle;
@@ -226,38 +236,38 @@ class VitServiceTile extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                          SizedBox(
-                            width: _bodyIconContainer,
-                            height: _bodyIconContainer,
-                            child: DecoratedBox(
-                              decoration: ShapeDecoration(
-                                color: accentColor.withValues(alpha: .16),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: AppRadii.mdRadius,
-                                  side: BorderSide(
-                                    color: accentColor.withValues(alpha: .28),
+                            SizedBox(
+                              width: _bodyIconContainer,
+                              height: _bodyIconContainer,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: accentColor.withValues(alpha: .16),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: AppRadii.mdRadius,
+                                    side: BorderSide(
+                                      color: accentColor.withValues(alpha: .28),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              child: Icon(
-                                icon,
-                                color: accentColor,
-                                size: _bodyIconSize,
+                                child: Icon(
+                                  icon,
+                                  color: accentColor,
+                                  size: _bodyIconSize,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: _bodyLabelGap),
-                          Text(
-                            label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: _bodyLabelStyle.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
+                            SizedBox(height: _bodyLabelGap),
+                            Text(
+                              label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: _bodyLabelStyle.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
                         ),
                       ),
                     ),

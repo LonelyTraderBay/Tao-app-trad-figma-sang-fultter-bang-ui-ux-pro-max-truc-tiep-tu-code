@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsProductDetailPage extends ConsumerWidget {
   const SavingsProductDetailPage({
@@ -56,8 +57,9 @@ class SavingsProductDetailPage extends ConsumerWidget {
           ),
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
-            padding: AppSpacing.earnBottomInsetPadding(bottomInset),
-            child: VitPageContent(rhythm: VitPageRhythm.standard, 
+            padding: EarnSpacingTokens.earnBottomInsetPadding(bottomInset),
+            child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.compact,
               gap: VitContentGap.defaultGap,
               children: [
@@ -120,9 +122,7 @@ class _ProductHero extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   lockLabel,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -158,7 +158,7 @@ class _ProductFacts extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         children: [
           _FactRow(label: 'Tài sản', value: product.asset),
@@ -224,7 +224,7 @@ class _NotFoundProductState extends StatelessWidget {
           child: VitCtaButton(
             key: SavingsProductDetailPage.backButtonKey,
             fullWidth: false,
-            height: AppSpacing.savingsFlowHeroHeight,
+            height: EarnSpacingTokens.savingsFlowHeroHeight,
             onPressed: () {
               HapticFeedback.selectionClick();
               context.go(snapshot.backRoute);

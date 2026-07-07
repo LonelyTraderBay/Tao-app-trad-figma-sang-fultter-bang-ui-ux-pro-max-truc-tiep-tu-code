@@ -114,10 +114,7 @@ class DCAScheduleAnalytics extends ConsumerWidget {
 }
 
 class _MissingConfigPanel extends StatelessWidget {
-  const _MissingConfigPanel({
-    required this.message,
-    required this.onConfigure,
-  });
+  const _MissingConfigPanel({required this.message, required this.onConfigure});
 
   final String message;
   final VoidCallback onConfigure;
@@ -159,7 +156,9 @@ class _MissingConfigPanel extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       'Chưa có cấu hình lịch mua để phân tích. Thiết lập lịch trình trước khi xem cadence và chất lượng thực thi.',
                       style: AppTextStyles.caption.copyWith(

@@ -37,7 +37,7 @@ class _ProgressSection extends StatelessWidget {
           ],
         ),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -103,7 +103,7 @@ class _ProgressSection extends StatelessWidget {
                 _LeaderboardRow(entry: entry),
                 if (entry != leaderboard.last)
                   const Divider(
-                    height: AppSpacing.arenaPointsDividerHeight,
+                    height: ArenaSpacingTokens.arenaPointsDividerHeight,
                     color: AppColors.divider,
                   ),
               ],
@@ -123,7 +123,7 @@ class _LeaderboardRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaPointsLeaderboardRowPadding,
+      padding: ArenaSpacingTokens.arenaPointsLeaderboardRowPadding,
       child: Row(
         children: [
           SizedBox(
@@ -163,14 +163,14 @@ class _RewardsDisclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.accent,
-            size: AppSpacing.arenaPointsCheckInIcon,
+            size: ArenaSpacingTokens.arenaPointsCheckInIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -178,7 +178,7 @@ class _RewardsDisclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaPointsBodyLineHeight,
+                height: ArenaSpacingTokens.arenaPointsBodyLineHeight,
               ),
             ),
           ),
@@ -189,10 +189,7 @@ class _RewardsDisclaimer extends StatelessWidget {
 }
 
 class _ProgressBar extends StatelessWidget {
-  const _ProgressBar({
-    required this.value,
-    required this.color,
-  });
+  const _ProgressBar({required this.value, required this.color});
 
   final double value;
   final Color color;
@@ -241,7 +238,7 @@ class _TinyStat extends StatelessWidget {
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: [
-        Icon(icon, color: color, size: AppSpacing.arenaPointsMicroIcon),
+        Icon(icon, color: color, size: ArenaSpacingTokens.arenaPointsMicroIcon),
         const SizedBox(width: AppSpacing.x2),
         Text(
           label,
@@ -309,13 +306,13 @@ class _MiniBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.arenaPointsMiniBadgePadding,
+        padding: ArenaSpacingTokens.arenaPointsMiniBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.bg,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.arenaPointsBadgeLineHeight,
+            height: ArenaSpacingTokens.arenaPointsBadgeLineHeight,
           ),
         ),
       ),

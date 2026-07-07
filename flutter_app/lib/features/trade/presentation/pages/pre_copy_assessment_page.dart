@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 const _assessmentPrimary = AppColors.primary;
 
@@ -104,11 +105,9 @@ class _WelcomeAssessment extends StatelessWidget {
           text:
               'Chúng tôi cần đánh giá sự phù hợp của Copy Trading với kiến thức, kinh nghiệm và mục tiêu đầu tư của bạn.',
         ),
-        const SizedBox(
-          height: AppSpacing.pageRhythmStandardInnerGap,
-        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
-          padding: AppSpacing.preCopyAssessmentCardPadding,
+          padding: TradeSpacingTokens.preCopyAssessmentCardPadding,
           child: Row(
             children: [
               VitAssetAvatar(
@@ -195,12 +194,10 @@ class _QuestionsSummary extends StatelessWidget {
               'Xác nhận rủi ro, giới hạn vốn, thời gian chờ và bước tiếp theo trước khi cấu hình copy trading.',
           density: VitDensity.compact,
         ),
-        const SizedBox(
-          height: AppSpacing.pageRhythmStandardInnerGap,
-        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final question in snapshot.questions) ...[
           VitCard(
-            padding: AppSpacing.preCopyAssessmentCardPadding,
+            padding: TradeSpacingTokens.preCopyAssessmentCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -221,13 +218,15 @@ class _QuestionsSummary extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),
                 for (final option in question.options)
                   Padding(
-                    padding: AppSpacing.preCopyAssessmentOptionMargin,
+                    padding: TradeSpacingTokens.preCopyAssessmentOptionMargin,
                     child: _OptionRow(option: option),
                   ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.preCopyAssessmentQuestionCardGap),
+          const SizedBox(
+            height: TradeSpacingTokens.preCopyAssessmentQuestionCardGap,
+          ),
         ],
         VitCtaButton(
           key: PreCopyAssessmentPage.continueKey,
@@ -315,7 +314,7 @@ class _OptionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.preCopyAssessmentOptionCardPadding,
+      padding: TradeSpacingTokens.preCopyAssessmentOptionCardPadding,
       child: Text(
         option.label,
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),

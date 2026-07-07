@@ -49,7 +49,9 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: SocialSignalsPage.contentKey,
-                    padding: AppSpacing.marketScrollPadding(bottomInset),
+                    padding: MarketsSpacingTokens.marketScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
@@ -68,21 +70,25 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                                     _statusFilter = null;
                                   }),
                                   color: AppAssetColors.neutralChain,
-                                  padding: AppSpacing.marketSocialFilterPadding
+                                  padding: MarketsSpacingTokens
+                                      .marketSocialFilterPadding
                                       .add(
                                         const EdgeInsetsDirectional.symmetric(
                                           vertical: AppSpacing.x2,
                                         ),
                                       ),
                                 ),
-                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                const SizedBox(
+                                  width: MarketsSpacingTokens.marketSocialGap,
+                                ),
                                 VitFilterChip(
                                   key: SocialSignalsPage.statusActiveKey,
                                   label: snapshot
                                       .statusConfigs[TradingSignalStatus
                                           .active]!
                                       .label,
-                                  active: _statusFilter ==
+                                  active:
+                                      _statusFilter ==
                                       TradingSignalStatus.active,
                                   onTap: () => setState(() {
                                     _statusFilter = TradingSignalStatus.active;
@@ -92,21 +98,25 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                                           .active]!
                                       .color
                                       .resolve(),
-                                  padding: AppSpacing.marketSocialFilterPadding
+                                  padding: MarketsSpacingTokens
+                                      .marketSocialFilterPadding
                                       .add(
                                         const EdgeInsetsDirectional.symmetric(
                                           vertical: AppSpacing.x2,
                                         ),
                                       ),
                                 ),
-                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                const SizedBox(
+                                  width: MarketsSpacingTokens.marketSocialGap,
+                                ),
                                 VitFilterChip(
                                   key: SocialSignalsPage.statusTargetHitKey,
                                   label: snapshot
                                       .statusConfigs[TradingSignalStatus
                                           .targetHit]!
                                       .label,
-                                  active: _statusFilter ==
+                                  active:
+                                      _statusFilter ==
                                       TradingSignalStatus.targetHit,
                                   onTap: () => setState(() {
                                     _statusFilter =
@@ -117,21 +127,25 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                                           .targetHit]!
                                       .color
                                       .resolve(),
-                                  padding: AppSpacing.marketSocialFilterPadding
+                                  padding: MarketsSpacingTokens
+                                      .marketSocialFilterPadding
                                       .add(
                                         const EdgeInsetsDirectional.symmetric(
                                           vertical: AppSpacing.x2,
                                         ),
                                       ),
                                 ),
-                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                const SizedBox(
+                                  width: MarketsSpacingTokens.marketSocialGap,
+                                ),
                                 VitFilterChip(
                                   key: SocialSignalsPage.statusStoppedKey,
                                   label: snapshot
                                       .statusConfigs[TradingSignalStatus
                                           .stopped]!
                                       .label,
-                                  active: _statusFilter ==
+                                  active:
+                                      _statusFilter ==
                                       TradingSignalStatus.stopped,
                                   onTap: () => setState(() {
                                     _statusFilter = TradingSignalStatus.stopped;
@@ -141,7 +155,8 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                                           .stopped]!
                                       .color
                                       .resolve(),
-                                  padding: AppSpacing.marketSocialFilterPadding
+                                  padding: MarketsSpacingTokens
+                                      .marketSocialFilterPadding
                                       .add(
                                         const EdgeInsetsDirectional.symmetric(
                                           vertical: AppSpacing.x2,
@@ -163,61 +178,74 @@ class _SocialSignalsPageState extends ConsumerState<SocialSignalsPage> {
                                     _categoryFilter = null;
                                   }),
                                   color: _marketPrimary,
-                                  padding: AppSpacing.marketSocialFilterPadding
+                                  padding: MarketsSpacingTokens
+                                      .marketSocialFilterPadding
                                       .add(
                                         const EdgeInsetsDirectional.symmetric(
                                           vertical: AppSpacing.x2,
                                         ),
                                       ),
                                 ),
-                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                const SizedBox(
+                                  width: MarketsSpacingTokens.marketSocialGap,
+                                ),
                                 VitFilterChip(
                                   key: SocialSignalsPage.categoryScalpKey,
                                   label: 'Scalp',
-                                  active: _categoryFilter ==
+                                  active:
+                                      _categoryFilter ==
                                       TradingSignalCategory.scalp,
                                   onTap: () => setState(() {
                                     _categoryFilter =
                                         TradingSignalCategory.scalp;
                                   }),
                                   color: _marketPrimary,
-                                  padding: AppSpacing.marketSocialFilterPadding
+                                  padding: MarketsSpacingTokens
+                                      .marketSocialFilterPadding
                                       .add(
                                         const EdgeInsetsDirectional.symmetric(
                                           vertical: AppSpacing.x2,
                                         ),
                                       ),
                                 ),
-                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                const SizedBox(
+                                  width: MarketsSpacingTokens.marketSocialGap,
+                                ),
                                 VitFilterChip(
                                   key: SocialSignalsPage.categorySwingKey,
                                   label: 'Swing',
-                                  active: _categoryFilter ==
+                                  active:
+                                      _categoryFilter ==
                                       TradingSignalCategory.swing,
                                   onTap: () => setState(() {
                                     _categoryFilter =
                                         TradingSignalCategory.swing;
                                   }),
                                   color: _marketPrimary,
-                                  padding: AppSpacing.marketSocialFilterPadding
+                                  padding: MarketsSpacingTokens
+                                      .marketSocialFilterPadding
                                       .add(
                                         const EdgeInsetsDirectional.symmetric(
                                           vertical: AppSpacing.x2,
                                         ),
                                       ),
                                 ),
-                                const SizedBox(width: AppSpacing.marketSocialGap),
+                                const SizedBox(
+                                  width: MarketsSpacingTokens.marketSocialGap,
+                                ),
                                 VitFilterChip(
                                   key: SocialSignalsPage.categoryPositionKey,
                                   label: 'Position',
-                                  active: _categoryFilter ==
+                                  active:
+                                      _categoryFilter ==
                                       TradingSignalCategory.position,
                                   onTap: () => setState(() {
                                     _categoryFilter =
                                         TradingSignalCategory.position;
                                   }),
                                   color: _marketPrimary,
-                                  padding: AppSpacing.marketSocialFilterPadding
+                                  padding: MarketsSpacingTokens
+                                      .marketSocialFilterPadding
                                       .add(
                                         const EdgeInsetsDirectional.symmetric(
                                           vertical: AppSpacing.x2,
@@ -414,14 +442,14 @@ class _RiskDisclaimerCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: AppSpacing.marketSocialDisclaimerIconPadding,
+            padding: MarketsSpacingTokens.marketSocialDisclaimerIconPadding,
             child: Icon(
               Icons.shield_outlined,
               color: AppColors.warn,
               size: AppSpacing.x4,
             ),
           ),
-          const SizedBox(width: AppSpacing.marketSocialGap),
+          const SizedBox(width: MarketsSpacingTokens.marketSocialGap),
           Expanded(
             child: Text(
               'Tín hiệu từ cộng đồng chỉ mang tính tham khảo. Không phải khuyến nghị đầu tư. Luôn tự nghiên cứu và quản lý rủi ro.',

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_common_widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class LiveMarketPairCard extends StatelessWidget {
   const LiveMarketPairCard({super.key, required this.snapshot});
@@ -14,8 +14,8 @@ class LiveMarketPairCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LiveMarketCard(
-      height: AppSpacing.liveMarketPairCardHeight,
-      padding: AppSpacing.liveMarketPairCardPadding,
+      height: MarketsSpacingTokens.liveMarketPairCardHeight,
+      padding: MarketsSpacingTokens.liveMarketPairCardPadding,
       borderColor: liveMarketGreen.withValues(alpha: .22),
       background: ColoredBox(color: liveMarketGreen.withValues(alpha: .08)),
       child: Column(
@@ -75,7 +75,7 @@ class _PairValue extends StatelessWidget {
           label,
           style: AppTextStyles.caption.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.liveMarketPairValueGap),
+        const SizedBox(height: MarketsSpacingTokens.liveMarketPairValueGap),
         Text(
           value,
           style: AppTextStyles.sectionTitleSm.copyWith(

@@ -384,7 +384,9 @@ class _HoldingsTab extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Text(
                           _formatUsd(snapshot.holdingsValue),
                           style: AppTextStyles.numericDisplayXl,
@@ -398,7 +400,7 @@ class _HoldingsTab extends StatelessWidget {
                       borderRadius: AppRadii.xlRadius,
                       side: const BorderSide(
                         color: AppColors.primary30,
-                        width: AppSpacing.stakingProductIconBorderWidth,
+                        width: EarnSpacingTokens.stakingProductIconBorderWidth,
                       ),
                     ),
                     child: const SizedBox(

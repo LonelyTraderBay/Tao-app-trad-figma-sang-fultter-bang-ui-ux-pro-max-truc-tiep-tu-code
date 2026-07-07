@@ -17,6 +17,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part 'auto_compound_settings_page_part_01.dart';
 part 'auto_compound_settings_page_part_02.dart';

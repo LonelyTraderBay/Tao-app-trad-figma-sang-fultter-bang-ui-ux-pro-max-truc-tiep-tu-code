@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/controllers/mark
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketSectorComparisonTable extends StatelessWidget {
   const MarketSectorComparisonTable({
@@ -27,12 +28,12 @@ class MarketSectorComparisonTable extends StatelessWidget {
       accentColor: marketSectorPrimary,
       children: [
         VitCard(
-          padding: AppSpacing.marketSectorComparisonPadding,
+          padding: MarketsSpacingTokens.marketSectorComparisonPadding,
           child: Column(
             children: [
               const _ComparisonHeader(),
               const SizedBox(
-                height: AppSpacing.marketSectorComparisonHeaderGap,
+                height: MarketsSpacingTokens.marketSectorComparisonHeaderGap,
               ),
               for (final sector in sectors) ...[
                 _ComparisonRow(
@@ -62,7 +63,7 @@ class MarketSectorDataRefreshFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.marketSectorRefreshFooterPadding,
+      padding: MarketsSpacingTokens.marketSectorRefreshFooterPadding,
       child: Text(
         '$count ngành · $label',
         textAlign: TextAlign.center,
@@ -102,7 +103,7 @@ class _ComparisonHeader extends StatelessWidget {
         ),
         for (final label in const ['24h', '7d', '30d'])
           SizedBox(
-            width: AppSpacing.marketSectorComparisonCellWidth,
+            width: MarketsSpacingTokens.marketSectorComparisonCellWidth,
             child: Text(
               label,
               textAlign: TextAlign.right,
@@ -131,9 +132,9 @@ class _ComparisonRow extends StatelessWidget {
           : AppColors.transparent,
       borderRadius: AppRadii.smRadius,
       child: SizedBox(
-        height: AppSpacing.marketSectorComparisonRowHeight,
+        height: MarketsSpacingTokens.marketSectorComparisonRowHeight,
         child: Padding(
-          padding: AppSpacing.marketSectorComparisonRowPadding,
+          padding: MarketsSpacingTokens.marketSectorComparisonRowPadding,
           child: Row(
             children: [
               Expanded(
@@ -143,11 +144,13 @@ class _ComparisonRow extends StatelessWidget {
                       color: sector.color.resolve(),
                       shape: const CircleBorder(),
                       child: const SizedBox.square(
-                        dimension: AppSpacing.marketSectorComparisonMarker,
+                        dimension:
+                            MarketsSpacingTokens.marketSectorComparisonMarker,
                       ),
                     ),
                     const SizedBox(
-                      width: AppSpacing.marketSectorComparisonMarkerGap,
+                      width:
+                          MarketsSpacingTokens.marketSectorComparisonMarkerGap,
                     ),
                     Expanded(
                       child: Text(
@@ -185,7 +188,7 @@ class _PercentCell extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = value >= 0 ? AppColors.buy : AppColors.sell;
     return SizedBox(
-      width: AppSpacing.marketSectorComparisonCellWidth,
+      width: MarketsSpacingTokens.marketSectorComparisonCellWidth,
       child: Text(
         formatMarketSectorPercent(value),
         maxLines: 1,

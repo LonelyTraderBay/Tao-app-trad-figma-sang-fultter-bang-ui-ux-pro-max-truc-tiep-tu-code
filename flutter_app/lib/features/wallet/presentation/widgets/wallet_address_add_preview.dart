@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart'
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class AddressConfirmPreviewSheet extends StatelessWidget {
   const AddressConfirmPreviewSheet({
@@ -51,7 +52,7 @@ class AddressConfirmPreviewSheet extends StatelessWidget {
               ('Whitelist', preview.whitelistLabel),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAddressFilterGap),
+          const SizedBox(height: WalletSpacingTokens.walletAddressFilterGap),
           AddressPrimaryActionButton(
             key: confirmButtonKey,
             enabled: true,

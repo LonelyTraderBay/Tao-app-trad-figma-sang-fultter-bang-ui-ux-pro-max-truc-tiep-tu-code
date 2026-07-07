@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/controllers/password_reset_flow_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
 
 part '../widgets/otp_identity_intro.dart';
 part '../widgets/otp_input_status.dart';
@@ -233,7 +234,7 @@ class _OTPPageState extends ConsumerState<OTPPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: OTPPage.contentKey,
-                padding: AppSpacing.authScrollBottomPadding,
+                padding: AuthSpacingTokens.authScrollBottomPadding,
                 child: VitPageContent(
                   rhythm: VitPageRhythm.form,
                   children: [
@@ -270,7 +271,7 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                       textAlign: TextAlign.center,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.authFooterLineHeight,
+                        height: AuthSpacingTokens.authFooterLineHeight,
                       ),
                     ),
                   ],

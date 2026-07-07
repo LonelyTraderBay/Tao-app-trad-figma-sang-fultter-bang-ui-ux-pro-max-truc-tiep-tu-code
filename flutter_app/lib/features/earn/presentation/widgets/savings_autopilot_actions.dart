@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_autopilot_page.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 import 'savings_autopilot_common.dart';
 import 'savings_autopilot_formatters.dart';
@@ -90,7 +91,7 @@ class _ApprovalCard extends StatelessWidget {
     final color = actionTypeColor(action.type);
     return VitCard(
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -117,7 +118,9 @@ class _ApprovalCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       action.title,
                       style: captionBoldStyle.copyWith(color: AppColors.text1),
@@ -200,7 +203,7 @@ class ActionTile extends StatelessWidget {
       key: SavingsAutoPilotPage.actionKey(action.id),
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       onTap: onTap,
       child: Row(
         children: [
@@ -283,7 +286,7 @@ class ActionDetailSheet extends StatelessWidget {
       top: false,
       child: VitSheetSurface(
         color: AppColors.surface,
-        padding: AppSpacing.earnPaddingX5,
+        padding: EarnSpacingTokens.earnPaddingX5,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -320,12 +323,12 @@ class ActionDetailSheet extends StatelessWidget {
             const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
               variant: VitCardVariant.inner,
-              padding: AppSpacing.earnPaddingX3,
+              padding: EarnSpacingTokens.earnPaddingX3,
               child: Column(
                 children: [
                   for (final entry in action.details.entries)
                     Padding(
-                      padding: AppSpacing.earnVerticalPaddingX1,
+                      padding: EarnSpacingTokens.earnVerticalPaddingX1,
                       child: Row(
                         children: [
                           Expanded(

@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketHeatmapLegend extends StatelessWidget {
   const MarketHeatmapLegend({super.key});
@@ -38,7 +39,7 @@ class MarketHeatmapLegend extends StatelessWidget {
       ),
     ];
     return Padding(
-      padding: AppSpacing.marketHeatmapLegendPadding,
+      padding: MarketsSpacingTokens.marketHeatmapLegendPadding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -49,19 +50,21 @@ class MarketHeatmapLegend extends StatelessWidget {
                 borderRadius: AppRadii.badgeRadius,
               ),
               child: const SizedBox.square(
-                dimension: AppSpacing.marketHeatmapLegendDot,
+                dimension: MarketsSpacingTokens.marketHeatmapLegendDot,
               ),
             ),
-            const SizedBox(width: AppSpacing.marketAnalyticsMicroGap),
+            const SizedBox(width: MarketsSpacingTokens.marketAnalyticsMicroGap),
             Text(
               item.label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.marketLineHeightTight,
+                height: MarketsSpacingTokens.marketLineHeightTight,
               ),
             ),
             if (item != items.last)
-              const SizedBox(width: AppSpacing.marketOverviewMiniHeaderGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketOverviewMiniHeaderGap,
+              ),
           ],
         ],
       ),
@@ -82,7 +85,7 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketHeatmapSelectedCardPadding,
+      padding: MarketsSpacingTokens.marketHeatmapSelectedCardPadding,
       child: Column(
         children: [
           Row(
@@ -99,7 +102,7 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
                   ),
                 ),
                 child: SizedBox.square(
-                  dimension: AppSpacing.marketHeatmapAvatar,
+                  dimension: MarketsSpacingTokens.marketHeatmapAvatar,
                   child: Center(
                     child: Text(
                       coin.symbol.length <= 3
@@ -108,13 +111,15 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
                       style: AppTextStyles.micro.copyWith(
                         color: AppAssetColors.forSymbol(coin.symbol),
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: MarketsSpacingTokens.marketLineHeightTight,
                       ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketHeatmapSummaryGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,15 +127,17 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
                     Text(
                       coin.name,
                       style: AppTextStyles.baseMedium.copyWith(
-                        height: AppSpacing.marketLineHeightCaption,
+                        height: MarketsSpacingTokens.marketLineHeightCaption,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
+                    const SizedBox(
+                      height: MarketsSpacingTokens.marketAnalyticsTinyGap,
+                    ),
                     Text(
                       '${coin.symbol}/USDT · ${coin.category}',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: MarketsSpacingTokens.marketLineHeightTight,
                       ),
                     ),
                   ],
@@ -141,13 +148,13 @@ class MarketHeatmapSelectedCoinCard extends StatelessWidget {
                 onPressed: onDetail,
                 variant: VitCtaButtonVariant.primary,
                 fullWidth: false,
-                height: AppSpacing.marketHeatmapDetailButtonHeight,
-                padding: AppSpacing.marketHeatmapDetailButtonPadding,
+                height: MarketsSpacingTokens.marketHeatmapDetailButtonHeight,
+                padding: MarketsSpacingTokens.marketHeatmapDetailButtonPadding,
                 child: const Text('Chi tiết'),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsStatIcon),
+          const SizedBox(height: MarketsSpacingTokens.marketAnalyticsStatIcon),
           Row(
             children: [
               _CoinMetric(
@@ -198,10 +205,10 @@ class _CoinMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
+          const SizedBox(height: MarketsSpacingTokens.marketAnalyticsSmallGap),
           Text(
             value,
             maxLines: 1,
@@ -210,7 +217,7 @@ class _CoinMetric extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
           ),
         ],
@@ -252,7 +259,7 @@ class MarketHeatmapTrendPanels extends StatelessWidget {
             metric: metric,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
+        const SizedBox(width: MarketsSpacingTokens.marketHeatmapSummaryGap),
         Expanded(
           child: _TrendCard(
             title: 'Top giảm',
@@ -290,25 +297,31 @@ class _TrendCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      height: AppSpacing.marketHeatmapTrendCardHeight,
-      padding: AppSpacing.marketHeatmapTrendCardPadding,
+      height: MarketsSpacingTokens.marketHeatmapTrendCardHeight,
+      padding: MarketsSpacingTokens.marketHeatmapTrendCardPadding,
       child: Column(
         children: [
           Row(
             children: [
-              Icon(icon, size: AppSpacing.marketHeatmapTrendIcon, color: color),
-              const SizedBox(width: AppSpacing.marketOverviewMiniHeaderGap),
+              Icon(
+                icon,
+                size: MarketsSpacingTokens.marketHeatmapTrendIcon,
+                color: color,
+              ),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketOverviewMiniHeaderGap,
+              ),
               Text(
                 title,
                 style: AppTextStyles.caption.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.marketLineHeightTight,
+                  height: MarketsSpacingTokens.marketLineHeightTight,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketHeatmapSummaryGap),
+          const SizedBox(height: MarketsSpacingTokens.marketHeatmapSummaryGap),
           for (var i = 0; i < coins.length; i++) ...[
             _TrendRow(index: i + 1, coin: coins[i], metric: metric),
             if (i != coins.length - 1)
@@ -340,24 +353,24 @@ class _TrendRow extends StatelessWidget {
     final color = change >= 0 ? AppColors.buy : AppColors.sell;
 
     return SizedBox(
-      height: AppSpacing.marketHeatmapTrendRowHeight,
+      height: MarketsSpacingTokens.marketHeatmapTrendRowHeight,
       child: Row(
         children: [
           Text(
             '$index.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
           ),
-          const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
+          const SizedBox(width: MarketsSpacingTokens.marketHeatmapSummaryGap),
           Expanded(
             child: Text(
               coin.symbol,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.marketLineHeightTight,
+                height: MarketsSpacingTokens.marketLineHeightTight,
               ),
             ),
           ),
@@ -367,7 +380,7 @@ class _TrendRow extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
           ),
         ],

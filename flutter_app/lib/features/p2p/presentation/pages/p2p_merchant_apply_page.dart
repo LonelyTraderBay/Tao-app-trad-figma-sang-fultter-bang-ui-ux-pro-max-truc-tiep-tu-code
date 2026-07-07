@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part 'p2p_merchant_apply_page_part_01.dart';
 part 'p2p_merchant_apply_page_part_02.dart';
@@ -29,15 +30,15 @@ const double _p2pMerchantApplyVisualNavClearance =
 const double _p2pMerchantApplyNativeNavClearance =
     _p2pMerchantApplyVisualNavClearance - AppSpacing.x4;
 const _p2pMerchantApplyBenefitExtent =
-    AppSpacing.p2pMerchantApplyBenefitMainAxisExtent;
+    P2PSpacingTokens.p2pMerchantApplyBenefitMainAxisExtent;
 const _p2pMerchantApplyConnectorHeight =
-    AppSpacing.p2pMerchantApplyConnectorHeight;
+    P2PSpacingTokens.p2pMerchantApplyConnectorHeight;
 const _p2pMerchantApplyCompactLineHeight =
-    AppSpacing.p2pMerchantApplyCompactLineHeight;
+    P2PSpacingTokens.p2pMerchantApplyCompactLineHeight;
 const _p2pMerchantApplyReadableLineHeight =
-    AppSpacing.p2pMerchantApplyReadableLineHeight;
+    P2PSpacingTokens.p2pMerchantApplyReadableLineHeight;
 const _p2pMerchantApplyTightLineHeight =
-    AppSpacing.p2pMerchantApplyTightLineHeight;
+    P2PSpacingTokens.p2pMerchantApplyTightLineHeight;
 
 class P2PMerchantApplyPage extends ConsumerStatefulWidget {
   const P2PMerchantApplyPage({super.key, this.shellRenderMode});

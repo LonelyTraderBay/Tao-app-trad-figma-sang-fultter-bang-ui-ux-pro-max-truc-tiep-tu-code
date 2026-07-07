@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/portfolio_analytics_summary_switcher.dart';
 part '../widgets/portfolio_analytics_overview_chart.dart';
@@ -59,8 +60,8 @@ class _PortfolioAnalyticsPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? AppSpacing.walletAnalyticsBottomInsetVisual
-            : AppSpacing.walletAnalyticsBottomInsetNative) +
+            ? WalletSpacingTokens.walletAnalyticsBottomInsetVisual
+            : WalletSpacingTokens.walletAnalyticsBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitAutoHidePageScaffold(

@@ -9,7 +9,7 @@ class _SurvivorshipWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.providerLeaderboardWarningPadding,
+      padding: TradeSpacingTokens.providerLeaderboardWarningPadding,
       density: VitDensity.compact,
       borderColor: _leaderWarningBorder,
       child: Row(
@@ -18,7 +18,7 @@ class _SurvivorshipWarning extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _leaderWarningText,
-            size: AppSpacing.providerLeaderboardWarningIcon,
+            size: TradeSpacingTokens.providerLeaderboardWarningIcon,
           ),
           const SizedBox(width: _leaderSpace),
           Expanded(
@@ -163,7 +163,7 @@ class _VerifiedToggle extends StatelessWidget {
     return VitCard(
       key: ProviderLeaderboardPage.verifiedToggleKey,
       height: _leaderControlExtent,
-      padding: AppSpacing.providerLeaderboardVerifiedPadding,
+      padding: TradeSpacingTokens.providerLeaderboardVerifiedPadding,
       density: VitDensity.compact,
       variant: VitCardVariant.inner,
       borderColor: AppColors.cardBorder,

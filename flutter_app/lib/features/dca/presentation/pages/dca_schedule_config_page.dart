@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 
 part '../widgets/dca_schedule_strategy_time.dart';
 part '../widgets/dca_schedule_limits_enable.dart';
@@ -94,7 +95,8 @@ class _DCAScheduleConfigState extends ConsumerState<DCAScheduleConfig> {
             key: DCAScheduleConfig.contentKey,
             physics: const ClampingScrollPhysics(),
             bottomInset: scrollEndPadding,
-            child: VitPageContent(rhythm: VitPageRhythm.standard, 
+            child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.compact,
               density: VitDensity.compact,
               children: [

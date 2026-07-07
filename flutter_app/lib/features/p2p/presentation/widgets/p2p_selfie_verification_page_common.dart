@@ -61,7 +61,7 @@ class _LivenessActionTile extends StatelessWidget {
       radius: VitCardRadius.standard,
       variant: completed ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: completed ? AppColors.buy20 : AppColors.cardBorder,
-      padding: AppSpacing.p2pSelfieReviewPadding,
+      padding: P2PSpacingTokens.p2pSelfieReviewPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -111,7 +111,7 @@ class _ResultStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Padding(
-          padding: AppSpacing.p2pSelfieResultIconMargin,
+          padding: P2PSpacingTokens.p2pSelfieResultIconMargin,
           child: SizedBox.square(
             dimension: _p2pSelfieActionIconBox,
             child: Material(
@@ -139,7 +139,7 @@ class _ResultStep extends StatelessWidget {
         const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pSelfieCardPadding,
+          padding: P2PSpacingTokens.p2pSelfieCardPadding,
           child: Column(
             children: [
               _ScoreRow(label: 'Face Match Score', value: snapshot.matchScore),
@@ -154,7 +154,7 @@ class _ResultStep extends StatelessWidget {
         const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
           radius: VitCardRadius.standard,
-          padding: AppSpacing.p2pSelfieCardPadding,
+          padding: P2PSpacingTokens.p2pSelfieCardPadding,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -188,7 +188,7 @@ class _ResultStep extends StatelessWidget {
           onPressed: onSupport,
           variant: VitCtaButtonVariant.secondary,
           height: AppSpacing.buttonCompact,
-          padding: AppSpacing.p2pPaymentDialogActionPadding,
+          padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
           child: const Text('Liên hệ hỗ trợ'),
         ),
       ],
@@ -205,7 +205,7 @@ class _ScoreRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pSelfieScoreRowPadding,
+      padding: P2PSpacingTokens.p2pSelfieScoreRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -239,13 +239,13 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.p2pSelfieChecklistIconPadding,
+          padding: P2PSpacingTokens.p2pSelfieChecklistIconPadding,
           child: Icon(
             color == AppColors.warn
                 ? Icons.auto_awesome_rounded
                 : Icons.check_circle_outline_rounded,
             color: color,
-            size: AppSpacing.p2pSelfieChecklistIconSize,
+            size: P2PSpacingTokens.p2pSelfieChecklistIconSize,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

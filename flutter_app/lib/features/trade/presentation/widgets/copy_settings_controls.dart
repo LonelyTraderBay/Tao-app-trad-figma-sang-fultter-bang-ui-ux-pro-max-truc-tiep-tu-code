@@ -22,7 +22,7 @@ class _CircuitBreakerCard extends StatelessWidget {
           Row(
             children: [
               const Icon(Icons.bolt_rounded, color: _settingsPrimary, size: 16),
-              const SizedBox(width: AppSpacing.walletAssetSmallGap),
+              const SizedBox(width: WalletSpacingTokens.walletAssetSmallGap),
               Expanded(
                 child: Text('Circuit Breaker', style: _cardTitleStyle()),
               ),
@@ -104,7 +104,7 @@ class _CompactSlider extends StatelessWidget {
           thumbColor: color,
           overlayColor: AppColors.transparent,
           thumbShape: const RoundSliderThumbShape(
-            enabledThumbRadius: AppSpacing.walletAssetSmallGap,
+            enabledThumbRadius: WalletSpacingTokens.walletAssetSmallGap,
           ),
           overlayShape: SliderComponentShape.noOverlay,
         ),

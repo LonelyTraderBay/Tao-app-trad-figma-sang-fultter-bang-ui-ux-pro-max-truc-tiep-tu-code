@@ -8,7 +8,7 @@ class _TwoFaStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.authTwoFaStepperPadding,
+      padding: AuthSpacingTokens.authTwoFaStepperPadding,
       child: Row(
         children: [
           for (var index = 1; index <= 3; index++) ...[
@@ -16,13 +16,13 @@ class _TwoFaStepper extends StatelessWidget {
             if (index < 3)
               Expanded(
                 child: Padding(
-                  padding: AppSpacing.authTwoFaProgressMargin,
+                  padding: AuthSpacingTokens.authTwoFaProgressMargin,
                   child: ClipRRect(
                     borderRadius: AppRadii.pillRadius,
                     child: ColoredBox(
                       color: index < step ? _authPrimary : _authPrimary30,
                       child: const SizedBox(
-                        height: AppSpacing.authOtpProgressHeight,
+                        height: AuthSpacingTokens.authOtpProgressHeight,
                       ),
                     ),
                   ),
@@ -48,7 +48,7 @@ class _StepDot extends StatelessWidget {
     final color = isActive || isComplete ? _authPrimary : _authStepInactive;
 
     return SizedBox.square(
-      dimension: AppSpacing.authTwoFaStepDotSize,
+      dimension: AuthSpacingTokens.authTwoFaStepDotSize,
       child: Material(
         color: color,
         shape: const CircleBorder(),
@@ -57,7 +57,7 @@ class _StepDot extends StatelessWidget {
               ? const Icon(
                   Icons.check_rounded,
                   color: AppColors.onAccent,
-                  size: AppSpacing.authTwoFaStepIcon,
+                  size: AuthSpacingTokens.authTwoFaStepIcon,
                 )
               : Text(
                   '$index',

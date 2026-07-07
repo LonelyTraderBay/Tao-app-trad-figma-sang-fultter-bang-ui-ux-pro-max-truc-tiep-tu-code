@@ -41,7 +41,8 @@ class _ResultView extends ConsumerWidget {
                   shape: CircleBorder(
                     side: BorderSide(
                       color: color,
-                      width: AppSpacing.stakingAssessmentScoreBorderWidth,
+                      width:
+                          EarnSpacingTokens.stakingAssessmentScoreBorderWidth,
                     ),
                   ),
                 ),

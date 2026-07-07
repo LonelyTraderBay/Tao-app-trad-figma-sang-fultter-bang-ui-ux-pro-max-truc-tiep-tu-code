@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingValidatorSelectionValidatorList extends StatelessWidget {
   const StakingValidatorSelectionValidatorList({
@@ -36,7 +37,8 @@ class StakingValidatorSelectionValidatorList extends StatelessWidget {
             validator: validators[i],
             onTap: () => onTap(validators[i]),
           ),
-          if (i != validators.length - 1) const SizedBox(height: AppSpacing.rowGap),
+          if (i != validators.length - 1)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -59,7 +61,7 @@ class _ValidatorCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -96,14 +98,18 @@ class _ValidatorCard extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x1,
                       children: [
                         VitAccentPill(
                           label: stakingValidatorTierLabel(validator.tier),
-                          accentColor: stakingValidatorTierColor(validator.tier),
+                          accentColor: stakingValidatorTierColor(
+                            validator.tier,
+                          ),
                           size: VitStatusPillSize.sm,
                         ),
                         if (validator.slashingHistory == 0)
@@ -169,7 +175,7 @@ class _ValidatorCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
               ),
               child: Padding(
-                padding: AppSpacing.earnPaddingX2,
+                padding: EarnSpacingTokens.earnPaddingX2,
                 child: Row(
                   children: [
                     const Icon(
@@ -225,7 +231,7 @@ class _ValidatorAvatar extends StatelessWidget {
               : Icon(
                   stakingValidatorIcon(validator),
                   color: accent,
-                  size: AppSpacing.stakingValidatorSelectionIcon,
+                  size: EarnSpacingTokens.stakingValidatorSelectionIcon,
                 ),
         ),
       ),
@@ -243,7 +249,7 @@ class _ValidatorMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

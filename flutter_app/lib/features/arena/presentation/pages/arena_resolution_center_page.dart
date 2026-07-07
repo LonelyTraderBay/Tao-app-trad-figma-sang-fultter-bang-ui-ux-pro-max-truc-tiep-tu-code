@@ -17,9 +17,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
-const _resolutionBodyLineRatio = AppSpacing.arenaResolutionBodyLineHeight;
+const _resolutionBodyLineRatio =
+    ArenaSpacingTokens.arenaResolutionBodyLineHeight;
 
 class ArenaResolutionCenterPage extends ConsumerWidget {
   const ArenaResolutionCenterPage({super.key, this.shellRenderMode});
@@ -69,9 +71,11 @@ class ArenaResolutionCenterPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
@@ -144,7 +148,7 @@ class _ResolutionStatusCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const Padding(padding: AppSpacing.arenaTopPaddingX1),
+                const Padding(padding: ArenaSpacingTokens.arenaTopPaddingX1),
                 Text(
                   body,
                   style: AppTextStyles.caption.copyWith(

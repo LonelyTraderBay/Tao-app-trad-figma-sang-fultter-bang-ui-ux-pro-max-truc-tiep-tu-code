@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_escrow_detail_status_address.dart';
 part '../widgets/p2p_escrow_detail_multisig_order.dart';
@@ -95,9 +96,7 @@ class _P2PEscrowDetailPageState extends ConsumerState<P2PEscrowDetailPage> {
               },
               onCopy: () {
                 HapticFeedback.selectionClick();
-                Clipboard.setData(
-                  ClipboardData(text: snapshot.escrowAddress),
-                );
+                Clipboard.setData(ClipboardData(text: snapshot.escrowAddress));
                 setState(() => _feedback = 'Đã copy địa chỉ escrow');
               },
               onExplorer: () {

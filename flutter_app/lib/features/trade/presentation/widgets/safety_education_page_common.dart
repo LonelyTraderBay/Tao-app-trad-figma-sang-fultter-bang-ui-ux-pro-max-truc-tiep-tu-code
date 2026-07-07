@@ -13,7 +13,8 @@ class _SeveritySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -50,7 +51,8 @@ class _SeveritySection extends StatelessWidget {
               ],
             ),
           ),
-          if (flag != flags.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (flag != flags.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -64,7 +66,8 @@ class _VerificationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -106,9 +109,9 @@ class _TierCard extends StatelessWidget {
               Icon(
                 Icons.check_circle_outline_rounded,
                 color: color,
-                size: AppSpacing.tradeBotSmallIcon,
+                size: TradeSpacingTokens.tradeBotSmallIcon,
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
               Text(
                 tier.tier,
                 style: AppTextStyles.caption.copyWith(
@@ -141,7 +144,7 @@ class _ReportTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -168,7 +171,7 @@ class _ReportTab extends StatelessWidget {
               const _ReportField(label: 'Lý do report'),
               const _ReportField(
                 label: 'Mô tả chi tiết',
-                height: AppSpacing.tradeBotControlTall,
+                height: TradeSpacingTokens.tradeBotControlTall,
               ),
               VitCtaButton(
                 onPressed: () {},
@@ -193,7 +196,7 @@ class _ReportTab extends StatelessWidget {
 class _ReportField extends StatelessWidget {
   const _ReportField({
     required this.label,
-    this.height = AppSpacing.tradeBotDisputeEvidenceHeight,
+    this.height = TradeSpacingTokens.tradeBotDisputeEvidenceHeight,
   });
 
   final String label;

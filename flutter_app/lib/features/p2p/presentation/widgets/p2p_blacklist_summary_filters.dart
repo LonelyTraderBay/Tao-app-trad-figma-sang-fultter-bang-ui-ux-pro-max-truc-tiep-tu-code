@@ -140,7 +140,7 @@ class _BlacklistReasonFilters extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       physics: const ClampingScrollPhysics(),
-      padding: AppSpacing.p2pBlacklistFilterRailPadding,
+      padding: P2PSpacingTokens.p2pBlacklistFilterRailPadding,
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -152,7 +152,7 @@ class _BlacklistReasonFilters extends StatelessWidget {
               color: filter.id == 'all'
                   ? AppModuleAccents.p2p
                   : _reasonColor(filter),
-              padding: AppSpacing.p2pBlacklistListFilterChipPadding,
+              padding: P2PSpacingTokens.p2pBlacklistListFilterChipPadding,
               semanticLabel: 'Blacklist filter ${filter.label}',
             ),
             const SizedBox(width: AppSpacing.x1),

@@ -23,7 +23,7 @@ class _PreviewRow extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: AppSpacing.dcaPaddingX4,
+        padding: DcaSpacingTokens.dcaPaddingX4,
         child: Row(
           children: [
             Text(
@@ -134,8 +134,8 @@ class _CoinBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.dcaRebalanceTileIconBox,
-      height: AppSpacing.dcaRebalanceTileIconBox,
+      width: DcaSpacingTokens.dcaRebalanceTileIconBox,
+      height: DcaSpacingTokens.dcaRebalanceTileIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: accent.withValues(alpha: .12),
@@ -147,7 +147,7 @@ class _CoinBadge extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Padding(
-              padding: AppSpacing.dcaPaddingX2,
+              padding: DcaSpacingTokens.dcaPaddingX2,
               child: Text(
                 symbol.length > 3 ? symbol.substring(0, 3) : symbol,
                 style: AppTextStyles.caption.copyWith(
@@ -193,7 +193,11 @@ class _IconBadgeButton extends StatelessWidget {
           color: neutral ? AppColors.surface : color.withValues(alpha: .12),
           shape: const CircleBorder(),
         ),
-        child: Icon(icon, color: color, size: AppSpacing.dcaRebalanceIcon),
+        child: Icon(
+          icon,
+          color: color,
+          size: DcaSpacingTokens.dcaRebalanceIcon,
+        ),
       ),
     );
   }

@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/notifications_spacing_tokens.dart';
 
 part '../widgets/notifications_page_sections.dart';
 part '../widgets/notifications_page_common.dart';
@@ -82,10 +83,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _NotificationFilterBand(
-                filter: _filter,
-                onChanged: _setFilter,
-              ),
+              _NotificationFilterBand(filter: _filter, onChanged: _setFilter),
               if (showOfflineBanner)
                 Padding(
                   key: NotificationsPage.offlineKey,
@@ -108,7 +106,10 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                   child: SingleChildScrollView(
                     key: NotificationsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.notificationsScrollPadding(bottomInset),
+                    padding:
+                        NotificationsSpacingTokens.notificationsScrollPadding(
+                          bottomInset,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
@@ -117,8 +118,9 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                             NotificationsScreenState.ready)
                           _UnreadSummaryBar(
                             unreadCount: unreadCount,
-                            onMarkAllRead:
-                                unreadCount > 0 ? _markAllRead : null,
+                            onMarkAllRead: unreadCount > 0
+                                ? _markAllRead
+                                : null,
                           ),
                         ...switch (snapshot.screenState) {
                           NotificationsScreenState.loading => [
@@ -139,14 +141,15 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                             ),
                           ],
                           NotificationsScreenState.empty ||
-                          NotificationsScreenState.offline
-                              when notifications.isEmpty => [
+                          NotificationsScreenState
+                              .offline when notifications.isEmpty => [
                             VitEmptyState(
                               key: NotificationsPage.emptyKey,
                               title: _filter == _NotificationFilter.unread
                                   ? 'Không có thông báo chưa đọc'
                                   : 'Chưa có thông báo nào',
-                              message: snapshot.screenState ==
+                              message:
+                                  snapshot.screenState ==
                                       NotificationsScreenState.offline
                                   ? 'Kết nối lại để nhận cập nhật mới nhất.'
                                   : 'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
@@ -168,8 +171,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                               message:
                                   'Thông báo giao dịch, bảo mật và hệ thống sẽ hiển thị tại đây',
                               icon: Icons.notifications_off_rounded,
-                              actionLabel:
-                                  _filter == _NotificationFilter.unread
+                              actionLabel: _filter == _NotificationFilter.unread
                                   ? 'Xem tất cả'
                                   : null,
                               onAction: _filter == _NotificationFilter.unread

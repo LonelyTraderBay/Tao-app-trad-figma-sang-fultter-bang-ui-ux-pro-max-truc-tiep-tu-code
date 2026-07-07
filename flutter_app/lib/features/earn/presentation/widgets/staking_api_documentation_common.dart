@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 enum StakingApiDocumentationTab { endpoints, examples, auth }
 
@@ -45,7 +45,7 @@ class StakingApiDocumentationMethodBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           method,
           style: AppTextStyles.micro.copyWith(
@@ -76,7 +76,7 @@ class StakingApiDocumentationStatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -107,13 +107,13 @@ class StakingApiDocumentationCopyButton extends StatelessWidget {
       onTap: onTap,
       tone: VitChoicePillTone.success,
       accentColor: AppColors.buy,
-      padding: AppSpacing.earnSmallPillPadding,
+      padding: EarnSpacingTokens.earnSmallPillPadding,
       semanticLabel: copied ? 'Copied API snippet' : 'Copy API snippet',
       leading: Icon(
         copied
             ? Icons.check_circle_outline_rounded
             : Icons.content_copy_rounded,
-        size: AppSpacing.stakingApiCopyIcon,
+        size: EarnSpacingTokens.stakingApiCopyIcon,
       ),
     );
   }
@@ -139,7 +139,7 @@ class StakingApiDocumentationCodeBlock extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         child: Padding(
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Text(
@@ -166,13 +166,13 @@ class StakingApiDocumentationFooterNote extends StatelessWidget {
     return VitCard(
       key: StakingApiDocumentationKeys.footer,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingApiFooterLineHeight,
+          height: EarnSpacingTokens.stakingApiFooterLineHeight,
         ),
       ),
     );

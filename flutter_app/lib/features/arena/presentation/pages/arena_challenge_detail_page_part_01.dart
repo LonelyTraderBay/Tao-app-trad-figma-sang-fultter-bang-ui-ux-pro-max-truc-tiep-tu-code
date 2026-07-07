@@ -429,7 +429,7 @@ class _MemberChip extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.arenaPresetPillPadding,
+        padding: ArenaSpacingTokens.arenaPresetPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

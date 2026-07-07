@@ -28,7 +28,8 @@ class _EventList extends StatelessWidget {
             onSelect: () => onSelect(event.id),
             onExpand: () => onExpand(event.id),
           ),
-          if (event != events.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (event != events.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -63,7 +64,7 @@ class _EventLogCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.launchpadPaddingX3,
+            padding: LaunchpadSpacingTokens.launchpadPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -112,11 +113,14 @@ class _EventLogCard extends StatelessWidget {
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.extraBold,
-                          height: AppSpacing.launchpadLineHeightLabel,
+                          height:
+                              LaunchpadSpacingTokens.launchpadLineHeightLabel,
                         ),
                       ),
                       if (event.tags.isNotEmpty) ...[
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Wrap(
                           spacing: AppSpacing.x1,
                           runSpacing: AppSpacing.x1,
@@ -172,7 +176,7 @@ class _EventDetails extends StatelessWidget {
           shape: Border(top: BorderSide(color: AppColors.divider)),
         ),
         child: Padding(
-          padding: AppSpacing.launchpadPaddingX3,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX3,
           child: Column(
             children: [
               for (final row in rows) _DetailRow(label: row.$1, value: row.$2),
@@ -193,12 +197,12 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadVerticalPaddingX1,
+      padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX1,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.launchpadBox76,
+            width: LaunchpadSpacingTokens.launchpadBox76,
             child: Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -211,7 +215,7 @@ class _DetailRow extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
                 fontWeight: AppTextStyles.medium,
-                height: AppSpacing.launchpadLineHeightCompact,
+                height: LaunchpadSpacingTokens.launchpadLineHeightCompact,
               ),
             ),
           ),

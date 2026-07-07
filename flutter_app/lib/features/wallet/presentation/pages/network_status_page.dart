@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/network_status_cards_stats.dart';
 part '../widgets/network_status_legend_common.dart';
@@ -29,18 +30,21 @@ const _networkMuted = AppColors.text3;
 const _networkInlineGap = AppSpacing.x2;
 const _networkTinyGap = AppSpacing.x1;
 const _networkCardGap = AppSpacing.x2;
-const _networkSummaryIconSize = AppSpacing.walletNetworkSummaryIcon;
-const _networkSummaryStatHeight = AppSpacing.walletNetworkSummaryStatHeight;
+const _networkSummaryIconSize = WalletSpacingTokens.walletNetworkSummaryIcon;
+const _networkSummaryStatHeight =
+    WalletSpacingTokens.walletNetworkSummaryStatHeight;
 const _networkLogoSize = AppSpacing.buttonCompact;
-const _networkActionIconBoxSize = AppSpacing.walletNetworkActionIconBox;
-const _networkStatHeight = AppSpacing.walletNetworkStatHeight;
-const _networkAvailabilityHeight = AppSpacing.walletNetworkAvailabilityHeight;
-const _networkCompactStatPadding = AppSpacing.walletNetworkStatPadding;
+const _networkActionIconBoxSize =
+    WalletSpacingTokens.walletNetworkActionIconBox;
+const _networkStatHeight = WalletSpacingTokens.walletNetworkStatHeight;
+const _networkAvailabilityHeight =
+    WalletSpacingTokens.walletNetworkAvailabilityHeight;
+const _networkCompactStatPadding = WalletSpacingTokens.walletNetworkStatPadding;
 
 double _networkScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? AppSpacing.walletBottomInsetVisualChrome
-          : AppSpacing.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletBottomInsetVisualChrome
+          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
 }
 

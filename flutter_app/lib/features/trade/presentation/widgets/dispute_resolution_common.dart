@@ -51,9 +51,9 @@ class _TimelineRow extends StatelessWidget {
         Icon(
           done ? Icons.check_circle_outline_rounded : Icons.schedule_rounded,
           color: done ? AppColors.buy : AppColors.text3,
-          size: AppSpacing.tradeBotSmallIcon,
+          size: TradeSpacingTokens.tradeBotSmallIcon,
         ),
-        const SizedBox(width: AppSpacing.tradeBotSmallGap),
+        const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

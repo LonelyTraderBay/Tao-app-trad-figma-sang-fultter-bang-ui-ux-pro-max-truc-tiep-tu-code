@@ -9,7 +9,7 @@ class _PlaceholderPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -62,7 +62,7 @@ class _StressScenarioPanel extends StatelessWidget {
         for (final scenario in scenarios) ...[
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.tradeBotInnerPanelPadding,
+            padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
             child: Row(
               children: [
                 Expanded(
@@ -114,7 +114,7 @@ class _ExposurePiePainter extends CustomPainter {
       final stroke = Paint()
         ..color = AppColors.onAccent
         ..style = PaintingStyle.stroke
-        ..strokeWidth = AppSpacing.tradeBotHairline;
+        ..strokeWidth = TradeSpacingTokens.tradeBotHairline;
       canvas.drawArc(rect, start, sweep, true, stroke);
       start += sweep;
     }

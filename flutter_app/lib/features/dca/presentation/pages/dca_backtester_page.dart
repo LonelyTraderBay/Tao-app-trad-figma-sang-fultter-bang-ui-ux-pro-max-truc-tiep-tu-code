@@ -82,7 +82,7 @@ class _DCABacktesterPageState extends ConsumerState<DCABacktesterPage> {
                   physics: const ClampingScrollPhysics(),
                   bottomInset: scrollEndPadding,
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: [

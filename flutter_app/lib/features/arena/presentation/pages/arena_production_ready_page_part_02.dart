@@ -82,18 +82,21 @@ class _FlowStepRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            width: AppSpacing.arenaProductionFlowColumnWidth,
+            width: ArenaSpacingTokens.arenaProductionFlowColumnWidth,
             child: Column(
               children: [
                 SizedBox.square(
-                  dimension: AppSpacing.arenaProductionFlowDot,
+                  dimension: ArenaSpacingTokens.arenaProductionFlowDot,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
-                      color: first ? color.withValues(alpha: .18) : AppColors.surface2,
+                      color: first
+                          ? color.withValues(alpha: .18)
+                          : AppColors.surface2,
                       shape: CircleBorder(
                         side: BorderSide(
                           color: color,
-                          width: AppSpacing.arenaProductionFlowBorderWidth,
+                          width:
+                              ArenaSpacingTokens.arenaProductionFlowBorderWidth,
                         ),
                       ),
                     ),
@@ -102,9 +105,10 @@ class _FlowStepRow extends StatelessWidget {
                 if (!last)
                   Expanded(
                     child: Padding(
-                      padding: AppSpacing.arenaProductionFlowLineMarginPadding,
+                      padding: ArenaSpacingTokens
+                          .arenaProductionFlowLineMarginPadding,
                       child: SizedBox(
-                        width: AppSpacing.arenaProductionFlowLineWidth,
+                        width: ArenaSpacingTokens.arenaProductionFlowLineWidth,
                         child: ColoredBox(color: color.withValues(alpha: .30)),
                       ),
                     ),
@@ -121,7 +125,9 @@ class _FlowStepRow extends StatelessWidget {
                 onTap: () => onRoute(step.route),
                 borderRadius: AppRadii.inputRadius,
                 child: Padding(
-                  padding: AppSpacing.arenaProductionFlowStepPadding(last),
+                  padding: ArenaSpacingTokens.arenaProductionFlowStepPadding(
+                    last,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -137,7 +143,8 @@ class _FlowStepRow extends StatelessWidget {
                         step.description,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.arenaProductionCheckLineHeight,
+                          height:
+                              ArenaSpacingTokens.arenaProductionCheckLineHeight,
                         ),
                       ),
                     ],
@@ -168,7 +175,7 @@ class _RegistrySection extends StatelessWidget {
           'Clear labels: Live = implemented local UI, Release-gated = not user-available, QA = internal only.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaProductionHeroLineHeight,
+            height: ArenaSpacingTokens.arenaProductionHeroLineHeight,
           ),
         ),
         VitCard(
@@ -212,7 +219,7 @@ class _StatusMetric extends StatelessWidget {
           style: AppTextStyles.sectionTitle.copyWith(
             color: color,
             fontWeight: AppTextStyles.heavy,
-            height: AppSpacing.arenaProductionMetricLineHeight,
+            height: ArenaSpacingTokens.arenaProductionMetricLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -290,7 +297,7 @@ class _RegistryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final row = Padding(
-      padding: AppSpacing.arenaProductionRegistryRowPadding,
+      padding: ArenaSpacingTokens.arenaProductionRegistryRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -359,7 +366,7 @@ class _HandoffSection extends StatelessWidget {
           '4 handoff boards: Route Registry, Component Registry, Trust & Governance Rules, Points Ledger / Resolution Dictionary.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaProductionHeroLineHeight,
+            height: ArenaSpacingTokens.arenaProductionHeroLineHeight,
           ),
         ),
         _HandoffCard(
@@ -444,7 +451,9 @@ class _HandoffCard extends StatelessWidget {
                     ),
                     Text(
                       subtitle,
-                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
                     ),
                   ],
                 ),
@@ -467,7 +476,7 @@ class _RouteRegistryLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaBottomPaddingX2,
+      padding: ArenaSpacingTokens.arenaBottomPaddingX2,
       child: Row(
         children: [
           _StatusPill(status: screen.status),

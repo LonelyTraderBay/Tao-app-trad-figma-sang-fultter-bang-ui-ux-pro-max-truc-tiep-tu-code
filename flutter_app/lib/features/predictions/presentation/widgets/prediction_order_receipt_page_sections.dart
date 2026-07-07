@@ -11,7 +11,9 @@ class _MissingReceipt extends StatelessWidget {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         key: PredictionOrderReceiptPage.missingReceiptKey,
-        padding: AppSpacing.predictionReceiptScrollPadding(scrollEndPadding),
+        padding: PredictionsSpacingTokens.predictionReceiptScrollPadding(
+          scrollEndPadding,
+        ),
         child: const VitEmptyState(
           title: 'Không tìm thấy',
           message: 'Lệnh không tồn tại hoặc đã bị xoá',
@@ -39,7 +41,9 @@ class _ReceiptContent extends StatelessWidget {
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         key: PredictionOrderReceiptPage.contentKey,
-        padding: AppSpacing.predictionReceiptScrollPadding(scrollEndPadding),
+        padding: PredictionsSpacingTokens.predictionReceiptScrollPadding(
+          scrollEndPadding,
+        ),
         child: VitPageContent(
           rhythm: VitPageRhythm.standard,
           density: VitDensity.compact,
@@ -152,7 +156,9 @@ class _OrderSummary extends StatelessWidget {
               ),
               _SummaryRow(
                 label: 'Loại lệnh',
-                value: receipt.orderType == 'market' ? 'Thị trường' : 'Giới hạn',
+                value: receipt.orderType == 'market'
+                    ? 'Thị trường'
+                    : 'Giới hạn',
               ),
               _SummaryRow(label: 'Kết quả', value: receipt.outcome),
               _SummaryRow(
@@ -260,7 +266,7 @@ class _ShareReceiptButton extends StatelessWidget {
       leading: const Icon(
         Icons.ios_share_rounded,
         color: _predictionPrimary,
-        size: AppSpacing.predictionReceiptShareIcon,
+        size: PredictionsSpacingTokens.predictionReceiptShareIcon,
       ),
       child: const Text('Chia sẻ chi tiết lệnh'),
     );
@@ -280,7 +286,7 @@ class _DisclosureCard extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: AppColors.accent,
-            size: AppSpacing.predictionReceiptDisclosureIcon,
+            size: PredictionsSpacingTokens.predictionReceiptDisclosureIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

@@ -10,10 +10,10 @@ class _ReceiptErrorState extends StatelessWidget {
       title: 'Không tải được dữ liệu',
       message: 'Vui lòng kiểm tra kết nối mạng và thử lại.',
       icon: Icons.error_outline_rounded,
-      iconContainerSize: AppSpacing.launchpadBox48,
+      iconContainerSize: LaunchpadSpacingTokens.launchpadBox48,
       iconSize: AppSpacing.iconMd,
       iconShape: BoxShape.circle,
-      verticalPadding: AppSpacing.launchpadBox48,
+      verticalPadding: LaunchpadSpacingTokens.launchpadBox48,
       horizontalPadding: AppSpacing.x6,
       titleStyle: AppTextStyles.baseMedium.copyWith(
         color: AppColors.text1,
@@ -21,7 +21,7 @@ class _ReceiptErrorState extends StatelessWidget {
       ),
       messageStyle: AppTextStyles.caption.copyWith(
         color: AppColors.text3,
-        height: AppSpacing.launchpadLineHeightShort,
+        height: LaunchpadSpacingTokens.launchpadLineHeightShort,
       ),
     );
   }
@@ -84,11 +84,11 @@ class _SuccessHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadVerticalPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX4,
       child: Column(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.launchpadBox64,
+            dimension: LaunchpadSpacingTokens.launchpadBox64,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.buy15,
@@ -100,7 +100,7 @@ class _SuccessHero extends StatelessWidget {
                 child: Icon(
                   Icons.check_circle_outline_rounded,
                   color: AppColors.buy,
-                  size: AppSpacing.launchpadIconHuge,
+                  size: LaunchpadSpacingTokens.launchpadIconHuge,
                 ),
               ),
             ),
@@ -120,7 +120,7 @@ class _SuccessHero extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: LaunchpadSpacingTokens.launchpadLineHeightShort,
             ),
           ),
         ],

@@ -21,12 +21,12 @@ class _CurrentLevelHero extends StatelessWidget {
           Material(
             color: accent.withValues(alpha: 0.12),
             child: Padding(
-              padding: AppSpacing.p2pTradingLevelHeroHeaderPadding,
+              padding: P2PSpacingTokens.p2pTradingLevelHeroHeaderPadding,
               child: Row(
                 children: [
                   _LevelIconBadge(
                     level: level,
-                    size: AppSpacing.p2pTradingLevelHeroBadgeSize,
+                    size: P2PSpacingTokens.p2pTradingLevelHeroBadgeSize,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
@@ -54,7 +54,9 @@ class _CurrentLevelHero extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Row(
                           children: [
                             Icon(
@@ -84,7 +86,7 @@ class _CurrentLevelHero extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: AppSpacing.p2pTradingLevelHeroBodyPadding,
+            padding: P2PSpacingTokens.p2pTradingLevelHeroBodyPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -138,7 +140,7 @@ class _CurrentLevelHero extends StatelessWidget {
                 _ProgressTrack(
                   value: dailyRatio,
                   color: accent,
-                  height: AppSpacing.p2pTradingLevelDailyTrackHeight,
+                  height: P2PSpacingTokens.p2pTradingLevelDailyTrackHeight,
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Row(
@@ -201,14 +203,14 @@ class _HeroMetricCard extends StatelessWidget {
       variant: VitCardVariant.ghost,
       borderColor: color.withValues(alpha: 0.24),
       background: ColoredBox(color: color.withValues(alpha: 0.08)),
-      padding: AppSpacing.p2pTradingLevelMetricPadding,
+      padding: P2PSpacingTokens.p2pTradingLevelMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               SizedBox.square(
-                dimension: AppSpacing.p2pTradingLevelMetricIconSize,
+                dimension: P2PSpacingTokens.p2pTradingLevelMetricIconSize,
                 child: Material(
                   color: color.withValues(alpha: 0.14),
                   shape: const RoundedRectangleBorder(
@@ -218,7 +220,7 @@ class _HeroMetricCard extends StatelessWidget {
                     child: Icon(
                       icon,
                       color: color,
-                      size: AppSpacing.p2pTradingLevelMetricGlyphSize,
+                      size: P2PSpacingTokens.p2pTradingLevelMetricGlyphSize,
                     ),
                   ),
                 ),
@@ -232,7 +234,7 @@ class _HeroMetricCard extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.medium,
-                    height: AppSpacing.p2pTradingLevelMicroLineHeight,
+                    height: P2PSpacingTokens.p2pTradingLevelMicroLineHeight,
                   ),
                 ),
               ),
@@ -246,7 +248,7 @@ class _HeroMetricCard extends StatelessWidget {
             style: AppTextStyles.sectionTitle.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.p2pTradingLevelTitleLineHeight,
+              height: P2PSpacingTokens.p2pTradingLevelTitleLineHeight,
             ),
           ),
           if (subvalue != null)
@@ -274,7 +276,7 @@ class _NextLevelProgress extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.accent30,
-      padding: AppSpacing.p2pTradingLevelNextCardPadding,
+      padding: P2PSpacingTokens.p2pTradingLevelNextCardPadding,
       child: Column(
         children: [
           Row(
@@ -307,7 +309,7 @@ class _NextLevelProgress extends StatelessWidget {
           _ProgressTrack(
             value: progress,
             color: AppColors.accent,
-            height: AppSpacing.p2pTradingLevelNextTrackHeight,
+            height: P2PSpacingTokens.p2pTradingLevelNextTrackHeight,
           ),
         ],
       ),

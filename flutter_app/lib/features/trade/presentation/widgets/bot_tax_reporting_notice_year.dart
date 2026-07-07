@@ -17,7 +17,7 @@ class _TaxNotice extends StatelessWidget {
             color: _taxAmber,
             size: AppSpacing.iconSm,
           ),
-          const SizedBox(width: AppSpacing.tradeBotNarrowIconGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotNarrowIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +80,7 @@ class _YearPicker extends StatelessWidget {
             ),
           ),
           if (i != years.length - 1)
-            const SizedBox(width: AppSpacing.tradeBotRowGap),
+            const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
         ],
       ],
     );

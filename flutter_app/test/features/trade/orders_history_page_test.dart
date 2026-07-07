@@ -97,8 +97,14 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('BÁN'), findsWidgets);
-    expect(find.byKey(OrdersHistoryPage.orderKey('ord-history-002')), findsOneWidget);
-    expect(find.byKey(OrdersHistoryPage.orderKey('ord-history-001')), findsNothing);
+    expect(
+      find.byKey(OrdersHistoryPage.orderKey('ord-history-002')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(OrdersHistoryPage.orderKey('ord-history-001')),
+      findsNothing,
+    );
   });
 
   testWidgets('SC-050 first viewport reaches first open order', (tester) async {

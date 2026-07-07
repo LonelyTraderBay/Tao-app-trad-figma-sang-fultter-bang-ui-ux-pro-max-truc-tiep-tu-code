@@ -8,7 +8,7 @@ class _ShieldHero extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: SizedBox.square(
-        dimension: AppSpacing.authHeroIconBoxMd,
+        dimension: AuthSpacingTokens.authHeroIconBoxMd,
         child: Material(
           color: _authPrimary10,
           shape: const RoundedRectangleBorder(
@@ -21,7 +21,7 @@ class _ShieldHero extends StatelessWidget {
           child: const Icon(
             Icons.gpp_good_outlined,
             color: _authPrimary,
-            size: AppSpacing.authHeroIconLg,
+            size: AuthSpacingTokens.authHeroIconLg,
           ),
         ),
       ),
@@ -43,7 +43,7 @@ class _OtpIntro extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.pageTitle,
         ),
-        const Padding(padding: AppSpacing.authTopGapX3),
+        const Padding(padding: AuthSpacingTokens.authTopGapX3),
         Text.rich(
           TextSpan(
             text: 'Chúng tôi đã gửi mã 6 chữ số đến ',
@@ -53,7 +53,7 @@ class _OtpIntro extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.authReadableLineHeight,
+                  height: AuthSpacingTokens.authReadableLineHeight,
                 ),
               ),
             ],
@@ -61,10 +61,10 @@ class _OtpIntro extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.authReadableLineHeight,
+            height: AuthSpacingTokens.authReadableLineHeight,
           ),
         ),
-        const Padding(padding: AppSpacing.authTopGapX1),
+        const Padding(padding: AuthSpacingTokens.authTopGapX1),
         Text.rich(
           TextSpan(
             text: '(Demo: nhập ',

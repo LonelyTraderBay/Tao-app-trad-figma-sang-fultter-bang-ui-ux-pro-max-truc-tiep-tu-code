@@ -40,7 +40,7 @@ class WithdrawRecentAddresses extends StatelessWidget {
               onTap: () => onSelect(addresses[i]),
               variant: VitCardVariant.ghost,
               borderColor: AppColors.divider,
-              padding: AppSpacing.walletWithdrawRecentAddressPadding,
+              padding: WalletSpacingTokens.walletWithdrawRecentAddressPadding,
               child: Row(
                 children: [
                   Expanded(

@@ -76,18 +76,21 @@ class _LiveMarketDataAnalyticsPageState
                       context: context,
                       children: [
                         const VitHighRiskStatePanel(
-                        state: VitHighRiskUiState.riskReview,
-                        title: 'Xem lại rủi ro dữ liệu trực tiếp',
-                        message:
-                            'Luồng realtime có thể trễ hoặc ngắt khi biến động mạnh. Xác nhận thanh khoản, giới hạn và rủi ro khớp lệnh trước khi giao dịch.',
-                      ),
-                      LiveMarketPairCard(snapshot: snapshot),
-                      LiveMarketUnderlineTabs(
-                        activeId: _tab,
-                        onChanged: (id) => setState(() => _tab = id),
-                        keyBuilder: LiveMarketDataAnalyticsPage.tabKey,
-                      ),
-                      LiveMarketTabContent(activeTab: _tab, snapshot: snapshot),
+                          state: VitHighRiskUiState.riskReview,
+                          title: 'Xem lại rủi ro dữ liệu trực tiếp',
+                          message:
+                              'Luồng realtime có thể trễ hoặc ngắt khi biến động mạnh. Xác nhận thanh khoản, giới hạn và rủi ro khớp lệnh trước khi giao dịch.',
+                        ),
+                        LiveMarketPairCard(snapshot: snapshot),
+                        LiveMarketUnderlineTabs(
+                          activeId: _tab,
+                          onChanged: (id) => setState(() => _tab = id),
+                          keyBuilder: LiveMarketDataAnalyticsPage.tabKey,
+                        ),
+                        LiveMarketTabContent(
+                          activeTab: _tab,
+                          snapshot: snapshot,
+                        ),
                       ],
                     ),
                   ),

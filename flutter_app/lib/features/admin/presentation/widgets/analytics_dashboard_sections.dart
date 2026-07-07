@@ -118,14 +118,14 @@ class _MetricCard extends StatelessWidget {
       label:
           'Admin analytics metric $title: $value. $caption. $delta $timeframe',
       child: VitCard(
-        padding: AppSpacing.adminCardPadding,
+        padding: AdminSpacingTokens.adminCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 SizedBox.square(
-                  dimension: AppSpacing.adminBox40,
+                  dimension: AdminSpacingTokens.adminBox40,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: tint,
@@ -136,7 +136,7 @@ class _MetricCard extends StatelessWidget {
                     child: Icon(
                       icon,
                       color: accent,
-                      size: AppSpacing.adminIconXl,
+                      size: AdminSpacingTokens.adminIconXl,
                     ),
                   ),
                 ),
@@ -209,7 +209,7 @@ class _EventVolumeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasEvents = stats.any((stat) => stat.events > 0 || stat.users > 0);
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -219,7 +219,7 @@ class _EventVolumeCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.adminAnalyticsSparklineHeight,
+            height: AdminSpacingTokens.adminAnalyticsSparklineHeight,
             child: Semantics(
               label: hasEvents
                   ? 'Event volume chart for ${stats.length} days'
@@ -252,7 +252,7 @@ class _TopEventsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

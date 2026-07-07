@@ -321,7 +321,8 @@ class _SentimentComponentRow extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       variant: VitCardVariant.inner,
-      child: VitPageContent(rhythm: VitPageRhythm.standard, 
+      child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,

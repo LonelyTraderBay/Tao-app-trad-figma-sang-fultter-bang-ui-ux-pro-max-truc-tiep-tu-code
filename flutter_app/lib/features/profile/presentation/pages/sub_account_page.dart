@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/profile_sub_account_summary.dart';
 part '../widgets/profile_sub_account_primitives.dart';
@@ -76,7 +77,9 @@ class _SubAccountPageState extends ConsumerState<SubAccountPage> {
       body: SingleChildScrollView(
         key: SubAccountPage.contentKey,
         physics: const ClampingScrollPhysics(),
-        padding: AppSpacing.profileSubAccountScrollPadding(scrollClearance),
+        padding: ProfileSpacingTokens.profileSubAccountScrollPadding(
+          scrollClearance,
+        ),
         child: VitPageContent(
           rhythm: VitPageRhythm.standard,
           padding: VitContentPadding.none,

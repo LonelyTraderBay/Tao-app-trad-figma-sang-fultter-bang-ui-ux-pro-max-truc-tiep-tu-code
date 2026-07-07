@@ -15,7 +15,7 @@ class _AdIdentityCard extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _p2pAdAnalyticsIdentityExtent,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Row(
         children: [
           VitAccentPill(
@@ -153,7 +153,7 @@ class _MetricCard extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _p2pAdAnalyticsMetricCardExtent,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -243,7 +243,7 @@ class _QuickStats extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _p2pAdAnalyticsQuickStatsExtent,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Row(
         children: [
           for (var i = 0; i < items.length; i++) ...[
@@ -330,7 +330,7 @@ class _ConversionFunnel extends StatelessWidget {
 
     return VitCard(
       key: P2PAdAnalyticsPage.funnelKey,
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -342,7 +342,8 @@ class _ConversionFunnel extends StatelessWidget {
           ),
           for (var i = 0; i < stages.length; i++) ...[
             _FunnelBar(stage: stages[i], showPct: i > 0),
-            if (i < stages.length - 1) const SizedBox(height: AppSpacing.rowGap),
+            if (i < stages.length - 1)
+              const SizedBox(height: AppSpacing.rowGap),
           ],
           const SizedBox(height: AppSpacing.rowGap),
           const Divider(
@@ -447,7 +448,7 @@ class _PerformanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

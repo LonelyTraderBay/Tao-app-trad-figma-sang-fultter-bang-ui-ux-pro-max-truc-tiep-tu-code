@@ -28,9 +28,9 @@ class _DetailsBlock extends StatelessWidget {
                 Icon(
                   Icons.check_circle_rounded,
                   color: done ? _kycGreen : AppColors.text3,
-                  size: AppSpacing.kycDetailIcon,
+                  size: ProfileSpacingTokens.kycDetailIcon,
                 ),
-                const SizedBox(width: AppSpacing.kycDetailIconGap),
+                const SizedBox(width: ProfileSpacingTokens.kycDetailIconGap),
               ] else
                 Text(
                   '\u2022 ',
@@ -68,9 +68,9 @@ class _PrivacyCard extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _kycPrimary,
-            size: AppSpacing.kycPrivacyIcon,
+            size: ProfileSpacingTokens.kycPrivacyIcon,
           ),
-          const SizedBox(width: AppSpacing.kycPrivacyGapHorizontal),
+          const SizedBox(width: ProfileSpacingTokens.kycPrivacyGapHorizontal),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

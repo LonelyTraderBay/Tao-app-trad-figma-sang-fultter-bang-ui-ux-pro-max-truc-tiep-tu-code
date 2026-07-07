@@ -23,7 +23,7 @@ class _TierChip extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadTierChipPadding,
+        padding: LaunchpadSpacingTokens.launchpadTierChipPadding,
         child: Column(
           children: [
             FittedBox(
@@ -33,7 +33,7 @@ class _TierChip extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: tier.accent.resolve(),
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.launchpadLineHeightTight,
+                  height: LaunchpadSpacingTokens.launchpadLineHeightTight,
                 ),
               ),
             ),
@@ -42,7 +42,7 @@ class _TierChip extends StatelessWidget {
               '+${_formatApy(tier.apyBonus)}%',
               style: AppTextStyles.chartLabelXs.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightTight,
+                height: LaunchpadSpacingTokens.launchpadLineHeightTight,
               ),
             ),
           ],
@@ -62,7 +62,7 @@ class _UserStakeSummary extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: pool.accent.resolve().withValues(alpha: .18),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           Expanded(
@@ -180,7 +180,7 @@ class _PoolAction extends StatelessWidget {
       return VitCard(
         variant: VitCardVariant.inner,
         borderColor: AppColors.warningBorder,
-        padding: AppSpacing.launchpadVerticalPaddingX4,
+        padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX4,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -236,7 +236,7 @@ class _StepperField extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           Expanded(

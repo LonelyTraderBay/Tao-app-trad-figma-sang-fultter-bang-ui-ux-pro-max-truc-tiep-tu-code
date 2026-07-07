@@ -11,7 +11,7 @@ class _CorrelationTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDepthTabsHeight,
+        height: MarketsSpacingTokens.marketDepthTabsHeight,
         child: Column(
           children: [
             Expanded(
@@ -62,7 +62,7 @@ class _TimeframeChips extends StatelessWidget {
       onTap: onSelected,
       accentColor: _marketPrimary,
       height: _corrTimeframeChipHeight,
-      padding: AppSpacing.marketCorrelationsTimeframeChipPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsTimeframeChipPadding,
       gap: _corrChipGap,
       items: const [
         VitPresetChipItem(

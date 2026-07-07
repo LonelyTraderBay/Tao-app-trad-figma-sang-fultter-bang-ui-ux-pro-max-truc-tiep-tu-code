@@ -65,15 +65,17 @@ class _SourcesOverview extends StatelessWidget {
                 color: AppColors.buy.withValues(alpha: .1),
                 borderRadius: AppRadii.inputRadius,
                 child: const SizedBox.square(
-                  dimension: AppSpacing.predictionDataHeroIconBox,
+                  dimension: PredictionsSpacingTokens.predictionDataHeroIconBox,
                   child: Icon(
                     Icons.storage_rounded,
                     color: AppColors.buy,
-                    size: AppSpacing.predictionDataHeroIcon,
+                    size: PredictionsSpacingTokens.predictionDataHeroIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionDataHeroGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionDataHeroGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,8 +204,10 @@ class _SourceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Wrap(
-                      spacing: AppSpacing.predictionDataHeaderWrapGap,
-                      runSpacing: AppSpacing.predictionDataHeaderRunGap,
+                      spacing:
+                          PredictionsSpacingTokens.predictionDataHeaderWrapGap,
+                      runSpacing:
+                          PredictionsSpacingTokens.predictionDataHeaderRunGap,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Text(
@@ -232,11 +236,11 @@ class _SourceCard extends StatelessWidget {
                 color: AppColors.bg,
                 shape: CircleBorder(),
                 child: SizedBox.square(
-                  dimension: AppSpacing.predictionDataIconBubble,
+                  dimension: PredictionsSpacingTokens.predictionDataIconBubble,
                   child: Icon(
                     Icons.refresh_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.predictionDataIconBubbleIcon,
+                    size: PredictionsSpacingTokens.predictionDataIconBubbleIcon,
                   ),
                 ),
               ),
@@ -273,9 +277,11 @@ class _SourceCard extends StatelessWidget {
                 const Icon(
                   Icons.link_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.predictionDataSourceLinkIcon,
+                  size: PredictionsSpacingTokens.predictionDataSourceLinkIcon,
                 ),
-                const SizedBox(width: AppSpacing.predictionDataSourceLinkGap),
+                const SizedBox(
+                  width: PredictionsSpacingTokens.predictionDataSourceLinkGap,
+                ),
                 Expanded(
                   child: Text(
                     source.apiUrl!,

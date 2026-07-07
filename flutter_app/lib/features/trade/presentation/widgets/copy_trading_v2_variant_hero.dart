@@ -71,12 +71,12 @@ class _VariantButton extends StatelessWidget {
       onTap: onTap,
       height: _copyVariantButtonHeight,
       constraints: const BoxConstraints(
-        minWidth: AppSpacing.copyTradingV2VariantButtonMinWidth,
+        minWidth: TradeSpacingTokens.copyTradingV2VariantButtonMinWidth,
       ),
       alignment: Alignment.center,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetHeroTopGap,
-        right: AppSpacing.walletAssetHeroTopGap,
+        left: WalletSpacingTokens.walletAssetHeroTopGap,
+        right: WalletSpacingTokens.walletAssetHeroTopGap,
       ),
       variant: active ? VitCardVariant.standard : VitCardVariant.ghost,
       borderColor: active ? _copyPrimary : AppColors.cardBorder,
@@ -370,10 +370,10 @@ class _BoldStatCard extends StatelessWidget {
       borderColor: color.withValues(alpha: .88),
       height: _copyBoldStatHeight,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.walletAssetChartBottomGap,
-        top: AppSpacing.walletAssetChartBottomGap,
-        right: AppSpacing.walletAssetChartBottomGap,
-        bottom: AppSpacing.walletAssetChartBottomGap,
+        left: WalletSpacingTokens.walletAssetChartBottomGap,
+        top: WalletSpacingTokens.walletAssetChartBottomGap,
+        right: WalletSpacingTokens.walletAssetChartBottomGap,
+        bottom: WalletSpacingTokens.walletAssetChartBottomGap,
       ),
       alignment: Alignment.center,
       child: Column(

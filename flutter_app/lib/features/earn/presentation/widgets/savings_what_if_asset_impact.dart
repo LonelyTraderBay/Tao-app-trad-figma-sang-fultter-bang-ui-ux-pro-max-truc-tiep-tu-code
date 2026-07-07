@@ -10,7 +10,7 @@ class _AssetImpactList extends StatelessWidget {
     return VitCard(
       key: SavingsWhatIfPage.assetImpactKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         children: [
           for (final impact in result.assetImpact) ...[
@@ -62,7 +62,7 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.savingsWhatIfAssetBadge,
+      dimension: EarnSpacingTokens.savingsWhatIfAssetBadge,
       child: Material(
         color: color.withValues(alpha: .14),
         borderRadius: AppRadii.lgRadius,

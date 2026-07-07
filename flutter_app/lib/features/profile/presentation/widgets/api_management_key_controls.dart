@@ -27,10 +27,10 @@ class _ToggleSwitch extends StatelessWidget {
       onTap: onTap,
       child: VitTogglePill(
         enabled: active,
-        width: AppSpacing.profileApiToggleWidth,
-        height: AppSpacing.profileApiToggleHeight,
-        knobSize: AppSpacing.profileApiToggleKnob,
-        knobMargin: AppSpacing.profileApiToggleKnobMargin,
+        width: ProfileSpacingTokens.profileApiToggleWidth,
+        height: ProfileSpacingTokens.profileApiToggleHeight,
+        knobSize: ProfileSpacingTokens.profileApiToggleKnob,
+        knobMargin: ProfileSpacingTokens.profileApiToggleKnobMargin,
         activeColor: _apiGreen.withValues(alpha: .16),
         activeKnobColor: _apiGreen,
         inactiveColor: AppColors.transparent,
@@ -60,7 +60,9 @@ class _SecretRow extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       variant: VitCardVariant.inner,
-      borderColor: redBorder ? _apiRed.withValues(alpha: .1) : AppColors.transparent,
+      borderColor: redBorder
+          ? _apiRed.withValues(alpha: .1)
+          : AppColors.transparent,
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: AppSpacing.x3,
         vertical: AppSpacing.x2,
@@ -130,8 +132,8 @@ class _PermissionBadges extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.profileApiPermissionSpacing,
-      runSpacing: AppSpacing.profileApiPermissionRunSpacing,
+      spacing: ProfileSpacingTokens.profileApiPermissionSpacing,
+      runSpacing: ProfileSpacingTokens.profileApiPermissionRunSpacing,
       children: [
         for (final permission in apiKey.permissions)
           VitAccentPill(
@@ -165,9 +167,9 @@ class _UsageRow extends StatelessWidget {
         const Icon(
           Icons.access_time_rounded,
           color: _apiMuted,
-          size: AppSpacing.profileApiUsageIcon,
+          size: ProfileSpacingTokens.profileApiUsageIcon,
         ),
-        const SizedBox(width: AppSpacing.profileApiUsageGapInline),
+        const SizedBox(width: ProfileSpacingTokens.profileApiUsageGapInline),
         Expanded(
           child: Text(
             'D\u00F9ng l\u1EA7n cu\u1ED1i: ${apiKey.lastUsed ?? 'Ch\u01B0a d\u00F9ng'}',

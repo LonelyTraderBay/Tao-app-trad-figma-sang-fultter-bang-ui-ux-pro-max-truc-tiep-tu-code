@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pAmlVisualClearance = AppSpacing.x3;
 const double _p2pAmlNativeClearance = AppSpacing.x2;
@@ -67,11 +68,11 @@ class P2PAmlScreeningPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pAmlScreeningScrollPadding(
+                    padding: P2PSpacingTokens.p2pAmlScreeningScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -114,7 +115,7 @@ class _AmlHero extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
-        padding: AppSpacing.p2pAmlScreeningCardPadding,
+        padding: P2PSpacingTokens.p2pAmlScreeningCardPadding,
         child: Row(
           children: [
             Material(
@@ -176,7 +177,7 @@ class _AmlSchedule extends StatelessWidget {
     return VitCard(
       key: P2PAmlScreeningPage.scheduleKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pAmlScreeningCardPadding,
+      padding: P2PSpacingTokens.p2pAmlScreeningCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -270,7 +271,7 @@ class _AmlCheckRow extends StatelessWidget {
 
     return Padding(
       key: P2PAmlScreeningPage.checkKey(check.id),
-      padding: AppSpacing.p2pAmlScreeningCardPadding,
+      padding: P2PSpacingTokens.p2pAmlScreeningCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -319,9 +320,7 @@ class _AmlCheckRow extends StatelessWidget {
                   check.detail,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -347,7 +346,7 @@ class _AmlInfoNotice extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .24)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pAmlScreeningCardPadding,
+        padding: P2PSpacingTokens.p2pAmlScreeningCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -23,7 +23,8 @@ class _LoginEventList extends StatelessWidget {
             expanded: expandedEventId == events[index].id,
             onTap: () => onToggle(events[index].id),
           ),
-          if (index != events.length - 1) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (index != events.length - 1)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -83,7 +84,7 @@ class _EventIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.p2pLoginHistoryIconBox,
+      dimension: P2PSpacingTokens.p2pLoginHistoryIconBox,
       child: Material(
         type: MaterialType.transparency,
         color: color.withValues(alpha: .14),
@@ -91,7 +92,7 @@ class _EventIcon extends StatelessWidget {
         child: Icon(
           _deviceIcon(event.deviceType),
           color: color,
-          size: AppSpacing.p2pLoginHistoryEventIcon,
+          size: P2PSpacingTokens.p2pLoginHistoryEventIcon,
         ),
       ),
     );
@@ -165,7 +166,7 @@ class _EventTrailing extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        maxWidth: AppSpacing.p2pLoginHistoryTrailingMaxWidth,
+        maxWidth: P2PSpacingTokens.p2pLoginHistoryTrailingMaxWidth,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -178,7 +179,7 @@ class _EventTrailing extends StatelessWidget {
             child: const Icon(
               Icons.keyboard_arrow_down_rounded,
               color: AppColors.text3,
-              size: AppSpacing.p2pLoginHistoryExpandIcon,
+              size: P2PSpacingTokens.p2pLoginHistoryExpandIcon,
             ),
           ),
         ],

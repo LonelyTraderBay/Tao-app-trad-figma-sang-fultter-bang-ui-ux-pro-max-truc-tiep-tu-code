@@ -67,7 +67,8 @@ class _LiquidityOverview extends StatelessWidget {
                   child: Icon(
                     Icons.water_drop_outlined,
                     color: _predictionPrimary,
-                    size: AppSpacing.predictionMarketMakerOverviewIcon,
+                    size: PredictionsSpacingTokens
+                        .predictionMarketMakerOverviewIcon,
                   ),
                 ),
               ),
@@ -154,7 +155,8 @@ class _AddLiquidityForm extends StatelessWidget {
                 prefix: const Icon(
                   Icons.attach_money_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.predictionMarketMakerInputPrefixIcon,
+                  size: PredictionsSpacingTokens
+                      .predictionMarketMakerInputPrefixIcon,
                 ),
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),

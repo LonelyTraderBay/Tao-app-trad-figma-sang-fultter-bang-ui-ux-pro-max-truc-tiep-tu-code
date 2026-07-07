@@ -74,7 +74,7 @@ class _EntryCard extends StatelessWidget {
             child: InkWell(
               onTap: onToggle,
               child: Padding(
-                padding: AppSpacing.p2pBlacklistListCardPadding,
+                padding: P2PSpacingTokens.p2pBlacklistListCardPadding,
                 child: Row(
                   children: [
                     _Avatar(entry: entry, reason: reason),
@@ -172,7 +172,7 @@ class _ExpandedEntry extends StatelessWidget {
           child: ColoredBox(color: AppColors.divider),
         ),
         Padding(
-          padding: AppSpacing.p2pBlacklistListCardPadding,
+          padding: P2PSpacingTokens.p2pBlacklistListCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -180,7 +180,7 @@ class _ExpandedEntry extends StatelessWidget {
                 color: AppColors.surface2,
                 borderRadius: AppRadii.cardRadius,
                 child: Padding(
-                  padding: AppSpacing.p2pBlacklistListTinyPadding,
+                  padding: P2PSpacingTokens.p2pBlacklistListTinyPadding,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -343,7 +343,7 @@ class _OrderLink extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.cardRadius,
       child: Padding(
-        padding: AppSpacing.p2pBlacklistListTinyPadding,
+        padding: P2PSpacingTokens.p2pBlacklistListTinyPadding,
         child: Row(
           children: [
             const Icon(

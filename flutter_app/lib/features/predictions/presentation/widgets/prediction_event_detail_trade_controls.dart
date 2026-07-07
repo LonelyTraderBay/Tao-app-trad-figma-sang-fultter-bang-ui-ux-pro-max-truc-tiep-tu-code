@@ -21,9 +21,11 @@ class _RiskLink extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.warn,
-                size: AppSpacing.predictionDetailRiskIcon,
+                size: PredictionsSpacingTokens.predictionDetailRiskIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionDetailRiskIconGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionDetailRiskIconGap,
+              ),
               Flexible(
                 child: Text(
                   'Hiểu rủi ro trước khi giao dịch',
@@ -35,11 +37,13 @@ class _RiskLink extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionDetailRiskChevronGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionDetailRiskChevronGap,
+              ),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.warn,
-                size: AppSpacing.predictionDetailRiskChevron,
+                size: PredictionsSpacingTokens.predictionDetailRiskChevron,
               ),
             ],
           ),

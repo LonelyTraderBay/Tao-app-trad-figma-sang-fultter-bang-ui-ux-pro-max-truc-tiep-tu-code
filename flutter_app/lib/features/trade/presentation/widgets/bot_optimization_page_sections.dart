@@ -7,7 +7,7 @@ class _IntroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       borderColor: _optimizationPrimary.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +56,7 @@ class _TargetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -67,7 +67,8 @@ class _TargetCard extends StatelessWidget {
               selected: target.id == selectedId,
               onTap: () => onChanged(target.id),
             ),
-            if (target != targets.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (target != targets.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -94,7 +95,7 @@ class _TargetTile extends StatelessWidget {
       onTap: onTap,
       variant: VitCardVariant.inner,
       constraints: const BoxConstraints(minHeight: AppSpacing.buttonStandard),
-      padding: AppSpacing.tradeBotChipPadding,
+      padding: TradeSpacingTokens.tradeBotChipPadding,
       borderColor: selected ? _optimizationPrimary : AppColors.borderSolid,
       child: Row(
         children: [
@@ -153,7 +154,7 @@ class _RangeCard extends StatelessWidget {
     final rangePct = ranges.firstWhere((item) => item.id == 'gridRange');
 
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       borderColor: AppColors.cardBorder,
       child: Column(
         children: [
@@ -247,7 +248,7 @@ class _HowItWorksCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -279,7 +280,8 @@ class _HowItWorksCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (step != steps.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (step != steps.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -296,7 +298,7 @@ class _QueuedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: _optimizationPrimary.withValues(alpha: .24),
       child: Text(
         'Optimization queued (${result.jobId}) - about ${result.estimatedMinutes} min',

@@ -28,14 +28,14 @@ class _ExpandedDetails extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
           ),
           child: Padding(
-            padding: AppSpacing.adminCompactPadding,
+            padding: AdminSpacingTokens.adminCompactPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.error_outline_rounded,
                   color: AppColors.warn,
-                  size: AppSpacing.adminIconMd,
+                  size: AdminSpacingTokens.adminIconMd,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
@@ -83,7 +83,7 @@ class _ExpandedDetails extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: const SizedBox(
-            height: AppSpacing.adminProgressHeight,
+            height: AdminSpacingTokens.adminProgressHeight,
             child: ColoredBox(color: AppColors.surface2),
           ),
         ),

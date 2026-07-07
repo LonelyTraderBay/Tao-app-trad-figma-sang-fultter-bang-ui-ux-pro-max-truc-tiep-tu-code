@@ -9,7 +9,7 @@ class _PenaltyExampleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,7 +25,7 @@ class _PenaltyExampleCard extends StatelessWidget {
             color: AppColors.surface2,
             borderRadius: AppRadii.lgRadius,
             child: Padding(
-              padding: AppSpacing.earnPaddingX3,
+              padding: EarnSpacingTokens.earnPaddingX3,
               child: Column(
                 children: [
                   for (final row in example.rows) ...[
@@ -33,7 +33,9 @@ class _PenaltyExampleCard extends StatelessWidget {
                       const Divider(color: AppColors.divider),
                     _CalculationRow(row: row),
                     if (row != example.rows.last)
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                   ],
                 ],
               ),
@@ -136,7 +138,9 @@ class _EmergencyTab extends StatelessWidget {
                                 fontWeight: AppTextStyles.bold,
                               ),
                             ),
-                            const Padding(padding: AppSpacing.earnTopPaddingX2),
+                            const Padding(
+                              padding: EarnSpacingTokens.earnTopPaddingX2,
+                            ),
                             Text(
                               snapshot.emergencyBody,
                               style: AppTextStyles.caption.copyWith(
@@ -149,11 +153,15 @@ class _EmergencyTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   for (final reason in snapshot.emergencyReasons) ...[
                     _BulletLine(text: reason, color: AppColors.sell),
                     if (reason != snapshot.emergencyReasons.last)
-                      const Padding(padding: AppSpacing.earnTopPaddingX2),
+                      const Padding(
+                        padding: EarnSpacingTokens.earnTopPaddingX2,
+                      ),
                   ],
                 ],
               ),
@@ -172,7 +180,9 @@ class _EmergencyTab extends StatelessWidget {
                   for (final step in snapshot.emergencySteps) ...[
                     _EmergencyStepRow(step: step),
                     if (step != snapshot.emergencySteps.last)
-                      const Padding(padding: AppSpacing.earnTopPaddingX3),
+                      const Padding(
+                        padding: EarnSpacingTokens.earnTopPaddingX3,
+                      ),
                   ],
                 ],
               ),
@@ -304,7 +314,7 @@ class _EmergencyFeeTile extends StatelessWidget {
           color: AppColors.surface2,
           borderRadius: AppRadii.lgRadius,
           child: Padding(
-            padding: AppSpacing.earnPaddingX3,
+            padding: EarnSpacingTokens.earnPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -356,7 +366,8 @@ class _SupportCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final contact in contacts) ...[
             _SupportRow(contact: contact),
-            if (contact != contacts.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (contact != contacts.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

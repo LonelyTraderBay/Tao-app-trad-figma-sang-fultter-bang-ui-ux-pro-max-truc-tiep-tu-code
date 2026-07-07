@@ -6,7 +6,7 @@ class _IntroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeToolRiskIntroPadding,
+      padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       borderColor: _riskPrimary.withValues(alpha: .30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -14,7 +14,7 @@ class _IntroCard extends StatelessWidget {
           _IconTile(
             icon: Icons.shield_rounded,
             color: _riskPrimary,
-            size: AppSpacing.tradeToolIconTileSm,
+            size: TradeSpacingTokens.tradeToolIconTileSm,
           ),
           const SizedBox(width: _riskCardSpace),
           Expanded(
@@ -53,13 +53,13 @@ class _FeatureCard extends StatelessWidget {
     return VitCard(
       key: RiskManagementDemoPage.featureKey(feature.id),
       onTap: onTap,
-      padding: AppSpacing.tradeToolRiskIntroPadding,
+      padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       child: Row(
         children: [
           _IconTile(
             icon: _iconForFeature(feature),
             color: color,
-            size: AppSpacing.tradeToolIconTileMd,
+            size: TradeSpacingTokens.tradeToolIconTileMd,
           ),
           const SizedBox(width: _riskCardSpace),
           Expanded(
@@ -129,7 +129,7 @@ class _BenefitsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeToolRiskIntroPadding,
+      padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -170,7 +170,11 @@ class _BenefitItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: _riskPrimary, size: AppSpacing.tradeToolBodyIcon),
+        Icon(
+          icon,
+          color: _riskPrimary,
+          size: TradeSpacingTokens.tradeToolBodyIcon,
+        ),
         const SizedBox(width: _riskSpace),
         Expanded(
           child: Column(
@@ -204,7 +208,7 @@ class _StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeToolRiskIntroPadding,
+      padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -229,7 +233,8 @@ class _StatusCard extends StatelessWidget {
                 _StatusPill(complete: item.complete),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

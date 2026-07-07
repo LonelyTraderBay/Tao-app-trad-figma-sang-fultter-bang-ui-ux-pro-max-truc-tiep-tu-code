@@ -57,7 +57,7 @@ class _TipCard extends StatelessWidget {
             child: const Icon(
               Icons.lightbulb_outline_rounded,
               color: _gasAmber,
-              size: AppSpacing.walletGasTipIcon,
+              size: WalletSpacingTokens.walletGasTipIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
@@ -107,7 +107,7 @@ class _TipCard extends StatelessWidget {
                             const Icon(
                               Icons.attach_money_rounded,
                               color: _gasGreen,
-                              size: AppSpacing.walletGasSavingIcon,
+                              size: WalletSpacingTokens.walletGasSavingIcon,
                             ),
                             Text(
                               'Est. ${tip.potentialSaving}',
@@ -178,7 +178,9 @@ class _QuickActionsCard extends StatelessWidget {
               onTap: () => onAction(_actions[i]),
             ),
             if (i != _actions.length - 1)
-              const SizedBox(height: AppSpacing.walletGasQuickActionBottomGap),
+              const SizedBox(
+                height: WalletSpacingTokens.walletGasQuickActionBottomGap,
+              ),
           ],
         ],
       ),
@@ -195,10 +197,10 @@ class _GasLineChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (points.length < 2) return;
     final chart = Rect.fromLTWH(
-      AppSpacing.walletGasLineChartInsetX,
-      AppSpacing.walletGasLineChartInsetTop,
-      size.width - AppSpacing.walletGasLineChartInsetX * 2,
-      size.height - AppSpacing.walletGasLineChartInsetBottom,
+      WalletSpacingTokens.walletGasLineChartInsetX,
+      WalletSpacingTokens.walletGasLineChartInsetTop,
+      size.width - WalletSpacingTokens.walletGasLineChartInsetX * 2,
+      size.height - WalletSpacingTokens.walletGasLineChartInsetBottom,
     );
     _drawGasLine(canvas, chart, points.map((p) => p.slow).toList(), _gasGreen);
     _drawGasLine(
@@ -226,7 +228,7 @@ class _GasLineChartPainter extends CustomPainter {
     }
     final paint = Paint()
       ..color = color
-      ..strokeWidth = AppSpacing.walletGasChartStroke
+      ..strokeWidth = WalletSpacingTokens.walletGasChartStroke
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round
       ..style = PaintingStyle.stroke;
@@ -250,15 +252,16 @@ class _NetworkBarChartPainter extends CustomPainter {
     final maxTx = points.map((point) => point.txCount).reduce(math.max);
     final barWidth =
         size.width /
-        (points.length * AppSpacing.walletGasNetworkBarWidthDivisor);
-    final gap = barWidth * AppSpacing.walletGasNetworkBarGapMultiplier;
+        (points.length * WalletSpacingTokens.walletGasNetworkBarWidthDivisor);
+    final gap = barWidth * WalletSpacingTokens.walletGasNetworkBarGapMultiplier;
     final paint = Paint()..color = _gasPrimary;
     for (var i = 0; i < points.length; i++) {
       final barHeight =
           (points[i].txCount / maxTx) *
-          (size.height - AppSpacing.walletGasNetworkBarHeightInset);
+          (size.height - WalletSpacingTokens.walletGasNetworkBarHeightInset);
       final left =
-          i * (barWidth + gap) + AppSpacing.walletGasNetworkBarLeftPadding;
+          i * (barWidth + gap) +
+          WalletSpacingTokens.walletGasNetworkBarLeftPadding;
       final rect = RRect.fromRectAndRadius(
         Rect.fromLTWH(left, size.height - barHeight, barWidth, barHeight),
         AppRadii.statusBarCorner,

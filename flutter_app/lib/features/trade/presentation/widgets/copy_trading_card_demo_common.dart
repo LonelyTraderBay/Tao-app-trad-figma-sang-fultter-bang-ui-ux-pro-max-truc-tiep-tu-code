@@ -21,7 +21,7 @@ class _InfoPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.standard,
       radius: VitCardRadius.large,
-      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoPanelPadding,
       borderColor: borderColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,7 @@ class _InfoPanel extends StatelessWidget {
               Icon(
                 icon,
                 color: iconColor,
-                size: AppSpacing.tradeBotClientMoneyDocumentGlyph,
+                size: TradeSpacingTokens.tradeBotClientMoneyDocumentGlyph,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -73,7 +73,7 @@ class _ScoreCard extends StatelessWidget {
       child: VitCard(
         variant: VitCardVariant.ghost,
         radius: VitCardRadius.standard,
-        padding: AppSpacing.tradeBotCopyDemoCompactPadding,
+        padding: TradeSpacingTokens.tradeBotCopyDemoCompactPadding,
         borderColor: selected ? color : null,
         background: ColoredBox(color: _statusTintColor(status)),
         child: Column(
@@ -138,7 +138,7 @@ class _ComplianceIcon extends StatelessWidget {
       child: Icon(
         icon,
         color: _statusColor(status),
-        size: AppSpacing.tradeBotMediumIcon,
+        size: TradeSpacingTokens.tradeBotMediumIcon,
       ),
     );
   }
@@ -176,8 +176,8 @@ class _BulletLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: compact
-          ? AppSpacing.tradeBotCopyDemoCompactLinePadding
-          : AppSpacing.tradeBotCopyDemoLinePadding,
+          ? TradeSpacingTokens.tradeBotCopyDemoCompactLinePadding
+          : TradeSpacingTokens.tradeBotCopyDemoLinePadding,
       child: Text(
         '- $text',
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -195,14 +195,16 @@ class _IconLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.tradeBotCopyDemoLinePadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoLinePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             icon,
             color: AppColors.buy,
-            size: AppSpacing.tradeBotSmallIcon + AppSpacing.hairlineStroke,
+            size:
+                TradeSpacingTokens.tradeBotSmallIcon +
+                AppSpacing.hairlineStroke,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 part '../widgets/predictions_breaking_page_sections.dart';
 part '../widgets/predictions_breaking_page_common.dart';
@@ -98,9 +99,10 @@ class _PredictionsBreakingPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsBreakingPage.contentKey,
-                    padding: AppSpacing.predictionHomeScrollPadding(
-                      scrollEndPadding,
-                    ),
+                    padding:
+                        PredictionsSpacingTokens.predictionHomeScrollPadding(
+                          scrollEndPadding,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,

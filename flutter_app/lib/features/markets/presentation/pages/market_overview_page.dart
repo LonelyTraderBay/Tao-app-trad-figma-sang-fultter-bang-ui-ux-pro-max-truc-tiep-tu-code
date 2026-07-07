@@ -22,6 +22,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 import '../widgets/market_body_review_widgets.dart';
 
 part 'market_overview_page_part_01.dart';
@@ -85,7 +86,9 @@ class MarketOverviewPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: contentKey,
-                    padding: AppSpacing.marketScrollPadding(bottomInset),
+                    padding: MarketsSpacingTokens.marketScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,

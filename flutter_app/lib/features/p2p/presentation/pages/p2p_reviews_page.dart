@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 enum _P2PReviewTab { received, given }
 
@@ -75,7 +76,7 @@ class _P2PReviewsPageState extends ConsumerState<P2PReviewsPage> {
                   child: SingleChildScrollView(
                     key: P2PReviewsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantCommerceScrollPadding(
+                    padding: P2PSpacingTokens.p2pMerchantCommerceScrollPadding(
                       bottomInset,
                     ),
                     child: VitPageContent(

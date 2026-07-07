@@ -6,11 +6,14 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 const _modeRelatedDescriptionLineRatio =
-    AppSpacing.arenaModeRelatedDescriptionLineHeight;
-const _modeRelatedDividerExtent = AppSpacing.arenaModeRelatedDividerHeight;
-const _modeRelatedTitleLineRatio = AppSpacing.arenaModeRelatedTitleLineHeight;
+    ArenaSpacingTokens.arenaModeRelatedDescriptionLineHeight;
+const _modeRelatedDividerExtent =
+    ArenaSpacingTokens.arenaModeRelatedDividerHeight;
+const _modeRelatedTitleLineRatio =
+    ArenaSpacingTokens.arenaModeRelatedTitleLineHeight;
 
 class ArenaModeRelatedRooms extends StatelessWidget {
   const ArenaModeRelatedRooms({
@@ -79,7 +82,7 @@ class _RoomRow extends StatelessWidget {
         variant: VitCardVariant.ghost,
         radius: VitCardRadius.standard,
         child: Padding(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Row(
             children: [
               Expanded(
@@ -148,7 +151,7 @@ class ArenaModeRelatedModes extends StatelessWidget {
             children: [
               for (final item in modes) ...[
                 SizedBox(
-                  width: AppSpacing.arenaModeRelatedCardWidth,
+                  width: ArenaSpacingTokens.arenaModeRelatedCardWidth,
                   child: _RelatedModeCard(
                     cardKey: relatedModeKey(item.id),
                     mode: item,
@@ -185,7 +188,7 @@ class _RelatedModeCard extends StatelessWidget {
       padding: AppSpacing.cardTilePadding,
       contentAlign: VitCardContentAlign.center,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.arenaModeRelatedCardMinHeight,
+        minHeight: ArenaSpacingTokens.arenaModeRelatedCardMinHeight,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

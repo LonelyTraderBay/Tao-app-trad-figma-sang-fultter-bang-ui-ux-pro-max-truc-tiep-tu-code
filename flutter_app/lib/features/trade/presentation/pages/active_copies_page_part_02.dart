@@ -73,7 +73,7 @@ class _ExpandedCopyDetails extends StatelessWidget {
           color: AppColors.cardBorder,
         ),
         Padding(
-          padding: AppSpacing.activeCopiesDetailsPadding,
+          padding: TradeSpacingTokens.activeCopiesDetailsPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -160,7 +160,9 @@ class _ExpandedCopyDetails extends StatelessWidget {
                 for (final trade in copy.recentTrades.take(3)) ...[
                   _RecentTradeRow(trade: trade),
                   if (trade != copy.recentTrades.take(3).last)
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                 ],
               ],
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
@@ -237,7 +239,7 @@ class _DetailStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.activeCopiesSmallCardPadding,
+      padding: TradeSpacingTokens.activeCopiesSmallCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -277,7 +279,7 @@ class _RecentTradeRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.activeCopiesSmallCardPadding,
+      padding: TradeSpacingTokens.activeCopiesSmallCardPadding,
       child: Row(
         children: [
           VitAccentPill(
@@ -330,7 +332,7 @@ class _ActionButton extends StatelessWidget {
           ? VitCtaButtonVariant.danger
           : VitCtaButtonVariant.secondary,
       leading: Icon(icon),
-      padding: AppSpacing.activeCopiesActionPadding,
+      padding: TradeSpacingTokens.activeCopiesActionPadding,
       child: Text(label),
     );
   }

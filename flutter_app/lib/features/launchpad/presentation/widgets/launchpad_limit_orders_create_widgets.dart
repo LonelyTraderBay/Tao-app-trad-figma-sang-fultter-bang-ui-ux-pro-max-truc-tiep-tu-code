@@ -68,7 +68,7 @@ class _CreateOrderSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               VitCard(
-                padding: AppSpacing.launchpadPaddingX4,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX4,
                 child: Column(
                   children: [
                     _LabeledField(
@@ -78,7 +78,9 @@ class _CreateOrderSection extends StatelessWidget {
                       hintText: 'ARB',
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     _LabeledField(
                       fieldKey: LaunchpadLimitOrdersPage.targetFieldKey,
                       label: 'Target Price (USD)',
@@ -89,7 +91,9 @@ class _CreateOrderSection extends StatelessWidget {
                       ),
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     _LabeledField(
                       fieldKey: LaunchpadLimitOrdersPage.amountFieldKey,
                       label: 'Amount',
@@ -100,7 +104,9 @@ class _CreateOrderSection extends StatelessWidget {
                       ),
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -110,7 +116,9 @@ class _CreateOrderSection extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         for (final value in ['1', '7', '14', '30']) ...[
@@ -126,12 +134,16 @@ class _CreateOrderSection extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     const Divider(
                       height: AppSpacing.dividerHairline,
                       color: AppColors.border,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -181,7 +193,7 @@ class _CreateOrderSection extends StatelessWidget {
           if (submissionMessage != null) ...[
             const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
-              padding: AppSpacing.launchpadPaddingX3,
+              padding: LaunchpadSpacingTokens.launchpadPaddingX3,
               borderColor: AppColors.buy20,
               child: Row(
                 children: [
@@ -195,7 +207,7 @@ class _CreateOrderSection extends StatelessWidget {
                       submissionMessage!,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.launchpadLineHeightShort,
+                        height: LaunchpadSpacingTokens.launchpadLineHeightShort,
                       ),
                     ),
                   ),

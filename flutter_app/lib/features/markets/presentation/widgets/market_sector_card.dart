@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/market_icon_tokens.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketSectorCard extends StatelessWidget {
   const MarketSectorCard({
@@ -28,7 +29,7 @@ class MarketSectorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: marketSectorKey(sector.id),
-      padding: AppSpacing.marketSectorCardPadding,
+      padding: MarketsSpacingTokens.marketSectorCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,15 +40,17 @@ class MarketSectorCard extends StatelessWidget {
                 color: sector.color.resolve().withValues(alpha: 0.16),
                 shape: const CircleBorder(),
                 child: SizedBox.square(
-                  dimension: AppSpacing.marketSectorCardIcon,
+                  dimension: MarketsSpacingTokens.marketSectorCardIcon,
                   child: Icon(
                     MarketIconTokens.icon(sector.icon),
                     color: sector.color.resolve(),
-                    size: AppSpacing.marketSectorCardIconGlyph,
+                    size: MarketsSpacingTokens.marketSectorCardIconGlyph,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketSectorCardHeaderGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketSectorCardHeaderGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,15 +61,19 @@ class MarketSectorCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.body.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.marketSectorLineHeightTitle,
+                        height:
+                            MarketsSpacingTokens.marketSectorLineHeightTitle,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.marketSectorTitleGap),
+                    const SizedBox(
+                      height: MarketsSpacingTokens.marketSectorTitleGap,
+                    ),
                     Text(
                       '${sector.coinCount} coins',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.marketSectorLineHeightTight,
+                        height:
+                            MarketsSpacingTokens.marketSectorLineHeightTight,
                       ),
                     ),
                   ],
@@ -84,7 +91,7 @@ class MarketSectorCard extends StatelessWidget {
                   value: formatMarketSectorBillions(sector.totalMarketCap),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketSectorMetricGap),
+              const SizedBox(width: MarketsSpacingTokens.marketSectorMetricGap),
               Expanded(
                 child: _SectorMetric(
                   label: 'KL 24h',
@@ -94,9 +101,11 @@ class MarketSectorCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketSectorMetricGap),
+          const SizedBox(height: MarketsSpacingTokens.marketSectorMetricGap),
           MarketSectorDominanceBar(sector: sector),
-          const SizedBox(height: AppSpacing.marketSectorCardHeaderGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketSectorCardHeaderGap,
+          ),
           _TopCoinChips(symbols: sector.topCoins),
         ],
       ),
@@ -137,17 +146,19 @@ class MarketSectorDominanceBar extends StatelessWidget {
       children: [
         LinearProgressIndicator(
           value: widthFactor,
-          minHeight: AppSpacing.marketSectorDominanceHeight,
+          minHeight: MarketsSpacingTokens.marketSectorDominanceHeight,
           borderRadius: AppRadii.pillRadius,
           backgroundColor: AppColors.surface3,
           color: sector.color.resolve(),
         ),
-        const SizedBox(height: AppSpacing.marketSectorDominanceLabelGap),
+        const SizedBox(
+          height: MarketsSpacingTokens.marketSectorDominanceLabelGap,
+        ),
         Text(
           '${formatMarketSectorDominance(sector.dominance)}% dominance',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.marketSectorLineHeightTight,
+            height: MarketsSpacingTokens.marketSectorLineHeightTight,
           ),
         ),
       ],
@@ -181,7 +192,7 @@ class _SectorMetric extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
-        const SizedBox(width: AppSpacing.marketSectorMetricInlineGap),
+        const SizedBox(width: MarketsSpacingTokens.marketSectorMetricInlineGap),
         Flexible(
           child: Text(
             value,
@@ -192,7 +203,7 @@ class _SectorMetric extends StatelessWidget {
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketSectorLineHeightTight,
+              height: MarketsSpacingTokens.marketSectorLineHeightTight,
             ),
           ),
         ),
@@ -211,8 +222,8 @@ class _TopCoinChips extends StatelessWidget {
     final visible = symbols.take(4).toList();
     final remaining = math.max(0, symbols.length - visible.length);
     return Wrap(
-      spacing: AppSpacing.marketSectorChipGap,
-      runSpacing: AppSpacing.marketSectorChipGap,
+      spacing: MarketsSpacingTokens.marketSectorChipGap,
+      runSpacing: MarketsSpacingTokens.marketSectorChipGap,
       children: [
         for (final symbol in visible) _CoinChip(label: symbol),
         if (remaining > 0) _CoinChip(label: '+$remaining'),

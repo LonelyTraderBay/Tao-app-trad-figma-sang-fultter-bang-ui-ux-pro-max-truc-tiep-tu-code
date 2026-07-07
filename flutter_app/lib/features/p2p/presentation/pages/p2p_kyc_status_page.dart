@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_kyc_status_page_sections.dart';
 part '../widgets/p2p_kyc_status_page_common.dart';
@@ -85,7 +86,7 @@ class P2PKycStatusPage extends ConsumerWidget {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: AppSpacing.p2pKycStatusScrollPadding(
+                      padding: P2PSpacingTokens.p2pKycStatusScrollPadding(
                         scrollEndPadding,
                       ),
                       child: Column(
@@ -104,9 +105,9 @@ class P2PKycStatusPage extends ConsumerWidget {
                           const SizedBox(height: _p2pKycSectionGap),
                           _SupportCard(snapshot: snapshot),
                           VitPageContent(
-         rhythm: VitPageRhythm.form,
+                            rhythm: VitPageRhythm.form,
                             padding: VitContentPadding.compact,
-                            customGap: AppSpacing.p2pKycContentGap,
+                            customGap: P2PSpacingTokens.p2pKycContentGap,
                             children: const [
                               VitHighRiskStatePanel(
                                 state: VitHighRiskUiState.riskReview,

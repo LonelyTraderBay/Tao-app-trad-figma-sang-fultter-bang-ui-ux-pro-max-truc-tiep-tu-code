@@ -11,14 +11,14 @@ class _SupportContextCard extends StatelessWidget {
       key: SupportPage.contextKey,
       radius: VitCardRadius.standard,
       borderColor: AppModuleAccents.support.withValues(alpha: .28),
-      padding: AppSpacing.supportCardPadding,
+      padding: SupportSpacingTokens.supportCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               SizedBox.square(
-                dimension: AppSpacing.supportContextIconBox,
+                dimension: SupportSpacingTokens.supportContextIconBox,
                 child: Material(
                   color: AppModuleAccents.support.withValues(alpha: .12),
                   shape: RoundedRectangleBorder(
@@ -30,7 +30,7 @@ class _SupportContextCard extends StatelessWidget {
                   child: const Icon(
                     Icons.assignment_outlined,
                     color: AppModuleAccents.support,
-                    size: AppSpacing.supportContextIcon,
+                    size: SupportSpacingTokens.supportContextIcon,
                   ),
                 ),
               ),
@@ -48,14 +48,14 @@ class _SupportContextCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.supportTinyGap),
+                    const SizedBox(height: SupportSpacingTokens.supportTinyGap),
                     Text(
                       supportContext.issueLabel,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.supportLineHeightTight,
+                        height: SupportSpacingTokens.supportLineHeightTight,
                       ),
                     ),
                   ],
@@ -128,11 +128,11 @@ class _TimelineRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            width: AppSpacing.supportTimelineRailWidth,
+            width: SupportSpacingTokens.supportTimelineRailWidth,
             child: Column(
               children: [
                 SizedBox.square(
-                  dimension: AppSpacing.supportTimelineDotSize,
+                  dimension: SupportSpacingTokens.supportTimelineDotSize,
                   child: Material(
                     color: AppColors.primary15,
                     shape: const CircleBorder(),
@@ -150,7 +150,7 @@ class _TimelineRow extends StatelessWidget {
                 if (!isLast)
                   Expanded(
                     child: SizedBox(
-                      width: AppSpacing.supportTimelineLineWidth,
+                      width: SupportSpacingTokens.supportTimelineLineWidth,
                       child: ColoredBox(color: AppColors.divider),
                     ),
                   ),
@@ -160,14 +160,14 @@ class _TimelineRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Padding(
-              padding: AppSpacing.supportTimelineLabelPadding(isLast),
+              padding: SupportSpacingTokens.supportTimelineLabelPadding(isLast),
               child: Text(
                 label,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.supportLineHeightTight,
+                  height: SupportSpacingTokens.supportLineHeightTight,
                 ),
               ),
             ),

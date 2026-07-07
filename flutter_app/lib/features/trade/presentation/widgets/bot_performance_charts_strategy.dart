@@ -8,7 +8,7 @@ class _KeyMetricsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       density: VitDensity.compact,
       child: Column(
         children: [
@@ -41,7 +41,7 @@ class _KeyMetricsCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             width: double.infinity,
-            padding: AppSpacing.tradeBotControlPadding,
+            padding: TradeSpacingTokens.tradeBotControlPadding,
             borderColor: _analyticsGreen.withValues(alpha: .22),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +136,7 @@ class _PnlChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: BotPerformanceAnalyticsPage.pnlChartKey,
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       density: VitDensity.compact,
       child: SizedBox(
         height: _analyticsChartExtent,
@@ -157,7 +157,7 @@ class _WinLossChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       density: VitDensity.compact,
       child: SizedBox(
         height: _analyticsDistributionExtent,
@@ -182,7 +182,7 @@ class _StrategyPerformanceCard extends StatelessWidget {
         .fold<double>(0, math.max);
 
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
       density: VitDensity.compact,
       child: Column(
         children: [
@@ -212,7 +212,11 @@ class _StrategyRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.circle, color: color, size: AppSpacing.tradeBotCardGap),
+            Icon(
+              Icons.circle,
+              color: color,
+              size: TradeSpacingTokens.tradeBotCardGap,
+            ),
             const SizedBox(width: _analyticsSpace),
             Expanded(
               child: Text(

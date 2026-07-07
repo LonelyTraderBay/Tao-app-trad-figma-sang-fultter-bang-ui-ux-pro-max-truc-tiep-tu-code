@@ -12,16 +12,19 @@ class _HoldersContent extends StatelessWidget {
         Row(
           children: [
             const SizedBox(
-              width: AppSpacing.predictionDetailHolderRankColumnWidth,
+              width: PredictionsSpacingTokens
+                  .predictionDetailHolderRankColumnWidth,
               child: _OrderBookLabel('#'),
             ),
             const Expanded(child: _OrderBookLabel('TRADER')),
             const SizedBox(
-              width: AppSpacing.predictionDetailHolderSideColumnWidth,
+              width: PredictionsSpacingTokens
+                  .predictionDetailHolderSideColumnWidth,
               child: _OrderBookLabel('SIDE', alignEnd: true),
             ),
             const SizedBox(
-              width: AppSpacing.predictionDetailHolderSharesColumnWidth,
+              width: PredictionsSpacingTokens
+                  .predictionDetailHolderSharesColumnWidth,
               child: _OrderBookLabel('SHARES', alignEnd: true),
             ),
           ],
@@ -44,17 +47,18 @@ class _HolderRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = holder.outcome == 'Yes' ? AppColors.buy : AppColors.sell;
     return Padding(
-      padding: AppSpacing.predictionDetailHolderRowPadding,
+      padding: PredictionsSpacingTokens.predictionDetailHolderRowPadding,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.predictionDetailHolderRankColumnWidth,
+            width:
+                PredictionsSpacingTokens.predictionDetailHolderRankColumnWidth,
             child: Icon(
               rank == 1 ? Icons.workspace_premium_rounded : Icons.circle,
               color: rank == 1 ? AppColors.warn : AppColors.text3,
               size: rank == 1
-                  ? AppSpacing.predictionDetailHolderWinnerIcon
-                  : AppSpacing.predictionDetailHolderDefaultIcon,
+                  ? PredictionsSpacingTokens.predictionDetailHolderWinnerIcon
+                  : PredictionsSpacingTokens.predictionDetailHolderDefaultIcon,
             ),
           ),
           Expanded(
@@ -67,7 +71,8 @@ class _HolderRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: AppSpacing.predictionDetailHolderSideColumnWidth,
+            width:
+                PredictionsSpacingTokens.predictionDetailHolderSideColumnWidth,
             child: Align(
               alignment: Alignment.centerRight,
               child: _TinyBadge(
@@ -78,7 +83,8 @@ class _HolderRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: AppSpacing.predictionDetailHolderSharesColumnWidth,
+            width: PredictionsSpacingTokens
+                .predictionDetailHolderSharesColumnWidth,
             child: Text(
               _formatInt(holder.shares),
               textAlign: TextAlign.end,
@@ -105,23 +111,27 @@ class _ActivityContent extends StatelessWidget {
       children: [
         for (final item in snapshot.activity)
           Padding(
-            padding: AppSpacing.predictionDetailActivityRowPadding,
+            padding:
+                PredictionsSpacingTokens.predictionDetailActivityRowPadding,
             child: Row(
               children: [
                 Material(
                   color: AppColors.surface2,
                   borderRadius: AppRadii.smRadius,
                   child: const SizedBox.square(
-                    dimension: AppSpacing.predictionDetailActivityIconBox,
+                    dimension: PredictionsSpacingTokens
+                        .predictionDetailActivityIconBox,
                     child: Icon(
                       Icons.flash_on_rounded,
                       color: _predictionPrimary,
-                      size: AppSpacing.predictionDetailActivityIcon,
+                      size:
+                          PredictionsSpacingTokens.predictionDetailActivityIcon,
                     ),
                   ),
                 ),
                 const SizedBox(
-                  width: AppSpacing.predictionDetailActivityIconGap,
+                  width:
+                      PredictionsSpacingTokens.predictionDetailActivityIconGap,
                 ),
                 Expanded(
                   child: Column(

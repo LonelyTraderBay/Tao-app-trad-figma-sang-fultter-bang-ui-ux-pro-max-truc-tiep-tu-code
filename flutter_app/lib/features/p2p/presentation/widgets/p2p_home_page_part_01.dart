@@ -47,7 +47,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
             children: [
               const SizedBox.shrink() /*
                 key: P2PHomePage.offlineKey,
-                padding: AppSpacing.p2pHomeOfflinePadding,
+                padding: P2PSpacingTokens.p2pHomeOfflinePadding,
                 child: const SizedBox.shrink(
                   message: 'Mất kết nối. Đang hiển thị dữ liệu gần nhất.',
                   detail: 'Cập nhật lần cuối: 2 phút trước',
@@ -88,9 +88,11 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                   child: SingleChildScrollView(
                     key: P2PHomePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pHomeScrollPadding(scrollEndPadding),
+                    padding: P2PSpacingTokens.p2pHomeScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -106,7 +108,7 @@ class _P2PHomePageState extends ConsumerState<P2PHomePage> {
                         if (showOfflineWithCache) ...[
                           Padding(
                             key: P2PHomePage.offlineKey,
-                            padding: AppSpacing.p2pHomeOfflinePadding,
+                            padding: P2PSpacingTokens.p2pHomeOfflinePadding,
                             child: VitOfflineBanner(
                               message:
                                   'M\u1EA5t k\u1EBFt n\u1ED1i. \u0110ang hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u g\u1EA7n nh\u1EA5t.',

@@ -18,7 +18,7 @@ class _MiniRiskMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: borderColor,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         children: [
           Text(
@@ -58,7 +58,7 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.pillRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnPillPaddingLarge,
+        padding: EarnSpacingTokens.earnPillPaddingLarge,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -92,7 +92,7 @@ class _ScorePill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           '$score/100',
           style: AppTextStyles.micro.copyWith(
@@ -116,13 +116,13 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingRiskDashboardPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+          height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
         ),
       ),
     );

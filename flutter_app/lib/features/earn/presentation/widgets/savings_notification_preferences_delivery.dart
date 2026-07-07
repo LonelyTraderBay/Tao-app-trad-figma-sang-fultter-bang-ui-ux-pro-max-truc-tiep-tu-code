@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_notification_preferences_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsNotificationProductsTab extends StatelessWidget {
   const SavingsNotificationProductsTab({super.key, required this.products});
@@ -28,7 +29,8 @@ class SavingsNotificationProductsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final product in products) ...[
           _ProductCard(product: product),
-          if (product != products.last) const SizedBox(height: AppSpacing.rowGap),
+          if (product != products.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -47,14 +49,14 @@ class _ProductCard extends StatelessWidget {
     return VitCard(
       key: SavingsNotificationPreferencesKeys.product(product.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               SizedBox.square(
-                dimension: AppSpacing.savingsNotificationIconBox,
+                dimension: EarnSpacingTokens.savingsNotificationIconBox,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: color.withValues(alpha: .14),
@@ -98,7 +100,7 @@ class _ProductCard extends StatelessWidget {
                 color: product.typeLabel == 'Linh hoạt'
                     ? AppColors.buy
                     : AppColors.primary,
-                size: AppSpacing.savingsNotificationInlineIcon,
+                size: EarnSpacingTokens.savingsNotificationInlineIcon,
               ),
             ],
           ),
@@ -197,11 +199,11 @@ class _ChannelCard extends StatelessWidget {
     return VitCard(
       key: SavingsNotificationPreferencesKeys.channel(channel.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.savingsNotificationIconBox,
+            dimension: EarnSpacingTokens.savingsNotificationIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .14),
@@ -213,7 +215,7 @@ class _ChannelCard extends StatelessWidget {
                 child: Icon(
                   savingsNotificationAlertIcon(channel.iconKey),
                   color: color,
-                  size: AppSpacing.savingsNotificationAlertIcon,
+                  size: EarnSpacingTokens.savingsNotificationAlertIcon,
                 ),
               ),
             ),
@@ -262,13 +264,13 @@ class _ActionSettingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           Icon(
             icon,
             color: AppColors.primary,
-            size: AppSpacing.savingsNotificationActionIcon,
+            size: EarnSpacingTokens.savingsNotificationActionIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -306,7 +308,7 @@ class _InfoCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,7 +316,7 @@ class _InfoCard extends StatelessWidget {
           Icon(
             icon,
             color: AppColors.primary,
-            size: AppSpacing.savingsNotificationInlineIcon,
+            size: EarnSpacingTokens.savingsNotificationInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -347,7 +349,7 @@ class SavingsNotificationSmallChip extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(label, style: AppTextStyles.micro.copyWith(color: color)),
       ),
     );

@@ -15,14 +15,15 @@ class _PinnedSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: AnnouncementsPage.pinnedKey,
-      padding: AppSpacing.supportSectionMargin,
+      padding: SupportSpacingTokens.supportSectionMargin,
       child: VitPageSection(
         label: 'GHIM',
         accentColor: AppModuleAccents.support,
         density: VitDensity.compact,
         children: [
           for (var i = 0; i < announcements.length; i++) ...[
-            if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (i > 0)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _AnnouncementCard(
               announcement: announcements[i],
               expanded: expandedId == announcements[i].id,
@@ -53,7 +54,7 @@ class _AnnouncementList extends StatelessWidget {
     if (showEmpty) {
       return Padding(
         key: AnnouncementsPage.listKey,
-        padding: AppSpacing.supportSectionMargin,
+        padding: SupportSpacingTokens.supportSectionMargin,
         child: const VitEmptyState(
           key: AnnouncementsPage.emptyKey,
           title: 'Không có thông báo nào',
@@ -65,12 +66,13 @@ class _AnnouncementList extends StatelessWidget {
 
     return Padding(
       key: AnnouncementsPage.listKey,
-      padding: AppSpacing.supportSectionMargin,
+      padding: SupportSpacingTokens.supportSectionMargin,
       child: VitPageSection(
         density: VitDensity.compact,
         children: [
           for (var i = 0; i < announcements.length; i++) ...[
-            if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (i > 0)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
             _AnnouncementCard(
               announcement: announcements[i],
               expanded: expandedId == announcements[i].id,
@@ -100,7 +102,7 @@ class _AnnouncementCard extends StatelessWidget {
     return VitCard(
       key: AnnouncementsPage.announcementKey(announcement.id),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.supportCardPadding,
+      padding: SupportSpacingTokens.supportCardPadding,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +137,7 @@ class _AnnouncementCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.supportLineHeightReadable,
+                    height: SupportSpacingTokens.supportLineHeightReadable,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -145,7 +147,7 @@ class _AnnouncementCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.supportLineHeightReadable,
+                    height: SupportSpacingTokens.supportLineHeightReadable,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -166,20 +168,26 @@ class _AnnouncementCard extends StatelessWidget {
                   ],
                 ),
                 if (expanded) ...[
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   const Divider(
                     color: AppColors.divider,
                     height: AppSpacing.dividerHairline,
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   Text(
                     announcement.content,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.supportLineHeightExpanded,
+                      height: SupportSpacingTokens.supportLineHeightExpanded,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
@@ -222,7 +230,7 @@ class _TypeIcon extends StatelessWidget {
         child: Icon(
           style.icon,
           color: style.color,
-          size: AppSpacing.supportAnnouncementIcon,
+          size: SupportSpacingTokens.supportAnnouncementIcon,
         ),
       ),
     );

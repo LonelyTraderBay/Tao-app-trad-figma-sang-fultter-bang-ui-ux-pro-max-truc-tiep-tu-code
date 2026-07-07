@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/withdraw_
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part 'withdraw_amount_actions.dart';
 
@@ -113,7 +114,7 @@ class WithdrawNetworkSelector extends StatelessWidget {
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text2,
-                  size: AppSpacing.transferActionIcon,
+                  size: WalletSpacingTokens.transferActionIcon,
                 ),
               ],
             ),
@@ -169,7 +170,7 @@ class WithdrawAddressInput extends StatelessWidget {
       textStyle: AppTextStyles.control,
       onChanged: onChanged,
       suffix: Padding(
-        padding: AppSpacing.walletWithdrawInputSuffixPadding,
+        padding: WalletSpacingTokens.walletWithdrawInputSuffixPadding,
         child: Text(
           asset,
           style: AppTextStyles.control.copyWith(color: AppColors.text3),

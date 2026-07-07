@@ -17,7 +17,7 @@ class _AnnouncementTypeFilters extends StatelessWidget {
       key: AnnouncementsPage.filtersKey,
       scrollDirection: Axis.horizontal,
       physics: const ClampingScrollPhysics(),
-      padding: AppSpacing.supportFilterRailPadding,
+      padding: SupportSpacingTokens.supportFilterRailPadding,
       child: Row(
         children: [
           for (final filter in filters) ...[
@@ -26,8 +26,8 @@ class _AnnouncementTypeFilters extends StatelessWidget {
               label: filter.label,
               selected: filter.id == activeFilterId,
               onTap: () => onChanged(filter.id),
-              height: AppSpacing.supportFilterChipHeight,
-              padding: AppSpacing.supportFilterChipPadding,
+              height: SupportSpacingTokens.supportFilterChipHeight,
+              padding: SupportSpacingTokens.supportFilterChipPadding,
               accentColor: AppColors.primary,
             ),
             if (filter != filters.last) const SizedBox(width: AppSpacing.x3),

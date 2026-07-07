@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class CopyTradingTrendPill extends StatelessWidget {
   const CopyTradingTrendPill({super.key, required this.value});
@@ -54,7 +55,7 @@ class CopyTradingSmallButton extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.tradeBotCopyDemoInlinePadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoInlinePadding,
       borderColor: AppColors.primary20,
       background: const ColoredBox(color: AppColors.primary15),
       onTap: () {
@@ -100,14 +101,16 @@ class CopyTradingIconLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.tradeBotCopyDemoLinePadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoLinePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             icon,
             color: AppColors.buy,
-            size: AppSpacing.tradeBotSmallIcon + AppSpacing.hairlineStroke,
+            size:
+                TradeSpacingTokens.tradeBotSmallIcon +
+                AppSpacing.hairlineStroke,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

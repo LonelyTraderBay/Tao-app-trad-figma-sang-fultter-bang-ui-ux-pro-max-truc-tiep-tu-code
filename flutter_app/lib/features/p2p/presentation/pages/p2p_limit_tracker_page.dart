@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pLimitMajorGap = AppSpacing.x3;
 const double _p2pLimitSectionGap = AppSpacing.x2;
@@ -54,7 +55,7 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
           key: P2PLimitTrackerPage.periodTabsKey,
           selected: _period,
           height: AppSpacing.buttonCompact,
-          padding: AppSpacing.p2pLimitTrackerPeriodTabPadding,
+          padding: P2PSpacingTokens.p2pLimitTrackerPeriodTabPadding,
           options: [
             for (final usage in snapshot.usages)
               VitSegmentedChoiceOption(
@@ -73,7 +74,7 @@ class _P2PLimitTrackerPageState extends ConsumerState<P2PLimitTrackerPage> {
         _LimitBreakdownList(items: snapshot.breakdown),
         const VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.p2pLimitTrackerCompactPadding,
+          padding: P2PSpacingTokens.p2pLimitTrackerCompactPadding,
           child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'P2P limit review',
@@ -102,7 +103,7 @@ class _UsageHero extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
-        padding: AppSpacing.p2pLimitTrackerCardPadding,
+        padding: P2PSpacingTokens.p2pLimitTrackerCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -192,7 +193,7 @@ class _DayBreakdownCard extends StatelessWidget {
     return VitCard(
       key: P2PLimitTrackerPage.dayKey(item.date),
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pLimitTrackerCompactPadding,
+      padding: P2PSpacingTokens.p2pLimitTrackerCompactPadding,
       child: Column(
         children: [
           Row(
@@ -200,7 +201,7 @@ class _DayBreakdownCard extends StatelessWidget {
               const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: AppSpacing.p2pComplianceCalendarIcon,
+                size: P2PSpacingTokens.p2pComplianceCalendarIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -261,7 +262,7 @@ class _TradeSideBox extends StatelessWidget {
       color: color.withValues(alpha: .12),
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       child: Padding(
-        padding: AppSpacing.p2pLimitTrackerMetricPadding,
+        padding: P2PSpacingTokens.p2pLimitTrackerMetricPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

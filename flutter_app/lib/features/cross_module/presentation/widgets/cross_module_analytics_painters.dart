@@ -10,7 +10,7 @@ class _ChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

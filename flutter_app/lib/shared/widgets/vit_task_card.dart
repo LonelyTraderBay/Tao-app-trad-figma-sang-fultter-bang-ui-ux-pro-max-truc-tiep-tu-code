@@ -40,8 +40,9 @@ class VitTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rewardColor =
-        status == VitTaskCardStatus.claimed ? claimedRewardColor : pendingRewardColor;
+    final rewardColor = status == VitTaskCardStatus.claimed
+        ? claimedRewardColor
+        : pendingRewardColor;
 
     return VitCard(
       padding: AppSpacing.taskCardPadding,
@@ -79,9 +80,7 @@ class VitTaskCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(
-                  height: AppSpacing.taskCardProgressSectionGap,
-                ),
+                const SizedBox(height: AppSpacing.taskCardProgressSectionGap),
                 _VitTaskCardProgressBar(value: progress, color: accentColor),
                 const SizedBox(height: AppSpacing.taskCardRewardRowGap),
                 Row(

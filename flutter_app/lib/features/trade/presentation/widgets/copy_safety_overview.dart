@@ -10,7 +10,7 @@ class _HeroBanner extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       constraints: const BoxConstraints(minHeight: _safetyHeroMinHeight),
-      padding: AppSpacing.copySafetyHeroPadding,
+      padding: TradeSpacingTokens.copySafetyHeroPadding,
       borderColor: _safetyPrimary,
       child: Row(
         children: [
@@ -18,14 +18,14 @@ class _HeroBanner extends StatelessWidget {
           const VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.large,
-            width: AppSpacing.walletTokenHeroIcon,
-            height: AppSpacing.walletTokenHeroIcon,
+            width: WalletSpacingTokens.walletTokenHeroIcon,
+            height: WalletSpacingTokens.walletTokenHeroIcon,
             borderColor: _safetyPrimary,
             alignment: Alignment.center,
             child: Icon(
               Icons.shield_outlined,
               color: _safetyPrimary,
-              size: AppSpacing.walletTokenHeroIconGlyph,
+              size: WalletSpacingTokens.walletTokenHeroIconGlyph,
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -172,7 +172,7 @@ class _VerificationTierCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       constraints: BoxConstraints(minHeight: _safetyTierMinHeight),
-      padding: AppSpacing.copySafetyTierPadding,
+      padding: TradeSpacingTokens.copySafetyTierPadding,
       borderColor: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,7 +182,7 @@ class _VerificationTierCard extends StatelessWidget {
               Icon(
                 Icons.shield_outlined,
                 color: color,
-                size: AppSpacing.copySafetyTierIcon,
+                size: TradeSpacingTokens.copySafetyTierIcon,
               ),
               const SizedBox(width: _safetySpace),
               Text(
@@ -219,7 +219,7 @@ class _ListBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.copySafetyListIndentPadding,
+      padding: TradeSpacingTokens.copySafetyListIndentPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -234,7 +234,7 @@ class _ListBlock extends StatelessWidget {
           const SizedBox(height: _safetySpace),
           for (final item in items) ...[
             Padding(
-              padding: AppSpacing.copySafetyListItemPadding,
+              padding: TradeSpacingTokens.copySafetyListItemPadding,
               child: Text(
                 '${check ? '/' : '*'} $item',
                 style: AppTextStyles.micro.copyWith(

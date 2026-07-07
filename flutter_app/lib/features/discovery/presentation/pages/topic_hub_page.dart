@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/topic_hub_header.dart';
 part '../widgets/topic_hub_sections.dart';
@@ -116,7 +117,7 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
               if (snapshot.showOfflineBanner)
                 Padding(
                   key: TopicHubPage.offlineKey,
-                  padding: AppSpacing.discoveryOfflineBannerPadding,
+                  padding: LaunchpadSpacingTokens.discoveryOfflineBannerPadding,
                   child: VitOfflineBanner(
                     message: snapshot.staleMessage,
                     detail: snapshot.staleDetail,
@@ -130,9 +131,10 @@ class _TopicHubPageState extends ConsumerState<TopicHubPage> {
                   child: SingleChildScrollView(
                     key: TopicHubPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.discoveryContentScrollPadding(
-                      bottomInset,
-                    ),
+                    padding:
+                        LaunchpadSpacingTokens.discoveryContentScrollPadding(
+                          bottomInset,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.none,

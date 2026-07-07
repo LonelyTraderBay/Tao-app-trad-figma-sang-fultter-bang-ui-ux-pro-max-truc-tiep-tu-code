@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_asset_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 const marketDerivativesPrimary = AppColors.primary;
 
@@ -46,8 +46,9 @@ class MarketDerivativesSplitBar extends StatelessWidget {
               flex: (leftPercent * 10).round(),
               child: SizedBox(
                 height: compact
-                    ? AppSpacing.marketDerivativesSplitBarCompactHeight
-                    : AppSpacing.marketDerivativesSplitBarHeight,
+                    ? MarketsSpacingTokens
+                          .marketDerivativesSplitBarCompactHeight
+                    : MarketsSpacingTokens.marketDerivativesSplitBarHeight,
                 child: const Material(
                   color: AppColors.buy,
                   borderRadius: BorderRadius.horizontal(
@@ -60,8 +61,9 @@ class MarketDerivativesSplitBar extends StatelessWidget {
               flex: (rightPercent * 10).round(),
               child: SizedBox(
                 height: compact
-                    ? AppSpacing.marketDerivativesSplitBarCompactHeight
-                    : AppSpacing.marketDerivativesSplitBarHeight,
+                    ? MarketsSpacingTokens
+                          .marketDerivativesSplitBarCompactHeight
+                    : MarketsSpacingTokens.marketDerivativesSplitBarHeight,
                 child: const Material(
                   color: AppColors.sell,
                   borderRadius: BorderRadius.horizontal(
@@ -72,7 +74,9 @@ class MarketDerivativesSplitBar extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.marketDerivativesSplitLabelGap),
+        const SizedBox(
+          height: MarketsSpacingTokens.marketDerivativesSplitLabelGap,
+        ),
         Row(
           children: [
             Expanded(
@@ -113,7 +117,7 @@ class MarketDerivativesMetric extends StatelessWidget {
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(height: AppSpacing.marketDerivativesMetricGap),
+        const SizedBox(height: MarketsSpacingTokens.marketDerivativesMetricGap),
         Text(
           value,
           style: AppTextStyles.caption.copyWith(
@@ -154,9 +158,7 @@ class MarketDerivativesPairLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final base = pair.symbol.split('/').first;
-    final labelStyle = size <= 30
-        ? AppTextStyles.micro
-        : AppTextStyles.caption;
+    final labelStyle = size <= 30 ? AppTextStyles.micro : AppTextStyles.caption;
     return CircleAvatar(
       radius: size / 2,
       backgroundColor: AppAssetColors.forSymbol(

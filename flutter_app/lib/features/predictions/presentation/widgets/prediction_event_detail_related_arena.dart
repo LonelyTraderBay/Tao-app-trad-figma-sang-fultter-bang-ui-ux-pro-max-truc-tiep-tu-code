@@ -22,7 +22,9 @@ class _RelatedMarketsSection extends StatelessWidget {
                 index += 1
               ) ...[
                 if (index > 0)
-                  const SizedBox(width: AppSpacing.predictionDetailRelatedGap),
+                  const SizedBox(
+                    width: PredictionsSpacingTokens.predictionDetailRelatedGap,
+                  ),
                 _RelatedMarketCard(
                   event: snapshot.relatedEvents[index],
                   onTap: () => context.go(
@@ -51,7 +53,7 @@ class _RelatedMarketCard extends StatelessWidget {
     final top = event.outcomes.first;
     return SizedBox(
       key: PredictionEventDetailPage.relatedKey(event.id),
-      width: AppSpacing.predictionDetailRelatedCardWidth,
+      width: PredictionsSpacingTokens.predictionDetailRelatedCardWidth,
       child: VitCard(
         onTap: onTap,
         density: VitDensity.compact,
@@ -77,13 +79,16 @@ class _RelatedMarketCard extends StatelessWidget {
             Row(
               children: [
                 SizedBox.square(
-                  dimension: AppSpacing.predictionDetailRelatedDot,
+                  dimension:
+                      PredictionsSpacingTokens.predictionDetailRelatedDot,
                   child: Material(
                     color: top.tone.resolve(),
                     shape: const CircleBorder(),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.predictionDetailRelatedDotGap),
+                const SizedBox(
+                  width: PredictionsSpacingTokens.predictionDetailRelatedDotGap,
+                ),
                 Text(
                   '${top.chance}%',
                   style: AppTextStyles.body.copyWith(
@@ -93,7 +98,8 @@ class _RelatedMarketCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: AppSpacing.predictionDetailRelatedLabelGap,
+                  width:
+                      PredictionsSpacingTokens.predictionDetailRelatedLabelGap,
                 ),
                 Text(
                   top.label,
@@ -133,18 +139,21 @@ class _ArenaBridgeSection extends StatelessWidget {
           Row(
             children: [
               const SizedBox.square(
-                dimension: AppSpacing.predictionDetailArenaIconBox,
+                dimension:
+                    PredictionsSpacingTokens.predictionDetailArenaIconBox,
                 child: Material(
                   color: AppColors.warn10,
                   borderRadius: AppRadii.mdRadius,
                   child: Icon(
                     Icons.sports_esports_rounded,
                     color: AppColors.warn,
-                    size: AppSpacing.predictionDetailArenaIcon,
+                    size: PredictionsSpacingTokens.predictionDetailArenaIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionDetailArenaHeaderGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionDetailArenaHeaderGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +166,8 @@ class _ArenaBridgeSection extends StatelessWidget {
                       ),
                     ),
                     Wrap(
-                      spacing: AppSpacing.predictionDetailArenaBadgeGap,
+                      spacing: PredictionsSpacingTokens
+                          .predictionDetailArenaBadgeGap,
                       children: const [
                         _ArenaBadge('Arena Points only'),
                         _ArenaBadge('Event context only'),
@@ -187,16 +197,19 @@ class _ArenaBridgeSection extends StatelessWidget {
             borderColor: AppColors.warningBorder,
             background: const ColoredBox(color: AppColors.warn08),
             clip: true,
-            padding: AppSpacing.predictionDetailArenaCreatePadding,
+            padding:
+                PredictionsSpacingTokens.predictionDetailArenaCreatePadding,
             child: Row(
               children: [
                 const Icon(
                   Icons.auto_awesome_rounded,
                   color: AppColors.warn,
-                  size: AppSpacing.predictionDetailArenaCreateIcon,
+                  size:
+                      PredictionsSpacingTokens.predictionDetailArenaCreateIcon,
                 ),
                 const SizedBox(
-                  width: AppSpacing.predictionDetailArenaCreateGap,
+                  width:
+                      PredictionsSpacingTokens.predictionDetailArenaCreateGap,
                 ),
                 Expanded(
                   child: Column(
@@ -220,12 +233,14 @@ class _ArenaBridgeSection extends StatelessWidget {
                 ),
                 const _ArenaBadge('Arena Points only'),
                 const SizedBox(
-                  width: AppSpacing.predictionDetailArenaCreateBadgeGap,
+                  width: PredictionsSpacingTokens
+                      .predictionDetailArenaCreateBadgeGap,
                 ),
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.warn,
-                  size: AppSpacing.predictionDetailArenaCreateChevron,
+                  size: PredictionsSpacingTokens
+                      .predictionDetailArenaCreateChevron,
                 ),
               ],
             ),
@@ -250,15 +265,17 @@ class _ArenaRoomRow extends StatelessWidget {
         side: const BorderSide(color: AppColors.borderSolid),
       ),
       child: Padding(
-        padding: AppSpacing.predictionDetailArenaRoomPadding,
+        padding: PredictionsSpacingTokens.predictionDetailArenaRoomPadding,
         child: Row(
           children: [
             const Icon(
               Icons.gamepad_outlined,
               color: AppColors.warn,
-              size: AppSpacing.predictionDetailArenaRoomIcon,
+              size: PredictionsSpacingTokens.predictionDetailArenaRoomIcon,
             ),
-            const SizedBox(width: AppSpacing.predictionDetailArenaRoomGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionDetailArenaRoomGap,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,7 +319,7 @@ class _ArenaBadge extends StatelessWidget {
       color: AppColors.warn10,
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.predictionDetailArenaBadgePadding,
+        padding: PredictionsSpacingTokens.predictionDetailArenaBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.badge.copyWith(color: AppColors.warn),

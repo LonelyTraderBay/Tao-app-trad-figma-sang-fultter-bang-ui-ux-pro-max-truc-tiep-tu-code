@@ -140,12 +140,13 @@ class _SimpleStepScaffold extends StatelessWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  padding: AppSpacing.profileApiCreateStepScrollPadding(
-                    scrollClearance,
-                  ),
+                  padding:
+                      ProfileSpacingTokens.profileApiCreateStepScrollPadding(
+                        scrollClearance,
+                      ),
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,
                     fullBleed: true,
@@ -171,8 +172,8 @@ class _SuccessIcon extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: AppSpacing.profileApiCreateSuccessIconBox,
-          height: AppSpacing.profileApiCreateSuccessIconBox,
+          width: ProfileSpacingTokens.profileApiCreateSuccessIconBox,
+          height: ProfileSpacingTokens.profileApiCreateSuccessIconBox,
           child: Material(
             color: _apiGreen.withValues(alpha: .1),
             shape: RoundedRectangleBorder(
@@ -182,7 +183,7 @@ class _SuccessIcon extends StatelessWidget {
             child: const Icon(
               Icons.check_circle_outline_rounded,
               color: _apiGreen,
-              size: AppSpacing.profileApiCreateSuccessIcon,
+              size: ProfileSpacingTokens.profileApiCreateSuccessIcon,
             ),
           ),
         ),
@@ -234,9 +235,11 @@ class _WarningCard extends StatelessWidget {
           Icon(
             Icons.warning_amber_rounded,
             color: color,
-            size: AppSpacing.profileApiCreateWarningIcon,
+            size: ProfileSpacingTokens.profileApiCreateWarningIcon,
           ),
-          const SizedBox(width: AppSpacing.profileApiCreateWarningGap),
+          const SizedBox(
+            width: ProfileSpacingTokens.profileApiCreateWarningGap,
+          ),
           Expanded(
             child: Text(
               text,

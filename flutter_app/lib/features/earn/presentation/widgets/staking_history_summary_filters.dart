@@ -10,7 +10,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: StakingHistoryPage.summaryKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           Expanded(
@@ -171,7 +171,7 @@ class _HistoryFilterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -209,7 +209,7 @@ class _HistoryFilterSection extends StatelessWidget {
                   selected: value == typeFilter,
                   onTap: () => onTypeChanged(value),
                   tone: VitChoicePillTone.primary,
-                  padding: AppSpacing.earnPillPaddingLarge,
+                  padding: EarnSpacingTokens.earnPillPaddingLarge,
                 ),
             ],
           ),
@@ -229,7 +229,7 @@ class _HistoryFilterSection extends StatelessWidget {
                   selected: value == statusFilter,
                   onTap: () => onStatusChanged(value),
                   tone: VitChoicePillTone.primary,
-                  padding: AppSpacing.earnPillPaddingLarge,
+                  padding: EarnSpacingTokens.earnPillPaddingLarge,
                 ),
             ],
           ),

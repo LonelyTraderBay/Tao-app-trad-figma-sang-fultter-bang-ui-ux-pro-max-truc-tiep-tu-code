@@ -23,7 +23,7 @@ class _SummaryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox.square(
-                dimension: AppSpacing.walletTransactionSummaryIconSize,
+                dimension: WalletSpacingTokens.walletTransactionSummaryIconSize,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: type.color.withValues(alpha: .12),
@@ -35,7 +35,8 @@ class _SummaryCard extends StatelessWidget {
                   child: Icon(
                     type.icon,
                     color: type.color,
-                    size: AppSpacing.walletTransactionSummaryStatusIcon,
+                    size:
+                        WalletSpacingTokens.walletTransactionSummaryStatusIcon,
                   ),
                 ),
               ),
@@ -127,7 +128,7 @@ class _ProgressRow extends StatelessWidget {
         Column(
           children: [
             SizedBox.square(
-              dimension: AppSpacing.walletTransactionProgressDotSize,
+              dimension: WalletSpacingTokens.walletTransactionProgressDotSize,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: color,
@@ -139,23 +140,28 @@ class _ProgressRow extends StatelessWidget {
               Column(
                 children: [
                   const SizedBox(
-                    height: AppSpacing.walletTransactionProgressLineSpacing,
+                    height: WalletSpacingTokens
+                        .walletTransactionProgressLineSpacing,
                   ),
                   SizedBox(
-                    width: AppSpacing.walletTransactionProgressLineWidth,
-                    height: AppSpacing.walletTransactionStepLineHeight,
+                    width:
+                        WalletSpacingTokens.walletTransactionProgressLineWidth,
+                    height: WalletSpacingTokens.walletTransactionStepLineHeight,
                     child: ColoredBox(
                       color: step.done ? _detailGreen : AppColors.borderSolid,
                     ),
                   ),
                   const SizedBox(
-                    height: AppSpacing.walletTransactionProgressLineSpacing,
+                    height: WalletSpacingTokens
+                        .walletTransactionProgressLineSpacing,
                   ),
                 ],
               ),
           ],
         ),
-        const SizedBox(width: AppSpacing.walletTransactionExplorerLabelGap),
+        const SizedBox(
+          width: WalletSpacingTokens.walletTransactionExplorerLabelGap,
+        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,7 +275,7 @@ class _ExplorerButton extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       key: TransactionDetailPage.explorerKey,
-      height: AppSpacing.walletTransactionExplorerHeight,
+      height: WalletSpacingTokens.walletTransactionExplorerHeight,
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
       borderColor: _detailPrimary.withValues(alpha: .28),
@@ -279,9 +285,11 @@ class _ExplorerButton extends StatelessWidget {
           const Icon(
             Icons.open_in_new_rounded,
             color: _detailPrimary,
-            size: AppSpacing.walletTransactionActionIcon,
+            size: WalletSpacingTokens.walletTransactionActionIcon,
           ),
-          const SizedBox(width: AppSpacing.walletTransactionExplorerLabelGap),
+          const SizedBox(
+            width: WalletSpacingTokens.walletTransactionExplorerLabelGap,
+          ),
           Text(
             'Xem trên Explorer',
             style: AppTextStyles.caption.copyWith(

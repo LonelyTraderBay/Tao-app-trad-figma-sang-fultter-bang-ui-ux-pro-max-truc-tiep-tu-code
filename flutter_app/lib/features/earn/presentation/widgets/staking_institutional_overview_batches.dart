@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingInstitutionalPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,7 +43,7 @@ class _StatsCard extends StatelessWidget {
     return VitCard(
       key: StakingInstitutionalPage.statsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         children: [
           for (var i = 0; i < snapshot.stats.length; i++) ...[
@@ -70,7 +70,7 @@ class _StatTile extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX2X3,
+        padding: EarnSpacingTokens.earnCardPaddingX2X3,
         child: Column(
           children: [
             Icon(_infoIcon(stat.icon), color: color, size: AppSpacing.iconSm),
@@ -137,7 +137,7 @@ class _BatchOperationCard extends StatelessWidget {
     return VitCard(
       key: StakingInstitutionalPage.batchKey(batch.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -202,7 +202,7 @@ class _BatchOperationCard extends StatelessWidget {
           ],
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
-            height: AppSpacing.stakingProductDividerHeight,
+            height: EarnSpacingTokens.stakingProductDividerHeight,
             color: AppColors.borderSolid,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -254,7 +254,7 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnPillPadding,
+        padding: EarnSpacingTokens.earnPillPadding,
         child: Text(
           _statusLabel(status),
           style: AppTextStyles.micro.copyWith(
@@ -282,7 +282,7 @@ class _InlineAction extends StatelessWidget {
           : VitCtaButtonVariant.primary,
       fullWidth: false,
       height: AppSpacing.buttonCompact,
-      padding: AppSpacing.earnWidePillPadding,
+      padding: EarnSpacingTokens.earnWidePillPadding,
       child: Text(
         label,
         style: AppTextStyles.micro.copyWith(

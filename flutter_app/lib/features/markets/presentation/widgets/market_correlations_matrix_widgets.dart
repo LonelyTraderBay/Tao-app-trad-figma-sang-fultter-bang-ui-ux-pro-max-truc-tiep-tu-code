@@ -9,7 +9,7 @@ class _MatrixCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: MarketCorrelationsPage.matrixCardKey,
-      padding: AppSpacing.marketCorrelationsMatrixPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsMatrixPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -38,7 +38,8 @@ class _CorrelationHeatmap extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        const labelSize = AppSpacing.marketCorrelationsHeatmapLabelSize;
+        const labelSize =
+            MarketsSpacingTokens.marketCorrelationsHeatmapLabelSize;
         final n = assets.length;
         final cellSize = (constraints.maxWidth - labelSize) / n;
         final height = labelSize + cellSize * n;
@@ -184,10 +185,12 @@ class _CorrelationLegend extends StatelessWidget {
             children: [
               Icon(
                 Icons.circle,
-                size: AppSpacing.marketCorrelationsLegendDot,
+                size: MarketsSpacingTokens.marketCorrelationsLegendDot,
                 color: item.color,
               ),
-              const SizedBox(width: AppSpacing.marketCorrelationsLegendGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketCorrelationsLegendGap,
+              ),
               Text(
                 item.label,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -213,16 +216,18 @@ class _MatrixInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _marketPrimary.withValues(alpha: .20),
-      padding: AppSpacing.marketCorrelationsInfoPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsInfoPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            size: AppSpacing.marketCorrelationsInfoIcon,
+            size: MarketsSpacingTokens.marketCorrelationsInfoIcon,
             color: _marketPrimary,
           ),
-          const SizedBox(width: AppSpacing.marketCorrelationsInfoIconGap),
+          const SizedBox(
+            width: MarketsSpacingTokens.marketCorrelationsInfoIconGap,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,7 +273,9 @@ class _QuickInsights extends StatelessWidget {
             color: AppColors.sell,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketCorrelationsInsightGap),
+        const SizedBox(
+          width: MarketsSpacingTokens.marketCorrelationsInsightGap,
+        ),
         Expanded(
           child: _InsightCard(
             label: 'Thấp nhất',
@@ -298,7 +305,7 @@ class _InsightCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketCorrelationsInsightPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsInsightPadding,
       child: Column(
         children: [
           Text(
@@ -334,17 +341,17 @@ class _RecommendationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _marketPrimary.withValues(alpha: .20),
-      padding: AppSpacing.marketCorrelationsRecommendationPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsRecommendationPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
-            size: AppSpacing.marketCorrelationsRecommendationIcon,
+            size: MarketsSpacingTokens.marketCorrelationsRecommendationIcon,
             color: _marketPrimary,
           ),
           const SizedBox(
-            width: AppSpacing.marketCorrelationsRecommendationIconGap,
+            width: MarketsSpacingTokens.marketCorrelationsRecommendationIconGap,
           ),
           Expanded(
             child: Column(

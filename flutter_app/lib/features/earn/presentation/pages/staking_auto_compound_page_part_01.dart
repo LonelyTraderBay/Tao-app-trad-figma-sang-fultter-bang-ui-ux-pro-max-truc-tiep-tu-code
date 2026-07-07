@@ -68,7 +68,9 @@ class _StakingAutoCompoundPageState
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const ClampingScrollPhysics(),
-                      padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                      padding: EarnSpacingTokens.earnBottomInsetPadding(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.compact,
@@ -223,7 +225,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingAutoCompoundPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -262,7 +264,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: StakingAutoCompoundPage.summaryKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX5,
+      padding: EarnSpacingTokens.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -278,7 +280,9 @@ class _SummaryCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       '$active/${positions.length}',
                       style: AppTextStyles.numericDisplayXl,
@@ -300,7 +304,8 @@ class _SummaryCard extends StatelessWidget {
                     borderRadius: AppRadii.xlRadius,
                     side: BorderSide(
                       color: AppModuleAccents.earn,
-                      width: AppSpacing.stakingAutoCompoundHeroIconBorderWidth,
+                      width: EarnSpacingTokens
+                          .stakingAutoCompoundHeroIconBorderWidth,
                     ),
                   ),
                   child: const Icon(
@@ -347,7 +352,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnStaticSelectPadding,
+      padding: EarnSpacingTokens.earnStaticSelectPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -387,7 +392,7 @@ class _SettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -433,7 +438,7 @@ class _SettingsCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.primary20,
-            padding: AppSpacing.earnPaddingX4,
+            padding: EarnSpacingTokens.earnPaddingX4,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

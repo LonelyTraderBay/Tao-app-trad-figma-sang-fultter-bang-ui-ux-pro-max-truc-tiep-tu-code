@@ -55,7 +55,7 @@ class _AssetChip extends StatelessWidget {
         onTap: onTap,
         fullWidth: true,
         accentColor: AppModuleAccents.p2p,
-        padding: AppSpacing.p2pOrderBookSelectorPadding,
+        padding: P2PSpacingTokens.p2pOrderBookSelectorPadding,
         semanticLabel: '${market.asset} VND ${_formatChange(market.changePct)}',
       ),
     );
@@ -80,7 +80,7 @@ class _MarketTicker extends StatelessWidget {
     return VitCard(
       key: P2POrderBookPage.tickerKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pOrderBookCardPadding,
+      padding: P2PSpacingTokens.p2pOrderBookCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

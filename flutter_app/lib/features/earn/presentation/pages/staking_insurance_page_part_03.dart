@@ -17,7 +17,7 @@ class _PlanSheet extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.earnPaddingX4,
+            padding: EarnSpacingTokens.earnPaddingX4,
             child: Column(
               children: [
                 _SheetRow(
@@ -46,7 +46,7 @@ class _PlanSheet extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final feature in plan.features)
             Padding(
-              padding: AppSpacing.earnBottomPaddingX2,
+              padding: EarnSpacingTokens.earnBottomPaddingX2,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,7 +71,7 @@ class _PlanSheet extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
-            padding: AppSpacing.earnPaddingX3,
+            padding: EarnSpacingTokens.earnPaddingX3,
             child: Text(
               'Ví dụ: Stake \$10,000 với plan này, phí bảo hiểm là \$${(10000 * plan.premium / 100).toStringAsFixed(0)}/năm. Nếu slashing mất \$1,000, khoản bồi thường dự kiến là \$${(1000 * plan.coverage / 100).toStringAsFixed(0)}.',
               style: AppTextStyles.micro.copyWith(color: AppColors.text2),
@@ -142,7 +142,7 @@ class _ClaimSheet extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.primary20,
-            padding: AppSpacing.earnPaddingX3,
+            padding: EarnSpacingTokens.earnPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -203,7 +203,7 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX2,
+      padding: EarnSpacingTokens.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -262,7 +262,7 @@ class _StaticSelect extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnStaticSelectPadding,
+      padding: EarnSpacingTokens.earnStaticSelectPadding,
       child: Row(
         children: [
           Expanded(child: Text(value, style: AppTextStyles.body)),

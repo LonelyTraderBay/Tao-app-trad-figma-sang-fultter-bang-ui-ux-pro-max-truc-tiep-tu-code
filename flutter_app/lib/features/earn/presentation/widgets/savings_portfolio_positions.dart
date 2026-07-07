@@ -48,7 +48,8 @@ class PositionsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final position in positions) ...[
           _PositionCard(position: position),
-          if (position != positions.last) const SizedBox(height: AppSpacing.rowGap),
+          if (position != positions.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );

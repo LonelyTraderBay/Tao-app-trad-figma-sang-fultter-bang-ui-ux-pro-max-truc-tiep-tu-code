@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingNotificationsPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,7 +86,7 @@ class _SettingCard extends StatelessWidget {
     final color = _priorityColor(setting.priority);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: onToggle,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +122,7 @@ class _SettingCard extends StatelessWidget {
                   setting.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.stakingNotificationsLineHeight,
+                    height: EarnSpacingTokens.stakingNotificationsLineHeight,
                   ),
                 ),
               ],
@@ -151,7 +151,7 @@ class _ChannelsList extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             children: [
               for (final channel in channels) ...[
@@ -277,7 +277,7 @@ class _NotificationCard extends StatelessWidget {
       borderColor: notification.read
           ? null
           : AppModuleAccents.earn.withValues(alpha: 0.28),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,7 +314,7 @@ class _NotificationCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingNotificationsLineHeight,
+                    height: EarnSpacingTokens.stakingNotificationsLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -342,7 +342,7 @@ class _DoNotDisturbCard extends StatelessWidget {
     return VitCard(
       key: StakingNotificationsPage.dndKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

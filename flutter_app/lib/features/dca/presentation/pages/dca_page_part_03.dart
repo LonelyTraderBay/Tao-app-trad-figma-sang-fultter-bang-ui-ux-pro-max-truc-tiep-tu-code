@@ -28,7 +28,11 @@ class _CoinAvatar extends StatelessWidget {
             side: BorderSide(color: color.withValues(alpha: .24)),
           ),
         ),
-        child: Icon(icon, color: color, size: AppSpacing.dcaMainAssetIcon),
+        child: Icon(
+          icon,
+          color: color,
+          size: DcaSpacingTokens.dcaMainAssetIcon,
+        ),
       ),
     );
   }
@@ -243,7 +247,7 @@ class _CreatePlanSheet extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: AppSpacing.dcaBottomSheetPadding(bottomInset),
+              padding: DcaSpacingTokens.dcaBottomSheetPadding(bottomInset),
               child: VitCard(
                 key: DCAPage.createSheetKey,
                 radius: VitCardRadius.large,
@@ -253,7 +257,9 @@ class _CreatePlanSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const VitSheetHandle(),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         SizedBox.square(
@@ -268,7 +274,7 @@ class _CreatePlanSheet extends StatelessWidget {
                             child: Icon(
                               Icons.add_chart_rounded,
                               color: AppColors.primary,
-                              size: AppSpacing.dcaMainToolIcon,
+                              size: DcaSpacingTokens.dcaMainToolIcon,
                             ),
                           ),
                         ),
@@ -295,7 +301,9 @@ class _CreatePlanSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     VitCtaButton(
                       onPressed: onClose,
                       leading: const Icon(Icons.check_rounded),

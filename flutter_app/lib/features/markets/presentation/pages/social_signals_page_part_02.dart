@@ -44,7 +44,7 @@ class _SignalCard extends StatelessWidget {
                         height: AppTextStyles.numericMicro.height,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.marketSocialGap),
+                    const SizedBox(width: MarketsSpacingTokens.marketSocialGap),
                     Flexible(
                       child: Text(
                         signal.providerName,
@@ -56,13 +56,15 @@ class _SignalCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.marketSocialCompactGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketSocialCompactGap,
+                    ),
                     _TinyBadge(
                       label: tierConfig.label,
                       color: tierConfig.color.resolve(),
                       background: tierConfig.background.resolve(),
                     ),
-                    const SizedBox(width: AppSpacing.marketSocialGap),
+                    const SizedBox(width: MarketsSpacingTokens.marketSocialGap),
                     Text(
                       '${signal.providerWinRate.toStringAsFixed(1)}% win',
                       style: AppTextStyles.micro.copyWith(
@@ -90,9 +92,10 @@ class _SignalCard extends StatelessWidget {
                       label: directionLabel,
                       color: directionColor,
                       background: directionColor.withValues(alpha: .12),
-                      padding: AppSpacing.marketSocialTinyBadgePaddingWide,
+                      padding:
+                          MarketsSpacingTokens.marketSocialTinyBadgePaddingWide,
                     ),
-                    const SizedBox(width: AppSpacing.marketSocialGap),
+                    const SizedBox(width: MarketsSpacingTokens.marketSocialGap),
                     Flexible(
                       child: Text(
                         signal.pair,
@@ -103,7 +106,7 @@ class _SignalCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.marketSocialGap),
+                    const SizedBox(width: MarketsSpacingTokens.marketSocialGap),
                     _TinyBadge(
                       label: statusConfig.label,
                       color: statusConfig.color.resolve(),
@@ -111,7 +114,9 @@ class _SignalCard extends StatelessWidget {
                         alpha: .12,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.marketSocialCompactGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketSocialCompactGap,
+                    ),
                     _TinyBadge(
                       label: _categoryLabel(signal.category).toLowerCase(),
                       color: AppColors.text3,
@@ -197,7 +202,7 @@ class _ExpandedSignalDetail extends StatelessWidget {
                       child: Padding(
                         padding: index == signal.targets.length - 1
                             ? AppSpacing.zeroInsets
-                            : AppSpacing.marketSocialTargetSpacing,
+                            : MarketsSpacingTokens.marketSocialTargetSpacing,
                         child: Material(
                           color: AppColors.buy10,
                           shape: const RoundedRectangleBorder(
@@ -249,13 +254,17 @@ class _ExpandedSignalDetail extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.marketSocialLargeGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.marketSocialLargeGap,
+                  ),
                   const Icon(
                     Icons.schedule_rounded,
-                    size: AppSpacing.marketDepthTrendIcon,
+                    size: MarketsSpacingTokens.marketDepthTrendIcon,
                     color: AppColors.text3,
                   ),
-                  const SizedBox(width: AppSpacing.marketSocialSmallGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.marketSocialSmallGap,
+                  ),
                   Text(
                     signal.expiresIn,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -272,21 +281,27 @@ class _ExpandedSignalDetail extends StatelessWidget {
                 children: [
                   const Icon(
                     Icons.favorite_border_rounded,
-                    size: AppSpacing.marketOverviewMoverHeaderIcon,
+                    size: MarketsSpacingTokens.marketOverviewMoverHeaderIcon,
                     color: AppColors.text3,
                   ),
-                  const SizedBox(width: AppSpacing.marketSocialSmallGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.marketSocialSmallGap,
+                  ),
                   Text(
                     '${signal.likes}',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                  const SizedBox(width: AppSpacing.marketAdvancedTipIcon),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.marketAdvancedTipIcon,
+                  ),
                   const Icon(
                     Icons.content_copy_rounded,
-                    size: AppSpacing.marketOverviewMoverHeaderIcon,
+                    size: MarketsSpacingTokens.marketOverviewMoverHeaderIcon,
                     color: AppColors.text3,
                   ),
-                  const SizedBox(width: AppSpacing.marketSocialSmallGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.marketSocialSmallGap,
+                  ),
                   Text(
                     '${signal.copies} copies',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -346,7 +361,7 @@ class _TinyBadge extends StatelessWidget {
     required this.label,
     required this.color,
     required this.background,
-    this.padding = AppSpacing.marketSocialTinyBadgePadding,
+    this.padding = MarketsSpacingTokens.marketSocialTinyBadgePadding,
   });
 
   final String label;
@@ -410,7 +425,7 @@ class _ProviderCard extends StatelessWidget {
                   ),
                 ),
                 child: SizedBox.square(
-                  dimension: AppSpacing.marketSocialProviderRank,
+                  dimension: MarketsSpacingTokens.marketSocialProviderRank,
                   child: Center(
                     child: Text(
                       '$rank',
@@ -454,7 +469,7 @@ class _ProviderCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: AppSpacing.marketSocialCompactGap,
+                          width: MarketsSpacingTokens.marketSocialCompactGap,
                         ),
                         _TinyBadge(
                           label: tierConfig.label,
@@ -476,7 +491,7 @@ class _ProviderCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketSocialGap),
+              const SizedBox(width: MarketsSpacingTokens.marketSocialGap),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [

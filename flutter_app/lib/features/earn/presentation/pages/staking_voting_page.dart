@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingVotingPage extends ConsumerStatefulWidget {
   const StakingVotingPage({super.key, this.proposalId, this.shellRenderMode});
@@ -87,7 +88,9 @@ class _StakingVotingPageState extends ConsumerState<StakingVotingPage> {
                           _VotingPowerNote(snapshot: snapshot),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardSectionGap,
+                      ),
                       VitStickyFooter(
                         child: VitCtaButton(
                           key: StakingVotingPage.submitKey,
@@ -118,7 +121,7 @@ class _ProposalSummary extends StatelessWidget {
     return VitCard(
       key: StakingVotingPage.proposalKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -131,7 +134,7 @@ class _ProposalSummary extends StatelessWidget {
           Text(snapshot.proposalTitle, style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Padding(
-            padding: AppSpacing.earnContentHorizontalPadding.copyWith(
+            padding: EarnSpacingTokens.earnContentHorizontalPadding.copyWith(
               left: AppSpacing.zero,
               top: AppSpacing.zero,
               right: AppSpacing.x6,
@@ -141,7 +144,7 @@ class _ProposalSummary extends StatelessWidget {
               snapshot.proposalBody,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingCommunityBodyLineHeight,
+                height: EarnSpacingTokens.stakingCommunityBodyLineHeight,
               ),
             ),
           ),
@@ -149,7 +152,7 @@ class _ProposalSummary extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.large,
-            padding: AppSpacing.earnCardPaddingX3X4,
+            padding: EarnSpacingTokens.earnCardPaddingX3X4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -186,7 +189,7 @@ class _ResultsSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnContentHorizontalPadding.copyWith(
+          padding: EarnSpacingTokens.earnContentHorizontalPadding.copyWith(
             top: AppSpacing.x5,
             bottom: AppSpacing.x5,
           ),
@@ -235,7 +238,8 @@ class _ResultRow extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.smRadius,
-          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+          child: SizedBox(
+            height: AppSpacing.pageRhythmCompactInnerGap,
             child: Align(
               alignment: Alignment.centerLeft,
               child: FractionallySizedBox(
@@ -308,7 +312,7 @@ class _VoteOptionCard extends StatelessWidget {
     return VitCard(
       key: StakingVotingPage.optionKey(option.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnContentHorizontalPadding.copyWith(
+      padding: EarnSpacingTokens.earnContentHorizontalPadding.copyWith(
         top: AppSpacing.x5,
         bottom: AppSpacing.x5,
       ),
@@ -349,7 +353,7 @@ class _VotingPowerNote extends StatelessWidget {
     return VitCard(
       key: StakingVotingPage.noteKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -375,7 +379,7 @@ class _VotingPowerNote extends StatelessWidget {
               ),
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingCommunityDescriptionLineHeight,
+                height: EarnSpacingTokens.stakingCommunityDescriptionLineHeight,
               ),
             ),
           ),

@@ -7,7 +7,8 @@ class _DrawdownTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -57,7 +58,8 @@ class _ProjectionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -114,7 +116,7 @@ class _CorrelationTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [

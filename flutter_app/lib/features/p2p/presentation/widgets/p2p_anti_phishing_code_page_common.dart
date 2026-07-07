@@ -21,7 +21,7 @@ class _SoftActionButton extends StatelessWidget {
       selected: true,
       onTap: onTap,
       fullWidth: true,
-      padding: AppSpacing.p2pSecurityDetailsActionPadding,
+      padding: P2PSpacingTokens.p2pSecurityDetailsActionPadding,
       accentColor: color,
       leading: Icon(icon),
       semanticLabel: label,
@@ -38,8 +38,8 @@ class _IconAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.p2pSecurityDetailsIconActionBox,
-      height: AppSpacing.p2pSecurityDetailsIconActionBox,
+      width: P2PSpacingTokens.p2pSecurityDetailsIconActionBox,
+      height: P2PSpacingTokens.p2pSecurityDetailsIconActionBox,
       child: VitIconButton(
         icon: icon,
         tooltip: 'Toggle anti-phishing code visibility',

@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/launchpad_home_header_widgets.dart';
 part '../widgets/launchpad_home_helpers.dart';
@@ -29,11 +30,16 @@ part '../widgets/launchpad_home_tool_widgets.dart';
 
 const _launchpadVisualNavClearance = 112.0;
 const _launchpadNativeNavClearance = 88.0;
-const _launchpadLineHeightDense = AppSpacing.launchpadLineHeightDense;
-const _launchpadLineHeightCompact = AppSpacing.launchpadLineHeightCompact;
-const _launchpadLineHeightLabel = AppSpacing.launchpadLineHeightLabel;
-const _launchpadLineHeightReadable = AppSpacing.launchpadLineHeightReadable;
-const _launchpadLineHeightShort = AppSpacing.launchpadLineHeightShort;
+const _launchpadLineHeightDense =
+    LaunchpadSpacingTokens.launchpadLineHeightDense;
+const _launchpadLineHeightCompact =
+    LaunchpadSpacingTokens.launchpadLineHeightCompact;
+const _launchpadLineHeightLabel =
+    LaunchpadSpacingTokens.launchpadLineHeightLabel;
+const _launchpadLineHeightReadable =
+    LaunchpadSpacingTokens.launchpadLineHeightReadable;
+const _launchpadLineHeightShort =
+    LaunchpadSpacingTokens.launchpadLineHeightShort;
 
 class LaunchpadPage extends ConsumerStatefulWidget {
   const LaunchpadPage({super.key, this.shellRenderMode});
@@ -124,7 +130,8 @@ class _LaunchpadPageState extends ConsumerState<LaunchpadPage> {
               key: LaunchpadPage.contentKey,
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
-              child: VitPageContent(rhythm: VitPageRhythm.standard, 
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [

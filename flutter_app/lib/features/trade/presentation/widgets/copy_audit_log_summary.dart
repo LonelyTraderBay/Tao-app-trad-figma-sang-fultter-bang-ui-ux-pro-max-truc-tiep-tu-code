@@ -11,7 +11,7 @@ class _SummarySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: AppSpacing.copyAuditSummaryTitlePadding,
+          padding: TradeSpacingTokens.copyAuditSummaryTitlePadding,
           child: Text(
             'Thống kê tổng quan',
             style: AppTextStyles.caption.copyWith(
@@ -129,7 +129,7 @@ class _ExportFormatButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.copyAuditExportButtonPadding,
+      padding: TradeSpacingTokens.copyAuditExportButtonPadding,
       borderColor: AppColors.cardBorder,
       onTap: onTap,
       child: Row(
@@ -160,7 +160,7 @@ class _ExportFormatButton extends StatelessWidget {
           const Icon(
             Icons.file_download_outlined,
             color: AppColors.text3,
-            size: AppSpacing.walletAssetActionIcon,
+            size: WalletSpacingTokens.walletAssetActionIcon,
           ),
         ],
       ),

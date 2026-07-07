@@ -7,7 +7,6 @@ import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/core/navigation/back_navigation.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_sections.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -17,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class AddressAddPage extends ConsumerStatefulWidget {
   const AddressAddPage({super.key, this.shellRenderMode});
@@ -155,8 +155,8 @@ class _AddressAddPageState extends ConsumerState<AddressAddPage> {
 
   double _scrollBottomInset(BuildContext context, ShellRenderMode mode) {
     return (mode.usesVisualQaFrame
-            ? AppSpacing.walletBottomInsetVisualChrome
-            : AppSpacing.walletBottomInsetNativeChrome) +
+            ? WalletSpacingTokens.walletBottomInsetVisualChrome
+            : WalletSpacingTokens.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom;
   }
 

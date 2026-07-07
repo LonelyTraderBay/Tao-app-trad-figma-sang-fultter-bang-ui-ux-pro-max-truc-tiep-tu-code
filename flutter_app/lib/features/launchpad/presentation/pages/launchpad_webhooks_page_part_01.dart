@@ -98,7 +98,7 @@ class _StatTile extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .22),
       background: ColoredBox(color: color.withValues(alpha: .08)),
-      padding: AppSpacing.launchpadVerticalPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
       child: Column(
         children: [
           Text(
@@ -306,7 +306,7 @@ class _SubscriptionCard extends StatelessWidget {
                     onTap: onExpand,
                     variant: VitCardVariant.ghost,
                     radius: VitCardRadius.standard,
-                    padding: AppSpacing.launchpadPaddingX3,
+                    padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

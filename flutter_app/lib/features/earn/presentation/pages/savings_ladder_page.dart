@@ -25,6 +25,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_lad
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_hero.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_rung_manager.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_timeline.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 const _visualNavClearance = 90.0;
 const _nativeNavClearance = 72.0;
@@ -101,7 +102,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     density: VitDensity.compact,
                     children: [
                       LadderHero(
@@ -319,7 +320,7 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
             color: AppColors.surface,
             borderRadius: AppRadii.sheetTopLargeRadius,
             child: Padding(
-              padding: AppSpacing.earnPaddingX5,
+              padding: EarnSpacingTokens.earnPaddingX5,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -339,7 +340,9 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   DetailRow(
                     label: 'Tổng vốn',
                     value: savingsLadderMoney(amountUsd),
@@ -357,12 +360,16 @@ class _SavingsLadderPageState extends ConsumerState<SavingsLadderPage> {
                         '+${savingsLadderMoney(savingsLadderAnnualInterest(rungs))}',
                     color: AppColors.buy,
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   EarnDisclaimerBanner(
                     text: snapshot.disclaimer,
                     lineHeight: _disclaimerLineHeight,
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   VitCtaButton(
                     onPressed: () {
                       HapticFeedback.lightImpact();

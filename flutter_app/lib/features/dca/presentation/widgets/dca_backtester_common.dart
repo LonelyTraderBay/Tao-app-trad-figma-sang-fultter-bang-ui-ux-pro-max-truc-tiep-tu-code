@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 
 enum DcaBacktesterTab { setup, results, analysis }
 
@@ -39,7 +40,7 @@ class DcaReadOnlyField extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: AppSpacing.dcaPrimaryChipPadding,
+            padding: DcaSpacingTokens.dcaPrimaryChipPadding,
             child: Row(
               children: [
                 Expanded(
@@ -92,7 +93,7 @@ class DcaNoResultsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         children: [
           const Icon(
@@ -130,7 +131,7 @@ class DcaStatusBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.dcaChipPadding,
+        padding: DcaSpacingTokens.dcaChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

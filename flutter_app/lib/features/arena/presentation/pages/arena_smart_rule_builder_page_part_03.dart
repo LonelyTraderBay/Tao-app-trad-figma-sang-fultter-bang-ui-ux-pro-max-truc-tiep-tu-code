@@ -23,7 +23,7 @@ class _RuleSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.accent20,
-      padding: AppSpacing.arenaSmartRuleCardPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,7 +32,7 @@ class _RuleSummaryCard extends StatelessWidget {
               const Icon(
                 Icons.summarize_outlined,
                 color: AppColors.accent,
-                size: AppSpacing.arenaSmartRuleIcon,
+                size: ArenaSpacingTokens.arenaSmartRuleIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -86,12 +86,12 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaSmartRuleSummaryRowPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleSummaryRowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.arenaSmartRuleSummaryLabelWidth,
+            width: ArenaSpacingTokens.arenaSmartRuleSummaryLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -122,14 +122,14 @@ class _ModerationNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.arenaSmartRuleInnerPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.primary,
-            size: AppSpacing.arenaSmartRuleIcon,
+            size: ArenaSpacingTokens.arenaSmartRuleIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -165,7 +165,7 @@ class _BackendPayloadPreviewCard extends StatelessWidget {
         (ready ? 'Sẵn sàng preview payload' : 'Hoàn thiện rule để preview');
 
     return VitCard(
-      padding: AppSpacing.arenaSmartRuleCardPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleCardPadding,
       borderColor: ready ? AppColors.buy20 : AppColors.borderSolid,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,7 +175,7 @@ class _BackendPayloadPreviewCard extends StatelessWidget {
               Icon(
                 ready ? Icons.cloud_done_outlined : Icons.cloud_queue_outlined,
                 color: ready ? AppColors.buy : AppColors.text3,
-                size: AppSpacing.arenaSmartRuleIcon,
+                size: ArenaSpacingTokens.arenaSmartRuleIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -256,7 +256,7 @@ class _CreationSafetyChecklist extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.arenaSmartRuleCardPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -265,7 +265,7 @@ class _CreationSafetyChecklist extends StatelessWidget {
               const Icon(
                 Icons.verified_user_outlined,
                 color: AppColors.primary,
-                size: AppSpacing.arenaSmartRuleIcon,
+                size: ArenaSpacingTokens.arenaSmartRuleIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -328,7 +328,7 @@ class _ChecklistRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleSwitchRowPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -461,7 +461,7 @@ class _FooterActions extends StatelessWidget {
               height: AppSpacing.buttonCompact,
               leading: const Icon(
                 Icons.save_outlined,
-                size: AppSpacing.arenaSmartRuleTinyIcon,
+                size: ArenaSpacingTokens.arenaSmartRuleTinyIcon,
               ),
               child: const Text('Lưu nháp'),
             ),
@@ -473,7 +473,7 @@ class _FooterActions extends StatelessWidget {
               height: AppSpacing.buttonCompact,
               leading: const Icon(
                 Icons.refresh_rounded,
-                size: AppSpacing.arenaSmartRuleTinyIcon,
+                size: ArenaSpacingTokens.arenaSmartRuleTinyIcon,
               ),
               child: const Text('Làm mới'),
             ),
@@ -527,7 +527,7 @@ class _SmartOptionSheet extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: AppSpacing.arenaSmartRuleCardPadding,
+            padding: ArenaSpacingTokens.arenaSmartRuleCardPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -573,7 +573,7 @@ class _TextOptionSheet extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           child: Padding(
-            padding: AppSpacing.arenaSmartRuleCardPadding,
+            padding: ArenaSpacingTokens.arenaSmartRuleCardPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -609,7 +609,7 @@ class _OptionSheetHeader extends StatelessWidget {
         const Icon(
           Icons.tune_rounded,
           color: _arenaAccent,
-          size: AppSpacing.arenaSmartRuleIcon,
+          size: ArenaSpacingTokens.arenaSmartRuleIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -644,7 +644,7 @@ class _OptionTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: selected ? AppColors.accent20 : AppColors.borderSolid,
-      padding: AppSpacing.arenaSmartRuleSelectorPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleSelectorPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -653,7 +653,7 @@ class _OptionTile extends StatelessWidget {
                 ? Icons.check_circle_rounded
                 : Icons.radio_button_unchecked_rounded,
             color: selected ? AppColors.buy : AppColors.text3,
-            size: AppSpacing.arenaSmartRuleIcon,
+            size: ArenaSpacingTokens.arenaSmartRuleIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -693,7 +693,7 @@ class _SubmitChallengeSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final padding = AppSpacing.arenaSmartRuleCardPadding;
+    final padding = ArenaSpacingTokens.arenaSmartRuleCardPadding;
     return SafeArea(
       top: false,
       child: ConstrainedBox(
@@ -712,7 +712,7 @@ class _SubmitChallengeSheet extends StatelessWidget {
                     const Icon(
                       Icons.outbox_outlined,
                       color: _arenaAccent,
-                      size: AppSpacing.arenaSmartRuleIcon,
+                      size: ArenaSpacingTokens.arenaSmartRuleIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(

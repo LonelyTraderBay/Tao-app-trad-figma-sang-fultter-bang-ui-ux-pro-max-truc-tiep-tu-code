@@ -121,7 +121,7 @@ class _ChallengeRow extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: AppSpacing.arenaProductionRegistryRowPadding,
+              padding: ArenaSpacingTokens.arenaProductionRegistryRowPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -136,7 +136,9 @@ class _ChallengeRow extends StatelessWidget {
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Wrap(
                           spacing: AppSpacing.x2,
                           runSpacing: AppSpacing.x1,
@@ -168,7 +170,9 @@ class _ChallengeRow extends StatelessWidget {
                         label: _stateLabel(challenge.state),
                         color: statusColor,
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Text(
                         'Xem',
                         style: AppTextStyles.micro.copyWith(
@@ -231,7 +235,8 @@ class _SavedModesList extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: AppSpacing.arenaProductionRegistryRowPadding,
+                      padding:
+                          ArenaSpacingTokens.arenaProductionRegistryRowPadding,
                       child: Row(
                         children: [
                           Expanded(
@@ -246,7 +251,9 @@ class _SavedModesList extends StatelessWidget {
                                     fontWeight: AppTextStyles.bold,
                                   ),
                                 ),
-                                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                                const SizedBox(
+                                  height: AppSpacing.pageRhythmCompactInnerGap,
+                                ),
                                 Wrap(
                                   spacing: AppSpacing.x2,
                                   runSpacing: AppSpacing.x1,
@@ -319,12 +326,13 @@ class _DraftList extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: AppSpacing.arenaProductionRegistryRowPadding,
+                      padding:
+                          ArenaSpacingTokens.arenaProductionRegistryRowPadding,
                       child: Row(
                         children: [
                           const SizedBox(
-                            width: AppSpacing.myArenaDraftIconBox,
-                            height: AppSpacing.myArenaDraftIconBox,
+                            width: ArenaSpacingTokens.myArenaDraftIconBox,
+                            height: ArenaSpacingTokens.myArenaDraftIconBox,
                             child: DecoratedBox(
                               decoration: ShapeDecoration(
                                 color: AppColors.surface2,
@@ -335,7 +343,7 @@ class _DraftList extends StatelessWidget {
                               child: Icon(
                                 Icons.edit_note_rounded,
                                 color: AppColors.text2,
-                                size: AppSpacing.myArenaDraftIcon,
+                                size: ArenaSpacingTokens.myArenaDraftIcon,
                               ),
                             ),
                           ),
@@ -352,7 +360,9 @@ class _DraftList extends StatelessWidget {
                                     fontWeight: AppTextStyles.bold,
                                   ),
                                 ),
-                                const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                                const SizedBox(
+                                  height: AppSpacing.pageRhythmCompactInnerGap,
+                                ),
                                 Row(
                                   children: [
                                     _MetaText(drafts[i].format),
@@ -425,7 +435,9 @@ class _CreatedModesSection extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       'Quản lý modes và xem thống kê',
                       style: AppTextStyles.micro.copyWith(
@@ -438,7 +450,7 @@ class _CreatedModesSection extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.myArenaSectionChevron,
+                size: ArenaSpacingTokens.myArenaSectionChevron,
               ),
             ],
           ),

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/uni
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_painters.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 
 class UnifiedPortfolioOverview extends StatelessWidget {
   const UnifiedPortfolioOverview({
@@ -69,7 +70,7 @@ class _TotalValueCard extends StatelessWidget {
     final pnlPositive = snapshot.totalPnl >= 0;
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -137,7 +138,7 @@ class _DistributionCard extends StatelessWidget {
     final modules = snapshot.financialModules.toList();
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -232,7 +233,7 @@ class _ModuleCard extends StatelessWidget {
       child: VitCard(
         key: cardKey,
         radius: VitCardRadius.large,
-        padding: AppSpacing.crossModuleCardPadding,
+        padding: CrossModuleSpacingTokens.crossModuleCardPadding,
         clip: true,
         onTap: () => onOpenRoute(module.route),
         child: Column(
@@ -348,7 +349,7 @@ class _BoundaryInfoCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

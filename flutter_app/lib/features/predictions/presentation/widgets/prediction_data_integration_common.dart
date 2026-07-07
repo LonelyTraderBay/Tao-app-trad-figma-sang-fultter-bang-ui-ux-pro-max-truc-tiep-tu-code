@@ -24,7 +24,7 @@ class _CompactMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.predictionDataCompactLineHeight,
+            height: PredictionsSpacingTokens.predictionDataCompactLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -44,11 +44,13 @@ class _CompactMetric extends StatelessWidget {
               ),
             ),
             if (trailingIcon != null) ...[
-              const SizedBox(width: AppSpacing.predictionDataMetricIconGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionDataMetricIconGap,
+              ),
               Icon(
                 trailingIcon,
                 color: color,
-                size: AppSpacing.predictionDataMetricIcon,
+                size: PredictionsSpacingTokens.predictionDataMetricIcon,
               ),
             ],
           ],
@@ -70,13 +72,13 @@ class _MiniStatusPill extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.predictionDataStatusPillPadding,
+        padding: PredictionsSpacingTokens.predictionDataStatusPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.predictionDataCompactLineHeight,
+            height: PredictionsSpacingTokens.predictionDataCompactLineHeight,
           ),
         ),
       ),
@@ -95,7 +97,7 @@ class _NeutralChip extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.predictionDataNeutralChipPadding,
+        padding: PredictionsSpacingTokens.predictionDataNeutralChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),
@@ -121,8 +123,8 @@ class _InlineIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      width: AppSpacing.predictionDataInlineButtonSize,
-      height: AppSpacing.predictionDataInlineButtonSize,
+      width: PredictionsSpacingTokens.predictionDataInlineButtonSize,
+      height: PredictionsSpacingTokens.predictionDataInlineButtonSize,
       onTap: onTap,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
@@ -130,7 +132,7 @@ class _InlineIconButton extends StatelessWidget {
       child: Icon(
         icon,
         color: color,
-        size: AppSpacing.predictionDataInlineIcon,
+        size: PredictionsSpacingTokens.predictionDataInlineIcon,
       ),
     );
   }
@@ -153,11 +155,11 @@ class _IconBubble extends StatelessWidget {
       color: background,
       borderRadius: AppRadii.mdRadius,
       child: SizedBox.square(
-        dimension: AppSpacing.predictionDataIconBubble,
+        dimension: PredictionsSpacingTokens.predictionDataIconBubble,
         child: Icon(
           icon,
           color: color,
-          size: AppSpacing.predictionDataIconBubbleIcon,
+          size: PredictionsSpacingTokens.predictionDataIconBubbleIcon,
         ),
       ),
     );
@@ -232,14 +234,20 @@ class _NoticeCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: AppSpacing.predictionDataNoticeIcon),
-          const SizedBox(width: AppSpacing.predictionDataNoticeGap),
+          Icon(
+            icon,
+            color: color,
+            size: PredictionsSpacingTokens.predictionDataNoticeIcon,
+          ),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionDataNoticeGap,
+          ),
           Expanded(
             child: Text(
               message,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.predictionDataMetricLineHeight,
+                height: PredictionsSpacingTokens.predictionDataMetricLineHeight,
               ),
             ),
           ),

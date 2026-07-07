@@ -20,38 +20,38 @@ class _OverviewContent extends StatelessWidget {
   }
 
   List<Widget> get sectionChildren => [
-        _PeriodSelector(
-          periods: snapshot.periods,
-          active: activePeriod,
-          onChanged: onPeriodChanged,
-        ),
-        VitPageSection(
-          label: 'Bi\u1EC3u \u0111\u1ED3 danh m\u1EE5c',
-          headerIcon: Icons.area_chart_rounded,
-          headerIconColor: _analyticsGreen,
-          accentColor: _analyticsGreen,
-          innerGap: AppSpacing.pageRhythmStandardInnerGap,
-          children: [_ChartCard(points: snapshot.history)],
-        ),
-        VitPageSection(
-          label: 'Ch\u1EC9 s\u1ED1 hi\u1EC7u su\u1EA5t',
-          headerIcon: Icons.speed_rounded,
-          headerIconColor: _analyticsPrimary,
-          accentColor: _analyticsPrimary,
-          innerGap: AppSpacing.pageRhythmStandardInnerGap,
-          children: [_MetricsCard(metrics: snapshot.metrics)],
-        ),
-        VitPageSection(
-          label: 'V\u1ECB th\u1EBF hi\u1EC7n t\u1EA1i',
-          headerIcon: Icons.account_balance_wallet_outlined,
-          headerIconColor: _analyticsPrimary,
-          accentColor: _analyticsPrimary,
-          innerGap: AppSpacing.pageRhythmStandardInnerGap,
-          children: [
-            _AssetsCard(assets: snapshot.assets, totalUsd: snapshot.totalUsd),
-          ],
-        ),
-      ];
+    _PeriodSelector(
+      periods: snapshot.periods,
+      active: activePeriod,
+      onChanged: onPeriodChanged,
+    ),
+    VitPageSection(
+      label: 'Bi\u1EC3u \u0111\u1ED3 danh m\u1EE5c',
+      headerIcon: Icons.area_chart_rounded,
+      headerIconColor: _analyticsGreen,
+      accentColor: _analyticsGreen,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
+      children: [_ChartCard(points: snapshot.history)],
+    ),
+    VitPageSection(
+      label: 'Ch\u1EC9 s\u1ED1 hi\u1EC7u su\u1EA5t',
+      headerIcon: Icons.speed_rounded,
+      headerIconColor: _analyticsPrimary,
+      accentColor: _analyticsPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
+      children: [_MetricsCard(metrics: snapshot.metrics)],
+    ),
+    VitPageSection(
+      label: 'V\u1ECB th\u1EBF hi\u1EC7n t\u1EA1i',
+      headerIcon: Icons.account_balance_wallet_outlined,
+      headerIconColor: _analyticsPrimary,
+      accentColor: _analyticsPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
+      children: [
+        _AssetsCard(assets: snapshot.assets, totalUsd: snapshot.totalUsd),
+      ],
+    ),
+  ];
 }
 
 class _PeriodSelector extends StatelessWidget {
@@ -93,12 +93,12 @@ class _ChartCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
-      padding: AppSpacing.walletAnalyticsChartPadding,
+      padding: WalletSpacingTokens.walletAnalyticsChartPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: AppSpacing.walletAnalyticsChartHeight,
+            height: WalletSpacingTokens.walletAnalyticsChartHeight,
             child: CustomPaint(
               painter: _PortfolioAreaPainter(points),
               child: const SizedBox.expand(),

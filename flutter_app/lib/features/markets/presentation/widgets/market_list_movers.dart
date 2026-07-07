@@ -6,10 +6,11 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 const double _marketMoverStripHeight = AppSpacing.buttonCompact;
 const EdgeInsets _marketMoverStripPadding =
-    AppSpacing.marketListMoverCompactPadding;
+    MarketsSpacingTokens.marketListMoverCompactPadding;
 
 class MarketListTopMovers extends StatelessWidget {
   const MarketListTopMovers({super.key, required this.pairs});
@@ -76,7 +77,7 @@ class _MoverStripSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: color, size: AppSpacing.marketMoverIcon),
+        Icon(icon, color: color, size: MarketsSpacingTokens.marketMoverIcon),
         const SizedBox(width: AppSpacing.x1),
         Flexible(
           flex: 0,

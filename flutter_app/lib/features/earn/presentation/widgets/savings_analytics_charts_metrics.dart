@@ -72,7 +72,7 @@ class _YieldChartCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           SizedBox(
-            height: AppSpacing.savingsConsumerYieldChartHeight,
+            height: EarnSpacingTokens.savingsConsumerYieldChartHeight,
             child: _YieldChart(points: points),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -164,7 +164,7 @@ class _MonthlyIncomeCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.savingsConsumerMonthlyChartHeight,
+            height: EarnSpacingTokens.savingsConsumerMonthlyChartHeight,
             child: _MonthlyBars(points: points),
           ),
         ],

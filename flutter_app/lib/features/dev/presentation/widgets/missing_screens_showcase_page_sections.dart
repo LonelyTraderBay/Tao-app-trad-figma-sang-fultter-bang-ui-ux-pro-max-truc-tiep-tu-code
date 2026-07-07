@@ -69,7 +69,7 @@ class _V2ScreensSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x4),
         VitCard(
-          padding: AppSpacing.devCardPadding,
+          padding: AdminSpacingTokens.devCardPadding,
           radius: VitCardRadius.standard,
           borderColor: AppColors.primary20,
           child: Text(
@@ -94,7 +94,7 @@ class _NewScreenCard extends StatelessWidget {
 
     return VitCard(
       key: MissingScreensShowcasePage.screenKey(screen.id),
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       borderColor: _borderForId(screen.id),
       onTap: onTap,
@@ -166,7 +166,7 @@ class _V2PageCard extends StatelessWidget {
 
     return VitCard(
       key: MissingScreensShowcasePage.v2PageKey(page.id),
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       onTap: onTap,
       child: Column(
@@ -238,7 +238,7 @@ class _FlowRow extends StatelessWidget {
       onTap: onTap,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.transparent,
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

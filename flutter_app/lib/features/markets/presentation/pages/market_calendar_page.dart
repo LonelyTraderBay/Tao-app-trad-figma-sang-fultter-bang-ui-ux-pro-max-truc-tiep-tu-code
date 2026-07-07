@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_c
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_calendar_filters.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_calendar_month.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketCalendarPage extends ConsumerStatefulWidget {
   const MarketCalendarPage({super.key, this.shellRenderMode});
@@ -102,7 +103,7 @@ class _MarketCalendarPageState extends ConsumerState<MarketCalendarPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketCalendarPage.contentKey,
-                    padding: AppSpacing.marketCalendarScrollPadding(
+                    padding: MarketsSpacingTokens.marketCalendarScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(

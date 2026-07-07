@@ -12,6 +12,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/copy_trading_v2_variant_hero.dart';
 part '../widgets/copy_trading_v2_list.dart';
@@ -20,7 +22,7 @@ part '../widgets/copy_trading_v2_common.dart';
 const _copyPrimary = AppColors.primary;
 const _copyPurple = AppColors.accent;
 const _copySpace = AppSpacing.x2;
-const _copyCardSpace = AppSpacing.tradePageContentGap;
+const _copyCardSpace = TradeSpacingTokens.tradePageContentGap;
 const _copyVariantMinHeight = 44.0;
 const _copyVariantButtonHeight = 40.0;
 const _copyGlassHeroMinHeight = 188.0;

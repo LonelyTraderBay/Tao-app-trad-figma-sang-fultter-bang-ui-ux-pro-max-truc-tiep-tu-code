@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_hero_glow.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_metric_delta_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 /// Compact one-line ticker for Bybit-style trade terminals.
 class VitTradeTickerStrip extends StatelessWidget {
@@ -168,7 +169,7 @@ class VitTradeInstrumentHero extends StatelessWidget {
       density: _compact ? VitDensity.compact : VitDensity.standard,
       padding: _compact
           ? AppSpacing.cardPaddingCompact
-          : AppSpacing.tradeInstrumentHeroPadding,
+          : TradeSpacingTokens.tradeInstrumentHeroPadding,
       background: _compact ? null : const VitHeroGlow(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,7 +206,7 @@ class VitTradeInstrumentHero extends StatelessWidget {
             SizedBox(
               height: _compact
                   ? AppSpacing.x2
-                  : AppSpacing.tradeInstrumentHeroMetricGap,
+                  : TradeSpacingTokens.tradeInstrumentHeroMetricGap,
             ),
             Row(
               children: [

@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part 'p2p_insurance_fund_page_part_01.dart';
 part 'p2p_insurance_fund_page_part_02.dart';
@@ -30,17 +31,19 @@ enum _InsuranceTab { overview, claims }
 const double _p2pInsuranceVisualNavClearance = 112;
 const double _p2pInsuranceNativeNavClearance = 88;
 const double _p2pInsuranceIconBox = AppSpacing.buttonCompact;
-const double _p2pInsuranceChartHeight = AppSpacing.p2pTrustProgressChartHeight;
-const double _p2pInsuranceInputHeight = AppSpacing.p2pTrustProgressInputHeight;
+const double _p2pInsuranceChartHeight =
+    P2PSpacingTokens.p2pTrustProgressChartHeight;
+const double _p2pInsuranceInputHeight =
+    P2PSpacingTokens.p2pTrustProgressInputHeight;
 const double _p2pInsuranceTourMaxHeight =
-    AppSpacing.p2pTrustProgressTourMaxHeight;
+    P2PSpacingTokens.p2pTrustProgressTourMaxHeight;
 const double _p2pInsuranceTourStepHeight =
-    AppSpacing.p2pTrustProgressTourStepHeight;
+    P2PSpacingTokens.p2pTrustProgressTourStepHeight;
 const double _p2pInsuranceTourIconBox = AppSpacing.x7;
 const double _p2pInsuranceBodyLineHeight =
-    AppSpacing.p2pTrustProgressBodyLineHeight;
+    P2PSpacingTokens.p2pTrustProgressBodyLineHeight;
 const double _p2pInsuranceCaptionLineHeight =
-    AppSpacing.p2pTrustProgressCaptionLineHeight;
+    P2PSpacingTokens.p2pTrustProgressCaptionLineHeight;
 
 class P2PInsuranceFundPage extends ConsumerStatefulWidget {
   const P2PInsuranceFundPage({super.key, this.shellRenderMode});
@@ -103,7 +106,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: AppSpacing.p2pTrustProgressTabPadding,
+                    padding: P2PSpacingTokens.p2pTrustProgressTabPadding,
                     child: VitTabBar(
                       variant: VitTabBarVariant.segment,
                       activeKey: _tab.name,
@@ -144,7 +147,7 @@ class _P2PInsuranceFundPageState extends ConsumerState<P2PInsuranceFundPage> {
                           scrollEndPadding,
                         ),
                         child: VitPageContent(
-       rhythm: VitPageRhythm.standard,
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.none,
                           fullBleed: true,
                           density: VitDensity.compact,

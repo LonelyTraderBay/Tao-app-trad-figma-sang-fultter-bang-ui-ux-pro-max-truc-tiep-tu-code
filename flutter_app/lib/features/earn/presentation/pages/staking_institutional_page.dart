@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 part '../widgets/staking_institutional_overview_batches.dart';
 part '../widgets/staking_institutional_signers_features.dart';
@@ -85,9 +86,11 @@ class _StakingInstitutionalPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [

@@ -10,7 +10,7 @@ class _TwoColumnInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pTrustProgressInfoRowPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressInfoRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -53,7 +53,7 @@ class _RangeChip extends StatelessWidget {
       background: ColoredBox(
         color: active ? AppColors.primary12 : AppColors.surface2,
       ),
-      padding: AppSpacing.p2pTrustProgressChipPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressChipPadding,
       clip: true,
       child: Text(
         label,
@@ -78,7 +78,7 @@ class _LegendDot extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox.square(
-          dimension: AppSpacing.p2pTrustProgressDotSize,
+          dimension: P2PSpacingTokens.p2pTrustProgressDotSize,
           child: Material(color: color, shape: const CircleBorder()),
         ),
         const SizedBox(width: AppSpacing.x1),
@@ -111,7 +111,7 @@ class _TierRow extends StatelessWidget {
       background: ColoredBox(
         color: tier.highlight ? AppColors.primary12 : AppColors.transparent,
       ),
-      padding: AppSpacing.p2pTrustProgressChipPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressChipPadding,
       clip: true,
       child: Row(
         children: [
@@ -147,7 +147,7 @@ class _NotificationRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pTrustProgressNotificationRowPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressNotificationRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -194,12 +194,12 @@ class _StepRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pTrustProgressStepPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressStepPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: AppSpacing.p2pTrustProgressStepRadius,
+            radius: P2PSpacingTokens.p2pTrustProgressStepRadius,
             backgroundColor: AppColors.surface3,
             child: Text(
               index,
@@ -250,7 +250,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pTrustProgressCompactPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressCompactPadding,
       child: Row(
         children: [
           Icon(icon, color: AppModuleAccents.p2p, size: AppSpacing.iconMd),

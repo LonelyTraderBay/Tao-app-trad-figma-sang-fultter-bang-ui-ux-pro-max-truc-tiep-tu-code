@@ -81,7 +81,8 @@ class _TicketSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (var i = 0; i < tickets.length; i++) ...[
-          if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (i > 0)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _TicketCard(ticket: tickets[i]),
         ],
       ],
@@ -102,7 +103,7 @@ class _TicketCard extends StatelessWidget {
     return VitCard(
       key: SupportPage.ticketKey(ticket.id),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.supportCardPadding,
+      padding: SupportSpacingTokens.supportCardPadding,
       onTap: HapticFeedback.selectionClick,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -137,7 +138,7 @@ class _TicketCard extends StatelessWidget {
             ticket.subject,
             style: AppTextStyles.baseMedium.copyWith(
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.supportLineHeightTight,
+              height: SupportSpacingTokens.supportLineHeightTight,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -163,7 +164,7 @@ class _TicketCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
-            padding: AppSpacing.supportCardPadding,
+            padding: SupportSpacingTokens.supportCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -198,7 +199,7 @@ class _TicketCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.supportLineHeightReadable,
+                    height: SupportSpacingTokens.supportLineHeightReadable,
                   ),
                 ),
               ],

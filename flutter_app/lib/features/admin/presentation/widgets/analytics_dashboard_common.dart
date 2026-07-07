@@ -8,7 +8,7 @@ class _DistributionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -18,7 +18,7 @@ class _DistributionCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.adminAnalyticsChartHeight,
+            height: AdminSpacingTokens.adminAnalyticsChartHeight,
             child: events.isEmpty
                 ? const Center(
                     child: AdminInlineEmptyState(
@@ -32,8 +32,9 @@ class _DistributionCard extends StatelessWidget {
                     child: ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: events.length,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       itemBuilder: (context, index) {
                         final event = events[index];
                         return Text(
@@ -62,7 +63,7 @@ class _RecentEventsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -93,7 +94,7 @@ class _QueueSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -113,7 +114,11 @@ class _CardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text1, size: AppSpacing.adminIconLg),
+        Icon(
+          icon,
+          color: AppColors.text1,
+          size: AdminSpacingTokens.adminIconLg,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -162,7 +167,7 @@ class _EventVolumePainter extends CustomPainter {
         Offset(0, y - 8),
         style: AppTextStyles.navLabel.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.adminLineHeightTight,
+          height: AdminSpacingTokens.adminLineHeightTight,
           fontFeatures: AppTextStyles.tabularFigures,
         ),
       );
@@ -178,7 +183,7 @@ class _EventVolumePainter extends CustomPainter {
         Offset(x - 22, chartBottom + 6),
         style: AppTextStyles.numericMicro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.adminLineHeightTight,
+          height: AdminSpacingTokens.adminLineHeightTight,
         ),
       );
     }

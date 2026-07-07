@@ -25,7 +25,7 @@ class _EmptyHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4X7,
+      padding: EarnSpacingTokens.earnCardPaddingX4X7,
       child: Column(
         children: [
           const Icon(
@@ -57,7 +57,7 @@ class _Disclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -72,7 +72,8 @@ class _Disclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.primary,
-                height: AppSpacing.savingsNotificationHistoryBodyLineHeight,
+                height:
+                    EarnSpacingTokens.savingsNotificationHistoryBodyLineHeight,
               ),
             ),
           ),
@@ -110,7 +111,7 @@ class _UnreadDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: AppSpacing.earnTopPaddingX1,
+      padding: EarnSpacingTokens.earnTopPaddingX1,
       child: SizedBox(
         width: AppSpacing.x2,
         height: AppSpacing.x2,

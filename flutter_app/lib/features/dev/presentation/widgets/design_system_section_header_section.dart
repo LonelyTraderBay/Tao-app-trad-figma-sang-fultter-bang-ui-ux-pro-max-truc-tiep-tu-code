@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/dev/domain/entities/dev_tools_entitie
 import 'package:vit_trade_flutter/features/dev/presentation/widgets/design_system_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class DesignSystemSectionHeaderSection extends StatelessWidget {
   const DesignSystemSectionHeaderSection({
@@ -27,7 +28,7 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
       children: [
         for (final demo in demos)
           VitCard(
-            padding: AppSpacing.devCardPadding,
+            padding: AdminSpacingTokens.devCardPadding,
             radius: VitCardRadius.large,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -74,13 +75,15 @@ class DesignSystemSectionHeaderSection extends StatelessWidget {
                       borderRadius: AppRadii.smRadius,
                     ),
                   ),
-                  child: SizedBox(height: AppSpacing.pageRhythmRelaxedSectionGap),
+                  child: SizedBox(
+                    height: AppSpacing.pageRhythmRelaxedSectionGap,
+                  ),
                 ),
               ],
             ),
           ),
         VitCard(
-          padding: AppSpacing.devCardPadding,
+          padding: AdminSpacingTokens.devCardPadding,
           radius: VitCardRadius.large,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

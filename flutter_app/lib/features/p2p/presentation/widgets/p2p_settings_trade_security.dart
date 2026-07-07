@@ -28,7 +28,7 @@ class _TradeOptionsCard extends StatelessWidget {
     return VitCard(
       key: P2PSettingsPage.tradeOptionsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pSettingsPageCardPadding,
+      padding: P2PSpacingTokens.p2pSettingsPageCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -158,7 +158,7 @@ class _ToggleSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pSettingsPageHorizontalCardPadding,
+          padding: P2PSpacingTokens.p2pSettingsPageHorizontalCardPadding,
           child: Column(
             children: [
               for (var index = 0; index < toggles.length; index++)
@@ -201,7 +201,7 @@ class _SecuritySection extends StatelessWidget {
         VitCard(
           key: P2PSettingsPage.securityKey,
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pSettingsPageHorizontalCardPadding,
+          padding: P2PSpacingTokens.p2pSettingsPageHorizontalCardPadding,
           child: Column(
             children: [
               for (final toggle in snapshot.securityToggles)
@@ -254,7 +254,7 @@ class _SettingToggleRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pSettingsPageRowPadding,
+          padding: P2PSpacingTokens.p2pSettingsPageRowPadding,
           child: Row(
             children: [
               _SettingIcon(icon: _settingsIcon(toggle.iconKey), color: color),
@@ -331,7 +331,7 @@ class _NavigationRow extends StatelessWidget {
           },
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.standard,
-          padding: AppSpacing.p2pSettingsPageRowPadding,
+          padding: P2PSpacingTokens.p2pSettingsPageRowPadding,
           child: Row(
             children: [
               _SettingIcon(icon: icon, color: color),

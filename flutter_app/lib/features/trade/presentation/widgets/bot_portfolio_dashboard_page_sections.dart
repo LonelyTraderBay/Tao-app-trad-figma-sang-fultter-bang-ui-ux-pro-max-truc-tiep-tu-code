@@ -46,10 +46,10 @@ class _SummaryGrid extends StatelessWidget {
     ];
 
     return GridView.count(
-      crossAxisCount: AppSpacing.tradeBotGridColumns,
-      crossAxisSpacing: AppSpacing.tradeBotCardGap,
-      mainAxisSpacing: AppSpacing.tradeBotCardGap,
-      childAspectRatio: AppSpacing.tradeBotPortfolioMetricAspectRatio,
+      crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
+      crossAxisSpacing: TradeSpacingTokens.tradeBotCardGap,
+      mainAxisSpacing: TradeSpacingTokens.tradeBotCardGap,
+      childAspectRatio: TradeSpacingTokens.tradeBotPortfolioMetricAspectRatio,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: [for (final card in cards) _SummaryCard(data: card)],
@@ -85,7 +85,7 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -124,7 +124,7 @@ class _EquityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       child: SizedBox(
         height: _portfolioEquityChartExtent,
         child: CustomPaint(
@@ -144,7 +144,7 @@ class _AllocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       child: Column(
         children: [
           SizedBox(
@@ -156,10 +156,11 @@ class _AllocationCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x1),
           GridView.count(
-            crossAxisCount: AppSpacing.tradeBotGridColumns,
-            childAspectRatio: AppSpacing.tradeBotAllocationLegendAspectRatio,
-            crossAxisSpacing: AppSpacing.tradeBotSmallGap,
-            mainAxisSpacing: AppSpacing.tradeBotSmallGap,
+            crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
+            childAspectRatio:
+                TradeSpacingTokens.tradeBotAllocationLegendAspectRatio,
+            crossAxisSpacing: TradeSpacingTokens.tradeBotSmallGap,
+            mainAxisSpacing: TradeSpacingTokens.tradeBotSmallGap,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             children: [
@@ -184,9 +185,9 @@ class _AllocationLegend extends StatelessWidget {
         Icon(
           Icons.circle,
           color: Color(item.colorHex),
-          size: AppSpacing.tradeBotCardGap,
+          size: TradeSpacingTokens.tradeBotCardGap,
         ),
-        const SizedBox(width: AppSpacing.tradeBotSmallGap),
+        const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,7 +224,7 @@ class _CorrelationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final headers = rows.map((row) => row.bot).toList();
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       child: Column(
         children: [
           Row(
@@ -231,7 +232,7 @@ class _CorrelationCard extends StatelessWidget {
               const Expanded(child: _TableHeaderText('Bot', alignLeft: true)),
               for (final header in headers)
                 SizedBox(
-                  width: AppSpacing.tradeBotCorrelationColumnWidth,
+                  width: TradeSpacingTokens.tradeBotCorrelationColumnWidth,
                   child: _TableHeaderText(header),
                 ),
             ],
@@ -251,14 +252,15 @@ class _CorrelationCard extends StatelessWidget {
                 ),
                 for (final header in headers)
                   SizedBox(
-                    width: AppSpacing.tradeBotCorrelationColumnWidth,
+                    width: TradeSpacingTokens.tradeBotCorrelationColumnWidth,
                     child: Center(
                       child: _CorrelationPill(value: row.values[header] ?? 0),
                     ),
                   ),
               ],
             ),
-            if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (row != rows.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text.rich(
@@ -272,7 +274,7 @@ class _CorrelationCard extends StatelessWidget {
                   child: Icon(
                     Icons.circle,
                     color: _portfolioGreen,
-                    size: AppSpacing.tradeBotCorrelationLegendDot,
+                    size: TradeSpacingTokens.tradeBotCorrelationLegendDot,
                   ),
                 ),
               ],

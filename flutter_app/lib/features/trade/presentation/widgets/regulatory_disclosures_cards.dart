@@ -29,7 +29,11 @@ class _DisclosureCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (icon != null) ...[
-                Icon(icon, color: accent, size: AppSpacing.tradeBotSmallIcon),
+                Icon(
+                  icon,
+                  color: accent,
+                  size: TradeSpacingTokens.tradeBotSmallIcon,
+                ),
                 const SizedBox(width: AppSpacing.x2),
               ],
               Expanded(
@@ -98,7 +102,7 @@ class _CommitmentCard extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _legalPrimary,
-            size: AppSpacing.tradeBotSmallIcon,
+            size: TradeSpacingTokens.tradeBotSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -136,7 +140,7 @@ class _WarningList extends StatelessWidget {
               const Icon(
                 Icons.warning_amber_rounded,
                 color: _legalAmber,
-                size: AppSpacing.tradeBotSmallIcon,
+                size: TradeSpacingTokens.tradeBotSmallIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -200,7 +204,8 @@ class _LeverageRules extends StatelessWidget {
               rule.body,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
             ),
-            if (rule != rules.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (rule != rules.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

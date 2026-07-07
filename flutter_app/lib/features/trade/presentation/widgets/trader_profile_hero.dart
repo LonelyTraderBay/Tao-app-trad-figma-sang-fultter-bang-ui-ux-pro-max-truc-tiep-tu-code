@@ -28,7 +28,7 @@ class _ProfileHero extends StatelessWidget {
               VitAssetAvatar(
                 label: trader.avatar,
                 accentColor: _profilePrimary,
-                size: AppSpacing.traderProfileAvatarSize,
+                size: TradeSpacingTokens.traderProfileAvatarSize,
                 radius: AppRadii.cardRadius,
                 border: true,
               ),
@@ -54,7 +54,7 @@ class _ProfileHero extends StatelessWidget {
                           const Icon(
                             Icons.star_rounded,
                             color: _profileAmber,
-                            size: AppSpacing.traderProfileActionIcon,
+                            size: TradeSpacingTokens.traderProfileActionIcon,
                           ),
                       ],
                     ),
@@ -130,7 +130,7 @@ class _ProfileHero extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.traderProfileProgressHeight,
+              minHeight: TradeSpacingTokens.traderProfileProgressHeight,
               value: (trader.copiers / trader.maxCopiers).clamp(0, 1),
               backgroundColor: AppColors.onAccent.withValues(alpha: .10),
               valueColor: const AlwaysStoppedAnimation(_profilePrimary),
@@ -147,7 +147,7 @@ class _ProfileHero extends StatelessWidget {
               isFollowing
                   ? Icons.warning_amber_rounded
                   : Icons.content_copy_rounded,
-              size: AppSpacing.traderProfileActionIcon,
+              size: TradeSpacingTokens.traderProfileActionIcon,
             ),
             child: Text(isFollowing ? 'Hủy theo dõi' : 'Copy Trader này'),
           ),

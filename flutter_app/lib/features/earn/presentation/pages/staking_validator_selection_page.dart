@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_val
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_filters.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_list.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_summary.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingValidatorSelectionPage extends ConsumerStatefulWidget {
   const StakingValidatorSelectionPage({super.key, this.shellRenderMode});
@@ -88,7 +89,9 @@ class _StakingValidatorSelectionPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,

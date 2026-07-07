@@ -9,7 +9,7 @@ class _EstimateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadGasTrackerPage.estimateKey(estimate.operation),
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -18,7 +18,7 @@ class _EstimateCard extends StatelessWidget {
               const Icon(
                 Icons.bolt_rounded,
                 color: AppColors.warn,
-                size: AppSpacing.launchpadIconMd,
+                size: LaunchpadSpacingTokens.launchpadIconMd,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -67,7 +67,7 @@ class _EstimateCostRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.launchpadVerticalPaddingX2,
+          padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
           child: Row(
             children: [
               Expanded(
@@ -143,12 +143,12 @@ class _AddAlertCard extends StatelessWidget {
       key: LaunchpadGasTrackerPage.addAlertKey,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       onTap: onTap,
       child: Row(
         children: [
           const SizedBox.square(
-            dimension: AppSpacing.launchpadBox40,
+            dimension: LaunchpadSpacingTokens.launchpadBox40,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary15,
@@ -203,11 +203,11 @@ class _AlertCard extends StatelessWidget {
 
     return VitCard(
       key: LaunchpadGasTrackerPage.alertKey(alert.id),
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.launchpadBox34,
+            dimension: LaunchpadSpacingTokens.launchpadBox34,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: alert.accent.resolve().withValues(alpha: .12),
@@ -218,7 +218,9 @@ class _AlertCard extends StatelessWidget {
               child: Icon(
                 trendIcon,
                 color: alert.accent.resolve(),
-                size: AppSpacing.launchpadIconXl + AppSpacing.hairlineStroke,
+                size:
+                    LaunchpadSpacingTokens.launchpadIconXl +
+                    AppSpacing.hairlineStroke,
               ),
             ),
           ),
@@ -329,14 +331,14 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                 ),
               ),
               child: Padding(
-                padding: AppSpacing.launchpadCreateSheetPadding,
+                padding: LaunchpadSpacingTokens.launchpadCreateSheetPadding,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Center(
                       child: SizedBox(
-                        width: AppSpacing.launchpadBox40,
+                        width: LaunchpadSpacingTokens.launchpadBox40,
                         height: AppSpacing.x1,
                         child: DecoratedBox(
                           decoration: const ShapeDecoration(
@@ -348,7 +350,9 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -369,7 +373,9 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Text(
                       'Chain',
                       style: AppTextStyles.micro.copyWith(
@@ -377,7 +383,9 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x2,
@@ -391,11 +399,14 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                             accentColor: price.accent.resolve(),
                             selected: _chain == price.chain,
                             onTap: () => setState(() => _chain = price.chain),
-                            padding: AppSpacing.launchpadPillPadding,
+                            padding:
+                                LaunchpadSpacingTokens.launchpadPillPadding,
                           ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Text(
                       'Dieu kien',
                       style: AppTextStyles.micro.copyWith(
@@ -403,7 +414,9 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -419,7 +432,8 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                               () =>
                                   _direction = LaunchpadGasAlertDirection.below,
                             ),
-                            padding: AppSpacing.launchpadPillPadding,
+                            padding:
+                                LaunchpadSpacingTokens.launchpadPillPadding,
                             fullWidth: true,
                           ),
                         ),
@@ -437,13 +451,16 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                               () =>
                                   _direction = LaunchpadGasAlertDirection.above,
                             ),
-                            padding: AppSpacing.launchpadPillPadding,
+                            padding:
+                                LaunchpadSpacingTokens.launchpadPillPadding,
                             fullWidth: true,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Text(
                       'Nguong (${selected.unit})',
                       style: AppTextStyles.micro.copyWith(
@@ -451,7 +468,9 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     VitInput(
                       controller: _thresholdController,
                       keyboardType: const TextInputType.numberWithOptions(
@@ -464,7 +483,9 @@ class _AddAlertSheetState extends State<_AddAlertSheet> {
                         color: AppColors.text1,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     VitCtaButton(
                       key: LaunchpadGasTrackerPage.addSubmitKey,
                       onPressed: _canSubmit ? () => _submit(selected) : null,

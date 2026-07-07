@@ -168,7 +168,7 @@ class _InsightList extends StatelessWidget {
           VitCard(
             key: _insightKey(insight.route),
             radius: VitCardRadius.large,
-            padding: AppSpacing.earnCardPaddingX4,
+            padding: EarnSpacingTokens.earnCardPaddingX4,
             onTap: insight.route == null
                 ? null
                 : () {
@@ -207,7 +207,8 @@ class _InsightList extends StatelessWidget {
               ],
             ),
           ),
-          if (insight != insights.last) const SizedBox(height: AppSpacing.rowGap),
+          if (insight != insights.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -241,7 +242,7 @@ class _ToolboxButton extends StatelessWidget {
       key: SavingsPage.guideButtonKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnVerticalPaddingX3,
+      padding: EarnSpacingTokens.earnVerticalPaddingX3,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(guideRoute);

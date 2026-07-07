@@ -29,7 +29,8 @@ class _FileComplaintTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.form, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.form,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -112,9 +113,9 @@ class _NoticeCard extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _disputePrimary,
-            size: AppSpacing.tradeBotSmallIcon,
+            size: TradeSpacingTokens.tradeBotSmallIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotSmallGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +159,7 @@ class _ComplaintTypeCard extends StatelessWidget {
       key: DisputeResolutionPage.complaintTypeKey(option.value),
       variant: VitCardVariant.inner,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotOptionMinHeight,
+        minHeight: TradeSpacingTokens.tradeBotOptionMinHeight,
       ),
       density: VitDensity.compact,
       borderColor: selected ? _disputePrimary : _disputeFieldBorder,
@@ -210,9 +211,9 @@ class _ProviderSelect extends StatelessWidget {
       variant: VitCardVariant.inner,
       borderColor: _disputeFieldBorder,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.tradeBotControlCompact,
+        minHeight: TradeSpacingTokens.tradeBotControlCompact,
       ),
-      padding: AppSpacing.tradeBotDisputeProviderPadding,
+      padding: TradeSpacingTokens.tradeBotDisputeProviderPadding,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: selectedProviderId,
@@ -222,7 +223,7 @@ class _ProviderSelect extends StatelessWidget {
           icon: const Icon(
             Icons.keyboard_arrow_down_rounded,
             color: AppColors.text3,
-            size: AppSpacing.tradeBotDisputeDropdownIcon,
+            size: TradeSpacingTokens.tradeBotDisputeDropdownIcon,
           ),
           hint: Text(
             'Select provider...',
@@ -282,7 +283,7 @@ class _TextFieldShell extends StatelessWidget {
         ),
         filled: true,
         fillColor: _disputeField,
-        contentPadding: AppSpacing.tradeBotDisputeTextFieldPadding,
+        contentPadding: TradeSpacingTokens.tradeBotDisputeTextFieldPadding,
         enabledBorder: OutlineInputBorder(
           borderRadius: AppRadii.cardRadius,
           borderSide: const BorderSide(color: _disputeFieldBorder),

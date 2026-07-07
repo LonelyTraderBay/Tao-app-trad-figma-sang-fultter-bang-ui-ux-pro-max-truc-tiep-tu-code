@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_slashing_history_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingSlashingStatisticsTab extends StatelessWidget {
   const StakingSlashingStatisticsTab({super.key, required this.snapshot});
@@ -28,11 +29,11 @@ class StakingSlashingStatisticsTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 children: [
                   SizedBox(
-                    height: AppSpacing.stakingSlashingStatsChartHeight,
+                    height: EarnSpacingTokens.stakingSlashingStatsChartHeight,
                     child: CustomPaint(
                       painter: _TrendPainter(snapshot.trend),
                       child: const SizedBox.expand(),
@@ -103,7 +104,7 @@ class _NetworkBreakdownCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         children: [
           Row(
@@ -163,7 +164,7 @@ class _BreakdownTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: borderColor,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -195,7 +196,7 @@ class _ReasonBreakdownCard extends StatelessWidget {
     final color = stakingSlashingSeverityColor(item.severity);
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           Icon(

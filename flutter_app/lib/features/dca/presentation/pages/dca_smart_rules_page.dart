@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 part '../widgets/dca_smart_rules_tabs_stats.dart';
 part '../widgets/dca_smart_rules_cards.dart';
 part '../widgets/dca_smart_rules_info_common.dart';
@@ -72,7 +73,7 @@ class _DCASmartRulesPageState extends ConsumerState<DCASmartRulesPage> {
               child: SingleChildScrollView(
                 key: DCASmartRulesPage.contentKey,
                 physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.dcaBottomInsetPadding(scrollBottom),
+                padding: DcaSpacingTokens.dcaBottomInsetPadding(scrollBottom),
                 child: VitPageContent(
                   rhythm: VitPageRhythm.standard,
                   children: [

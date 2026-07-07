@@ -25,8 +25,8 @@ class _SecuritySummaryCard extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.profileDevicesSummaryIconBox,
-                height: AppSpacing.profileDevicesSummaryIconBox,
+                width: ProfileSpacingTokens.profileDevicesSummaryIconBox,
+                height: ProfileSpacingTokens.profileDevicesSummaryIconBox,
                 child: Material(
                   color: AppColors.primary15,
                   shape: RoundedRectangleBorder(
@@ -35,11 +35,13 @@ class _SecuritySummaryCard extends StatelessWidget {
                   child: const Icon(
                     Icons.shield_outlined,
                     color: _devicesPrimary,
-                    size: AppSpacing.profileDevicesSummaryIcon,
+                    size: ProfileSpacingTokens.profileDevicesSummaryIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileDevicesSummaryGapInline),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileDevicesSummaryGapInline,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +76,9 @@ class _SecuritySummaryCard extends StatelessWidget {
                   color: _devicesGreen,
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileDevicesSummaryStatGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileDevicesSummaryStatGap,
+              ),
               Expanded(
                 child: _SummaryStat(
                   label: 'Kh\u00F4ng tin c\u1EADy',
@@ -82,7 +86,9 @@ class _SecuritySummaryCard extends StatelessWidget {
                   color: _devicesAmber,
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileDevicesSummaryStatGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileDevicesSummaryStatGap,
+              ),
               Expanded(
                 child: _SummaryStat(
                   label: '\u0110ang ho\u1EA1t \u0111\u1ED9ng',
@@ -216,8 +222,8 @@ class _DeviceCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: AppSpacing.profileDevicesIconBox,
-                height: AppSpacing.profileDevicesIconBox,
+                width: ProfileSpacingTokens.profileDevicesIconBox,
+                height: ProfileSpacingTokens.profileDevicesIconBox,
                 child: Material(
                   color: accent.withValues(alpha: .14),
                   shape: RoundedRectangleBorder(
@@ -226,11 +232,11 @@ class _DeviceCard extends StatelessWidget {
                   child: Icon(
                     _deviceIcon(device.type),
                     color: accent,
-                    size: AppSpacing.profileDevicesIcon,
+                    size: ProfileSpacingTokens.profileDevicesIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileDevicesIconGap),
+              const SizedBox(width: ProfileSpacingTokens.profileDevicesIconGap),
               Expanded(
                 child: _DeviceDetails(device: device, suspicious: suspicious),
               ),
@@ -248,7 +254,9 @@ class _DeviceCard extends StatelessWidget {
                 Expanded(
                   child: _TrustButton(device: device, onTap: onToggleTrust),
                 ),
-                const SizedBox(width: AppSpacing.profileDevicesActionGap),
+                const SizedBox(
+                  width: ProfileSpacingTokens.profileDevicesActionGap,
+                ),
                 _LogoutButton(deviceId: device.id, onTap: onLogout),
               ],
             ),
@@ -284,18 +292,22 @@ class _DeviceDetails extends StatelessWidget {
               ),
             ),
             if (device.isCurrent) ...[
-              const SizedBox(width: AppSpacing.profileDevicesNamePillGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileDevicesNamePillGap,
+              ),
               const _TinyPill(
                 label: 'Hi\u1EC7n t\u1EA1i',
                 color: _devicesGreen,
               ),
             ],
             if (suspicious) ...[
-              const SizedBox(width: AppSpacing.profileDevicesNamePillGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileDevicesNamePillGap,
+              ),
               const Icon(
                 Icons.warning_amber_rounded,
                 color: _devicesAmber,
-                size: AppSpacing.profileDevicesWarningIcon,
+                size: ProfileSpacingTokens.profileDevicesWarningIcon,
               ),
             ],
           ],
@@ -312,8 +324,8 @@ class _DeviceDetails extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Wrap(
-          spacing: AppSpacing.profileDevicesMetaSpacing,
-          runSpacing: AppSpacing.profileDevicesMetaRunSpacing,
+          spacing: ProfileSpacingTokens.profileDevicesMetaSpacing,
+          runSpacing: ProfileSpacingTokens.profileDevicesMetaRunSpacing,
           children: [
             _MetaItem(
               icon: Icons.location_on_outlined,

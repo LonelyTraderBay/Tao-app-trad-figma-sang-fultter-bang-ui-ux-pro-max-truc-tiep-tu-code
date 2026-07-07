@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/risk_management_overview.dart';
 part '../widgets/risk_management_tabs.dart';
@@ -92,7 +93,7 @@ class _RiskManagementDemoPageState
                         bottom: scrollEndClearance,
                       ),
                       child: VitPageContent(
-     rhythm: VitPageRhythm.standard,
+                        rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,
                         fullBleed: true,
@@ -100,52 +101,53 @@ class _RiskManagementDemoPageState
                           context: context,
                           children: [
                             const _IntroCard(),
-                          const VitCard(
-                            variant: VitCardVariant.inner,
-                            padding: AppSpacing.tradeToolRiskReviewPadding,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            const VitCard(
+                              variant: VitCardVariant.inner,
+                              padding:
+                                  TradeSpacingTokens.tradeToolRiskReviewPadding,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  VitHighRiskStatePanel(
+                                    state: VitHighRiskUiState.riskReview,
+                                    title: 'Xem lại công cụ rủi ro',
+                                    message:
+                                        'Lệnh OCO, vị thế bảo vệ, kết quả máy tính khối lượng và phí được xem trước trước khi áp dụng.',
+                                    contractId: 'risk-management-demo-review',
+                                    density: VitDensity.compact,
+                                  ),
+                                  SizedBox(height: _riskSpace),
+                                  VitStatusPill(
+                                    label: 'Xem trước khi thực hiện',
+                                    status: VitStatusPillStatus.warning,
+                                    size: VitStatusPillSize.sm,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            for (final feature in snapshot.features) ...[
+                              _FeatureCard(
+                                feature: feature,
+                                onTap: () => _onFeatureTap(feature),
+                              ),
+                            ],
+                            const _BenefitsCard(),
+                            _StatusCard(items: snapshot.statusItems),
+                            _RiskTabs(
+                              active: _tab,
+                              onChanged: (tab) => setState(() => _tab = tab),
+                            ),
+                            VitPageSection(
+                              density: VitDensity.compact,
                               children: [
-                                VitHighRiskStatePanel(
-                                  state: VitHighRiskUiState.riskReview,
-                                  title: 'Xem lại công cụ rủi ro',
-                                  message:
-                                      'Lệnh OCO, vị thế bảo vệ, kết quả máy tính khối lượng và phí được xem trước trước khi áp dụng.',
-                                  contractId: 'risk-management-demo-review',
-                                  density: VitDensity.compact,
-                                ),
-                                SizedBox(height: _riskSpace),
-                                VitStatusPill(
-                                  label: 'Xem trước khi thực hiện',
-                                  status: VitStatusPillStatus.warning,
-                                  size: VitStatusPillSize.sm,
-                                ),
+                                if (_tab == _RiskTab.oco)
+                                  _OcoTab(onOpen: _openOcoSheet)
+                                else if (_tab == _RiskTab.positions)
+                                  _PositionsTab(positions: snapshot.positions)
+                                else
+                                  _CalculatorTab(onOpen: _openCalculatorSheet),
                               ],
                             ),
-                          ),
-                          for (final feature in snapshot.features) ...[
-                            _FeatureCard(
-                              feature: feature,
-                              onTap: () => _onFeatureTap(feature),
-                            ),
-                          ],
-                          const _BenefitsCard(),
-                          _StatusCard(items: snapshot.statusItems),
-                          _RiskTabs(
-                            active: _tab,
-                            onChanged: (tab) => setState(() => _tab = tab),
-                          ),
-                          VitPageSection(
-                            density: VitDensity.compact,
-                            children: [
-                              if (_tab == _RiskTab.oco)
-                                _OcoTab(onOpen: _openOcoSheet)
-                              else if (_tab == _RiskTab.positions)
-                                _PositionsTab(positions: snapshot.positions)
-                              else
-                                _CalculatorTab(onOpen: _openCalculatorSheet),
-                            ],
-                          ),
                           ],
                         ),
                       ),

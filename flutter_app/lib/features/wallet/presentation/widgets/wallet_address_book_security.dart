@@ -38,7 +38,7 @@ class _WhitelistModeCard extends StatelessWidget {
                 size: AppSpacing.iconSm,
               ),
             ),
-            const SizedBox(width: AppSpacing.walletAddressActionGap),
+            const SizedBox(width: WalletSpacingTokens.walletAddressActionGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,9 @@ class _WhitelistModeCard extends StatelessWidget {
                       fontWeight: AppTextStyles.bold,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletAddressCompactGap),
+                  const SizedBox(
+                    height: WalletSpacingTokens.walletAddressCompactGap,
+                  ),
                   Text(
                     enabled
                         ? 'Chỉ rút tới địa chỉ whitelist'

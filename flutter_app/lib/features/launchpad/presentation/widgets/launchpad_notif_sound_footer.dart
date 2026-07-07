@@ -15,7 +15,7 @@ class _InfoBanner extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,7 +30,7 @@ class _InfoBanner extends StatelessWidget {
                 'Âm thanh chỉ phát khi ứng dụng đang hoạt động. Thông báo push ngoài app sử dụng cài đặt hệ thống thiết bị.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.launchpadLineHeightShort,
+                  height: LaunchpadSpacingTokens.launchpadLineHeightShort,
                 ),
               ),
             ),
@@ -57,7 +57,7 @@ class _InlineSaveActions extends StatelessWidget {
     return VitCard(
       key: LaunchpadNotifSoundPage.footerKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX5,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -115,8 +115,8 @@ class _SoundSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = small
-        ? AppSpacing.x6 + AppSpacing.launchpadGapXxs
-        : AppSpacing.launchpadBox44 + AppSpacing.hairlineStroke;
+        ? AppSpacing.x6 + LaunchpadSpacingTokens.launchpadGapXxs
+        : LaunchpadSpacingTokens.launchpadBox44 + AppSpacing.hairlineStroke;
     final height = small
         ? AppSpacing.iconMd + AppSpacing.dividerHairline
         : AppSpacing.iconMd + AppSpacing.x2;

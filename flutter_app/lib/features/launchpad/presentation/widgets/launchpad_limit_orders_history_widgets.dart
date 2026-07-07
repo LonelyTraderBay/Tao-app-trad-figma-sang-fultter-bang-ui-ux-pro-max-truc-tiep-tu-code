@@ -15,7 +15,7 @@ class _HistorySection extends StatelessWidget {
         children: [
           for (final order in orders)
             VitCard(
-              padding: AppSpacing.launchpadPaddingX4,
+              padding: LaunchpadSpacingTokens.launchpadPaddingX4,
               child: Column(
                 children: [
                   Row(
@@ -90,7 +90,7 @@ class _HistorySection extends StatelessWidget {
                             : order.status == LaunchpadLimitOrderStatus.expired
                             ? Icons.warning_amber_rounded
                             : Icons.cancel_rounded,
-                        size: AppSpacing.launchpadIconLg,
+                        size: LaunchpadSpacingTokens.launchpadIconLg,
                         color: order.status == LaunchpadLimitOrderStatus.filled
                             ? AppColors.buy
                             : order.status == LaunchpadLimitOrderStatus.expired

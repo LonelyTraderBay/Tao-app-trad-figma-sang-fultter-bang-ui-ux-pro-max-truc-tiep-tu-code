@@ -103,7 +103,7 @@ class _SummaryMetric extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.positionDashboardLabelLineHeight,
+            height: TradeSpacingTokens.positionDashboardLabelLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.x1),
@@ -115,7 +115,7 @@ class _SummaryMetric extends StatelessWidget {
               .copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.positionDashboardTightLineHeight,
+                height: TradeSpacingTokens.positionDashboardTightLineHeight,
               ),
         ),
       ],
@@ -183,7 +183,7 @@ class _SortChips extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.positionDashboardTightLineHeight,
+            height: TradeSpacingTokens.positionDashboardTightLineHeight,
           ),
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -228,7 +228,7 @@ class _SortChip extends StatelessWidget {
         label,
         style: AppTextStyles.badge.copyWith(
           color: active ? AppColors.onAccent : AppColors.text3,
-          height: AppSpacing.positionDashboardTightLineHeight,
+          height: TradeSpacingTokens.positionDashboardTightLineHeight,
         ),
       ),
     );

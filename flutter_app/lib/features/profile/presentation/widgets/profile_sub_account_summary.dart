@@ -17,7 +17,8 @@ List<Widget> _subAccountPageChildren({
     ProfileScreenState.error => [
       VitErrorState(
         key: SubAccountPage.errorKey,
-        title: 'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c t\u00E0i kho\u1EA3n ph\u1EE5',
+        title:
+            'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c t\u00E0i kho\u1EA3n ph\u1EE5',
         message: 'Ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
         actionLabel: 'Th\u1EED l\u1EA1i',
         onAction: () => context.go(AppRoutePaths.profileSubAccounts),
@@ -36,7 +37,8 @@ List<Widget> _subAccountPageChildren({
       const VitOfflineBanner(
         key: SubAccountPage.offlineKey,
         message: '\u0110ang ngo\u1EA1i tuy\u1EBFn',
-        detail: 'Hi\u1EC3n th\u1ECB danh s\u00E1ch t\u00E0i kho\u1EA3n ph\u1EE5 \u0111\u00E3 l\u01B0u.',
+        detail:
+            'Hi\u1EC3n th\u1ECB danh s\u00E1ch t\u00E0i kho\u1EA3n ph\u1EE5 \u0111\u00E3 l\u01B0u.',
       ),
       ..._subAccountReadySections(
         snapshot: snapshot,
@@ -83,10 +85,7 @@ List<Widget> _subAccountReadySections({
       contractId: 'Sub accounts: ${snapshot.accounts.length}',
       density: VitDensity.compact,
     ),
-    _CreateSubAccountButton(
-      isOpen: showCreate,
-      onTap: onToggleCreateForm,
-    ),
+    _CreateSubAccountButton(isOpen: showCreate, onTap: onToggleCreateForm),
     if (showCreate) const _CreateSubAccountForm(),
     VitSectionHeader(
       title: 'T\u00C0I KHO\u1EA2N (${snapshot.accounts.length})',
@@ -142,9 +141,11 @@ class _SubAccountSummaryCard extends StatelessWidget {
               const Icon(
                 Icons.group_outlined,
                 color: AppColors.primary,
-                size: AppSpacing.profileSubAccountSummaryIcon,
+                size: ProfileSpacingTokens.profileSubAccountSummaryIcon,
               ),
-              const SizedBox(width: AppSpacing.profileSubAccountSummaryIconGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileSubAccountSummaryIconGap,
+              ),
               Expanded(
                 child: Text(
                   'T\u1ED5ng t\u00E0i s\u1EA3n t\u1EA5t c\u1EA3 t\u00E0i kho\u1EA3n',
@@ -196,7 +197,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: AppSpacing.profileSubAccountSummaryMetricGap,
+                width: ProfileSpacingTokens.profileSubAccountSummaryMetricGap,
               ),
               Expanded(
                 child: _SummaryMetric(
@@ -206,7 +207,7 @@ class _SubAccountSummaryCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: AppSpacing.profileSubAccountSummaryMetricGap,
+                width: ProfileSpacingTokens.profileSubAccountSummaryMetricGap,
               ),
               Expanded(
                 child: _SummaryMetric(

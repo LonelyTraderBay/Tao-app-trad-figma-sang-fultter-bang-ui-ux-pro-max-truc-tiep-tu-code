@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_wallet_transfer_form.dart';
 part '../widgets/p2p_wallet_transfer_amount.dart';
@@ -146,11 +147,11 @@ class _P2PWalletTransferPageState extends ConsumerState<P2PWalletTransferPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pWalletTransferScrollPadding(
+                    padding: P2PSpacingTokens.p2pWalletTransferScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,

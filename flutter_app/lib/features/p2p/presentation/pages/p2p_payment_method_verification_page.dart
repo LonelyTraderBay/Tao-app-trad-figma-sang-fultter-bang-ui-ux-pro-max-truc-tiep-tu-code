@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_payment_method_verification_methods.dart';
 part '../widgets/p2p_payment_method_verification_flow.dart';
@@ -107,9 +108,10 @@ class _P2PPaymentMethodVerificationPageState
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodVerificationPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentVerificationScrollPadding(
-                      scrollEndPadding,
-                    ),
+                    padding:
+                        P2PSpacingTokens.p2pPaymentVerificationScrollPadding(
+                          scrollEndPadding,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
@@ -190,7 +192,7 @@ class _P2PPaymentMethodVerificationPageState
             variant: VitCtaButtonVariant.secondary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pPaymentDialogActionPadding,
+            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
             child: const Text('Hủy'),
           ),
           VitCtaButton(
@@ -199,7 +201,7 @@ class _P2PPaymentMethodVerificationPageState
             variant: VitCtaButtonVariant.primary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pPaymentDialogActionPadding,
+            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
             child: const Text('Xác nhận'),
           ),
         ],

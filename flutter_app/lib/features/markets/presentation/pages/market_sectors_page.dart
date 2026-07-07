@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
 import 'package:vit_trade_flutter/app/router/app_router.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_card.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
@@ -18,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketSectorsPage extends ConsumerStatefulWidget {
   const MarketSectorsPage({
@@ -60,8 +60,8 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
         (mode.usesVisualQaFrame
-            ? AppSpacing.marketSectorsVisualBottomExtra
-            : AppSpacing.marketSectorsNativeBottomExtra);
+            ? MarketsSpacingTokens.marketSectorsVisualBottomExtra
+            : MarketsSpacingTokens.marketSectorsNativeBottomExtra);
     final selectedSector = findMarketSector(
       snapshot.sectors,
       widget.selectedSectorId,
@@ -106,7 +106,9 @@ class _MarketSectorsPageState extends ConsumerState<MarketSectorsPage> {
                     key: selectedSector == null
                         ? MarketSectorsPage.contentKey
                         : MarketSectorsPage.detailContentKey,
-                    padding: AppSpacing.marketSectorsScrollPadding(bottomInset),
+                    padding: MarketsSpacingTokens.marketSectorsScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.defaultPadding,

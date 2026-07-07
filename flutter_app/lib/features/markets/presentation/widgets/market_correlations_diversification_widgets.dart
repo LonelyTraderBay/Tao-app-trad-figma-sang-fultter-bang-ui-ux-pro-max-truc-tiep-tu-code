@@ -10,7 +10,7 @@ class _DiversificationHero extends StatelessWidget {
     final color = _scoreColor(score.score);
     return VitCard(
       variant: VitCardVariant.hero,
-      padding: AppSpacing.marketCorrelationsHeroPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,9 +29,11 @@ class _DiversificationHero extends StatelessWidget {
                 '${score.score}',
                 style: AppTextStyles.heroNumber.copyWith(color: color),
               ),
-              const SizedBox(width: AppSpacing.marketCorrelationsHeroMetaGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketCorrelationsHeroMetaGap,
+              ),
               Padding(
-                padding: AppSpacing.marketCorrelationsHeroMetaPadding,
+                padding: MarketsSpacingTokens.marketCorrelationsHeroMetaPadding,
                 child: Text(
                   '/ 100',
                   style: AppTextStyles.caption.copyWith(
@@ -39,9 +41,11 @@ class _DiversificationHero extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketCorrelationsHeroPillGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketCorrelationsHeroPillGap,
+              ),
               Padding(
-                padding: AppSpacing.marketCorrelationsHeroMetaPadding,
+                padding: MarketsSpacingTokens.marketCorrelationsHeroMetaPadding,
                 child: _SmallPill(label: score.label, color: color),
               ),
             ],
@@ -109,7 +113,7 @@ class _DiversificationMetrics extends StatelessWidget {
       children: [
         Expanded(
           child: VitCard(
-            padding: AppSpacing.marketCorrelationsMetricPadding,
+            padding: MarketsSpacingTokens.marketCorrelationsMetricPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -131,10 +135,10 @@ class _DiversificationMetrics extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.marketCorrelationsMetricGap),
+        const SizedBox(width: MarketsSpacingTokens.marketCorrelationsMetricGap),
         Expanded(
           child: VitCard(
-            padding: AppSpacing.marketCorrelationsMetricPadding,
+            padding: MarketsSpacingTokens.marketCorrelationsMetricPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -176,12 +180,12 @@ class _TimeframeScoreCard extends StatelessWidget {
       MarketCorrelationTimeframe.d90,
     ];
     return VitCard(
-      padding: AppSpacing.marketCorrelationsScoreCardPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsScoreCardPadding,
       child: Column(
         children: [
           for (final timeframe in timeframes)
             Padding(
-              padding: AppSpacing.marketCorrelationsScoreRowPadding,
+              padding: MarketsSpacingTokens.marketCorrelationsScoreRowPadding,
               child: _TimeframeScoreRow(
                 label: _timeframeLabel(timeframe),
                 score: repo
@@ -207,7 +211,7 @@ class _TimeframeScoreRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.marketCorrelationsScoreLabelWidth,
+          width: MarketsSpacingTokens.marketCorrelationsScoreLabelWidth,
           child: Text(
             label,
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -224,9 +228,9 @@ class _TimeframeScoreRow extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.marketCorrelationsScoreGap),
+        const SizedBox(width: MarketsSpacingTokens.marketCorrelationsScoreGap),
         SizedBox(
-          width: AppSpacing.marketCorrelationsScoreValueWidth,
+          width: MarketsSpacingTokens.marketCorrelationsScoreValueWidth,
           child: Text(
             '${score.score}',
             textAlign: TextAlign.right,
@@ -248,16 +252,18 @@ class _CorrelationDisclaimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.marketCorrelationsDisclaimerPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsDisclaimerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            size: AppSpacing.marketCorrelationsDisclaimerIcon,
+            size: MarketsSpacingTokens.marketCorrelationsDisclaimerIcon,
             color: AppColors.warn,
           ),
-          const SizedBox(width: AppSpacing.marketCorrelationsDisclaimerIconGap),
+          const SizedBox(
+            width: MarketsSpacingTokens.marketCorrelationsDisclaimerIconGap,
+          ),
           Expanded(
             child: Text(
               'Tương quan quá khứ không đảm bảo tương lai. Trong giai đoạn biến động mạnh, tương quan giữa crypto thường tăng cao (risk-on/risk-off). Chỉ mang tính tham khảo.',

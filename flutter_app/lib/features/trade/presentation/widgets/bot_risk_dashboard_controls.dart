@@ -76,7 +76,8 @@ class _SafetyControlsCard extends StatelessWidget {
                 ],
               ),
             ),
-            if (control != controls.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (control != controls.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 import '../widgets/launchpad_rebalance_allocation.dart';
 import '../widgets/launchpad_rebalance_deviation.dart';
@@ -129,7 +130,7 @@ class _LaunchpadRebalancePageState
                   key: LaunchpadRebalancePage.contentKey,
                   physics: const ClampingScrollPhysics(),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [

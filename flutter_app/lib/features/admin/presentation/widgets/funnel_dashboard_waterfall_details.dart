@@ -8,7 +8,7 @@ class _WaterfallCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -77,19 +77,19 @@ class _WaterfallStep extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.inputRadius,
           child: SizedBox(
-            height: AppSpacing.adminBox32,
+            height: AdminSpacingTokens.adminBox32,
             child: ColoredBox(
               color: AppColors.surface2,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: AppSpacing.adminHorizontalCardPadding,
+                  padding: AdminSpacingTokens.adminHorizontalCardPadding,
                   child: Text(
                     'hoàn thành',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.adminLineHeightShort,
+                      height: AdminSpacingTokens.adminLineHeightShort,
                     ),
                   ),
                 ),
@@ -103,7 +103,7 @@ class _WaterfallStep extends StatelessWidget {
             const Icon(
               Icons.check_circle_outline_rounded,
               color: AppColors.buy,
-              size: AppSpacing.adminIconXs,
+              size: AdminSpacingTokens.adminIconXs,
             ),
             const SizedBox(width: AppSpacing.x1),
             Text(
@@ -126,7 +126,7 @@ class _DropoutChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasDropout = funnel.steps.any((step) => step.reached > 0);
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -136,7 +136,7 @@ class _DropoutChartCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.adminFunnelWaterfallHeight,
+            height: AdminSpacingTokens.adminFunnelWaterfallHeight,
             child: Semantics(
               label: hasDropout
                   ? '${funnel.name} dropout chart'
@@ -169,7 +169,7 @@ class _StepDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -203,7 +203,7 @@ class _StepDetailRow extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: AppSpacing.adminCompactPadding,
+        padding: AdminSpacingTokens.adminCompactPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -223,7 +223,7 @@ class _StepDetailRow extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.adminIconMd,
+                  size: AdminSpacingTokens.adminIconMd,
                 ),
               ],
             ),

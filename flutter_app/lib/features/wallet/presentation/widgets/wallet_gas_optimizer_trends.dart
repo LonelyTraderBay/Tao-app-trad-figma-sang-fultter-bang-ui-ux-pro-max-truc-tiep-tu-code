@@ -14,22 +14,22 @@ class _TrendsTab extends StatelessWidget {
   }
 
   List<Widget> get sectionChildren => [
-        _ChartCard(
-          title: '24h Gas Price Trends',
-          height: VitDensity.compact.controlHeight * 3.2,
-          child: CustomPaint(
-            painter: _GasLineChartPainter(points: snapshot.history),
-          ),
-        ),
-        _ChartCard(
-          title: 'Network Activity',
-          height: VitDensity.compact.controlHeight * 2.5,
-          child: CustomPaint(
-            painter: _NetworkBarChartPainter(points: snapshot.networkActivity),
-          ),
-        ),
-        const _BestTimeCard(),
-      ];
+    _ChartCard(
+      title: '24h Gas Price Trends',
+      height: VitDensity.compact.controlHeight * 3.2,
+      child: CustomPaint(
+        painter: _GasLineChartPainter(points: snapshot.history),
+      ),
+    ),
+    _ChartCard(
+      title: 'Network Activity',
+      height: VitDensity.compact.controlHeight * 2.5,
+      child: CustomPaint(
+        painter: _NetworkBarChartPainter(points: snapshot.networkActivity),
+      ),
+    ),
+    const _BestTimeCard(),
+  ];
 }
 
 class _ChartCard extends StatelessWidget {
@@ -84,7 +84,7 @@ class _BestTimeCard extends StatelessWidget {
               const Icon(
                 Icons.schedule_rounded,
                 color: _gasGreen,
-                size: AppSpacing.walletGasIcon,
+                size: WalletSpacingTokens.walletGasIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(

@@ -45,9 +45,10 @@ class PredictionTournamentDetailPage extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.predictionTournamentScrollPadding(
-                    footerPadding,
-                  ),
+                  padding:
+                      PredictionsSpacingTokens.predictionTournamentScrollPadding(
+                        footerPadding,
+                      ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     density: VitDensity.compact,

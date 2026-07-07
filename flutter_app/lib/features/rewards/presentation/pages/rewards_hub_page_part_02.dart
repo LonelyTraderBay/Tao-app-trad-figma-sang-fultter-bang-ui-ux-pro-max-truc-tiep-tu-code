@@ -31,7 +31,7 @@ class _CheckInSection extends StatelessWidget {
           ],
         ),
         VitCard(
-          padding: AppSpacing.arenaPaddingX3,
+          padding: ArenaSpacingTokens.arenaPaddingX3,
           child: Column(
             children: [
               SingleChildScrollView(
@@ -56,7 +56,7 @@ class _CheckInSection extends StatelessWidget {
                   const Icon(
                     Icons.info_outline_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.arenaPointsMicroIcon,
+                    size: ArenaSpacingTokens.arenaPointsMicroIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -98,7 +98,7 @@ class _CheckInTile extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.arenaPointsCheckInTilePadding,
+        padding: ArenaSpacingTokens.arenaPointsCheckInTilePadding,
         child: Column(
           children: [
             Text(
@@ -113,7 +113,7 @@ class _CheckInTile extends StatelessWidget {
             Icon(
               item.claimed ? Icons.check_circle_outline : Icons.circle_outlined,
               color: color,
-              size: AppSpacing.arenaPointsCheckInIcon,
+              size: ArenaSpacingTokens.arenaPointsCheckInIcon,
             ),
             const SizedBox(height: AppSpacing.x1),
             Text(
@@ -141,10 +141,13 @@ class _ReferralBanner extends StatelessWidget {
       key: RewardsHubPage.referralKey,
       accentColor: AppColors.buy,
       onTap: onTap,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         children: [
-          const VitAccentIconBox(icon: Icons.group_add_outlined, color: AppColors.buy),
+          const VitAccentIconBox(
+            icon: Icons.group_add_outlined,
+            color: AppColors.buy,
+          ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: Column(
@@ -171,7 +174,7 @@ class _ReferralBanner extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.buy,
-            size: AppSpacing.arenaPointsChevron,
+            size: ArenaSpacingTokens.arenaPointsChevron,
           ),
         ],
       ),
@@ -310,7 +313,7 @@ class _BonusSection extends StatelessWidget {
                 _BonusRow(row: row),
                 if (row != rows.last)
                   const Divider(
-                    height: AppSpacing.arenaPointsDividerHeight,
+                    height: ArenaSpacingTokens.arenaPointsDividerHeight,
                     color: AppColors.divider,
                   ),
               ],
@@ -331,7 +334,7 @@ class _BonusRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _accentColor(row.kind);
     return Padding(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         children: [
           VitAccentIconBox(icon: _accentIcon(row.kind), color: color),

@@ -9,7 +9,7 @@ class _StrategyMatchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(
@@ -56,7 +56,7 @@ class _ProductResultTile extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           _AssetBadge(asset: product.asset, color: accent),
@@ -125,7 +125,7 @@ class _BulletRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.earnBulletTopMarginX3,
+          padding: EarnSpacingTokens.earnBulletTopMarginX3,
           child: SizedBox.square(
             dimension: AppSpacing.x1,
             child: DecoratedBox(

@@ -8,12 +8,13 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 const double _marketColumnCompactHeaderHeight = AppSpacing.buttonCompact;
 const EdgeInsets _marketPairCompactHeaderPadding =
-    AppSpacing.marketListPairCompactHeaderPadding;
+    MarketsSpacingTokens.marketListPairCompactHeaderPadding;
 const EdgeInsets _marketPairCompactRowPadding =
-    AppSpacing.marketListPairCompactRowPadding;
+    MarketsSpacingTokens.marketListPairCompactRowPadding;
 const double _marketPairCompactGap = AppSpacing.x3;
 const double _marketPairCompactMicroGap = AppSpacing.x1;
 const double _marketPairCompactSparklineWidth = AppSpacing.x7;

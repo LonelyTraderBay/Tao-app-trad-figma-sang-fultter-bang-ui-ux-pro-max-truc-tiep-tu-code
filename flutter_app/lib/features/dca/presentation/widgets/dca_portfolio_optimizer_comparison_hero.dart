@@ -30,7 +30,7 @@ class _ComparisonHero extends StatelessWidget {
               _ScoreBadge(score: snapshot.score),
             ],
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX1),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX1),
           Text(
             'So sánh danh mục · drift ${snapshot.driftPercent.toStringAsFixed(1)}%',
             maxLines: 1,
@@ -40,7 +40,7 @@ class _ComparisonHero extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX3),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
           _MetricStrip(snapshot: snapshot),
         ],
       ),
@@ -64,7 +64,7 @@ class _ScoreBadge extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.dcaScoreChipPadding,
+        padding: DcaSpacingTokens.dcaScoreChipPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -146,7 +146,7 @@ class _MetricStrip extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const Padding(padding: AppSpacing.dcaTopPaddingX2),
+                    const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
                     Text(
                       metric.value,
                       style: AppTextStyles.sectionTitle.copyWith(
@@ -194,7 +194,7 @@ class _AllocationDeltaCard extends StatelessWidget {
           for (final allocation in snapshot.currentAllocations) ...[
             _AllocationRow(allocation: allocation),
             if (allocation != snapshot.currentAllocations.last)
-              const Padding(padding: AppSpacing.dcaTopPaddingX3),
+              const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
           ],
         ],
       ),
@@ -219,7 +219,7 @@ class _AllocationRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.dcaPaddingX3,
+      padding: DcaSpacingTokens.dcaPaddingX3,
       child: Column(
         children: [
           Row(
@@ -256,7 +256,7 @@ class _AllocationRow extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX3),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
           _PercentBar(
             label: 'Hiện tại',
             value: allocation.currentPercent,
@@ -264,7 +264,7 @@ class _AllocationRow extends StatelessWidget {
             color: accent.withValues(alpha: .65),
             valueColor: AppColors.portfolioTextDim,
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX2),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
           _PercentBar(
             label: 'Tối ưu',
             value: allocation.optimalPercent,

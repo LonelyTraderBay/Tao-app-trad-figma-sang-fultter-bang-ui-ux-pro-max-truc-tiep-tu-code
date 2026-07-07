@@ -14,6 +14,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 const _providerPrimary = AppColors.primary;
 const _providerGreen = AppColors.buy;
@@ -61,7 +63,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
                 const Icon(
                   Icons.warning_amber_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.walletTokenHeroIcon,
+                  size: WalletSpacingTokens.walletTokenHeroIcon,
                 ),
                 const SizedBox(height: AppSpacing.cardGap),
                 Text(
@@ -139,7 +141,7 @@ class CopyProviderDetailPage extends ConsumerWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.copyProviderDetailDisclaimerLineHeight,
+              height: TradeSpacingTokens.copyProviderDetailDisclaimerLineHeight,
             ),
           ),
         ),
@@ -193,9 +195,7 @@ class _ProviderCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 Text(
                   '${provider.totalTrades} lệnh · giữ trung bình ${provider.avgHoldingTime}',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -243,12 +243,12 @@ class _MetricGrid extends StatelessWidget {
     ];
 
     return GridView.count(
-      crossAxisCount: AppSpacing.copyProviderDetailMetricColumns,
+      crossAxisCount: TradeSpacingTokens.copyProviderDetailMetricColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisSpacing: AppSpacing.x3,
       mainAxisSpacing: AppSpacing.x3,
-      childAspectRatio: AppSpacing.copyProviderDetailMetricAspectRatio,
+      childAspectRatio: TradeSpacingTokens.copyProviderDetailMetricAspectRatio,
       children: [
         for (final metric in metrics)
           VitCardStat(

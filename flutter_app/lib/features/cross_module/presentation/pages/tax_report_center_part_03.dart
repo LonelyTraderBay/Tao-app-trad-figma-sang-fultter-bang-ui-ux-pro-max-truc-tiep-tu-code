@@ -24,7 +24,7 @@ class _ReportStatusBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: AppSpacing.crossModulePillPadding,
+        padding: CrossModuleSpacingTokens.crossModulePillPadding,
         child: Text(
           status.name.toUpperCase(),
           style: AppTextStyles.chartLabelTiny.copyWith(
@@ -55,7 +55,7 @@ class _TaxSettingsTab extends StatelessWidget {
           label: 'Report Settings',
           children: [
             VitCard(
-              padding: AppSpacing.crossModuleCardPadding,
+              padding: CrossModuleSpacingTokens.crossModuleCardPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -90,7 +90,7 @@ class _TaxSettingsTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
-          padding: AppSpacing.crossModuleCardPadding,
+          padding: CrossModuleSpacingTokens.crossModuleCardPadding,
           radius: VitCardRadius.large,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +110,8 @@ class _TaxSettingsTab extends StatelessWidget {
                 'Crypto Tax Guide by IRS',
               ])
                 Padding(
-                  padding: AppSpacing.crossModuleTrailingRowPadding,
+                  padding:
+                      CrossModuleSpacingTokens.crossModuleTrailingRowPadding,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -163,7 +164,7 @@ class _ImportantNoticeCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.crossModuleCardPadding,
+        padding: CrossModuleSpacingTokens.crossModuleCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -187,7 +188,9 @@ class _ImportantNoticeCard extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Text(
                         'This platform does not provide tax advice. Tax reports are generated for your convenience only. Please consult a qualified tax professional or accountant for accurate tax filing guidance specific to your jurisdiction.',
                         style: AppTextStyles.micro.copyWith(
@@ -208,7 +211,7 @@ class _ImportantNoticeCard extends StatelessWidget {
               'We are not tax advisors or accountants',
             ])
               Padding(
-                padding: AppSpacing.crossModuleTrailingRowPadding,
+                padding: CrossModuleSpacingTokens.crossModuleTrailingRowPadding,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -260,7 +263,7 @@ class _ToggleSwitch extends StatelessWidget {
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
         ),
         child: Padding(
-          padding: AppSpacing.crossModuleTogglePadding,
+          padding: CrossModuleSpacingTokens.crossModuleTogglePadding,
           child: AnimatedAlign(
             duration: const Duration(milliseconds: 160),
             alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
@@ -364,7 +367,7 @@ class _InfoPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: border,
-      padding: AppSpacing.crossModulePanelPadding,
+      padding: CrossModuleSpacingTokens.crossModulePanelPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

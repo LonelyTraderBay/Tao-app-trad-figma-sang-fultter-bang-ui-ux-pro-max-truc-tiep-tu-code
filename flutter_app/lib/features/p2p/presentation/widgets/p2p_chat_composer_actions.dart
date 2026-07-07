@@ -32,7 +32,7 @@ class _ChatComposer extends StatelessWidget {
             child: ColoredBox(color: AppColors.divider),
           ),
           Padding(
-            padding: AppSpacing.p2pChatComposerBottomPadding(bottomInset),
+            padding: P2PSpacingTokens.p2pChatComposerBottomPadding(bottomInset),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -40,7 +40,7 @@ class _ChatComposer extends StatelessWidget {
                   height: AppSpacing.buttonStandard,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    padding: AppSpacing.p2pChatQuickReplyRailPadding,
+                    padding: P2PSpacingTokens.p2pChatQuickReplyRailPadding,
                     children: [
                       _ReplyChip(
                         key: P2PChatPage.shareProofKey,
@@ -59,7 +59,7 @@ class _ChatComposer extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: AppSpacing.p2pChatComposerInputPadding,
+                  padding: P2PSpacingTokens.p2pChatComposerInputPadding,
                   child: Row(
                     children: [
                       _RoundIconButton(
@@ -73,7 +73,8 @@ class _ChatComposer extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: AppSpacing.p2pChatComposerLabelPadding,
+                              padding:
+                                  P2PSpacingTokens.p2pChatComposerLabelPadding,
                               child: Text(
                                 'E2E Encrypted',
                                 style: AppTextStyles.micro.copyWith(
@@ -131,7 +132,7 @@ class _ReplyChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pChatReplyChipOuterPadding,
+      padding: P2PSpacingTokens.p2pChatReplyChipOuterPadding,
       child: VitStatusPill(
         label: label,
         status: icon == null
@@ -162,7 +163,7 @@ class _RoundIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.p2pChatRoundIconButtonSize,
+      dimension: P2PSpacingTokens.p2pChatRoundIconButtonSize,
       child: Center(
         child: VitInlineIconAction(
           icon: icon,

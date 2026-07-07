@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_notification_preferences_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsNotificationMasterSummaryCard extends StatelessWidget {
   const SavingsNotificationMasterSummaryCard({
@@ -29,11 +30,11 @@ class SavingsNotificationMasterSummaryCard extends StatelessWidget {
       key: SavingsNotificationPreferencesKeys.summary,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.savingsNotificationSummaryIconBox,
+            dimension: EarnSpacingTokens.savingsNotificationSummaryIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .14),
@@ -44,7 +45,7 @@ class SavingsNotificationMasterSummaryCard extends StatelessWidget {
                     ? Icons.notifications_none_rounded
                     : Icons.notifications_off_outlined,
                 color: color,
-                size: AppSpacing.savingsNotificationSummaryIcon,
+                size: EarnSpacingTokens.savingsNotificationSummaryIcon,
               ),
             ),
           ),
@@ -144,7 +145,7 @@ class SavingsNotificationStatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -181,14 +182,14 @@ class SavingsNotificationTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnHorizontalPaddingX4,
-        child: VitSegmentedTabBar(
-          activeKey: active,
-          onChanged: onChanged,
-          tabs: [
-            for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
-          ],
-        ),
+      padding: EarnSpacingTokens.earnHorizontalPaddingX4,
+      child: VitSegmentedTabBar(
+        activeKey: active,
+        onChanged: onChanged,
+        tabs: [
+          for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
+        ],
+      ),
     );
   }
 }

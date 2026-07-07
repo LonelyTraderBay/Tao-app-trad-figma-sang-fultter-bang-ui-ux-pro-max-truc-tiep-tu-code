@@ -42,7 +42,8 @@ class ReferralFriendDetailPage extends ConsumerWidget {
             children: [
               Expanded(
                 key: ReferralFriendDetailPage.contentKey,
-                child: VitPageContent(rhythm: VitPageRhythm.standard, 
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   children: [
                     VitEmptyState(

@@ -53,7 +53,7 @@ class _ImpactCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: _tradePrimary,
-                size: AppSpacing.tradeTpslIcon,
+                size: TradeSpacingTokens.tradeTpslIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
@@ -96,8 +96,8 @@ class _ImpactRow extends StatelessWidget {
       children: [
         Padding(
           padding: AppSpacing.zeroInsets.copyWith(
-            top: AppSpacing.transferCardGap,
-            bottom: AppSpacing.transferCardGap,
+            top: WalletSpacingTokens.transferCardGap,
+            bottom: WalletSpacingTokens.transferCardGap,
           ),
           child: Row(
             children: [
@@ -171,7 +171,7 @@ class _RiskTipsCard extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.sell,
-                size: AppSpacing.tradeTpslIcon,
+                size: TradeSpacingTokens.tradeTpslIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Text(
@@ -208,7 +208,8 @@ class _RiskTipsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (tip != _tips.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (tip != _tips.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

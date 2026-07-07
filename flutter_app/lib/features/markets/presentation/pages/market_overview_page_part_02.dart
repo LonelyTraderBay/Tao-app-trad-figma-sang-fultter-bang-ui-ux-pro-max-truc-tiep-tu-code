@@ -97,7 +97,9 @@ class _QuickNavigation extends StatelessWidget {
         for (var i = 0; i < items.length; i++) ...[
           Expanded(child: items[i]),
           if (i < items.length - 1)
-            const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+            const SizedBox(
+              width: MarketsSpacingTokens.marketAnalyticsCompactGap,
+            ),
         ],
       ],
     );
@@ -130,8 +132,8 @@ class _QuickNavItem extends StatelessWidget {
           _IconBubble(
             icon: icon,
             color: color,
-            size: AppSpacing.marketOverviewQuickNavIcon,
-            iconSize: AppSpacing.marketOverviewQuickNavGlyph,
+            size: MarketsSpacingTokens.marketOverviewQuickNavIcon,
+            iconSize: MarketsSpacingTokens.marketOverviewQuickNavGlyph,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
@@ -174,7 +176,7 @@ class _MoversGrid extends StatelessWidget {
             headerKey: MarketOverviewPage.topGainersKey,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsGap),
         Expanded(
           child: _MoverListCard(
             title: 'Giảm mạnh',
@@ -217,15 +219,17 @@ class _MoverListCard extends StatelessWidget {
               onTap: () => context.go(AppRoutePaths.marketsMovers),
               borderRadius: AppRadii.inputRadius,
               child: Padding(
-                padding: AppSpacing.marketOverviewMoverHeaderPadding,
+                padding: MarketsSpacingTokens.marketOverviewMoverHeaderPadding,
                 child: Row(
                   children: [
                     Icon(
                       icon,
                       color: color,
-                      size: AppSpacing.marketOverviewMoverHeaderIcon,
+                      size: MarketsSpacingTokens.marketOverviewMoverHeaderIcon,
                     ),
-                    const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketAnalyticsSmallGap,
+                    ),
                     Expanded(
                       child: Text(
                         title,
@@ -239,7 +243,7 @@ class _MoverListCard extends StatelessWidget {
                     const Icon(
                       Icons.chevron_right_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.marketOverviewMoverChevron,
+                      size: MarketsSpacingTokens.marketOverviewMoverChevron,
                     ),
                   ],
                 ),
@@ -272,7 +276,7 @@ class _QuickMoverRow extends StatelessWidget {
           color: AppAssetColors.forSymbol(mover.symbol).withValues(alpha: 0.18),
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
           child: SizedBox.square(
-            dimension: AppSpacing.marketOverviewMoverAvatar,
+            dimension: MarketsSpacingTokens.marketOverviewMoverAvatar,
             child: Center(
               child: Text(
                 mover.symbol.substring(0, math.min(3, mover.symbol.length)),
@@ -285,7 +289,7 @@ class _QuickMoverRow extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsSmallGap),
         Expanded(
           child: Text(
             mover.symbol,
@@ -297,9 +301,9 @@ class _QuickMoverRow extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsTinyGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsTinyGap),
         SizedBox(
-          width: AppSpacing.marketOverviewMoverPriceWidth,
+          width: MarketsSpacingTokens.marketOverviewMoverPriceWidth,
           child: Text(
             _formatPrice(mover.price),
             maxLines: 1,
@@ -313,9 +317,9 @@ class _QuickMoverRow extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsMicroGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsMicroGap),
         SizedBox(
-          width: AppSpacing.marketOverviewMoverChangeWidth,
+          width: MarketsSpacingTokens.marketOverviewMoverChangeWidth,
           child: VitAccentPill(
             label: _formatSignedPercent(mover.change24h),
             accentColor: color,
@@ -360,7 +364,8 @@ class _SectorPerformance extends StatelessWidget {
                   onTap: () => context.go(AppRoutePaths.marketsSectors),
                   borderRadius: AppRadii.inputRadius,
                   child: Padding(
-                    padding: AppSpacing.marketOverviewSectorActionPadding,
+                    padding:
+                        MarketsSpacingTokens.marketOverviewSectorActionPadding,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -373,12 +378,13 @@ class _SectorPerformance extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: AppSpacing.marketAnalyticsMicroGap,
+                          width: MarketsSpacingTokens.marketAnalyticsMicroGap,
                         ),
                         const Icon(
                           Icons.chevron_right_rounded,
                           color: _marketPrimary,
-                          size: AppSpacing.marketOverviewMoverHeaderIcon,
+                          size: MarketsSpacingTokens
+                              .marketOverviewMoverHeaderIcon,
                         ),
                       ],
                     ),
@@ -419,10 +425,12 @@ class _SectorRow extends StatelessWidget {
                   _IconBubble(
                     icon: MarketIconTokens.icon(sector.icon),
                     color: sector.color.resolve(),
-                    size: AppSpacing.marketOverviewSectorIcon,
-                    iconSize: AppSpacing.marketOverviewSectorGlyph,
+                    size: MarketsSpacingTokens.marketOverviewSectorIcon,
+                    iconSize: MarketsSpacingTokens.marketOverviewSectorGlyph,
                   ),
-                  const SizedBox(width: AppSpacing.marketAnalyticsGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.marketAnalyticsGap,
+                  ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -465,11 +473,13 @@ class _SectorRow extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.marketAnalyticsSmallGap,
+                  ),
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.marketOverviewSectorChevron,
+                    size: MarketsSpacingTokens.marketOverviewSectorChevron,
                   ),
                 ],
               ),

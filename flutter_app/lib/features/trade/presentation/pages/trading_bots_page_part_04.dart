@@ -10,7 +10,7 @@ class _SuccessToast extends StatelessWidget {
     return Material(
       color: AppColors.transparent,
       child: VitCard(
-        padding: AppSpacing.tradeBotCardPadding,
+        padding: TradeSpacingTokens.tradeBotCardPadding,
         borderColor: AppColors.buy,
         child: Row(
           children: [

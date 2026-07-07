@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/dca/domain/entities/dca_entities.dart
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_charts.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 
 class DcaBacktesterAnalysis extends StatelessWidget {
   const DcaBacktesterAnalysis({
@@ -50,7 +51,7 @@ class _DrawdownCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,7 +108,7 @@ class _RiskMetricCard extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final metric in metrics) ...[
           VitCard(
-            padding: AppSpacing.dcaPaddingX4,
+            padding: DcaSpacingTokens.dcaPaddingX4,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -129,7 +130,9 @@ class _RiskMetricCard extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Text(
                         metric.$2,
                         style: AppTextStyles.baseMedium.copyWith(

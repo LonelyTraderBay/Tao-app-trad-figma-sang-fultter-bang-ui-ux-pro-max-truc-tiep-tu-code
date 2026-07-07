@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/launchpad_swap_aggregator_input.dart';
 part '../widgets/launchpad_swap_aggregator_quotes.dart';
@@ -100,7 +101,7 @@ class _LaunchpadSwapAggregatorPageState
         : DeviceMetrics.nativeBottomChrome;
     final safeBottom = MediaQuery.paddingOf(context).bottom;
     final ctaInset = _activeTab == _SwapTab.compare
-        ? AppSpacing.launchpadSwapStickyCtaClearance
+        ? LaunchpadSpacingTokens.launchpadSwapStickyCtaClearance
         : 0.0;
     final scrollTailReserve = navInset + safeBottom + AppSpacing.x3 + ctaInset;
 
@@ -124,7 +125,8 @@ class _LaunchpadSwapAggregatorPageState
               child: VitInsetScrollView(
                 key: LaunchpadSwapAggregatorPage.contentKey,
                 physics: const ClampingScrollPhysics(),
-                child: VitPageContent(rhythm: VitPageRhythm.standard, 
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   gap: VitContentGap.tight,
                   children: [

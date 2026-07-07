@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class TransactionReportingStatsGrid extends StatelessWidget {
   const TransactionReportingStatsGrid({required this.stats, super.key});
@@ -66,14 +67,14 @@ class TransactionReportingStatsTab extends StatelessWidget {
           'Reporting Statistics',
           style: AppTextStyles.badge.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.transactionReportingLineHeightTight,
+            height: TradeSpacingTokens.transactionReportingLineHeightTight,
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.standard,
-          padding: AppSpacing.transactionReportingStatsPanelPadding,
+          padding: TradeSpacingTokens.transactionReportingStatsPanelPadding,
           borderColor: transactionReportBorder.withValues(alpha: .7),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +139,7 @@ class _StatCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       height: AppSpacing.buttonHero + AppSpacing.x2,
-      padding: AppSpacing.transactionReportingStatCardPadding,
+      padding: TradeSpacingTokens.transactionReportingStatCardPadding,
       borderColor: transactionReportBorder.withValues(alpha: .65),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,7 +154,8 @@ class _StatCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.transactionReportingLineHeightTight,
+                    height:
+                        TradeSpacingTokens.transactionReportingLineHeightTight,
                   ),
                 ),
                 const SizedBox(
@@ -163,7 +165,8 @@ class _StatCard extends StatelessWidget {
                   value,
                   style: AppTextStyles.amountSm.copyWith(
                     color: AppColors.text1,
-                    height: AppSpacing.transactionReportingLineHeightTight,
+                    height:
+                        TradeSpacingTokens.transactionReportingLineHeightTight,
                   ),
                 ),
                 const Spacer(),
@@ -173,7 +176,8 @@ class _StatCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: color,
-                    height: AppSpacing.transactionReportingLineHeightTight,
+                    height:
+                        TradeSpacingTokens.transactionReportingLineHeightTight,
                   ),
                 ),
               ],
@@ -190,7 +194,7 @@ class _StatCard extends StatelessWidget {
             child: Icon(
               icon,
               color: color,
-              size: AppSpacing.transactionReportingStatIcon,
+              size: TradeSpacingTokens.transactionReportingStatIcon,
             ),
           ),
         ],
@@ -214,7 +218,7 @@ class _StatColumn extends StatelessWidget {
           title,
           style: AppTextStyles.badge.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.transactionReportingLineHeightTight,
+            height: TradeSpacingTokens.transactionReportingLineHeightTight,
           ),
         ),
         const SizedBox(height: AppSpacing.rowGapRegular + AppSpacing.x1),
@@ -228,7 +232,8 @@ class _StatColumn extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.transactionReportingLineHeightTight,
+                    height:
+                        TradeSpacingTokens.transactionReportingLineHeightTight,
                   ),
                 ),
               ),
@@ -237,12 +242,14 @@ class _StatColumn extends StatelessWidget {
                 style: AppTextStyles.numericCode.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.transactionReportingLineHeightTight,
+                  height:
+                      TradeSpacingTokens.transactionReportingLineHeightTight,
                 ),
               ),
             ],
           ),
-          if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          if (row != rows.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );

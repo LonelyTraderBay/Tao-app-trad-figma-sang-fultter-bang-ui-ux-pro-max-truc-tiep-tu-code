@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/dev/domain/entities/dev_tools_entitie
 import 'package:vit_trade_flutter/features/dev/presentation/widgets/design_system_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class DesignSystemInputSection extends StatelessWidget {
   const DesignSystemInputSection({
@@ -127,7 +128,7 @@ class _InputWrapperDemo extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: AppSpacing.devInputPadding,
+            padding: AdminSpacingTokens.devInputPadding,
             child: Row(
               children: [
                 if (icon != null) ...[

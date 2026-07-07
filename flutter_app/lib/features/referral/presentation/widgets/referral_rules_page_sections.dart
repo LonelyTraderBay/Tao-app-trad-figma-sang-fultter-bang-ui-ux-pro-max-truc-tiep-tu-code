@@ -53,7 +53,7 @@ class _TierTable extends StatelessWidget {
             ),
             if (i < snapshot.tiers.length - 1)
               const Divider(
-                height: AppSpacing.referralDividerHeight,
+                height: ReferralSpacingTokens.referralDividerHeight,
                 color: AppColors.divider,
               ),
           ],
@@ -71,7 +71,7 @@ class _TierHeader extends StatelessWidget {
     return ColoredBox(
       color: AppColors.surface2,
       child: Padding(
-        padding: AppSpacing.referralLedgerHeaderPadding,
+        padding: ReferralSpacingTokens.referralLedgerHeaderPadding,
         child: Row(
           children: [
             Expanded(
@@ -144,7 +144,7 @@ class _TierRow extends StatelessWidget {
       key: ReferralRulesPage.tierKey(tier.id),
       color: current ? AppColors.primary08 : AppColors.transparent,
       child: Padding(
-        padding: AppSpacing.referralLedgerHeaderPadding,
+        padding: ReferralSpacingTokens.referralLedgerHeaderPadding,
         child: Row(
           children: [
             Expanded(
@@ -266,7 +266,7 @@ class _RewardTypeCard extends StatelessWidget {
     final color = isKyc ? AppColors.primary : AppColors.buy;
     return VitCard(
       key: ReferralRulesPage.rewardTypeKey(rule.id),
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

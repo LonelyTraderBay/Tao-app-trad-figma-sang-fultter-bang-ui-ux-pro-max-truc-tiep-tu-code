@@ -12,7 +12,7 @@ class _SavingsPositions extends StatelessWidget {
         for (final position in positions) ...[
           VitCard(
             radius: VitCardRadius.large,
-            padding: AppSpacing.earnCardPaddingX4,
+            padding: EarnSpacingTokens.earnCardPaddingX4,
             child: Row(
               children: [
                 _AssetBadge(
@@ -50,7 +50,8 @@ class _SavingsPositions extends StatelessWidget {
               ],
             ),
           ),
-          if (position != positions.last) const SizedBox(height: AppSpacing.rowGap),
+          if (position != positions.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -84,7 +85,6 @@ class _RoundIcon extends StatelessWidget {
     );
   }
 }
-
 
 class _AssetBadge extends StatelessWidget {
   const _AssetBadge({required this.asset, required this.color});
@@ -138,7 +138,7 @@ class _StatusBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -161,7 +161,8 @@ class _ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.xlRadius,
-      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+      child: SizedBox(
+        height: AppSpacing.pageRhythmCompactInnerGap,
         child: Stack(
           fit: StackFit.expand,
           children: [

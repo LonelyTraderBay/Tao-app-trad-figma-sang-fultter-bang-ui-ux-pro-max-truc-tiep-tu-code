@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketSectorDistributionCard extends StatelessWidget {
   const MarketSectorDistributionCard({required this.sectors, super.key});
@@ -28,8 +29,8 @@ class MarketSectorDistributionCard extends StatelessWidget {
 
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      height: AppSpacing.marketSectorDistributionHeight,
-      padding: AppSpacing.marketSectorCardPadding,
+      height: MarketsSpacingTokens.marketSectorDistributionHeight,
+      padding: MarketsSpacingTokens.marketSectorCardPadding,
       borderColor: marketSectorAccent.withValues(alpha: 0.20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,16 +41,17 @@ class MarketSectorDistributionCard extends StatelessWidget {
                 color: marketSectorAccent.withValues(alpha: 0.16),
                 borderRadius: AppRadii.smRadius,
                 child: const SizedBox.square(
-                  dimension: AppSpacing.marketSectorDistributionIcon,
+                  dimension: MarketsSpacingTokens.marketSectorDistributionIcon,
                   child: Icon(
                     Icons.pie_chart_rounded,
                     color: marketSectorAccent,
-                    size: AppSpacing.marketSectorDistributionIconGlyph,
+                    size:
+                        MarketsSpacingTokens.marketSectorDistributionIconGlyph,
                   ),
                 ),
               ),
               const SizedBox(
-                width: AppSpacing.marketSectorDistributionHeaderGap,
+                width: MarketsSpacingTokens.marketSectorDistributionHeaderGap,
               ),
               Expanded(
                 child: Text(
@@ -58,7 +60,7 @@ class MarketSectorDistributionCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marketSectorLineHeightTitle,
+                    height: MarketsSpacingTokens.marketSectorLineHeightTitle,
                   ),
                 ),
               ),
@@ -70,7 +72,7 @@ class MarketSectorDistributionCard extends StatelessWidget {
             borderRadius: AppRadii.pillRadius,
             clipBehavior: Clip.antiAlias,
             child: SizedBox(
-              height: AppSpacing.marketSectorDistributionBarHeight,
+              height: MarketsSpacingTokens.marketSectorDistributionBarHeight,
               child: Row(
                 children: [
                   for (final sector in visible)
@@ -85,11 +87,13 @@ class MarketSectorDistributionCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.marketSectorDistributionBarGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketSectorDistributionBarGap,
+          ),
           Expanded(
             child: Wrap(
-              spacing: AppSpacing.marketSectorCardHeaderGap,
-              runSpacing: AppSpacing.marketSectorChipGap,
+              spacing: MarketsSpacingTokens.marketSectorCardHeaderGap,
+              runSpacing: MarketsSpacingTokens.marketSectorChipGap,
               children: [
                 for (final sector in visible)
                   _LegendItem(
@@ -126,10 +130,10 @@ class _LegendItem extends StatelessWidget {
           color: color,
           borderRadius: AppRadii.hairlineRadius,
           child: const SizedBox.square(
-            dimension: AppSpacing.marketSectorLegendDot,
+            dimension: MarketsSpacingTokens.marketSectorLegendDot,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketSectorLegendGap),
+        const SizedBox(width: MarketsSpacingTokens.marketSectorLegendGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),

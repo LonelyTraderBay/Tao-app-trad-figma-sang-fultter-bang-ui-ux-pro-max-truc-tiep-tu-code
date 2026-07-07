@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 class P2POrderTimelinePage extends ConsumerWidget {
   const P2POrderTimelinePage({
@@ -75,12 +76,12 @@ class P2POrderTimelinePage extends ConsumerWidget {
                       physics: const ClampingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics(),
                       ),
-                      padding: AppSpacing.p2pOrderLifecycleScrollPadding(
+                      padding: P2PSpacingTokens.p2pOrderLifecycleScrollPadding(
                         bottomInset,
                       ),
                       child: snapshot.events.isEmpty
                           ? VitPageContent(
-           rhythm: VitPageRhythm.standard,
+                              rhythm: VitPageRhythm.standard,
                               key: emptyKey,
                               padding: VitContentPadding.none,
                               children: [
@@ -182,7 +183,7 @@ class _TimelineList extends StatelessWidget {
           top: AppSpacing.x1,
           bottom: AppSpacing.x6,
           child: const SizedBox(
-            width: AppSpacing.p2pOrderTimelineConnectorWidth,
+            width: P2PSpacingTokens.p2pOrderTimelineConnectorWidth,
             child: ColoredBox(color: AppColors.borderSolid),
           ),
         ),
@@ -219,7 +220,7 @@ class _TimelineRow extends StatelessWidget {
             shape: CircleBorder(
               side: BorderSide(
                 color: color,
-                width: AppSpacing.p2pOrderStepperConnectorHeight,
+                width: P2PSpacingTokens.p2pOrderStepperConnectorHeight,
               ),
             ),
             child: SizedBox.square(
@@ -227,7 +228,7 @@ class _TimelineRow extends StatelessWidget {
               child: Icon(
                 _eventIcon(event.typeKey),
                 color: color,
-                size: AppSpacing.p2pOrderTimelineEventIcon,
+                size: P2PSpacingTokens.p2pOrderTimelineEventIcon,
               ),
             ),
           ),

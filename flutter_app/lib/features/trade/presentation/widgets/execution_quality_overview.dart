@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/execution_quality_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class ExecutionQualityIntroCard extends StatelessWidget {
   const ExecutionQualityIntroCard({super.key});
@@ -20,9 +21,9 @@ class ExecutionQualityIntroCard extends StatelessWidget {
           const ExecutionQualityIconTile(
             icon: Icons.bolt_rounded,
             color: executionQualityPrimary,
-            size: AppSpacing.tradeToolIconTileSm,
+            size: TradeSpacingTokens.tradeToolIconTileSm,
           ),
-          const SizedBox(width: AppSpacing.tradeToolCardGap),
+          const SizedBox(width: TradeSpacingTokens.tradeToolCardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,16 +67,16 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
     return VitCard(
       key: executionQualityFeatureKey(feature.id),
       onTap: onTap,
-      padding: AppSpacing.tradeToolRiskIntroPadding,
+      padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       variant: VitCardVariant.inner,
       child: Row(
         children: [
           ExecutionQualityIconTile(
             icon: _iconFor(feature.id),
             color: color,
-            size: AppSpacing.tradeToolIconTileMd,
+            size: TradeSpacingTokens.tradeToolIconTileMd,
           ),
-          const SizedBox(width: AppSpacing.tradeToolCardGap),
+          const SizedBox(width: TradeSpacingTokens.tradeToolCardGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +98,7 @@ class ExecutionQualityFeatureCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeToolInlineGap),
+          const SizedBox(width: TradeSpacingTokens.tradeToolInlineGap),
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
@@ -151,11 +152,11 @@ class ExecutionQualityBenefitsCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: TradeSpacingTokens.tradeToolCardGap),
           for (final item in _items) ...[
             _BenefitItem(icon: item.$1, title: item.$2, description: item.$3),
             if (item != _items.last)
-              const SizedBox(height: AppSpacing.tradeToolCardGap),
+              const SizedBox(height: TradeSpacingTokens.tradeToolCardGap),
           ],
         ],
       ),
@@ -180,7 +181,7 @@ class ExecutionQualityProgressCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.tradeToolCardGap),
+          const SizedBox(height: TradeSpacingTokens.tradeToolCardGap),
           for (final item in items) ...[
             Row(
               children: [
@@ -196,7 +197,7 @@ class ExecutionQualityProgressCard extends StatelessWidget {
               ],
             ),
             if (item != items.last)
-              const SizedBox(height: AppSpacing.tradeToolInlineGap),
+              const SizedBox(height: TradeSpacingTokens.tradeToolInlineGap),
           ],
         ],
       ),
@@ -219,7 +220,7 @@ class ExecutionQualityParityCard extends StatelessWidget {
             color: AppColors.buy,
             size: 18,
           ),
-          const SizedBox(width: AppSpacing.tradeToolIconGap),
+          const SizedBox(width: TradeSpacingTokens.tradeToolIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,7 +266,7 @@ class _BenefitItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, color: executionQualityPrimary, size: 18),
-        const SizedBox(width: AppSpacing.tradeToolIconGap),
+        const SizedBox(width: TradeSpacingTokens.tradeToolIconGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +278,7 @@ class _BenefitItem extends StatelessWidget {
                   fontWeight: AppTextStyles.medium,
                 ),
               ),
-              const SizedBox(height: AppSpacing.tradeToolMicroGap),
+              const SizedBox(height: TradeSpacingTokens.tradeToolMicroGap),
               Text(
                 description,
                 style: AppTextStyles.micro.copyWith(

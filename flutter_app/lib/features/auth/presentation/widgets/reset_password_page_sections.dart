@@ -7,11 +7,11 @@ class _ResetExpired extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: ResetPasswordPage.expiredKey,
-      padding: AppSpacing.authStateVerticalPadding,
+      padding: AuthSpacingTokens.authStateVerticalPadding,
       child: Column(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.authHeroIconBoxMd,
+            dimension: AuthSpacingTokens.authHeroIconBoxMd,
             child: Material(
               color: AppColors.warn10,
               shape: const CircleBorder(
@@ -23,24 +23,24 @@ class _ResetExpired extends StatelessWidget {
               child: const Icon(
                 Icons.lock_clock_outlined,
                 color: AppColors.warn,
-                size: AppSpacing.authHeroIconLg,
+                size: AuthSpacingTokens.authHeroIconLg,
               ),
             ),
           ),
-          const Padding(padding: AppSpacing.authTopGapX6),
+          const Padding(padding: AuthSpacingTokens.authTopGapX6),
           Text(
             'Phiên xác minh đã hết hạn',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,
           ),
-          const Padding(padding: AppSpacing.authTopGapX3),
+          const Padding(padding: AuthSpacingTokens.authTopGapX3),
           Text(
             'Vui lòng xác minh OTP lại để tạo mật khẩu mới. '
             'Mã OTP không được lưu trong URL.',
             textAlign: TextAlign.center,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.authReadableLineHeight,
+              height: AuthSpacingTokens.authReadableLineHeight,
             ),
           ),
         ],
@@ -57,7 +57,7 @@ class _ResetHero extends StatelessWidget {
     return Column(
       children: [
         SizedBox.square(
-          dimension: AppSpacing.authHeroIconBoxSm,
+          dimension: AuthSpacingTokens.authHeroIconBoxSm,
           child: Material(
             color: _authPrimary10,
             shape: const RoundedRectangleBorder(
@@ -70,23 +70,23 @@ class _ResetHero extends StatelessWidget {
             child: const Icon(
               Icons.lock_outline_rounded,
               color: _authPrimary,
-              size: AppSpacing.authHeroIconMd,
+              size: AuthSpacingTokens.authHeroIconMd,
             ),
           ),
         ),
-        const Padding(padding: AppSpacing.authTopGapX5),
+        const Padding(padding: AuthSpacingTokens.authTopGapX5),
         Text(
           'Tạo mật khẩu mới',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const Padding(padding: AppSpacing.authTopGapX3),
+        const Padding(padding: AuthSpacingTokens.authTopGapX3),
         Text(
           'Chọn mật khẩu mạnh để bảo vệ tài khoản của bạn.',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.authReadableLineHeight,
+            height: AuthSpacingTokens.authReadableLineHeight,
           ),
         ),
       ],
@@ -106,7 +106,7 @@ class _PasswordRulesList extends StatelessWidget {
         for (final rule in _passwordRules) ...[
           _PasswordRuleRow(label: rule.label, pass: rule.test(password)),
           if (rule != _passwordRules.last)
-            const Padding(padding: AppSpacing.authCompactTopPadding),
+            const Padding(padding: AuthSpacingTokens.authCompactTopPadding),
         ],
       ],
     );
@@ -125,14 +125,14 @@ class _PasswordRuleRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox.square(
-          dimension: AppSpacing.authInlineCheckIcon,
+          dimension: AuthSpacingTokens.authInlineCheckIcon,
           child: Material(
             color: pass ? AppColors.buy15 : AppColors.hoverBg,
             shape: const CircleBorder(),
             child: Icon(
               Icons.check_rounded,
               color: color,
-              size: AppSpacing.authInlineIconSm,
+              size: AuthSpacingTokens.authInlineIconSm,
             ),
           ),
         ),
@@ -164,7 +164,7 @@ class _InlinePasswordState extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(icon, color: color, size: AppSpacing.authInlineIcon),
+        Icon(icon, color: color, size: AuthSpacingTokens.authInlineIcon),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(text, style: AppTextStyles.micro.copyWith(color: color)),
@@ -180,11 +180,11 @@ class _ResetSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.authStateVerticalPadding,
+      padding: AuthSpacingTokens.authStateVerticalPadding,
       child: Column(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.authStateIconBox,
+            dimension: AuthSpacingTokens.authStateIconBox,
             child: Material(
               color: AppColors.buy15,
               shape: const CircleBorder(
@@ -196,24 +196,24 @@ class _ResetSuccess extends StatelessWidget {
               child: const Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.authStateIconLg,
+                size: AuthSpacingTokens.authStateIconLg,
               ),
             ),
           ),
-          const Padding(padding: AppSpacing.authTopGapX6),
+          const Padding(padding: AuthSpacingTokens.authTopGapX6),
           Text(
             'Đổi mật khẩu thành công!',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,
           ),
-          const Padding(padding: AppSpacing.authTopGapX3),
+          const Padding(padding: AuthSpacingTokens.authTopGapX3),
           Text(
             'Mật khẩu của bạn đã được cập nhật.\n'
             'Vui lòng đăng nhập lại với mật khẩu mới.',
             textAlign: TextAlign.center,
             style: AppTextStyles.body.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.authReadableLineHeight,
+              height: AuthSpacingTokens.authReadableLineHeight,
             ),
           ),
         ],

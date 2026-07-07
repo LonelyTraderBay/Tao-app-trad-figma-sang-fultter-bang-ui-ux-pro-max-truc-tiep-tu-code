@@ -9,7 +9,7 @@ class _OrderProofSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pFinancialSafetyInnerPadding,
+      padding: P2PSpacingTokens.p2pFinancialSafetyInnerPadding,
       child: Column(
         children: [
           _SummaryLine(label: 'Đơn hàng', value: order.orderNumber),
@@ -154,7 +154,7 @@ class _UploadSourceCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       height: AppSpacing.buttonHero + AppSpacing.x4,
-      padding: AppSpacing.p2pFinancialSafetyCardPadding,
+      padding: P2PSpacingTokens.p2pFinancialSafetyCardPadding,
       borderColor: color.withValues(alpha: .45),
       onTap: enabled ? onPressed : null,
       child: Column(
@@ -227,8 +227,8 @@ class _ProofThumb extends StatelessWidget {
       children: [
         // card-tile: allow-start — fixed surface, not horizontal strip tile
         VitCard(
-          width: AppSpacing.p2pFinancialSafetyProofThumb,
-          height: AppSpacing.p2pFinancialSafetyProofThumb,
+          width: P2PSpacingTokens.p2pFinancialSafetyProofThumb,
+          height: P2PSpacingTokens.p2pFinancialSafetyProofThumb,
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.standard,
           borderColor: AppColors.buy20,
@@ -284,7 +284,7 @@ class _TipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pFinancialSafetyInnerPadding,
+      padding: P2PSpacingTokens.p2pFinancialSafetyInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -317,7 +317,7 @@ class _ProofWarning extends StatelessWidget {
       messageColor: AppColors.warn,
       borderColor: AppColors.warningBorder,
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.p2pFinancialSafetyInnerPadding,
+      padding: P2PSpacingTokens.p2pFinancialSafetyInnerPadding,
     );
   }
 }

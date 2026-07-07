@@ -57,7 +57,7 @@ class _StatCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.referralHeroMetricPadding,
+        padding: ReferralSpacingTokens.referralHeroMetricPadding,
         child: Column(
           children: [
             Text(
@@ -106,8 +106,8 @@ class _ReferralFriendFilters extends StatelessWidget {
               selected: item.filter == active,
               onTap: () => onChanged(item.filter),
               accentColor: AppColors.primary,
-              height: AppSpacing.referralHistoryFilterHeight,
-              padding: AppSpacing.referralFilterChipPadding,
+              height: ReferralSpacingTokens.referralHistoryFilterHeight,
+              padding: ReferralSpacingTokens.referralFilterChipPadding,
             ),
             const SizedBox(width: AppSpacing.x3),
           ],
@@ -138,7 +138,7 @@ class _SortRail extends StatelessWidget {
           const Icon(
             Icons.swap_vert_rounded,
             color: AppColors.text3,
-            size: AppSpacing.referralSortIcon,
+            size: ReferralSpacingTokens.referralSortIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(
@@ -179,8 +179,8 @@ class _SortChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: AppColors.primary,
-      height: AppSpacing.referralStepBox,
-      padding: AppSpacing.referralSortChipPadding,
+      height: ReferralSpacingTokens.referralStepBox,
+      padding: ReferralSpacingTokens.referralSortChipPadding,
     );
   }
 }

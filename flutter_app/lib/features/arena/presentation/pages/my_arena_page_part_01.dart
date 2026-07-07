@@ -23,7 +23,7 @@ class _PointsHero extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: AppSpacing.arenaPaddingX5,
+            padding: ArenaSpacingTokens.arenaPaddingX5,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -56,7 +56,7 @@ class _PointsHero extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Padding(
-                      padding: AppSpacing.myArenaBalanceSuffixPadding,
+                      padding: ArenaSpacingTokens.myArenaBalanceSuffixPadding,
                       child: Text(
                         'pts',
                         style: AppTextStyles.base.copyWith(
@@ -94,7 +94,7 @@ class _PointsHero extends StatelessWidget {
             color: AppColors.divider,
           ),
           Padding(
-            padding: AppSpacing.arenaPaddingX5,
+            padding: ArenaSpacingTokens.arenaPaddingX5,
             child: Row(
               children: [
                 Expanded(
@@ -127,9 +127,9 @@ class _PointsHero extends StatelessWidget {
                   leading: Icon(
                     Icons.redeem_rounded,
                     color: AppColors.accent,
-                    size: AppSpacing.myArenaAccentPillIcon,
+                    size: ArenaSpacingTokens.myArenaAccentPillIcon,
                   ),
-                  padding: AppSpacing.arenaHorizontalPaddingX4,
+                  padding: ArenaSpacingTokens.arenaHorizontalPaddingX4,
                 ),
               ],
             ),
@@ -159,8 +159,8 @@ class _PointsDelta extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              height: AppSpacing.myArenaDeltaDot,
-              width: AppSpacing.myArenaDeltaDot,
+              height: ArenaSpacingTokens.myArenaDeltaDot,
+              width: ArenaSpacingTokens.myArenaDeltaDot,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: color,
@@ -358,7 +358,7 @@ class _QuickLinkButton extends StatelessWidget {
                 Icon(
                   icon,
                   color: AppColors.text2,
-                  size: AppSpacing.myArenaQuickLinkIcon,
+                  size: ArenaSpacingTokens.myArenaQuickLinkIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Flexible(
@@ -402,11 +402,8 @@ class _ArenaTabs extends StatelessWidget {
               selected: tab.tab == activeTab,
               onTap: () => onChanged(tab.tab),
               accentColor: _arenaAccent,
-              leading: Icon(
-                tab.icon,
-                size: AppSpacing.myArenaTabIcon,
-              ),
-              padding: AppSpacing.arenaHorizontalPaddingX4,
+              leading: Icon(tab.icon, size: ArenaSpacingTokens.myArenaTabIcon),
+              padding: ArenaSpacingTokens.arenaHorizontalPaddingX4,
             ),
             if (tab != _tabConfigs.last) const SizedBox(width: AppSpacing.x2),
           ],

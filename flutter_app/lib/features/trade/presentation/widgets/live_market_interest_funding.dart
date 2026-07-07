@@ -18,20 +18,18 @@ class _FundingCard extends StatelessWidget {
             badge: '+${data.currentRatePct.toStringAsFixed(4)}%',
             badgeColor: liveMarketRed,
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           LiveMarketCard(
             variant: VitCardVariant.ghost,
             borderColor: AppColors.transparent,
-            height: AppSpacing.liveMarketFundingCountdownHeight,
-            padding: AppSpacing.liveMarketFundingCountdownPadding,
+            height: MarketsSpacingTokens.liveMarketFundingCountdownHeight,
+            padding: MarketsSpacingTokens.liveMarketFundingCountdownPadding,
             background: const ColoredBox(color: liveMarketSurface3),
             child: Row(
               children: [
                 Text(
                   'Next funding in',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
                 const Spacer(),
                 Text(
@@ -45,7 +43,7 @@ class _FundingCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           Row(
             children: [
               Expanded(
@@ -72,17 +70,17 @@ class _FundingCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           LiveMarketCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.transparent,
-            height: AppSpacing.liveMarketFundingChartHeight,
-            padding: AppSpacing.liveMarketFundingChartPadding,
+            height: MarketsSpacingTokens.liveMarketFundingChartHeight,
+            padding: MarketsSpacingTokens.liveMarketFundingChartPadding,
             child: CustomPaint(
               painter: LiveMarketLinePainter(values: data.historyPct),
             ),
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           const LiveMarketInfoStrip(),
         ],
       ),

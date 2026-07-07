@@ -75,11 +75,13 @@ class _AssetRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.walletAnalyticsAssetRowPadding,
+          padding: WalletSpacingTokens.walletAnalyticsAssetRowPadding,
           child: Row(
             children: [
               _AssetAvatar(asset: asset, color: color),
-              const SizedBox(width: AppSpacing.walletAnalyticsAssetGap),
+              const SizedBox(
+                width: WalletSpacingTokens.walletAnalyticsAssetGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +100,8 @@ class _AssetRow extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: AppSpacing.walletAnalyticsAssetValueGap,
+                          width:
+                              WalletSpacingTokens.walletAnalyticsAssetValueGap,
                         ),
                         Flexible(
                           child: Text(
@@ -124,15 +127,16 @@ class _AssetRow extends StatelessWidget {
                             borderRadius: AppRadii.xsRadius,
                             child: LinearProgressIndicator(
                               value: math.min(1, pct / 100),
-                              minHeight:
-                                  AppSpacing.walletAnalyticsAssetProgressHeight,
+                              minHeight: WalletSpacingTokens
+                                  .walletAnalyticsAssetProgressHeight,
                               backgroundColor: AppColors.surface3,
                               valueColor: AlwaysStoppedAnimation<Color>(color),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          width: AppSpacing.walletAnalyticsAssetValueGap,
+                          width:
+                              WalletSpacingTokens.walletAnalyticsAssetValueGap,
                         ),
                         VitMetricDeltaPill(
                           label:
@@ -176,8 +180,8 @@ class _AssetAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      width: AppSpacing.walletAnalyticsAssetAvatar,
-      height: AppSpacing.walletAnalyticsAssetAvatar,
+      width: WalletSpacingTokens.walletAnalyticsAssetAvatar,
+      height: WalletSpacingTokens.walletAnalyticsAssetAvatar,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: .56),

@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_calendar_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketCalendarEventGroups extends StatelessWidget {
   const MarketCalendarEventGroups({
@@ -29,7 +30,7 @@ class MarketCalendarEventGroups extends StatelessWidget {
       children: [
         for (final group in groups) ...[
           _DateHeader(event: group.events.first),
-          const SizedBox(height: AppSpacing.marketCalendarGroupGap),
+          const SizedBox(height: MarketsSpacingTokens.marketCalendarGroupGap),
           for (final event in group.events) ...[
             _EventCard(
               key: MarketCalendarKeys.event(event.id),
@@ -37,9 +38,9 @@ class MarketCalendarEventGroups extends StatelessWidget {
               expanded: expandedId == event.id,
               onTap: () => onToggle(event.id),
             ),
-            const SizedBox(height: AppSpacing.marketCalendarGroupGap),
+            const SizedBox(height: MarketsSpacingTokens.marketCalendarGroupGap),
           ],
-          const SizedBox(height: AppSpacing.marketCalendarGroupGap),
+          const SizedBox(height: MarketsSpacingTokens.marketCalendarGroupGap),
         ],
       ],
     );
@@ -62,7 +63,7 @@ class _DateHeader extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketCalendarDateHeaderGap),
+        const SizedBox(width: MarketsSpacingTokens.marketCalendarDateHeaderGap),
         Text(
           marketCalendarRelativeLabel(event.dateIso),
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -99,7 +100,7 @@ class _EventCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.marketCalendarEventCardPadding,
+            padding: MarketsSpacingTokens.marketCalendarEventCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -107,22 +108,26 @@ class _EventCard extends StatelessWidget {
                   color: type.color.withValues(alpha: .13),
                   borderRadius: AppRadii.smRadius,
                   child: SizedBox.square(
-                    dimension: AppSpacing.marketCalendarEventIcon,
+                    dimension: MarketsSpacingTokens.marketCalendarEventIcon,
                     child: Icon(
                       type.icon,
                       color: type.color,
-                      size: AppSpacing.marketCalendarEventIconGlyph,
+                      size: MarketsSpacingTokens.marketCalendarEventIconGlyph,
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.marketCalendarEventIconGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.marketCalendarEventIconGap,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Wrap(
-                        spacing: AppSpacing.marketCalendarBadgeSpacing,
-                        runSpacing: AppSpacing.marketCalendarBadgeRunSpacing,
+                        spacing:
+                            MarketsSpacingTokens.marketCalendarBadgeSpacing,
+                        runSpacing:
+                            MarketsSpacingTokens.marketCalendarBadgeRunSpacing,
                         children: [
                           if (event.symbol != null)
                             _TinyBadge(
@@ -135,7 +140,8 @@ class _EventCard extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(
-                        height: AppSpacing.marketCalendarEventTitleGap,
+                        height:
+                            MarketsSpacingTokens.marketCalendarEventTitleGap,
                       ),
                       Text(
                         event.title,
@@ -144,21 +150,24 @@ class _EventCard extends StatelessWidget {
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.medium,
-                          height: AppSpacing.marketCalendarEventTitleLineHeight,
+                          height: MarketsSpacingTokens
+                              .marketCalendarEventTitleLineHeight,
                         ),
                       ),
                       const SizedBox(
-                        height: AppSpacing.marketCalendarEventMetaGap,
+                        height: MarketsSpacingTokens.marketCalendarEventMetaGap,
                       ),
                       Row(
                         children: [
                           const Icon(
                             Icons.access_time_rounded,
                             color: AppColors.text3,
-                            size: AppSpacing.marketCalendarEventTimeIcon,
+                            size: MarketsSpacingTokens
+                                .marketCalendarEventTimeIcon,
                           ),
                           const SizedBox(
-                            width: AppSpacing.marketCalendarEventTimeGap,
+                            width:
+                                MarketsSpacingTokens.marketCalendarEventTimeGap,
                           ),
                           Text(
                             marketCalendarFormatEventTime(event.dateIso),
@@ -167,7 +176,8 @@ class _EventCard extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            width: AppSpacing.marketCalendarEventImpactGap,
+                            width: MarketsSpacingTokens
+                                .marketCalendarEventImpactGap,
                           ),
                           Flexible(
                             child: Text(
@@ -188,7 +198,7 @@ class _EventCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: AppSpacing.marketCalendarEventCountdownGap,
+                  width: MarketsSpacingTokens.marketCalendarEventCountdownGap,
                 ),
                 Text(
                   days == 0 ? 'Hôm nay' : '${days}d',
@@ -213,7 +223,8 @@ class _EventCard extends StatelessWidget {
                   color: AppColors.divider,
                 ),
                 Padding(
-                  padding: AppSpacing.marketCalendarEventExpandedPadding,
+                  padding:
+                      MarketsSpacingTokens.marketCalendarEventExpandedPadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -221,13 +232,14 @@ class _EventCard extends StatelessWidget {
                         event.description,
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          height: AppSpacing
+                          height: MarketsSpacingTokens
                               .marketCalendarEventDescriptionLineHeight,
                         ),
                       ),
                       if (event.source != null) ...[
                         const SizedBox(
-                          height: AppSpacing.marketCalendarEventSourceGap,
+                          height:
+                              MarketsSpacingTokens.marketCalendarEventSourceGap,
                         ),
                         Text(
                           'Nguồn: ${event.source}',

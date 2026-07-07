@@ -47,12 +47,12 @@ class _SuggestionCard extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: AppSpacing.launchpadVerticalMarkerWidth,
+              width: LaunchpadSpacingTokens.launchpadVerticalMarkerWidth,
               child: ColoredBox(color: color),
             ),
             Expanded(
               child: Padding(
-                padding: AppSpacing.launchpadPaddingX3,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                 child: Row(
                   children: [
                     _AssetBadge(asset: suggestion.asset),
@@ -128,7 +128,7 @@ class _AssetBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox34,
+      dimension: LaunchpadSpacingTokens.launchpadBox34,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: asset.accent.resolve().withValues(alpha: .14),
@@ -162,22 +162,22 @@ class _ActionPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadCompactChipPadding,
+        padding: LaunchpadSpacingTokens.launchpadCompactChipPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               launchpadRebalanceActionIcon(action),
               color: color,
-              size: AppSpacing.launchpadFontXs,
+              size: LaunchpadSpacingTokens.launchpadFontXs,
             ),
-            const SizedBox(width: AppSpacing.launchpadGapXs),
+            const SizedBox(width: LaunchpadSpacingTokens.launchpadGapXs),
             Text(
               launchpadRebalanceActionLabel(action),
               style: AppTextStyles.chartLabelXs.copyWith(
                 color: color,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.launchpadLineHeightTight,
+                height: LaunchpadSpacingTokens.launchpadLineHeightTight,
               ),
             ),
           ],

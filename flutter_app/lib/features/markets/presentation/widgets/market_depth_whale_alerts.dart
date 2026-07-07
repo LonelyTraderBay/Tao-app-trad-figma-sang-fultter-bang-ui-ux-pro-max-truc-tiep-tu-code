@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketDepthWhaleAlertsView extends StatelessWidget {
   const MarketDepthWhaleAlertsView({required this.snapshot, super.key});
@@ -43,16 +44,16 @@ class _WhaleWarningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warn15,
-      padding: AppSpacing.marketDepthWhaleCardPadding,
+      padding: MarketsSpacingTokens.marketDepthWhaleCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: AppSpacing.marketAdvancedTipIcon,
+            size: MarketsSpacingTokens.marketAdvancedTipIcon,
           ),
-          const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
+          const SizedBox(width: MarketsSpacingTokens.marketHeatmapSummaryGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,15 +63,17 @@ class _WhaleWarningCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marketLineHeightTight,
+                    height: MarketsSpacingTokens.marketLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
+                const SizedBox(
+                  height: MarketsSpacingTokens.marketAnalyticsTinyGap,
+                ),
                 Text(
                   'Các lệnh lớn bất thường trong sổ lệnh BTC/USDT. Không phải tín hiệu giao dịch, chỉ mang tính tham khảo.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.marketLineHeightReadable,
+                    height: MarketsSpacingTokens.marketLineHeightReadable,
                   ),
                 ),
               ],
@@ -93,7 +96,7 @@ class _WhaleOrderCard extends StatelessWidget {
     final buy = order.side == MarketOrderSide.buy;
     final color = buy ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: AppSpacing.marketDepthWhaleCardPadding,
+      padding: MarketsSpacingTokens.marketDepthWhaleCardPadding,
       child: Row(
         children: [
           Material(
@@ -102,11 +105,11 @@ class _WhaleOrderCard extends StatelessWidget {
               borderRadius: AppRadii.mdRadius,
             ),
             child: const SizedBox.square(
-              dimension: AppSpacing.marketDepthWhaleIconBox,
+              dimension: MarketsSpacingTokens.marketDepthWhaleIconBox,
               child: Icon(Icons.waves_rounded, color: AppColors.text2),
             ),
           ),
-          const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
+          const SizedBox(width: MarketsSpacingTokens.marketHeatmapSummaryGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,33 +120,39 @@ class _WhaleOrderCard extends StatelessWidget {
                       label: buy ? 'MUA' : 'BÁN',
                       accentColor: color,
                     ),
-                    const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketAnalyticsCompactGap,
+                    ),
                     Text(
                       order.timeAgo,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.marketLineHeightTight,
+                        height: MarketsSpacingTokens.marketLineHeightTight,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
+                const SizedBox(
+                  height: MarketsSpacingTokens.marketAnalyticsSmallGap,
+                ),
                 Text(
                   '${order.quantity.toStringAsFixed(4)} $baseAsset',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
                     fontFeatures: AppTextStyles.tabularFigures,
-                    height: AppSpacing.marketLineHeightTight,
+                    height: MarketsSpacingTokens.marketLineHeightTight,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
+                const SizedBox(
+                  height: MarketsSpacingTokens.marketAnalyticsTinyGap,
+                ),
                 Text(
                   '@ \$${formatMarketDepthPrice(order.price)}  ≈ ${formatMarketDepthCompact(order.usdValue, prefix: r'$')}',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
                     fontFeatures: AppTextStyles.tabularFigures,
-                    height: AppSpacing.marketLineHeightTight,
+                    height: MarketsSpacingTokens.marketLineHeightTight,
                   ),
                 ),
               ],
@@ -183,7 +192,7 @@ class _WhaleSummary extends StatelessWidget {
             color: AppColors.buy,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsCompactGap),
         Expanded(
           child: _WhaleSummaryCard(
             count: sellOrders.length,
@@ -216,7 +225,7 @@ class _WhaleSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketDepthWhaleSummaryPadding,
+      padding: MarketsSpacingTokens.marketDepthWhaleSummaryPadding,
       child: Column(
         children: [
           Text(
@@ -225,24 +234,24 @@ class _WhaleSummaryCard extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightCaption,
+              height: MarketsSpacingTokens.marketLineHeightCaption,
             ),
           ),
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
+          const SizedBox(height: MarketsSpacingTokens.marketAnalyticsTinyGap),
           Text(
             formatMarketDepthCompact(total, prefix: r'$'),
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.medium,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
           ),
         ],

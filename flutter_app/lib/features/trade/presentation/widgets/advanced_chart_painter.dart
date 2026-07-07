@@ -202,7 +202,7 @@ class _AdvancedTradeChartPainter extends CustomPainter {
         text: 'VOL',
         style: AppTextStyles.chartLabelXs.copyWith(
           color: AppColors.sell,
-          height: AppSpacing.tradeBotLineHeightTight,
+          height: TradeSpacingTokens.tradeBotLineHeightTight,
         ),
       ),
       textDirection: TextDirection.ltr,

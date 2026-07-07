@@ -49,7 +49,7 @@ class _SummaryCard extends StatelessWidget {
                       ? Icons.wifi_off_rounded
                       : Icons.wifi_rounded,
                   color: summaryColor,
-                  size: AppSpacing.walletNetworkSummaryIconGlyph,
+                  size: WalletSpacingTokens.walletNetworkSummaryIconGlyph,
                 ),
               ),
               const SizedBox(width: _networkInlineGap),

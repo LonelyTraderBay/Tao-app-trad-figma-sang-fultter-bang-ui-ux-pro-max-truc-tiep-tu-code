@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_h
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_panels.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_summary.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_treemap.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketHeatmapPage extends ConsumerStatefulWidget {
   const MarketHeatmapPage({super.key, this.shellRenderMode});
@@ -82,7 +83,9 @@ class _MarketHeatmapPageState extends ConsumerState<MarketHeatmapPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketHeatmapPage.contentKey,
-                    padding: AppSpacing.marketScrollPadding(scrollEndClearance),
+                    padding: MarketsSpacingTokens.marketScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,

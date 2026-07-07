@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingCommunityGovernancePage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent30,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,7 +54,7 @@ class _OverviewCard extends StatelessWidget {
     return VitCard(
       key: StakingCommunityGovernancePage.overviewKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -65,10 +65,10 @@ class _OverviewCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: stats.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: AppSpacing.stakingGovernanceGridColumns,
+              crossAxisCount: EarnSpacingTokens.stakingGovernanceGridColumns,
               crossAxisSpacing: AppSpacing.x3,
               mainAxisSpacing: AppSpacing.x3,
-              childAspectRatio: AppSpacing.stakingGovernanceGridAspect,
+              childAspectRatio: EarnSpacingTokens.stakingGovernanceGridAspect,
             ),
             itemBuilder: (context, index) {
               return _StatTile(stat: stats[index]);
@@ -93,7 +93,7 @@ class _StatTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: _toneBorder(stat.tone),
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +132,7 @@ class _ActiveProposal extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           onTap: onTap,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,7 +191,7 @@ class _DecisionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -235,14 +235,14 @@ class _GovernanceSteps extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Column(
             children: [
               for (var i = 0; i < steps.length; i++) ...[
                 _StepRow(step: steps[i]),
                 if (i != steps.length - 1)
                   const Padding(
-                    padding: AppSpacing.earnVerticalPaddingX3,
+                    padding: EarnSpacingTokens.earnVerticalPaddingX3,
                     child: Divider(
                       height: AppSpacing.dividerHairline,
                       color: AppColors.divider,

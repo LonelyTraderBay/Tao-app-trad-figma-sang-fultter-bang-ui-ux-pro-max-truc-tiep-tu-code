@@ -6,7 +6,7 @@ class _ImpactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,14 +55,14 @@ class _InfoCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             icon,
             color: AppColors.primary,
-            size: AppSpacing.dcaSmartInlineIcon,
+            size: DcaSpacingTokens.dcaSmartInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -87,14 +87,14 @@ class _SuccessCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: AppSpacing.dcaSmartInlineIcon,
+            size: DcaSpacingTokens.dcaSmartInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -175,13 +175,13 @@ class _TinyBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.dcaChipPadding,
+        padding: DcaSpacingTokens.dcaChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.dcaSmartBadgeLineHeight,
+            height: DcaSpacingTokens.dcaSmartBadgeLineHeight,
           ),
         ),
       ),
@@ -213,7 +213,7 @@ class _DeleteButton extends StatelessWidget {
         ),
         child: Icon(
           Icons.delete_outline_rounded,
-          size: AppSpacing.dcaSmartInlineIcon,
+          size: DcaSpacingTokens.dcaSmartInlineIcon,
           color: AppColors.sell,
         ),
       ),

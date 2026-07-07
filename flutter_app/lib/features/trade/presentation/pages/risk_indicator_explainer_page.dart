@@ -104,9 +104,7 @@ class RiskIndicatorExplainerPage extends ConsumerWidget {
           title: 'Additional Risks Not Captured by SRI',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _AdditionalRisksCard(risks: snapshot.additionalRisks),
-            ],
+            children: [_AdditionalRisksCard(risks: snapshot.additionalRisks)],
           ),
         ),
       ],

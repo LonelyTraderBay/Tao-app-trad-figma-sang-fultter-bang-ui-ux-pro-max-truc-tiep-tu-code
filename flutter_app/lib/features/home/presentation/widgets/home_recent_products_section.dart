@@ -5,9 +5,10 @@ import 'package:vit_trade_flutter/app/theme/home_action_tokens.dart';
 import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
-const double _recentProductExtent = AppSpacing.homeRecentProductHeight;
-const double _recentProductWidth = AppSpacing.homeRecentProductWidth;
+const double _recentProductExtent = HomeSpacingTokens.homeRecentProductHeight;
+const double _recentProductWidth = HomeSpacingTokens.homeRecentProductWidth;
 
 class HomeRecentProductsSection extends StatelessWidget {
   const HomeRecentProductsSection({

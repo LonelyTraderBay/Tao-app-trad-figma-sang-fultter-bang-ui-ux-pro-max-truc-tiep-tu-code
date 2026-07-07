@@ -14,7 +14,7 @@ class _SmallPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: AppSpacing.dcaChipPadding,
+        padding: DcaSpacingTokens.dcaChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -90,7 +90,7 @@ class _CardLabel extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX2),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
         Text(
           subtitle,
           style: AppTextStyles.caption.copyWith(

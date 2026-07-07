@@ -16,11 +16,11 @@ class _CompareRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX2,
+      padding: EarnSpacingTokens.earnVerticalPaddingX2,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.savingsRecommendationsMatrixLabelWidth,
+            width: EarnSpacingTokens.savingsRecommendationsMatrixLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -59,7 +59,7 @@ class _SheetMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX2,
+      padding: EarnSpacingTokens.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -192,7 +192,7 @@ class _BulletSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: AppSpacing.savingsRecommendationsBulletPadding,
+                padding: EarnSpacingTokens.savingsRecommendationsBulletPadding,
                 child: SizedBox.square(
                   dimension: AppSpacing.x1,
                   child: DecoratedBox(
@@ -215,7 +215,8 @@ class _BulletSection extends StatelessWidget {
               ),
             ],
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (item != items.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -236,7 +237,7 @@ class _SmallPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 class PredictionOrderPreviewCard extends StatelessWidget {
   const PredictionOrderPreviewCard({super.key, required this.preview});
@@ -29,7 +29,7 @@ class PredictionOrderPreviewCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.predictionOrderPreviewPadding,
+        padding: PredictionsSpacingTokens.predictionOrderPreviewPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -38,9 +38,11 @@ class PredictionOrderPreviewCard extends StatelessWidget {
                 const Icon(
                   Icons.receipt_long_outlined,
                   color: AppColors.primary,
-                  size: AppSpacing.predictionOrderPreviewIcon,
+                  size: PredictionsSpacingTokens.predictionOrderPreviewIcon,
                 ),
-                const SizedBox(width: AppSpacing.predictionOrderPreviewIconGap),
+                const SizedBox(
+                  width: PredictionsSpacingTokens.predictionOrderPreviewIconGap,
+                ),
                 Expanded(
                   child: Text(
                     'Order Preview',
@@ -52,11 +54,15 @@ class PredictionOrderPreviewCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.predictionOrderPreviewIconGap),
+                const SizedBox(
+                  width: PredictionsSpacingTokens.predictionOrderPreviewIconGap,
+                ),
                 _PreviewBadge(label: preview.orderTypeLabel),
               ],
             ),
-            const SizedBox(height: AppSpacing.predictionOrderPreviewHeaderGap),
+            const SizedBox(
+              height: PredictionsSpacingTokens.predictionOrderPreviewHeaderGap,
+            ),
             for (final row in rows) ...[
               Row(
                 children: [
@@ -81,9 +87,13 @@ class PredictionOrderPreviewCard extends StatelessWidget {
                 ],
               ),
               if (row != rows.last)
-                const SizedBox(height: AppSpacing.predictionOrderPreviewRowGap),
+                const SizedBox(
+                  height: PredictionsSpacingTokens.predictionOrderPreviewRowGap,
+                ),
             ],
-            const SizedBox(height: AppSpacing.predictionOrderPreviewFooterGap),
+            const SizedBox(
+              height: PredictionsSpacingTokens.predictionOrderPreviewFooterGap,
+            ),
             Text(
               'Prediction positions, probability, receipt, rewards, and P/L stay separate from Arena Points.',
               style: AppTextStyles.numericMicro.copyWith(
@@ -110,7 +120,7 @@ class _PreviewBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: AppSpacing.predictionOrderPreviewBadgePadding,
+        padding: PredictionsSpacingTokens.predictionOrderPreviewBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.badge.copyWith(color: AppColors.primary),

@@ -8,7 +8,7 @@ class _ComplianceNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.copyAuditNoticePadding,
+      padding: TradeSpacingTokens.copyAuditNoticePadding,
       density: VitDensity.compact,
       borderColor: _auditPrimary,
       child: Row(
@@ -17,7 +17,7 @@ class _ComplianceNotice extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: _auditPrimary,
-            size: AppSpacing.walletTokenApprovalActionIcon,
+            size: WalletSpacingTokens.walletTokenApprovalActionIcon,
           ),
           const SizedBox(width: _auditSpace),
           Expanded(
@@ -67,4 +67,3 @@ class _AuditSearchField extends StatelessWidget {
     );
   }
 }
-

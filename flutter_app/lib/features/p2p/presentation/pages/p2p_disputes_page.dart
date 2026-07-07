@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 class P2PDisputesPage extends ConsumerWidget {
   const P2PDisputesPage({super.key, this.shellRenderMode});
@@ -36,9 +37,9 @@ class P2PDisputesPage extends ConsumerWidget {
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pDisputeBottomInsetVisual
+                  P2PSpacingTokens.p2pDisputeBottomInsetVisual
             : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pDisputeBottomInsetNative) +
+                  P2PSpacingTokens.p2pDisputeBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -64,7 +65,9 @@ class P2PDisputesPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PDisputesPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDisputesScrollPadding(bottomInset),
+                    padding: P2PSpacingTokens.p2pDisputesScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
@@ -80,7 +83,9 @@ class P2PDisputesPage extends ConsumerWidget {
                           for (final dispute in snapshot.disputes) ...[
                             _DisputeListTile(dispute: dispute),
                             if (dispute != snapshot.disputes.last)
-                              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmCompactInnerGap,
+                              ),
                           ],
                         _GuideCard(snapshot: snapshot),
                       ],
@@ -154,7 +159,7 @@ class _StatCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDisputeCompactCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCompactCardPadding,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -202,7 +207,7 @@ class _SafetyNotice extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .18)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pDisputeCompactCardPadding,
+        padding: P2PSpacingTokens.p2pDisputeCompactCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -290,7 +295,7 @@ class _EmptyDisputes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pDisputeEmptyPadding,
+      padding: P2PSpacingTokens.p2pDisputeEmptyPadding,
       child: Column(
         children: [
           const Icon(
@@ -328,7 +333,7 @@ class _DisputeListTile extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pDisputeDetail(dispute.id));
       },
-      padding: AppSpacing.p2pDisputeCompactCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -418,7 +423,11 @@ class _MetaItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: AppColors.text3, size: AppSpacing.p2pDisputeMetaIcon),
+        Icon(
+          icon,
+          color: AppColors.text3,
+          size: P2PSpacingTokens.p2pDisputeMetaIcon,
+        ),
         const SizedBox(width: AppSpacing.x1),
         Text(
           label,
@@ -438,7 +447,7 @@ class _GuideCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.p2pDisputeCompactCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -10,11 +10,11 @@ class _LimitDetailRow extends StatelessWidget {
     final color = _toneColor(item.toneKey);
     return Padding(
       key: P2PTransactionLimitsPage.detailItemKey(item.id),
-      padding: AppSpacing.p2pTransactionLimitsCardPadding,
+      padding: P2PSpacingTokens.p2pTransactionLimitsCardPadding,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.p2pTransactionLimitsIconBox,
+            dimension: P2PSpacingTokens.p2pTransactionLimitsIconBox,
             child: Material(
               type: MaterialType.transparency,
               color: color.withValues(alpha: .14),
@@ -22,7 +22,7 @@ class _LimitDetailRow extends StatelessWidget {
               child: Icon(
                 _detailIcon(item.iconKey),
                 color: color,
-                size: AppSpacing.p2pTransactionLimitsDetailIcon,
+                size: P2PSpacingTokens.p2pTransactionLimitsDetailIcon,
               ),
             ),
           ),
@@ -71,7 +71,7 @@ class _UpgradeCard extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Nâng cấp giới hạn',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           icon: Icons.arrow_upward_rounded,
           accentColor: AppModuleAccents.p2p,
           density: VitDensity.compact,
@@ -79,7 +79,7 @@ class _UpgradeCard extends StatelessWidget {
         const SizedBox(height: _p2pLimitsSectionGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pTransactionLimitsCardPadding,
+          padding: P2PSpacingTokens.p2pTransactionLimitsCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -87,7 +87,7 @@ class _UpgradeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox.square(
-                    dimension: AppSpacing.p2pTransactionLimitsIconBox,
+                    dimension: P2PSpacingTokens.p2pTransactionLimitsIconBox,
                     child: Material(
                       type: MaterialType.transparency,
                       color: AppModuleAccents.p2p.withValues(alpha: .14),
@@ -140,7 +140,8 @@ class _UpgradeCard extends StatelessWidget {
                     const Icon(
                       Icons.lock_outline_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.p2pTransactionLimitsRequirementIcon,
+                      size:
+                          P2PSpacingTokens.p2pTransactionLimitsRequirementIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -192,18 +193,21 @@ class _LimitInfoNotice extends StatelessWidget {
           message: items.first,
           titleColor: AppModuleAccents.p2p,
           borderColor: AppModuleAccents.p2p.withValues(alpha: .28),
-          padding: AppSpacing.p2pTransactionLimitsInnerPadding,
+          padding: P2PSpacingTokens.p2pTransactionLimitsInnerPadding,
         ),
         if (items.length > 1) ...[
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.p2pTransactionLimitsInnerPadding,
+            padding: P2PSpacingTokens.p2pTransactionLimitsInnerPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 for (var index = 1; index < items.length; index++) ...[
-                  if (index > 1) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                  if (index > 1)
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                   P2PHelpBullet(text: items[index]),
                 ],
               ],

@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 part '../widgets/staking_guide_page_sections.dart';
 part '../widgets/staking_guide_page_common.dart';
@@ -78,9 +79,11 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -144,7 +147,7 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                   child: SingleChildScrollView(
                     key: StakingGuidePage.tutorialSheetKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.earnSheetContentPadding,
+                    padding: EarnSpacingTokens.earnSheetContentPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -165,17 +168,25 @@ class _StakingGuidePageState extends ConsumerState<StakingGuidePage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _ProgressHeader(
                           stepIndex: stepIndex,
                           total: tutorial.steps.length,
                           progress: progress,
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmFormSectionGap,
+                        ),
                         _StepDetail(step: step),
-                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmFormSectionGap,
+                        ),
                         _TipPanel(tips: step.tips),
-                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmFormSectionGap,
+                        ),
                         Row(
                           children: [
                             Expanded(

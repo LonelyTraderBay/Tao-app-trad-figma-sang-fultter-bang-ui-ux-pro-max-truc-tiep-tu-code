@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_ad_detail_merchant_info.dart';
 part '../widgets/p2p_ad_detail_amount_terms.dart';
@@ -88,11 +89,11 @@ class _P2PAdDetailPageState extends ConsumerState<P2PAdDetailPage> {
                   child: SingleChildScrollView(
                     key: P2PAdDetailPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pAdDetailFlushScrollPadding(
+                    padding: P2PSpacingTokens.p2pAdDetailFlushScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,

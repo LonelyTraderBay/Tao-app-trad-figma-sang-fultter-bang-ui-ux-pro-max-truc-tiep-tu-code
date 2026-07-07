@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_tax_reporting_page_sections.dart';
 part '../widgets/p2p_tax_reporting_page_common.dart';
@@ -105,9 +106,11 @@ class _P2PTaxReportingPageState extends ConsumerState<P2PTaxReportingPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pTaxScrollPadding(scrollEndPadding),
+                    padding: P2PSpacingTokens.p2pTaxScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,

@@ -21,7 +21,7 @@ class _OpenInterestCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sectionGapCompact),
           const LiveMarketMutedLabel('Total Open Interest'),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           Row(
             children: [
               Text(
@@ -66,7 +66,7 @@ class _OpenInterestCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           const LiveMarketInfoStrip(),
         ],
       ),

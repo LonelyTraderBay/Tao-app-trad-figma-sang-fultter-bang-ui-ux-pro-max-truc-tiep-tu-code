@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pPaymentHistoryVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -65,7 +66,7 @@ class P2PPaymentMethodHistoryPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodHistoryPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentHistoryScrollPadding(
+                    padding: P2PSpacingTokens.p2pPaymentHistoryScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
@@ -112,7 +113,7 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pPaymentCompactCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCompactCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -199,7 +200,7 @@ class _TransactionCard extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodHistoryPage.txKey(transaction.id),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentCompactCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -246,7 +247,7 @@ class _TransactionCard extends StatelessWidget {
                     const Icon(
                       Icons.schedule_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.p2pPaymentMetaIcon,
+                      size: P2PSpacingTokens.p2pPaymentMetaIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Flexible(

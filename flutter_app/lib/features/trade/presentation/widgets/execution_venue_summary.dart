@@ -16,7 +16,7 @@ class _SummaryGrid extends StatelessWidget {
             subtitle: 'Active integrations',
           ),
         ),
-        const SizedBox(width: AppSpacing.executionVenueSummaryGap),
+        const SizedBox(width: TradeSpacingTokens.executionVenueSummaryGap),
         Expanded(
           child: _SummaryCard(
             label: 'Avg Total Cost',
@@ -25,7 +25,7 @@ class _SummaryGrid extends StatelessWidget {
             subtitleColor: _venueGreen,
           ),
         ),
-        const SizedBox(width: AppSpacing.executionVenueSummaryGap),
+        const SizedBox(width: TradeSpacingTokens.executionVenueSummaryGap),
         Expanded(
           child: _SummaryCard(
             label: 'Avg Fill Time',
@@ -110,17 +110,17 @@ class _SortSelector extends StatelessWidget {
         const Icon(
           Icons.filter_alt_outlined,
           color: AppColors.text3,
-          size: AppSpacing.executionVenueSortIcon,
+          size: TradeSpacingTokens.executionVenueSortIcon,
         ),
         const SizedBox(width: AppSpacing.x3),
         SizedBox(
-          width: AppSpacing.executionVenueSortLabelWidth,
+          width: TradeSpacingTokens.executionVenueSortLabelWidth,
           child: Text(
             'Sort\nby:',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
         ),
-        const SizedBox(width: AppSpacing.executionVenueSortLabelGap),
+        const SizedBox(width: TradeSpacingTokens.executionVenueSortLabelGap),
         for (final option in options) ...[
           Expanded(
             child: VitChoicePill(
@@ -129,7 +129,7 @@ class _SortSelector extends StatelessWidget {
               selected: activeId == option.$1,
               onTap: () => onChanged(option.$1),
               fullWidth: true,
-              height: AppSpacing.tradeBotControlCompact,
+              height: TradeSpacingTokens.tradeBotControlCompact,
               accentColor: _venuePrimary,
             ),
           ),

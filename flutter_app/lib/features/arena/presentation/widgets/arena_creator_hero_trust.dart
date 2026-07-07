@@ -10,14 +10,14 @@ class _CreatorHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: _arenaAccent,
-      padding: AppSpacing.arenaCreatorHeroPadding,
+      padding: ArenaSpacingTokens.arenaCreatorHeroPadding,
       child: Column(
         children: [
           Row(
             children: [
               const SizedBox(
-                width: AppSpacing.arenaCreatorAvatar,
-                height: AppSpacing.arenaCreatorAvatar,
+                width: ArenaSpacingTokens.arenaCreatorAvatar,
+                height: ArenaSpacingTokens.arenaCreatorAvatar,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.surface2,
@@ -29,7 +29,7 @@ class _CreatorHero extends StatelessWidget {
                     child: Icon(
                       Icons.person_rounded,
                       color: _arenaAccent,
-                      size: AppSpacing.arenaCreatorAvatarGlyph,
+                      size: ArenaSpacingTokens.arenaCreatorAvatarGlyph,
                     ),
                   ),
                 ),
@@ -48,7 +48,9 @@ class _CreatorHero extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x2,
@@ -155,7 +157,7 @@ class _CreatorHeroKpi extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: AppSpacing.arenaCreatorStatPadding,
+          padding: ArenaSpacingTokens.arenaCreatorStatPadding,
           child: content,
         ),
       ),
@@ -176,7 +178,7 @@ class _TrustSection extends StatelessWidget {
         _TrustHeader(onDetails: onDetails),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
-          padding: AppSpacing.arenaCreatorCardPadding,
+          padding: ArenaSpacingTokens.arenaCreatorCardPadding,
           child: Column(
             children: [
               for (var i = 0; i < metrics.length; i++) ...[
@@ -205,7 +207,7 @@ class _TrustHeader extends StatelessWidget {
     return Row(
       children: [
         const SizedBox(
-          width: AppSpacing.arenaCreatorSectionMarkerWidth,
+          width: ArenaSpacingTokens.arenaCreatorSectionMarkerWidth,
           height: _creatorSectionMarkerExtent,
           child: DecoratedBox(
             decoration: ShapeDecoration(
@@ -234,7 +236,7 @@ class _TrustHeader extends StatelessWidget {
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
             child: Padding(
-              padding: AppSpacing.arenaCreatorTrustActionPadding,
+              padding: ArenaSpacingTokens.arenaCreatorTrustActionPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -249,7 +251,7 @@ class _TrustHeader extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.buy,
-                    size: AppSpacing.arenaCreatorChevron,
+                    size: ArenaSpacingTokens.arenaCreatorChevron,
                   ),
                 ],
               ),
@@ -272,8 +274,8 @@ class _TrustMetricRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.arenaCreatorMetricIconBox,
-          height: AppSpacing.arenaCreatorMetricIconBox,
+          width: ArenaSpacingTokens.arenaCreatorMetricIconBox,
+          height: ArenaSpacingTokens.arenaCreatorMetricIconBox,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: color.withValues(alpha: .14),
@@ -285,7 +287,7 @@ class _TrustMetricRow extends StatelessWidget {
               child: Icon(
                 _metricIcon(metric.kind),
                 color: color,
-                size: AppSpacing.arenaCreatorMetricGlyph,
+                size: ArenaSpacingTokens.arenaCreatorMetricGlyph,
               ),
             ),
           ),

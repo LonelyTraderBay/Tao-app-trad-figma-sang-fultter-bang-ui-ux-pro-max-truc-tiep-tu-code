@@ -58,11 +58,12 @@ class _FeaturedTournamentBlock extends StatelessWidget {
           children: [
             const Icon(
               Icons.bolt_rounded,
-              size: AppSpacing.predictionTournamentFeaturedIcon,
+              size: PredictionsSpacingTokens.predictionTournamentFeaturedIcon,
               color: AppColors.warn,
             ),
             const SizedBox(
-              width: AppSpacing.predictionTournamentFeaturedIconGap,
+              width:
+                  PredictionsSpacingTokens.predictionTournamentFeaturedIconGap,
             ),
             Text(
               'Featured',
@@ -146,11 +147,12 @@ class _TournamentCard extends StatelessWidget {
                             const Icon(
                               Icons.star_rounded,
                               color: AppColors.warn,
-                              size: AppSpacing.predictionTournamentTitleIcon,
+                              size: PredictionsSpacingTokens
+                                  .predictionTournamentTitleIcon,
                             ),
                             const SizedBox(
-                              width:
-                                  AppSpacing.predictionTournamentTitleIconGap,
+                              width: PredictionsSpacingTokens
+                                  .predictionTournamentTitleIconGap,
                             ),
                           ],
                           Expanded(
@@ -177,7 +179,9 @@ class _TournamentCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: AppSpacing.predictionTournamentStatusGap),
+                const SizedBox(
+                  width: PredictionsSpacingTokens.predictionTournamentStatusGap,
+                ),
                 _StatusPill(status: tournament.status, color: statusColor),
               ],
             ),
@@ -235,12 +239,13 @@ class _TournamentCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: AppSpacing.predictionTournamentChevronGap,
+                  width:
+                      PredictionsSpacingTokens.predictionTournamentChevronGap,
                 ),
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.predictionTournamentChevron,
+                  size: PredictionsSpacingTokens.predictionTournamentChevron,
                 ),
               ],
             ),

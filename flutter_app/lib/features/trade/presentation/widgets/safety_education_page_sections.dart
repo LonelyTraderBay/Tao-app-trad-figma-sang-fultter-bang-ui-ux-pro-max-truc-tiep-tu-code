@@ -16,17 +16,17 @@ class _HeroBanner extends StatelessWidget {
           const VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.large,
-            width: AppSpacing.tradeBotClientCategoryIcon,
-            height: AppSpacing.tradeBotClientCategoryIcon,
+            width: TradeSpacingTokens.tradeBotClientCategoryIcon,
+            height: TradeSpacingTokens.tradeBotClientCategoryIcon,
             alignment: Alignment.center,
             borderColor: _safetyPrimary,
             child: Icon(
               Icons.shield_outlined,
               color: AppColors.onAccent,
-              size: AppSpacing.tradeBotHeroIcon,
+              size: TradeSpacingTokens.tradeBotHeroIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotStatusGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotStatusGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +98,8 @@ class _ScamsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -142,7 +143,7 @@ class _ScamCard extends StatelessWidget {
             onTap: onTap,
             variant: VitCardVariant.ghost,
             constraints: const BoxConstraints(
-              minHeight: AppSpacing.tradeBotControlTall,
+              minHeight: TradeSpacingTokens.tradeBotControlTall,
             ),
             density: VitDensity.compact,
             child: Row(
@@ -150,9 +151,9 @@ class _ScamCard extends StatelessWidget {
                 const Icon(
                   Icons.warning_amber_rounded,
                   color: AppColors.sell,
-                  size: AppSpacing.tradeBotActionIcon,
+                  size: TradeSpacingTokens.tradeBotActionIcon,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotRowGap),
+                const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -179,14 +180,14 @@ class _ScamCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+                const SizedBox(width: TradeSpacingTokens.tradeBotDisclosureGap),
                 AnimatedRotation(
                   turns: expanded ? .5 : 0,
                   duration: const Duration(milliseconds: 120),
                   child: const Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.tradeBotMediumIcon,
+                    size: TradeSpacingTokens.tradeBotMediumIcon,
                   ),
                 ),
               ],
@@ -284,7 +285,8 @@ class _RedFlagsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,

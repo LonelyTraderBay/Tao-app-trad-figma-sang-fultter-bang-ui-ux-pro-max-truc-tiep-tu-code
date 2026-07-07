@@ -19,12 +19,14 @@ void main() {
     expect(
       source,
       isNot(contains('serviceTileBadgeReserveStart')),
-      reason: 'Do not reintroduce half-width horizontal reserve (shrinks label cell)',
+      reason:
+          'Do not reintroduce half-width horizontal reserve (shrinks label cell)',
     );
     expect(
       source,
       isNot(contains('serviceTileBadgeReserveEnd')),
-      reason: 'Do not reintroduce half-width horizontal reserve (shrinks label cell)',
+      reason:
+          'Do not reintroduce half-width horizontal reserve (shrinks label cell)',
     );
   });
 

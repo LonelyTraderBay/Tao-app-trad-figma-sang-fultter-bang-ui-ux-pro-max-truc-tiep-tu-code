@@ -9,7 +9,7 @@ class _ToneIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.myArenaReportsIconBox,
+      dimension: ArenaSpacingTokens.myArenaReportsIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: 0.12),
@@ -19,7 +19,7 @@ class _ToneIcon extends StatelessWidget {
           child: Icon(
             icon,
             color: color,
-            size: AppSpacing.myArenaReportsToneIcon,
+            size: ArenaSpacingTokens.myArenaReportsToneIcon,
           ),
         ),
       ),

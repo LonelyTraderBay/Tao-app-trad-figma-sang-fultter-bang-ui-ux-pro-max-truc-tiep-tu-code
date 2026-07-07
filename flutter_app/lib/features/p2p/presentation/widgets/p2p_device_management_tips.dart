@@ -10,7 +10,7 @@ class _SecurityTips extends StatelessWidget {
     return VitCard(
       key: P2PDeviceManagementPage.tipsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDevicesCardPadding,
+      padding: P2PSpacingTokens.p2pDevicesCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -33,7 +33,8 @@ class _SecurityTips extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final tip in tips) ...[
             _TipRow(text: tip),
-            if (tip != tips.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (tip != tips.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -52,11 +53,11 @@ class _TipRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: AppSpacing.p2pSecurityDetailsBulletPadding,
+          padding: P2PSpacingTokens.p2pSecurityDetailsBulletPadding,
           child: Icon(
             Icons.circle,
             color: AppColors.text3,
-            size: AppSpacing.p2pSecurityDetailsBullet,
+            size: P2PSpacingTokens.p2pSecurityDetailsBullet,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

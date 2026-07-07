@@ -33,7 +33,7 @@ class _ResultView extends StatelessWidget {
           key: StakingRiskAssessmentPage.resultCardKey,
           radius: VitCardRadius.large,
           borderColor: accent,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -59,7 +59,9 @@ class _ResultView extends StatelessWidget {
                             color: accent,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Text(
                           result.description,
                           style: AppTextStyles.caption.copyWith(
@@ -136,7 +138,7 @@ class _ResultIcon extends StatelessWidget {
         shape: RoundedRectangleBorder(
           side: BorderSide(
             color: color,
-            width: AppSpacing.stakingAssessmentOptionBorderWidth,
+            width: EarnSpacingTokens.stakingAssessmentOptionBorderWidth,
           ),
           borderRadius: AppRadii.xlRadius,
         ),
@@ -173,7 +175,7 @@ class _ScoreMeter extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -198,7 +200,8 @@ class _ScoreMeter extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ClipRRect(
             borderRadius: AppRadii.xlRadius,
-            child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+            child: SizedBox(
+              height: AppSpacing.pageRhythmCompactInnerGap,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -254,7 +257,7 @@ class _ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           Expanded(

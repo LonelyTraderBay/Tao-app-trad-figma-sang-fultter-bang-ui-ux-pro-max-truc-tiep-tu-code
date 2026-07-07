@@ -14,7 +14,8 @@ class _GoalsStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.form, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
@@ -23,10 +24,11 @@ class _GoalsStep extends StatelessWidget {
           subtitle: 'Chọn một hoặc nhiều mục tiêu để cá nhân hóa trải nghiệm',
         ),
         GridView.count(
-          crossAxisCount: AppSpacing.onboardingGoalGridColumns,
+          crossAxisCount: OnboardingSpacingTokens.onboardingGoalGridColumns,
           mainAxisSpacing: AppSpacing.x3,
           crossAxisSpacing: AppSpacing.x3,
-          childAspectRatio: AppSpacing.onboardingGoalGridAspectRatio,
+          childAspectRatio:
+              OnboardingSpacingTokens.onboardingGoalGridAspectRatio,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           children: [
@@ -72,7 +74,8 @@ class _CompleteStep extends StatelessWidget {
         .take(3)
         .toList(growable: false);
 
-    return VitPageContent(rhythm: VitPageRhythm.form, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.tight,
       children: [
@@ -110,7 +113,7 @@ class _CompleteStep extends StatelessWidget {
           ),
         ],
         VitCard(
-          padding: AppSpacing.onboardingCardPadding,
+          padding: OnboardingSpacingTokens.onboardingCardPadding,
           radius: VitCardRadius.standard,
           borderColor: AppColors.primary20,
           child: Text.rich(
@@ -295,7 +298,7 @@ class _SmallIconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.onboardingSmallIconBox,
+      dimension: OnboardingSpacingTokens.onboardingSmallIconBox,
       child: Material(
         color: background,
         borderRadius: AppRadii.mdRadius,
@@ -322,7 +325,7 @@ class _BoundaryCard extends StatelessWidget {
 
     return VitCard(
       key: OnboardingFlow.boundaryKey(boundary.id),
-      padding: AppSpacing.onboardingCardPadding,
+      padding: OnboardingSpacingTokens.onboardingCardPadding,
       radius: VitCardRadius.standard,
       borderColor: expanded ? accent : AppColors.cardBorder,
       onTap: onTap,
@@ -370,7 +373,9 @@ class _BoundaryCard extends StatelessWidget {
                     icon: Icons.check_rounded,
                   ),
                   if (example != boundary.examples.last)
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                 ],
               ],
             )
@@ -395,7 +400,7 @@ class _TrustCard extends StatelessWidget {
     final accent = _accentForId(pillar.id);
 
     return VitCard(
-      padding: AppSpacing.onboardingCardPadding,
+      padding: OnboardingSpacingTokens.onboardingCardPadding,
       radius: VitCardRadius.standard,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -414,9 +419,7 @@ class _TrustCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   pillar.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),

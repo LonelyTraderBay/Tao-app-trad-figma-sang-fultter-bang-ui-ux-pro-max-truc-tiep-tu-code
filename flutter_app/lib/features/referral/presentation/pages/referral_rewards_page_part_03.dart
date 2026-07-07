@@ -24,7 +24,7 @@ class _SheetRecord extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.referralInnerPadding,
+      padding: ReferralSpacingTokens.referralInnerPadding,
       child: Row(
         children: [
           _RecordIcon(type: record.type),
@@ -69,7 +69,7 @@ class _DisputeTypeRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.referralInnerPadding,
+      padding: ReferralSpacingTokens.referralInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -100,7 +100,7 @@ class _DisputeHistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

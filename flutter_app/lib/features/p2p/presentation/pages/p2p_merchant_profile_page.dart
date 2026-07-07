@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_merchant_profile_header_stats.dart';
 part '../widgets/p2p_merchant_profile_ads_reviews.dart';
@@ -23,7 +24,7 @@ const double _p2pMerchantButtonHeight =
     AppSpacing.buttonCompact + AppSpacing.x1;
 const double _p2pMerchantActionHeight = AppSpacing.buttonCompact;
 const double _p2pMerchantBodyLineHeight =
-    AppSpacing.p2pMerchantCommerceBodyLineHeight;
+    P2PSpacingTokens.p2pMerchantCommerceBodyLineHeight;
 
 enum _MerchantProfileTab { ads, reviews }
 
@@ -143,7 +144,7 @@ class _P2PMerchantProfilePageState
               variant: VitCtaButtonVariant.secondary,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
+              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Hủy'),
             ),
             VitCtaButton(
@@ -151,7 +152,7 @@ class _P2PMerchantProfilePageState
               variant: VitCtaButtonVariant.warning,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
+              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Chặn'),
             ),
           ],

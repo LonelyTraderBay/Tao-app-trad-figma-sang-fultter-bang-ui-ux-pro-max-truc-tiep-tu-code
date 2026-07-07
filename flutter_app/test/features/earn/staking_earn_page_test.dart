@@ -93,7 +93,10 @@ void main() {
     expect(pageSource, contains('VitInsetScrollView'));
     expect(pageSource, contains('VitContentPadding.compact'));
     expect(pageSource, contains('VitDensity.compact'));
-    expect(pageSource, isNot(contains('AppSpacing.earnBottomInsetPadding')));
+    expect(
+      pageSource,
+      isNot(contains('EarnSpacingTokens.earnBottomInsetPadding')),
+    );
     expect(pageSource, isNot(contains('child: Column(')));
   });
 

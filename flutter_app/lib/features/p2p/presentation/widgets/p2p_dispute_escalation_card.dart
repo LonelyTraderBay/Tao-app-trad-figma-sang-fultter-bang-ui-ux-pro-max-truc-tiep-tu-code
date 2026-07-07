@@ -23,7 +23,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
     final color = p2pDisputeLevelColor(currentLevel);
     final nextLevel = nextLevelData;
     return VitCard(
-      padding: AppSpacing.p2pDisputeCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -62,9 +62,9 @@ class P2PDisputeEscalationCard extends StatelessWidget {
                 if (index < levels.length - 1)
                   Expanded(
                     child: Padding(
-                      padding: AppSpacing.p2pDisputeLevelConnectorPadding,
+                      padding: P2PSpacingTokens.p2pDisputeLevelConnectorPadding,
                       child: SizedBox(
-                        height: AppSpacing.p2pDisputeLevelConnectorHeight,
+                        height: P2PSpacingTokens.p2pDisputeLevelConnectorHeight,
                         child: ColoredBox(
                           color: levels[index].level < currentLevel
                               ? p2pDisputeLevelColor(levels[index].level)
@@ -84,7 +84,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
               side: BorderSide(color: color.withValues(alpha: .18)),
             ),
             child: Padding(
-              padding: AppSpacing.p2pDisputeCompactCardPadding,
+              padding: P2PSpacingTokens.p2pDisputeCompactCardPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -122,13 +122,15 @@ class P2PDisputeEscalationCard extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Row(
                           children: [
                             const Icon(
                               Icons.schedule_rounded,
                               color: AppColors.text3,
-                              size: AppSpacing.p2pDisputeMetaIcon,
+                              size: P2PSpacingTokens.p2pDisputeMetaIcon,
                             ),
                             const SizedBox(width: AppSpacing.x1),
                             Text(
@@ -160,7 +162,7 @@ class P2PDisputeEscalationCard extends StatelessWidget {
               constraints: const BoxConstraints(
                 minHeight: AppSpacing.inputHeight,
               ),
-              padding: AppSpacing.p2pDisputeEscalatePadding,
+              padding: P2PSpacingTokens.p2pDisputeEscalatePadding,
               child: Row(
                 children: [
                   const Icon(
@@ -222,8 +224,8 @@ class _LevelNode extends StatelessWidget {
               side: isActive ? BorderSide.none : BorderSide(color: color),
             ),
             child: SizedBox(
-              width: AppSpacing.p2pDisputeLevelNodeSize,
-              height: AppSpacing.p2pDisputeLevelNodeSize,
+              width: P2PSpacingTokens.p2pDisputeLevelNodeSize,
+              height: P2PSpacingTokens.p2pDisputeLevelNodeSize,
               child: Icon(
                 isCompleted
                     ? Icons.check_circle_outline_rounded

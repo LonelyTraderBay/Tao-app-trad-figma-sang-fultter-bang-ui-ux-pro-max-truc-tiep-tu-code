@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_segmented_choice.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 /// Spot MUA/BÁN side toggle — shared across Spot terminal surfaces.
 class VitTradeSpotSideSwitch extends StatelessWidget {
@@ -69,7 +69,7 @@ class VitTradeFuturesSideSwitch extends StatelessWidget {
     return VitSegmentedChoice<TradeFuturesSide>(
       selected: side,
       onChanged: onChanged,
-      height: AppSpacing.futuresSideSwitchHeight,
+      height: TradeSpacingTokens.futuresSideSwitchHeight,
       options: [
         VitSegmentedChoiceOption(
           key: longKey,

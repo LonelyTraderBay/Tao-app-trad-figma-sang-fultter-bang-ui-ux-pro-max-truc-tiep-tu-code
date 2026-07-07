@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pExpressConfirmVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -107,7 +108,7 @@ class _P2PExpressConfirmPageState extends ConsumerState<P2PExpressConfirmPage> {
                   child: SingleChildScrollView(
                     key: P2PExpressConfirmPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pExpressConfirmScrollPadding(
+                    padding: P2PSpacingTokens.p2pExpressConfirmScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
@@ -362,7 +363,7 @@ class _MerchantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pExpressConfirmCompactCardPadding,
+      padding: P2PSpacingTokens.p2pExpressConfirmCompactCardPadding,
       child: Row(
         children: [
           VitAssetAvatar(

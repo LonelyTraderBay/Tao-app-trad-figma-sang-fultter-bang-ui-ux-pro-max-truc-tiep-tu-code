@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 part '../widgets/performance_monitor_sections.dart';
 part '../widgets/performance_monitor_common.dart';
@@ -32,8 +33,7 @@ class PerformanceMonitor extends ConsumerStatefulWidget {
   final ShellRenderMode? shellRenderMode;
 
   @override
-  ConsumerState<PerformanceMonitor> createState() =>
-      _PerformanceMonitorState();
+  ConsumerState<PerformanceMonitor> createState() => _PerformanceMonitorState();
 }
 
 class _PerformanceMonitorState extends ConsumerState<PerformanceMonitor> {
@@ -68,9 +68,9 @@ class _PerformanceMonitorState extends ConsumerState<PerformanceMonitor> {
                 child: SingleChildScrollView(
                   key: PerformanceMonitor.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.devScrollPadding(bottomInset),
+                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
                   child: VitPageContent(
- rhythm: VitPageRhythm.flush,
+                    rhythm: VitPageRhythm.flush,
                     gap: VitContentGap.defaultGap,
                     children: [
                       _DevStateBar(

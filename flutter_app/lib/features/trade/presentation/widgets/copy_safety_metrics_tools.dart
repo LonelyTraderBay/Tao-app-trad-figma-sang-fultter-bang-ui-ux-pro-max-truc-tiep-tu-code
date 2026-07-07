@@ -127,7 +127,7 @@ class _MetricCard extends StatelessWidget {
           ),
           if (expanded)
             Padding(
-              padding: AppSpacing.copySafetyMetricExpandedPadding,
+              padding: TradeSpacingTokens.copySafetyMetricExpandedPadding,
               child: Column(
                 children: [
                   _MetricInfo(
@@ -174,7 +174,7 @@ class _MetricInfo extends StatelessWidget {
       density: VitDensity.compact,
       radius: VitCardRadius.standard,
       width: double.infinity,
-      padding: AppSpacing.copySafetyMetricInfoPadding,
+      padding: TradeSpacingTokens.copySafetyMetricInfoPadding,
       borderColor: color,
       child: Text(
         '$label\n$text',
@@ -305,7 +305,7 @@ class _ToolButton extends StatelessWidget {
       key: CopySafetyCenterPage.toolKey(tool.id),
       variant: VitCardVariant.inner,
       density: VitDensity.compact,
-      padding: AppSpacing.copySafetyActionCardPadding,
+      padding: TradeSpacingTokens.copySafetyActionCardPadding,
       borderColor: AppColors.cardBorder,
       onTap: () {
         if (tool.routePath != null) {
@@ -323,7 +323,7 @@ class _ToolButton extends StatelessWidget {
                 ? Icons.flag_outlined
                 : Icons.warning_amber_rounded,
             color: color,
-            size: AppSpacing.homeNextActionIconSize,
+            size: HomeSpacingTokens.homeNextActionIconSize,
           ),
           const SizedBox(width: AppSpacing.cardGap),
           Expanded(

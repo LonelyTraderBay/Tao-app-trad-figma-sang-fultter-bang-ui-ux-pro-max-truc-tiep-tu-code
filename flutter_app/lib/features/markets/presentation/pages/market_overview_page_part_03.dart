@@ -29,7 +29,7 @@ class _FearGreedHistory extends StatelessWidget {
                       ),
                       if (i < points.length - 1)
                         const SizedBox(
-                          width: AppSpacing.marketAnalyticsMicroGap,
+                          width: MarketsSpacingTokens.marketAnalyticsMicroGap,
                         ),
                     ],
                   ],
@@ -72,7 +72,9 @@ class _HistoryBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height =
-        point.value / 100 * AppSpacing.marketOverviewHistoryBarMaxHeight;
+        point.value /
+        100 *
+        MarketsSpacingTokens.marketOverviewHistoryBarMaxHeight;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -149,7 +151,9 @@ class _MarketTools extends StatelessWidget {
             Row(
               children: [
                 Expanded(child: tools[0]),
-                const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.marketAnalyticsCompactGap,
+                ),
                 Expanded(child: tools[1]),
               ],
             ),
@@ -157,7 +161,9 @@ class _MarketTools extends StatelessWidget {
             Row(
               children: [
                 Expanded(child: tools[2]),
-                const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.marketAnalyticsCompactGap,
+                ),
                 Expanded(child: tools[3]),
               ],
             ),
@@ -190,8 +196,12 @@ class _MarketTool extends StatelessWidget {
       onTap: () => context.go(route),
       child: Row(
         children: [
-          Icon(icon, color: color, size: AppSpacing.marketOverviewToolIcon),
-          const SizedBox(width: AppSpacing.marketAnalyticsGap),
+          Icon(
+            icon,
+            color: color,
+            size: MarketsSpacingTokens.marketOverviewToolIcon,
+          ),
+          const SizedBox(width: MarketsSpacingTokens.marketAnalyticsGap),
           Expanded(
             child: Text(
               label,
@@ -224,8 +234,12 @@ class _MiniHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: color, size: AppSpacing.marketOverviewMiniHeaderIcon),
-        const SizedBox(width: AppSpacing.marketOverviewMiniHeaderGap),
+        Icon(
+          icon,
+          color: color,
+          size: MarketsSpacingTokens.marketOverviewMiniHeaderIcon,
+        ),
+        const SizedBox(width: MarketsSpacingTokens.marketOverviewMiniHeaderGap),
         Expanded(
           child: Text(
             label,

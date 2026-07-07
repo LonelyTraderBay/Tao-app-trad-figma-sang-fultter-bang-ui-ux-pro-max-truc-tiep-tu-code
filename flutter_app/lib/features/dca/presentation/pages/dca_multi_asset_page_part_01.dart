@@ -282,7 +282,7 @@ class _BudgetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -365,7 +365,7 @@ class _AllocationSetupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -450,7 +450,7 @@ class _DeleteButton extends StatelessWidget {
         ),
         child: Icon(
           Icons.delete_outline_rounded,
-          size: AppSpacing.dcaMultiIcon,
+          size: DcaSpacingTokens.dcaMultiIcon,
           color: AppColors.sell,
         ),
       ),

@@ -32,7 +32,7 @@ class _InlineStudioActions extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.arenaPaddingX3,
+      padding: ArenaSpacingTokens.arenaPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -84,14 +84,14 @@ class _InlineStudioActions extends StatelessWidget {
             children: [
               if (onBack != null)
                 SizedBox(
-                  width: AppSpacing.arenaStudioFooterButton,
-                  height: AppSpacing.arenaStudioFooterButton,
+                  width: ArenaSpacingTokens.arenaStudioFooterButton,
+                  height: ArenaSpacingTokens.arenaStudioFooterButton,
                   child: VitCtaButton(
                     key: ArenaStudioPage.backStepKey,
                     onPressed: onBack,
                     variant: VitCtaButtonVariant.secondary,
                     fullWidth: false,
-                    height: AppSpacing.arenaStudioFooterButton,
+                    height: ArenaSpacingTokens.arenaStudioFooterButton,
                     padding: AppSpacing.zeroInsets,
                     child: const Icon(Icons.chevron_left_rounded),
                   ),
@@ -99,14 +99,14 @@ class _InlineStudioActions extends StatelessWidget {
               const Expanded(child: SizedBox.shrink()),
               SizedBox(
                 width: isLastStep
-                    ? AppSpacing.arenaStudioFooterSubmitWidth
-                    : AppSpacing.arenaStudioFooterContinueWidth,
+                    ? ArenaSpacingTokens.arenaStudioFooterSubmitWidth
+                    : ArenaSpacingTokens.arenaStudioFooterContinueWidth,
                 child: VitCtaButton(
                   key: ArenaStudioPage.continueKey,
                   onPressed: canContinue ? onContinue : null,
                   fullWidth: true,
-                  height: AppSpacing.arenaStudioFooterButton,
-                  padding: AppSpacing.arenaStudioFooterCtaPadding,
+                  height: ArenaSpacingTokens.arenaStudioFooterButton,
+                  padding: ArenaSpacingTokens.arenaStudioFooterCtaPadding,
                   trailing: Icon(
                     isLastStep
                         ? Icons.send_outlined
@@ -140,7 +140,11 @@ class _InlineStudioStateLine extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(icon, color: color, size: AppSpacing.arenaStudioFooterStateIcon),
+        Icon(
+          icon,
+          color: color,
+          size: ArenaSpacingTokens.arenaStudioFooterStateIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -181,8 +185,8 @@ class _FooterToolButton extends StatelessWidget {
         child: VitCard(
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.standard,
-          width: AppSpacing.arenaStudioFooterToolButton,
-          height: AppSpacing.arenaStudioFooterToolButton,
+          width: ArenaSpacingTokens.arenaStudioFooterToolButton,
+          height: ArenaSpacingTokens.arenaStudioFooterToolButton,
           onTap: onTap,
           child: Icon(icon, color: AppColors.text3, size: AppSpacing.iconSm),
         ),

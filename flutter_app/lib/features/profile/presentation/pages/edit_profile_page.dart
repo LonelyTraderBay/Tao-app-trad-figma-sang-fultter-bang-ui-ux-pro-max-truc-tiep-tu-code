@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 const _editBackground = AppColors.bg;
 const _editPrimary = AppColors.primary;
@@ -209,8 +210,8 @@ class _AvatarEditor extends StatelessWidget {
               border: true,
             ),
             Positioned(
-              right: AppSpacing.profileEditCameraOffsetEnd,
-              bottom: AppSpacing.profileEditCameraOffsetBottom,
+              right: ProfileSpacingTokens.profileEditCameraOffsetEnd,
+              bottom: ProfileSpacingTokens.profileEditCameraOffsetBottom,
               child: VitIconButton(
                 key: EditProfilePage.cameraKey,
                 icon: selected

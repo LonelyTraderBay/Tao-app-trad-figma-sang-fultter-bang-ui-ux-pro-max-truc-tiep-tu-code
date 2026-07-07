@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_custody_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingCustodyReconciliationSection extends StatelessWidget {
   const StakingCustodyReconciliationSection({
@@ -27,7 +28,7 @@ class StakingCustodyReconciliationSection extends StatelessWidget {
         VitCard(
           key: StakingCustodyKeys.reconciliation,
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -35,7 +36,7 @@ class StakingCustodyReconciliationSection extends StatelessWidget {
                 snapshot.reconciliationBody,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingCustodyBodyLineHeight,
+                  height: EarnSpacingTokens.stakingCustodyBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
@@ -72,7 +73,7 @@ class StakingCustodyTransparencySection extends StatelessWidget {
         VitCard(
           key: StakingCustodyKeys.transparency,
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -90,19 +91,25 @@ class StakingCustodyTransparencySection extends StatelessWidget {
                       'Real-time On-Chain Verification',
                       style: AppTextStyles.baseMedium,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       snapshot.transparencyBody,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.stakingCustodyBodyLineHeight,
+                        height: EarnSpacingTokens.stakingCustodyBodyLineHeight,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     for (final address in snapshot.transparencyAddresses) ...[
                       StakingCustodyAddressRow(address: address),
                       if (address != snapshot.transparencyAddresses.last)
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                     ],
                   ],
                 ),

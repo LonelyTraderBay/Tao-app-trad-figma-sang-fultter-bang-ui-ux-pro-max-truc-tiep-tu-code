@@ -17,7 +17,7 @@ class _CertificateCard extends StatelessWidget {
         children: [
           const _CertificateHero(),
           Padding(
-            padding: AppSpacing.p2pInsuranceCertificateLargePadding,
+            padding: P2PSpacingTokens.p2pInsuranceCertificateLargePadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -49,7 +49,7 @@ class _CertificateHero extends StatelessWidget {
     return Material(
       color: AppModuleAccents.p2p,
       child: Padding(
-        padding: AppSpacing.p2pInsuranceCertificateHeroPadding,
+        padding: P2PSpacingTokens.p2pInsuranceCertificateHeroPadding,
         child: Column(
           children: [
             SizedBox.square(
@@ -100,7 +100,7 @@ class _CertificateIdBlock extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pInsuranceCertificateDividerPadding,
+          padding: P2PSpacingTokens.p2pInsuranceCertificateDividerPadding,
           child: Column(
             children: [
               Text(
@@ -166,7 +166,7 @@ class _CoverageBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pInsuranceCertificateCardPadding,
+      padding: P2PSpacingTokens.p2pInsuranceCertificateCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -206,7 +206,7 @@ class _ValidityRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pInsuranceCertificateDividerPadding,
+          padding: P2PSpacingTokens.p2pInsuranceCertificateDividerPadding,
           child: _CertificateInfoRow(
             icon: Icons.calendar_month_outlined,
             label: 'Hiệu lực',
@@ -245,7 +245,7 @@ class _ProtectedCases extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.p2pDocumentSmallIcon,
+                size: P2PSpacingTokens.p2pDocumentSmallIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -277,14 +277,14 @@ class _AuditCallout extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pInsuranceCertificateCardPadding,
+      padding: P2PSpacingTokens.p2pInsuranceCertificateCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.gpp_good_outlined,
             color: AppModuleAccents.p2p,
-            size: AppSpacing.p2pDocumentCalloutIcon,
+            size: P2PSpacingTokens.p2pDocumentCalloutIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

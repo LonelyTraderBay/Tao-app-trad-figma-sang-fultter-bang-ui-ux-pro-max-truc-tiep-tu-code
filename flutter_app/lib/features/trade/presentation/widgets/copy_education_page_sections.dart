@@ -10,7 +10,7 @@ class _IntroBanner extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.copyEducationIntroMinHeight,
+        minHeight: TradeSpacingTokens.copyEducationIntroMinHeight,
       ),
       padding: AppSpacing.cardPadding,
       borderColor: _copyPrimary,
@@ -61,7 +61,7 @@ class _EducationTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.copyEducationTabHeight,
+      height: TradeSpacingTokens.copyEducationTabHeight,
       child: ColoredBox(
         color: AppColors.surface,
         child: VitTabBar(
@@ -120,7 +120,8 @@ class _StepsCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final step in steps) ...[
             _StepRow(step: step),
-            if (step != steps.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (step != steps.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -141,7 +142,7 @@ class _StepRow extends StatelessWidget {
         SizedBox(
           width: AppSpacing.iconLg,
           child: Padding(
-            padding: AppSpacing.copyEducationStepNumberPadding,
+            padding: TradeSpacingTokens.copyEducationStepNumberPadding,
             child: Text(
               '${step.number}',
               textAlign: TextAlign.center,
@@ -149,7 +150,7 @@ class _StepRow extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.walletAddressFilterGap),
+        const SizedBox(width: WalletSpacingTokens.walletAddressFilterGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +160,7 @@ class _StepRow extends StatelessWidget {
                   Icon(
                     _iconFor(step.iconName),
                     color: AppColors.text1,
-                    size: AppSpacing.walletAddressSectionIcon,
+                    size: WalletSpacingTokens.walletAddressSectionIcon,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
@@ -205,7 +206,8 @@ class _CopyModesCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final mode in modes) ...[
             _CopyModeTile(mode: mode),
-            if (mode != modes.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+            if (mode != modes.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
         ],
       ),
@@ -226,7 +228,7 @@ class _CopyModeTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.copyEducationModeMinHeight,
+        minHeight: TradeSpacingTokens.copyEducationModeMinHeight,
       ),
       padding: AppSpacing.cardPaddingCompact,
       borderColor: AppColors.cardBorder,
@@ -300,7 +302,8 @@ class _ConceptsCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final concept in concepts) ...[
             _ConceptRow(concept: concept),
-            if (concept != concepts.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (concept != concepts.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

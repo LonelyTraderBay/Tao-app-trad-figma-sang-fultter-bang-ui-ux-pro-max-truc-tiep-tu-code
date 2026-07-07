@@ -9,7 +9,7 @@ class _WarningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       width: double.infinity,
-      padding: AppSpacing.authTwoFaBannerPadding,
+      padding: AuthSpacingTokens.authTwoFaBannerPadding,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
       child: Row(
@@ -17,7 +17,7 @@ class _WarningBanner extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: AppSpacing.authTwoFaWarningIcon,
+            size: AuthSpacingTokens.authTwoFaWarningIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -60,19 +60,21 @@ class _VerifyStep extends StatelessWidget {
       child: Column(
         children: [
           const _ShieldHero(),
-          const Padding(padding: AppSpacing.authTwoFaHeroTopPadding),
+          const Padding(padding: AuthSpacingTokens.authTwoFaHeroTopPadding),
           Text(
             'Bước 2: Xác minh mã',
             textAlign: TextAlign.center,
             style: AppTextStyles.sectionTitle,
           ),
-          const Padding(padding: AppSpacing.authTopGapX3),
+          const Padding(padding: AuthSpacingTokens.authTopGapX3),
           Text(
             'Nhập mã 6 chữ số từ ứng dụng xác thực của bạn',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const Padding(padding: AppSpacing.authTwoFaVerifyCodeTopPadding),
+          const Padding(
+            padding: AuthSpacingTokens.authTwoFaVerifyCodeTopPadding,
+          ),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -81,7 +83,9 @@ class _VerifyStep extends StatelessWidget {
                 children: [
                   for (var index = 0; index < 6; index++) ...[
                     if (index > 0)
-                      const SizedBox(width: AppSpacing.authTwoFaCodeDigitGap),
+                      const SizedBox(
+                        width: AuthSpacingTokens.authTwoFaCodeDigitGap,
+                      ),
                     _CodeDigitBox(
                       digit: index < code.length ? code[index] : '',
                       hasError: error.isNotEmpty,
@@ -90,8 +94,8 @@ class _VerifyStep extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                width: AppSpacing.authTwoFaHiddenInputSize,
-                height: AppSpacing.authTwoFaHiddenInputSize,
+                width: AuthSpacingTokens.authTwoFaHiddenInputSize,
+                height: AuthSpacingTokens.authTwoFaHiddenInputSize,
                 child: Opacity(
                   opacity: 0,
                   child: VitInput(
@@ -111,14 +115,14 @@ class _VerifyStep extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: AppSpacing.authTopGapX4),
+          const Padding(padding: AuthSpacingTokens.authTopGapX4),
           Text(
             'Chạm vào đây để nhập mã',
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(color: _authPrimary),
           ),
           if (error.isNotEmpty) ...[
-            const Padding(padding: AppSpacing.authTopGapX4),
+            const Padding(padding: AuthSpacingTokens.authTopGapX4),
             _ErrorBanner(error: error),
           ],
         ],
@@ -143,8 +147,8 @@ class _CodeDigitBox extends StatelessWidget {
         : AppColors.borderSolid;
 
     return SizedBox(
-      width: AppSpacing.authTwoFaCodeDigitWidth,
-      height: AppSpacing.authTwoFaCodeDigitHeight,
+      width: AuthSpacingTokens.authTwoFaCodeDigitWidth,
+      height: AuthSpacingTokens.authTwoFaCodeDigitHeight,
       child: Material(
         color: filled ? _authPrimary10 : AppColors.surface2,
         shape: RoundedRectangleBorder(
@@ -173,7 +177,7 @@ class _ErrorBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       width: double.infinity,
-      padding: AppSpacing.authErrorBannerPadding,
+      padding: AuthSpacingTokens.authErrorBannerPadding,
       variant: VitCardVariant.inner,
       borderColor: AppColors.sell20,
       child: Text(

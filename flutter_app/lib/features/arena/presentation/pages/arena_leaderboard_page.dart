@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/arena_leaderboard_controls.dart';
 part '../widgets/arena_leaderboard_body.dart';
@@ -119,7 +120,7 @@ class _ArenaLeaderboardPageState extends ConsumerState<ArenaLeaderboardPage> {
                   child: SingleChildScrollView(
                     key: ArenaLeaderboardPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(

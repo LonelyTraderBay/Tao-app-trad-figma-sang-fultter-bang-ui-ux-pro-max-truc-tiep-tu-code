@@ -54,9 +54,7 @@ class BuyInputContent {
             icon: Icons.account_balance_rounded,
             label: 'Chuyển khoản ngân hàng',
             methods: snapshot.paymentMethods
-                .where(
-                  (method) => method.type == WalletPaymentMethodType.bank,
-                )
+                .where((method) => method.type == WalletPaymentMethodType.bank)
                 .toList(),
             selectedId: selectedPaymentId,
             onChanged: onPaymentChanged,
@@ -65,9 +63,7 @@ class BuyInputContent {
             icon: Icons.phone_android_rounded,
             label: 'Ví điện tử',
             methods: snapshot.paymentMethods
-                .where(
-                  (method) => method.type != WalletPaymentMethodType.bank,
-                )
+                .where((method) => method.type != WalletPaymentMethodType.bank)
                 .toList(),
             selectedId: selectedPaymentId,
             onChanged: onPaymentChanged,
@@ -107,7 +103,7 @@ class _ZeroFeeBanner extends StatelessWidget {
       child: Row(
         children: [
           const Icon(Icons.shield_outlined, color: _buyGreen, size: 15),
-          const SizedBox(width: AppSpacing.walletBuyInlineGap),
+          const SizedBox(width: WalletSpacingTokens.walletBuyInlineGap),
           Expanded(
             child: Text(
               'Mua trực tiếp bằng VND — Phí 0% — Nhận USDT tức thì',
@@ -115,11 +111,11 @@ class _ZeroFeeBanner extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.walletBuyBannerLineHeight,
+                height: WalletSpacingTokens.walletBuyBannerLineHeight,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.walletBuyCompactGap),
+          const SizedBox(width: WalletSpacingTokens.walletBuyCompactGap),
           Text('0% phí', style: AppTextStyles.badge.copyWith(color: _buyGreen)),
         ],
       ),
@@ -153,7 +149,7 @@ class _AmountCard extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletBuyAmountCardMinHeight,
+        minHeight: WalletSpacingTokens.walletBuyAmountCardMinHeight,
       ),
       density: VitDensity.compact,
       borderColor: AppColors.overlayStroke,
@@ -179,7 +175,7 @@ class _AmountCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletBuyAmountLabelGap),
+          const SizedBox(height: WalletSpacingTokens.walletBuyAmountLabelGap),
           VitInput(
             fieldKey: const Key('sc145_buy_crypto_amount'),
             controller: amountController,
@@ -191,14 +187,14 @@ class _AmountCard extends StatelessWidget {
             textStyle: AppTextStyles.amountMd.copyWith(
               color: AppColors.text1,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.walletBuyAmountLineHeight,
+              height: WalletSpacingTokens.walletBuyAmountLineHeight,
             ),
             prefix: Text(
               '₫',
               style: AppTextStyles.amountSm.copyWith(color: AppColors.text3),
             ),
           ),
-          const SizedBox(height: AppSpacing.walletBuyPresetGap),
+          const SizedBox(height: WalletSpacingTokens.walletBuyPresetGap),
           Row(
             children: [
               for (var i = 0; i < snapshot.presetAmounts.length; i++) ...[
@@ -212,11 +208,13 @@ class _AmountCard extends StatelessWidget {
                   ),
                 ),
                 if (i != snapshot.presetAmounts.length - 1)
-                  const SizedBox(width: AppSpacing.walletBuyPaymentPopularGap),
+                  const SizedBox(
+                    width: WalletSpacingTokens.walletBuyPaymentPopularGap,
+                  ),
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.walletBuyReceiveGap),
+          const SizedBox(height: WalletSpacingTokens.walletBuyReceiveGap),
           _ReceivePanel(
             crypto: selectedCrypto,
             receiveAmount: receiveAmount,
@@ -247,7 +245,7 @@ class _PresetChip extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       fullWidth: true,
-      height: AppSpacing.walletBuyPresetChipHeight,
+      height: WalletSpacingTokens.walletBuyPresetChipHeight,
       accentColor: _buyPrimary,
     );
   }
@@ -280,12 +278,12 @@ class _ReceivePanel extends StatelessWidget {
                   'Bạn sẽ nhận được',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(height: AppSpacing.walletBuyCompactGap),
+                const SizedBox(height: WalletSpacingTokens.walletBuyCompactGap),
                 Text(
                   '${_formatCrypto(receiveAmount)} ${crypto.symbol}',
                   style: AppTextStyles.base.copyWith(
                     color: _buyGreen,
-                    height: AppSpacing.walletBuyReceiveLineHeight,
+                    height: WalletSpacingTokens.walletBuyReceiveLineHeight,
                     fontFeatures: AppTextStyles.tabularFigures,
                   ),
                 ),
@@ -296,8 +294,8 @@ class _ReceivePanel extends StatelessWidget {
           VitCard(
             key: const Key('sc145_buy_crypto_selector'),
             onTap: onCryptoTap,
-            height: AppSpacing.walletBuySelectorHeight,
-            padding: AppSpacing.walletBuySelectorPadding,
+            height: WalletSpacingTokens.walletBuySelectorHeight,
+            padding: WalletSpacingTokens.walletBuySelectorPadding,
             borderColor: AppColors.borderSolid,
             clip: true,
             background: const ColoredBox(color: _buyPanel),
@@ -305,16 +303,16 @@ class _ReceivePanel extends StatelessWidget {
               children: [
                 _CryptoLogo(
                   option: crypto,
-                  size: AppSpacing.walletBuyCryptoLogoCompact,
+                  size: WalletSpacingTokens.walletBuyCryptoLogoCompact,
                 ),
-                const SizedBox(width: AppSpacing.walletBuyCompactGap),
+                const SizedBox(width: WalletSpacingTokens.walletBuyCompactGap),
                 Text(
                   crypto.symbol,
                   style: AppTextStyles.body.copyWith(
                     fontWeight: AppTextStyles.medium,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.walletBuyMicroGap),
+                const SizedBox(width: WalletSpacingTokens.walletBuyMicroGap),
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text2,

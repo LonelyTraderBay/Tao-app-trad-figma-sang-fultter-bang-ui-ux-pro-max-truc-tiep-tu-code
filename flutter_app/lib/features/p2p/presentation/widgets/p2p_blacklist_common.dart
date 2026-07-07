@@ -11,7 +11,7 @@ class _InfoNote extends StatelessWidget {
       key: P2PBlacklistPage.infoKey,
       radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pBlacklistListCardPadding,
+      padding: P2PSpacingTokens.p2pBlacklistListCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,7 +44,7 @@ class _InfoNote extends StatelessWidget {
                   snapshot.infoText,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.p2pBlacklistReadableLineHeight,
+                    height: P2PSpacingTokens.p2pBlacklistReadableLineHeight,
                   ),
                 ),
               ],
@@ -68,7 +68,7 @@ class _SmallReasonPill extends StatelessWidget {
       color: color.withValues(alpha: .10),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.p2pBlacklistSmallReasonPadding,
+        padding: P2PSpacingTokens.p2pBlacklistSmallReasonPadding,
         child: Text(
           reason.label,
           style: AppTextStyles.micro.copyWith(
@@ -94,7 +94,7 @@ class _TinyStat extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.cardRadius,
       child: Padding(
-        padding: AppSpacing.p2pBlacklistListTinyPadding,
+        padding: P2PSpacingTokens.p2pBlacklistListTinyPadding,
         child: Column(
           children: [
             Text(

@@ -15,7 +15,7 @@ class _TaxHero extends StatelessWidget {
         side: BorderSide(color: AppColors.accent),
       ),
       child: Padding(
-        padding: AppSpacing.p2pTaxCardPadding,
+        padding: P2PSpacingTokens.p2pTaxCardPadding,
         child: Row(
           children: [
             SizedBox.square(
@@ -171,7 +171,7 @@ class _JurisdictionTile extends StatelessWidget {
         color: selected ? AppColors.accent12 : AppColors.bg,
       ),
       constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-      padding: AppSpacing.p2pTaxCardPadding,
+      padding: P2PSpacingTokens.p2pTaxCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -272,7 +272,7 @@ class _TaxSummary extends StatelessWidget {
           radius: VitCardRadius.large,
           variant: VitCardVariant.inner,
           borderColor: AppColors.accent20,
-          padding: AppSpacing.p2pTaxCardPadding,
+          padding: P2PSpacingTokens.p2pTaxCardPadding,
           child: Row(
             children: [
               Expanded(
@@ -286,7 +286,9 @@ class _TaxSummary extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       snapshot.summary.netGainsLabel,
                       style: AppTextStyles.pageTitle.copyWith(

@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_chart_painter.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_common_widgets.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 part 'live_market_interest_funding.dart';
 part 'live_market_interest_open_interest.dart';
@@ -24,11 +25,11 @@ class LiveMarketInterestTab extends StatelessWidget {
     return Column(
       children: [
         _OpenInterestCard(data: snapshot.openInterest),
-        const SizedBox(height: AppSpacing.liveMarketCardGap),
+        const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
         _LongShortCard(data: snapshot.longShortRatio),
-        const SizedBox(height: AppSpacing.liveMarketCardGap),
+        const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
         _TopTradersCard(data: snapshot.topTraders),
-        const SizedBox(height: AppSpacing.liveMarketCardGap),
+        const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
         _FundingCard(data: snapshot.fundingRate),
       ],
     );

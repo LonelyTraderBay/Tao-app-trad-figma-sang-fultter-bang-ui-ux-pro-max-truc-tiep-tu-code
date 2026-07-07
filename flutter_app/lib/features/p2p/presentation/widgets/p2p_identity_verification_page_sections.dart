@@ -131,7 +131,8 @@ class _DocumentTypePicker extends StatelessWidget {
               ],
             ),
           ),
-          if (document != documents.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (document != documents.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -334,7 +335,9 @@ class _UploadCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Text(
                           title,
                           maxLines: 1,

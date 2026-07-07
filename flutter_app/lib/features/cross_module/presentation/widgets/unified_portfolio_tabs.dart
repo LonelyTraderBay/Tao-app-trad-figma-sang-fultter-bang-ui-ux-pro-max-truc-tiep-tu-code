@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/cross_module/domain/entities/unified_portfolio_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 
 class UnifiedPortfolioTabs extends StatelessWidget {
   const UnifiedPortfolioTabs({
@@ -36,7 +36,7 @@ class UnifiedPortfolioTabs extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: AppSpacing.crossModuleTabBarPadding,
+        padding: CrossModuleSpacingTokens.crossModuleTabBarPadding,
         child: VitSegmentedTabBar(
           tabs: tabItems,
           activeKey: active.name,

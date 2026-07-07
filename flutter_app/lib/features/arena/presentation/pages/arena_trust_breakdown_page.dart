@@ -18,9 +18,11 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-const _trustDisclaimerLineRatio = AppSpacing.arenaTrustDisclaimerLineHeight;
-const _trustHeroLineRatio = AppSpacing.arenaTrustHeroLineHeight;
+const _trustDisclaimerLineRatio =
+    ArenaSpacingTokens.arenaTrustDisclaimerLineHeight;
+const _trustHeroLineRatio = ArenaSpacingTokens.arenaTrustHeroLineHeight;
 
 class ArenaTrustBreakdownPage extends ConsumerWidget {
   const ArenaTrustBreakdownPage({
@@ -73,10 +75,12 @@ class ArenaTrustBreakdownPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: snapshot.creator == null
                         ? VitPageContent(
-         rhythm: VitPageRhythm.standard,
+                            rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.none,
                             children: [
                               VitEmptyState(
@@ -137,7 +141,7 @@ class _TrustBreakdownCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox.square(
-                dimension: AppSpacing.arenaTrustScoreBox,
+                dimension: ArenaSpacingTokens.arenaTrustScoreBox,
                 child: DecoratedBox(
                   decoration: const ShapeDecoration(
                     color: AppColors.buy10,
@@ -178,7 +182,9 @@ class _TrustBreakdownCard extends StatelessWidget {
                       ),
                     ),
                     if (creator.fairPlayBadge) ...[
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       const VitStatusPill(
                         label: 'Fair Play',
                         status: VitStatusPillStatus.success,
@@ -228,7 +234,7 @@ class _TrustMetricRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox.square(
-          dimension: AppSpacing.arenaTrustMetricIconBox,
+          dimension: ArenaSpacingTokens.arenaTrustMetricIconBox,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: color.withValues(alpha: .14),
@@ -240,7 +246,7 @@ class _TrustMetricRow extends StatelessWidget {
               child: Icon(
                 _metricIcon(metric.kind),
                 color: color,
-                size: AppSpacing.arenaTrustMetricGlyph,
+                size: ArenaSpacingTokens.arenaTrustMetricGlyph,
               ),
             ),
           ),
@@ -281,11 +287,11 @@ class _CreatorProfileLink extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.arenaCreator(creator.id));
       },
-      padding: AppSpacing.arenaTrustCardPadding,
+      padding: ArenaSpacingTokens.arenaTrustCardPadding,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.arenaTrustCreatorAvatar,
+            dimension: ArenaSpacingTokens.arenaTrustCreatorAvatar,
             child: DecoratedBox(
               decoration: const ShapeDecoration(
                 color: AppColors.surface2,
@@ -344,13 +350,13 @@ class _SafetyLink extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.arenaSafety);
       },
-      padding: AppSpacing.arenaTrustCardPadding,
+      padding: ArenaSpacingTokens.arenaTrustCardPadding,
       child: Row(
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.buy,
-            size: AppSpacing.arenaTrustSafetyIcon,
+            size: ArenaSpacingTokens.arenaTrustSafetyIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

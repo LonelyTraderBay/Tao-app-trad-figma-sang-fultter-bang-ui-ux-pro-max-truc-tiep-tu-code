@@ -15,7 +15,7 @@ class _BugBountySection extends StatelessWidget {
         VitCard(
           key: StakingAuditReportsPage.bugBountyKey,
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -49,18 +49,20 @@ class _BugBountySection extends StatelessWidget {
                 bugBounty.body,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingAuditBodyLineHeight,
+                  height: EarnSpacingTokens.stakingAuditBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: AppSpacing.earnCardPaddingX3,
+                padding: EarnSpacingTokens.earnCardPaddingX3,
                 child: GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: AppSpacing.stakingAuditPayoutGridColumns,
-                  childAspectRatio: AppSpacing.stakingAuditPayoutGridAspect,
+                  crossAxisCount:
+                      EarnSpacingTokens.stakingAuditPayoutGridColumns,
+                  childAspectRatio:
+                      EarnSpacingTokens.stakingAuditPayoutGridAspect,
                   crossAxisSpacing: AppSpacing.x3,
                   mainAxisSpacing: AppSpacing.x2,
                   children: [
@@ -150,13 +152,13 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingAuditReportsPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingAuditFooterLineHeight,
+          height: EarnSpacingTokens.stakingAuditFooterLineHeight,
         ),
       ),
     );
@@ -177,7 +179,7 @@ class _SmallPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,
@@ -209,8 +211,8 @@ class _RoundIcon extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        width: AppSpacing.stakingAuditRoundIconBox,
-        height: AppSpacing.stakingAuditRoundIconBox,
+        width: EarnSpacingTokens.stakingAuditRoundIconBox,
+        height: EarnSpacingTokens.stakingAuditRoundIconBox,
         child: Icon(icon, color: color, size: AppSpacing.iconMd),
       ),
     );

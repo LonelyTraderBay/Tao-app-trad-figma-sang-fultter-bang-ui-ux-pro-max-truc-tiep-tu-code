@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 enum StakingSlashingTab { history, statistics, prevention }
 
@@ -35,7 +36,7 @@ class StakingSlashingExportButton extends StatelessWidget {
     return VitCard(
       key: StakingSlashingHistoryKeys.export,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -71,13 +72,13 @@ class StakingSlashingFooterNote extends StatelessWidget {
     return VitCard(
       key: StakingSlashingHistoryKeys.footer,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingSlashingFooterLineHeight,
+          height: EarnSpacingTokens.stakingSlashingFooterLineHeight,
         ),
       ),
     );
@@ -102,7 +103,7 @@ class StakingSlashingStatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.pillRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

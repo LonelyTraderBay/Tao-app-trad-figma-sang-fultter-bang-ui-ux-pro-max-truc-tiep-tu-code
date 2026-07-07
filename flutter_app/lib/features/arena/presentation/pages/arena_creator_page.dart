@@ -20,15 +20,17 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/arena_creator_hero_trust.dart';
 part '../widgets/arena_creator_tabs.dart';
 part '../widgets/arena_creator_common.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
-const _creatorAboutLineRatio = AppSpacing.arenaCreatorAboutLineHeight;
-const _creatorSectionMarkerExtent = AppSpacing.arenaCreatorSectionMarkerHeight;
-const _creatorTabButtonExtent = AppSpacing.arenaCreatorTabButtonHeight;
+const _creatorAboutLineRatio = ArenaSpacingTokens.arenaCreatorAboutLineHeight;
+const _creatorSectionMarkerExtent =
+    ArenaSpacingTokens.arenaCreatorSectionMarkerHeight;
+const _creatorTabButtonExtent = ArenaSpacingTokens.arenaCreatorTabButtonHeight;
 
 enum _CreatorTab { modes, live, history, about }
 
@@ -93,9 +95,11 @@ class _ArenaCreatorPageState extends ConsumerState<ArenaCreatorPage> {
                   child: SingleChildScrollView(
                     key: ArenaCreatorPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,

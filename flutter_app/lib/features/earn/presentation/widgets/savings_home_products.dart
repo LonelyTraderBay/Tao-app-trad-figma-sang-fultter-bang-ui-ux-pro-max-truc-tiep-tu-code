@@ -75,7 +75,8 @@ class _SavingsProductList extends StatelessWidget {
       children: [
         for (final product in products) ...[
           _SavingsProductCard(product: product, detailRoute: detailRoute),
-          if (product != products.last) const SizedBox(height: AppSpacing.rowGap),
+          if (product != products.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -94,7 +95,7 @@ class _SavingsProductCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -212,7 +213,7 @@ class _SavingsProductCard extends StatelessWidget {
                       : null,
                   onPressed: () => context.go(detailRoute),
                   variant: VitCtaButtonVariant.secondary,
-                  height: AppSpacing.savingsConsumerActionHeight,
+                  height: EarnSpacingTokens.savingsConsumerActionHeight,
                   trailing: const Icon(Icons.chevron_right_rounded),
                   child: const Text('Chi tiết'),
                 ),
@@ -220,7 +221,7 @@ class _SavingsProductCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x3),
               Expanded(
                 child: VitCtaButton(
-                  height: AppSpacing.savingsConsumerActionHeight,
+                  height: EarnSpacingTokens.savingsConsumerActionHeight,
                   onPressed: () => HapticFeedback.selectionClick(),
                   child: const Text('Đăng ký'),
                 ),

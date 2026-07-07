@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/support_spacing_tokens.dart';
 
 part '../widgets/announcements_filters_widgets.dart';
 part '../widgets/announcements_list_widgets.dart';
@@ -106,7 +107,7 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
                   child: SingleChildScrollView(
                     key: AnnouncementsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.supportScrollPadding(
+                    padding: SupportSpacingTokens.supportScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
@@ -136,17 +137,17 @@ class _AnnouncementsPageState extends ConsumerState<AnnouncementsPage> {
                               onAction: () => setState(() {}),
                             ),
                           ],
-                          SupportScreenState.empty ||
-                          SupportScreenState.offline
-                              when pinned.isEmpty && regular.isEmpty => [
-                            const VitEmptyState(
-                              key: AnnouncementsPage.emptyKey,
-                              title: 'Không có thông báo nào',
-                              message:
-                                  'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
-                              icon: Icons.notifications_none_rounded,
-                            ),
-                          ],
+                          SupportScreenState.empty || SupportScreenState.offline
+                              when pinned.isEmpty && regular.isEmpty =>
+                            [
+                              const VitEmptyState(
+                                key: AnnouncementsPage.emptyKey,
+                                title: 'Không có thông báo nào',
+                                message:
+                                    'Các cập nhật mới từ VitTrade sẽ hiển thị tại đây.',
+                                icon: Icons.notifications_none_rounded,
+                              ),
+                            ],
                           _ => [
                             if (pinned.isNotEmpty)
                               _PinnedSection(

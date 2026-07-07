@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingAdvancedOrdersPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,7 +43,7 @@ class _StatsCard extends StatelessWidget {
     return VitCard(
       key: StakingAdvancedOrdersPage.statsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         children: [
           for (var i = 0; i < snapshot.statCards.length; i++) ...[
@@ -123,7 +123,7 @@ class _OrderCard extends StatelessWidget {
     return VitCard(
       key: StakingAdvancedOrdersPage.orderKey(order.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         children: [
           Row(
@@ -172,7 +172,7 @@ class _OrderCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
-            height: AppSpacing.stakingProductDividerHeight,
+            height: EarnSpacingTokens.stakingProductDividerHeight,
             color: AppColors.borderSolid,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -222,7 +222,7 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnPillPadding,
+        padding: EarnSpacingTokens.earnPillPadding,
         child: Text(
           _statusLabel(status),
           style: AppTextStyles.micro.copyWith(

@@ -12,7 +12,7 @@ class _DetailTabs extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.cardRadius,
       child: Padding(
-        padding: AppSpacing.predictionDetailTabsPadding,
+        padding: PredictionsSpacingTokens.predictionDetailTabsPadding,
         child: VitTabBar(
           variant: VitTabBarVariant.segment,
           activeKey: activeTab.name,
@@ -126,7 +126,7 @@ class _RuleRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.predictionDetailRuleNumberWidth,
+          width: PredictionsSpacingTokens.predictionDetailRuleNumberWidth,
           child: Text(
             '${index + 1}.',
             style: AppTextStyles.micro.copyWith(
@@ -167,9 +167,11 @@ class _InfoBlock extends StatelessWidget {
             Icon(
               icon,
               color: AppColors.text2,
-              size: AppSpacing.predictionDetailInfoIcon,
+              size: PredictionsSpacingTokens.predictionDetailInfoIcon,
             ),
-            const SizedBox(width: AppSpacing.predictionDetailInfoIconGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionDetailInfoIconGap,
+            ),
             Text(
               title,
               style: AppTextStyles.caption.copyWith(
@@ -208,16 +210,18 @@ class _InfoBox extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.mdRadius,
       child: Padding(
-        padding: AppSpacing.predictionDetailInfoBoxPadding,
+        padding: PredictionsSpacingTokens.predictionDetailInfoBoxPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(
               icon,
               color: color,
-              size: AppSpacing.predictionDetailInfoBoxIcon,
+              size: PredictionsSpacingTokens.predictionDetailInfoBoxIcon,
             ),
-            const SizedBox(width: AppSpacing.predictionDetailInfoBoxGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionDetailInfoBoxGap,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

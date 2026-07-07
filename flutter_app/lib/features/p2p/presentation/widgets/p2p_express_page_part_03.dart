@@ -45,7 +45,7 @@ class _PaymentChip extends StatelessWidget {
       selected: selected,
       onTap: onPressed,
       height: AppSpacing.buttonCompact,
-      padding: AppSpacing.p2pExpressChoiceChipPadding,
+      padding: P2PSpacingTokens.p2pExpressChoiceChipPadding,
       accentColor: AppColors.primary,
       showSelectedIcon: selected,
       selectedIcon: Icons.check_circle_outline,
@@ -65,7 +65,7 @@ class _MerchantOfferRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pExpressMerchantRowPadding,
+          padding: P2PSpacingTokens.p2pExpressMerchantRowPadding,
           child: Row(
             children: [
               SizedBox.square(
@@ -176,7 +176,7 @@ class _OfferMetric extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.inputRadius,
       child: Padding(
-        padding: AppSpacing.p2pExpressTightCardPadding,
+        padding: P2PSpacingTokens.p2pExpressTightCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -219,7 +219,7 @@ class _SmallTextChip extends StatelessWidget {
       color: AppColors.surface2,
       shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       child: Padding(
-        padding: AppSpacing.p2pExpressSmallChipPadding,
+        padding: P2PSpacingTokens.p2pExpressSmallChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),

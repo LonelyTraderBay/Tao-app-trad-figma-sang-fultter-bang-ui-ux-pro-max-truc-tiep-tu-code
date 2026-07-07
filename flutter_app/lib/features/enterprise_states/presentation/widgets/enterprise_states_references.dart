@@ -26,26 +26,26 @@ class _AppliedSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-          Text(
-            '6 màn dữ liệu × 4–5 states. Chọn page và state để preview.',
-            style: AppTextStyles.body.copyWith(color: AppColors.text2),
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _ReferenceTile(
-            icon: Icons.bar_chart_rounded,
-            title: 'MarketListPage',
-            subtitle: 'Loading · Empty · Error · Offline',
-            actionLabel: 'Mở Markets',
-            onTap: () => context.go(snapshot.marketRoute),
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          const _ReferenceTile(
-            icon: Icons.history_rounded,
-            title: 'OrdersHistoryPage',
-            subtitle: 'Gate state requires 2FA before risky actions',
-            actionLabel: 'Preview only',
-          ),
-        ],
+        Text(
+          '6 màn dữ liệu × 4–5 states. Chọn page và state để preview.',
+          style: AppTextStyles.body.copyWith(color: AppColors.text2),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        _ReferenceTile(
+          icon: Icons.bar_chart_rounded,
+          title: 'MarketListPage',
+          subtitle: 'Loading · Empty · Error · Offline',
+          actionLabel: 'Mở Markets',
+          onTap: () => context.go(snapshot.marketRoute),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        const _ReferenceTile(
+          icon: Icons.history_rounded,
+          title: 'OrdersHistoryPage',
+          subtitle: 'Gate state requires 2FA before risky actions',
+          actionLabel: 'Preview only',
+        ),
+      ],
     );
   }
 }
@@ -60,36 +60,36 @@ class _SecuritySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-          Text(
-            '4 security overlay chuẩn enterprise. Các CTA đi tới route đã migrate hoặc auth shell.',
-            style: AppTextStyles.body.copyWith(color: AppColors.text2),
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _ReferenceTile(
-            icon: Icons.login_rounded,
-            title: 'Session Expired Modal',
-            subtitle: 'Phiên đăng nhập đã hết hạn',
-            actionLabel: 'Đăng nhập lại',
-            actionKey: EnterpriseStatesPage.loginCtaKey,
-            onTap: () => context.go(snapshot.loginRoute),
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _ReferenceTile(
-            icon: Icons.verified_user_outlined,
-            title: 'KYC Gate Panel',
-            subtitle: 'Cần KYC để tiếp tục',
-            actionLabel: 'Đi tới KYC',
-            onTap: () => context.go(snapshot.kycRoute),
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _ReferenceTile(
-            icon: Icons.key_rounded,
-            title: '2FA Gate Panel',
-            subtitle: 'Bật 2FA để tiếp tục',
-            actionLabel: 'Thiết lập 2FA',
-            onTap: () => context.go(snapshot.securityRoute),
-          ),
-        ],
+        Text(
+          '4 security overlay chuẩn enterprise. Các CTA đi tới route đã migrate hoặc auth shell.',
+          style: AppTextStyles.body.copyWith(color: AppColors.text2),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        _ReferenceTile(
+          icon: Icons.login_rounded,
+          title: 'Session Expired Modal',
+          subtitle: 'Phiên đăng nhập đã hết hạn',
+          actionLabel: 'Đăng nhập lại',
+          actionKey: EnterpriseStatesPage.loginCtaKey,
+          onTap: () => context.go(snapshot.loginRoute),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        _ReferenceTile(
+          icon: Icons.verified_user_outlined,
+          title: 'KYC Gate Panel',
+          subtitle: 'Cần KYC để tiếp tục',
+          actionLabel: 'Đi tới KYC',
+          onTap: () => context.go(snapshot.kycRoute),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        _ReferenceTile(
+          icon: Icons.key_rounded,
+          title: '2FA Gate Panel',
+          subtitle: 'Bật 2FA để tiếp tục',
+          actionLabel: 'Thiết lập 2FA',
+          onTap: () => context.go(snapshot.securityRoute),
+        ),
+      ],
     );
   }
 }
@@ -114,7 +114,7 @@ class _ReferenceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.enterpriseStatesCardPadding,
+      padding: EnterpriseStatesSpacingTokens.enterpriseStatesCardPadding,
       child: Row(
         children: [
           _IconBubble(icon: icon, color: AppModuleAccents.enterpriseStates),
@@ -163,7 +163,7 @@ class _IconBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.enterpriseStatesIconBox,
+      dimension: EnterpriseStatesSpacingTokens.enterpriseStatesIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .12),

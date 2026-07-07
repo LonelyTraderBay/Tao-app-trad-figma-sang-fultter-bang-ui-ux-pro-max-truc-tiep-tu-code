@@ -39,21 +39,18 @@ void main() {
       },
     );
 
-    test(
-      'getTransactionDetail does not throw for an unknown id and falls '
-      'back to a null transaction',
-      () {
-        late final WalletTransactionDetailSnapshot snapshot;
+    test('getTransactionDetail does not throw for an unknown id and falls '
+        'back to a null transaction', () {
+      late final WalletTransactionDetailSnapshot snapshot;
 
-        expect(
-          () => snapshot = repository.getTransactionDetail('does-not-exist'),
-          returnsNormally,
-        );
-        expect(snapshot, isA<WalletTransactionDetailSnapshot>());
-        expect(snapshot.transaction, isNull);
-        expect(snapshot.endpoint, isNotEmpty);
-      },
-    );
+      expect(
+        () => snapshot = repository.getTransactionDetail('does-not-exist'),
+        returnsNormally,
+      );
+      expect(snapshot, isA<WalletTransactionDetailSnapshot>());
+      expect(snapshot.transaction, isNull);
+      expect(snapshot.endpoint, isNotEmpty);
+    });
 
     test('getPortfolioAnalytics returns a populated snapshot', () {
       final snapshot = repository.getPortfolioAnalytics();
@@ -116,20 +113,17 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test(
-      'getAssetDetail does not throw for an unrecognized asset id and '
-      'falls back to the default fixture',
-      () {
-        late final WalletAssetDetailSnapshot snapshot;
+    test('getAssetDetail does not throw for an unrecognized asset id and '
+        'falls back to the default fixture', () {
+      late final WalletAssetDetailSnapshot snapshot;
 
-        expect(
-          () => snapshot = repository.getAssetDetail('does-not-exist'),
-          returnsNormally,
-        );
-        expect(snapshot, isA<WalletAssetDetailSnapshot>());
-        expect(snapshot.symbol, isNotEmpty);
-      },
-    );
+      expect(
+        () => snapshot = repository.getAssetDetail('does-not-exist'),
+        returnsNormally,
+      );
+      expect(snapshot, isA<WalletAssetDetailSnapshot>());
+      expect(snapshot.symbol, isNotEmpty);
+    });
 
     test('getMultiManager returns a populated snapshot', () {
       final snapshot = repository.getMultiManager();
@@ -216,28 +210,22 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test(
-      'getDeposit with assetScoped true uses an asset-scoped endpoint',
-      () {
-        final snapshot = repository.getDeposit('USDT', assetScoped: true);
+    test('getDeposit with assetScoped true uses an asset-scoped endpoint', () {
+      final snapshot = repository.getDeposit('USDT', assetScoped: true);
 
-        expect(snapshot.endpoint, contains('usdt'));
-      },
-    );
+      expect(snapshot.endpoint, contains('usdt'));
+    });
 
-    test(
-      'getDeposit does not throw for an unrecognized asset and falls back '
-      'to default networks',
-      () {
-        late final WalletDepositSnapshot snapshot;
+    test('getDeposit does not throw for an unrecognized asset and falls back '
+        'to default networks', () {
+      late final WalletDepositSnapshot snapshot;
 
-        expect(
-          () => snapshot = repository.getDeposit('does-not-exist'),
-          returnsNormally,
-        );
-        expect(snapshot.networks, isNotEmpty);
-      },
-    );
+      expect(
+        () => snapshot = repository.getDeposit('does-not-exist'),
+        returnsNormally,
+      );
+      expect(snapshot.networks, isNotEmpty);
+    });
 
     test('getWithdraw returns a populated snapshot for a known asset', () {
       final snapshot = repository.getWithdraw('USDT');
@@ -249,28 +237,22 @@ void main() {
       expect(snapshot.endpoint, isNotEmpty);
     });
 
-    test(
-      'getWithdraw with assetScoped true uses an asset-scoped endpoint',
-      () {
-        final snapshot = repository.getWithdraw('USDT', assetScoped: true);
+    test('getWithdraw with assetScoped true uses an asset-scoped endpoint', () {
+      final snapshot = repository.getWithdraw('USDT', assetScoped: true);
 
-        expect(snapshot.endpoint, contains('usdt'));
-      },
-    );
+      expect(snapshot.endpoint, contains('usdt'));
+    });
 
-    test(
-      'getWithdraw does not throw for an unrecognized asset and falls '
-      'back to default networks and available amount',
-      () {
-        late final WalletWithdrawSnapshot snapshot;
+    test('getWithdraw does not throw for an unrecognized asset and falls '
+        'back to default networks and available amount', () {
+      late final WalletWithdrawSnapshot snapshot;
 
-        expect(
-          () => snapshot = repository.getWithdraw('does-not-exist'),
-          returnsNormally,
-        );
-        expect(snapshot.networks, isNotEmpty);
-        expect(snapshot.available, greaterThan(0));
-      },
-    );
+      expect(
+        () => snapshot = repository.getWithdraw('does-not-exist'),
+        returnsNormally,
+      );
+      expect(snapshot.networks, isNotEmpty);
+      expect(snapshot.available, greaterThan(0));
+    });
   });
 }

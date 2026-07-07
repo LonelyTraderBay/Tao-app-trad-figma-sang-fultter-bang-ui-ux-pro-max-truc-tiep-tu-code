@@ -28,7 +28,7 @@ class _EmergencyContactCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.warn,
-                size: AppSpacing.walletTokenApprovalActionIcon,
+                size: WalletSpacingTokens.walletTokenApprovalActionIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -133,7 +133,7 @@ class _PrivacyCard extends StatelessWidget {
           Icon(
             active ? Icons.visibility_rounded : Icons.visibility_off_rounded,
             color: active ? _settingsPrimary : AppColors.text3,
-            size: AppSpacing.walletTokenApprovalActionIcon,
+            size: WalletSpacingTokens.walletTokenApprovalActionIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

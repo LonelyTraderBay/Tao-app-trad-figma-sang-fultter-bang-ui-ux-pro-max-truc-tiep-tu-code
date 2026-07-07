@@ -73,7 +73,7 @@ class _RecentTransactions extends StatelessWidget {
               variant: VitCtaButtonVariant.ghost,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pWalletTextActionPadding,
+              padding: P2PSpacingTokens.p2pWalletTextActionPadding,
               trailing: const Icon(Icons.chevron_right_rounded),
               child: const Text('Xem tất cả'),
             ),
@@ -127,7 +127,7 @@ class _TransactionRow extends StatelessWidget {
               child: Icon(
                 _transactionIcon(tx.type),
                 color: color,
-                size: AppSpacing.p2pWalletTransactionIcon,
+                size: P2PSpacingTokens.p2pWalletTransactionIcon,
               ),
             ),
           ),
@@ -151,7 +151,7 @@ class _TransactionRow extends StatelessWidget {
                     const Icon(
                       Icons.access_time_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.p2pWalletMetaIcon,
+                      size: P2PSpacingTokens.p2pWalletMetaIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Flexible(

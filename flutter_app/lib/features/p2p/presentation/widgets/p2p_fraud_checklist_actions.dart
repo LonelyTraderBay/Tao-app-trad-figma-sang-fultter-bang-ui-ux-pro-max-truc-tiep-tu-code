@@ -23,7 +23,7 @@ class _ChecklistCard extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.checklistKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pFraudCardPadding,
+      padding: P2PSpacingTokens.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -102,7 +102,7 @@ class _CategoryTab extends StatelessWidget {
       background: ColoredBox(
         color: selected ? AppModuleAccents.p2p : AppColors.surface2,
       ),
-      padding: AppSpacing.p2pFraudCategoryTabPadding,
+      padding: P2PSpacingTokens.p2pFraudCategoryTabPadding,
       onTap: onTap,
       clip: true,
       child: Column(
@@ -143,13 +143,13 @@ class _ChecklistItem extends StatelessWidget {
       key: P2PFraudPreventionPage.checklistItemKey(item.id),
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pFraudChecklistItemPadding,
+      padding: P2PSpacingTokens.p2pFraudChecklistItemPadding,
       onTap: () => onTap(item.id),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox.square(
-            dimension: AppSpacing.p2pFraudChecklistBox,
+            dimension: P2PSpacingTokens.p2pFraudChecklistBox,
             child: Material(
               color: item.checked ? AppColors.buy : AppColors.transparent,
               shape: RoundedRectangleBorder(
@@ -162,7 +162,7 @@ class _ChecklistItem extends StatelessWidget {
                   ? const Icon(
                       Icons.check_rounded,
                       color: AppColors.onAccent,
-                      size: AppSpacing.p2pFraudChecklistCheckIcon,
+                      size: P2PSpacingTokens.p2pFraudChecklistCheckIcon,
                     )
                   : null,
             ),
@@ -206,7 +206,7 @@ class _EmergencyActions extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.emergencyKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pFraudCardPadding,
+      padding: P2PSpacingTokens.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -257,7 +257,7 @@ class _EmergencyButton extends StatelessWidget {
       radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: .22),
       background: ColoredBox(color: color.withValues(alpha: .08)),
-      padding: AppSpacing.p2pFraudInnerPadding,
+      padding: P2PSpacingTokens.p2pFraudInnerPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(action.route);
@@ -268,7 +268,7 @@ class _EmergencyButton extends StatelessWidget {
           Icon(
             _actionIcon(action.iconKey),
             color: color,
-            size: AppSpacing.p2pFraudActionIcon,
+            size: P2PSpacingTokens.p2pFraudActionIcon,
           ),
           const SizedBox(width: _p2pFraudMajorGap),
           Expanded(
@@ -283,7 +283,7 @@ class _EmergencyButton extends StatelessWidget {
           Icon(
             Icons.chevron_right_rounded,
             color: color,
-            size: AppSpacing.p2pFraudActionIcon,
+            size: P2PSpacingTokens.p2pFraudActionIcon,
           ),
         ],
       ),

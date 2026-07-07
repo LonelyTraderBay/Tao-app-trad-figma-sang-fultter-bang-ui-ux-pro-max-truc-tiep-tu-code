@@ -9,10 +9,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 void main() {
-  testWidgets('tradeScrollBottomInset matches Home formula at 360px native',
-      (tester) async {
+  testWidgets('tradeScrollBottomInset matches Home formula at 360px native', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(360, 800);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -33,14 +35,12 @@ void main() {
       ),
     );
 
-    expect(
-      inset,
-      AppSpacing.buttonStandard + AppSpacing.x5,
-    );
+    expect(inset, AppSpacing.buttonStandard + AppSpacing.x5);
   });
 
-  testWidgets('tradeTerminalScrollBottomInset includes chrome at visual QA',
-      (tester) async {
+  testWidgets('tradeTerminalScrollBottomInset includes chrome at visual QA', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(360, 800);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -67,7 +67,7 @@ void main() {
     );
 
     expect(visualInset, greaterThan(nativeInset));
-    expect(nativeInset, greaterThan(AppSpacing.tradeBottomInsetNative));
+    expect(nativeInset, greaterThan(TradeSpacingTokens.tradeBottomInsetNative));
   });
 
   testWidgets('VitTradeDetailScaffold uses flush page variant', (tester) async {
@@ -88,8 +88,9 @@ void main() {
     expect(find.text('Body'), findsOneWidget);
   });
 
-  testWidgets('VitTradeComplianceSection renders rows, dividers, and pill',
-      (tester) async {
+  testWidgets('VitTradeComplianceSection renders rows, dividers, and pill', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -100,14 +101,8 @@ void main() {
               status: VitStatusPillStatus.success,
             ),
             items: const [
-              VitTradeComplianceItem(
-                label: 'Framework',
-                value: 'MiFID II',
-              ),
-              VitTradeComplianceItem(
-                label: 'Last review',
-                value: '2026-01-15',
-              ),
+              VitTradeComplianceItem(label: 'Framework', value: 'MiFID II'),
+              VitTradeComplianceItem(label: 'Last review', value: '2026-01-15'),
             ],
           ),
         ),
@@ -123,29 +118,31 @@ void main() {
     expect(find.byType(Divider), findsOneWidget);
   });
 
-  testWidgets('VitTradeHubScaffold renders product tabs as first scroll child',
-      (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: VitTradeHubScaffold(
-          title: 'Orders',
-          showBack: false,
-          children: const [Text('Order body')],
+  testWidgets(
+    'VitTradeHubScaffold renders product tabs as first scroll child',
+    (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: VitTradeHubScaffold(
+            title: 'Orders',
+            showBack: false,
+            children: const [Text('Order body')],
+          ),
         ),
-      ),
-    );
-    await tester.pumpAndSettle();
+      );
+      await tester.pumpAndSettle();
 
-    expect(find.byType(VitTradeProductTabs), findsOneWidget);
-    expect(find.text('Spot'), findsOneWidget);
-    expect(find.text('Order body'), findsOneWidget);
+      expect(find.byType(VitTradeProductTabs), findsOneWidget);
+      expect(find.text('Spot'), findsOneWidget);
+      expect(find.text('Order body'), findsOneWidget);
 
-    final pageContent = tester.widget<VitPageContent>(
-      find.descendant(
-        of: find.byType(VitTradeHubScaffold),
-        matching: find.byType(VitPageContent),
-      ),
-    );
-    expect(pageContent.children.first, isA<VitTradeProductTabs>());
-  });
+      final pageContent = tester.widget<VitPageContent>(
+        find.descendant(
+          of: find.byType(VitTradeHubScaffold),
+          matching: find.byType(VitPageContent),
+        ),
+      );
+      expect(pageContent.children.first, isA<VitTradeProductTabs>());
+    },
+  );
 }

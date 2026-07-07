@@ -34,9 +34,9 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
     final scrollEndPadding =
         (mode.usesVisualQaFrame
             ? _p2pMerchantApplyVisualNavClearance +
-                  AppSpacing.p2pMerchantApplyBottomInsetVisual
+                  P2PSpacingTokens.p2pMerchantApplyBottomInsetVisual
             : _p2pMerchantApplyNativeNavClearance +
-                  AppSpacing.p2pMerchantApplyBottomInsetNative) +
+                  P2PSpacingTokens.p2pMerchantApplyBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -64,7 +64,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                   child: SingleChildScrollView(
                     key: P2PMerchantApplyPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMerchantApplyScrollPadding(
+                    padding: P2PSpacingTokens.p2pMerchantApplyScrollPadding(
                       scrollEndPadding,
                     ),
                     child: _submitted
@@ -73,7 +73,7 @@ class _P2PMerchantApplyPageState extends ConsumerState<P2PMerchantApplyPage> {
                             onBackToP2P: () => context.go(AppRoutePaths.p2p),
                           )
                         : VitPageContent(
-         rhythm: VitPageRhythm.standard,
+                            rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.none,
                             fullBleed: true,
                             density: VitDensity.compact,
@@ -204,7 +204,7 @@ class _ProgressHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: AppSpacing.p2pMerchantApplyProgressPadding,
+            padding: P2PSpacingTokens.p2pMerchantApplyProgressPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -265,7 +265,7 @@ class _StepConnector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pMerchantApplyConnectorPadding,
+      padding: P2PSpacingTokens.p2pMerchantApplyConnectorPadding,
       child: SizedBox(
         height: _p2pMerchantApplyConnectorHeight,
         child: Material(
@@ -293,7 +293,7 @@ class _StepDot extends StatelessWidget {
         ? AppModuleAccents.p2p
         : AppColors.surface3;
     return SizedBox.square(
-      dimension: AppSpacing.p2pMerchantApplyStepDotSize,
+      dimension: P2PSpacingTokens.p2pMerchantApplyStepDotSize,
       child: Material(
         color: color,
         shape: CircleBorder(
@@ -357,7 +357,7 @@ class _BenefitGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: benefits.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: AppSpacing.p2pMerchantApplyBenefitCrossAxisCount,
+        crossAxisCount: P2PSpacingTokens.p2pMerchantApplyBenefitCrossAxisCount,
         crossAxisSpacing: AppSpacing.x3,
         mainAxisSpacing: AppSpacing.x3,
         mainAxisExtent: _p2pMerchantApplyBenefitExtent,

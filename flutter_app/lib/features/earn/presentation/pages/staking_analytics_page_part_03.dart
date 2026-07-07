@@ -24,7 +24,7 @@ class _LegendRow extends StatelessWidget {
                   ),
                 ),
                 child: const SizedBox(
-                  width: AppSpacing.earnAnalyticsLegendMarkerWidth,
+                  width: EarnSpacingTokens.earnAnalyticsLegendMarkerWidth,
                   height: _stakingAnalyticsLegendMarkerHeight,
                 ),
               ),

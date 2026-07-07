@@ -10,7 +10,7 @@ class _PredictionResultCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.resultKey('prediction', event.id),
       onTap: () => context.go(event.route),
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: AppModuleAccents.predictions.withValues(alpha: .18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +66,7 @@ class _ArenaModeResultCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.resultKey('arenaMode', mode.id),
       onTap: () => context.go(mode.route),
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: AppModuleAccents.arena.withValues(alpha: .18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

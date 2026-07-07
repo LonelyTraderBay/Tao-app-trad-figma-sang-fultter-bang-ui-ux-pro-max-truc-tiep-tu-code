@@ -86,7 +86,9 @@ class _ProjectCard extends StatelessWidget {
                         height: _launchpadLineHeightLabel,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x1,
@@ -233,7 +235,8 @@ class _ProjectProgressBar extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
-          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+          child: SizedBox(
+            height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [

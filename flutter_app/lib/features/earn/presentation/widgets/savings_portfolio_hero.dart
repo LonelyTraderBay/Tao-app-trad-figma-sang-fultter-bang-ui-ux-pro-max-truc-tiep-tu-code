@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_portf
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class PortfolioHero extends StatelessWidget {
   const PortfolioHero({
@@ -82,7 +83,7 @@ class PortfolioHero extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: AppSpacing.earnPillPadding,
+                  padding: EarnSpacingTokens.earnPillPadding,
                   child: Text(
                     gain,
                     style: AppTextStyles.micro.copyWith(
@@ -197,7 +198,7 @@ class _HeroStat extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnPaddingX3,
+        padding: EarnSpacingTokens.earnPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -242,7 +243,7 @@ class _HeroPositionStat extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnPaddingX3,
+        padding: EarnSpacingTokens.earnPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -305,7 +306,7 @@ class _HeroAction extends StatelessWidget {
           ? VitCtaButtonVariant.success
           : VitCtaButtonVariant.secondary,
       density: VitDensity.compact,
-      padding: AppSpacing.earnHorizontalPaddingX2,
+      padding: EarnSpacingTokens.earnHorizontalPaddingX2,
       onPressed: () {
         HapticFeedback.selectionClick();
         onTap();

@@ -10,7 +10,7 @@ class _AnalysisCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: _equityGreen.withValues(alpha: .30),
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,7 +53,8 @@ class _AnalysisCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

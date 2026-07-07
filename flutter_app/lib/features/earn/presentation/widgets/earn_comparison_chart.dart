@@ -137,7 +137,8 @@ class _CapacityValue extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
-          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+          child: SizedBox(
+            height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -233,7 +234,7 @@ class _FeatureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -261,10 +262,7 @@ class _FeatureCard extends StatelessWidget {
             runSpacing: AppSpacing.x2,
             children: [
               for (final feature in detail?.features ?? const <String>[])
-                VitAccentPill(
-                  label: feature,
-                  accentColor: AppColors.buy,
-                ),
+                VitAccentPill(label: feature, accentColor: AppColors.buy),
             ],
           ),
         ],

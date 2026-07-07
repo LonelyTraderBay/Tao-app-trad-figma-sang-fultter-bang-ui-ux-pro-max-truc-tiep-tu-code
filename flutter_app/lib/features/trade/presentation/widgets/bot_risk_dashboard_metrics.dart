@@ -45,10 +45,10 @@ class _CriticalMetricsGrid extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
       crossAxisSpacing: AppSpacing.x2,
       mainAxisSpacing: AppSpacing.x2,
-      childAspectRatio: AppSpacing.tradeBotCriticalMetricAspectRatio,
+      childAspectRatio: TradeSpacingTokens.tradeBotCriticalMetricAspectRatio,
       children: [for (final metric in metrics) _MetricCard(metric: metric)],
     );
   }
@@ -94,9 +94,7 @@ class _MetricCard extends StatelessWidget {
                   metric.label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
             ],

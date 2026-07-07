@@ -151,7 +151,7 @@ class WalletAssetHeader extends StatelessWidget {
           density: VitDensity.compact,
           variant: VitCtaButtonVariant.ghost,
           fullWidth: false,
-          padding: AppSpacing.walletAddressFilterPadding,
+          padding: WalletSpacingTokens.walletAddressFilterPadding,
           onPressed: () => onNavigate('/wallet/address-book'),
           child: const Text('S\u1ED5 \u0111\u1ECBa ch\u1EC9'),
         ),
@@ -331,8 +331,8 @@ class _AssetRow extends StatelessWidget {
           ),
           if (!last)
             const Divider(
-              height: AppSpacing.walletHistoryDividerHeight,
-              thickness: AppSpacing.walletHistoryDividerHeight,
+              height: WalletSpacingTokens.walletHistoryDividerHeight,
+              thickness: WalletSpacingTokens.walletHistoryDividerHeight,
               color: AppColors.cardBorder,
             ),
         ],

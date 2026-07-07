@@ -51,7 +51,9 @@ class _LiveStats extends StatelessWidget {
                       'Real-time market activity',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
                     ),
                   ],
                 ),

@@ -5,9 +5,11 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-const _modeDescriptionLineRatio = AppSpacing.arenaModeDescriptionLineHeight;
-const _modeRuleValueLineRatio = AppSpacing.arenaModeRuleValueLineHeight;
+const _modeDescriptionLineRatio =
+    ArenaSpacingTokens.arenaModeDescriptionLineHeight;
+const _modeRuleValueLineRatio = ArenaSpacingTokens.arenaModeRuleValueLineHeight;
 
 class ArenaModeDescriptionCard extends StatelessWidget {
   const ArenaModeDescriptionCard({super.key, required this.description});
@@ -25,7 +27,7 @@ class ArenaModeDescriptionCard extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Text(
             description,
             style: AppTextStyles.body.copyWith(
@@ -56,7 +58,7 @@ class ArenaModeRulesSummary extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Column(
             children: [
               for (var index = 0; index < rows.length; index++) ...[
@@ -84,7 +86,7 @@ class _RuleRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.arenaModeRuleLabelWidth,
+          width: ArenaSpacingTokens.arenaModeRuleLabelWidth,
           child: Text(
             row.label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),

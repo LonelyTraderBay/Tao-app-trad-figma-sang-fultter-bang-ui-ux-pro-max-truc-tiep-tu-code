@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_anti_phishing_code_page_sections.dart';
 part '../widgets/p2p_anti_phishing_code_page_common.dart';
@@ -106,16 +107,20 @@ class _P2PAntiPhishingCodePageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pSecurityDetailsScrollPadding(
+                    padding: P2PSpacingTokens.p2pSecurityDetailsScrollPadding(
                       bottomInset,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _StatusCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _ExplainerCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         VitSectionHeader(
                           title: _editing ? 'Thiết lập code' : 'Code hiện tại',
                           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
@@ -123,13 +128,17 @@ class _P2PAntiPhishingCodePageState
                         _editing
                             ? _editCodeCard()
                             : _currentCodeCard(code: _code),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         const VitSectionHeader(
                           title: 'Ví dụ email',
                           bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                         ),
                         _EmailExamples(examples: snapshot.examples),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _WarningCard(snapshot: snapshot),
                         VitPageContent(
                           rhythm: VitPageRhythm.standard,

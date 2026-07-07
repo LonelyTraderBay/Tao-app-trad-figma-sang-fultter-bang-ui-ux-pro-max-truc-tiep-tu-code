@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingValidatorSelectionSearchAndFilter extends StatelessWidget {
   const StakingValidatorSelectionSearchAndFilter({
@@ -33,13 +34,13 @@ class StakingValidatorSelectionSearchAndFilter extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
             ),
             child: Padding(
-              padding: AppSpacing.earnHorizontalPaddingX4,
+              padding: EarnSpacingTokens.earnHorizontalPaddingX4,
               child: Row(
                 children: [
                   const Icon(
                     Icons.search_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.stakingValidatorSelectionSearchIcon,
+                    size: EarnSpacingTokens.stakingValidatorSelectionSearchIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -99,7 +100,7 @@ class StakingValidatorSelectionFilterPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -136,7 +137,7 @@ class StakingValidatorSelectionFilterPanel extends StatelessWidget {
                   selected: sort == value,
                   onTap: () => onSortChanged(value),
                   accentColor: AppColors.primarySoft,
-                  padding: AppSpacing.earnWidePillPadding,
+                  padding: EarnSpacingTokens.earnWidePillPadding,
                 ),
             ],
           ),
@@ -155,7 +156,7 @@ class StakingValidatorSelectionFilterPanel extends StatelessWidget {
                 selected: tier == null,
                 onTap: () => onTierChanged(null),
                 accentColor: AppColors.primarySoft,
-                padding: AppSpacing.earnWidePillPadding,
+                padding: EarnSpacingTokens.earnWidePillPadding,
               ),
               for (final value in StakingValidatorTier.values)
                 VitChoicePill(
@@ -163,7 +164,7 @@ class StakingValidatorSelectionFilterPanel extends StatelessWidget {
                   selected: tier == value,
                   onTap: () => onTierChanged(value),
                   accentColor: AppColors.primarySoft,
-                  padding: AppSpacing.earnWidePillPadding,
+                  padding: EarnSpacingTokens.earnWidePillPadding,
                 ),
             ],
           ),

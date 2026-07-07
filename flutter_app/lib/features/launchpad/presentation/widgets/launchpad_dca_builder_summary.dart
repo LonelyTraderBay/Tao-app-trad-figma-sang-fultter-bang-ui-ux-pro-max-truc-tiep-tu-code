@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_dca_builder_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadDcaSummaryCard extends StatelessWidget {
   const LaunchpadDcaSummaryCard({super.key, required this.snapshot});
@@ -15,7 +16,7 @@ class LaunchpadDcaSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         children: [
           Row(

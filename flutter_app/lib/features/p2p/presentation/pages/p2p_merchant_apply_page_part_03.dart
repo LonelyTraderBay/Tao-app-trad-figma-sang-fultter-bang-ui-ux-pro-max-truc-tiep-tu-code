@@ -62,7 +62,7 @@ class _MultilineInput extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: AppSpacing.buttonHero),
             child: Padding(
-              padding: AppSpacing.p2pMerchantApplyInputPadding,
+              padding: P2PSpacingTokens.p2pMerchantApplyInputPadding,
               child: TextField(
                 key: fieldKey,
                 controller: controller,
@@ -104,7 +104,7 @@ class _AgreementCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: AppSpacing.p2pMerchantApplyCheckboxMargin,
+            padding: P2PSpacingTokens.p2pMerchantApplyCheckboxMargin,
             child: SizedBox.square(
               dimension: AppSpacing.iconMd,
               child: Material(
@@ -158,7 +158,7 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: .22),
-      padding: AppSpacing.p2pMerchantApplyInfoPadding,
+      padding: P2PSpacingTokens.p2pMerchantApplyInfoPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -202,7 +202,7 @@ class _MetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pMerchantApplyRowPadding,
+      padding: P2PSpacingTokens.p2pMerchantApplyRowPadding,
       child: Row(
         children: [
           _IconBadge(icon: data.icon, color: data.color),
@@ -243,7 +243,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pMerchantApplyRowPadding,
+      padding: P2PSpacingTokens.p2pMerchantApplyRowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -282,8 +282,8 @@ class _IconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = large
-        ? AppSpacing.p2pMerchantApplyLargeIconBadgeSize
-        : AppSpacing.p2pMerchantApplyIconBadgeSize;
+        ? P2PSpacingTokens.p2pMerchantApplyLargeIconBadgeSize
+        : P2PSpacingTokens.p2pMerchantApplyIconBadgeSize;
     return SizedBox.square(
       dimension: size,
       child: Material(
@@ -307,7 +307,7 @@ class _CircleStatusIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.p2pMerchantApplyStatusIconSize,
+      dimension: P2PSpacingTokens.p2pMerchantApplyStatusIconSize,
       child: Material(
         color: (met ? AppColors.buy : AppColors.sell).withValues(alpha: .12),
         shape: const CircleBorder(),

@@ -70,7 +70,8 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
                       children: [
                         const Divider(height: AppSpacing.hairlineStroke),
                         Padding(
-                          padding: AppSpacing.launchpadHorizontalContentPadding,
+                          padding: LaunchpadSpacingTokens
+                              .launchpadHorizontalContentPadding,
                           child: _Tabs(
                             activeTab: _activeTab,
                             onChanged: (tab) =>
@@ -90,7 +91,7 @@ class _LaunchpadMultisigPageState extends ConsumerState<LaunchpadMultisigPage> {
                         key: LaunchpadMultisigPage.contentKey,
                         physics: const ClampingScrollPhysics(),
                         child: VitPageContent(
-       rhythm: VitPageRhythm.standard,
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           gap: VitContentGap.tight,
                           children: [
@@ -229,7 +230,7 @@ class _SafeSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: LaunchpadMultisigPage.safeSelectorKey,
-      padding: AppSpacing.launchpadHeaderStatsPadding,
+      padding: LaunchpadSpacingTokens.launchpadHeaderStatsPadding,
       child: Row(
         children: [
           for (final safe in safes) ...[
@@ -242,7 +243,7 @@ class _SafeSelector extends StatelessWidget {
                 borderColor: selectedAddress == safe.address
                     ? AppModuleAccents.launchpad.withValues(alpha: .34)
                     : AppColors.cardBorder,
-                padding: AppSpacing.launchpadPaddingX3,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                 onTap: () => onChanged(safe.address),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +255,7 @@ class _SafeSelector extends StatelessWidget {
                           color: selectedAddress == safe.address
                               ? AppModuleAccents.launchpad
                               : safe.accent.resolve(),
-                          size: AppSpacing.launchpadIcon5xl,
+                          size: LaunchpadSpacingTokens.launchpadIcon5xl,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Expanded(
@@ -319,7 +320,7 @@ class _StatsStrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: LaunchpadMultisigPage.statsKey,
-      padding: AppSpacing.launchpadStatsStripPadding,
+      padding: LaunchpadSpacingTokens.launchpadStatsStripPadding,
       child: Row(
         children: [
           Expanded(
@@ -369,7 +370,7 @@ class _StatTile extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .22),
       background: ColoredBox(color: color.withValues(alpha: .08)),
-      padding: AppSpacing.launchpadVerticalPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
       child: Column(
         children: [
           Text(
@@ -377,7 +378,7 @@ class _StatTile extends StatelessWidget {
             style: AppTextStyles.numericCode.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.launchpadLineHeightTight,
+              height: LaunchpadSpacingTokens.launchpadLineHeightTight,
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
@@ -388,7 +389,7 @@ class _StatTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: LaunchpadSpacingTokens.launchpadLineHeightShort,
             ),
           ),
         ],
@@ -429,14 +430,14 @@ class _CreateTxCard extends StatelessWidget {
       key: LaunchpadMultisigPage.createKey,
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .28),
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       onTap: onTap,
       child: Row(
         children: [
           _IconBubble(
             icon: Icons.add_rounded,
             color: AppModuleAccents.launchpad,
-            size: AppSpacing.launchpadBox40,
+            size: LaunchpadSpacingTokens.launchpadBox40,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

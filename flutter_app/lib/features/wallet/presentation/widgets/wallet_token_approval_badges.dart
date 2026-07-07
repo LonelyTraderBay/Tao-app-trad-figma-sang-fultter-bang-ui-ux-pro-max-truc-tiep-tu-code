@@ -78,7 +78,7 @@ class WalletTokenApprovalStat extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.walletTokenStatValueGap),
+          const SizedBox(height: WalletSpacingTokens.walletTokenStatValueGap),
           Text(
             value,
             style: AppTextStyles.micro.copyWith(

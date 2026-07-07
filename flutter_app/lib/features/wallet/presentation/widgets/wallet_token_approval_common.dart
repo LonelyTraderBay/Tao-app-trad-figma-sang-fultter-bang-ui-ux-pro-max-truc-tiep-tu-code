@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 const walletTokenApprovalBackground = AppColors.bg;
 const walletTokenApprovalPanel = AppColors.surface;
@@ -129,9 +130,11 @@ class WalletTokenApprovalInfoNotice extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: walletTokenApprovalPrimary,
-            size: AppSpacing.walletTokenNoticeIcon,
+            size: WalletSpacingTokens.walletTokenNoticeIcon,
           ),
-          const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
+          const SizedBox(
+            width: WalletSpacingTokens.walletTokenApprovalHeaderGap,
+          ),
           Expanded(
             child: Text(
               'Token approvals allow smart contracts to spend your tokens. Revoke unused or suspicious approvals to protect your assets.',

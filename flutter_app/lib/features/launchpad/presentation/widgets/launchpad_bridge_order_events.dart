@@ -27,7 +27,7 @@ class _BridgeEventLog extends StatelessWidget {
             child: InkWell(
               onTap: onToggle,
               child: Padding(
-                padding: AppSpacing.launchpadPaddingX4,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX4,
                 child: Row(
                   children: [
                     const Icon(
@@ -68,7 +68,7 @@ class _BridgeEventLog extends StatelessWidget {
           ),
           if (expanded) ...[
             const Divider(
-              height: AppSpacing.launchpadDividerHeight,
+              height: LaunchpadSpacingTokens.launchpadDividerHeight,
               color: AppColors.divider,
             ),
             SizedBox(
@@ -76,7 +76,7 @@ class _BridgeEventLog extends StatelessWidget {
               child: ColoredBox(
                 color: AppColors.bg,
                 child: Padding(
-                  padding: AppSpacing.launchpadPaddingX3,
+                  padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                   child: Column(
                     children: [
                       for (final event in events) _EventRow(event: event),
@@ -86,16 +86,16 @@ class _BridgeEventLog extends StatelessWidget {
               ),
             ),
             const Divider(
-              height: AppSpacing.launchpadDividerHeight,
+              height: LaunchpadSpacingTokens.launchpadDividerHeight,
               color: AppColors.divider,
             ),
             Padding(
-              padding: AppSpacing.launchpadEventFooterPadding,
+              padding: LaunchpadSpacingTokens.launchpadEventFooterPadding,
               child: Row(
                 children: [
                   const SizedBox(
-                    width: AppSpacing.launchpadDotSm,
-                    height: AppSpacing.launchpadDotSm,
+                    width: LaunchpadSpacingTokens.launchpadDotSm,
+                    height: LaunchpadSpacingTokens.launchpadDotSm,
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
                         color: AppColors.buy,
@@ -137,12 +137,12 @@ class _EventRow extends StatelessWidget {
     final color = _eventColor(event.level);
     return Padding(
       key: LaunchpadBridgeOrderPage.eventKey(event.id),
-      padding: AppSpacing.launchpadVerticalPaddingX1,
+      padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX1,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.launchpadBox68,
+            width: LaunchpadSpacingTokens.launchpadBox68,
             child: Text(
               event.timestamp,
               style: AppTextStyles.micro.copyWith(
@@ -152,7 +152,7 @@ class _EventRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: AppSpacing.launchpadBox36,
+            width: LaunchpadSpacingTokens.launchpadBox36,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .14),
@@ -161,7 +161,7 @@ class _EventRow extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: AppSpacing.launchpadEventLevelPadding,
+                padding: LaunchpadSpacingTokens.launchpadEventLevelPadding,
                 child: Center(
                   child: Text(
                     _eventLabel(event.level),
@@ -208,13 +208,13 @@ class _ConnectionBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadLiveBadgePadding,
+        padding: LaunchpadSpacingTokens.launchpadLiveBadgePadding,
         child: Row(
           children: [
             Icon(
               connected ? Icons.wifi_rounded : Icons.wifi_find_rounded,
               color: connected ? AppColors.buy : AppColors.warn,
-              size: AppSpacing.launchpadFontXs,
+              size: LaunchpadSpacingTokens.launchpadFontXs,
             ),
             const SizedBox(width: AppSpacing.x1),
             Text(

@@ -114,12 +114,12 @@ class _ModeRow extends StatelessWidget {
       onTap: onTap,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaCreatorModeRowPadding,
+      padding: ArenaSpacingTokens.arenaCreatorModeRowPadding,
       child: Row(
         children: [
           const SizedBox(
-            width: AppSpacing.arenaCreatorModeIconBox,
-            height: AppSpacing.arenaCreatorModeIconBox,
+            width: ArenaSpacingTokens.arenaCreatorModeIconBox,
+            height: ArenaSpacingTokens.arenaCreatorModeIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.primary12,
@@ -129,7 +129,7 @@ class _ModeRow extends StatelessWidget {
                 child: Icon(
                   Icons.calculate_rounded,
                   color: AppColors.primary,
-                  size: AppSpacing.arenaCreatorModeGlyph,
+                  size: ArenaSpacingTokens.arenaCreatorModeGlyph,
                 ),
               ),
             ),
@@ -162,7 +162,7 @@ class _ModeRow extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.arenaCreatorModeChevron,
+            size: ArenaSpacingTokens.arenaCreatorModeChevron,
           ),
         ],
       ),
@@ -186,7 +186,7 @@ class _HistoryTab extends StatelessWidget {
     }
 
     return VitCard(
-      padding: AppSpacing.arenaCreatorCardPadding,
+      padding: ArenaSpacingTokens.arenaCreatorCardPadding,
       child: Text(
         '${rooms.length} challenge đã hoàn tất',
         style: AppTextStyles.base.copyWith(color: AppColors.text1),
@@ -206,7 +206,7 @@ class _AboutTab extends StatelessWidget {
     return Column(
       children: [
         VitCard(
-          padding: AppSpacing.arenaCreatorCardPadding,
+          padding: ArenaSpacingTokens.arenaCreatorCardPadding,
           child: Text(
             creator.bio,
             style: AppTextStyles.base.copyWith(
@@ -217,12 +217,13 @@ class _AboutTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
-          padding: AppSpacing.arenaCreatorCardPadding,
+          padding: ArenaSpacingTokens.arenaCreatorCardPadding,
           child: Column(
             children: [
               for (final row in rows) ...[
                 _AboutRow(row: row),
-                if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                if (row != rows.last)
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
               ],
             ],
           ),

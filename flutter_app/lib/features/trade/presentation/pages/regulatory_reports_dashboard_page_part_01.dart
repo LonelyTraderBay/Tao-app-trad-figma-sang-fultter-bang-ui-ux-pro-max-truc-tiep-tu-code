@@ -127,7 +127,7 @@ class _ComplianceAlert extends StatelessWidget {
           const Icon(
             Icons.check_circle_outline,
             color: AppColors.text1,
-            size: AppSpacing.tradeBotMediumIcon,
+            size: TradeSpacingTokens.tradeBotMediumIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -199,7 +199,7 @@ class _KpiGrid extends StatelessWidget {
         for (final item in items) ...[
           Expanded(child: _KpiCard(item: item)),
           if (item != items.last)
-            const SizedBox(width: AppSpacing.tradeBotSmallGap),
+            const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
         ],
       ],
     );
@@ -228,7 +228,7 @@ class _KpiCard extends StatelessWidget {
               Icon(
                 item.$5,
                 color: item.$4,
-                size: AppSpacing.tradeBotMediumIcon,
+                size: TradeSpacingTokens.tradeBotMediumIcon,
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
@@ -293,7 +293,7 @@ class _RangeSelector extends StatelessWidget {
             onTap: () => onChanged(range),
           ),
           if (range != ranges.last)
-            const SizedBox(width: AppSpacing.tradeBotSmallGap),
+            const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
         ],
       ],
     );
@@ -338,7 +338,8 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -347,7 +348,7 @@ class _OverviewTab extends StatelessWidget {
           density: VitDensity.compact,
           children: [
             _Card(
-              padding: AppSpacing.tradeBotInnerPanelPadding,
+              padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
               child: AspectRatio(
                 aspectRatio: 2.4,
                 child: CustomPaint(
@@ -367,7 +368,7 @@ class _OverviewTab extends StatelessWidget {
               children: [
                 Expanded(
                   child: _Card(
-                    padding: AppSpacing.tradeBotInnerPanelPadding,
+                    padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
                     child: AspectRatio(
                       aspectRatio: 1.25,
                       child: CustomPaint(

@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api_documentation_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingApiDocumentationInfoBanner extends StatelessWidget {
   const StakingApiDocumentationInfoBanner({super.key, required this.snapshot});
@@ -19,7 +20,7 @@ class StakingApiDocumentationInfoBanner extends StatelessWidget {
       key: StakingApiDocumentationKeys.info,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,7 +40,7 @@ class StakingApiDocumentationInfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingApiBodyLineHeight,
+                    height: EarnSpacingTokens.stakingApiBodyLineHeight,
                   ),
                 ),
               ],
@@ -79,9 +80,9 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(stat.tone);
     return VitCard(
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: SizedBox(
-        height: AppSpacing.stakingApiStatTileHeight,
+        height: EarnSpacingTokens.stakingApiStatTileHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -132,7 +133,7 @@ class StakingApiDocumentationTabs extends StatelessWidget {
                 key: StakingApiDocumentationKeys.tab(tab.name),
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
-                padding: AppSpacing.earnTopPaddingX4,
+                padding: EarnSpacingTokens.earnTopPaddingX4,
                 onTap: () => onChanged(tab),
                 child: Column(
                   children: [
@@ -147,7 +148,9 @@ class StakingApiDocumentationTabs extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     TweenAnimationBuilder<double>(
                       duration: const Duration(milliseconds: 160),
                       tween: Tween<double>(
@@ -156,7 +159,8 @@ class StakingApiDocumentationTabs extends StatelessWidget {
                       builder: (context, width, _) {
                         return SizedBox(
                           width: width,
-                          height: AppSpacing.stakingApiTabIndicatorHeight,
+                          height:
+                              EarnSpacingTokens.stakingApiTabIndicatorHeight,
                           child: DecoratedBox(
                             decoration: ShapeDecoration(
                               color: active == tab

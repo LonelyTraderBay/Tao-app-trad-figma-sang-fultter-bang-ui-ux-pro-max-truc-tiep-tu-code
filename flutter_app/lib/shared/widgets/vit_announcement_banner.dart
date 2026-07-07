@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_carousel_dots.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inline_icon_action.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 enum VitAnnouncementBannerVariant { standard, compact }
 
@@ -41,9 +42,9 @@ class VitAnnouncementBanner extends StatelessWidget {
   EdgeInsetsGeometry get _padding {
     return switch (variant) {
       VitAnnouncementBannerVariant.standard =>
-        AppSpacing.homeCardPaddingDefault,
+        HomeSpacingTokens.homeCardPaddingDefault,
       VitAnnouncementBannerVariant.compact =>
-        AppSpacing.homeAnnouncementCardPaddingCompact,
+        HomeSpacingTokens.homeAnnouncementCardPaddingCompact,
     };
   }
 
@@ -61,9 +62,9 @@ class VitAnnouncementBanner extends StatelessWidget {
               Icon(
                 icon,
                 color: accentColor,
-                size: AppSpacing.homeAnnouncementIcon,
+                size: HomeSpacingTokens.homeAnnouncementIcon,
               ),
-              const SizedBox(width: AppSpacing.homeAnnouncementIconGap),
+              const SizedBox(width: HomeSpacingTokens.homeAnnouncementIconGap),
               Expanded(
                 child: Text(
                   message,
@@ -72,12 +73,12 @@ class VitAnnouncementBanner extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
-              const SizedBox(width: AppSpacing.homeAnnouncementArrowGap),
+              const SizedBox(width: HomeSpacingTokens.homeAnnouncementArrowGap),
               if (onDismiss == null)
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.homeAnnouncementChevron,
+                  size: HomeSpacingTokens.homeAnnouncementChevron,
                 )
               else
                 VitInlineIconAction(

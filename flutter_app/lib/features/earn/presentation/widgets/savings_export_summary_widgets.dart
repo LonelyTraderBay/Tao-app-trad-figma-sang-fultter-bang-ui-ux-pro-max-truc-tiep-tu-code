@@ -22,7 +22,7 @@ class _ExportSummary extends StatelessWidget {
       key: SavingsExportPage.summaryRowsKey,
       variant: VitCardVariant.standard,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -88,7 +88,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,7 +123,7 @@ class _PreviewReadyBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -176,7 +176,7 @@ class _HistoryCard extends StatelessWidget {
       key: SavingsExportPage.historyKey(item.id),
       variant: VitCardVariant.standard,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -288,8 +288,8 @@ class _SelectionDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.earnExportSelectionDot,
-      height: AppSpacing.earnExportSelectionDot,
+      width: EarnSpacingTokens.earnExportSelectionDot,
+      height: EarnSpacingTokens.earnExportSelectionDot,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           shape: CircleBorder(
@@ -299,8 +299,8 @@ class _SelectionDot extends StatelessWidget {
         child: selected
             ? Center(
                 child: SizedBox(
-                  width: AppSpacing.earnExportSelectionDotInner,
-                  height: AppSpacing.earnExportSelectionDotInner,
+                  width: EarnSpacingTokens.earnExportSelectionDotInner,
+                  height: EarnSpacingTokens.earnExportSelectionDotInner,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: color,
@@ -329,7 +329,7 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

@@ -49,21 +49,21 @@ class _TableHeader extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: AppSpacing.predictionRewardsTablePadding,
+            padding: PredictionsSpacingTokens.predictionRewardsTablePadding,
             child: Row(
               children: [
                 Expanded(child: _HeaderText('MARKET')),
                 const SizedBox(width: AppSpacing.x1),
                 const SizedBox(
-                  width: AppSpacing.predictionRewardsSpreadWidth,
+                  width: PredictionsSpacingTokens.predictionRewardsSpreadWidth,
                   child: Center(child: _HeaderText('SPREAD')),
                 ),
                 const SizedBox(
-                  width: AppSpacing.predictionRewardsMinWidth,
+                  width: PredictionsSpacingTokens.predictionRewardsMinWidth,
                   child: Center(child: _HeaderText('MIN')),
                 ),
                 const SizedBox(
-                  width: AppSpacing.predictionRewardsRewardWidth,
+                  width: PredictionsSpacingTokens.predictionRewardsRewardWidth,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: _HeaderText('REWARD'),
@@ -126,7 +126,7 @@ class _RewardRow extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: AppSpacing.predictionRewardsTablePadding,
+              padding: PredictionsSpacingTokens.predictionRewardsTablePadding,
               child: Row(
                 children: [
                   // card-tile: allow-start — fixed surface, not horizontal strip tile
@@ -135,13 +135,15 @@ class _RewardRow extends StatelessWidget {
                     onTap: onFavoriteToggle,
                     variant: VitCardVariant.ghost,
                     radius: VitCardRadius.standard,
-                    width: AppSpacing.predictionRewardsFavoriteWidth,
+                    width:
+                        PredictionsSpacingTokens.predictionRewardsFavoriteWidth,
                     height: VitDensity.compact.controlHeight - AppSpacing.x3,
                     padding: AppSpacing.zeroInsets,
                     child: Icon(
                       favorite ? Icons.star_rounded : Icons.star_border_rounded,
                       color: favorite ? AppColors.warn : AppColors.text3,
-                      size: AppSpacing.predictionRewardsFavoriteIcon,
+                      size: PredictionsSpacingTokens
+                          .predictionRewardsFavoriteIcon,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.x1),
@@ -177,7 +179,8 @@ class _RewardRow extends StatelessWidget {
                                   ? Icons.arrow_outward_rounded
                                   : Icons.south_east_rounded,
                               color: changeColor,
-                              size: AppSpacing.predictionRewardsChangeIcon,
+                              size: PredictionsSpacingTokens
+                                  .predictionRewardsChangeIcon,
                             ),
                             Text(
                               _formatPercent(reward.priceChange24h),
@@ -204,7 +207,8 @@ class _RewardRow extends StatelessWidget {
                   ),
                   const SizedBox(width: AppSpacing.x1),
                   SizedBox(
-                    width: AppSpacing.predictionRewardsSpreadWidth,
+                    width:
+                        PredictionsSpacingTokens.predictionRewardsSpreadWidth,
                     child: Text(
                       '${(reward.maxSpread * 100).toStringAsFixed(0)}%',
                       textAlign: TextAlign.center,
@@ -215,7 +219,7 @@ class _RewardRow extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: AppSpacing.predictionRewardsMinWidth,
+                    width: PredictionsSpacingTokens.predictionRewardsMinWidth,
                     child: Text(
                       '${reward.minShares}',
                       textAlign: TextAlign.center,
@@ -226,7 +230,8 @@ class _RewardRow extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: AppSpacing.predictionRewardsRewardWidth,
+                    width:
+                        PredictionsSpacingTokens.predictionRewardsRewardWidth,
                     child: Text(
                       '\$${reward.dailyReward.toStringAsFixed(0)}',
                       textAlign: TextAlign.right,
@@ -241,7 +246,7 @@ class _RewardRow extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.predictionRewardsChevron,
+                    size: PredictionsSpacingTokens.predictionRewardsChevron,
                   ),
                 ],
               ),
@@ -282,14 +287,14 @@ class _RiskLink extends StatelessWidget {
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
       child: Padding(
-        padding: AppSpacing.predictionRewardsRiskLinkPadding,
+        padding: PredictionsSpacingTokens.predictionRewardsRiskLinkPadding,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
               Icons.shield_outlined,
               color: AppColors.warn,
-              size: AppSpacing.predictionRewardsRiskIcon,
+              size: PredictionsSpacingTokens.predictionRewardsRiskIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Flexible(
@@ -307,7 +312,7 @@ class _RiskLink extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.warn,
-              size: AppSpacing.predictionRewardsRiskChevron,
+              size: PredictionsSpacingTokens.predictionRewardsRiskChevron,
             ),
           ],
         ),

@@ -95,7 +95,9 @@ class _NoticePanel extends StatelessWidget {
     return Positioned(
       left: AppSpacing.contentPad,
       right: AppSpacing.contentPad,
-      top: MediaQuery.paddingOf(context).top + AppSpacing.tradeToolBodyIcon,
+      top:
+          MediaQuery.paddingOf(context).top +
+          TradeSpacingTokens.tradeToolBodyIcon,
       child: Material(
         color: AppColors.transparent,
         child: VitCard(

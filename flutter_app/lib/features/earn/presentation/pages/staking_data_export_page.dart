@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingDataExportPage extends ConsumerStatefulWidget {
   const StakingDataExportPage({super.key, this.shellRenderMode});
@@ -81,7 +82,9 @@ class _StakingDataExportPageState extends ConsumerState<StakingDataExportPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.defaultPadding,
@@ -127,7 +130,7 @@ class _ExportHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -140,7 +143,7 @@ class _ExportHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+              height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
             ),
           ),
         ],
@@ -171,10 +174,10 @@ class _QuickExports extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: snapshot.quickExports.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.stakingDataExportGridColumns,
+            crossAxisCount: EarnSpacingTokens.stakingDataExportGridColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: AppSpacing.stakingDataExportGridAspect,
+            childAspectRatio: EarnSpacingTokens.stakingDataExportGridAspect,
           ),
           itemBuilder: (context, index) {
             final item = snapshot.quickExports[index];
@@ -207,7 +210,7 @@ class _QuickExportCard extends StatelessWidget {
       key: StakingDataExportPage.quickExportKey(item.id),
       radius: VitCardRadius.large,
       borderColor: selected ? AppColors.primary : null,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +218,7 @@ class _QuickExportCard extends StatelessWidget {
           Icon(
             _iconFor(item.iconKey),
             color: AppColors.text3,
-            size: AppSpacing.stakingDataExportQuickIcon,
+            size: EarnSpacingTokens.stakingDataExportQuickIcon,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
@@ -259,7 +262,7 @@ class _CustomExport extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -329,7 +332,7 @@ class _DateField extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.earnHorizontalPaddingX3,
+          padding: EarnSpacingTokens.earnHorizontalPaddingX3,
           child: Row(
             children: [
               Expanded(
@@ -377,7 +380,7 @@ class _FormatSelect extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: AppColors.borderSolid,
       height: AppSpacing.buttonStandard,
-      padding: AppSpacing.earnHorizontalPaddingX3,
+      padding: EarnSpacingTokens.earnHorizontalPaddingX3,
       onTap: () {
         final index = options.indexOf(format);
         final next = options[(index + 1) % options.length];
@@ -415,13 +418,13 @@ class _FooterNote extends StatelessWidget {
       key: StakingDataExportPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+          height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
         ),
       ),
     );

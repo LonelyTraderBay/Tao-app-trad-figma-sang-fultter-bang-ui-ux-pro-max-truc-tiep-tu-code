@@ -38,7 +38,7 @@ class _MerchantAdCard extends StatelessWidget {
     return VitCard(
       key: P2PMerchantProfilePage.adKey(ad.id),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -155,7 +155,7 @@ class _OutlineActionButton extends StatelessWidget {
           Icon(
             Icons.chevron_right_rounded,
             color: color,
-            size: AppSpacing.p2pMerchantCommerceSmallIcon,
+            size: P2PSpacingTokens.p2pMerchantCommerceSmallIcon,
           ),
         ],
       ),
@@ -198,7 +198,7 @@ class _ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -207,7 +207,7 @@ class _ReviewCard extends StatelessWidget {
               VitAssetAvatar(
                 label: review.fromUser,
                 accentColor: AppColors.accent,
-                size: AppSpacing.p2pMerchantCommerceAvatarSize,
+                size: P2PSpacingTokens.p2pMerchantCommerceAvatarSize,
                 radius: AppRadii.pillRadius,
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -237,7 +237,7 @@ class _ReviewCard extends StatelessWidget {
                 const Icon(
                   Icons.star_rounded,
                   color: AppColors.warn,
-                  size: AppSpacing.p2pMerchantCommerceSmallIcon,
+                  size: P2PSpacingTokens.p2pMerchantCommerceSmallIcon,
                 ),
             ],
           ),

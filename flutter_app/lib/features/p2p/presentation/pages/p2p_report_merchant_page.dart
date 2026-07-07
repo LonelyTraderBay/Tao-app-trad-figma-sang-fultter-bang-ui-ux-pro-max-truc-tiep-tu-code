@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_report_merchant_summary_actions.dart';
 part '../widgets/p2p_report_merchant_reasons_details.dart';
@@ -99,11 +100,12 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                   child: SingleChildScrollView(
                     key: P2PReportMerchantPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pRiskControlsReportScrollPadding(
-                      scrollEndPadding,
-                    ),
+                    padding:
+                        P2PSpacingTokens.p2pRiskControlsReportScrollPadding(
+                          scrollEndPadding,
+                        ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -163,7 +165,7 @@ class _P2PReportMerchantPageState extends ConsumerState<P2PReportMerchantPage> {
                           child: selectedReason.isEmpty
                               ? const SizedBox.shrink()
                               : Padding(
-                                  padding: AppSpacing
+                                  padding: P2PSpacingTokens
                                       .p2pRiskControlsDetailBottomPadding,
                                   child: _DetailField(
                                     controller: _detailController,

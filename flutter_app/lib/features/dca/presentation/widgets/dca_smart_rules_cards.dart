@@ -9,7 +9,7 @@ class _RuleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -19,7 +19,7 @@ class _RuleCard extends StatelessWidget {
               Icon(
                 _typeIcon(rule.type),
                 color: AppColors.text3,
-                size: AppSpacing.dcaSmartInlineIcon,
+                size: DcaSpacingTokens.dcaSmartInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -40,7 +40,9 @@ class _RuleCard extends StatelessWidget {
                         _StatusBadge(status: rule.status),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     _TypeBadge(type: rule.type),
                   ],
                 ),
@@ -97,7 +99,8 @@ class _TemplateGroup extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final template in templates) ...[
           _TemplateCard(template: template),
-          if (template != templates.last) const SizedBox(height: AppSpacing.rowGap),
+          if (template != templates.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -112,7 +115,7 @@ class _TemplateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -132,7 +135,7 @@ class _TemplateCard extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
             child: Padding(
-              padding: AppSpacing.dcaPaddingX3,
+              padding: DcaSpacingTokens.dcaPaddingX3,
               child: Column(
                 children: [
                   _CodeRow(label: 'Condition', value: template.condition),
@@ -152,7 +155,7 @@ class _TemplateCard extends StatelessWidget {
               const Icon(
                 Icons.show_chart_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.dcaSmartButtonIcon,
+                size: DcaSpacingTokens.dcaSmartButtonIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -162,15 +165,15 @@ class _TemplateCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: AppSpacing.dcaSmartButtonHeight,
+                height: DcaSpacingTokens.dcaSmartButtonHeight,
                 child: VitCtaButton(
                   onPressed: () {},
                   fullWidth: false,
-                  height: AppSpacing.dcaSmartButtonHeight,
-                  padding: AppSpacing.dcaHorizontalPaddingX3,
+                  height: DcaSpacingTokens.dcaSmartButtonHeight,
+                  padding: DcaSpacingTokens.dcaHorizontalPaddingX3,
                   leading: const Icon(
                     Icons.copy_rounded,
-                    size: AppSpacing.dcaSmartButtonIcon,
+                    size: DcaSpacingTokens.dcaSmartButtonIcon,
                   ),
                   child: const Text('Use'),
                 ),
@@ -191,7 +194,7 @@ class _HistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -216,13 +219,15 @@ class _HistoryCard extends StatelessWidget {
                         _ResultBadge(result: entry.result),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         const Icon(
                           Icons.schedule_rounded,
                           color: AppColors.text3,
-                          size: AppSpacing.dcaSmartTinyIcon,
+                          size: DcaSpacingTokens.dcaSmartTinyIcon,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Text(
@@ -245,7 +250,7 @@ class _HistoryCard extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
             child: Padding(
-              padding: AppSpacing.dcaPaddingX3,
+              padding: DcaSpacingTokens.dcaPaddingX3,
               child: Column(
                 children: [
                   _CodeRow(label: 'Condition Met', value: entry.condition),

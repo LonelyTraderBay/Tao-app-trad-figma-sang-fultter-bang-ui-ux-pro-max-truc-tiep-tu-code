@@ -34,8 +34,8 @@ class _SelectionHeader extends StatelessWidget {
           child: const Text('Chọn tất cả'),
         ),
         const SizedBox(
-          width: AppSpacing.launchpadDividerWidth,
-          height: AppSpacing.launchpadBox18,
+          width: LaunchpadSpacingTokens.launchpadDividerWidth,
+          height: LaunchpadSpacingTokens.launchpadBox18,
           child: ColoredBox(color: AppColors.divider),
         ),
         VitCtaButton(
@@ -71,7 +71,7 @@ class _BatchPositionCard extends StatelessWidget {
       borderColor: selected
           ? position.accent.resolve().withValues(alpha: .42)
           : AppColors.cardBorder,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       onTap: onToggle,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,7 +128,7 @@ class _BatchPositionCard extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: AppSpacing.launchpadPillPadding,
+                    padding: LaunchpadSpacingTokens.launchpadPillPadding,
                     child: Row(
                       children: [
                         Expanded(
@@ -183,7 +183,8 @@ class _BatchPositionCard extends StatelessWidget {
                               variant: VitCtaButtonVariant.secondary,
                               fullWidth: false,
                               height: AppSpacing.buttonCompact,
-                              padding: AppSpacing.launchpadInlinePillPadding,
+                              padding: LaunchpadSpacingTokens
+                                  .launchpadInlinePillPadding,
                               child: const Text('Chi tiết'),
                             ),
                           ],
@@ -222,7 +223,7 @@ class _TokenAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox36,
+      dimension: LaunchpadSpacingTokens.launchpadBox36,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .18),
@@ -255,7 +256,7 @@ class _CountBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadTimelineMarkerPadding,
+        padding: LaunchpadSpacingTokens.launchpadTimelineMarkerPadding,
         child: Text(
           '$count đợt',
           style: AppTextStyles.micro.copyWith(
@@ -284,7 +285,7 @@ class _VestingPill extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPillPadding,
+        padding: LaunchpadSpacingTokens.launchpadPillPadding,
         child: Text(
           '${entry.label}: ${_formatNumber(entry.amount)} ${entry.token}',
           style: AppTextStyles.micro.copyWith(
@@ -314,7 +315,7 @@ class _ChainWarning extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX4,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

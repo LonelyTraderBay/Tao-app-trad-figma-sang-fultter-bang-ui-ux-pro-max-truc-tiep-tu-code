@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class TransactionReportsSection extends StatelessWidget {
   const TransactionReportsSection({
@@ -33,7 +34,7 @@ class TransactionReportsSection extends StatelessWidget {
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.transactionReportingLineHeightTight,
+            height: TradeSpacingTokens.transactionReportingLineHeightTight,
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
@@ -47,7 +48,8 @@ class TransactionReportsSection extends StatelessWidget {
               onRetry: () => onRetry(report),
               onCopy: () => onCopy(report),
             ),
-            if (report != reports.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+            if (report != reports.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
       ],
     );
@@ -78,7 +80,7 @@ class _ReportCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.transactionReportingReportCardPadding,
+      padding: TradeSpacingTokens.transactionReportingReportCardPadding,
       borderColor: transactionReportBorder.withValues(alpha: .7),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +96,7 @@ class _ReportCard extends StatelessWidget {
             child: Icon(
               status.icon,
               color: status.color,
-              size: AppSpacing.transactionReportingStatusIcon,
+              size: TradeSpacingTokens.transactionReportingStatusIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x4),
@@ -119,7 +121,7 @@ class _ReportCard extends StatelessWidget {
                                   style: AppTextStyles.caption.copyWith(
                                     color: AppColors.text1,
                                     fontWeight: AppTextStyles.bold,
-                                    height: AppSpacing
+                                    height: TradeSpacingTokens
                                         .transactionReportingLineHeightTight,
                                   ),
                                 ),
@@ -131,14 +133,16 @@ class _ReportCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
                           Text(
                             '${report.transactionId} - ${report.tradingVenue}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text3,
-                              height: AppSpacing
+                              height: TradeSpacingTokens
                                   .transactionReportingLineHeightTight,
                             ),
                           ),
@@ -192,7 +196,8 @@ class _ReportCard extends StatelessWidget {
                       style: AppTextStyles.micro.copyWith(
                         color: sla.color,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.transactionReportingLineHeightTight,
+                        height: TradeSpacingTokens
+                            .transactionReportingLineHeightTight,
                       ),
                     ),
                   ],
@@ -202,7 +207,8 @@ class _ReportCard extends StatelessWidget {
                   VitCard(
                     variant: VitCardVariant.inner,
                     radius: VitCardRadius.standard,
-                    padding: AppSpacing.transactionReportingErrorPadding,
+                    padding:
+                        TradeSpacingTokens.transactionReportingErrorPadding,
                     borderColor: transactionReportRed.withValues(alpha: .28),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +216,8 @@ class _ReportCard extends StatelessWidget {
                         const Icon(
                           Icons.warning_amber_rounded,
                           color: transactionReportRed,
-                          size: AppSpacing.transactionReportingErrorIcon,
+                          size:
+                              TradeSpacingTokens.transactionReportingErrorIcon,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Expanded(
@@ -218,7 +225,7 @@ class _ReportCard extends StatelessWidget {
                             report.errorMessage!,
                             style: AppTextStyles.micro.copyWith(
                               color: transactionReportRed,
-                              height: AppSpacing
+                              height: TradeSpacingTokens
                                   .transactionReportingErrorLineHeight,
                             ),
                           ),
@@ -275,7 +282,7 @@ class _DetailValue extends StatelessWidget {
           '$label: ',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.transactionReportingLineHeightTight,
+            height: TradeSpacingTokens.transactionReportingLineHeightTight,
           ),
         ),
         Flexible(
@@ -287,7 +294,7 @@ class _DetailValue extends StatelessWidget {
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.transactionReportingLineHeightTight,
+              height: TradeSpacingTokens.transactionReportingLineHeightTight,
             ),
           ),
         ),
@@ -318,7 +325,7 @@ class _ActionChip extends StatelessWidget {
           : VitCtaButtonVariant.ghost,
       fullWidth: false,
       height: AppSpacing.buttonCompact,
-      padding: AppSpacing.transactionReportingActionPadding,
+      padding: TradeSpacingTokens.transactionReportingActionPadding,
       leading: Icon(icon, size: AppSpacing.iconSm),
       child: Text(
         label,

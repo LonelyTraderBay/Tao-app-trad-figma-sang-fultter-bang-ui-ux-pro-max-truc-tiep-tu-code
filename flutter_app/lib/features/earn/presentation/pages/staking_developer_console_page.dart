@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingDeveloperConsolePage extends ConsumerStatefulWidget {
   const StakingDeveloperConsolePage({super.key, this.shellRenderMode});
@@ -84,7 +85,9 @@ class _StakingDeveloperConsolePageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.defaultPadding,
@@ -96,7 +99,7 @@ class _StakingDeveloperConsolePageState
                         key: StakingDeveloperConsolePage.tabsKey,
                         color: AppColors.surface,
                         child: Padding(
-                          padding: AppSpacing.earnSurfaceTabsPadding,
+                          padding: EarnSpacingTokens.earnSurfaceTabsPadding,
                           child: VitTabBar(
                             tabs: [
                               for (final tab in snapshot.tabs)
@@ -145,7 +148,7 @@ class _ConsoleHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: AppColors.accent30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -158,7 +161,7 @@ class _ConsoleHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingDeveloperConsoleBodyLineHeight,
+              height: EarnSpacingTokens.stakingDeveloperConsoleBodyLineHeight,
             ),
           ),
         ],
@@ -177,7 +180,7 @@ class _StatsCard extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.statsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           for (final stat in stats) ...[
@@ -201,7 +204,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3X4,
+      padding: EarnSpacingTokens.earnCardPaddingX3X4,
       borderColor: stat.tone == 'success' ? AppColors.primary20 : null,
       child: Column(
         children: [
@@ -270,7 +273,7 @@ class _ApiKeyCard extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.apiKeyCardKey(apiKey.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -365,7 +368,7 @@ class _RequestCard extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.requestKey(index),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           SizedBox(
@@ -427,7 +430,7 @@ class _DocCard extends StatelessWidget {
     return VitCard(
       key: StakingDeveloperConsolePage.docKey(doc.title),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       onTap: () {},
       child: Row(
         children: [

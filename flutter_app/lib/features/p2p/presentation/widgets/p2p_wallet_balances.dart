@@ -155,7 +155,9 @@ class _BalanceCard extends StatelessWidget {
                     ],
                   ),
                   if (balance.inEscrow > 0) ...[
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     _EscrowDetailButton(
                       asset: balance.asset,
                       onTap: () => context.go(

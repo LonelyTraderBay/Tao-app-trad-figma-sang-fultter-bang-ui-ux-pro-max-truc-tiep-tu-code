@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/controllers/wallet_controller.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class AddressNetworkGrid extends StatelessWidget {
   const AddressNetworkGrid({
@@ -20,8 +20,8 @@ class AddressNetworkGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.walletAddressAddNetworkSpacing,
-      runSpacing: AppSpacing.walletAddressAddNetworkRunSpacing,
+      spacing: WalletSpacingTokens.walletAddressAddNetworkSpacing,
+      runSpacing: WalletSpacingTokens.walletAddressAddNetworkRunSpacing,
       children: [
         for (final network in networks)
           _NetworkChip(
@@ -50,19 +50,19 @@ class _NetworkChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.walletAddressAddNetworkChipWidth,
+      width: WalletSpacingTokens.walletAddressAddNetworkChipWidth,
       child: VitChoicePill(
         label: network.label,
         selected: selected,
         onTap: onTap,
         fullWidth: true,
-        padding: AppSpacing.walletAddressAddNetworkChipPadding,
+        padding: WalletSpacingTokens.walletAddressAddNetworkChipPadding,
         accentColor: addressAddPrimary,
         semanticLabel: '${network.label} address network',
         leading: Icon(
           Icons.circle_rounded,
           color: Color(network.colorHex),
-          size: AppSpacing.walletAddressAddNetworkDot,
+          size: WalletSpacingTokens.walletAddressAddNetworkDot,
         ),
       ),
     );
@@ -84,14 +84,14 @@ class AddressAssetSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.walletAddressAddAssetSpacing,
-      runSpacing: AppSpacing.walletAddressAddAssetRunSpacing,
+      spacing: WalletSpacingTokens.walletAddressAddAssetSpacing,
+      runSpacing: WalletSpacingTokens.walletAddressAddAssetRunSpacing,
       children: [
         for (final asset in assets)
           SizedBox(
             width: asset == 'MATIC'
-                ? AppSpacing.walletAddressAddAssetChipWideWidth
-                : AppSpacing.walletAddressAddAssetChipWidth,
+                ? WalletSpacingTokens.walletAddressAddAssetChipWideWidth
+                : WalletSpacingTokens.walletAddressAddAssetChipWidth,
             child: VitChoicePill(
               key: Key('sc143_address_asset_$asset'),
               label: asset,

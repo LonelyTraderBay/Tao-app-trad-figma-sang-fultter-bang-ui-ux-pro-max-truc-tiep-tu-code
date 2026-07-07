@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_payment_methods_page_sections.dart';
 part '../widgets/p2p_payment_methods_page_common.dart';
@@ -101,7 +102,8 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                   for (var index = 0; index < bankMethods.length; index++) ...[
                     if (index > 0)
                       const SizedBox(
-                        height: AppSpacing.p2pPaymentMethodsListSectionGap,
+                        height:
+                            P2PSpacingTokens.p2pPaymentMethodsListSectionGap,
                       ),
                     _PaymentMethodCard(
                       method: bankMethods[index],
@@ -120,10 +122,15 @@ class _P2PPaymentMethodsPageState extends ConsumerState<P2PPaymentMethodsPage> {
                     icon: Icons.phone_android_rounded,
                     title: 'Ví điện tử (${ewalletMethods.length})',
                   ),
-                  for (var index = 0; index < ewalletMethods.length; index++) ...[
+                  for (
+                    var index = 0;
+                    index < ewalletMethods.length;
+                    index++
+                  ) ...[
                     if (index > 0)
                       const SizedBox(
-                        height: AppSpacing.p2pPaymentMethodsListSectionGap,
+                        height:
+                            P2PSpacingTokens.p2pPaymentMethodsListSectionGap,
                       ),
                     _PaymentMethodCard(
                       method: ewalletMethods[index],

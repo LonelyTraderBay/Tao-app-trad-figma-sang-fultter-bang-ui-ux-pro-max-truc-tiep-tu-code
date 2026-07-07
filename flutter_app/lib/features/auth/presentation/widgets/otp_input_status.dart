@@ -22,7 +22,8 @@ class _OtpDigitRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (var index = 0; index < controllers.length; index++) ...[
-          if (index > 0) const SizedBox(width: AppSpacing.authOtpDigitGap),
+          if (index > 0)
+            const SizedBox(width: AuthSpacingTokens.authOtpDigitGap),
           _OtpDigitField(
             index: index,
             controller: controllers[index],
@@ -57,8 +58,8 @@ class _OtpDigitField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.authOtpBoxSize,
-      height: AppSpacing.authOtpBoxHeight,
+      width: AuthSpacingTokens.authOtpBoxSize,
+      height: AuthSpacingTokens.authOtpBoxHeight,
       child: Focus(
         onKeyEvent: onKey,
         child: VitInput(
@@ -102,7 +103,9 @@ class _OtpProgress extends StatelessWidget {
               borderRadius: AppRadii.pillRadius,
               child: ColoredBox(
                 color: index < filled ? _authPrimary : AppColors.borderSolid,
-                child: const SizedBox(height: AppSpacing.authOtpProgressHeight),
+                child: const SizedBox(
+                  height: AuthSpacingTokens.authOtpProgressHeight,
+                ),
               ),
             ),
           ),
@@ -128,7 +131,7 @@ class _OtpErrorBanner extends StatelessWidget {
           side: BorderSide(color: AppColors.sell20),
         ),
         child: Padding(
-          padding: AppSpacing.authErrorBannerPadding,
+          padding: AuthSpacingTokens.authErrorBannerPadding,
           child: Text(
             error,
             textAlign: TextAlign.center,
@@ -160,7 +163,7 @@ class _ResendControl extends StatelessWidget {
       children: [
         Icon(
           Icons.refresh_rounded,
-          size: AppSpacing.authErrorIcon,
+          size: AuthSpacingTokens.authErrorIcon,
           color: canResend ? _authPrimary : AppColors.text3,
         ),
         const SizedBox(width: AppSpacing.x3),
@@ -170,8 +173,8 @@ class _ResendControl extends StatelessWidget {
             onPressed: onResend,
             variant: VitCtaButtonVariant.ghost,
             fullWidth: false,
-            height: AppSpacing.authTextButtonHeight,
-            padding: AppSpacing.authInlineTextButtonPadding,
+            height: AuthSpacingTokens.authTextButtonHeight,
+            padding: AuthSpacingTokens.authInlineTextButtonPadding,
             child: Text(
               'Gửi lại mã OTP',
               style: AppTextStyles.caption.copyWith(

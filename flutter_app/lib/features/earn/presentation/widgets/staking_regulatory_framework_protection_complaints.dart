@@ -20,7 +20,9 @@ class _ProtectionTab extends StatelessWidget {
                 for (final scheme in snapshot.protectionSchemes) ...[
                   _ProtectionCard(scheme: scheme),
                   if (scheme != snapshot.protectionSchemes.last)
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                 ],
               ],
             ),
@@ -42,7 +44,7 @@ class _ProtectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -80,7 +82,7 @@ class _ProtectionCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.earnCardPaddingX3,
+            padding: EarnSpacingTokens.earnCardPaddingX3,
             child: Text(
               scheme.description,
               style: AppTextStyles.caption.copyWith(
@@ -120,7 +122,7 @@ class _ComplaintsTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX3,
+              padding: EarnSpacingTokens.earnCardPaddingX3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -132,7 +134,9 @@ class _ComplaintsTab extends StatelessWidget {
                   for (final step in snapshot.complaintSteps) ...[
                     _ComplaintStep(step: step),
                     if (step != snapshot.complaintSteps.last)
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                   ],
                 ],
               ),
@@ -146,7 +150,7 @@ class _ComplaintsTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX3,
+              padding: EarnSpacingTokens.earnCardPaddingX3,
               child: Column(
                 children: [
                   for (final contact in snapshot.authorityContacts) ...[

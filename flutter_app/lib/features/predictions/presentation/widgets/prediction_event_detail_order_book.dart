@@ -22,16 +22,19 @@ class _OrderBookSection extends StatelessWidget {
           key: PredictionEventDetailPage.orderBookToggleKey,
           onTap: onToggle,
           variant: VitCardVariant.inner,
-          padding: AppSpacing.predictionDetailOrderBookTogglePadding,
+          padding:
+              PredictionsSpacingTokens.predictionDetailOrderBookTogglePadding,
           child: Row(
             children: [
               const Icon(
                 Icons.layers_rounded,
                 color: _predictionPrimary,
-                size: AppSpacing.predictionDetailOrderBookToggleIcon,
+                size: PredictionsSpacingTokens
+                    .predictionDetailOrderBookToggleIcon,
               ),
               const SizedBox(
-                width: AppSpacing.predictionDetailOrderBookToggleGap,
+                width:
+                    PredictionsSpacingTokens.predictionDetailOrderBookToggleGap,
               ),
               Expanded(
                 child: Text(
@@ -45,7 +48,8 @@ class _OrderBookSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: AppSpacing.predictionDetailOrderBookToggleGap,
+                width:
+                    PredictionsSpacingTokens.predictionDetailOrderBookToggleGap,
               ),
               Flexible(
                 child: Text(
@@ -57,14 +61,15 @@ class _OrderBookSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: AppSpacing.predictionDetailOrderBookToggleGap,
+                width:
+                    PredictionsSpacingTokens.predictionDetailOrderBookToggleGap,
               ),
               Icon(
                 expanded
                     ? Icons.keyboard_arrow_up_rounded
                     : Icons.keyboard_arrow_down_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.predictionDetailOrderBookChevron,
+                size: PredictionsSpacingTokens.predictionDetailOrderBookChevron,
               ),
             ],
           ),
@@ -80,13 +85,14 @@ class _OrderBookSection extends StatelessWidget {
                 for (final ask in snapshot.orderBook.asks.reversed)
                   _OrderBookRow(entry: ask, isBid: false),
                 Padding(
-                  padding: AppSpacing.predictionDetailOrderBookMidPriceMargin,
+                  padding: PredictionsSpacingTokens
+                      .predictionDetailOrderBookMidPriceMargin,
                   child: Material(
                     color: AppColors.surface2,
                     borderRadius: AppRadii.smRadius,
                     child: Padding(
-                      padding:
-                          AppSpacing.predictionDetailOrderBookMidPricePadding,
+                      padding: PredictionsSpacingTokens
+                          .predictionDetailOrderBookMidPricePadding,
                       child: Center(
                         child: Text(
                           '${_formatPrice(chance)} \u00B7 mid price',
@@ -117,11 +123,11 @@ class _OrderBookHeader extends StatelessWidget {
       children: [
         Expanded(child: _OrderBookLabel('PRICE')),
         SizedBox(
-          width: AppSpacing.predictionDetailOrderBookColumnWidth,
+          width: PredictionsSpacingTokens.predictionDetailOrderBookColumnWidth,
           child: _OrderBookLabel('SHARES', alignEnd: true),
         ),
         SizedBox(
-          width: AppSpacing.predictionDetailOrderBookColumnWidth,
+          width: PredictionsSpacingTokens.predictionDetailOrderBookColumnWidth,
           child: _OrderBookLabel('TOTAL', alignEnd: true),
         ),
       ],
@@ -161,7 +167,7 @@ class _OrderBookRow extends StatelessWidget {
       color: color.withValues(alpha: .04),
       borderRadius: AppRadii.predictionDetailOrderBookRowRadius,
       child: Padding(
-        padding: AppSpacing.predictionDetailOrderBookRowPadding,
+        padding: PredictionsSpacingTokens.predictionDetailOrderBookRowPadding,
         child: Row(
           children: [
             Expanded(
@@ -175,7 +181,8 @@ class _OrderBookRow extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: AppSpacing.predictionDetailOrderBookColumnWidth,
+              width:
+                  PredictionsSpacingTokens.predictionDetailOrderBookColumnWidth,
               child: Text(
                 _formatInt(entry.shares),
                 textAlign: TextAlign.end,
@@ -186,7 +193,8 @@ class _OrderBookRow extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: AppSpacing.predictionDetailOrderBookColumnWidth,
+              width:
+                  PredictionsSpacingTokens.predictionDetailOrderBookColumnWidth,
               child: Text(
                 _formatInt((entry.price * entry.shares).round()),
                 textAlign: TextAlign.end,

@@ -14,8 +14,8 @@ class _KycStatusCard extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.kycStatusIconBox,
-            height: AppSpacing.kycStatusIconBox,
+            width: ProfileSpacingTokens.kycStatusIconBox,
+            height: ProfileSpacingTokens.kycStatusIconBox,
             child: Material(
               color: _kycGreen.withValues(alpha: .2),
               shape: RoundedRectangleBorder(
@@ -24,11 +24,11 @@ class _KycStatusCard extends StatelessWidget {
               child: const Icon(
                 Icons.shield_outlined,
                 color: _kycGreen,
-                size: AppSpacing.kycStatusIcon,
+                size: ProfileSpacingTokens.kycStatusIcon,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.kycStatusGap),
+          const SizedBox(width: ProfileSpacingTokens.kycStatusGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -57,11 +57,13 @@ class _KycStatusCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.kycStatusCheckGap),
+                    const SizedBox(
+                      width: ProfileSpacingTokens.kycStatusCheckGap,
+                    ),
                     const Icon(
                       Icons.check_rounded,
                       color: _kycGreen,
-                      size: AppSpacing.kycStatusCheckIcon,
+                      size: ProfileSpacingTokens.kycStatusCheckIcon,
                     ),
                   ],
                 ),
@@ -113,11 +115,11 @@ class _KycLevelCard extends StatelessWidget {
                 minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
               ),
               child: Padding(
-                padding: AppSpacing.kycLevelRowPadding,
+                padding: ProfileSpacingTokens.kycLevelRowPadding,
                 child: Row(
                   children: [
                     _LevelIcon(level: level.level, done: done, accent: accent),
-                    const SizedBox(width: AppSpacing.kycLevelRowGap),
+                    const SizedBox(width: ProfileSpacingTokens.kycLevelRowGap),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +141,7 @@ class _KycLevelCard extends StatelessWidget {
                                 const Icon(
                                   Icons.check_rounded,
                                   color: _kycMuted,
-                                  size: AppSpacing.kycDetailIcon,
+                                  size: ProfileSpacingTokens.kycDetailIcon,
                                 ),
                                 const SizedBox(
                                   width:
@@ -170,7 +172,7 @@ class _KycLevelCard extends StatelessWidget {
                       child: const Icon(
                         Icons.chevron_right_rounded,
                         color: AppColors.text3,
-                        size: AppSpacing.kycLevelChevron,
+                        size: ProfileSpacingTokens.kycLevelChevron,
                       ),
                     ),
                   ],
@@ -184,7 +186,7 @@ class _KycLevelCard extends StatelessWidget {
               color: AppColors.divider,
             ),
             Padding(
-              padding: AppSpacing.kycLevelDetailsPadding,
+              padding: ProfileSpacingTokens.kycLevelDetailsPadding,
               child: _ExpandedLevelDetails(
                 level: level,
                 done: done,
@@ -214,15 +216,15 @@ class _LevelIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.kycLevelIconBox,
-      height: AppSpacing.kycLevelIconBox,
+      width: ProfileSpacingTokens.kycLevelIconBox,
+      height: ProfileSpacingTokens.kycLevelIconBox,
       child: Material(
         color: done ? accent.withValues(alpha: .13) : AppColors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.lgRadius,
           side: BorderSide(
             color: done ? accent : AppColors.borderSolid,
-            width: AppSpacing.kycLevelIconBorder,
+            width: ProfileSpacingTokens.kycLevelIconBorder,
           ),
         ),
         child: Center(
@@ -230,7 +232,7 @@ class _LevelIcon extends StatelessWidget {
               ? Icon(
                   Icons.check_circle_outline_rounded,
                   color: accent,
-                  size: AppSpacing.kycLevelDoneIcon,
+                  size: ProfileSpacingTokens.kycLevelDoneIcon,
                 )
               : Text(
                   '$level',

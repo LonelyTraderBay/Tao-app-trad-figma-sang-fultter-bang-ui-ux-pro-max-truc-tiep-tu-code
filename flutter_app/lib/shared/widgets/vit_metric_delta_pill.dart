@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 enum VitMetricDeltaTone { positive, negative, neutral, warning }
 
@@ -54,15 +55,15 @@ class VitMetricDeltaPill extends StatelessWidget {
   _MetricDeltaMetrics get _metrics {
     return switch (size) {
       VitMetricDeltaPillSize.sm => const _MetricDeltaMetrics(
-        paddingX: AppSpacing.homePortfolioBadgeHorizontalPadding,
-        paddingY: AppSpacing.homePortfolioBadgeVerticalPadding,
-        iconSize: AppSpacing.homePortfolioBadgeIcon,
+        paddingX: HomeSpacingTokens.homePortfolioBadgeHorizontalPadding,
+        paddingY: HomeSpacingTokens.homePortfolioBadgeVerticalPadding,
+        iconSize: HomeSpacingTokens.homePortfolioBadgeIcon,
         textStyle: AppTextStyles.caption,
       ),
       VitMetricDeltaPillSize.md => const _MetricDeltaMetrics(
         paddingX: AppSpacing.statusPillHorizontalPaddingMd,
         paddingY: AppSpacing.x2,
-        iconSize: AppSpacing.homeNextActionIconSize,
+        iconSize: HomeSpacingTokens.homeNextActionIconSize,
         textStyle: AppTextStyles.caption,
       ),
     };

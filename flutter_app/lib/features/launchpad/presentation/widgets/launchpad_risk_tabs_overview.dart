@@ -12,7 +12,7 @@ class _Tabs extends StatelessWidget {
       key: LaunchpadRiskAnalyticsPage.tabsKey,
       color: AppColors.surface,
       child: Padding(
-        padding: AppSpacing.launchpadHorizontalContentPadding,
+        padding: LaunchpadSpacingTokens.launchpadHorizontalContentPadding,
         child: VitTabBar(
           tabs: const [
             VitTabItem(key: 'overview', label: 'Tong quan'),
@@ -41,7 +41,7 @@ class _OverallRiskCard extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -63,13 +63,15 @@ class _OverallRiskCard extends StatelessWidget {
                       '${project.score.overall}/100',
                       style: AppTextStyles.amountLg,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     _RiskPill(level: project.level),
                   ],
                 ),
               ),
               SizedBox.square(
-                dimension: AppSpacing.launchpadBox60,
+                dimension: LaunchpadSpacingTokens.launchpadBox60,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: color.withValues(alpha: .12),
@@ -81,7 +83,7 @@ class _OverallRiskCard extends StatelessWidget {
                     child: Icon(
                       Icons.shield_outlined,
                       color: color,
-                      size: AppSpacing.launchpadIconHuge,
+                      size: LaunchpadSpacingTokens.launchpadIconHuge,
                     ),
                   ),
                 ),
@@ -110,7 +112,7 @@ class _RiskBreakdownCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadRiskAnalyticsPage.breakdownKey,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,7 +125,9 @@ class _RiskBreakdownCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.launchpadBox150 + AppSpacing.launchpadBox64,
+            height:
+                LaunchpadSpacingTokens.launchpadBox150 +
+                LaunchpadSpacingTokens.launchpadBox64,
             child: CustomPaint(
               painter: _RadarChartPainter(metrics),
               child: Stack(
@@ -181,10 +185,10 @@ class _QuickChecksSection extends StatelessWidget {
         accentColor: AppColors.primary,
         children: [
           GridView.count(
-            crossAxisCount: AppSpacing.launchpadGridColumns,
+            crossAxisCount: LaunchpadSpacingTokens.launchpadGridColumns,
             mainAxisSpacing: AppSpacing.x3,
             crossAxisSpacing: AppSpacing.x3,
-            childAspectRatio: AppSpacing.launchpadGridAspectWide,
+            childAspectRatio: LaunchpadSpacingTokens.launchpadGridAspectWide,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: AppSpacing.zeroInsets,
@@ -227,7 +231,7 @@ class _QuickCheckCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -236,7 +240,7 @@ class _QuickCheckCard extends StatelessWidget {
                 Icon(
                   check.icon,
                   color: color,
-                  size: AppSpacing.launchpadIconXl,
+                  size: LaunchpadSpacingTokens.launchpadIconXl,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Icon(
@@ -244,7 +248,7 @@ class _QuickCheckCard extends StatelessWidget {
                       ? Icons.check_circle_outline_rounded
                       : Icons.cancel_outlined,
                   color: color,
-                  size: AppSpacing.launchpadIconLg,
+                  size: LaunchpadSpacingTokens.launchpadIconLg,
                 ),
               ],
             ),
@@ -296,11 +300,15 @@ class _SignalSection extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: AppSpacing.launchpadPaddingX3,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(icon, color: accent, size: AppSpacing.launchpadIconXl),
+                    Icon(
+                      icon,
+                      color: accent,
+                      size: LaunchpadSpacingTokens.launchpadIconXl,
+                    ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
                       child: Text(

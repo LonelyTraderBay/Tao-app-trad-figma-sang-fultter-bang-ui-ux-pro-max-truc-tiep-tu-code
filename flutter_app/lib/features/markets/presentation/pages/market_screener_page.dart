@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 part '../widgets/market_screener_filters.dart';
 part '../widgets/market_screener_results.dart';
 part '../widgets/market_screener_row_common.dart';
@@ -208,7 +209,7 @@ class _MarketScreenerPageState extends ConsumerState<MarketScreenerPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketScreenerPage.contentKey,
-                    padding: AppSpacing.marketScreenerScrollPadding(
+                    padding: MarketsSpacingTokens.marketScreenerScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(

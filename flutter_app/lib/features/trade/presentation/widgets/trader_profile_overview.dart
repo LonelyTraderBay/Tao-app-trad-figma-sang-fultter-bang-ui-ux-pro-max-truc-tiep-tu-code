@@ -42,7 +42,8 @@ class _OverviewTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -211,7 +212,7 @@ class _DetailRow extends StatelessWidget {
         Icon(
           item.icon,
           color: AppColors.text3,
-          size: AppSpacing.traderProfileDetailIcon,
+          size: TradeSpacingTokens.traderProfileDetailIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(

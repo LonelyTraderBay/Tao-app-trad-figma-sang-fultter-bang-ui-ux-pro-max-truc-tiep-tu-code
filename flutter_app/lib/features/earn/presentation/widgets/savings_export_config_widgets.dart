@@ -11,7 +11,7 @@ class _ExportHero extends StatelessWidget {
       key: SavingsExportPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: EarnSpacingTokens.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -114,7 +114,7 @@ class _HeroPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -226,7 +226,7 @@ class _ReportTypeCard extends StatelessWidget {
       radius: VitCardRadius.large,
       borderColor: selected ? AppModuleAccents.earn : AppColors.cardBorder,
       onTap: onTap,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           _RoundIcon(icon: _iconFor(report.iconKey), color: color),
@@ -249,7 +249,7 @@ class _ReportTypeCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.earnExportDescriptionLineHeight,
+                    height: EarnSpacingTokens.earnExportDescriptionLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),

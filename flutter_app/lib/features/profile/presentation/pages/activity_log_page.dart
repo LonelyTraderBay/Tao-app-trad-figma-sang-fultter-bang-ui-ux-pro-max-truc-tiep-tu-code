@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/activity_log_page_sections.dart';
 part '../widgets/activity_log_page_common.dart';
@@ -79,7 +80,9 @@ class _ActivityLogPageState extends ConsumerState<ActivityLogPage> {
       body: SingleChildScrollView(
         key: ActivityLogPage.contentKey,
         physics: const ClampingScrollPhysics(),
-        padding: AppSpacing.profileActivityScrollPadding(scrollClearance),
+        padding: ProfileSpacingTokens.profileActivityScrollPadding(
+          scrollClearance,
+        ),
         child: VitPageContent(
           rhythm: VitPageRhythm.standard,
           padding: VitContentPadding.none,

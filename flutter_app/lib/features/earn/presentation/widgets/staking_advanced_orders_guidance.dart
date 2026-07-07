@@ -14,7 +14,7 @@ class _HowItWorks extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -49,7 +49,7 @@ class _RiskDisclosure extends StatelessWidget {
       key: StakingAdvancedOrdersPage.riskKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.sell20,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

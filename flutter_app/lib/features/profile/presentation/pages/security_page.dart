@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/security_page_sections.dart';
 part '../widgets/security_page_common.dart';
@@ -111,7 +112,7 @@ class _SecurityPageState extends ConsumerState<SecurityPage> {
       body: SingleChildScrollView(
         key: SecurityPage.contentKey,
         physics: const ClampingScrollPhysics(),
-        padding: AppSpacing.securityScrollPadding(scrollClearance),
+        padding: ProfileSpacingTokens.securityScrollPadding(scrollClearance),
         child: VitPageContent(
           rhythm: VitPageRhythm.standard,
           padding: VitContentPadding.none,

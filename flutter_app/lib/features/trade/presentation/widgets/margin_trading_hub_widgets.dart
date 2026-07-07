@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class MarginHubPhaseBadge extends StatelessWidget {
   const MarginHubPhaseBadge({
@@ -29,7 +29,7 @@ class MarginHubComplianceInfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       clip: true,
-      padding: AppSpacing.marginTradingHubComplianceInfoPadding,
+      padding: TradeSpacingTokens.marginTradingHubComplianceInfoPadding,
       background: ColoredBox(color: AppColors.accent.withValues(alpha: .10)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,9 +37,11 @@ class MarginHubComplianceInfoBanner extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: AppColors.accent,
-            size: AppSpacing.marginTradingHubComplianceIcon,
+            size: TradeSpacingTokens.marginTradingHubComplianceIcon,
           ),
-          const SizedBox(width: AppSpacing.marginTradingHubComplianceGap),
+          const SizedBox(
+            width: TradeSpacingTokens.marginTradingHubComplianceGap,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,17 +51,17 @@ class MarginHubComplianceInfoBanner extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.accent,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marginTradingHubLineHeightTight,
+                    height: TradeSpacingTokens.marginTradingHubLineHeightTight,
                   ),
                 ),
                 const SizedBox(
-                  height: AppSpacing.marginTradingHubComplianceBodyGap,
+                  height: TradeSpacingTokens.marginTradingHubComplianceBodyGap,
                 ),
                 Text(
                   'Appropriateness checks, leverage limits, liquidation risk, and cost disclosure stay visible before margin actions.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.marginTradingHubLineHeightBody,
+                    height: TradeSpacingTokens.marginTradingHubLineHeightBody,
                   ),
                 ),
               ],

@@ -27,7 +27,7 @@ class _StepDetail extends StatelessWidget {
           step.description,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.earnGuideParagraphLineHeight,
+            height: EarnSpacingTokens.earnGuideParagraphLineHeight,
           ),
         ),
       ],
@@ -44,7 +44,7 @@ class _TipPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,10 +71,10 @@ class _TipPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: AppSpacing.earnWithdrawalBulletPadding,
+                  padding: EarnSpacingTokens.earnWithdrawalBulletPadding,
                   child: SizedBox(
-                    width: AppSpacing.earnGuideBulletSize,
-                    height: AppSpacing.earnGuideBulletSize,
+                    width: EarnSpacingTokens.earnGuideBulletSize,
+                    height: EarnSpacingTokens.earnGuideBulletSize,
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
                         color: AppColors.text3,
@@ -89,13 +89,14 @@ class _TipPanel extends StatelessWidget {
                     tip,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.earnGuideTipLineHeight,
+                      height: EarnSpacingTokens.earnGuideTipLineHeight,
                     ),
                   ),
                 ),
               ],
             ),
-            if (tip != tips.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (tip != tips.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -117,13 +118,13 @@ class _DifficultyPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           difficulty.name,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.earnGuidePillLineHeight,
+            height: EarnSpacingTokens.earnGuidePillLineHeight,
           ),
         ),
       ),

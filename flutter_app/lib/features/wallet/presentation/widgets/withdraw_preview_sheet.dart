@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WithdrawPreviewSheet extends StatelessWidget {
   const WithdrawPreviewSheet({required this.preview, super.key});
@@ -51,7 +52,7 @@ class WithdrawPreviewSheet extends StatelessWidget {
             value: preview.maskedAddress,
             density: VitDensity.compact,
           ),
-          const SizedBox(height: AppSpacing.transferInfoGap),
+          const SizedBox(height: WalletSpacingTokens.transferInfoGap),
           VitCard(
             variant: VitCardVariant.inner,
             density: VitDensity.compact,
@@ -61,7 +62,7 @@ class WithdrawPreviewSheet extends StatelessWidget {
               style: AppTextStyles.caption.copyWith(color: withdrawAmber),
             ),
           ),
-          const SizedBox(height: AppSpacing.transferInfoGap),
+          const SizedBox(height: WalletSpacingTokens.transferInfoGap),
           Row(
             children: [
               Expanded(

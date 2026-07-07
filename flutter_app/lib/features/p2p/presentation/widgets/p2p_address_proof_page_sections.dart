@@ -11,7 +11,7 @@ class _AddressHero extends StatelessWidget {
       key: P2PAddressProofPage.heroKey,
       radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pAddressProofCardPadding,
+      padding: P2PSpacingTokens.p2pAddressProofCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,7 +22,7 @@ class _AddressHero extends StatelessWidget {
               side: const BorderSide(color: AppColors.primary20),
             ),
             child: const Padding(
-              padding: AppSpacing.p2pAddressProofHeroIconPadding,
+              padding: P2PSpacingTokens.p2pAddressProofHeroIconPadding,
               child: Icon(
                 Icons.location_on_outlined,
                 color: AppModuleAccents.p2p,
@@ -48,7 +48,7 @@ class _AddressHero extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pAddressProofReadableLineHeight,
+                    height: P2PSpacingTokens.p2pAddressProofReadableLineHeight,
                   ),
                 ),
               ],
@@ -70,7 +70,7 @@ class _RequirementsCard extends StatelessWidget {
     return VitCard(
       key: P2PAddressProofPage.requirementsKey,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pAddressProofCardPadding,
+      padding: P2PSpacingTokens.p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -117,7 +117,7 @@ class _DocumentTypePicker extends StatelessWidget {
           VitCard(
             key: P2PAddressProofPage.documentTypeKey(document.id),
             radius: VitCardRadius.large,
-            padding: AppSpacing.p2pAddressProofCardPadding,
+            padding: P2PSpacingTokens.p2pAddressProofCardPadding,
             onTap: () => onSelected(document),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -129,7 +129,8 @@ class _DocumentTypePicker extends StatelessWidget {
                       color: AppColors.primary12,
                       borderRadius: AppRadii.smRadius,
                       child: Padding(
-                        padding: AppSpacing.p2pAddressProofExampleTilePadding,
+                        padding:
+                            P2PSpacingTokens.p2pAddressProofExampleTilePadding,
                         child: Icon(
                           _documentIcon(document.iconKey),
                           color: AppModuleAccents.p2p,
@@ -167,7 +168,8 @@ class _DocumentTypePicker extends StatelessWidget {
                 ),
                 const SizedBox(height: _p2pAddressProofSectionGap),
                 Padding(
-                  padding: AppSpacing.p2pAddressProofDocumentExamplePadding,
+                  padding:
+                      P2PSpacingTokens.p2pAddressProofDocumentExamplePadding,
                   child: Wrap(
                     spacing: AppSpacing.x2,
                     runSpacing: AppSpacing.x2,
@@ -177,7 +179,8 @@ class _DocumentTypePicker extends StatelessWidget {
                           color: AppColors.surface2,
                           borderRadius: AppRadii.cardLargeRadius,
                           child: Padding(
-                            padding: AppSpacing.p2pAddressProofExamplePadding,
+                            padding:
+                                P2PSpacingTokens.p2pAddressProofExamplePadding,
                             child: Text(
                               example,
                               style: AppTextStyles.caption.copyWith(
@@ -235,7 +238,7 @@ class _UploadSection extends StatelessWidget {
               variant: VitCtaButtonVariant.ghost,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pAddressProofActionHorizontalPadding,
+              padding: P2PSpacingTokens.p2pAddressProofActionHorizontalPadding,
               child: const Text('Đổi loại tài liệu'),
             ),
           ],
@@ -246,7 +249,7 @@ class _UploadSection extends StatelessWidget {
           radius: VitCardRadius.large,
           variant: uploaded ? VitCardVariant.inner : VitCardVariant.ghost,
           borderColor: uploaded ? AppColors.buy20 : AppColors.borderSolid,
-          padding: AppSpacing.p2pAddressProofCardPadding,
+          padding: P2PSpacingTokens.p2pAddressProofCardPadding,
           onTap: uploaded ? null : onUpload,
           child: uploaded
               ? Row(
@@ -255,7 +258,8 @@ class _UploadSection extends StatelessWidget {
                       color: AppColors.buy10,
                       borderRadius: AppRadii.lgRadius,
                       child: const Padding(
-                        padding: AppSpacing.p2pAddressProofUploadIconPadding,
+                        padding:
+                            P2PSpacingTokens.p2pAddressProofUploadIconPadding,
                         child: Icon(
                           Icons.check_circle_outline_rounded,
                           color: AppColors.buy,
@@ -292,7 +296,8 @@ class _UploadSection extends StatelessWidget {
                   ],
                 )
               : Padding(
-                  padding: AppSpacing.p2pAddressProofUploadVerticalPadding,
+                  padding:
+                      P2PSpacingTokens.p2pAddressProofUploadVerticalPadding,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -300,7 +305,8 @@ class _UploadSection extends StatelessWidget {
                         color: AppColors.primary12,
                         shape: const CircleBorder(),
                         child: const Padding(
-                          padding: AppSpacing.p2pAddressProofUploadIconPadding,
+                          padding:
+                              P2PSpacingTokens.p2pAddressProofUploadIconPadding,
                           child: Icon(
                             Icons.cloud_upload_outlined,
                             color: AppModuleAccents.p2p,
@@ -345,7 +351,7 @@ class _ExtractedDataCard extends StatelessWidget {
       radius: VitCardRadius.standard,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pAddressProofCardPadding,
+      padding: P2PSpacingTokens.p2pAddressProofCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

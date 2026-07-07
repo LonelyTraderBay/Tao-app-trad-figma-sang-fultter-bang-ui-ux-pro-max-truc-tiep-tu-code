@@ -21,14 +21,14 @@ class _TextIconButton extends StatelessWidget {
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
       child: Padding(
-        padding: AppSpacing.arenaPresetPillPadding,
+        padding: ArenaSpacingTokens.arenaPresetPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               icon,
               color: color,
-              size: AppSpacing.myArenaTextIconButtonIcon,
+              size: ArenaSpacingTokens.myArenaTextIconButtonIcon,
             ),
             const SizedBox(width: AppSpacing.x1),
             Text(

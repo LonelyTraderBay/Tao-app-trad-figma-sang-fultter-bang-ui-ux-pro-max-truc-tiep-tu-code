@@ -30,7 +30,7 @@ class _ExampleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(example.tone);
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +64,7 @@ class _ExampleCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final reason in example.reasons)
             Padding(
-              padding: AppSpacing.arenaGuideReasonPadding,
+              padding: ArenaSpacingTokens.arenaGuideReasonPadding,
               child: Row(
                 children: [
                   Icon(
@@ -72,7 +72,7 @@ class _ExampleCard extends StatelessWidget {
                         ? Icons.check_circle_outline
                         : Icons.warning_amber_outlined,
                     color: color,
-                    size: AppSpacing.arenaGuideReasonIcon,
+                    size: ArenaSpacingTokens.arenaGuideReasonIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -115,7 +115,7 @@ class _ConceptSection extends StatelessWidget {
                     color: AppColors.divider,
                   ),
                 Padding(
-                  padding: AppSpacing.arenaPaddingX3,
+                  padding: ArenaSpacingTokens.arenaPaddingX3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -154,14 +154,14 @@ class _TipsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: _arenaAccent,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.lightbulb_outline,
             color: _arenaAccent,
-            size: AppSpacing.arenaGuideTipsHeaderIcon,
+            size: ArenaSpacingTokens.arenaGuideTipsHeaderIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -224,7 +224,7 @@ class _TipsList extends StatelessWidget {
       children: [
         for (var index = 0; index < tips.length; index++)
           Padding(
-            padding: AppSpacing.arenaGuideAccordionListPadding(
+            padding: ArenaSpacingTokens.arenaGuideAccordionListPadding(
               index == tips.length - 1,
             ),
             child: _AccordionCard(
@@ -260,7 +260,7 @@ class _ShowMoreTipsButton extends StatelessWidget {
         height: AppSpacing.buttonCompact,
         leading: const Icon(
           Icons.expand_more,
-          size: AppSpacing.arenaGuideShowMoreIcon,
+          size: ArenaSpacingTokens.arenaGuideShowMoreIcon,
         ),
         child: Text('Xem thêm $remaining mẹo'),
       ),
@@ -277,7 +277,7 @@ class _ChecklistCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.buy20,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -286,7 +286,7 @@ class _ChecklistCard extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline,
                 color: AppColors.buy,
-                size: AppSpacing.arenaGuideChecklistIcon,
+                size: ArenaSpacingTokens.arenaGuideChecklistIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -301,13 +301,13 @@ class _ChecklistCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (var index = 0; index < items.length; index++)
             Padding(
-              padding: AppSpacing.arenaGuideChecklistItemPadding,
+              padding: ArenaSpacingTokens.arenaGuideChecklistItemPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: AppSpacing.arenaGuideChecklistBox,
-                    height: AppSpacing.arenaGuideChecklistBox,
+                    width: ArenaSpacingTokens.arenaGuideChecklistBox,
+                    height: ArenaSpacingTokens.arenaGuideChecklistBox,
                     child: DecoratedBox(
                       decoration: const ShapeDecoration(
                         shape: RoundedRectangleBorder(
@@ -349,14 +349,14 @@ class _SafetyHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: AppColors.buy,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.buy,
-            size: AppSpacing.arenaGuideSafetyHeroIcon,
+            size: ArenaSpacingTokens.arenaGuideSafetyHeroIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -389,12 +389,12 @@ class _PointsOnlyBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.accent20,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.arenaGuideFeatureIconBox,
-            height: AppSpacing.arenaGuideFeatureIconBox,
+            width: ArenaSpacingTokens.arenaGuideFeatureIconBox,
+            height: ArenaSpacingTokens.arenaGuideFeatureIconBox,
             child: const DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.accent12,
@@ -404,7 +404,7 @@ class _PointsOnlyBanner extends StatelessWidget {
                 child: Icon(
                   Icons.info_outline,
                   color: AppColors.accent,
-                  size: AppSpacing.arenaGuideFeatureGlyph,
+                  size: ArenaSpacingTokens.arenaGuideFeatureGlyph,
                 ),
               ),
             ),
@@ -445,7 +445,7 @@ class _SafetyTipList extends StatelessWidget {
       children: [
         for (var index = 0; index < items.length; index++)
           Padding(
-            padding: AppSpacing.arenaGuideSafetyTipPadding(
+            padding: ArenaSpacingTokens.arenaGuideSafetyTipPadding(
               index == items.length - 1,
             ),
             child: _SafetyTipCard(item: items[index]),
@@ -464,13 +464,13 @@ class _SafetyTipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(item.tone);
     return VitCard(
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.arenaGuideSafetyTipIconBox,
-            height: AppSpacing.arenaGuideSafetyTipIconBox,
+            width: ArenaSpacingTokens.arenaGuideSafetyTipIconBox,
+            height: ArenaSpacingTokens.arenaGuideSafetyTipIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .12),
@@ -482,7 +482,7 @@ class _SafetyTipCard extends StatelessWidget {
                 child: Icon(
                   _iconFor(item.iconKey),
                   color: color,
-                  size: AppSpacing.arenaGuideSafetyTipGlyph,
+                  size: ArenaSpacingTokens.arenaGuideSafetyTipGlyph,
                 ),
               ),
             ),

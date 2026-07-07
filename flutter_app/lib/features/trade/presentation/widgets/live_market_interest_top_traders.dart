@@ -18,11 +18,11 @@ class _TopTradersCard extends StatelessWidget {
             title: 'Top Traders',
             badge: 'Long',
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           LiveMarketCard(
             variant: VitCardVariant.ghost,
             borderColor: liveMarketGreen.withValues(alpha: .2),
-            height: AppSpacing.liveMarketTopTraderHighlightHeight,
+            height: MarketsSpacingTokens.liveMarketTopTraderHighlightHeight,
             padding: AppSpacing.cardPadding,
             background: ColoredBox(
               color: liveMarketGreen.withValues(alpha: .09),
@@ -49,13 +49,13 @@ class _TopTradersCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           LiveMarketRatioBar(longPct: data.longPct),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           LiveMarketCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.transparent,
-            padding: AppSpacing.liveMarketRowPadding,
+            padding: MarketsSpacingTokens.liveMarketRowPadding,
             child: Row(
               children: [
                 Expanded(
@@ -79,13 +79,13 @@ class _TopTradersCard extends StatelessWidget {
                     color: (shortShift ? liveMarketRed : liveMarketGreen)
                         .withValues(alpha: .12),
                     child: SizedBox.square(
-                      dimension: AppSpacing.liveMarketTrendActionBox,
+                      dimension: MarketsSpacingTokens.liveMarketTrendActionBox,
                       child: Icon(
                         shortShift
                             ? Icons.trending_down_rounded
                             : Icons.trending_up_rounded,
                         color: shortShift ? liveMarketRed : liveMarketGreen,
-                        size: AppSpacing.liveMarketTrendActionIcon,
+                        size: MarketsSpacingTokens.liveMarketTrendActionIcon,
                       ),
                     ),
                   ),
@@ -93,7 +93,7 @@ class _TopTradersCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           LiveMarketInfoStrip(
             bg: liveMarketAmber.withValues(alpha: .06),
             color: liveMarketAmber,

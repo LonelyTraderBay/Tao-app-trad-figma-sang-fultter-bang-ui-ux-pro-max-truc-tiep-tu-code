@@ -12,7 +12,7 @@ class _SignalBadge extends StatelessWidget {
       color: color.withValues(alpha: .15),
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.predictionAdvancedSignalBadgePadding,
+        padding: PredictionsSpacingTokens.predictionAdvancedSignalBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -39,10 +39,12 @@ class _LegendItem extends StatelessWidget {
           color: color,
           borderRadius: AppRadii.hairlineRadius,
           child: const SizedBox.square(
-            dimension: AppSpacing.predictionAdvancedLegendSwatch,
+            dimension: PredictionsSpacingTokens.predictionAdvancedLegendSwatch,
           ),
         ),
-        const SizedBox(width: AppSpacing.predictionAdvancedLegendGap),
+        const SizedBox(
+          width: PredictionsSpacingTokens.predictionAdvancedLegendGap,
+        ),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),

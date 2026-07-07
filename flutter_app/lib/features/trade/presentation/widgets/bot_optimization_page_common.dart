@@ -10,14 +10,14 @@ class _StartFooter extends StatelessWidget {
     return ColoredBox(
       color: _optimizationBackground.withValues(alpha: .96),
       child: Padding(
-        padding: AppSpacing.tradeBotFooterPadding.copyWith(
-          top: AppSpacing.tradeBotSmallGap,
-          bottom: AppSpacing.tradeBotSmallGap,
+        padding: TradeSpacingTokens.tradeBotFooterPadding.copyWith(
+          top: TradeSpacingTokens.tradeBotSmallGap,
+          bottom: TradeSpacingTokens.tradeBotSmallGap,
         ),
         child: VitCtaButton(
           key: BotOptimizationPage.startKey,
           onPressed: onStart,
-          height: AppSpacing.tradeBotSheetActionHeight,
+          height: TradeSpacingTokens.tradeBotSheetActionHeight,
           leading: const Icon(Icons.play_arrow_outlined),
           child: const Text('Start Optimization'),
         ),

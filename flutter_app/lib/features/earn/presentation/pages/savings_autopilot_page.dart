@@ -96,7 +96,7 @@ class _SavingsAutoPilotPageState extends ConsumerState<SavingsAutoPilotPage> {
                     bottom: scrollTailReserve,
                   ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [

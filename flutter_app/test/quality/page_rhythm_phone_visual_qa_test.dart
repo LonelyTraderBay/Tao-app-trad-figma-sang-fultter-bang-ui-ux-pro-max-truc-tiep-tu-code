@@ -60,7 +60,9 @@ void main() {
         finally {
         FlutterError.onError = previousOnError;
        },
-    );
+    ) {
+     {}
+  }
   }
 }
 

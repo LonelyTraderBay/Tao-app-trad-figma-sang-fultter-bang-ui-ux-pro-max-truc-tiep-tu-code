@@ -167,7 +167,7 @@ class _PortfolioTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDepthTabsHeight,
+        height: MarketsSpacingTokens.marketDepthTabsHeight,
         child: Column(
           children: [
             Expanded(

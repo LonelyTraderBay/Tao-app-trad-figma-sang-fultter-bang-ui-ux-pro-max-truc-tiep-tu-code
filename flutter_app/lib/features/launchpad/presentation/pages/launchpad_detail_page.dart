@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadDetailPage extends ConsumerWidget {
   const LaunchpadDetailPage({
@@ -63,7 +64,8 @@ class LaunchpadDetailPage extends ConsumerWidget {
           child: SingleChildScrollView(
             key: contentKey,
             physics: const ClampingScrollPhysics(),
-            child: VitPageContent(rhythm: VitPageRhythm.standard, 
+            child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.defaultPadding,
               children: [
                 if (snapshot.project == null)
@@ -100,7 +102,7 @@ class _LaunchpadDetailError extends StatelessWidget {
       ),
       messageStyle: AppTextStyles.caption.copyWith(
         color: AppColors.text3,
-        height: AppSpacing.launchpadLineHeightLong,
+        height: LaunchpadSpacingTokens.launchpadLineHeightLong,
       ),
     );
   }
@@ -123,7 +125,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.launchpadPaddingX5,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX5,
           borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
           child: Row(
             children: [
@@ -149,7 +151,9 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     Text(
                       project.name,
                       style: AppTextStyles.baseMedium.copyWith(
@@ -198,7 +202,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.large,
-          padding: AppSpacing.launchpadPaddingX5,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -206,7 +210,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                 project.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.launchpadLineHeightLong,
+                  height: LaunchpadSpacingTokens.launchpadLineHeightLong,
                 ),
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
@@ -256,7 +260,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.large,
-          padding: AppSpacing.launchpadPaddingX5,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX5,
           borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -270,7 +274,7 @@ class _LaunchpadDetailSummary extends StatelessWidget {
                 'Chỉ mở staking sau khi đã xem điều kiện và thời hạn khóa.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.launchpadLineHeightLong,
+                  height: LaunchpadSpacingTokens.launchpadLineHeightLong,
                 ),
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),

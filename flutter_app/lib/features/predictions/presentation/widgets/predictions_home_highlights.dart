@@ -133,13 +133,13 @@ class _BreakingMoversStrip extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadii.inputRadius,
         child: Padding(
-          padding: AppSpacing.predictionHomeCategoryPadding,
+          padding: PredictionsSpacingTokens.predictionHomeCategoryPadding,
           child: Row(
             children: [
               const Icon(
                 Icons.bolt_outlined,
                 color: AppColors.warn,
-                size: AppSpacing.predictionHomeHighlightIcon,
+                size: PredictionsSpacingTokens.predictionHomeHighlightIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -170,7 +170,7 @@ class _BreakingMoversStrip extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.predictionHomeHighlightCtaIcon,
+                size: PredictionsSpacingTokens.predictionHomeHighlightCtaIcon,
               ),
             ],
           ),
@@ -197,7 +197,7 @@ class _ArenaBridgeCard extends StatelessWidget {
             icon: Icons.sports_esports_outlined,
             color: AppColors.text2,
             background: AppColors.surface2,
-            iconSize: AppSpacing.predictionHomeHighlightIcon,
+            iconSize: PredictionsSpacingTokens.predictionHomeHighlightIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -235,7 +235,7 @@ class _ArenaBridgeCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.predictionHomeHighlightCtaIcon,
+            size: PredictionsSpacingTokens.predictionHomeHighlightCtaIcon,
           ),
         ],
       ),

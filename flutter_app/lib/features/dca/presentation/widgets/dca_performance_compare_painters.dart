@@ -208,7 +208,7 @@ void _drawRadarLabel(
     ),
     maxLines: 1,
     textDirection: TextDirection.ltr,
-  )..layout(maxWidth: AppSpacing.dcaPerformanceCompareRadarLabelMaxWidth);
+  )..layout(maxWidth: DcaSpacingTokens.dcaPerformanceCompareRadarLabelMaxWidth);
   final offset = Offset(
     center.dx + math.cos(angle) * radius - textPainter.width / 2,
     center.dy + math.sin(angle) * radius - textPainter.height / 2,

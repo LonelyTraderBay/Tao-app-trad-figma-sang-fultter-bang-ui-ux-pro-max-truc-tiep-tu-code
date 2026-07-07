@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketDerivativesLiquidationSummary extends StatelessWidget {
   const MarketDerivativesLiquidationSummary({super.key, required this.stats});
@@ -18,7 +18,7 @@ class MarketDerivativesLiquidationSummary extends StatelessWidget {
         stats.longLiquidations24h / stats.totalLiquidations24h * 100;
     return VitCard(
       width: double.infinity,
-      padding: AppSpacing.marketDerivativesLiquidationSummaryPadding,
+      padding: MarketsSpacingTokens.marketDerivativesLiquidationSummaryPadding,
       borderColor: AppColors.sell20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +27,9 @@ class MarketDerivativesLiquidationSummary extends StatelessWidget {
             'Tổng thanh lý 24h',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.marketDerivativesSummaryLabelGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketDerivativesSummaryLabelGap,
+          ),
           Text(
             marketDerivativesFormatCompact(
               stats.totalLiquidations24h,
@@ -35,7 +37,9 @@ class MarketDerivativesLiquidationSummary extends StatelessWidget {
             ),
             style: AppTextStyles.amountMd,
           ),
-          const SizedBox(height: AppSpacing.marketDerivativesSummarySplitGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketDerivativesSummarySplitGap,
+          ),
           MarketDerivativesSplitBar(
             leftPercent: longPercent,
             leftLabel:
@@ -59,14 +63,14 @@ class MarketDerivativesLiquidationPairCard extends StatelessWidget {
     final longPercent =
         pair.longLiquidations24h / pair.totalLiquidations24h * 100;
     return VitCard(
-      padding: AppSpacing.marketDerivativesPairCardPadding,
+      padding: MarketsSpacingTokens.marketDerivativesPairCardPadding,
       child: Row(
         children: [
           MarketDerivativesPairLogo(
             pair: pair,
-            size: AppSpacing.marketDerivativesPairAvatarSm,
+            size: MarketsSpacingTokens.marketDerivativesPairAvatarSm,
           ),
-          const SizedBox(width: AppSpacing.marketDerivativesPairGap),
+          const SizedBox(width: MarketsSpacingTokens.marketDerivativesPairGap),
           Expanded(
             child: Column(
               children: [
@@ -93,7 +97,8 @@ class MarketDerivativesLiquidationPairCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: AppSpacing.marketDerivativesLiquidationRowGap,
+                  height:
+                      MarketsSpacingTokens.marketDerivativesLiquidationRowGap,
                 ),
                 MarketDerivativesSplitBar(
                   leftPercent: longPercent,
@@ -119,16 +124,18 @@ class MarketDerivativesRiskWarningCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: AppSpacing.marketDerivativesRiskPadding,
+      padding: MarketsSpacingTokens.marketDerivativesRiskPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: AppSpacing.marketDerivativesRiskIcon,
+            size: MarketsSpacingTokens.marketDerivativesRiskIcon,
           ),
-          const SizedBox(width: AppSpacing.marketDerivativesRiskIconGap),
+          const SizedBox(
+            width: MarketsSpacingTokens.marketDerivativesRiskIconGap,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,13 +148,14 @@ class MarketDerivativesRiskWarningCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: AppSpacing.marketDerivativesRiskTitleGap,
+                  height: MarketsSpacingTokens.marketDerivativesRiskTitleGap,
                 ),
                 Text(
                   'Giao dịch phái sinh có rủi ro cao. Đòn bẩy khuếch đại cả lãi lẫn lỗ.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.marketDerivativesRiskLineHeight,
+                    height:
+                        MarketsSpacingTokens.marketDerivativesRiskLineHeight,
                   ),
                 ),
               ],

@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 enum VitSectionHeaderVariant { plain, accentBar }
 
@@ -74,7 +75,7 @@ class VitSectionHeader extends StatelessWidget {
         ],
         if (icon != null) ...[
           Icon(icon, color: iconColor ?? accentColor, size: AppSpacing.iconMd),
-          const SizedBox(width: AppSpacing.homeSectionHeaderIconGap),
+          const SizedBox(width: HomeSpacingTokens.homeSectionHeaderIconGap),
         ],
         Expanded(
           child: Semantics(
@@ -90,7 +91,8 @@ class VitSectionHeader extends StatelessWidget {
                       .copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.homeSectionHeaderTitleLineHeight,
+                        height:
+                            HomeSpacingTokens.homeSectionHeaderTitleLineHeight,
                       ),
             ),
           ),
@@ -125,7 +127,7 @@ class VitSectionHeader extends StatelessWidget {
                         Icon(
                           Icons.chevron_right_rounded,
                           color: accentColor,
-                          size: AppSpacing.homeSectionHeaderChevronSize,
+                          size: HomeSpacingTokens.homeSectionHeaderChevronSize,
                         ),
                       ],
                     ],

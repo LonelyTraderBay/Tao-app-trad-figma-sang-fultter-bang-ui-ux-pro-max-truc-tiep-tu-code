@@ -31,10 +31,11 @@ class _CategorySection extends StatelessWidget {
           shrinkWrap: true,
           itemCount: categories.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.supportCategoryGridColumns,
+            crossAxisCount: SupportSpacingTokens.supportCategoryGridColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: AppSpacing.supportCategoryGridAspectRatio,
+            childAspectRatio:
+                SupportSpacingTokens.supportCategoryGridAspectRatio,
           ),
           itemBuilder: (context, index) {
             final category = categories[index];
@@ -68,7 +69,7 @@ class _CategoryTile extends StatelessWidget {
       key: HelpCenterPage.categoryKey(category.id),
       radius: VitCardRadius.standard,
       borderColor: selected ? AppColors.primary40 : null,
-      padding: AppSpacing.supportCardPadding,
+      padding: SupportSpacingTokens.supportCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +78,7 @@ class _CategoryTile extends StatelessWidget {
           Icon(
             _categoryIcon(category.id),
             color: iconColor,
-            size: AppSpacing.supportCategoryIcon,
+            size: SupportSpacingTokens.supportCategoryIcon,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
@@ -141,7 +142,8 @@ class _ArticleSection extends StatelessWidget {
           Column(
             children: [
               for (var i = 0; i < articles.length; i++) ...[
-                if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                if (i > 0)
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _ArticleTile(
                   article: articles[i],
                   category: categories.firstWhere(
@@ -177,7 +179,7 @@ class _ArticleTile extends StatelessWidget {
     return VitCard(
       key: HelpCenterPage.articleKey(article.id),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.supportQuickCardPadding,
+      padding: SupportSpacingTokens.supportQuickCardPadding,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +187,7 @@ class _ArticleTile extends StatelessWidget {
           Icon(
             _categoryIcon(category.id),
             color: iconColor,
-            size: AppSpacing.supportArticleIcon,
+            size: SupportSpacingTokens.supportArticleIcon,
           ),
           const SizedBox(width: AppSpacing.x4),
           Expanded(
@@ -223,7 +225,7 @@ class _ArticleTile extends StatelessWidget {
                     article.summary,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.supportLineHeightBody,
+                      height: SupportSpacingTokens.supportLineHeightBody,
                     ),
                   ),
                 ],

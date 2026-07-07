@@ -30,7 +30,7 @@ class _CalendarCard extends StatelessWidget {
     return VitCard(
       key: StakingEarningsCalendarPage.calendarCardKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         children: [
           Row(
@@ -83,7 +83,7 @@ class _CalendarCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           GridView.count(
-            crossAxisCount: AppSpacing.stakingEarningsCalendarColumns,
+            crossAxisCount: EarnSpacingTokens.stakingEarningsCalendarColumns,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: AppSpacing.x1,
@@ -180,7 +180,7 @@ class _DayCell extends StatelessWidget {
                   for (final event in events.take(3)) ...[
                     _EventDot(color: _eventColor(event.type)),
                     const SizedBox(
-                      width: AppSpacing.stakingEarningsEventDotGap,
+                      width: EarnSpacingTokens.stakingEarningsEventDotGap,
                     ),
                   ],
                 ],
@@ -201,7 +201,7 @@ class _LegendCard extends StatelessWidget {
     return VitCard(
       key: StakingEarningsCalendarPage.legendKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -247,7 +247,7 @@ class _LegendItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.stakingEarningsLegendWidth,
+      width: EarnSpacingTokens.stakingEarningsLegendWidth,
       child: Row(
         children: [
           _EventDot(color: color),

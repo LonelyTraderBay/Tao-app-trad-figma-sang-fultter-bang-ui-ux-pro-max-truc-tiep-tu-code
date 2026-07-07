@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketDepthTabs extends StatelessWidget {
   const MarketDepthTabs({
@@ -20,7 +21,7 @@ class MarketDepthTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDepthTabsHeight,
+        height: MarketsSpacingTokens.marketDepthTabsHeight,
         child: Column(
           children: [
             Expanded(

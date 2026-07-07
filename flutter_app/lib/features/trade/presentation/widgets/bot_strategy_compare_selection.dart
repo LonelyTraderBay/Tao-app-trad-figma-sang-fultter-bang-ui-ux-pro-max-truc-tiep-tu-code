@@ -14,10 +14,10 @@ class _StrategySelectionGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
       crossAxisSpacing: AppSpacing.x2,
       mainAxisSpacing: AppSpacing.x2,
-      childAspectRatio: AppSpacing.tradeBotStrategyGridAspectRatio,
+      childAspectRatio: TradeSpacingTokens.tradeBotStrategyGridAspectRatio,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: [

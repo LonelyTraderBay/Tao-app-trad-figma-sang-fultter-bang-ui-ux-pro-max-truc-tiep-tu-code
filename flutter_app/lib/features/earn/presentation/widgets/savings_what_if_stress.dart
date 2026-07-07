@@ -41,7 +41,7 @@ class _StressTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -50,7 +50,7 @@ class _StressTab extends StatelessWidget {
                   const Icon(
                     Icons.stacked_line_chart_rounded,
                     color: AppColors.primary,
-                    size: AppSpacing.savingsWhatIfInlineIcon,
+                    size: EarnSpacingTokens.savingsWhatIfInlineIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
@@ -78,7 +78,7 @@ class _StressTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           borderColor: scoreColor.withValues(alpha: .35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,7 @@ class _StressTab extends StatelessWidget {
                   Icon(
                     Icons.shield_outlined,
                     color: scoreColor,
-                    size: AppSpacing.savingsWhatIfInlineIcon,
+                    size: EarnSpacingTokens.savingsWhatIfInlineIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
@@ -114,7 +114,9 @@ class _StressTab extends StatelessWidget {
                               : 'Rủi ro cao',
                           style: _captionBold.copyWith(color: AppColors.text1),
                         ),
-                        const Padding(padding: AppSpacing.earnTopPaddingX1),
+                        const Padding(
+                          padding: EarnSpacingTokens.earnTopPaddingX1,
+                        ),
                         Text(
                           'Xấu nhất (${worst.scenario.label}): ${worst.result.differencePct.toStringAsFixed(1)}%. Tốt nhất (${best.scenario.label}): +${best.result.differencePct.toStringAsFixed(1)}%.',
                           style: AppTextStyles.caption.copyWith(

@@ -90,10 +90,7 @@ List<Widget> _profileReadySections({
       label: 'D\u1EF1 \u0111o\u00E1n & Th\u00E1ch \u0111\u1EA5u',
       accent: _profilePurple,
     ),
-    _PredictionCard(
-      prediction: snapshot.prediction,
-      onTap: onOpenPredictions,
-    ),
+    _PredictionCard(prediction: snapshot.prediction, onTap: onOpenPredictions),
     _ArenaCard(arena: snapshot.arena, onTap: onOpenArena),
     const _SectionLabel(
       label: 'S\u1EA2N PH\u1EA8M & H\u1ED6 TR\u1EE2',
@@ -117,10 +114,7 @@ List<Widget> _profileReadySections({
       )
     else
       for (final section in snapshot.sections) ...[
-        _SectionLabel(
-          label: section.label,
-          accent: Color(section.accentHex),
-        ),
+        _SectionLabel(label: section.label, accent: Color(section.accentHex)),
         _MenuSection(section: section),
       ],
     _ActivityButton(onTap: onOpenActivity),
@@ -170,11 +164,13 @@ class _ProfileProductHub extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final tileWidth =
-            (constraints.maxWidth - AppSpacing.profileProductGridGap) / 2;
+            (constraints.maxWidth -
+                ProfileSpacingTokens.profileProductGridGap) /
+            2;
         return Wrap(
           key: ProfilePage.productHubKey,
-          spacing: AppSpacing.profileProductGridGap,
-          runSpacing: AppSpacing.profileProductGridGap,
+          spacing: ProfileSpacingTokens.profileProductGridGap,
+          runSpacing: ProfileSpacingTokens.profileProductGridGap,
           children: [
             for (final shortcut in shortcuts)
               SizedBox(
@@ -204,19 +200,19 @@ class _ProfileProductTile extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.profileProductIconBox,
-            height: AppSpacing.profileProductIconBox,
+            width: ProfileSpacingTokens.profileProductIconBox,
+            height: ProfileSpacingTokens.profileProductIconBox,
             child: Material(
               color: accent.withValues(alpha: .12),
               shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
               child: Icon(
                 _iconFor(shortcut.iconKey),
                 color: accent,
-                size: AppSpacing.profileProductIcon,
+                size: ProfileSpacingTokens.profileProductIcon,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.profileProductGap),
+          const SizedBox(width: ProfileSpacingTokens.profileProductGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -265,58 +261,60 @@ class _MenuRow extends StatelessWidget {
             minHeight: VitDensity.standard.controlHeight,
           ),
           child: Padding(
-            padding: AppSpacing.profileMenuRowPadding,
+            padding: ProfileSpacingTokens.profileMenuRowPadding,
             child: Row(
               children: [
-              SizedBox(
-                width: AppSpacing.profileMenuIconBox,
-                height: AppSpacing.profileMenuIconBox,
-                child: Material(
-                  color: accent.withValues(alpha: .12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadii.cardRadius,
-                  ),
-                  child: Icon(
-                    _iconFor(item.iconKey),
-                    color: accent,
-                    size: AppSpacing.profileMenuIcon,
+                SizedBox(
+                  width: ProfileSpacingTokens.profileMenuIconBox,
+                  height: ProfileSpacingTokens.profileMenuIconBox,
+                  child: Material(
+                    color: accent.withValues(alpha: .12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadii.cardRadius,
+                    ),
+                    child: Icon(
+                      _iconFor(item.iconKey),
+                      color: accent,
+                      size: ProfileSpacingTokens.profileMenuIcon,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.profileMenuGap),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.caption.copyWith(
-                        fontWeight: AppTextStyles.bold,
-                      ),
-                    ),
-                    if (item.subtitle != null) ...[
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                const SizedBox(width: ProfileSpacingTokens.profileMenuGap),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        item.subtitle!,
+                        item.label,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: item.subtitleHex == null
-                              ? _profileMuted
-                              : Color(item.subtitleHex!),
+                        style: AppTextStyles.caption.copyWith(
+                          fontWeight: AppTextStyles.bold,
                         ),
                       ),
+                      if (item.subtitle != null) ...[
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
+                        Text(
+                          item.subtitle!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: item.subtitleHex == null
+                                ? _profileMuted
+                                : Color(item.subtitleHex!),
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
-              ),
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: _profileMuted,
-                  size: AppSpacing.profileMenuChevron,
+                  size: ProfileSpacingTokens.profileMenuChevron,
                 ),
               ],
             ),
@@ -377,9 +375,9 @@ class _LogoutButton extends StatelessWidget {
             const Icon(
               Icons.logout_rounded,
               color: _profileRed,
-              size: AppSpacing.profileLogoutIcon,
+              size: ProfileSpacingTokens.profileLogoutIcon,
             ),
-            const SizedBox(width: AppSpacing.profileLogoutGap),
+            const SizedBox(width: ProfileSpacingTokens.profileLogoutGap),
             Text(
               '\u0110\u0103ng xu\u1EA5t',
               style: AppTextStyles.baseMedium.copyWith(

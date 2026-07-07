@@ -51,7 +51,7 @@ class _ReportCard extends StatelessWidget {
       opacity: isPublished ? 1 : 0.78,
       child: VitCard(
         radius: VitCardRadius.large,
-        padding: AppSpacing.earnCardPaddingX4,
+        padding: EarnSpacingTokens.earnCardPaddingX4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -92,7 +92,9 @@ class _ReportCard extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: _SmallPill(
@@ -110,7 +112,7 @@ class _ReportCard extends StatelessWidget {
               report.summary,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingAuditBodyLineHeight,
+                height: EarnSpacingTokens.stakingAuditBodyLineHeight,
               ),
             ),
             if (isPublished && report.findings.resolvedFindings > 0) ...[
@@ -173,7 +175,7 @@ class _FindingsSummary extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -251,7 +253,7 @@ class _ProgressNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(

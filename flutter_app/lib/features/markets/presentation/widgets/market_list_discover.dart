@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketListDiscoverMoreSection extends StatelessWidget {
   const MarketListDiscoverMoreSection({super.key});
@@ -21,7 +22,7 @@ class MarketListDiscoverMoreSection extends StatelessWidget {
           title: 'Khám phá thêm',
           accentColor: marketListPredictionAccent,
         ),
-        const SizedBox(height: AppSpacing.marketDiscoverLabelGap),
+        const SizedBox(height: MarketsSpacingTokens.marketDiscoverLabelGap),
         VitCard(
           clip: true,
           padding: AppSpacing.zeroInsets,
@@ -97,7 +98,7 @@ class _DiscoverRow extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: AppSpacing.marketDiscoverRowPadding,
+          padding: MarketsSpacingTokens.marketDiscoverRowPadding,
           child: Row(
             children: [
               Material(
@@ -106,16 +107,16 @@ class _DiscoverRow extends StatelessWidget {
                   borderRadius: AppRadii.mdRadius,
                 ),
                 child: SizedBox(
-                  width: AppSpacing.marketDiscoverIconBox,
-                  height: AppSpacing.marketDiscoverIconBox,
+                  width: MarketsSpacingTokens.marketDiscoverIconBox,
+                  height: MarketsSpacingTokens.marketDiscoverIconBox,
                   child: Icon(
                     icon,
                     color: color,
-                    size: AppSpacing.marketDiscoverIcon,
+                    size: MarketsSpacingTokens.marketDiscoverIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketDiscoverRowGap),
+              const SizedBox(width: MarketsSpacingTokens.marketDiscoverRowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,17 +134,22 @@ class _DiscoverRow extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: AppSpacing.marketDiscoverTitleBadgeGap,
+                          width:
+                              MarketsSpacingTokens.marketDiscoverTitleBadgeGap,
                         ),
                         VitAccentPill(label: badge, accentColor: color),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.marketDiscoverSubtitleGap),
+                    const SizedBox(
+                      height: MarketsSpacingTokens.marketDiscoverSubtitleGap,
+                    ),
                     Text(
                       subtitle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.micro.copyWith(color: AppColors.text3),
+                      style: AppTextStyles.micro.copyWith(
+                        color: AppColors.text3,
+                      ),
                     ),
                   ],
                 ),
@@ -151,7 +157,7 @@ class _DiscoverRow extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.marketDiscoverChevron,
+                size: MarketsSpacingTokens.marketDiscoverChevron,
               ),
             ],
           ),

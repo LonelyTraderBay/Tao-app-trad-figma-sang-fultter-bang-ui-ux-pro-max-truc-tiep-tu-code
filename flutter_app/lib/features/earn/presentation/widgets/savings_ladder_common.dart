@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 const _sectionMarkerHeight = 12.0;
 
@@ -44,7 +45,7 @@ class SectionTitle extends StatelessWidget {
     return Row(
       children: [
         const SizedBox(
-          width: AppSpacing.savingsLadderSectionMarkerWidth,
+          width: EarnSpacingTokens.savingsLadderSectionMarkerWidth,
           height: _sectionMarkerHeight,
           child: Material(
             color: AppColors.primary,
@@ -75,7 +76,7 @@ class SmallPill extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: savingsLadderMicroBoldStyle.copyWith(color: color),
@@ -94,7 +95,7 @@ class RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.savingsLadderRoundIcon,
+      dimension: EarnSpacingTokens.savingsLadderRoundIcon,
       child: Material(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,
@@ -119,7 +120,7 @@ class DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX1,
+      padding: EarnSpacingTokens.earnVerticalPaddingX1,
       child: Row(
         children: [
           Expanded(
@@ -200,7 +201,7 @@ class LadderTabs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: AppSpacing.earnHorizontalPaddingX4,
+            padding: EarnSpacingTokens.earnHorizontalPaddingX4,
             child: VitTabBar(
               variant: VitTabBarVariant.underline,
               activeKey: active,

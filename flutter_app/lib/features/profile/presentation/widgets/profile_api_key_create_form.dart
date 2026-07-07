@@ -99,8 +99,8 @@ class _PermissionCard extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.profileApiCreatePermissionIconBox,
-            height: AppSpacing.profileApiCreatePermissionIconBox,
+            width: ProfileSpacingTokens.profileApiCreatePermissionIconBox,
+            height: ProfileSpacingTokens.profileApiCreatePermissionIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: selected ? accent.withValues(alpha: .12) : _apiPanel,
@@ -116,52 +116,52 @@ class _PermissionCard extends StatelessWidget {
               child: Icon(
                 _apiPermissionIcon(permission.iconKey),
                 color: selected ? accent : _apiMuted,
-                size: AppSpacing.profileApiCreatePermissionIcon,
+                size: ProfileSpacingTokens.profileApiCreatePermissionIcon,
               ),
             ),
           ),
-            const SizedBox(width: AppSpacing.profileApiCreatePermissionIconGap),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          permission.label,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.caption.copyWith(
-                            color: selected ? AppColors.text1 : AppColors.text2,
-                            fontWeight: FontWeight.w700,
-                          ),
+          const SizedBox(
+            width: ProfileSpacingTokens.profileApiCreatePermissionIconGap,
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        permission.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.caption.copyWith(
+                          color: selected ? AppColors.text1 : AppColors.text2,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      if (permission.required)
-                        Text(
-                          ' (b\u1EAFt bu\u1ED9c)',
-                          style: AppTextStyles.caption.copyWith(
-                            color: _apiMuted,
-                          ),
-                        ),
-                    ],
-                  ),
-                  SizedBox(height: VitDensity.compact.verticalSpace),
-                  Text(
-                    permission.description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.micro.copyWith(color: _apiMuted),
-                  ),
-                ],
-              ),
+                    ),
+                    if (permission.required)
+                      Text(
+                        ' (b\u1EAFt bu\u1ED9c)',
+                        style: AppTextStyles.caption.copyWith(color: _apiMuted),
+                      ),
+                  ],
+                ),
+                SizedBox(height: VitDensity.compact.verticalSpace),
+                Text(
+                  permission.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.micro.copyWith(color: _apiMuted),
+                ),
+              ],
             ),
-            const SizedBox(
-              width: AppSpacing.profileApiCreatePermissionTrailingGap,
-            ),
+          ),
+          const SizedBox(
+            width: ProfileSpacingTokens.profileApiCreatePermissionTrailingGap,
+          ),
           _PermissionCheck(selected: selected, color: accent),
         ],
       ),
@@ -178,21 +178,21 @@ class _PermissionCheck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.profileApiCreatePermissionCheck,
-      height: AppSpacing.profileApiCreatePermissionCheck,
+      width: ProfileSpacingTokens.profileApiCreatePermissionCheck,
+      height: ProfileSpacingTokens.profileApiCreatePermissionCheck,
       child: Material(
         color: selected ? color : AppColors.transparent,
         shape: CircleBorder(
           side: BorderSide(
             color: selected ? color : _apiBorder,
-            width: AppSpacing.profileApiCreatePermissionCheckBorder,
+            width: ProfileSpacingTokens.profileApiCreatePermissionCheckBorder,
           ),
         ),
         child: selected
             ? const Icon(
                 Icons.check_rounded,
                 color: AppColors.onAccent,
-                size: AppSpacing.profileApiCreatePermissionCheckIcon,
+                size: ProfileSpacingTokens.profileApiCreatePermissionCheckIcon,
               )
             : null,
       ),
@@ -231,9 +231,11 @@ class _IpWhitelistSection extends StatelessWidget {
                   onSubmitted: (_) => onAdd(),
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileApiCreateIpInputGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileApiCreateIpInputGap,
+              ),
               SizedBox(
-                width: AppSpacing.profileApiCreateIpAddWidth,
+                width: ProfileSpacingTokens.profileApiCreateIpAddWidth,
                 child: VitIconButton(
                   icon: Icons.add_rounded,
                   tooltip: 'Th\u00EAm IP whitelist',
@@ -256,8 +258,8 @@ class _IpWhitelistSection extends StatelessWidget {
           ] else ...[
             SizedBox(height: VitDensity.compact.verticalSpace),
             Wrap(
-              spacing: AppSpacing.profileApiCreateIpChipGap,
-              runSpacing: AppSpacing.profileApiCreateIpChipGap,
+              spacing: ProfileSpacingTokens.profileApiCreateIpChipGap,
+              runSpacing: ProfileSpacingTokens.profileApiCreateIpChipGap,
               children: [
                 for (final ip in ips)
                   VitChoicePill(
@@ -265,8 +267,8 @@ class _IpWhitelistSection extends StatelessWidget {
                     selected: true,
                     onTap: () => onRemove(ip),
                     tone: VitChoicePillTone.success,
-                    height: AppSpacing.homeChipMinHeight,
-                    padding: AppSpacing.profileApiCreateIpChipPadding,
+                    height: HomeSpacingTokens.homeChipMinHeight,
+                    padding: ProfileSpacingTokens.profileApiCreateIpChipPadding,
                   ),
               ],
             ),
@@ -296,10 +298,11 @@ class _ExpirySection extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: AppSpacing.profileApiCreateExpiryCrossAxisCount,
-          mainAxisSpacing: AppSpacing.profileApiCreateExpirySpacing,
-          crossAxisSpacing: AppSpacing.profileApiCreateExpirySpacing,
-          mainAxisExtent: AppSpacing.profileApiCreateExpiryExtent,
+          crossAxisCount:
+              ProfileSpacingTokens.profileApiCreateExpiryCrossAxisCount,
+          mainAxisSpacing: ProfileSpacingTokens.profileApiCreateExpirySpacing,
+          crossAxisSpacing: ProfileSpacingTokens.profileApiCreateExpirySpacing,
+          mainAxisExtent: ProfileSpacingTokens.profileApiCreateExpiryExtent,
         ),
         itemCount: options.length,
         itemBuilder: (context, index) {
@@ -309,11 +312,13 @@ class _ExpirySection extends StatelessWidget {
             key: ApiKeyCreatePage.expiryKey(option.id),
             onTap: () => onSelect(option.id),
             density: VitDensity.compact,
-            variant: isSelected ? VitCardVariant.standard : VitCardVariant.inner,
+            variant: isSelected
+                ? VitCardVariant.standard
+                : VitCardVariant.inner,
             borderColor: isSelected
                 ? _apiPrimary.withValues(alpha: .55)
                 : _apiBorder,
-            padding: AppSpacing.profileApiCreateExpiryPadding,
+            padding: ProfileSpacingTokens.profileApiCreateExpiryPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -361,9 +366,11 @@ class _SecurityTips extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: _apiPrimary,
-                size: AppSpacing.profileApiCreateTipsIcon,
+                size: ProfileSpacingTokens.profileApiCreateTipsIcon,
               ),
-              const SizedBox(width: AppSpacing.profileApiCreateTipsTitleGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileApiCreateTipsTitleGap,
+              ),
               Text(
                 'M\u1EB9o b\u1EA3o m\u1EADt',
                 style: AppTextStyles.caption.copyWith(
@@ -379,8 +386,8 @@ class _SecurityTips extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: AppSpacing.profileApiCreateTipsBullet,
-                  height: AppSpacing.profileApiCreateTipsBullet,
+                  width: ProfileSpacingTokens.profileApiCreateTipsBullet,
+                  height: ProfileSpacingTokens.profileApiCreateTipsBullet,
                   child: Material(
                     color: _apiPrimary.withValues(alpha: .14),
                     shape: const CircleBorder(),
@@ -395,7 +402,9 @@ class _SecurityTips extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.profileApiCreateTipsBulletGap),
+                const SizedBox(
+                  width: ProfileSpacingTokens.profileApiCreateTipsBulletGap,
+                ),
                 Expanded(
                   child: Text(
                     tips[i],

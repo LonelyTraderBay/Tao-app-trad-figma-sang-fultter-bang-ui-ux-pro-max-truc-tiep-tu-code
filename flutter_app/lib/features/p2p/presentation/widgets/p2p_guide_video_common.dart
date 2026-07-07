@@ -23,7 +23,7 @@ class _VideoTab extends StatelessWidget {
         ],
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.p2pGuideVideoEmptyPadding,
+          padding: P2PSpacingTokens.p2pGuideVideoEmptyPadding,
           child: Column(
             children: [
               const Icon(
@@ -55,12 +55,12 @@ class _VideoCard extends StatelessWidget {
     return VitCard(
       key: P2PGuidePage.videoKey(video.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pGuideVideoCardPadding,
+      padding: P2PSpacingTokens.p2pGuideVideoCardPadding,
       onTap: HapticFeedback.selectionClick,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.p2pGuideThumbWidth,
+            width: P2PSpacingTokens.p2pGuideThumbWidth,
             height: AppSpacing.buttonCompact,
             child: Material(
               color: color.withValues(alpha: .12),
@@ -163,7 +163,7 @@ class _ConceptList extends StatelessWidget {
         for (final concept in concepts) ...[
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.p2pGuideConceptPadding,
+            padding: P2PSpacingTokens.p2pGuideConceptPadding,
             child: RichText(
               text: TextSpan(
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -240,7 +240,7 @@ class _NumberIcon extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: color,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.p2pGuidePillLineHeight,
+                  height: P2PSpacingTokens.p2pGuidePillLineHeight,
                 ),
               ),
             ),

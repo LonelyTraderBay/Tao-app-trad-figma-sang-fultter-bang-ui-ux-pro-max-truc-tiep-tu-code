@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_autopilot_page.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 import 'savings_autopilot_actions.dart';
 import 'savings_autopilot_common.dart';
@@ -31,7 +32,7 @@ class AutoPilotTabs extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.earnHorizontalPaddingX4,
+            padding: EarnSpacingTokens.earnHorizontalPaddingX4,
             child: VitTabBar(
               variant: VitTabBarVariant.underline,
               activeKey: active,
@@ -123,16 +124,16 @@ class _MetricGrid extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: AppSpacing.savingsAutoPilotMetricGridColumns,
+        crossAxisCount: EarnSpacingTokens.savingsAutoPilotMetricGridColumns,
         mainAxisSpacing: AppSpacing.x3,
         crossAxisSpacing: AppSpacing.x3,
-        childAspectRatio: AppSpacing.savingsAutoPilotMetricGridAspect,
+        childAspectRatio: EarnSpacingTokens.savingsAutoPilotMetricGridAspect,
       ),
       itemBuilder: (context, index) {
         final metric = metrics[index];
         final color = toneColor(metric.tone);
         return VitCard(
-          padding: AppSpacing.earnPaddingX3,
+          padding: EarnSpacingTokens.earnPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -194,7 +195,7 @@ class _ModuleTile extends StatelessWidget {
       radius: VitCardRadius.large,
       borderColor: enabled ? null : AppColors.borderSolid,
       onTap: onTap,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Row(
         children: [
           IconBadge(icon: iconForKey(module.iconKey), color: color),

@@ -18,7 +18,7 @@ class _BotCard extends StatelessWidget {
     final profitColor = bot.profit >= 0 ? AppColors.buy : AppColors.sell;
 
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -38,7 +38,9 @@ class _BotCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     VitStatusPill(
                       label: running ? 'Đang chạy' : 'Tạm dừng',
                       status: running
@@ -77,7 +79,9 @@ class _BotCard extends StatelessWidget {
                   variant: running
                       ? VitCtaButtonVariant.warning
                       : VitCtaButtonVariant.success,
-                  padding: AppSpacing.tradeBotActionButtonPadding(false),
+                  padding: TradeSpacingTokens.tradeBotActionButtonPadding(
+                    false,
+                  ),
                   leading: Icon(
                     running ? Icons.pause_rounded : Icons.play_arrow_rounded,
                   ),
@@ -141,15 +145,19 @@ class _BotIcon extends StatelessWidget {
       _ => Icons.smart_toy_outlined,
     };
     return Container(
-      width: AppSpacing.launchpadBox40,
-      height: AppSpacing.launchpadBox40,
+      width: LaunchpadSpacingTokens.launchpadBox40,
+      height: LaunchpadSpacingTokens.launchpadBox40,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.smRadius,
         border: Border.all(color: color.withValues(alpha: .22)),
       ),
-      child: Icon(iconData, color: color, size: AppSpacing.tradeBotActionIcon),
+      child: Icon(
+        iconData,
+        color: color,
+        size: TradeSpacingTokens.tradeBotActionIcon,
+      ),
     );
   }
 }

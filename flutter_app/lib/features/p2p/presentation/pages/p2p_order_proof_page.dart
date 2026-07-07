@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_order_proof_widgets.dart';
 
@@ -88,7 +89,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                   child: SingleChildScrollView(
                     key: P2POrderProofPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pOrderLifecycleScrollPadding(
+                    padding: P2PSpacingTokens.p2pOrderLifecycleScrollPadding(
                       scrollEndPadding,
                     ),
                     child: Column(
@@ -96,12 +97,14 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                       children: [
                         _OrderProofSummary(order: snapshot.order),
                         Padding(
-                          padding:
-                              AppSpacing.p2pFinancialSafetyHorizontalPadding,
+                          padding: P2PSpacingTokens
+                              .p2pFinancialSafetyHorizontalPadding,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmStandardInnerGap,
+                              ),
                               _UploadSection(
                                 title: snapshot.uploadTitle,
                                 subtitle: snapshot.uploadSubtitle,
@@ -110,23 +113,31 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                                 onGallery: () => _addProof('gallery'),
                               ),
                               if (_proofs.isNotEmpty) ...[
-                                const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                                const SizedBox(
+                                  height: AppSpacing.pageRhythmStandardInnerGap,
+                                ),
                                 _UploadedProofs(
                                   proofs: _proofs,
                                   onRemove: _removeProof,
                                 ),
                               ],
-                              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmStandardInnerGap,
+                              ),
                               _TipsCard(
                                 title: snapshot.tipsTitle,
                                 tips: snapshot.tips,
                               ),
-                              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmStandardInnerGap,
+                              ),
                               _ProofWarning(message: snapshot.warningMessage),
                             ],
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         VitCtaButton(
                           key: P2POrderProofPage.confirmKey,
                           onPressed: _proofs.isEmpty
@@ -137,7 +148,7 @@ class _P2POrderProofPageState extends ConsumerState<P2POrderProofPage> {
                           child: Text('Xác nhận (${_proofs.length} ảnh)'),
                         ),
                         VitPageContent(
-       rhythm: VitPageRhythm.standard,
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           children: const [
                             VitHighRiskStatePanel(

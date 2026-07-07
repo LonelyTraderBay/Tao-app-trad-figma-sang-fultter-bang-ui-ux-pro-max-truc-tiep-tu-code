@@ -14,7 +14,7 @@ class _PerformanceChartCard extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'P/L Over Time',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -43,7 +43,7 @@ class _TradeStatsSection extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Trade Statistics',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           density: VitDensity.compact,
         ),
@@ -96,7 +96,8 @@ class _TradeStatsSection extends StatelessWidget {
               ClipRRect(
                 borderRadius: AppRadii.pillRadius,
                 child: LinearProgressIndicator(
-                  minHeight: AppSpacing.predictionAnalyzerTradeProgressHeight,
+                  minHeight: PredictionsSpacingTokens
+                      .predictionAnalyzerTradeProgressHeight,
                   value: snapshot.winRate / 100,
                   color: AppColors.buy,
                   backgroundColor: AppColors.bg,
@@ -124,7 +125,7 @@ class _AttributionSection extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Performance Attribution',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           density: VitDensity.compact,
         ),
@@ -156,7 +157,8 @@ class _AttributionSection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: AppSpacing.predictionAnalyzerAttributionTrailingGap,
+                  width: PredictionsSpacingTokens
+                      .predictionAnalyzerAttributionTrailingGap,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,

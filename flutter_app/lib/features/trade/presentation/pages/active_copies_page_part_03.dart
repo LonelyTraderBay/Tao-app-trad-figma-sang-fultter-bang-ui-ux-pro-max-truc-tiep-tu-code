@@ -88,7 +88,7 @@ class _StopCopyModalState extends State<_StopCopyModal> {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: VitSheetSurface(
-            padding: AppSpacing.activeCopiesStopSheetPadding(
+            padding: TradeSpacingTokens.activeCopiesStopSheetPadding(
               MediaQuery.paddingOf(context).bottom,
             ),
             child: Column(

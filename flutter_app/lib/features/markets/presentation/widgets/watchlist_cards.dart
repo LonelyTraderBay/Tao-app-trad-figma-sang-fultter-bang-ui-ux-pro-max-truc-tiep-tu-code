@@ -145,7 +145,7 @@ class _AssetAvatar extends StatelessWidget {
     return VitAssetAvatar(
       label: pair.baseAsset,
       accentColor: AppAssetColors.forSymbol(pair.baseAsset),
-      size: AppSpacing.watchlistAvatar,
+      size: MarketsSpacingTokens.watchlistAvatar,
       radius: AppRadii.pillRadius,
     );
   }

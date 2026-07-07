@@ -38,6 +38,73 @@ This document defines how VitTrade Flutter screens can keep module-specific char
 - Use `VitModuleHeroCard`, `VitMetricCard`, `VitStatusPill`, `VitModuleSectionHeader`, and `VitAccentIconBox` for repeated module patterns before creating local equivalents.
 - Keep card backgrounds neutral; apply module character through `VitAccentIconBox` color, pill color, chart series, or copy.
 
+## Shared Widgets Extracted From Home
+
+These widgets were extracted directly from `lib/features/home/presentation/**`
+so other modules reuse the exact same implementation instead of forking a
+local copy:
+
+- `VitServiceTile.fromAction` (`lib/shared/widgets/vit_module_components.dart`)
+  — factory taking primitive fields (`icon`, `label`, `accentColor`,
+  `badgeLabel`, `riskBadgeLabel`, `onTap`), used by Home's product grid and
+  "more products" sheet.
+- `VitBalanceBreakdownRow` / `VitBalanceBreakdownItem`
+  (`lib/shared/widgets/vit_balance_breakdown_row.dart`) — the tappable
+  Spot/Earn/Funding-style balance breakdown row used by
+  `HomePortfolioBreakdown`.
+- `VitRiskDisclaimerNote` (`lib/shared/widgets/vit_risk_disclaimer_note.dart`)
+  — centered muted compliance note with an optional distinct Semantics label,
+  used for the Predictions/Arena product-boundary disclaimer.
+
+## Token Growth Policy
+
+`lib/app/theme/app_spacing.dart` now holds only the true generic scale
+(`x1..x7`, `contentPad`, `rowPy`, page-rhythm tokens, icon sizes, etc). The
+historical "module-prefixed screen tokens" block (finding #15) has been fully
+migrated into per-feature files under `lib/app/theme/spacing/`
+(`<module>_spacing_tokens.dart`, e.g. `TradeSpacingTokens`,
+`MarketsSpacingTokens`) — one file per `lib/features/*` module, plus
+`shared_spacing_tokens.dart` for the handful of tokens that are genuinely
+generic (consumed by `lib/shared/widgets/**`) but don't belong in the core
+scale. New one-off tokens for a feature must go into that feature's own
+`<module>_spacing_tokens.dart`, never appended back into `app_spacing.dart`.
+
+## Enforcement
+
+- `tool/design_token_consistency_audit.dart` — local literal-token debt
+  (fontSize, EdgeInsets, BorderRadius.circular, etc.) with a hard baseline
+  gate on the 5 P0 financial modules.
+- `tool/home_reference_consistency_audit.dart` — structural divergence from
+  Home's own patterns (raw `Container`/`BoxDecoration` instead of `VitCard`,
+  `BorderRadius.circular(`/`Radius.circular(` instead of `AppRadii.*`),
+  **hard-gated for every module**, not just P0. Home itself is locked at a
+  divergence baseline of `0` — if that regresses, Home is no longer clean
+  enough to serve as the reference. Paired with
+  `test/quality/home_reference_consistency_guardrail_test.dart` (also spot-
+  checks that Home still consumes the three shared widgets above instead of
+  re-forking a local copy).
+- `test/features/home/golden/` — pixel baselines for Home's loading/error/data
+  states and the three shared widgets above, pinned to Flutter 3.41.9 stable
+  (matches CI) at 360×800. No `golden_toolkit` dependency; uses `flutter_test`'s
+  native `matchesGoldenFile`, so custom fonts render as their test-environment
+  fallback rather than the real typeface — goldens catch structural/layout
+  regressions, not font-rendering differences.
+- All of the above run in `.github/workflows/flutter-ci.yml` alongside the
+  existing design-token/page-rhythm/card-tile/segment-pill gates.
+
+## Out of Scope
+
+The following were explicitly identified as out of scope while making Home
+the enforced standard, and remain separate future initiatives:
+
+- App-wide `AppColors.warn`/`warn08`/`warn10`/`warn15`/`warningText` sweep
+  (697+119 call sites across ~450 files) — unrelated in scope and size to the
+  Home-reference work; only Home's own 2 usages were migrated to
+  `riskWarning`/`riskWarning10` as an isolated pilot.
+- Branch protection / required status checks for the new CI gates — a GitHub
+  repository admin-settings action (web UI or API), not achievable by any
+  code change in this repo.
+
 ## Review Checklist
 
 - Foundation matches Home: background, surfaces, card radii, spacing, typography, CTA/input heights, bottom chrome.

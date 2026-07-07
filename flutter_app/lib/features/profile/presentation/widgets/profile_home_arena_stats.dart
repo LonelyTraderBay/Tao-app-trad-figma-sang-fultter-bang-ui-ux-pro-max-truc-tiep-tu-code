@@ -22,9 +22,9 @@ class _ArenaCard extends StatelessWidget {
               const Icon(
                 Icons.sports_esports_outlined,
                 color: _profileAmber,
-                size: AppSpacing.profileModuleIcon,
+                size: ProfileSpacingTokens.profileModuleIcon,
               ),
-              const SizedBox(width: AppSpacing.profileModuleGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleGap),
               Expanded(
                 child: Text(
                   'Open Arena',
@@ -35,7 +35,7 @@ class _ArenaCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileModuleGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleGap),
               _TinyTag(label: 'Points only', color: _profileAmber),
             ],
           ),
@@ -49,14 +49,14 @@ class _ArenaCard extends StatelessWidget {
                   valueColor: _profileAmber,
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileModuleStatGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleStatGap),
               Expanded(
                 child: _ModuleStat(
                   label: 'Ph\u00F2ng',
                   value: '${arena.rooms}',
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileModuleStatGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleStatGap),
               Expanded(
                 child: _ModuleStat(
                   label: 'Creator',
@@ -77,19 +77,23 @@ class _ArenaCard extends StatelessWidget {
                   style: AppTextStyles.badge.copyWith(color: _profileAmber),
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileHeroInfoTrailingGap,
+              ),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: _profileAmber,
-                size: AppSpacing.profileModuleLinkIcon,
+                size: ProfileSpacingTokens.profileModuleLinkIcon,
               ),
-              const SizedBox(width: AppSpacing.profileModuleEndGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleEndGap),
               const Icon(
                 Icons.shield_outlined,
                 color: _profileMuted,
-                size: AppSpacing.profileModuleLinkIcon,
+                size: ProfileSpacingTokens.profileModuleLinkIcon,
               ),
-              const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileHeroInfoTrailingGap,
+              ),
               Flexible(
                 child: Text(
                   'An to\u00E0n & B\u00E1o c\u00E1o',

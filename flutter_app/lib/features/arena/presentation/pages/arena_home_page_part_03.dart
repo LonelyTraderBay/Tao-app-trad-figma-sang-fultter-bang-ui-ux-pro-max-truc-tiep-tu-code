@@ -82,7 +82,7 @@ class _ArenaFooter extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.accent,
-                size: AppSpacing.arenaHomeFooterShieldIcon,
+                size: ArenaSpacingTokens.arenaHomeFooterShieldIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -263,7 +263,7 @@ class _SearchRow extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.arenaHomeSearchChevron,
+            size: ArenaSpacingTokens.arenaHomeSearchChevron,
           ),
         ],
       ),
@@ -280,8 +280,8 @@ class _ActionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.arenaHomeActionIconBox,
-      height: AppSpacing.arenaHomeActionIconBox,
+      width: ArenaSpacingTokens.arenaHomeActionIconBox,
+      height: ArenaSpacingTokens.arenaHomeActionIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .12),
@@ -290,7 +290,11 @@ class _ActionIcon extends StatelessWidget {
             side: BorderSide(color: color.withValues(alpha: .18)),
           ),
         ),
-        child: Icon(icon, color: color, size: AppSpacing.arenaHomeActionIcon),
+        child: Icon(
+          icon,
+          color: color,
+          size: ArenaSpacingTokens.arenaHomeActionIcon,
+        ),
       ),
     );
   }
@@ -305,7 +309,7 @@ class _MiniCountBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        minWidth: AppSpacing.arenaHomeCountBadgeMinWidth,
+        minWidth: ArenaSpacingTokens.arenaHomeCountBadgeMinWidth,
       ),
       child: DecoratedBox(
         decoration: const ShapeDecoration(
@@ -313,7 +317,7 @@ class _MiniCountBadge extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
         ),
         child: Padding(
-          padding: AppSpacing.arenaHomeCountBadgePadding,
+          padding: ArenaSpacingTokens.arenaHomeCountBadgePadding,
           child: Center(
             child: Text(
               count > 99 ? '99+' : '$count',

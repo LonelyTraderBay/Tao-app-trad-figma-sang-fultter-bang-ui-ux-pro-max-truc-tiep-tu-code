@@ -15,7 +15,7 @@ class _AlertHistoryTab extends StatelessWidget {
           children: [
             for (final entry in snapshot.history)
               VitCard(
-                padding: AppSpacing.crossModuleCardPadding,
+                padding: CrossModuleSpacingTokens.crossModuleCardPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -33,7 +33,9 @@ class _AlertHistoryTab extends StatelessWidget {
                                   fontWeight: AppTextStyles.bold,
                                 ),
                               ),
-                              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmCompactInnerGap,
+                              ),
                               VitAccentPill(
                                 label: entry.moduleName,
                                 accentColor: AppColors.text2,
@@ -49,14 +51,18 @@ class _AlertHistoryTab extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     Text(
                       entry.action,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         const Icon(
@@ -80,7 +86,7 @@ class _AlertHistoryTab extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
-          padding: AppSpacing.crossModuleCardPadding,
+          padding: CrossModuleSpacingTokens.crossModuleCardPadding,
           radius: VitCardRadius.large,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +195,7 @@ class _ChannelCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -245,7 +251,7 @@ class _ToggleSwitch extends StatelessWidget {
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
         ),
         child: Padding(
-          padding: AppSpacing.crossModuleTogglePadding,
+          padding: CrossModuleSpacingTokens.crossModuleTogglePadding,
           child: AnimatedAlign(
             duration: const Duration(milliseconds: 160),
             alignment: enabled ? Alignment.centerRight : Alignment.centerLeft,
@@ -286,7 +292,8 @@ class _TemplateCategory extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final template in templates) ...[
           _TemplateCard(template: template),
-          if (template != templates.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (template != templates.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -301,7 +308,7 @@ class _TemplateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.crossModulePanelPadding,
+      padding: CrossModuleSpacingTokens.crossModulePanelPadding,
       radius: VitCardRadius.standard,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -337,7 +344,7 @@ class _TemplateCard extends StatelessWidget {
                 onPressed: HapticFeedback.selectionClick,
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: AppSpacing.crossModuleTextButtonPadding,
+                padding: CrossModuleSpacingTokens.crossModuleTextButtonPadding,
                 child: const Text('Use'),
               ),
             ],

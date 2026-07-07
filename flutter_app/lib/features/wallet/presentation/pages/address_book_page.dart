@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/wallet_address_book_controls.dart';
 part '../widgets/wallet_address_book_security.dart';
@@ -23,8 +24,8 @@ part '../widgets/wallet_address_book_list.dart';
 
 double _bookScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? AppSpacing.walletBottomInsetVisualChrome
-          : AppSpacing.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletBottomInsetVisualChrome
+          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
 }
 

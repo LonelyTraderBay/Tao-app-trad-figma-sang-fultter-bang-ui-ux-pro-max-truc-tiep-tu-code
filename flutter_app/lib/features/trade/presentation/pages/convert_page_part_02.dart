@@ -80,7 +80,7 @@ class _SubmitButton extends StatelessWidget {
       variant: receipt == null
           ? VitCtaButtonVariant.primary
           : VitCtaButtonVariant.success,
-      height: AppSpacing.convertSubmitHeight,
+      height: TradeSpacingTokens.convertSubmitHeight,
       leading: Icon(
         receipt == null
             ? Icons.swap_vert_rounded

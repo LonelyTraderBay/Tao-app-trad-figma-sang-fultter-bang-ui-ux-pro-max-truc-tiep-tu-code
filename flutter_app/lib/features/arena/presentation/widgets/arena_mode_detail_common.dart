@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 const arenaModeAccent = AppModuleAccents.arena;
 
@@ -13,7 +13,7 @@ class ArenaModeActionIcon extends StatelessWidget {
     super.key,
     required this.icon,
     required this.color,
-    this.size = AppSpacing.arenaModeActionIconDefaultSize,
+    this.size = ArenaSpacingTokens.arenaModeActionIconDefaultSize,
   });
 
   final IconData icon;
@@ -30,7 +30,8 @@ class ArenaModeActionIcon extends StatelessWidget {
           color: color.withValues(alpha: .12),
           shape: RoundedRectangleBorder(
             side: BorderSide(color: color.withValues(alpha: .20)),
-            borderRadius: size >= AppSpacing.arenaModeActionIconLargeThreshold
+            borderRadius:
+                size >= ArenaSpacingTokens.arenaModeActionIconLargeThreshold
                 ? AppRadii.cardRadius
                 : AppRadii.mdRadius,
           ),
@@ -38,9 +39,9 @@ class ArenaModeActionIcon extends StatelessWidget {
         child: Icon(
           icon,
           color: color,
-          size: size >= AppSpacing.arenaModeActionIconLargeThreshold
-              ? AppSpacing.arenaModeActionIconLargeGlyph
-              : AppSpacing.arenaModeActionIconGlyph,
+          size: size >= ArenaSpacingTokens.arenaModeActionIconLargeThreshold
+              ? ArenaSpacingTokens.arenaModeActionIconLargeGlyph
+              : ArenaSpacingTokens.arenaModeActionIconGlyph,
         ),
       ),
     );

@@ -12,7 +12,7 @@ class _EscrowStatusHero extends StatelessWidget {
       key: P2PEscrowDetailPage.heroKey,
       radius: VitCardRadius.large,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pEscrowDetailHeroPadding,
+      padding: P2PSpacingTokens.p2pEscrowDetailHeroPadding,
       child: Column(
         children: [
           SizedBox.square(
@@ -68,7 +68,7 @@ class _EscrowAddressCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowDetailPage.addressKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pEscrowDetailCardPadding,
+      padding: P2PSpacingTokens.p2pEscrowDetailCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -105,7 +105,7 @@ class _EscrowAddressCard extends StatelessWidget {
             variant: VitCardVariant.inner,
             radius: VitCardRadius.large,
             borderColor: AppColors.primary20,
-            padding: AppSpacing.p2pEscrowDetailInnerPadding,
+            padding: P2PSpacingTokens.p2pEscrowDetailInnerPadding,
             child: Row(
               children: [
                 Expanded(
@@ -139,7 +139,7 @@ class _EscrowAddressCard extends StatelessWidget {
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
             borderColor: AppColors.primary20,
-            padding: AppSpacing.p2pEscrowDetailExplorerPadding,
+            padding: P2PSpacingTokens.p2pEscrowDetailExplorerPadding,
             onTap: onExplorer,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

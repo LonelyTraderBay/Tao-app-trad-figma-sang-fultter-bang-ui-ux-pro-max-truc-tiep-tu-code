@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadRebalanceAllocationCard extends StatelessWidget {
   const LaunchpadRebalanceAllocationCard({super.key, required this.assets});
@@ -18,7 +19,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,7 +43,7 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
               const Icon(
                 Icons.sync_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.launchpadIcon2xl,
+                size: LaunchpadSpacingTokens.launchpadIcon2xl,
               ),
               Expanded(
                 child: _DonutBlock(
@@ -64,8 +65,8 @@ class LaunchpadRebalanceAllocationCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      width: AppSpacing.launchpadDotMd,
-                      height: AppSpacing.launchpadDotMd,
+                      width: LaunchpadSpacingTokens.launchpadDotMd,
+                      height: LaunchpadSpacingTokens.launchpadDotMd,
                       child: DecoratedBox(
                         decoration: ShapeDecoration(
                           color: asset.accent.resolve(),
@@ -113,8 +114,8 @@ class _DonutBlock extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         SizedBox(
-          width: AppSpacing.launchpadBox104,
-          height: AppSpacing.launchpadBox104,
+          width: LaunchpadSpacingTokens.launchpadBox104,
+          height: LaunchpadSpacingTokens.launchpadBox104,
           child: CustomPaint(
             painter: _DonutPainter(values: values, colors: colors),
           ),

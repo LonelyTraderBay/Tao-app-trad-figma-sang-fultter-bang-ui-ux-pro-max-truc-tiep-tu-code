@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class ExecutionQualityDemoPage extends ConsumerStatefulWidget {
   const ExecutionQualityDemoPage({super.key, this.shellRenderMode});
@@ -86,51 +87,53 @@ class _ExecutionQualityDemoPageState
                   Expanded(
                     child: SingleChildScrollView(
                       key: ExecutionQualityDemoPage.contentKey,
-                      padding: AppSpacing.tradeToolScrollPadding(bottomInset),
+                      padding: TradeSpacingTokens.tradeToolScrollPadding(
+                        bottomInset,
+                      ),
                       child: VitPageContent(
                         rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.none,
                         fullBleed: true,
-                        customGap: AppSpacing.tradeToolCardGap,
+                        customGap: TradeSpacingTokens.tradeToolCardGap,
                         children: tradeShellWithProductTabs(
                           context: context,
                           children: [
                             const ExecutionQualityIntroCard(),
-                          VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Xem lại chất lượng khớp lệnh',
-                            message:
-                                'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
-                            contractId: 'execution-quality-demo-review',
-                            density: VitDensity.compact,
-                          ),
-                          for (final feature in snapshot.features)
-                            ExecutionQualityFeatureCard(
-                              feature: feature,
-                              onTap: () => _onFeatureTap(feature),
+                            VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Xem lại chất lượng khớp lệnh',
+                              message:
+                                  'Ngưỡng trượt giá, báo cáo khớp lệnh và sửa lệnh được xem trước trước khi lưu hoặc gửi thay đổi.',
+                              contractId: 'execution-quality-demo-review',
+                              density: VitDensity.compact,
                             ),
-                          const ExecutionQualityBenefitsCard(),
-                          ExecutionQualityProgressCard(
-                            items: snapshot.statusItems,
-                          ),
-                          const ExecutionQualityParityCard(),
-                          ExecutionQualityTabs(
-                            active: _tab,
-                            onChanged: (tab) => setState(() => _tab = tab),
-                          ),
-                          if (_tab == ExecutionQualityTab.slippage)
-                            ExecutionQualitySlippageTab(
-                              settings: _settings,
-                              onOpen: _openSlippageSheet,
-                            )
-                          else if (_tab == ExecutionQualityTab.execution)
-                            ExecutionQualityExecutionTab(
-                              onOpen: _openExecutionSheet,
-                            )
-                          else
-                            ExecutionQualityAmendmentTab(
-                              onOpen: _openAmendmentSheet,
+                            for (final feature in snapshot.features)
+                              ExecutionQualityFeatureCard(
+                                feature: feature,
+                                onTap: () => _onFeatureTap(feature),
+                              ),
+                            const ExecutionQualityBenefitsCard(),
+                            ExecutionQualityProgressCard(
+                              items: snapshot.statusItems,
                             ),
+                            const ExecutionQualityParityCard(),
+                            ExecutionQualityTabs(
+                              active: _tab,
+                              onChanged: (tab) => setState(() => _tab = tab),
+                            ),
+                            if (_tab == ExecutionQualityTab.slippage)
+                              ExecutionQualitySlippageTab(
+                                settings: _settings,
+                                onOpen: _openSlippageSheet,
+                              )
+                            else if (_tab == ExecutionQualityTab.execution)
+                              ExecutionQualityExecutionTab(
+                                onOpen: _openExecutionSheet,
+                              )
+                            else
+                              ExecutionQualityAmendmentTab(
+                                onOpen: _openAmendmentSheet,
+                              ),
                           ],
                         ),
                       ),

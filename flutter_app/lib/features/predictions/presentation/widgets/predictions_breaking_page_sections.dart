@@ -11,13 +11,13 @@ class _MovementSummary extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.inputRadius,
       child: Padding(
-        padding: AppSpacing.predictionHomeCategoryPadding,
+        padding: PredictionsSpacingTokens.predictionHomeCategoryPadding,
         child: Row(
           children: [
             const Icon(
               Icons.bolt_outlined,
               color: AppColors.warn,
-              size: AppSpacing.predictionHomeHighlightIcon,
+              size: PredictionsSpacingTokens.predictionHomeHighlightIcon,
             ),
             const SizedBox(width: _breakingSpace),
             Expanded(
@@ -143,7 +143,7 @@ class _CategoryTabButton extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _predictionPrimary,
-      padding: AppSpacing.predictionHomeCategoryPadding,
+      padding: PredictionsSpacingTokens.predictionHomeCategoryPadding,
     );
   }
 }

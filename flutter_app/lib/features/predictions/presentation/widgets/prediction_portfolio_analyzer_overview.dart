@@ -61,7 +61,7 @@ class _PortfolioSummaryCard extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: AppSpacing.homeCardPaddingDefault,
+      padding: HomeSpacingTokens.homeCardPaddingDefault,
       background: const VitHeroGlow(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -196,10 +196,10 @@ class _StatsGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: stats.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: AppSpacing.predictionAnalyzerGridColumns,
+        crossAxisCount: PredictionsSpacingTokens.predictionAnalyzerGridColumns,
         mainAxisExtent: AppSpacing.x7 * 3,
-        crossAxisSpacing: AppSpacing.predictionAnalyzerGridGap,
-        mainAxisSpacing: AppSpacing.predictionAnalyzerGridGap,
+        crossAxisSpacing: PredictionsSpacingTokens.predictionAnalyzerGridGap,
+        mainAxisSpacing: PredictionsSpacingTokens.predictionAnalyzerGridGap,
       ),
       itemBuilder: (context, index) {
         final stat = stats[index];
@@ -213,10 +213,11 @@ class _StatsGrid extends StatelessWidget {
                   Icon(
                     stat.icon,
                     color: stat.color,
-                    size: AppSpacing.predictionAnalyzerStatIcon,
+                    size: PredictionsSpacingTokens.predictionAnalyzerStatIcon,
                   ),
                   const SizedBox(
-                    width: AppSpacing.predictionAnalyzerStatIconGap,
+                    width:
+                        PredictionsSpacingTokens.predictionAnalyzerStatIconGap,
                   ),
                   Expanded(
                     child: Text(
@@ -261,7 +262,7 @@ class _CategoryCard extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Portfolio by Category',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -280,10 +281,13 @@ class _CategoryCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: categories.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: AppSpacing.predictionAnalyzerLegendColumns,
+              crossAxisCount:
+                  PredictionsSpacingTokens.predictionAnalyzerLegendColumns,
               mainAxisExtent: AppSpacing.x7,
-              crossAxisSpacing: AppSpacing.predictionAnalyzerLegendCrossGap,
-              mainAxisSpacing: AppSpacing.predictionAnalyzerLegendMainGap,
+              crossAxisSpacing:
+                  PredictionsSpacingTokens.predictionAnalyzerLegendCrossGap,
+              mainAxisSpacing:
+                  PredictionsSpacingTokens.predictionAnalyzerLegendMainGap,
             ),
             itemBuilder: (context, index) {
               final category = categories[index];

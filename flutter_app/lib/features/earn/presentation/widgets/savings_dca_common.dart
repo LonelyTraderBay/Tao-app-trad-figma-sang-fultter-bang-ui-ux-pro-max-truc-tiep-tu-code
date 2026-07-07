@@ -44,13 +44,13 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+            height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
           ),
         ),
       ),

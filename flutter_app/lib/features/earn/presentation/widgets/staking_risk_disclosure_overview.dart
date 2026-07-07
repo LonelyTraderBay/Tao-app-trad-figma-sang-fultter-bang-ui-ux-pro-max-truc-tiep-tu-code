@@ -22,7 +22,7 @@ class _WarningBanner extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -43,7 +43,9 @@ class _WarningBanner extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       snapshot.warningBody,
                       style: AppTextStyles.caption.copyWith(
@@ -185,7 +187,7 @@ class _RiskCountTile extends StatelessWidget {
           side: BorderSide(color: color.withValues(alpha: .28)),
         ),
         child: Padding(
-          padding: AppSpacing.earnCardPaddingX3X4,
+          padding: EarnSpacingTokens.earnCardPaddingX3X4,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -257,7 +259,7 @@ class _RiskProductCard extends StatelessWidget {
                   borderRadius: AppRadii.mdRadius,
                   color: AppColors.surface3,
                   child: Padding(
-                    padding: AppSpacing.earnCardPaddingX3X2,
+                    padding: EarnSpacingTokens.earnCardPaddingX3X2,
                     child: Text(
                       risk,
                       style: AppTextStyles.caption.copyWith(

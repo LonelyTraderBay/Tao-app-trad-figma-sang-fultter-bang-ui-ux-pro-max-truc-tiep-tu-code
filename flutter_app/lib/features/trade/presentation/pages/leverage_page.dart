@@ -13,6 +13,8 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/leverage_header_hero_risk.dart';
 part '../widgets/leverage_controls_presets.dart';
@@ -99,10 +101,7 @@ class _LeveragePageState extends ConsumerState<LeveragePage> {
           active: _leverage,
           onChanged: _setLeverage,
         ),
-        _ImpactCard(
-          margin: snapshot.exampleMargin,
-          preview: preview,
-        ),
+        _ImpactCard(margin: snapshot.exampleMargin, preview: preview),
         _WarningCard(preview: preview),
         if (preview.showRiskTips) const _RiskTipsCard(),
         _ConfirmButton(

@@ -16,7 +16,7 @@ class _TransactionDetailCard extends StatelessWidget {
 
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -73,12 +73,12 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnTopPaddingX2,
+      padding: EarnSpacingTokens.earnTopPaddingX2,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.stakingHistoryDetailLabelWidth,
+            width: EarnSpacingTokens.stakingHistoryDetailLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -152,7 +152,7 @@ class _TransactionCard extends StatelessWidget {
 
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           _TypeIcon(type: tx.type),
@@ -229,12 +229,12 @@ class _TypeIcon extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
       child: SizedBox(
-        width: AppSpacing.stakingHistoryIconBox,
-        height: AppSpacing.stakingHistoryIconBox,
+        width: EarnSpacingTokens.stakingHistoryIconBox,
+        height: EarnSpacingTokens.stakingHistoryIconBox,
         child: Icon(
           _typeIcon(type),
           color: color,
-          size: AppSpacing.stakingHistoryIcon,
+          size: EarnSpacingTokens.stakingHistoryIcon,
         ),
       ),
     );
@@ -255,13 +255,13 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           _statusLabel(status),
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingHistoryPillLineHeight,
+            height: EarnSpacingTokens.stakingHistoryPillLineHeight,
           ),
         ),
       ),
@@ -278,13 +278,13 @@ class _FooterNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingHistoryFooterLineHeight,
+          height: EarnSpacingTokens.stakingHistoryFooterLineHeight,
         ),
       ),
     );

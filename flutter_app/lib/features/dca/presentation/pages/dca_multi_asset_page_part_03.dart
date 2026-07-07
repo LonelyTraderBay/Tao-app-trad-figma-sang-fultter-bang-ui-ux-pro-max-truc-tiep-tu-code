@@ -17,7 +17,7 @@ class _SuccessCallout extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.buy20,
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +37,9 @@ class _SuccessCallout extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       text,
                       style: AppTextStyles.caption.copyWith(
@@ -57,12 +59,12 @@ class _SuccessCallout extends StatelessWidget {
                 score,
                 style: AppTextStyles.amountMd.copyWith(
                   color: AppColors.buy,
-                  height: AppSpacing.dcaMultiTightLineHeight,
+                  height: DcaSpacingTokens.dcaMultiTightLineHeight,
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
               Padding(
-                padding: AppSpacing.dcaBottomPaddingX2,
+                padding: DcaSpacingTokens.dcaBottomPaddingX2,
                 child: Text(
                   '/ 10',
                   style: AppTextStyles.caption.copyWith(color: AppColors.text3),
@@ -149,7 +151,7 @@ class _PercentBar extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
-            minHeight: AppSpacing.dcaMultiProgressHeight,
+            minHeight: DcaSpacingTokens.dcaMultiProgressHeight,
             value: (percent / 100).clamp(0.0, 1.0),
             backgroundColor: AppColors.surface3,
             valueColor: AlwaysStoppedAnimation<Color>(color),
@@ -189,8 +191,8 @@ class _LegendItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: AppSpacing.dcaMultiDot,
-          height: AppSpacing.dcaMultiDot,
+          width: DcaSpacingTokens.dcaMultiDot,
+          height: DcaSpacingTokens.dcaMultiDot,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: color,

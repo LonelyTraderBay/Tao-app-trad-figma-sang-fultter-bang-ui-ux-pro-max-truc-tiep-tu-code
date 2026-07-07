@@ -23,7 +23,7 @@ class _ActionsRow extends StatelessWidget {
             onPressed: onReset,
             variant: VitCtaButtonVariant.secondary,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.devVerticalPaddingX4,
+            padding: AdminSpacingTokens.devVerticalPaddingX4,
             child: const Text('Reset Tests', textAlign: TextAlign.center),
           ),
         ),
@@ -53,7 +53,7 @@ class _PhaseStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,12 +67,12 @@ class _PhaseStats extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x4),
           GridView.count(
-            crossAxisCount: AppSpacing.devRouteGridColumns,
+            crossAxisCount: AdminSpacingTokens.devRouteGridColumns,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             mainAxisSpacing: AppSpacing.x3,
             crossAxisSpacing: AppSpacing.x3,
-            childAspectRatio: AppSpacing.devRouteGridAspect,
+            childAspectRatio: AdminSpacingTokens.devRouteGridAspect,
             children: [
               for (final phase in snapshot.phases)
                 _PhaseStatTile(
@@ -115,7 +115,7 @@ class _PhaseStatTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.devTinyPadding,
+        padding: AdminSpacingTokens.devTinyPadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -164,7 +164,7 @@ class _InternalNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCompactPadding,
+      padding: AdminSpacingTokens.devCompactPadding,
       borderColor: AppColors.primary20,
       background: const ColoredBox(color: AppColors.primary08),
       child: Row(

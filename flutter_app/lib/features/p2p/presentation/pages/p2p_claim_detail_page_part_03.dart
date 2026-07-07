@@ -10,7 +10,7 @@ class _ReviewerNoteCard extends StatelessWidget {
     final isSystem = note.role == 'Tự động';
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
+      padding: P2PSpacingTokens.p2pClaimCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -84,7 +84,7 @@ class _NotificationsCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.notificationsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
+      padding: P2PSpacingTokens.p2pClaimCompactCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -149,13 +149,13 @@ class _CheckBullet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pClaimChecklistPadding,
+      padding: P2PSpacingTokens.p2pClaimChecklistPadding,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: AppSpacing.p2pClaimSmallIcon,
+            size: P2PSpacingTokens.p2pClaimSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -186,7 +186,7 @@ class _ActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimActionPadding,
+      padding: P2PSpacingTokens.p2pClaimActionPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -224,13 +224,13 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
+      padding: P2PSpacingTokens.p2pClaimCompactCardPadding,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: AppSpacing.p2pClaimFeedbackIcon,
+            size: P2PSpacingTokens.p2pClaimFeedbackIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

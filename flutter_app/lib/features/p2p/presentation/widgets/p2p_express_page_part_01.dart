@@ -217,7 +217,7 @@ class _ExpressHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: AppSpacing.p2pExpressCompactCardPadding,
+      padding: P2PSpacingTokens.p2pExpressCompactCardPadding,
       background: const VitHeroGlow(),
       child: Row(
         children: [
@@ -322,7 +322,7 @@ class _AssetCard extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return VitCard(
-      padding: AppSpacing.p2pExpressCompactCardPadding,
+      padding: P2PSpacingTokens.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -354,7 +354,7 @@ class _AssetCard extends StatelessWidget {
                     side: const BorderSide(color: AppColors.borderSolid),
                   ),
                   child: Padding(
-                    padding: AppSpacing.p2pExpressSelectorPadding,
+                    padding: P2PSpacingTokens.p2pExpressSelectorPadding,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -384,7 +384,7 @@ class _AssetCard extends StatelessWidget {
             color: AppColors.surface2,
             shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
             child: Padding(
-              padding: AppSpacing.p2pExpressSelectorPadding,
+              padding: P2PSpacingTokens.p2pExpressSelectorPadding,
               child: Row(
                 children: [
                   const Icon(

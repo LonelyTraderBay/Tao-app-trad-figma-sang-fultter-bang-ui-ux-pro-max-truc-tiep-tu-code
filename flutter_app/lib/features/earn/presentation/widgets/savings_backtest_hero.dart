@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_backtest_page.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class BacktestHero extends StatelessWidget {
   const BacktestHero({
@@ -34,7 +35,7 @@ class BacktestHero extends StatelessWidget {
       key: SavingsBacktestPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX5,
+      padding: EarnSpacingTokens.earnPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -138,7 +139,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

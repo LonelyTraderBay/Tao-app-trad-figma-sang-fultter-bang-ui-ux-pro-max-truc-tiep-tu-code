@@ -8,7 +8,7 @@ class _EmptyMyAds extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceCardPadding,
       child: Column(
         children: [
           const Icon(
@@ -41,7 +41,7 @@ class _QuickLinksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,7 +92,7 @@ class _QuickLinkTile extends StatelessWidget {
       onTap: () => context.go(link.route),
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pMerchantCommerceQuickLinkPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceQuickLinkPadding,
       child: Row(
         children: [
           Material(

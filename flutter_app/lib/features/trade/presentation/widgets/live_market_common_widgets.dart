@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 const liveMarketPanel = AppColors.surface;
 const liveMarketPanel2 = AppColors.surface2;
@@ -53,7 +54,11 @@ class LiveMarketCardHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: color, size: AppSpacing.liveMarketHeaderIcon),
+        Icon(
+          icon,
+          color: color,
+          size: MarketsSpacingTokens.liveMarketHeaderIcon,
+        ),
         const SizedBox(width: AppSpacing.rowGap),
         Expanded(
           child: Text(
@@ -137,9 +142,9 @@ class LiveMarketMetricBox extends StatelessWidget {
           ? VitCardVariant.inner
           : VitCardVariant.ghost,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.liveMarketMetricMinHeight,
+        minHeight: MarketsSpacingTokens.liveMarketMetricMinHeight,
       ),
-      padding: AppSpacing.liveMarketMetricPadding,
+      padding: MarketsSpacingTokens.liveMarketMetricPadding,
       background: bg == liveMarketPanel2 ? null : ColoredBox(color: bg),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -205,7 +210,7 @@ class LiveMarketInfoStrip extends StatelessWidget {
     return LiveMarketCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.transparent,
-      padding: AppSpacing.liveMarketInfoPadding,
+      padding: MarketsSpacingTokens.liveMarketInfoPadding,
       background: ColoredBox(color: bg),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,7 +218,7 @@ class LiveMarketInfoStrip extends StatelessWidget {
           Icon(
             Icons.info_outline_rounded,
             color: color,
-            size: AppSpacing.liveMarketInlineIcon,
+            size: MarketsSpacingTokens.liveMarketInlineIcon,
           ),
           const SizedBox(width: AppSpacing.rowGap),
           Expanded(
@@ -238,7 +243,7 @@ class LiveMarketRatioBar extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
       child: SizedBox(
-        height: AppSpacing.liveMarketRatioBarHeight,
+        height: MarketsSpacingTokens.liveMarketRatioBarHeight,
         child: Row(
           children: [
             Expanded(

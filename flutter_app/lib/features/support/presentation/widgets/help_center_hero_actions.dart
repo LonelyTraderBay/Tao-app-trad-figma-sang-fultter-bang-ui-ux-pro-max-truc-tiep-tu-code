@@ -16,7 +16,7 @@ class _HelpHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.supportCardPadding,
+      padding: SupportSpacingTokens.supportCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -43,7 +43,7 @@ class _HelpHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.portfolioTextDim,
-              height: AppSpacing.supportLineHeightBody,
+              height: SupportSpacingTokens.supportLineHeightBody,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmRelaxedInnerGap),
@@ -113,7 +113,7 @@ class _QuickActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.supportQuickCardPadding,
+      padding: SupportSpacingTokens.supportQuickCardPadding,
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -163,15 +163,14 @@ List<Widget> _helpCenterPageChildren({
       ),
     ],
     SupportScreenState.empty ||
-    SupportScreenState.offline when snapshot.articles.isEmpty =>
-      [
-        const VitEmptyState(
-          key: HelpCenterPage.emptyKey,
-          title: 'Chưa có bài viết trợ giúp',
-          message: 'Nội dung hướng dẫn sẽ được cập nhật tại đây.',
-          icon: Icons.menu_book_outlined,
-        ),
-      ],
+    SupportScreenState.offline when snapshot.articles.isEmpty => [
+      const VitEmptyState(
+        key: HelpCenterPage.emptyKey,
+        title: 'Chưa có bài viết trợ giúp',
+        message: 'Nội dung hướng dẫn sẽ được cập nhật tại đây.',
+        icon: Icons.menu_book_outlined,
+      ),
+    ],
     _ => _helpCenterReadySections(
       snapshot: snapshot,
       articles: articles,

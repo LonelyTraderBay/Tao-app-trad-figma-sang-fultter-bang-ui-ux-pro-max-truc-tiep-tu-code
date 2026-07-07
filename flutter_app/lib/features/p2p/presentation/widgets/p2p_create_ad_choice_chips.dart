@@ -17,7 +17,7 @@ class _PaymentChip extends StatelessWidget {
     return VitChoicePill(
       label: label,
       selected: selected,
-      padding: AppSpacing.p2pMerchantCommerceChipPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceChipPadding,
       onTap: onTap,
       showSelectedIcon: true,
     );

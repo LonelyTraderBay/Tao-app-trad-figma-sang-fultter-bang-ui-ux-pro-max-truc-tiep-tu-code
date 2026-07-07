@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api_documentation_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingApiDocumentationAuthTab extends StatelessWidget {
   const StakingApiDocumentationAuthTab({super.key, required this.snapshot});
@@ -25,7 +26,7 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -46,12 +47,15 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                               'API Key Authentication',
                               style: AppTextStyles.baseMedium,
                             ),
-                            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmCompactInnerGap,
+                            ),
                             Text(
                               'Include your API key in the X-API-Key header with every request.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: AppSpacing.stakingApiAuthLineHeight,
+                                height:
+                                    EarnSpacingTokens.stakingApiAuthLineHeight,
                               ),
                             ),
                           ],
@@ -59,7 +63,9 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   StakingApiDocumentationCodeBlock(
                     text: snapshot.authHeaderExample,
                   ),
@@ -88,13 +94,15 @@ class StakingApiDocumentationAuthTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 children: [
                   for (final error in snapshot.errorCodes) ...[
                     _ErrorCodeRow(error: error),
                     if (error != snapshot.errorCodes.last)
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                   ],
                 ],
               ),
@@ -116,7 +124,7 @@ class _RateLimitCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.large,
       borderColor: tier.recommended ? AppColors.primary : null,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -147,7 +155,7 @@ class _RateLimitCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.earnCardPaddingX3,
+            padding: EarnSpacingTokens.earnCardPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -162,7 +170,7 @@ class _RateLimitCard extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Padding(
-                      padding: AppSpacing.earnBottomPaddingX1,
+                      padding: EarnSpacingTokens.earnBottomPaddingX1,
                       child: Text(
                         'requests',
                         style: AppTextStyles.caption.copyWith(
@@ -203,7 +211,7 @@ class _ErrorCodeRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

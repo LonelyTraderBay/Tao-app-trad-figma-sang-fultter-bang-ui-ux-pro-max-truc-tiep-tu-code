@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingValidatorSelectionDetailCard extends StatelessWidget {
   const StakingValidatorSelectionDetailCard({
@@ -22,7 +23,7 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -55,7 +56,8 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
             validator.description,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingValidatorSelectionDetailLineHeight,
+              height:
+                  EarnSpacingTokens.stakingValidatorSelectionDetailLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -80,12 +82,13 @@ class StakingValidatorSelectionDetailCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn15,
-            padding: AppSpacing.earnCardPaddingX3,
+            padding: EarnSpacingTokens.earnCardPaddingX3,
             child: Text(
               'Khi chọn validator riêng, bạn chịu rủi ro slashing nếu validator vi phạm. Ưu tiên validator Top Tier hoặc Recommended.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingValidatorSelectionDetailLineHeight,
+                height:
+                    EarnSpacingTokens.stakingValidatorSelectionDetailLineHeight,
               ),
             ),
           ),
@@ -108,13 +111,13 @@ class StakingValidatorSelectionFooterNote extends StatelessWidget {
     return VitCard(
       key: StakingValidatorSelectionKeys.footer,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         snapshot.footerNote,
         textAlign: TextAlign.center,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingValidatorSelectionDetailLineHeight,
+          height: EarnSpacingTokens.stakingValidatorSelectionDetailLineHeight,
         ),
       ),
     );

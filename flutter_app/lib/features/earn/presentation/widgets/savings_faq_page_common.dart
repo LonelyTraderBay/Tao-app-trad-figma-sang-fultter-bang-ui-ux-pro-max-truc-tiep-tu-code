@@ -19,7 +19,7 @@ class _FeedbackPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -48,7 +48,7 @@ class _EmptyResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         children: [
           const Icon(
@@ -84,7 +84,7 @@ class _SupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           const _QuestionIcon(color: AppColors.primary),
@@ -105,7 +105,7 @@ class _SupportCard extends StatelessWidget {
             key: SavingsFAQPage.supportButtonKey,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.earnHorizontalPaddingX3,
+            padding: EarnSpacingTokens.earnHorizontalPaddingX3,
             onPressed: () {
               HapticFeedback.selectionClick();
               context.go(snapshot.supportRoute);

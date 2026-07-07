@@ -15,7 +15,7 @@ class P2PDisputeEvidenceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pDisputeCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,8 +52,8 @@ class P2PDisputeEvidenceCard extends StatelessWidget {
                     side: BorderSide(color: AppColors.borderSolid),
                   ),
                   child: SizedBox(
-                    width: AppSpacing.p2pDisputeEvidenceThumb,
-                    height: AppSpacing.p2pDisputeEvidenceThumb,
+                    width: P2PSpacingTokens.p2pDisputeEvidenceThumb,
+                    height: P2PSpacingTokens.p2pDisputeEvidenceThumb,
                     child: Stack(
                       alignment: Alignment.center,
                       children: [

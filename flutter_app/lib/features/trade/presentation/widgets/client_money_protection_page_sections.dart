@@ -14,9 +14,9 @@ class _ProtectionNotice extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: AppColors.text1,
-            size: AppSpacing.tradeBotClientMoneyNoticeIcon,
+            size: TradeSpacingTokens.tradeBotClientMoneyNoticeIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,18 +61,18 @@ class _BalanceCard extends StatelessWidget {
             children: [
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
-                width: AppSpacing.tradeBotClientMoneyBalanceIcon,
-                height: AppSpacing.tradeBotClientMoneyBalanceIcon,
+                width: TradeSpacingTokens.tradeBotClientMoneyBalanceIcon,
+                height: TradeSpacingTokens.tradeBotClientMoneyBalanceIcon,
                 variant: VitCardVariant.inner,
                 alignment: Alignment.center,
                 borderColor: _moneyGreen.withValues(alpha: .35),
                 child: const Icon(
                   Icons.lock_outline_rounded,
                   color: _moneyGreen,
-                  size: AppSpacing.tradeBotClientMoneyBalanceGlyph,
+                  size: TradeSpacingTokens.tradeBotClientMoneyBalanceGlyph,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotStatusGap),
+              const SizedBox(width: TradeSpacingTokens.tradeBotStatusGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +110,7 @@ class _BalanceCard extends StatelessWidget {
                   value: snapshot.trustAccount,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotRowGap),
+              const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
               Expanded(
                 child: _MetricBox(
                   label: 'Last Reconciled',
@@ -161,7 +161,7 @@ class _Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -173,7 +173,7 @@ class _Overview extends StatelessWidget {
           children: [
             _Card(
               child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.none,
                 fullBleed: true,
                 density: VitDensity.compact,
@@ -199,9 +199,12 @@ class _Overview extends StatelessWidget {
                       const Icon(
                         Icons.info_outline_rounded,
                         color: AppColors.text1,
-                        size: AppSpacing.tradeBotClientMoneyInsolvencyIcon,
+                        size: TradeSpacingTokens
+                            .tradeBotClientMoneyInsolvencyIcon,
                       ),
-                      const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+                      const SizedBox(
+                        width: TradeSpacingTokens.tradeBotDisclosureGap,
+                      ),
                       Expanded(
                         child: RichText(
                           text: TextSpan(
@@ -253,9 +256,9 @@ class _ProtectionItem extends StatelessWidget {
         const Icon(
           Icons.check_circle_outline,
           color: _moneyGreen,
-          size: AppSpacing.tradeToolBodyIcon,
+          size: TradeSpacingTokens.tradeToolBodyIcon,
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+        const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

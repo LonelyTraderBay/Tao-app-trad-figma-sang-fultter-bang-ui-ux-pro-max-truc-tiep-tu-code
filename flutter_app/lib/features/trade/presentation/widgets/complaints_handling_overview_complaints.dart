@@ -7,21 +7,22 @@ class _OverviewContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'Complaint Categories',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
         _CategoryGrid(categories: snapshot.categories),
         const VitSectionHeader(
           title: 'Resolution Timeline',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
@@ -59,7 +60,7 @@ class _CategoryGrid extends StatelessWidget {
                       Icon(
                         _iconForCategory(category.icon),
                         color: _complaintsPrimary,
-                        size: AppSpacing.complaintCaseSmallIcon,
+                        size: TradeSpacingTokens.complaintCaseSmallIcon,
                       ),
                       const SizedBox(width: AppSpacing.x2),
                       Expanded(
@@ -132,7 +133,8 @@ class _TimelineCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != timeline.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (item != timeline.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -147,14 +149,15 @@ class _MyComplaintsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'Your Complaints',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
@@ -183,11 +186,11 @@ class _ComplaintCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox.square(
-            dimension: AppSpacing.walletAddressIconSize,
+            dimension: WalletSpacingTokens.walletAddressIconSize,
             child: Icon(
               Icons.chat_bubble_outline_rounded,
               color: status.color,
-              size: AppSpacing.complaintCaseTrailingIcon,
+              size: TradeSpacingTokens.complaintCaseTrailingIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
@@ -228,7 +231,7 @@ class _ComplaintCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.complaintCaseSmallIcon,
+            size: TradeSpacingTokens.complaintCaseSmallIcon,
           ),
         ],
       ),

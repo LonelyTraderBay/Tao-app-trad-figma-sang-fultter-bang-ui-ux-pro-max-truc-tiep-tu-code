@@ -37,7 +37,7 @@ class _RouteCard extends StatelessWidget {
             key: LaunchpadBridgeComparePage.routeSelectKey(route.id),
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.large,
-            padding: AppSpacing.launchpadPaddingX4,
+            padding: LaunchpadSpacingTokens.launchpadPaddingX4,
             onTap: onSelect,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,9 +64,13 @@ class _RouteCard extends StatelessWidget {
                           if (route.recommended) const _RecommendedBadge(),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       _RouteTags(route: route, comparison: comparison),
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                       _RouteMetrics(route: route, comparison: comparison),
                     ],
                   ),
@@ -92,7 +96,7 @@ class _RouteCard extends StatelessWidget {
             key: LaunchpadBridgeComparePage.expandKey(route.id),
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
-            padding: AppSpacing.launchpadVerticalPaddingX2,
+            padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
             onTap: onExpand,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -136,15 +140,15 @@ class _RankedProviderBadge extends StatelessWidget {
         _ProviderBadge(
           label: route.providerIcon,
           accent: route.accent.resolve(),
-          size: AppSpacing.launchpadBox40,
+          size: LaunchpadSpacingTokens.launchpadBox40,
         ),
         if (rank == 1)
           Positioned(
             top: -6,
             right: -6,
             child: SizedBox(
-              width: AppSpacing.launchpadBox17,
-              height: AppSpacing.launchpadBox17,
+              width: LaunchpadSpacingTokens.launchpadBox17,
+              height: LaunchpadSpacingTokens.launchpadBox17,
               child: DecoratedBox(
                 decoration: const ShapeDecoration(
                   color: AppColors.primarySoft,
@@ -156,7 +160,7 @@ class _RankedProviderBadge extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.onAccent,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.launchpadLineHeightTight,
+                      height: LaunchpadSpacingTokens.launchpadLineHeightTight,
                     ),
                   ),
                 ),
@@ -216,7 +220,7 @@ class _RecommendedBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadMiniChipPadding,
+        padding: LaunchpadSpacingTokens.launchpadMiniChipPadding,
         child: Text(
           'KHUYẾN NGHỊ',
           style: AppTextStyles.micro.copyWith(
@@ -289,7 +293,7 @@ class _MetricTag extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadMiniChipPadding,
+        padding: LaunchpadSpacingTokens.launchpadMiniChipPadding,
         child: Text(
           tag.label,
           style: AppTextStyles.micro.copyWith(
@@ -442,7 +446,7 @@ class _SecurityDots extends StatelessWidget {
       children: [
         for (var i = 0; i < 5; i++)
           Padding(
-            padding: AppSpacing.launchpadRightMarginXxs,
+            padding: LaunchpadSpacingTokens.launchpadRightMarginXxs,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: i < filled
@@ -451,8 +455,8 @@ class _SecurityDots extends StatelessWidget {
                 shape: const CircleBorder(),
               ),
               child: const SizedBox(
-                width: AppSpacing.launchpadDotXs,
-                height: AppSpacing.launchpadDotXs,
+                width: LaunchpadSpacingTokens.launchpadDotXs,
+                height: LaunchpadSpacingTokens.launchpadDotXs,
               ),
             ),
           ),
@@ -479,7 +483,7 @@ class _ExpandedRouteDetails extends StatelessWidget {
             color: AppColors.divider,
           ),
           Padding(
-            padding: AppSpacing.launchpadSheetHeaderPadding,
+            padding: LaunchpadSpacingTokens.launchpadSheetHeaderPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -498,20 +502,22 @@ class _ExpandedRouteDetails extends StatelessWidget {
                       for (final hop in route.path) ...[
                         _HopChip(label: hop.fromToken, subtitle: hop.chain),
                         const Padding(
-                          padding: AppSpacing.launchpadHorizontalPaddingX1,
+                          padding: LaunchpadSpacingTokens
+                              .launchpadHorizontalPaddingX1,
                           child: Icon(
                             Icons.arrow_forward_rounded,
                             color: AppColors.text3,
-                            size: AppSpacing.launchpadIconXs,
+                            size: LaunchpadSpacingTokens.launchpadIconXs,
                           ),
                         ),
                         _HopChip(label: hop.dex, subtitle: 'DEX'),
                         const Padding(
-                          padding: AppSpacing.launchpadHorizontalPaddingX1,
+                          padding: LaunchpadSpacingTokens
+                              .launchpadHorizontalPaddingX1,
                           child: Icon(
                             Icons.arrow_forward_rounded,
                             color: AppColors.text3,
-                            size: AppSpacing.launchpadIconXs,
+                            size: LaunchpadSpacingTokens.launchpadIconXs,
                           ),
                         ),
                         _HopChip(label: hop.toToken, subtitle: hop.chain),

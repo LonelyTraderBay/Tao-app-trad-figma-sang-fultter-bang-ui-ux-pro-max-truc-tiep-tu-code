@@ -9,7 +9,7 @@ class _PositionModeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: AppSpacing.tradeToolRiskIntroPadding,
+      padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -112,7 +112,7 @@ class _PositionTab extends StatelessWidget {
     return Column(
       children: [
         _Panel(
-          padding: AppSpacing.tradeToolRiskIntroPadding,
+          padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -161,7 +161,7 @@ class _ActionButton extends StatelessWidget {
       onTap: onTap,
       constraints: const BoxConstraints(minHeight: _advancedActionMinExtent),
       alignment: Alignment.center,
-      padding: AppSpacing.tradeToolMetricRowPadding,
+      padding: TradeSpacingTokens.tradeToolMetricRowPadding,
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
       child: Text(
@@ -184,7 +184,7 @@ class _MockPositionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Panel(
-      padding: AppSpacing.tradeToolRiskIntroPadding,
+      padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -227,7 +227,7 @@ class _OrdersTab extends StatelessWidget {
     return Column(
       children: [
         _Panel(
-          padding: AppSpacing.tradeToolRiskIntroPadding,
+          padding: TradeSpacingTokens.tradeToolRiskIntroPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

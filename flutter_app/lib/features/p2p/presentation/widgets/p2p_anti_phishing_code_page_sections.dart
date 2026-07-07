@@ -178,7 +178,7 @@ class _EmailExampleCard extends StatelessWidget {
                         const Icon(
                           Icons.mail_outline_rounded,
                           color: AppColors.text3,
-                          size: AppSpacing.p2pSecurityDetailsInlineIcon,
+                          size: P2PSpacingTokens.p2pSecurityDetailsInlineIcon,
                         ),
                         const SizedBox(width: AppSpacing.x1),
                         Expanded(
@@ -194,12 +194,14 @@ class _EmailExampleCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     VitCard(
                       radius: VitCardRadius.standard,
                       variant: VitCardVariant.inner,
                       borderColor: AppColors.transparent,
-                      padding: AppSpacing.p2pSecurityDetailsInnerPadding,
+                      padding: P2PSpacingTokens.p2pSecurityDetailsInnerPadding,
                       child: Text(
                         example.preview,
                         maxLines: 2,
@@ -250,7 +252,7 @@ class _WarningCard extends StatelessWidget {
         side: BorderSide(color: AppColors.sell20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pSecurityDetailsInnerPadding,
+        padding: P2PSpacingTokens.p2pSecurityDetailsInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -300,7 +302,7 @@ class _CheckRow extends StatelessWidget {
         const Icon(
           Icons.check_circle_outline_rounded,
           color: AppColors.buy,
-          size: AppSpacing.p2pSecurityDetailsCheckIcon,
+          size: P2PSpacingTokens.p2pSecurityDetailsCheckIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -330,11 +332,11 @@ class _BulletRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: AppSpacing.p2pSecurityDetailsBulletPadding,
+          padding: P2PSpacingTokens.p2pSecurityDetailsBulletPadding,
           child: Icon(
             Icons.circle,
             color: AppColors.text3,
-            size: AppSpacing.p2pSecurityDetailsSmallBullet,
+            size: P2PSpacingTokens.p2pSecurityDetailsSmallBullet,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

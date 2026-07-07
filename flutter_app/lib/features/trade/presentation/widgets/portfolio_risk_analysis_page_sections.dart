@@ -74,7 +74,7 @@ class _RiskSummaryCard extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       height: _riskSummaryExtent,
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -110,7 +110,7 @@ class _RiskWarningPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotDisputeNoticePadding,
+      padding: TradeSpacingTokens.tradeBotDisputeNoticePadding,
       borderColor: _riskWarningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +120,7 @@ class _RiskWarningPanel extends StatelessWidget {
               const Icon(
                 Icons.warning_amber_rounded,
                 color: _riskWarningText,
-                size: AppSpacing.tradeBotSmallIcon,
+                size: TradeSpacingTokens.tradeBotSmallIcon,
               ),
               const SizedBox(width: _riskSectionSpace),
               Text(
@@ -190,7 +190,7 @@ class _ExposureTab extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Asset Allocation',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
         ),
         const SizedBox(height: _riskSectionSpace),
@@ -230,7 +230,7 @@ class _AssetExposureRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       height: _riskAssetRowExtent,
-      padding: AppSpacing.tradeBotMetricBoxPadding,
+      padding: TradeSpacingTokens.tradeBotMetricBoxPadding,
       child: Row(
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
@@ -288,7 +288,7 @@ class _DiversificationNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotDisputeNoticePadding,
+      padding: TradeSpacingTokens.tradeBotDisputeNoticePadding,
       borderColor: _riskPrimary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,7 +296,7 @@ class _DiversificationNote extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _riskPrimary,
-            size: AppSpacing.tradeBotMediumIcon,
+            size: TradeSpacingTokens.tradeBotMediumIcon,
           ),
           const SizedBox(width: _riskSectionSpace),
           Expanded(

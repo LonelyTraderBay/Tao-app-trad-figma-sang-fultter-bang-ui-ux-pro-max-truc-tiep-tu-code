@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pE2EVisualNavClearance = 112;
 const double _p2pE2ENativeNavClearance = 88;
@@ -26,13 +27,14 @@ const double _p2pE2EStepNodeExtent = AppSpacing.iconLg;
 const double _p2pE2EConnectorExtent = AppSpacing.x3;
 const double _p2pE2EConnectorThickness = AppSpacing.hairlineStroke;
 const double _p2pE2ELockExtent = AppSpacing.x7;
-const double _p2pE2ELockIconExtent = AppSpacing.p2pHomeInlineIcon;
+const double _p2pE2ELockIconExtent = P2PSpacingTokens.p2pHomeInlineIcon;
 const double _p2pE2EBodyLineHeight = 1.45;
 const double _p2pE2EStepLineHeight = 1.35;
 const double _p2pE2EFingerprintLineHeight = 1.55;
 const double _p2pE2EFingerprintLetterSpacing = AppSpacing.hairlineStroke;
-const EdgeInsets _p2pE2ECardPadding = AppSpacing.p2pWalletCompactCardPadding;
-const EdgeInsets _p2pE2EServerPadding = AppSpacing.p2pWalletNoticePadding;
+const EdgeInsets _p2pE2ECardPadding =
+    P2PSpacingTokens.p2pWalletCompactCardPadding;
+const EdgeInsets _p2pE2EServerPadding = P2PSpacingTokens.p2pWalletNoticePadding;
 
 class P2PE2EInfoPage extends ConsumerWidget {
   const P2PE2EInfoPage({super.key, this.shellRenderMode});
@@ -95,18 +97,28 @@ class P2PE2EInfoPage extends ConsumerWidget {
                       children: [
                         _Hero(snapshot: snapshot),
                         _EncryptionDiagram(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         _InfoItems(items: snapshot.infoItems),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         _FingerprintCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         _HowItWorks(steps: snapshot.steps),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         _ServerInfo(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pWalletNoticePadding,
+                          padding: P2PSpacingTokens.p2pWalletNoticePadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Rà soát mã hóa đầu cuối',
@@ -292,7 +304,8 @@ class _InfoItems extends StatelessWidget {
       children: [
         for (var index = 0; index < items.length; index++) ...[
           _InfoItemCard(item: items[index]),
-          if (index != items.length - 1) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (index != items.length - 1)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

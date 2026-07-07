@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingFAQPage extends ConsumerStatefulWidget {
   const StakingFAQPage({super.key, this.shellRenderMode});
@@ -70,7 +71,9 @@ class _StakingFAQPageState extends ConsumerState<StakingFAQPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
@@ -153,7 +156,7 @@ class _CategoryTabs extends StatelessWidget {
       key: StakingFAQPage.tabsKey,
       color: AppColors.surface,
       child: Padding(
-        padding: AppSpacing.earnHorizontalPaddingX3.copyWith(
+        padding: EarnSpacingTokens.earnHorizontalPaddingX3.copyWith(
           top: AppSpacing.x4,
         ),
         child: VitTabBar(
@@ -197,7 +200,8 @@ class _FAQList extends StatelessWidget {
             expanded: expandedIds.contains(item.id),
             onTap: () => onToggle(item.id),
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (item != items.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -227,7 +231,7 @@ class _FAQCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.earnCardPaddingX4,
+            padding: EarnSpacingTokens.earnCardPaddingX4,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -241,7 +245,8 @@ class _FAQCard extends StatelessWidget {
                   child: Text(
                     item.question,
                     style: AppTextStyles.baseMedium.copyWith(
-                      height: AppSpacing.stakingCommunityFaqQuestionLineHeight,
+                      height: EarnSpacingTokens
+                          .stakingCommunityFaqQuestionLineHeight,
                     ),
                   ),
                 ),
@@ -260,7 +265,7 @@ class _FAQCard extends StatelessWidget {
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
-              padding: AppSpacing.earnContentHorizontalPadding.copyWith(
+              padding: EarnSpacingTokens.earnContentHorizontalPadding.copyWith(
                 left: AppSpacing.x7,
                 top: AppSpacing.zero,
                 bottom: AppSpacing.x4,
@@ -269,7 +274,7 @@ class _FAQCard extends StatelessWidget {
                 item.answer,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingCommunityFaqAnswerLineHeight,
+                  height: EarnSpacingTokens.stakingCommunityFaqAnswerLineHeight,
                 ),
               ),
             ),
@@ -293,7 +298,7 @@ class _EmptyResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: StakingFAQPage.emptyKey,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: EarnSpacingTokens.earnCardPaddingX5,
       child: Column(
         children: [
           const Icon(
@@ -331,7 +336,7 @@ class _SupportPanel extends StatelessWidget {
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_create_ad_sections.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_create_ad_page_sections.dart';
 
@@ -179,8 +180,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
             if (_priceType == 'fixed')
               _InputBlock(
                 label: 'Giá ($_currency/$_asset) *',
-                hint:
-                    'Giá thị trường: ${preview.marketPriceLabel} $_currency',
+                hint: 'Giá thị trường: ${preview.marketPriceLabel} $_currency',
                 child: VitInput(
                   controller: _priceController,
                   fieldKey: P2PCreateAdPage.priceFieldKey,
@@ -224,9 +224,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
             keyboardType: TextInputType.number,
             suffix: Text(
               _asset,
-              style: AppTextStyles.caption.copyWith(
-                color: AppColors.text3,
-              ),
+              style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
             onChanged: (_) => setState(() {}),
           ),
@@ -300,8 +298,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
         P2PCreateAdMultilineBlock(
           label: 'Điều kiện giao dịch (tuỳ chọn)',
           controller: _termsController,
-          hintText:
-              'VD: Chỉ giao dịch với tài khoản đã xác minh KYC...',
+          hintText: 'VD: Chỉ giao dịch với tài khoản đã xác minh KYC...',
         ),
         P2PCreateAdMultilineBlock(
           label: 'Tin nhắn tự động (tuỳ chọn)',
@@ -313,9 +310,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
         P2PCreateAdWarningCard(text: snapshot.warningNote),
         P2PCreateAdLivePreviewCard(
           expanded: _previewExpanded,
-          onTap: () => setState(
-            () => _previewExpanded = !_previewExpanded,
-          ),
+          onTap: () => setState(() => _previewExpanded = !_previewExpanded),
           preview: preview,
         ),
         const VitHighRiskStatePanel(
@@ -455,7 +450,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
               variant: VitCtaButtonVariant.secondary,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
+              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Hủy'),
             ),
             VitCtaButton(
@@ -466,7 +461,7 @@ class _P2PCreateAdPageState extends ConsumerState<P2PCreateAdPage> {
                   : VitCtaButtonVariant.danger,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
+              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Đăng'),
             ),
           ],

@@ -5,6 +5,8 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 const walletManagerBackground = AppColors.bg;
 const walletManagerPanel = AppColors.surface;
@@ -55,11 +57,11 @@ class WalletManagerDefaultBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _WalletManagerBadge(
-      height: AppSpacing.walletManagerDefaultBadgeHeight,
+      height: WalletSpacingTokens.walletManagerDefaultBadgeHeight,
       label: 'DEFAULT',
       textColor: walletManagerGreen,
       backgroundColor: walletManagerGreen.withValues(alpha: .13),
-      padding: AppSpacing.walletManagerCompactBadgePadding,
+      padding: WalletSpacingTokens.walletManagerCompactBadgePadding,
       borderRadius: AppRadii.walletHistoryStatusBadgeRadius,
     );
   }
@@ -73,11 +75,11 @@ class WalletManagerAssetChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _WalletManagerBadge(
-      height: AppSpacing.walletManagerAssetChipHeight,
+      height: WalletSpacingTokens.walletManagerAssetChipHeight,
       label: symbol,
       textColor: AppColors.textSoftBlue,
       backgroundColor: AppColors.overlaySubtle,
-      padding: AppSpacing.walletManagerBadgePadding,
+      padding: WalletSpacingTokens.walletManagerBadgePadding,
       borderRadius: AppRadii.badgeRadius,
     );
   }
@@ -96,11 +98,11 @@ class WalletManagerTypeBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _WalletManagerBadge(
-      height: AppSpacing.walletManagerTypeBadgeHeight,
+      height: WalletSpacingTokens.walletManagerTypeBadgeHeight,
       label: label,
       textColor: color,
       backgroundColor: color.withValues(alpha: .15),
-      padding: AppSpacing.walletManagerBadgePadding,
+      padding: WalletSpacingTokens.walletManagerBadgePadding,
       borderRadius: AppRadii.pillRadius,
     );
   }
@@ -141,7 +143,7 @@ class _WalletManagerBadge extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(
                   color: textColor,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.tradeBotLineHeightTight,
+                  height: TradeSpacingTokens.tradeBotLineHeightTight,
                 ),
               ),
             ),
@@ -178,9 +180,9 @@ class WalletManagerSecurityNotice extends StatelessWidget {
     return VitCard(
       key: const Key('sc148_multi_manager_security_note'),
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletManagerSecurityMinHeight,
+        minHeight: WalletSpacingTokens.walletManagerSecurityMinHeight,
       ),
-      padding: AppSpacing.walletManagerSecurityPadding,
+      padding: WalletSpacingTokens.walletManagerSecurityPadding,
       variant: VitCardVariant.ghost,
       borderColor: walletManagerPrimary.withValues(alpha: .20),
       background: ColoredBox(
@@ -193,16 +195,16 @@ class WalletManagerSecurityNotice extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: walletManagerPrimary,
-            size: AppSpacing.walletManagerSecurityIcon,
+            size: WalletSpacingTokens.walletManagerSecurityIcon,
           ),
-          const SizedBox(width: AppSpacing.walletManagerSecurityGap),
+          const SizedBox(width: WalletSpacingTokens.walletManagerSecurityGap),
           Expanded(
             child: Text(
               'Địa chỉ được ẩn mặc định. Nhấn biểu tượng mắt để hiện. '
               'Không chia sẻ private key.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.tradeBotLineHeightReadable,
+                height: TradeSpacingTokens.tradeBotLineHeightReadable,
               ),
             ),
           ),

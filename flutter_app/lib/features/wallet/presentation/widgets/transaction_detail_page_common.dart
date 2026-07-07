@@ -11,7 +11,7 @@ class _SupportButton extends StatelessWidget {
       key: TransactionDetailPage.supportKey,
       onPressed: onTap,
       variant: VitCtaButtonVariant.warning,
-      height: AppSpacing.walletTransactionMissingActionHeight,
+      height: WalletSpacingTokens.walletTransactionMissingActionHeight,
       leading: const Icon(Icons.chat_bubble_outline_rounded),
       child: const Text('Liên hệ hỗ trợ'),
     );

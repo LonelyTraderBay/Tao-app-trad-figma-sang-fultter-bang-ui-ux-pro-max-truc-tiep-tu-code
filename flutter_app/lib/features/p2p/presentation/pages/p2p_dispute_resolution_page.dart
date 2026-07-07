@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pDisputeResolutionVisualClearance = AppSpacing.x3;
 const double _p2pDisputeResolutionNativeClearance = AppSpacing.x2;
@@ -86,11 +87,11 @@ class _P2PDisputeResolutionPageState
                   child: SingleChildScrollView(
                     key: P2PDisputeResolutionPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDisputeResolutionScrollPadding(
+                    padding: P2PSpacingTokens.p2pDisputeResolutionScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.form,
+                      rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -147,7 +148,7 @@ class _DecisionHero extends StatelessWidget {
         side: BorderSide(color: AppColors.buy15),
       ),
       child: Padding(
-        padding: AppSpacing.p2pDisputeResolutionCardPadding,
+        padding: P2PSpacingTokens.p2pDisputeResolutionCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -201,7 +202,7 @@ class _DecisionDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pDisputeResolutionCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeResolutionCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -293,7 +294,7 @@ class _AppealCard extends StatelessWidget {
         side: BorderSide(color: AppColors.warn15),
       ),
       child: Padding(
-        padding: AppSpacing.p2pDisputeResolutionCardPadding,
+        padding: P2PSpacingTokens.p2pDisputeResolutionCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -326,13 +327,16 @@ class _AppealCard extends StatelessWidget {
                     variant: VitCtaButtonVariant.warning,
                     fullWidth: false,
                     height: AppSpacing.buttonCompact,
-                    padding: AppSpacing.p2pDisputeResolutionCompactCardPadding,
+                    padding:
+                        P2PSpacingTokens.p2pDisputeResolutionCompactCardPadding,
                     child: Text(
                       appealOpened ? 'Đang mở kháng cáo' : 'Kháng cáo',
                     ),
                   ),
                   if (appealOpened) ...[
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       'Form kháng cáo đã được chuẩn bị. Mock/fail-closed: chưa gửi appeal lên backend.',
                       style: AppTextStyles.micro.copyWith(

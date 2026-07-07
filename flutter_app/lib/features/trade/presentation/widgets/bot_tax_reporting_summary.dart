@@ -145,7 +145,9 @@ class _CostBasisPicker extends StatelessWidget {
                   Row(
                     children: [
                       _RadioDot(selected: selectedMethod == methods[i].$1),
-                      const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                      const SizedBox(
+                        width: TradeSpacingTokens.tradeBotSmallGap,
+                      ),
                       Text(
                         methods[i].$1,
                         style: AppTextStyles.caption.copyWith(
@@ -161,7 +163,7 @@ class _CostBasisPicker extends StatelessWidget {
                   Row(
                     children: [
                       const SizedBox(
-                        width: AppSpacing.tradeBotMethodTextIndent,
+                        width: TradeSpacingTokens.tradeBotMethodTextIndent,
                       ),
                       Expanded(
                         child: Text(
@@ -180,7 +182,7 @@ class _CostBasisPicker extends StatelessWidget {
             ),
           ),
           if (i != methods.length - 1)
-            const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+            const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
         ],
       ],
     );

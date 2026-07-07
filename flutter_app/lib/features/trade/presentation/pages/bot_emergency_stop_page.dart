@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/bot_emergency_stop_page_sections.dart';
 part '../widgets/bot_emergency_stop_page_common.dart';
@@ -83,7 +84,8 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
               child: VitInsetScrollView(
                 key: BotEmergencyStopPage.contentKey,
                 bottomInset: scrollEndClearance,
-                child: VitPageContent(rhythm: VitPageRhythm.standard, 
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
                   children: tradeShellWithProductTabs(
@@ -96,71 +98,72 @@ class _BotEmergencyStopPageState extends ConsumerState<BotEmergencyStopPage> {
                         primaryColor: _stopRed,
                         secondaryLabel: 'Lý do',
                         secondaryValue: _reasonId == null ? '—' : 'Đã chọn',
-                        secondaryColor:
-                            _reasonId == null ? AppColors.text3 : _stopGreen,
+                        secondaryColor: _reasonId == null
+                            ? AppColors.text3
+                            : _stopGreen,
                       ),
                       VitTradeSection(
                         title: 'Cảnh báo khẩn cấp',
-                      child: _WarningBanner(snapshot: snapshot),
-                    ),
-                    VitTradeSection(
-                      title: 'Bots to Stop (${snapshot.bots.length})',
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          for (final bot in snapshot.bots) _BotCard(bot: bot),
-                        ],
+                        child: _WarningBanner(snapshot: snapshot),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Reason for Emergency Stop',
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          for (final reason in snapshot.reasons)
-                            _ReasonOption(
-                              reason: reason,
-                              selected: reason.id == _reasonId,
-                              onTap: () =>
-                                  setState(() => _reasonId = reason.id),
-                            ),
-                        ],
+                      VitTradeSection(
+                        title: 'Bots to Stop (${snapshot.bots.length})',
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            for (final bot in snapshot.bots) _BotCard(bot: bot),
+                          ],
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Additional Actions',
-                      child: _CheckActionCard(
-                        key: BotEmergencyStopPage.closePositionsKey,
-                        selected: _closePositions,
-                        title: snapshot.closePositionsTitle,
-                        description: snapshot.closePositionsDescription,
-                        danger: false,
-                        onTap: () {
-                          setState(() => _closePositions = !_closePositions);
-                        },
+                      VitTradeSection(
+                        title: 'Reason for Emergency Stop',
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            for (final reason in snapshot.reasons)
+                              _ReasonOption(
+                                reason: reason,
+                                selected: reason.id == _reasonId,
+                                onTap: () =>
+                                    setState(() => _reasonId = reason.id),
+                              ),
+                          ],
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Confirmation',
-                      child: _CheckActionCard(
-                        key: BotEmergencyStopPage.confirmationKey,
-                        selected: _confirmed,
-                        title: snapshot.confirmationTitle,
-                        description: snapshot.confirmationDescription,
-                        danger: true,
-                        onTap: () => setState(() => _confirmed = !_confirmed),
+                      VitTradeSection(
+                        title: 'Additional Actions',
+                        child: _CheckActionCard(
+                          key: BotEmergencyStopPage.closePositionsKey,
+                          selected: _closePositions,
+                          title: snapshot.closePositionsTitle,
+                          description: snapshot.closePositionsDescription,
+                          danger: false,
+                          onTap: () {
+                            setState(() => _closePositions = !_closePositions);
+                          },
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Hỗ trợ',
-                      child: _SupportNotice(snapshot: snapshot),
-                    ),
-                    const VitBotRiskReviewFooter(
-                      title: 'Emergency stop review',
-                      message:
-                          'Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.',
-                      contractId: 'bot-emergency-stop-review',
-                    ),
+                      VitTradeSection(
+                        title: 'Confirmation',
+                        child: _CheckActionCard(
+                          key: BotEmergencyStopPage.confirmationKey,
+                          selected: _confirmed,
+                          title: snapshot.confirmationTitle,
+                          description: snapshot.confirmationDescription,
+                          danger: true,
+                          onTap: () => setState(() => _confirmed = !_confirmed),
+                        ),
+                      ),
+                      VitTradeSection(
+                        title: 'Hỗ trợ',
+                        child: _SupportNotice(snapshot: snapshot),
+                      ),
+                      const VitBotRiskReviewFooter(
+                        title: 'Emergency stop review',
+                        message:
+                            'Selected bots, reason, close-position choice, confirmation, risk impact and next step are reviewed before the stop request is submitted.',
+                        contractId: 'bot-emergency-stop-review',
+                      ),
                     ],
                   ),
                 ),

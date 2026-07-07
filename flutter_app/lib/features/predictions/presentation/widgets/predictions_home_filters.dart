@@ -86,7 +86,7 @@ class _CategoryChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _marketPrimary,
-      padding: AppSpacing.predictionHomeCategoryPadding,
+      padding: PredictionsSpacingTokens.predictionHomeCategoryPadding,
     );
   }
 }

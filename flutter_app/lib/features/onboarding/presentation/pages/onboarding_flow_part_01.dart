@@ -35,7 +35,8 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                     if (snapshot.screenState == OnboardingScreenState.offline)
                       Padding(
                         key: OnboardingFlow.offlineKey,
-                        padding: AppSpacing.onboardingHeaderProgressPadding,
+                        padding: OnboardingSpacingTokens
+                            .onboardingHeaderProgressPadding,
                         child: const VitOfflineBanner(
                           message:
                               'Mất kết nối. Bạn vẫn có thể hoàn thành onboarding.',
@@ -70,7 +71,9 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
                     width: constraints.maxWidth,
                     borderRadius: AppRadii.cardLargeRadius,
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   const VitSkeletonList(rows: 3),
                 ],
               ),
@@ -107,7 +110,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
         child: SafeArea(
           bottom: false,
           child: Padding(
-            padding: AppSpacing.onboardingHeaderWelcomePadding,
+            padding: OnboardingSpacingTokens.onboardingHeaderWelcomePadding,
             child: Align(
               alignment: Alignment.centerRight,
               child: VitCtaButton(
@@ -132,7 +135,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: AppSpacing.onboardingHeaderProgressPadding,
+          padding: OnboardingSpacingTokens.onboardingHeaderProgressPadding,
           child: _ProgressHeader(
             currentIndex: snapshot.steps.indexOf(_step),
             total: snapshot.steps.length,
@@ -206,7 +209,7 @@ class _OnboardingFlowState extends ConsumerState<OnboardingFlow> {
   Widget _buildFooter(OnboardingSnapshot snapshot) {
     final bottomPadding = MediaQuery.paddingOf(context).bottom;
     return Padding(
-      padding: AppSpacing.onboardingFooterPadding(bottomPadding),
+      padding: OnboardingSpacingTokens.onboardingFooterPadding(bottomPadding),
       child: switch (_step) {
         OnboardingStepDraft.welcome => Column(
           mainAxisSize: MainAxisSize.min,
@@ -331,7 +334,7 @@ class _WelcomeStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.form,
+      rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.tight,
       children: [
@@ -339,7 +342,7 @@ class _WelcomeStep extends StatelessWidget {
           variant: VitCardVariant.hero,
           radius: VitCardRadius.large,
           clip: true,
-          padding: AppSpacing.onboardingCardPadding,
+          padding: OnboardingSpacingTokens.onboardingCardPadding,
           background: const VitHeroGlow(center: Alignment(0, -0.96)),
           child: Column(
             children: [
@@ -359,7 +362,7 @@ class _WelcomeStep extends StatelessWidget {
           ),
         ),
         VitCard(
-          padding: AppSpacing.onboardingCardPadding,
+          padding: OnboardingSpacingTokens.onboardingCardPadding,
           radius: VitCardRadius.standard,
           child: Column(
             children: [
@@ -391,7 +394,7 @@ class _ModulesStep extends StatelessWidget {
     final accent = _accentForId(module.id);
 
     return VitPageContent(
- rhythm: VitPageRhythm.form,
+      rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.tight,
       children: [
@@ -416,7 +419,7 @@ class _ModulesStep extends StatelessWidget {
           ],
         ),
         VitCard(
-          padding: AppSpacing.onboardingCardPadding,
+          padding: OnboardingSpacingTokens.onboardingCardPadding,
           radius: VitCardRadius.large,
           child: Column(
             children: [
@@ -455,7 +458,7 @@ class _BoundariesStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.form,
+      rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
@@ -470,7 +473,7 @@ class _BoundariesStep extends StatelessWidget {
             onTap: () => onToggle(boundary.id),
           ),
         VitCard(
-          padding: AppSpacing.onboardingCardPadding,
+          padding: OnboardingSpacingTokens.onboardingCardPadding,
           radius: VitCardRadius.standard,
           borderColor: AppColors.warningBorder,
           child: Column(
@@ -519,7 +522,7 @@ class _TrustStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
-     rhythm: VitPageRhythm.form,
+      rhythm: VitPageRhythm.form,
       padding: VitContentPadding.defaultPadding,
       gap: VitContentGap.defaultGap,
       children: [
@@ -529,7 +532,7 @@ class _TrustStep extends StatelessWidget {
         ),
         for (final pillar in pillars) _TrustCard(pillar: pillar),
         VitCard(
-          padding: AppSpacing.onboardingCardPadding,
+          padding: OnboardingSpacingTokens.onboardingCardPadding,
           radius: VitCardRadius.standard,
           borderColor: AppColors.buy20,
           child: Column(

@@ -25,8 +25,12 @@ class _QuickLinkButton extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          Icon(icon, color: iconColor, size: AppSpacing.tradeBotCheckboxIcon),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          Icon(
+            icon,
+            color: iconColor,
+            size: TradeSpacingTokens.tradeBotCheckboxIcon,
+          ),
+          const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
           Expanded(
             child: Text(
               label,
@@ -41,7 +45,7 @@ class _QuickLinkButton extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.tradeBotMediumIcon,
+            size: TradeSpacingTokens.tradeBotMediumIcon,
           ),
         ],
       ),
@@ -100,7 +104,7 @@ class _CategoryIcon extends StatelessWidget {
     return VitCard(
       width: size,
       height: size,
-      radius: size >= AppSpacing.tradeBotClientCategoryHeroIcon
+      radius: size >= TradeSpacingTokens.tradeBotClientCategoryHeroIcon
           ? VitCardRadius.large
           : VitCardRadius.standard,
       variant: VitCardVariant.inner,

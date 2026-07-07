@@ -117,7 +117,7 @@ class _ReportsFilterRow extends StatelessWidget {
             onTap: () => onChanged(filter.id),
             color: _filterColor(filter),
             count: filter.count > 0 ? filter.count : null,
-            padding: AppSpacing.myArenaReportsFilterPadding,
+            padding: ArenaSpacingTokens.myArenaReportsFilterPadding,
           );
         },
       ),
@@ -133,7 +133,7 @@ class _ProcessBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.myArenaReportsCardPadding,
+      padding: ArenaSpacingTokens.myArenaReportsCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,7 +213,7 @@ class _ReportRow extends StatelessWidget {
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
             child: Padding(
-              padding: AppSpacing.myArenaReportsCardPadding,
+              padding: ArenaSpacingTokens.myArenaReportsCardPadding,
               child: Row(
                 children: [
                   _ReportIcon(
@@ -254,7 +254,8 @@ class _ReportRow extends StatelessWidget {
                         const SizedBox(height: AppSpacing.x1),
                         Wrap(
                           spacing: AppSpacing.x2,
-                          runSpacing: AppSpacing.myArenaReportsWrapRunSpacing,
+                          runSpacing:
+                              ArenaSpacingTokens.myArenaReportsWrapRunSpacing,
                           children: [
                             Text(
                               _targetLabel(report.targetType),
@@ -283,7 +284,7 @@ class _ReportRow extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right,
                     color: AppColors.text3,
-                    size: AppSpacing.myArenaReportsChevron,
+                    size: ArenaSpacingTokens.myArenaReportsChevron,
                   ),
                 ],
               ),
@@ -309,14 +310,18 @@ class _ReportIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.myArenaReportsIconBox,
+      dimension: ArenaSpacingTokens.myArenaReportsIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: 0.14),
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
         child: Center(
-          child: Icon(icon, color: color, size: AppSpacing.myArenaReportsIcon),
+          child: Icon(
+            icon,
+            color: color,
+            size: ArenaSpacingTokens.myArenaReportsIcon,
+          ),
         ),
       ),
     );

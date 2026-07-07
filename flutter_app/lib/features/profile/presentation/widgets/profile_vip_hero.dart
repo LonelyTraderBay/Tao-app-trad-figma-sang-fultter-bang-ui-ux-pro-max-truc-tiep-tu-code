@@ -14,7 +14,8 @@ List<Widget> _vipPageChildren({
     ProfileScreenState.error => [
       VitErrorState(
         key: VIPPage.errorKey,
-        title: 'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c ch\u01B0\u01A1ng tr\u00ECnh VIP',
+        title:
+            'Kh\u00F4ng t\u1EA3i \u0111\u01B0\u1EE3c ch\u01B0\u01A1ng tr\u00ECnh VIP',
         message: 'Ki\u1EC3m tra k\u1EBFt n\u1ED1i v\u00E0 th\u1EED l\u1EA1i.',
         actionLabel: 'Th\u1EED l\u1EA1i',
         onAction: () => context.go(AppRoutePaths.profileVip),
@@ -33,7 +34,8 @@ List<Widget> _vipPageChildren({
       const VitOfflineBanner(
         key: VIPPage.offlineKey,
         message: '\u0110ang ngo\u1EA1i tuy\u1EBFn',
-        detail: 'Hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u VIP \u0111\u00E3 l\u01B0u g\u1EA7n nh\u1EA5t.',
+        detail:
+            'Hi\u1EC3n th\u1ECB d\u1EEF li\u1EC7u VIP \u0111\u00E3 l\u01B0u g\u1EA7n nh\u1EA5t.',
       ),
       ..._vipReadySections(
         snapshot: snapshot,
@@ -136,10 +138,12 @@ class _VipHero extends StatelessWidget {
                               const Icon(
                                 Icons.workspace_premium_rounded,
                                 color: _vipGold,
-                                size: AppSpacing.profileVipHeroBadgeIcon,
+                                size: ProfileSpacingTokens
+                                    .profileVipHeroBadgeIcon,
                               ),
                               const SizedBox(
-                                width: AppSpacing.profileVipHeroTitleGap,
+                                width:
+                                    ProfileSpacingTokens.profileVipHeroTitleGap,
                               ),
                               Flexible(
                                 child: Text(
@@ -167,7 +171,9 @@ class _VipHero extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.profileVipHeroStatusGap),
+                    const SizedBox(
+                      width: ProfileSpacingTokens.profileVipHeroStatusGap,
+                    ),
                     VitStatusPill(
                       label: currentTier.badge,
                       status: VitStatusPillStatus.orange,
@@ -219,7 +225,7 @@ class _HeroFeeBox extends StatelessWidget {
           side: BorderSide(color: AppColors.onAccent.withValues(alpha: .08)),
         ),
         child: Padding(
-          padding: AppSpacing.profileHeroInfoPadding,
+          padding: ProfileSpacingTokens.profileHeroInfoPadding,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

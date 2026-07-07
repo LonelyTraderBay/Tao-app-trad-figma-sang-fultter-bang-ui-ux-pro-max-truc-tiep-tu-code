@@ -58,11 +58,12 @@ class _ProfileHeader extends StatelessWidget {
                     children: [
                       for (var i = 0; i < merchant.level; i++)
                         const Padding(
-                          padding: AppSpacing.p2pMerchantCommerceStarPadding,
+                          padding:
+                              P2PSpacingTokens.p2pMerchantCommerceStarPadding,
                           child: Icon(
                             Icons.star_rounded,
                             color: AppColors.warn,
-                            size: AppSpacing.p2pMerchantCommerceSmallIcon,
+                            size: P2PSpacingTokens.p2pMerchantCommerceSmallIcon,
                           ),
                         ),
                       const SizedBox(width: AppSpacing.x2),
@@ -100,7 +101,7 @@ class _ProfileHeader extends StatelessWidget {
                       const Icon(
                         Icons.calendar_today_outlined,
                         color: AppColors.text3,
-                        size: AppSpacing.p2pMerchantCommerceTinyIcon,
+                        size: P2PSpacingTokens.p2pMerchantCommerceTinyIcon,
                       ),
                       const SizedBox(width: AppSpacing.x1),
                       Text(
@@ -173,7 +174,7 @@ class _MerchantAvatar extends StatelessWidget {
         VitAssetAvatar(
           label: merchant.name,
           accentColor: AppColors.accent,
-          size: AppSpacing.p2pMerchantCommerceMerchantAvatarSize,
+          size: P2PSpacingTokens.p2pMerchantCommerceMerchantAvatarSize,
           radius: AppRadii.pillRadius,
         ),
         Positioned(
@@ -184,11 +185,11 @@ class _MerchantAvatar extends StatelessWidget {
             shape: const CircleBorder(
               side: BorderSide(
                 color: AppColors.bg,
-                width: AppSpacing.p2pMerchantCommerceOnlineBorderWidth,
+                width: P2PSpacingTokens.p2pMerchantCommerceOnlineBorderWidth,
               ),
             ),
             child: const SizedBox.square(
-              dimension: AppSpacing.p2pMerchantCommerceOnlineDot,
+              dimension: P2PSpacingTokens.p2pMerchantCommerceOnlineDot,
             ),
           ),
         ),
@@ -276,7 +277,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -319,7 +320,7 @@ class _ReputationCard extends StatelessWidget {
     final merchant = snapshot.merchant;
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceCompactPadding,
       child: Column(
         children: [
           Row(
@@ -388,7 +389,7 @@ class _TinyIconText extends StatelessWidget {
         Icon(
           icon,
           color: AppColors.text3,
-          size: AppSpacing.p2pMerchantCommerceTinyIcon,
+          size: P2PSpacingTokens.p2pMerchantCommerceTinyIcon,
         ),
         const SizedBox(width: AppSpacing.x1),
         Flexible(

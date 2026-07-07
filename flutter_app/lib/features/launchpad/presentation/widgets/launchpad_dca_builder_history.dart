@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_e
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_dca_builder_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadDcaHistorySection extends StatelessWidget {
   const LaunchpadDcaHistorySection({
@@ -30,7 +31,7 @@ class LaunchpadDcaHistorySection extends StatelessWidget {
         children: [
           VitCard(
             key: chartKey,
-            padding: AppSpacing.launchpadPaddingX4,
+            padding: LaunchpadSpacingTokens.launchpadPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,7 +73,7 @@ class _ExecutionBars extends StatelessWidget {
       0,
       (max, execution) => execution.tokens > max ? execution.tokens : max,
     );
-    final chartHeight = AppSpacing.launchpadDcaHistoryChartHeight;
+    final chartHeight = LaunchpadSpacingTokens.launchpadDcaHistoryChartHeight;
     return SizedBox(
       height: chartHeight,
       child: Row(
@@ -133,7 +134,7 @@ class _ExecutionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           const Icon(Icons.check_circle_outline_rounded, color: AppColors.buy),

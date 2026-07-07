@@ -46,7 +46,7 @@ class _PreviewPill extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.devChipPadding,
+        padding: AdminSpacingTokens.devChipPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -86,7 +86,7 @@ class _StateChip extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.devCompactChipPadding,
+        padding: AdminSpacingTokens.devCompactChipPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -129,7 +129,7 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Divider(
-      height: AppSpacing.devDividerHeight,
+      height: AdminSpacingTokens.devDividerHeight,
       color: AppColors.divider,
     );
   }

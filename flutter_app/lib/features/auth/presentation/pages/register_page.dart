@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/pages/otp_page.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
 
 part '../widgets/register_page_sections.dart';
 
@@ -179,7 +180,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: RegisterPage.contentKey,
-                padding: AppSpacing.authScrollBottomPadding,
+                padding: AuthSpacingTokens.authScrollBottomPadding,
                 child: AutofillGroup(
                   child: VitPageContent(
                     rhythm: VitPageRhythm.form,
@@ -187,7 +188,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       VitSegmentedChoice.withPrimaryAccent(
                         selected: _contactType,
                         onChanged: _setContactType,
-                        height: AppSpacing.authSegmentedHeight,
+                        height: AuthSpacingTokens.authSegmentedHeight,
                         options: [
                           VitSegmentedChoiceOption(
                             value: _RegisterContactType.email,
@@ -266,7 +267,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           ),
                           if (_passwordController.text.isNotEmpty)
                             Padding(
-                              padding: AppSpacing.authTopGapX3,
+                              padding: AuthSpacingTokens.authTopGapX3,
                               child: _PasswordStrength(
                                 password: _passwordController.text,
                               ),
@@ -335,8 +336,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 : () => context.go(AppRoutePaths.authLogin),
                             variant: VitCtaButtonVariant.ghost,
                             fullWidth: false,
-                            height: AppSpacing.authTextButtonHeight,
-                            padding: AppSpacing.authInlineTextButtonPadding,
+                            height: AuthSpacingTokens.authTextButtonHeight,
+                            padding:
+                                AuthSpacingTokens.authInlineTextButtonPadding,
                             child: Text(
                               'Đăng nhập',
                               style: AppTextStyles.caption.copyWith(
@@ -367,13 +369,13 @@ Widget _authInlineErrorBanner(String error) {
       side: BorderSide(color: AppColors.sell20),
     ),
     child: Padding(
-      padding: AppSpacing.authErrorBannerPaddingSm,
+      padding: AuthSpacingTokens.authErrorBannerPaddingSm,
       child: Row(
         children: [
           const Icon(
             Icons.error_outline_rounded,
             color: AppColors.sell,
-            size: AppSpacing.authErrorIcon,
+            size: AuthSpacingTokens.authErrorIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

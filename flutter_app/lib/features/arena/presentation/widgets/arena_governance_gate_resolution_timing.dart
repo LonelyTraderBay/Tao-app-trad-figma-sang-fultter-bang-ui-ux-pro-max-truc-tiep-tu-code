@@ -86,7 +86,7 @@ class _TimingRulesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaGovernanceCardPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -95,7 +95,7 @@ class _TimingRulesCard extends StatelessWidget {
               const Icon(
                 Icons.schedule_outlined,
                 color: AppColors.buy,
-                size: AppSpacing.arenaGovernanceIcon,
+                size: ArenaSpacingTokens.arenaGovernanceIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -118,7 +118,7 @@ class _TimingRulesCard extends StatelessWidget {
                 suffixIcon: const Icon(
                   Icons.calendar_today_outlined,
                   color: AppColors.text3,
-                  size: AppSpacing.arenaGovernanceIcon,
+                  size: ArenaSpacingTokens.arenaGovernanceIcon,
                 ),
               ),
             ),
@@ -175,18 +175,18 @@ class _WarningStack extends StatelessWidget {
       children: [
         for (final warning in result.warnings)
           Padding(
-            padding: AppSpacing.arenaGovernanceListItemPadding,
+            padding: ArenaSpacingTokens.arenaGovernanceListItemPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
               borderColor: AppColors.warningBorder,
-              padding: AppSpacing.arenaGovernanceInnerPadding,
+              padding: ArenaSpacingTokens.arenaGovernanceInnerPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Icon(
                     Icons.warning_amber_rounded,
                     color: AppColors.warn,
-                    size: AppSpacing.arenaGovernanceIcon,
+                    size: ArenaSpacingTokens.arenaGovernanceIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(

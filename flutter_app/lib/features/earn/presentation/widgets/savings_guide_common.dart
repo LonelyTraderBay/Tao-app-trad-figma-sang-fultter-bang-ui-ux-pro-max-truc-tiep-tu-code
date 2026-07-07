@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 final class SavingsGuideKeys {
   const SavingsGuideKeys._();
@@ -53,7 +54,7 @@ class SavingsGuideProgressHeader extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
-            minHeight: AppSpacing.earnGuideProgressHeight,
+            minHeight: EarnSpacingTokens.earnGuideProgressHeight,
             value: progress,
             backgroundColor: AppColors.borderSolid,
             valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
@@ -98,7 +99,7 @@ class SavingsGuideStepDetail extends StatelessWidget {
           step.description,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.earnGuideParagraphLineHeight,
+            height: EarnSpacingTokens.earnGuideParagraphLineHeight,
           ),
         ),
       ],
@@ -115,7 +116,7 @@ class SavingsGuideTipPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -142,10 +143,10 @@ class SavingsGuideTipPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: AppSpacing.earnWithdrawalBulletPadding,
+                  padding: EarnSpacingTokens.earnWithdrawalBulletPadding,
                   child: SizedBox(
-                    width: AppSpacing.earnGuideBulletSize,
-                    height: AppSpacing.earnGuideBulletSize,
+                    width: EarnSpacingTokens.earnGuideBulletSize,
+                    height: EarnSpacingTokens.earnGuideBulletSize,
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
                         color: AppColors.text3,
@@ -160,13 +161,14 @@ class SavingsGuideTipPanel extends StatelessWidget {
                     tip,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.earnGuideTipLineHeight,
+                      height: EarnSpacingTokens.earnGuideTipLineHeight,
                     ),
                   ),
                 ),
               ],
             ),
-            if (tip != tips.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (tip != tips.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -188,13 +190,13 @@ class SavingsGuideDifficultyPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           savingsGuideDifficultyLabel(difficulty),
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.earnGuidePillLineHeight,
+            height: EarnSpacingTokens.earnGuidePillLineHeight,
           ),
         ),
       ),
@@ -237,7 +239,7 @@ class SavingsGuideRoundIcon extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.earnGuidePillLineHeight,
+                    height: EarnSpacingTokens.earnGuidePillLineHeight,
                   ),
                 ),
         ),

@@ -14,7 +14,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadStakingPage.positionKey(position.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX5,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -99,7 +99,7 @@ class _PositionCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn15,
-            padding: AppSpacing.launchpadPaddingX4,
+            padding: LaunchpadSpacingTokens.launchpadPaddingX4,
             child: Row(
               children: [
                 const Icon(
@@ -197,7 +197,7 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
         VitCard(
           key: LaunchpadStakingPage.calculatorKey,
           radius: VitCardRadius.large,
-          padding: AppSpacing.launchpadPaddingX5,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -246,21 +246,25 @@ class _ApyCalculatorState extends State<_ApyCalculator> {
               VitCard(
                 variant: VitCardVariant.inner,
                 borderColor: pool.accent.resolve().withValues(alpha: .24),
-                padding: AppSpacing.launchpadPaddingX4,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX4,
                 child: Column(
                   children: [
                     _ResultRow(
                       label: 'APY hiệu lực',
                       value: '${_formatApy(apy)}%',
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     _ResultRow(
                       label: 'Phần thưởng ước tính',
                       value: '${_formatToken(rewards)} ${pool.rewardToken}',
                       valueColor: AppColors.warn,
                     ),
                     if (nextTier != null) ...[
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                       Text(
                         'Stake thêm ${_formatUsd(nextTier.minStake - _amount)} để lên ${nextTier.label} (+${_formatApy(nextTier.apyBonus)}%).',
                         textAlign: TextAlign.center,
@@ -289,7 +293,7 @@ class _RiskDisclosure extends StatelessWidget {
       key: LaunchpadStakingPage.disclaimerKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -332,7 +336,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.launchpadMetricCardPadding,
+      padding: LaunchpadSpacingTokens.launchpadMetricCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -384,7 +388,7 @@ class _LogoBadge extends StatelessWidget {
           shape: RoundedRectangleBorder(
             side: BorderSide(
               color: color.withValues(alpha: .34),
-              width: AppSpacing.launchpadBorderWidthFocus,
+              width: LaunchpadSpacingTokens.launchpadBorderWidthFocus,
             ),
             borderRadius: AppRadii.lgRadius,
           ),
@@ -395,7 +399,7 @@ class _LogoBadge extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.extraBold,
-              height: AppSpacing.launchpadLineHeightTight,
+              height: LaunchpadSpacingTokens.launchpadLineHeightTight,
             ),
           ),
         ),
@@ -414,7 +418,7 @@ class _InfoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         children: [
           Text(

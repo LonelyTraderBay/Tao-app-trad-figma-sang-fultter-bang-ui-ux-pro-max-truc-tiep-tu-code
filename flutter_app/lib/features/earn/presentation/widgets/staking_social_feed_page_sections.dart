@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingSocialFeedPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                    height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
               ],
@@ -53,7 +53,7 @@ class _Composer extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.composerKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           const _Avatar(label: 'Me', icon: Icons.person_rounded),
@@ -89,7 +89,7 @@ class _FeedTabs extends StatelessWidget {
       key: StakingSocialFeedPage.tabsKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnHorizontalPaddingX3,
+      padding: EarnSpacingTokens.earnHorizontalPaddingX3,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: activeTabId,
@@ -130,7 +130,7 @@ class _PostCard extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.postKey(post.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -279,7 +279,7 @@ class _TypeChip extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -289,7 +289,7 @@ class _TypeChip extends StatelessWidget {
               meta.label,
               style: AppTextStyles.micro.copyWith(
                 color: meta.color,
-                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
               ),
             ),
           ],
@@ -334,7 +334,7 @@ class _CommunityStats extends StatelessWidget {
     return VitCard(
       key: StakingSocialFeedPage.statsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

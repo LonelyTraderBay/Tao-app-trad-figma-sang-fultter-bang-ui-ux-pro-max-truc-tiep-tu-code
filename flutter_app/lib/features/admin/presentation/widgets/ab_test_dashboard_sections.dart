@@ -59,11 +59,11 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.adminBox40,
+            dimension: AdminSpacingTokens.adminBox40,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: tint,
@@ -71,7 +71,11 @@ class _SummaryCard extends StatelessWidget {
                   borderRadius: AppRadii.inputRadius,
                 ),
               ),
-              child: Icon(icon, color: accent, size: AppSpacing.adminIconXl),
+              child: Icon(
+                icon,
+                color: accent,
+                size: AdminSpacingTokens.adminIconXl,
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -144,7 +148,7 @@ class _ABTestCard extends StatelessWidget {
       child: VitCard(
         key: ABTestDashboard.testKey(test.id),
         onTap: onTap,
-        padding: AppSpacing.adminCardPadding,
+        padding: AdminSpacingTokens.adminCardPadding,
         borderColor: selected ? AppColors.accent30 : AppColors.cardBorder,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -161,7 +165,7 @@ class _ABTestCard extends StatelessWidget {
             if (selected) ...[
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               const Divider(
-                height: AppSpacing.adminDividerHeight,
+                height: AdminSpacingTokens.adminDividerHeight,
                 color: AppColors.divider,
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
@@ -187,7 +191,7 @@ class _TestHeader extends StatelessWidget {
         const Icon(
           Icons.science_outlined,
           color: AppColors.accent,
-          size: AppSpacing.adminIconMd,
+          size: AdminSpacingTokens.adminIconMd,
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
@@ -267,7 +271,7 @@ class _MiniStat extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
         ),
         child: Padding(
-          padding: AppSpacing.adminCompactPadding,
+          padding: AdminSpacingTokens.adminCompactPadding,
           child: Column(
             children: [
               Text(
@@ -335,7 +339,7 @@ class _VariantResult extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: SizedBox(
-              height: AppSpacing.adminProgressHeight,
+              height: AdminSpacingTokens.adminProgressHeight,
               child: Stack(
                 children: [
                   const Positioned.fill(

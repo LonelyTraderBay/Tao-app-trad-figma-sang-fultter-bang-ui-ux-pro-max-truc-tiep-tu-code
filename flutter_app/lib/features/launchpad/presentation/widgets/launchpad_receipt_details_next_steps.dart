@@ -11,11 +11,11 @@ class _ProjectReceiptCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .20),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.launchpadBox48,
+            dimension: LaunchpadSpacingTokens.launchpadBox48,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: subscription.accent.resolve().withValues(alpha: .12),
@@ -97,7 +97,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -122,7 +122,7 @@ class _ReceiptDetailsCard extends StatelessWidget {
               VitCard(
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
-                padding: AppSpacing.launchpadInlinePillPadding,
+                padding: LaunchpadSpacingTokens.launchpadInlinePillPadding,
                 onTap: () {
                   Clipboard.setData(ClipboardData(text: subscription.txHash));
                   HapticFeedback.selectionClick();
@@ -163,7 +163,7 @@ class _ReceiptInfoRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.launchpadVerticalPaddingX2,
+          padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
           child: Row(
             children: [
               Expanded(
@@ -214,7 +214,7 @@ class _ReceiptNextSteps extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -240,7 +240,7 @@ class _ReceiptNextSteps extends StatelessWidget {
             Padding(
               padding: i == 0
                   ? AppSpacing.zeroInsets
-                  : AppSpacing.launchpadTopPaddingX2,
+                  : LaunchpadSpacingTokens.launchpadTopPaddingX2,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -259,7 +259,7 @@ class _ReceiptNextSteps extends StatelessWidget {
                       _steps[i],
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.launchpadLineHeightShort,
+                        height: LaunchpadSpacingTokens.launchpadLineHeightShort,
                       ),
                     ),
                   ),
@@ -291,7 +291,7 @@ class _ReceiptDisclosure extends StatelessWidget {
             'Phân bổ thực tế có thể khác dự kiến nếu tổng đăng ký vượt hard cap. Hiệu suất quá khứ không đảm bảo kết quả tương lai.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: LaunchpadSpacingTokens.launchpadLineHeightShort,
             ),
           ),
         ),

@@ -15,7 +15,7 @@ class P2PDisputeStatusBanner extends StatelessWidget {
         side: BorderSide(color: color.withValues(alpha: .22)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pDisputeCardPadding,
+        padding: P2PSpacingTokens.p2pDisputeCardPadding,
         child: Row(
           children: [
             Material(
@@ -24,12 +24,12 @@ class P2PDisputeStatusBanner extends StatelessWidget {
                 borderRadius: AppRadii.inputRadius,
               ),
               child: SizedBox(
-                width: AppSpacing.p2pDisputeStatusIconBox,
-                height: AppSpacing.p2pDisputeStatusIconBox,
+                width: P2PSpacingTokens.p2pDisputeStatusIconBox,
+                height: P2PSpacingTokens.p2pDisputeStatusIconBox,
                 child: Icon(
                   p2pDisputeStatusIcon(dispute.status),
                   color: color,
-                  size: AppSpacing.p2pDisputeStatusIcon,
+                  size: P2PSpacingTokens.p2pDisputeStatusIcon,
                 ),
               ),
             ),
@@ -65,7 +65,7 @@ class P2PDisputeReasonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pDisputeCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

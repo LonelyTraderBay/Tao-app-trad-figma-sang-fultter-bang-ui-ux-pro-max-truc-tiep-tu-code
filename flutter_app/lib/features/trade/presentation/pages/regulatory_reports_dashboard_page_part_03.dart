@@ -25,7 +25,7 @@ class _QuickAction extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          Icon(icon, color: color, size: AppSpacing.tradeBotMediumIcon),
+          Icon(icon, color: color, size: TradeSpacingTokens.tradeBotMediumIcon),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Text(
@@ -41,7 +41,7 @@ class _QuickAction extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.tradeBotMediumIcon,
+            size: TradeSpacingTokens.tradeBotMediumIcon,
           ),
         ],
       ),
@@ -132,22 +132,22 @@ class _NoticePanel extends StatelessWidget {
       left: AppSpacing.contentPad,
       right: AppSpacing.contentPad,
       bottom:
-          AppSpacing.tradeBotBottomInsetVisual +
-          AppSpacing.tradeBotPanelGap +
+          TradeSpacingTokens.tradeBotBottomInsetVisual +
+          TradeSpacingTokens.tradeBotPanelGap +
           MediaQuery.paddingOf(context).bottom,
       child: Material(
         color: AppColors.transparent,
         child: VitCard(
-          padding: AppSpacing.tradeBotDisputeNoticePadding,
+          padding: TradeSpacingTokens.tradeBotDisputeNoticePadding,
           borderColor: _dashGreen.withValues(alpha: .35),
           child: Row(
             children: [
               const Icon(
                 Icons.check_circle_outline,
                 color: _dashGreen,
-                size: AppSpacing.tradeBotActionIcon,
+                size: TradeSpacingTokens.tradeBotActionIcon,
               ),
-              const SizedBox(width: AppSpacing.tradeBotRowGap),
+              const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
               Expanded(
                 child: Text(
                   text,
@@ -159,7 +159,7 @@ class _NoticePanel extends StatelessWidget {
                 tooltip: 'Dismiss notice',
                 onPressed: onClose,
                 color: AppColors.text3,
-                size: AppSpacing.tradeBotActionIcon,
+                size: TradeSpacingTokens.tradeBotActionIcon,
                 padding: AppSpacing.x1,
               ),
             ],
@@ -179,10 +179,10 @@ class _TrendPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final grid = Paint()
       ..color = _dashBorder.withValues(alpha: .62)
-      ..strokeWidth = AppSpacing.tradeBotHairline;
+      ..strokeWidth = TradeSpacingTokens.tradeBotHairline;
     final axis = Paint()
       ..color = AppColors.text3.withValues(alpha: .50)
-      ..strokeWidth = AppSpacing.tradeBotHairline;
+      ..strokeWidth = TradeSpacingTokens.tradeBotHairline;
     final chartRect = Rect.fromLTWH(58, 8, size.width - 66, size.height - 34);
     const maxValue = 240.0;
     final textPainter = TextPainter(textDirection: TextDirection.ltr);

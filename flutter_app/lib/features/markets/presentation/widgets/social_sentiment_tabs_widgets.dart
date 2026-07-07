@@ -11,7 +11,7 @@ class _SentimentTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDepthTabsHeight,
+        height: MarketsSpacingTokens.marketDepthTabsHeight,
         child: VitTabBar(
           activeKey: activeTab,
           variant: VitTabBarVariant.underline,

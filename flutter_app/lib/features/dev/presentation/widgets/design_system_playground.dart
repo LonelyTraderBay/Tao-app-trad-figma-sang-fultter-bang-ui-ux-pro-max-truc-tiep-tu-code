@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/dev/presentation/widgets/design_system_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class DesignSystemPlayground extends StatelessWidget {
   const DesignSystemPlayground({
@@ -60,7 +61,7 @@ class DesignSystemPlayground extends StatelessWidget {
       label: 'Interactive Playground',
       children: [
         VitCard(
-          padding: AppSpacing.devCardPadding,
+          padding: AdminSpacingTokens.devCardPadding,
           radius: VitCardRadius.large,
           borderColor: AppColors.primary20,
           child: Column(
@@ -74,7 +75,7 @@ class DesignSystemPlayground extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: AppSpacing.devCardPaddingLarge,
+                padding: AdminSpacingTokens.devCardPaddingLarge,
                 child: Center(
                   child: VitCtaButton(
                     variant: designSystemVariantFromString(variant),
@@ -124,7 +125,7 @@ class DesignSystemPlayground extends StatelessWidget {
           ),
         ),
         VitCard(
-          padding: AppSpacing.devCardPadding,
+          padding: AdminSpacingTokens.devCardPadding,
           radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
           child: Column(
@@ -138,7 +139,7 @@ class DesignSystemPlayground extends StatelessWidget {
               const SizedBox(height: AppSpacing.x4),
               VitCard(
                 variant: VitCardVariant.inner,
-                padding: AppSpacing.devCardPaddingLarge,
+                padding: AdminSpacingTokens.devCardPaddingLarge,
                 child: VitInput(
                   controller: inputController,
                   label: 'Email',
@@ -272,7 +273,7 @@ class _ChoiceChip extends StatelessWidget {
       label: label,
       selected: selected,
       onTap: onTap,
-      padding: AppSpacing.devChipPadding,
+      padding: AdminSpacingTokens.devChipPadding,
     );
   }
 }
@@ -297,7 +298,7 @@ class _ToggleChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: color,
-      padding: AppSpacing.devChipPadding,
+      padding: AdminSpacingTokens.devChipPadding,
       leading: Icon(
         active ? Icons.check_box_rounded : Icons.check_box_outline_blank,
       ),

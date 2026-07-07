@@ -13,22 +13,25 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 const _kidBorder = AppColors.borderSolid;
 const _kidPrimary = AppColors.primary;
 const _kidGreen = AppColors.buy;
 const _kidSectionCardGap = AppSpacing.x2;
 const _kidStackGap = AppSpacing.x3;
-const _kidPreviewPadding = AppSpacing.kidGeneratorPreviewPadding;
-const _kidSectionCardPadding = AppSpacing.kidGeneratorSectionCardPadding;
-const _kidMetricPadding = AppSpacing.kidGeneratorMetricPadding;
+const _kidPreviewPadding = WalletSpacingTokens.kidGeneratorPreviewPadding;
+const _kidSectionCardPadding =
+    WalletSpacingTokens.kidGeneratorSectionCardPadding;
+const _kidMetricPadding = WalletSpacingTokens.kidGeneratorMetricPadding;
 const _kidPreviewIconBox = AppSpacing.searchBarCompactHeight;
 const _kidPreviewIconSize = AppSpacing.iconMd;
 const _kidMetricHeight = AppSpacing.searchBarCompactHeight;
 const _kidSectionRowHeight = AppSpacing.buttonCompact;
 const _kidSectionIconBox = AppSpacing.buttonCompact;
 const _kidSectionStatusRadius = AppSpacing.x3;
-const _kidSectionStatusIcon = AppSpacing.tradeBotSmallIcon;
+const _kidSectionStatusIcon = TradeSpacingTokens.tradeBotSmallIcon;
 
 class KIDGeneratorPage extends ConsumerWidget {
   const KIDGeneratorPage({super.key, this.shellRenderMode});
@@ -92,7 +95,7 @@ class KIDGeneratorPage extends ConsumerWidget {
               _KidPreviewCard(document: snapshot.document),
               const VitSectionHeader(
                 title: 'Document Sections',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 variant: VitSectionHeaderVariant.accentBar,
                 accentColor: _kidPrimary,
               ),
@@ -116,16 +119,16 @@ class _RegulatoryNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.tradeBotClientMoneyNoticePadding,
+      padding: TradeSpacingTokens.tradeBotClientMoneyNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.text1,
-            size: AppSpacing.tradeBotCheckboxIcon,
+            size: TradeSpacingTokens.tradeBotCheckboxIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +140,7 @@ class _RegulatoryNotice extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: TradeSpacingTokens.tradeBotSmallGap),
                 Text(
                   'This Key Information Document must be provided before you '
                   'invest. It contains essential information in a standardized '
@@ -183,7 +186,7 @@ class _KidPreviewCard extends StatelessWidget {
                   size: _kidPreviewIconSize,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotRowGap),
+              const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +198,9 @@ class _KidPreviewCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       'Last updated: ${document.lastUpdated} • '
                       'Version ${document.version}',
@@ -217,7 +222,7 @@ class _KidPreviewCard extends StatelessWidget {
                   value: document.documentType,
                 ),
               ),
-              const SizedBox(width: AppSpacing.tradeBotRowGap),
+              const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
               Expanded(
                 child: _DocumentMetric(
                   label: 'Pages',
@@ -290,7 +295,7 @@ class _KidSectionCard extends StatelessWidget {
                 size: AppSpacing.inputPrefixIcon,
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotSmallGap),
+            const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
             Expanded(
               child: Text(
                 section.title,

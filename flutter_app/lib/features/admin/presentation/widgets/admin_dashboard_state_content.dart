@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/controllers/admin_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class AdminDashboardStateContent extends StatelessWidget {
   const AdminDashboardStateContent({
@@ -82,11 +83,15 @@ class AdminInlineEmptyState extends StatelessWidget {
       label: '$title. $message',
       child: VitCard(
         variant: VitCardVariant.ghost,
-        padding: AppSpacing.adminCardPadding,
+        padding: AdminSpacingTokens.adminCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, color: AppColors.text3, size: AppSpacing.adminIconLg),
+            Icon(
+              icon,
+              color: AppColors.text3,
+              size: AdminSpacingTokens.adminIconLg,
+            ),
             const SizedBox(width: AppSpacing.x3),
             Expanded(
               child: Column(
@@ -104,7 +109,7 @@ class AdminInlineEmptyState extends StatelessWidget {
                     message,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.adminLineHeightDense,
+                      height: AdminSpacingTokens.adminLineHeightDense,
                     ),
                   ),
                 ],

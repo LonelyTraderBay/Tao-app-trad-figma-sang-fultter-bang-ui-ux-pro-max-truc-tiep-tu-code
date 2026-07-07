@@ -83,9 +83,9 @@ class _AllocationSummary extends StatelessWidget {
               leading: Icon(
                 Icons.add_rounded,
                 color: AppColors.accent,
-                size: AppSpacing.dcaRebalanceIconSm,
+                size: DcaSpacingTokens.dcaRebalanceIconSm,
               ),
-              padding: AppSpacing.dcaPrimaryChipPadding,
+              padding: DcaSpacingTokens.dcaPrimaryChipPadding,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -127,7 +127,7 @@ class _AllocationSummary extends StatelessWidget {
                   children: targets
                       .map(
                         (target) => Padding(
-                          padding: AppSpacing.dcaBottomPaddingX3,
+                          padding: DcaSpacingTokens.dcaBottomPaddingX3,
                           child: _LegendRow(target: target),
                         ),
                       )
@@ -148,7 +148,7 @@ class _AllocationSummary extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: AppSpacing.dcaPrimaryChipPadding,
+              padding: DcaSpacingTokens.dcaPrimaryChipPadding,
               child: Row(
                 children: [
                   Icon(
@@ -156,7 +156,7 @@ class _AllocationSummary extends StatelessWidget {
                         ? Icons.check_circle_outline_rounded
                         : Icons.error_outline_rounded,
                     color: _valid ? AppColors.buy : AppColors.sell,
-                    size: AppSpacing.dcaRebalanceIcon,
+                    size: DcaSpacingTokens.dcaRebalanceIcon,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Text(
@@ -220,7 +220,8 @@ class _TargetList extends StatelessWidget {
                 onToleranceChanged(targets[index].id, value),
             onRemove: () => onRemove(targets[index].id),
           ),
-          if (index < targets.length - 1) const SizedBox(height: AppSpacing.rowGap),
+          if (index < targets.length - 1)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -281,7 +282,7 @@ class _TargetCard extends StatelessWidget {
                               const Icon(
                                 Icons.keyboard_arrow_down_rounded,
                                 color: AppColors.text3,
-                                size: AppSpacing.dcaRebalanceIcon,
+                                size: DcaSpacingTokens.dcaRebalanceIcon,
                               ),
                             ],
                           ),
@@ -343,7 +344,7 @@ class _TargetCard extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: AppSpacing.dcaPrimaryChipPadding,
+                    padding: DcaSpacingTokens.dcaPrimaryChipPadding,
                     child: Row(
                       children: [
                         Expanded(
@@ -358,7 +359,7 @@ class _TargetCard extends StatelessWidget {
                               const SizedBox(width: AppSpacing.x2),
                               const Icon(
                                 Icons.help_outline_rounded,
-                                size: AppSpacing.dcaRebalanceIconXs,
+                                size: DcaSpacingTokens.dcaRebalanceIconXs,
                                 color: AppColors.text3,
                               ),
                             ],

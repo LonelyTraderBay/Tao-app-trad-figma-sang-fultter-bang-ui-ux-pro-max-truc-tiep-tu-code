@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -95,7 +96,8 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
               child: VitInsetScrollView(
                 key: BotBacktestingPage.contentKey,
                 bottomInset: scrollEndClearance,
-                child: VitPageContent(rhythm: VitPageRhythm.standard, 
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
                   children: tradeShellWithProductTabs(
@@ -108,63 +110,64 @@ class _BotBacktestingPageState extends ConsumerState<BotBacktestingPage> {
                         secondaryLabel: 'Cặp giao dịch',
                         secondaryValue: '${snapshot.pairs.length}',
                       ),
-                    VitTradeSection(
-                      title: 'Strategy Selection',
-                      child: _StrategyGrid(
-                        strategies: snapshot.strategies,
-                        selectedId: _selectedStrategy,
-                        onChanged: (id) =>
-                            setState(() => _selectedStrategy = id),
+                      VitTradeSection(
+                        title: 'Strategy Selection',
+                        child: _StrategyGrid(
+                          strategies: snapshot.strategies,
+                          selectedId: _selectedStrategy,
+                          onChanged: (id) =>
+                              setState(() => _selectedStrategy = id),
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Trading Pair',
-                      child: _PairGrid(
-                        pairs: snapshot.pairs,
-                        selectedPair: _selectedPair,
-                        onChanged: (pair) =>
-                            setState(() => _selectedPair = pair),
+                      VitTradeSection(
+                        title: 'Trading Pair',
+                        child: _PairGrid(
+                          pairs: snapshot.pairs,
+                          selectedPair: _selectedPair,
+                          onChanged: (pair) =>
+                              setState(() => _selectedPair = pair),
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Date Range',
-                      child: _DateRangeGrid(
-                        ranges: snapshot.dateRanges,
-                        selectedId: _selectedRange,
-                        onChanged: (id) => setState(() => _selectedRange = id),
+                      VitTradeSection(
+                        title: 'Date Range',
+                        child: _DateRangeGrid(
+                          ranges: snapshot.dateRanges,
+                          selectedId: _selectedRange,
+                          onChanged: (id) =>
+                              setState(() => _selectedRange = id),
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Initial Capital',
-                      child: _CapitalInput(controller: _capitalController),
-                    ),
-                    VitTradeSection(
-                      title: 'Backtest period',
-                      child: _BacktestPeriodCard(
-                        strategyId: _selectedStrategy,
-                        pair: _selectedPair,
-                        range: range,
-                        capital: _capitalController.text,
+                      VitTradeSection(
+                        title: 'Initial Capital',
+                        child: _CapitalInput(controller: _capitalController),
                       ),
-                    ),
-                    _RunFooter(onRun: () => _handleRun(snapshot)),
-                    const TradeBodyReviewSection(
-                      title: 'Backtest body review',
-                      message: 'Bot backtesting body reviewed',
-                      detail:
-                          'Strategy, pair, range, capital, simulated period, submitting, and result states stay visible.',
-                      primary:
-                          'Assumption review remains above strategy and capital controls.',
-                      secondary:
-                          'Selected strategy, pair, and range stay visible before running.',
-                      tertiary:
-                          'Backtest output is framed as simulation, not guaranteed performance.',
-                    ),
-                    const VitBotRiskReviewFooter(
-                      title: 'Review backtest assumptions',
-                      message:
-                          'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
-                    ),
+                      VitTradeSection(
+                        title: 'Backtest period',
+                        child: _BacktestPeriodCard(
+                          strategyId: _selectedStrategy,
+                          pair: _selectedPair,
+                          range: range,
+                          capital: _capitalController.text,
+                        ),
+                      ),
+                      _RunFooter(onRun: () => _handleRun(snapshot)),
+                      const TradeBodyReviewSection(
+                        title: 'Backtest body review',
+                        message: 'Bot backtesting body reviewed',
+                        detail:
+                            'Strategy, pair, range, capital, simulated period, submitting, and result states stay visible.',
+                        primary:
+                            'Assumption review remains above strategy and capital controls.',
+                        secondary:
+                            'Selected strategy, pair, and range stay visible before running.',
+                        tertiary:
+                            'Backtest output is framed as simulation, not guaranteed performance.',
+                      ),
+                      const VitBotRiskReviewFooter(
+                        title: 'Review backtest assumptions',
+                        message:
+                            'Backtests are simulated. Confirm strategy, pair, date range, capital, and risk limits before running.',
+                      ),
                     ],
                   ),
                 ),

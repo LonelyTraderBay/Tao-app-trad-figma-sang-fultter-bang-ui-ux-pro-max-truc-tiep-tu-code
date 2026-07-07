@@ -17,7 +17,7 @@ class _StressBars extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.savingsWhatIfStressLabelWidth,
+                width: EarnSpacingTokens.savingsWhatIfStressLabelWidth,
                 child: Text(
                   entry.scenario.label,
                   maxLines: 1,
@@ -30,7 +30,8 @@ class _StressBars extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: AppRadii.smRadius,
                   child: LinearProgressIndicator(
-                    minHeight: AppSpacing.savingsWhatIfStressProgressHeight,
+                    minHeight:
+                        EarnSpacingTokens.savingsWhatIfStressProgressHeight,
                     value: entry.result.differencePct.abs() / maxAbs,
                     backgroundColor: AppColors.surface3,
                     valueColor: AlwaysStoppedAnimation<Color>(
@@ -43,7 +44,7 @@ class _StressBars extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x3),
               SizedBox(
-                width: AppSpacing.savingsWhatIfStressValueWidth,
+                width: EarnSpacingTokens.savingsWhatIfStressValueWidth,
                 child: Text(
                   '${entry.result.differencePct >= 0 ? '+' : ''}${entry.result.differencePct.toStringAsFixed(1)}%',
                   textAlign: TextAlign.right,
@@ -75,7 +76,7 @@ class _StressRankCard extends StatelessWidget {
     final color = result.difference >= 0 ? AppColors.buy : AppColors.sell;
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       borderColor: color.withValues(alpha: .18),
       child: Column(
         children: [

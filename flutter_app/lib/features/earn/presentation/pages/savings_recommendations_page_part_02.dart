@@ -16,7 +16,7 @@ class _StrategyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       borderColor: strategy.recommended ? AppColors.primary : null,
       onTap: onTap,
       child: Column(
@@ -141,7 +141,9 @@ class _AllocationBar extends StatelessWidget {
               flex: item.percentage,
               child: ColoredBox(
                 color: _assetColor(item.asset),
-                child: const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                child: const SizedBox(
+                  height: AppSpacing.pageRhythmCompactInnerGap,
+                ),
               ),
             ),
         ],
@@ -163,7 +165,7 @@ class _AllocationChip extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           '${item.asset} ${item.percentage}%',
           style: AppTextStyles.micro.copyWith(
@@ -186,7 +188,7 @@ class _InsightCard extends StatelessWidget {
     final color = _insightColor(insight.tone);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -311,7 +313,7 @@ class _StrategyDetailSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.earnPaddingX3,
+          padding: EarnSpacingTokens.earnPaddingX3,
           child: Column(
             children: [
               _SheetMetric(

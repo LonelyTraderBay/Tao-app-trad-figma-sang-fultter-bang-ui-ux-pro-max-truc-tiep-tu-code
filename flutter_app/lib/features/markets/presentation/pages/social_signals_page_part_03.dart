@@ -175,7 +175,7 @@ class _StatusBreakdown extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
             spacing: AppSpacing.rowGap,
-            runSpacing: AppSpacing.marketSocialCompactGap,
+            runSpacing: MarketsSpacingTokens.marketSocialCompactGap,
             children: [
               for (final entry in counts.entries)
                 if (entry.value > 0)
@@ -207,10 +207,10 @@ class _LegendItem extends StatelessWidget {
           color: color,
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
           child: const SizedBox.square(
-            dimension: AppSpacing.marketSocialLegendDot,
+            dimension: MarketsSpacingTokens.marketSocialLegendDot,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketSocialCompactGap),
+        const SizedBox(width: MarketsSpacingTokens.marketSocialCompactGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -236,13 +236,13 @@ class _SignalResultRow extends StatelessWidget {
       color: AppColors.surface,
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       child: Padding(
-        padding: AppSpacing.marketSocialResultPadding,
+        padding: MarketsSpacingTokens.marketSocialResultPadding,
         child: Row(
           children: [
             Icon(
               positive ? Icons.check_circle_rounded : Icons.cancel_rounded,
               color: positive ? AppColors.buy : AppColors.sell,
-              size: AppSpacing.marketSocialResultIcon,
+              size: MarketsSpacingTokens.marketSocialResultIcon,
             ),
             const SizedBox(width: AppSpacing.rowGap),
             Expanded(
@@ -259,7 +259,9 @@ class _SignalResultRow extends StatelessWidget {
                           height: AppTextStyles.numericMicro.height,
                         ),
                       ),
-                      const SizedBox(width: AppSpacing.marketSocialGap),
+                      const SizedBox(
+                        width: MarketsSpacingTokens.marketSocialGap,
+                      ),
                       _TinyBadge(
                         label: signal.direction == TradingSignalDirection.long
                             ? 'LONG'

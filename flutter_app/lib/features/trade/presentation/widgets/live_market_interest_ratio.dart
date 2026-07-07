@@ -17,9 +17,9 @@ class _LongShortCard extends StatelessWidget {
             title: 'Long/Short Ratio',
             badge: 'Long',
           ),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           const _ToggleBar(),
-          const SizedBox(height: AppSpacing.liveMarketCardGap),
+          const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
           Row(
             children: [
               _TrendLabel(
@@ -90,8 +90,8 @@ class _ToggleBar extends StatelessWidget {
     return LiveMarketCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.transparent,
-      height: AppSpacing.liveMarketToggleHeight,
-      padding: AppSpacing.liveMarketTogglePadding,
+      height: MarketsSpacingTokens.liveMarketToggleHeight,
+      padding: MarketsSpacingTokens.liveMarketTogglePadding,
       child: Row(
         children: [
           Expanded(
@@ -144,7 +144,7 @@ class _TrendLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgets = <Widget>[
-      Icon(icon, color: color, size: AppSpacing.liveMarketTrendIcon),
+      Icon(icon, color: color, size: MarketsSpacingTokens.liveMarketTrendIcon),
       const SizedBox(width: AppSpacing.statusPillGapMd),
       Text(
         text,

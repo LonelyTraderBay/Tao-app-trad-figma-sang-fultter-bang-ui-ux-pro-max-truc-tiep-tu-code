@@ -39,7 +39,9 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
                   child: SingleChildScrollView(
                     key: ReferralRewardsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.referralPageScrollPadding(bottomInset),
+                    padding: ReferralSpacingTokens.referralPageScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
@@ -105,7 +107,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.referralSheetPadding,
+            padding: ReferralSpacingTokens.referralSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -164,7 +166,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.referralSheetPadding,
+            padding: ReferralSpacingTokens.referralSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -211,7 +213,7 @@ class _ReferralRewardsPageState extends ConsumerState<ReferralRewardsPage> {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.referralSheetPadding,
+            padding: ReferralSpacingTokens.referralSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -251,7 +253,7 @@ class _RewardHero extends StatelessWidget {
       key: ReferralRewardsPage.heroKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -394,7 +396,7 @@ class _HeroStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       density: VitDensity.compact,
-      padding: AppSpacing.referralInnerPadding,
+      padding: ReferralSpacingTokens.referralInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

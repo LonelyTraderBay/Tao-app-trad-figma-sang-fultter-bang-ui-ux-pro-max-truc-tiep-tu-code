@@ -10,7 +10,7 @@ class _PredictionEventCard extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.predictionKey(event.id),
       onTap: () => context.go(event.route),
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: AppModuleAccents.predictions.withValues(alpha: .16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,7 @@ class _PredictionEventCard extends StatelessWidget {
             event.title,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
-              height: AppSpacing.discoveryPredictionTitleLineHeight,
+              height: LaunchpadSpacingTokens.discoveryPredictionTitleLineHeight,
               fontWeight: AppTextStyles.bold,
             ),
           ),
@@ -85,7 +85,7 @@ class _ArenaRoomCard extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.roomKey(room.id),
       onTap: () => context.go(room.route),
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: AppModuleAccents.arena.withValues(alpha: .16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +150,7 @@ class _ArenaModeCard extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.modeKey(mode.id),
       onTap: () => context.go(mode.route),
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       child: Row(
         children: [
           _SmallAccentIcon(
@@ -212,7 +212,7 @@ class _CreatorChip extends StatelessWidget {
       onTap: () => context.go(creator.route),
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
-      padding: AppSpacing.discoveryPillPadding,
+      padding: LaunchpadSpacingTokens.discoveryPillPadding,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -249,7 +249,7 @@ class _CreateRoomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: TopicHubPage.createRoomKey,
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: AppModuleAccents.arena.withValues(alpha: .22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,14 +286,14 @@ class _CreateRoomCard extends StatelessWidget {
                 onPressed: () => context.go(snapshot.createArenaRoute),
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: AppSpacing.discoveryChipHorizontalPadding,
+                padding: LaunchpadSpacingTokens.discoveryChipHorizontalPadding,
                 child: const Text('Tạo room'),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Padding(
-            padding: AppSpacing.discoveryLeftIndentedCopyPadding,
+            padding: LaunchpadSpacingTokens.discoveryLeftIndentedCopyPadding,
             child: Text(
               'Chủ đề chỉ là bối cảnh. Room Arena không ảnh hưởng vị thế Prediction Markets.',
               style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -315,7 +315,7 @@ class _DisclosureCard extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.disclosureKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       child: Text(
         'Lưu ý: Prediction Markets sử dụng USDT thật (vị thế thực). Arena Challenges chỉ dùng Arena Points (không phải tài sản tài chính). Topic Hub là trang khám phá, 2 module hoàn toàn riêng biệt.\n$notes',
         textAlign: TextAlign.center,

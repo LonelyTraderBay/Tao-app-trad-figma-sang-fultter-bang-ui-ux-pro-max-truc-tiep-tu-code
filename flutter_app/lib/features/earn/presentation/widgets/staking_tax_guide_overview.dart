@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_tax_guide_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingTaxOverviewTab extends StatelessWidget {
   const StakingTaxOverviewTab({super.key, required this.snapshot});
@@ -26,7 +27,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
             VitCard(
               key: StakingTaxGuideKeys.overview,
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -34,14 +35,18 @@ class StakingTaxOverviewTab extends StatelessWidget {
                     snapshot.overviewBody,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.stakingTaxOverviewLineHeight,
+                      height: EarnSpacingTokens.stakingTaxOverviewLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   for (final event in snapshot.incomeEvents) ...[
                     _IncomeEventCard(event: event),
                     if (event != snapshot.incomeEvents.last)
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                   ],
                 ],
               ),
@@ -55,13 +60,15 @@ class StakingTaxOverviewTab extends StatelessWidget {
             VitCard(
               key: StakingTaxGuideKeys.summary,
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 children: [
                   for (final summary in snapshot.countrySummaries) ...[
                     _CountrySummaryRow(summary: summary),
                     if (summary != snapshot.countrySummaries.last)
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                   ],
                 ],
               ),
@@ -74,7 +81,7 @@ class StakingTaxOverviewTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 children: [
                   _ToolRow(
@@ -117,7 +124,7 @@ class _IncomeEventCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: EarnSpacingTokens.earnCardPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -133,7 +140,7 @@ class _IncomeEventCard extends StatelessWidget {
               event.description,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingTaxEventLineHeight,
+                height: EarnSpacingTokens.stakingTaxEventLineHeight,
               ),
             ),
             const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -142,7 +149,7 @@ class _IncomeEventCard extends StatelessWidget {
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
                 fontStyle: FontStyle.italic,
-                height: AppSpacing.stakingTaxExampleLineHeight,
+                height: EarnSpacingTokens.stakingTaxExampleLineHeight,
               ),
             ),
           ],
@@ -208,14 +215,14 @@ class _ToolRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       onTap: onTap,
       child: Row(
         children: [
           Icon(
             icon,
             color: AppColors.text1,
-            size: AppSpacing.stakingTaxToolIcon,
+            size: EarnSpacingTokens.stakingTaxToolIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -240,7 +247,7 @@ class _ToolRow extends StatelessWidget {
           const Icon(
             Icons.open_in_new_rounded,
             color: AppColors.text3,
-            size: AppSpacing.stakingTaxExternalIcon,
+            size: EarnSpacingTokens.stakingTaxExternalIcon,
           ),
         ],
       ),

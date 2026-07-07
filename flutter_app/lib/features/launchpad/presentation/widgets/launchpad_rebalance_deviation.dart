@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadRebalanceDeviationCard extends StatelessWidget {
   const LaunchpadRebalanceDeviationCard({super.key, required this.assets});
@@ -16,7 +17,7 @@ class LaunchpadRebalanceDeviationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,11 +47,11 @@ class _DeviationRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const maxPercent = 36.0;
     return Padding(
-      padding: AppSpacing.launchpadBottomPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadBottomPaddingX2,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.launchpadBox44,
+            width: LaunchpadSpacingTokens.launchpadBox44,
             child: Text(
               asset.symbol,
               style: AppTextStyles.micro.copyWith(
@@ -67,7 +68,7 @@ class _DeviationRow extends StatelessWidget {
                   maxValue: maxPercent,
                   color: asset.accent.resolve(),
                 ),
-                const SizedBox(height: AppSpacing.launchpadGapXs),
+                const SizedBox(height: LaunchpadSpacingTokens.launchpadGapXs),
                 _DeviationBar(
                   value: asset.targetPercent,
                   maxValue: maxPercent,
@@ -102,7 +103,7 @@ class _DeviationBar extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: SizedBox(
             width: width,
-            height: AppSpacing.launchpadDotXs,
+            height: LaunchpadSpacingTokens.launchpadDotXs,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color,

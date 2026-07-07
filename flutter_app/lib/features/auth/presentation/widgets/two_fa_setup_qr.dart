@@ -11,13 +11,13 @@ class _QrStep extends StatelessWidget {
     return Column(
       children: [
         const _ShieldHero(),
-        const Padding(padding: AppSpacing.authTwoFaHeroTopPadding),
+        const Padding(padding: AuthSpacingTokens.authTwoFaHeroTopPadding),
         Text(
           'Bước 1: Quét mã QR',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const Padding(padding: AppSpacing.authTopGapX3),
+        const Padding(padding: AuthSpacingTokens.authTopGapX3),
         Text.rich(
           TextSpan(
             text: 'Mở ứng dụng ',
@@ -27,7 +27,7 @@ class _QrStep extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.authFooterLineHeight,
+                  height: AuthSpacingTokens.authFooterLineHeight,
                 ),
               ),
               const TextSpan(text: ' hoặc '),
@@ -36,7 +36,7 @@ class _QrStep extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.authFooterLineHeight,
+                  height: AuthSpacingTokens.authFooterLineHeight,
                 ),
               ),
               const TextSpan(text: ' và quét mã QR\nbên dưới.'),
@@ -45,14 +45,14 @@ class _QrStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.authFooterLineHeight,
+            height: AuthSpacingTokens.authFooterLineHeight,
           ),
         ),
-        const Padding(padding: AppSpacing.authTwoFaQrTopPadding),
+        const Padding(padding: AuthSpacingTokens.authTwoFaQrTopPadding),
         const _QrPreview(),
-        const Padding(padding: AppSpacing.authTwoFaSectionTopPadding),
+        const Padding(padding: AuthSpacingTokens.authTwoFaSectionTopPadding),
         _SecretKeyCard(copied: copied, onCopy: onCopy),
-        const Padding(padding: AppSpacing.authTwoFaSectionTopPadding),
+        const Padding(padding: AuthSpacingTokens.authTwoFaSectionTopPadding),
         const _WarningBanner(text: 'Giữ bí mật khóa này.'),
       ],
     );
@@ -67,7 +67,7 @@ class _ShieldHero extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: SizedBox.square(
-        dimension: AppSpacing.authHeroIconBoxSm,
+        dimension: AuthSpacingTokens.authHeroIconBoxSm,
         child: Material(
           color: _authPrimary10,
           shape: const RoundedRectangleBorder(
@@ -77,7 +77,7 @@ class _ShieldHero extends StatelessWidget {
           child: const Icon(
             Icons.shield_outlined,
             color: _authPrimary,
-            size: AppSpacing.authHeroIconMd,
+            size: AuthSpacingTokens.authHeroIconMd,
           ),
         ),
       ),
@@ -93,12 +93,12 @@ class _QrPreview extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: SizedBox.square(
-        dimension: AppSpacing.authTwoFaQrSize,
+        dimension: AuthSpacingTokens.authTwoFaQrSize,
         child: Material(
           color: AppColors.onAccent,
           borderRadius: AppRadii.cardLargeRadius,
           child: const Padding(
-            padding: AppSpacing.authTwoFaQrPadding,
+            padding: AuthSpacingTokens.authTwoFaQrPadding,
             child: CustomPaint(painter: _QrPainter()),
           ),
         ),
@@ -226,7 +226,7 @@ class _SecretKeyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       width: double.infinity,
-      padding: AppSpacing.authTwoFaSecretPadding,
+      padding: AuthSpacingTokens.authTwoFaSecretPadding,
       borderColor: _authPrimary30,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -235,7 +235,7 @@ class _SecretKeyCard extends StatelessWidget {
             'Hoặc nhập thủ công khóa bí mật:',
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
           ),
-          const Padding(padding: AppSpacing.authTopGapX4),
+          const Padding(padding: AuthSpacingTokens.authTopGapX4),
           Row(
             children: [
               Expanded(
@@ -255,11 +255,11 @@ class _SecretKeyCard extends StatelessWidget {
                 onPressed: onCopy,
                 variant: VitCtaButtonVariant.secondary,
                 fullWidth: false,
-                height: AppSpacing.authTextButtonHeightLg,
-                padding: AppSpacing.authTwoFaCopyButtonPadding,
+                height: AuthSpacingTokens.authTextButtonHeightLg,
+                padding: AuthSpacingTokens.authTwoFaCopyButtonPadding,
                 leading: Icon(
                   copied ? Icons.check_rounded : Icons.content_copy_rounded,
-                  size: AppSpacing.authTwoFaCopyIcon,
+                  size: AuthSpacingTokens.authTwoFaCopyIcon,
                 ),
                 child: Text(
                   copied ? 'Đã sao chép' : 'Sao chép',

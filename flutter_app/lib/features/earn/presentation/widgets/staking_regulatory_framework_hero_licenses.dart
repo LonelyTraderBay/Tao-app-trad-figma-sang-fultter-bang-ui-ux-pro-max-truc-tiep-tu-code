@@ -11,7 +11,7 @@ class _HeroCard extends StatelessWidget {
       key: StakingRegulatoryFrameworkPage.heroKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -97,7 +97,9 @@ class _LicensesTab extends StatelessWidget {
                     onTap: () => onLicenseTap(license),
                   ),
                   if (license != snapshot.licenses.last)
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                 ],
               ],
             ),
@@ -120,7 +122,7 @@ class _LicenseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

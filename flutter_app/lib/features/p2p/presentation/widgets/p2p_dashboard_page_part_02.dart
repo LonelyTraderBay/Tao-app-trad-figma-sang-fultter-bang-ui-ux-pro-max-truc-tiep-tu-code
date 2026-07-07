@@ -72,7 +72,7 @@ class _OrderBreakdownCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.breakdownKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -102,7 +102,7 @@ class _TopMerchantsCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.merchantsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -148,7 +148,7 @@ class _RecentActivityCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.activityKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -209,7 +209,7 @@ class _QuickNavigation extends StatelessWidget {
             ],
           ),
           if (row == 0)
-            const SizedBox(height: AppSpacing.p2pDashboardMetricRowGap),
+            const SizedBox(height: P2PSpacingTokens.p2pDashboardMetricRowGap),
         ],
       ],
     );
@@ -229,7 +229,7 @@ class _QuickActionTile extends StatelessWidget {
       variant: VitCardVariant.ghost,
       borderColor: AppColors.border,
       background: const ColoredBox(color: AppColors.surface),
-      padding: AppSpacing.p2pDashboardQuickActionPadding,
+      padding: P2PSpacingTokens.p2pDashboardQuickActionPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(action.route);
@@ -284,7 +284,7 @@ class _IconBubble extends StatelessWidget {
             icon,
             color: color,
             size: small
-                ? AppSpacing.p2pDashboardIconBubbleSmallIcon
+                ? P2PSpacingTokens.p2pDashboardIconBubbleSmallIcon
                 : AppSpacing.iconMd,
           ),
         ),
@@ -306,7 +306,7 @@ class _TrendBadge extends StatelessWidget {
         const Icon(
           Icons.arrow_outward_rounded,
           color: AppColors.buy,
-          size: AppSpacing.p2pDashboardTrendIcon,
+          size: P2PSpacingTokens.p2pDashboardTrendIcon,
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(

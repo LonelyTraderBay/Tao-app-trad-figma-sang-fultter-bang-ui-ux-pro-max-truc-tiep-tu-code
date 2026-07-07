@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_formatters.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class RoundIcon extends StatelessWidget {
   const RoundIcon({super.key, required this.icon, required this.color});
@@ -45,7 +46,7 @@ class StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -67,8 +68,8 @@ class SelectionDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.savingsBacktestSelectionDot,
-      height: AppSpacing.savingsBacktestSelectionDot,
+      width: EarnSpacingTokens.savingsBacktestSelectionDot,
+      height: EarnSpacingTokens.savingsBacktestSelectionDot,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           shape: CircleBorder(
@@ -83,8 +84,8 @@ class SelectionDot extends StatelessWidget {
                     shape: const CircleBorder(),
                   ),
                   child: const SizedBox(
-                    width: AppSpacing.savingsBacktestSelectionDotInner,
-                    height: AppSpacing.savingsBacktestSelectionDotInner,
+                    width: EarnSpacingTokens.savingsBacktestSelectionDotInner,
+                    height: EarnSpacingTokens.savingsBacktestSelectionDotInner,
                   ),
                 ),
               )

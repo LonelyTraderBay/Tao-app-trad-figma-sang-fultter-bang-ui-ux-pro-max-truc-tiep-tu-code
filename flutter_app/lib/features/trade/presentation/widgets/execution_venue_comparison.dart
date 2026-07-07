@@ -52,7 +52,7 @@ class _VenueCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.executionVenueRankGap),
+              const SizedBox(width: TradeSpacingTokens.executionVenueRankGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +66,9 @@ class _VenueCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     Text(
                       '${_formatInt(venue.volume)} orders • ${_formatUsd(venue.value)}',
                       maxLines: 1,
@@ -82,7 +84,7 @@ class _VenueCard extends StatelessWidget {
                 const Icon(
                   Icons.workspace_premium_outlined,
                   color: _venueAmber,
-                  size: AppSpacing.executionVenueWinnerIcon,
+                  size: TradeSpacingTokens.executionVenueWinnerIcon,
                 ),
             ],
           ),

@@ -15,7 +15,7 @@ class _ProviderCard extends StatelessWidget {
           VitAssetAvatar(
             label: provider.avatar,
             accentColor: _configurationPrimary,
-            size: AppSpacing.copyConfigurationAvatarSize,
+            size: TradeSpacingTokens.copyConfigurationAvatarSize,
             radius: AppRadii.avatarRadius,
             border: true,
           ),
@@ -227,7 +227,7 @@ class _ModeSection extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      width: AppSpacing.copyConfigurationRatioWidth,
+                      width: TradeSpacingTokens.copyConfigurationRatioWidth,
                       child: Text(
                         '${copyRatio.toStringAsFixed(0)}%',
                         textAlign: TextAlign.right,

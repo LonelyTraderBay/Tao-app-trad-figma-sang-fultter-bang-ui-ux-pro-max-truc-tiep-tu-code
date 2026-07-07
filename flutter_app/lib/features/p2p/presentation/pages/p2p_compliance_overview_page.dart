@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pComplianceVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -70,9 +71,10 @@ class P2PComplianceOverviewPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pComplianceOverviewScrollPadding(
-                      scrollEndPadding,
-                    ),
+                    padding:
+                        P2PSpacingTokens.p2pComplianceOverviewScrollPadding(
+                          scrollEndPadding,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
@@ -122,7 +124,7 @@ class _ComplianceHero extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
-        padding: AppSpacing.p2pComplianceOverviewHeroPadding,
+        padding: P2PSpacingTokens.p2pComplianceOverviewHeroPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -219,7 +221,7 @@ class _ComplianceRow extends StatelessWidget {
           context.go(item.route);
         },
         child: Padding(
-          padding: AppSpacing.p2pComplianceOverviewItemPadding,
+          padding: P2PSpacingTokens.p2pComplianceOverviewItemPadding,
           child: Row(
             children: [
               Material(

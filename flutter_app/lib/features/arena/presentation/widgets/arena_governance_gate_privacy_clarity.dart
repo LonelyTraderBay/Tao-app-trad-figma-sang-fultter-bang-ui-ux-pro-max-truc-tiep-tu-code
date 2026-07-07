@@ -16,7 +16,7 @@ class _PrivacyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaGovernanceCardPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,7 +34,7 @@ class _PrivacyCard extends StatelessWidget {
               VitCard(
                 key: ArenaGovernanceGatePage.compareKey,
                 variant: VitCardVariant.ghost,
-                padding: AppSpacing.arenaGovernanceComparePadding,
+                padding: ArenaSpacingTokens.arenaGovernanceComparePadding,
                 onTap: onCompare,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -42,7 +42,7 @@ class _PrivacyCard extends StatelessWidget {
                     const Icon(
                       Icons.help_outline_rounded,
                       color: AppColors.accent,
-                      size: AppSpacing.arenaGovernanceSmallIcon,
+                      size: ArenaSpacingTokens.arenaGovernanceSmallIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -107,14 +107,14 @@ class _PrivacyChip extends StatelessWidget {
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.accent20 : AppColors.borderSolid,
       radius: VitCardRadius.large,
-      padding: AppSpacing.arenaGovernancePrivacyChipPadding,
+      padding: ArenaSpacingTokens.arenaGovernancePrivacyChipPadding,
       onTap: onTap,
       child: Column(
         children: [
           Icon(
             _privacyIcon(option.id),
             color: active ? AppColors.accent : AppColors.text3,
-            size: AppSpacing.arenaGovernanceIcon,
+            size: ArenaSpacingTokens.arenaGovernanceIcon,
           ),
           const SizedBox(height: AppSpacing.x1),
           Text(
@@ -141,7 +141,7 @@ class _ClarityScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = result.clarity >= 60 ? AppColors.buy : AppColors.sell;
     return VitCard(
-      padding: AppSpacing.arenaGovernanceCardPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceCardPadding,
       child: Column(
         children: [
           Row(
@@ -149,7 +149,7 @@ class _ClarityScoreCard extends StatelessWidget {
               Icon(
                 Icons.shield_outlined,
                 color: color,
-                size: AppSpacing.arenaGovernanceIcon,
+                size: ArenaSpacingTokens.arenaGovernanceIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -176,7 +176,8 @@ class _ClarityScoreCard extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.arenaGovernanceClarityProgressHeight,
+              minHeight:
+                  ArenaSpacingTokens.arenaGovernanceClarityProgressHeight,
               value: result.clarity / 100,
               backgroundColor: AppColors.surface3,
               color: color,

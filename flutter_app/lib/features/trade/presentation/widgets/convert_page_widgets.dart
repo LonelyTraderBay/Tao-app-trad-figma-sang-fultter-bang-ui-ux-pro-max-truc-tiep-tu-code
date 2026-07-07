@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class ConvertHistoryRow extends StatelessWidget {
   const ConvertHistoryRow({
@@ -41,7 +42,7 @@ class ConvertHistoryRow extends StatelessWidget {
                   child: Icon(
                     Icons.swap_vert_rounded,
                     color: AppColors.buy,
-                    size: AppSpacing.tradeReceiptFooterIcon,
+                    size: TradeSpacingTokens.tradeReceiptFooterIcon,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.rowGapRegular),
@@ -60,7 +61,9 @@ class ConvertHistoryRow extends StatelessWidget {
                           fontFeatures: AppTextStyles.tabularFigures,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmStandardInnerGap,
+                      ),
                       Row(
                         children: [
                           const Icon(

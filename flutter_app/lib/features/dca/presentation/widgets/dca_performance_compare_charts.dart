@@ -8,14 +8,14 @@ class _ComparisonChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _CardTitle('Portfolio Value Over Time'),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.dcaPerformanceCompareChartHeight,
+            height: DcaSpacingTokens.dcaPerformanceCompareChartHeight,
             width: double.infinity,
             child: CustomPaint(painter: _PerformanceLinePainter(points)),
           ),
@@ -44,7 +44,7 @@ class _MetricCompareCard extends StatelessWidget {
     final dcaWins = metric.winner == DcaPerformanceWinner.dca;
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -101,7 +101,7 @@ class _MetricValueBox extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.dcaPaddingX3,
+        padding: DcaSpacingTokens.dcaPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -133,7 +133,7 @@ class _ScenarioCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -204,7 +204,7 @@ class _AdvantageBar extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
-            minHeight: AppSpacing.dcaPerformanceCompareProgressHeight,
+            minHeight: DcaSpacingTokens.dcaPerformanceCompareProgressHeight,
             value: (value / 10).clamp(0.0, 1.0),
             backgroundColor: AppColors.surface3,
             valueColor: AlwaysStoppedAnimation<Color>(color),
@@ -223,14 +223,14 @@ class _RadarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX5,
+      padding: DcaSpacingTokens.dcaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const _CardTitle('Multi-Dimensional Comparison'),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.dcaPerformanceCompareRadarHeight,
+            height: DcaSpacingTokens.dcaPerformanceCompareRadarHeight,
             width: double.infinity,
             child: CustomPaint(painter: _RadarPainter(metrics)),
           ),

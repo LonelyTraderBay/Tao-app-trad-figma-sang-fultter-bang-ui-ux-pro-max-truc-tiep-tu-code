@@ -17,10 +17,11 @@ class _BenefitsGrid extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.stakingProductGridColumns,
+            crossAxisCount: EarnSpacingTokens.stakingProductGridColumns,
             crossAxisSpacing: AppSpacing.x4,
             mainAxisSpacing: AppSpacing.x4,
-            childAspectRatio: AppSpacing.stakingProductLiquidBenefitAspect,
+            childAspectRatio:
+                EarnSpacingTokens.stakingProductLiquidBenefitAspect,
           ),
           itemBuilder: (context, index) {
             final benefit = snapshot.benefits[index];

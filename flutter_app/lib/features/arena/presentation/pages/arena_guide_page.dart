@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part 'arena_guide_page_part_01.dart';
 part 'arena_guide_page_part_02.dart';
@@ -31,10 +32,12 @@ enum _GuideMode { create, join }
 
 final double _guideActionExtent = VitDensity.compact.controlHeight;
 const _guideAccordionBodyLineRatio =
-    AppSpacing.arenaGuideAccordionBodyLineHeight;
-const _guideChecklistLineRatio = AppSpacing.arenaGuideChecklistLineHeight;
-const _guideSmallBadgeLineRatio = AppSpacing.arenaGuideSmallBadgeLineHeight;
-const _guideStepBodyLineRatio = AppSpacing.arenaGuideStepBodyLineHeight;
+    ArenaSpacingTokens.arenaGuideAccordionBodyLineHeight;
+const _guideChecklistLineRatio =
+    ArenaSpacingTokens.arenaGuideChecklistLineHeight;
+const _guideSmallBadgeLineRatio =
+    ArenaSpacingTokens.arenaGuideSmallBadgeLineHeight;
+const _guideStepBodyLineRatio = ArenaSpacingTokens.arenaGuideStepBodyLineHeight;
 const _arenaAccent = AppModuleAccents.arena;
 
 class ArenaGuidePage extends ConsumerStatefulWidget {
@@ -101,9 +104,11 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
                   child: SingleChildScrollView(
                     key: ArenaGuidePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,
@@ -158,7 +163,7 @@ class _ArenaGuidePageState extends ConsumerState<ArenaGuidePage> {
           onPressed: () => context.go(AppRoutePaths.arenaStudio),
           leading: const Icon(
             Icons.auto_awesome,
-            size: AppSpacing.arenaGuideCtaIcon,
+            size: ArenaSpacingTokens.arenaGuideCtaIcon,
           ),
           child: const Text('Áp dụng ngay - Tạo Challenge'),
         ),

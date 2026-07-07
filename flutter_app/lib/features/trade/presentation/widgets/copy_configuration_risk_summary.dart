@@ -189,7 +189,7 @@ class _ModeTile extends StatelessWidget {
                 ? Icons.radio_button_checked_rounded
                 : Icons.radio_button_unchecked_rounded,
             color: selected ? _configurationPrimary : AppColors.text3,
-            size: AppSpacing.copyConfigurationModeIcon,
+            size: TradeSpacingTokens.copyConfigurationModeIcon,
           ),
           const SizedBox(width: _configurationCardSpace),
           Expanded(

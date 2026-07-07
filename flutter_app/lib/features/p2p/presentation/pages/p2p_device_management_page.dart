@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_device_management_overview.dart';
 part '../widgets/p2p_device_management_cards.dart';
@@ -104,7 +105,7 @@ class _P2PDeviceManagementPageState
         _SecurityTips(tips: snapshot.securityTips),
         const VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.p2pDevicesInnerPadding,
+          padding: P2PSpacingTokens.p2pDevicesInnerPadding,
           child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Rà soát thiết bị tin cậy',

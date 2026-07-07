@@ -23,7 +23,7 @@ class _TitlesSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -52,7 +52,7 @@ class _TitlesSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             borderColor: AppColors.sell20,
-            padding: AppSpacing.arenaPaddingX4,
+            padding: ArenaSpacingTokens.arenaPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -74,7 +74,7 @@ class _TitlesSection extends StatelessWidget {
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
@@ -139,15 +139,15 @@ class _DomainIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.arenaPresetDomainIconBox,
-      height: AppSpacing.arenaPresetDomainIconBox,
+      width: ArenaSpacingTokens.arenaPresetDomainIconBox,
+      height: ArenaSpacingTokens.arenaPresetDomainIconBox,
       child: Material(
         color: AppColors.surface2,
         shape: const CircleBorder(),
         child: Icon(
           _domainIcon(id),
           color: _arenaAccent,
-          size: AppSpacing.arenaPresetDomainIcon,
+          size: ArenaSpacingTokens.arenaPresetDomainIcon,
         ),
       ),
     );
@@ -169,7 +169,7 @@ class _SmallPill extends StatelessWidget {
         borderRadius: AppRadii.smRadius,
       ),
       child: Padding(
-        padding: AppSpacing.arenaPresetPillPadding,
+        padding: ArenaSpacingTokens.arenaPresetPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -193,14 +193,14 @@ class _ExampleRow extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.arenaPaddingX2,
+        padding: ArenaSpacingTokens.arenaPaddingX2,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.auto_awesome_rounded,
               color: AppColors.text3,
-              size: AppSpacing.arenaPresetTinyIcon,
+              size: ArenaSpacingTokens.arenaPresetTinyIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -236,7 +236,7 @@ class _SuggestionChip extends StatelessWidget {
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.warn : AppColors.borderSolid,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaPresetChipPadding,
+      padding: ArenaSpacingTokens.arenaPresetChipPadding,
       onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -244,12 +244,12 @@ class _SuggestionChip extends StatelessWidget {
           Icon(
             _challengeIcon(item.type),
             color: selected ? AppColors.warn : AppColors.text3,
-            size: AppSpacing.arenaPresetMicroIcon,
+            size: ArenaSpacingTokens.arenaPresetMicroIcon,
           ),
           const SizedBox(width: AppSpacing.x1),
           ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: AppSpacing.arenaPresetSuggestionMaxWidth,
+              maxWidth: ArenaSpacingTokens.arenaPresetSuggestionMaxWidth,
             ),
             child: Text(
               item.text,
@@ -279,13 +279,13 @@ class _SearchBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
-      padding: AppSpacing.arenaPresetSectionChipPadding,
+      padding: ArenaSpacingTokens.arenaPresetSectionChipPadding,
       child: Row(
         children: [
           const Icon(
             Icons.search_rounded,
             color: AppColors.text3,
-            size: AppSpacing.arenaPresetSearchIcon,
+            size: ArenaSpacingTokens.arenaPresetSearchIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -309,7 +309,7 @@ class _AutocompleteRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaBottomPaddingX2,
+      padding: ArenaSpacingTokens.arenaBottomPaddingX2,
       child: Row(
         children: [
           Icon(
@@ -317,7 +317,7 @@ class _AutocompleteRow extends StatelessWidget {
                 ? Icons.check_circle_rounded
                 : Icons.radio_button_unchecked_rounded,
             color: selected ? AppColors.buy : AppColors.text3,
-            size: AppSpacing.arenaPresetSmallIcon,
+            size: ArenaSpacingTokens.arenaPresetSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -348,7 +348,7 @@ class _DropdownPreview extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: group.disabled ? AppColors.borderSolid : AppColors.accent20,
-      padding: AppSpacing.arenaPaddingX3,
+      padding: ArenaSpacingTokens.arenaPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -359,7 +359,7 @@ class _DropdownPreview extends StatelessWidget {
                     ? Icons.lock_outline_rounded
                     : Icons.search_rounded,
                 color: group.disabled ? AppColors.text3 : AppColors.accent,
-                size: AppSpacing.arenaPresetInlineIcon,
+                size: ArenaSpacingTokens.arenaPresetInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -374,7 +374,7 @@ class _DropdownPreview extends StatelessWidget {
               const Icon(
                 Icons.keyboard_arrow_down_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.arenaPresetChevron,
+                size: ArenaSpacingTokens.arenaPresetChevron,
               ),
             ],
           ),
@@ -420,7 +420,7 @@ class _DemoSelectorChip extends StatelessWidget {
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.buy : AppColors.borderSolid,
       radius: VitCardRadius.large,
-      padding: AppSpacing.arenaPresetChipPadding,
+      padding: ArenaSpacingTokens.arenaPresetChipPadding,
       onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -428,7 +428,7 @@ class _DemoSelectorChip extends StatelessWidget {
           Icon(
             _domainIcon(flow.domainId),
             color: active ? AppColors.buy : AppColors.text3,
-            size: AppSpacing.arenaPresetSmallIcon,
+            size: ArenaSpacingTokens.arenaPresetSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(

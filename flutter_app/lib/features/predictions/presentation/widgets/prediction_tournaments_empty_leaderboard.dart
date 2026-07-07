@@ -46,7 +46,7 @@ class _EmptyStateCard extends StatelessWidget {
           Icon(
             icon,
             color: AppColors.text3,
-            size: AppSpacing.predictionTournamentEmptyIcon,
+            size: PredictionsSpacingTokens.predictionTournamentEmptyIcon,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(
@@ -101,7 +101,8 @@ class _LeaderboardEntryCard extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.predictionTournamentLeaderboardRankWidth,
+            width: PredictionsSpacingTokens
+                .predictionTournamentLeaderboardRankWidth,
             child: Icon(
               entry.rank == 1
                   ? Icons.emoji_events_rounded
@@ -110,11 +111,15 @@ class _LeaderboardEntryCard extends StatelessWidget {
                   : Icons.tag_rounded,
               color: _rankColor(entry.rank),
               size: entry.rank == 1
-                  ? AppSpacing.predictionTournamentLeaderboardWinnerIcon
-                  : AppSpacing.predictionTournamentLeaderboardIcon,
+                  ? PredictionsSpacingTokens
+                        .predictionTournamentLeaderboardWinnerIcon
+                  : PredictionsSpacingTokens
+                        .predictionTournamentLeaderboardIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.predictionTournamentLeaderboardGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionTournamentLeaderboardGap,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

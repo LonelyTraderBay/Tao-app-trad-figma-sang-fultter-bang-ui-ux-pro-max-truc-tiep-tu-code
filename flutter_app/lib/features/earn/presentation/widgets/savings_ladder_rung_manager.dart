@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_lad
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_formatters.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class RungList extends StatelessWidget {
   const RungList({
@@ -95,7 +96,7 @@ class _RungTile extends StatelessWidget {
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.savingsLadderRungIndexBox,
+            dimension: EarnSpacingTokens.savingsLadderRungIndexBox,
             child: Material(
               color: color.withValues(alpha: .14),
               shape: const CircleBorder(),
@@ -259,7 +260,7 @@ class AllocationStatus extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x4),
           SizedBox(
-            width: AppSpacing.savingsLadderAllocationProgressWidth,
+            width: EarnSpacingTokens.savingsLadderAllocationProgressWidth,
             child: ClipRRect(
               borderRadius: AppRadii.pillRadius,
               child: LinearProgressIndicator(

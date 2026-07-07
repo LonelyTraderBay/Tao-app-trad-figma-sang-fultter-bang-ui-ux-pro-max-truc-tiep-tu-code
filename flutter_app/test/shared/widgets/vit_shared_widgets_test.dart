@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 Widget _wrap(Widget child) {
   return MaterialApp(
@@ -965,8 +966,11 @@ void main() {
       find.byKey(const ValueKey('vit_carousel_dot_1')),
     );
 
-    expect(inactiveSize.width, AppSpacing.homeAnnouncementDotInactiveWidth);
-    expect(activeSize.width, AppSpacing.homeAnnouncementDotActiveWidth);
+    expect(
+      inactiveSize.width,
+      HomeSpacingTokens.homeAnnouncementDotInactiveWidth,
+    );
+    expect(activeSize.width, HomeSpacingTokens.homeAnnouncementDotActiveWidth);
     expect(find.bySemanticsLabel('Carousel page 2 of 3'), findsOneWidget);
   });
 
@@ -1198,6 +1202,88 @@ void main() {
         reason: 'state badge overlaps label at aspect $aspectRatio',
       );
     }
+  });
+
+  testWidgets('VitServiceTile.fromAction renders label/badges and taps', (
+    tester,
+  ) async {
+    var tapped = false;
+
+    await tester.pumpWidget(
+      _wrap(
+        VitServiceTile.fromAction(
+          icon: Icons.bolt_rounded,
+          label: 'Quick Buy',
+          accentColor: AppColors.primary,
+          badgeLabel: 'New',
+          riskBadgeLabel: 'Rủi ro cao',
+          onTap: () => tapped = true,
+        ),
+      ),
+    );
+
+    expect(find.text('Quick Buy'), findsOneWidget);
+    expect(find.text('New'), findsOneWidget);
+    expect(find.text('Rủi ro cao'), findsOneWidget);
+
+    await tester.tap(find.byType(VitServiceTile));
+    expect(tapped, isTrue);
+  });
+
+  testWidgets('VitBalanceBreakdownRow renders items and dispatches taps', (
+    tester,
+  ) async {
+    final routes = <String>[];
+
+    await tester.pumpWidget(
+      _wrap(
+        VitBalanceBreakdownRow(
+          onNavigate: routes.add,
+          items: const [
+            VitBalanceBreakdownItem(
+              label: 'Spot',
+              value: '\$100',
+              icon: Icons.swap_horiz_rounded,
+              tooltip: 'Spot wallet',
+              route: '/wallet',
+            ),
+            VitBalanceBreakdownItem(
+              label: 'Earn',
+              value: '••••',
+              icon: Icons.savings_outlined,
+              tooltip: 'Earn wallet',
+              route: '/earn',
+            ),
+          ],
+        ),
+      ),
+    );
+
+    expect(find.text('Spot'), findsOneWidget);
+    expect(find.text('\$100'), findsOneWidget);
+    expect(find.text('••••'), findsOneWidget);
+
+    await tester.tap(find.text('Earn'));
+    expect(routes, ['/earn']);
+  });
+
+  testWidgets('VitRiskDisclaimerNote renders message with distinct semantics', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _wrap(
+        const VitRiskDisclaimerNote(
+          message: 'Short note',
+          semanticsLabel: 'Risk notice: short note',
+        ),
+      ),
+    );
+
+    expect(find.text('Short note'), findsOneWidget);
+    expect(
+      tester.getSemantics(find.byType(VitRiskDisclaimerNote)).label,
+      contains('Risk notice: short note'),
+    );
   });
 
   testWidgets('VitAccentIconBox renders 34px bordered accent container', (
@@ -1470,8 +1556,14 @@ void main() {
         ),
       );
 
-      expect(handleSize.width, AppSpacing.homeMoreProductsSheetHandleWidth);
-      expect(handleSize.height, AppSpacing.homeMoreProductsSheetHandleHeight);
+      expect(
+        handleSize.width,
+        HomeSpacingTokens.homeMoreProductsSheetHandleWidth,
+      );
+      expect(
+        handleSize.height,
+        HomeSpacingTokens.homeMoreProductsSheetHandleHeight,
+      );
     },
   );
 
@@ -1503,7 +1595,10 @@ void main() {
     final decoration = surfaceDecoration.decoration as ShapeDecoration;
     final shape = decoration.shape as RoundedRectangleBorder;
 
-    expect(surfacePadding.padding, AppSpacing.homeMoreProductsSheetPadding);
+    expect(
+      surfacePadding.padding,
+      HomeSpacingTokens.homeMoreProductsSheetPadding,
+    );
     expect(decoration.color, AppColors.bg);
     expect(shape.borderRadius, AppRadii.sheetTopLargeRadius);
   });

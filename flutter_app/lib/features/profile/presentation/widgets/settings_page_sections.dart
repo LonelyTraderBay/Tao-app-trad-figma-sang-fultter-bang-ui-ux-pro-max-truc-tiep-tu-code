@@ -22,9 +22,9 @@ class _CurrencyCard extends StatelessWidget {
           const Icon(
             Icons.language_rounded,
             color: AppColors.primary,
-            size: AppSpacing.settingsCurrencyIcon,
+            size: ProfileSpacingTokens.settingsCurrencyIcon,
           ),
-          const SizedBox(width: AppSpacing.settingsCurrencyIconGap),
+          const SizedBox(width: ProfileSpacingTokens.settingsCurrencyIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +38,7 @@ class _CurrencyCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitPresetChipRow<String>(
-                  gap: AppSpacing.settingsCurrencyChipGap,
+                  gap: ProfileSpacingTokens.settingsCurrencyChipGap,
                   selectedValue: selectedCurrency,
                   onTap: onChanged,
                   items: [
@@ -122,7 +122,7 @@ class _LanguageRow extends StatelessWidget {
             minHeight: VitDensity.compact.controlHeight + AppSpacing.x2,
           ),
           child: Padding(
-            padding: AppSpacing.settingsLanguageRowPadding,
+            padding: ProfileSpacingTokens.settingsLanguageRowPadding,
             child: Row(
               children: [
                 Expanded(
@@ -136,8 +136,8 @@ class _LanguageRow extends StatelessWidget {
                 ),
                 if (selected)
                   const SizedBox(
-                    width: AppSpacing.settingsLanguageSelectedDot,
-                    height: AppSpacing.settingsLanguageSelectedDot,
+                    width: ProfileSpacingTokens.settingsLanguageSelectedDot,
+                    height: ProfileSpacingTokens.settingsLanguageSelectedDot,
                     child: Material(
                       color: AppColors.primary,
                       shape: CircleBorder(),
@@ -210,17 +210,17 @@ class _SettingsRow extends StatelessWidget {
       ),
       child: Padding(
         padding: hasIcon
-            ? AppSpacing.settingsRowPaddingWithIcon
-            : AppSpacing.settingsRowPaddingNoIcon,
+            ? ProfileSpacingTokens.settingsRowPaddingWithIcon
+            : ProfileSpacingTokens.settingsRowPaddingNoIcon,
         child: Row(
           children: [
             if (hasIcon) ...[
               Icon(
                 _iconFor(row.iconKey),
                 color: AppColors.primary,
-                size: AppSpacing.settingsRowIcon,
+                size: ProfileSpacingTokens.settingsRowIcon,
               ),
-              const SizedBox(width: AppSpacing.settingsRowIconGap),
+              const SizedBox(width: ProfileSpacingTokens.settingsRowIconGap),
             ],
             Expanded(
               child: Column(
@@ -250,7 +250,7 @@ class _SettingsRow extends StatelessWidget {
               ),
             ),
             if (row.canToggle && row.enabled != null) ...[
-              const SizedBox(width: AppSpacing.settingsRowSwitchGap),
+              const SizedBox(width: ProfileSpacingTokens.settingsRowSwitchGap),
               _SettingsSwitch(
                 key: SettingsPage.toggleKey(row.id),
                 value: enabled,
@@ -287,10 +287,10 @@ class _SettingsSwitch extends StatelessWidget {
         onTap: () => onChanged(!value),
         child: VitTogglePill(
           enabled: value,
-          width: AppSpacing.settingsSwitchWidth,
-          height: AppSpacing.settingsSwitchHeight,
-          knobSize: AppSpacing.settingsSwitchKnob,
-          knobMargin: AppSpacing.settingsSwitchKnobMargin,
+          width: ProfileSpacingTokens.settingsSwitchWidth,
+          height: ProfileSpacingTokens.settingsSwitchHeight,
+          knobSize: ProfileSpacingTokens.settingsSwitchKnob,
+          knobMargin: ProfileSpacingTokens.settingsSwitchKnobMargin,
           activeColor: AppColors.buy,
           inactiveColor: AppColors.toggleTrackOff,
         ),

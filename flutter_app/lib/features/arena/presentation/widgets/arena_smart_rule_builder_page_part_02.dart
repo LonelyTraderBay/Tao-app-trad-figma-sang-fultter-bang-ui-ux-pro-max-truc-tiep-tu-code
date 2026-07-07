@@ -47,7 +47,7 @@ class _ConditionBuilder extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           VitCard(
-            padding: AppSpacing.arenaSmartRuleCardPadding,
+            padding: ArenaSpacingTokens.arenaSmartRuleCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -56,7 +56,7 @@ class _ConditionBuilder extends StatelessWidget {
                     const Icon(
                       Icons.track_changes_rounded,
                       color: AppColors.accent,
-                      size: AppSpacing.arenaSmartRuleIcon,
+                      size: ArenaSpacingTokens.arenaSmartRuleIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -115,7 +115,7 @@ class _ConditionBuilder extends StatelessWidget {
                   VitCard(
                     variant: VitCardVariant.inner,
                     borderColor: AppColors.accent20,
-                    padding: AppSpacing.arenaSmartRuleInnerPadding,
+                    padding: ArenaSpacingTokens.arenaSmartRuleInnerPadding,
                     child: Text(
                       '"$preview."',
                       style: AppTextStyles.caption.copyWith(
@@ -165,7 +165,9 @@ class _BuilderBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: wide ? double.infinity : AppSpacing.arenaSmartRuleOptionWidth,
+      width: wide
+          ? double.infinity
+          : ArenaSpacingTokens.arenaSmartRuleOptionWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -182,7 +184,7 @@ class _BuilderBox extends StatelessWidget {
             borderColor: value.isEmpty
                 ? AppColors.borderSolid
                 : AppColors.accent20,
-            padding: AppSpacing.arenaSmartRuleCompactSelectorPadding,
+            padding: ArenaSpacingTokens.arenaSmartRuleCompactSelectorPadding,
             onTap: () {
               HapticFeedback.selectionClick();
               onTap();
@@ -205,7 +207,7 @@ class _BuilderBox extends StatelessWidget {
                 const Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.arenaSmartRuleIcon,
+                  size: ArenaSpacingTokens.arenaSmartRuleIcon,
                 ),
               ],
             ),
@@ -253,7 +255,7 @@ class _QuickSuggestions extends StatelessWidget {
             const Icon(
               Icons.lightbulb_outline_rounded,
               color: _arenaAccent,
-              size: AppSpacing.arenaSmartRuleSmallIcon,
+              size: ArenaSpacingTokens.arenaSmartRuleSmallIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Text(
@@ -319,7 +321,7 @@ class _TimingRulesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaSmartRuleCardPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -328,7 +330,7 @@ class _TimingRulesCard extends StatelessWidget {
               const Icon(
                 Icons.schedule_outlined,
                 color: AppColors.buy,
-                size: AppSpacing.arenaSmartRuleIcon,
+                size: ArenaSpacingTokens.arenaSmartRuleIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -351,7 +353,7 @@ class _TimingRulesCard extends StatelessWidget {
               suffix: const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: AppSpacing.arenaSmartRuleIcon,
+                size: ArenaSpacingTokens.arenaSmartRuleIcon,
               ),
               onChanged: (value) => onDate(_normalizeArenaRuleDateInput(value)),
             ),
@@ -409,7 +411,7 @@ class _EdgeRuleField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaSmartRuleEdgeFieldPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleEdgeFieldPadding,
       child: _FieldBlock(
         label: label,
         hint: 'Nên có',
@@ -417,7 +419,7 @@ class _EdgeRuleField extends StatelessWidget {
           key: fieldKey,
           variant: VitCardVariant.inner,
           borderColor: value.isEmpty ? AppColors.borderSolid : AppColors.buy20,
-          padding: AppSpacing.arenaSmartRuleSelectorPadding,
+          padding: ArenaSpacingTokens.arenaSmartRuleSelectorPadding,
           onTap: () {
             HapticFeedback.selectionClick();
             onTap();
@@ -464,7 +466,7 @@ class _SwitchRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaSmartRuleSwitchRowPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleSwitchRowPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         onTap();

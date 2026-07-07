@@ -15,7 +15,7 @@ class _TipCard extends StatelessWidget {
     };
 
     return VitCard(
-      padding: AppSpacing.devCompactPadding,
+      padding: AdminSpacingTokens.devCompactPadding,
       radius: VitCardRadius.large,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +55,7 @@ class _TargetsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       borderColor: AppColors.primary20,
       background: const ColoredBox(color: AppColors.primary08),
       child: Column(
@@ -88,7 +88,7 @@ class _InternalNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCompactPadding,
+      padding: AdminSpacingTokens.devCompactPadding,
       variant: VitCardVariant.inner,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,10 +117,10 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: AppSpacing.devVerticalPaddingX2,
+      padding: AdminSpacingTokens.devVerticalPaddingX2,
       child: Divider(
-        height: AppSpacing.devDividerHeight,
-        thickness: AppSpacing.devDividerThickness,
+        height: AdminSpacingTokens.devDividerHeight,
+        thickness: AdminSpacingTokens.devDividerThickness,
         color: AppColors.borderSolid,
       ),
     );

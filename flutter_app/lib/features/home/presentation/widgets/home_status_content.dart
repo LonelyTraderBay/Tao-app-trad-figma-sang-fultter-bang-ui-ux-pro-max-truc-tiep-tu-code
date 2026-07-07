@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
@@ -57,15 +58,21 @@ class HomePortfolioSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.homeCardPaddingDefault,
+      padding: HomeSpacingTokens.homeCardPaddingDefault,
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          VitSkeleton(width: 160, height: AppSpacing.x3),
+          VitSkeleton(
+            width: HomeSpacingTokens.skeletonTitleWidth,
+            height: AppSpacing.x3,
+          ),
           SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitSkeleton(width: double.infinity, height: AppSpacing.x6),
           SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
-          VitSkeleton(width: 120, height: AppSpacing.x3),
+          VitSkeleton(
+            width: HomeSpacingTokens.skeletonSubtitleWidth,
+            height: AppSpacing.x3,
+          ),
         ],
       ),
     );
@@ -79,23 +86,29 @@ class HomeNextActionSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       padding: const EdgeInsetsDirectional.all(
-        AppSpacing.homeNextActionCardPadding,
+        HomeSpacingTokens.homeNextActionCardPadding,
       ),
       child: const Row(
         children: [
           VitSkeleton(
-            width: AppSpacing.homeNextActionIconContainer,
-            height: AppSpacing.homeNextActionIconContainer,
+            width: HomeSpacingTokens.homeNextActionIconContainer,
+            height: HomeSpacingTokens.homeNextActionIconContainer,
             borderRadius: AppRadii.smRadius,
           ),
-          SizedBox(width: AppSpacing.homeCommandRowSpacing),
+          SizedBox(width: HomeSpacingTokens.homeCommandRowSpacing),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                VitSkeleton(width: 160, height: 14),
+                VitSkeleton(
+                  width: HomeSpacingTokens.skeletonTitleWidth,
+                  height: HomeSpacingTokens.skeletonLineHeightLg,
+                ),
                 SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
-                VitSkeleton(width: 220, height: 10),
+                VitSkeleton(
+                  width: HomeSpacingTokens.skeletonLineWidthLg,
+                  height: HomeSpacingTokens.skeletonLineHeightSm,
+                ),
               ],
             ),
           ),
@@ -112,7 +125,7 @@ class HomeProductsSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitActionTileGrid(
       density: VitDensity.compact,
-      itemCount: AppSpacing.homeQuickActionCompactCount,
+      itemCount: HomeSpacingTokens.homeQuickActionCompactCount,
       itemBuilder: (context, index, tileDensity) => const VitSkeleton(
         width: double.infinity,
         height: double.infinity,
@@ -128,7 +141,7 @@ class HomeRecentProductsSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.homeRecentProductHeight,
+      height: HomeSpacingTokens.homeRecentProductHeight,
       child: const Row(
         children: [
           Expanded(
@@ -168,7 +181,10 @@ class HomeMarketSkeleton extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        VitSkeleton(width: 120, height: AppSpacing.x4),
+        VitSkeleton(
+          width: HomeSpacingTokens.skeletonSubtitleWidth,
+          height: AppSpacing.x4,
+        ),
         SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitSkeletonList(rows: 3),
       ],

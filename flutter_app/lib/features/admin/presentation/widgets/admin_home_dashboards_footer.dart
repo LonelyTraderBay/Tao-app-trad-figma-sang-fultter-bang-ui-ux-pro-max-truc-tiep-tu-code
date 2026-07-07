@@ -37,7 +37,7 @@ class _DashboardCard extends StatelessWidget {
     return VitCard(
       key: AdminHome.dashboardKey(dashboard.id),
       onTap: () => context.go(dashboard.route),
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Row(
         children: [
           SizedBox.square(
@@ -52,7 +52,7 @@ class _DashboardCard extends StatelessWidget {
               child: Icon(
                 _metricIcon(dashboard.icon),
                 color: accent,
-                size: AppSpacing.adminIcon2xl,
+                size: AdminSpacingTokens.adminIcon2xl,
               ),
             ),
           ),
@@ -93,7 +93,7 @@ class _DashboardCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.adminIconXl,
+            size: AdminSpacingTokens.adminIconXl,
           ),
         ],
       ),
@@ -109,7 +109,7 @@ class _FooterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.adminCardPadding,
+      padding: AdminSpacingTokens.adminCardPadding,
       child: Column(
         children: [
           Text(

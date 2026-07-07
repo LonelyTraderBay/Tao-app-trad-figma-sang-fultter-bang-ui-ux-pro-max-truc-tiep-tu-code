@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/app/providers/market_controller_providers.dart
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/comparison_tool_common.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/comparison_tool_content.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/comparison_tool_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class ComparisonToolPage extends ConsumerStatefulWidget {
   const ComparisonToolPage({super.key, this.shellRenderMode});
@@ -116,7 +117,7 @@ class _ComparisonToolPageState extends ConsumerState<ComparisonToolPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: ComparisonToolPage.contentKey,
-                    padding: AppSpacing.comparisonToolScrollPadding(
+                    padding: MarketsSpacingTokens.comparisonToolScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(

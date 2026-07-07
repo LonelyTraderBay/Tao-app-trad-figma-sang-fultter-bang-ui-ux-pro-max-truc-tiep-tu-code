@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_autopilot_page.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 import 'savings_autopilot_formatters.dart';
 
@@ -37,7 +38,7 @@ class AutoPilotHero extends StatelessWidget {
       key: SavingsAutoPilotPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

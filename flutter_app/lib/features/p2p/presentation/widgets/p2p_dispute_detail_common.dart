@@ -36,7 +36,7 @@ class P2PDisputeSmallButton extends StatelessWidget {
       label: label,
       selected: true,
       onTap: onPressed,
-      padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
+      padding: P2PSpacingTokens.p2pDisputeEvidenceButtonPadding,
       accentColor: color,
       leading: Icon(icon),
       semanticLabel: 'P2P dispute action $label',

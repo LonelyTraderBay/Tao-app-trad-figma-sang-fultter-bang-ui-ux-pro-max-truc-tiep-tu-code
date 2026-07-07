@@ -65,7 +65,7 @@ class _OwnersSection extends StatelessWidget {
         children: [
           for (final owner in safe.owners)
             VitCard(
-              padding: AppSpacing.launchpadPaddingX3,
+              padding: LaunchpadSpacingTokens.launchpadPaddingX3,
               child: Row(
                 children: [
                   _IconBubble(
@@ -75,7 +75,7 @@ class _OwnersSection extends StatelessWidget {
                     color: owner.role == LaunchpadMultisigSignerRole.owner
                         ? AppModuleAccents.launchpad
                         : AppColors.primary,
-                    size: AppSpacing.launchpadBox36,
+                    size: LaunchpadSpacingTokens.launchpadBox36,
                   ),
                   const SizedBox(width: AppSpacing.x3),
                   Expanded(
@@ -165,7 +165,7 @@ class _TxCard extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width: AppSpacing.launchpadVerticalMarkerWidth,
+                  width: LaunchpadSpacingTokens.launchpadVerticalMarkerWidth,
                   child: ColoredBox(color: status.color),
                 ),
                 Expanded(
@@ -173,7 +173,7 @@ class _TxCard extends StatelessWidget {
                     key: LaunchpadMultisigPage.txToggleKey(tx.id),
                     variant: VitCardVariant.ghost,
                     radius: VitCardRadius.standard,
-                    padding: AppSpacing.launchpadPaddingX3,
+                    padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                     onTap: onToggle,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,7 +181,7 @@ class _TxCard extends StatelessWidget {
                         _IconBubble(
                           icon: status.icon,
                           color: status.color,
-                          size: AppSpacing.launchpadIcon7xl,
+                          size: LaunchpadSpacingTokens.launchpadIcon7xl,
                         ),
                         const SizedBox(width: AppSpacing.x3),
                         Expanded(
@@ -229,7 +229,9 @@ class _TxCard extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                              const SizedBox(
+                                height: AppSpacing.pageRhythmCompactInnerGap,
+                              ),
                               _SignatureProgress(tx: tx),
                             ],
                           ),
@@ -239,7 +241,7 @@ class _TxCard extends StatelessWidget {
                               ? Icons.keyboard_arrow_up_rounded
                               : Icons.keyboard_arrow_down_rounded,
                           color: AppColors.text3,
-                          size: AppSpacing.launchpadIcon2xl,
+                          size: LaunchpadSpacingTokens.launchpadIcon2xl,
                         ),
                       ],
                     ),
@@ -299,7 +301,7 @@ class _TxDetails extends StatelessWidget {
             color: AppColors.divider,
           ),
           Padding(
-            padding: AppSpacing.launchpadPaddingX3,
+            padding: LaunchpadSpacingTokens.launchpadPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -327,7 +329,7 @@ class _TxDetails extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: AppSpacing.launchpadPaddingX2,
+                      padding: LaunchpadSpacingTokens.launchpadPaddingX2,
                       child: Column(
                         children: [
                           for (final entry in tx.params.entries)
@@ -391,7 +393,7 @@ class _DetailRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.launchpadVerticalPaddingX1,
+          padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX1,
           child: Row(
             children: [
               Text(
@@ -440,7 +442,7 @@ class _SignerRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadTopPaddingX1,
+      padding: LaunchpadSpacingTokens.launchpadTopPaddingX1,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: signer.signed ? AppColors.buy10 : AppColors.surface2,
@@ -449,7 +451,7 @@ class _SignerRow extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.launchpadInlinePillPadding,
+          padding: LaunchpadSpacingTokens.launchpadInlinePillPadding,
           child: Row(
             children: [
               Icon(
@@ -457,7 +459,7 @@ class _SignerRow extends StatelessWidget {
                     ? Icons.check_circle_outline_rounded
                     : Icons.schedule_rounded,
                 color: signer.signed ? AppColors.buy : AppColors.text3,
-                size: AppSpacing.launchpadIconSm,
+                size: LaunchpadSpacingTokens.launchpadIconSm,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(

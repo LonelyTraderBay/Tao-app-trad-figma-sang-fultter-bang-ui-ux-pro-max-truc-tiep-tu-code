@@ -12,7 +12,7 @@ class _CalculatorPreview extends StatelessWidget {
         VitCard(
           key: AutoCompoundSettingsPage.calculatorKey,
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Column(
             children: [
               Row(
@@ -114,7 +114,7 @@ class _NoteCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -129,7 +129,7 @@ class _NoteCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
               ),
             ),
           ),
@@ -156,7 +156,7 @@ class _SheetFrame extends StatelessWidget {
           top: false,
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
-            padding: AppSpacing.transferSheetPadding.copyWith(
+            padding: WalletSpacingTokens.transferSheetPadding.copyWith(
               top: AppSpacing.x5,
             ),
             child: child,

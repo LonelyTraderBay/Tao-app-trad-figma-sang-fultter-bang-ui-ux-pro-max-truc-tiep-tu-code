@@ -86,7 +86,10 @@ class _OrderHistoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return grouped
-        ? Padding(padding: AppSpacing.tradeOrderRowPadding, child: content)
+        ? Padding(
+            padding: TradeSpacingTokens.tradeOrderRowPadding,
+            child: content,
+          )
         : VitCard(
             radius: VitCardRadius.standard,
             padding: VitDensity.compact.cardPadding,

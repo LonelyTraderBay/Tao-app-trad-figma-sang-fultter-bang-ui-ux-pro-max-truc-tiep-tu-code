@@ -10,7 +10,7 @@ class _SummaryStats extends StatelessWidget {
     return VitCard(
       key: StakingValidatorHealthMonitorPage.statsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           Expanded(
@@ -66,7 +66,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: borderColor,
-      padding: AppSpacing.earnCardPaddingX3X2,
+      padding: EarnSpacingTokens.earnCardPaddingX3X2,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
@@ -112,7 +112,7 @@ class _ValidatorCard extends StatelessWidget {
       key: StakingValidatorHealthMonitorPage.validatorKey(validator.id),
       radius: VitCardRadius.large,
       onTap: onTap,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -161,7 +161,9 @@ class _ValidatorCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Wrap(
                       spacing: AppSpacing.x2,
                       crossAxisAlignment: WrapCrossAlignment.center,
@@ -283,7 +285,7 @@ class _ValidatorMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -324,7 +326,7 @@ class _TrendSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Column(
             children: [
               SizedBox(

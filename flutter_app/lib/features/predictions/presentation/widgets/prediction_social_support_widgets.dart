@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 class PredictionSocialShareButton extends StatelessWidget {
   const PredictionSocialShareButton({
@@ -28,15 +29,17 @@ class PredictionSocialShareButton extends StatelessWidget {
       child: SizedBox(
         height: VitDensity.compact.controlHeight,
         child: Padding(
-          padding: AppSpacing.predictionSocialShareButtonPadding,
+          padding: PredictionsSpacingTokens.predictionSocialShareButtonPadding,
           child: Row(
             children: [
               const Icon(
                 Icons.share_rounded,
                 color: AppColors.onAccent,
-                size: AppSpacing.predictionSocialShareIcon,
+                size: PredictionsSpacingTokens.predictionSocialShareIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionSocialShareIconGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionSocialShareIconGap,
+              ),
               Text(
                 label,
                 style: AppTextStyles.caption.copyWith(
@@ -103,10 +106,13 @@ class PredictionSocialSentimentLegend extends StatelessWidget {
               color: color,
               borderRadius: AppRadii.hairlineRadius,
               child: const SizedBox.square(
-                dimension: AppSpacing.predictionSocialLegendSwatch,
+                dimension:
+                    PredictionsSpacingTokens.predictionSocialLegendSwatch,
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionSocialLegendGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionSocialLegendGap,
+            ),
             Text(
               item.name,
               style: AppTextStyles.micro.copyWith(color: AppColors.text2),

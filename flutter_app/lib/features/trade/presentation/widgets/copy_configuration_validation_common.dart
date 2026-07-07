@@ -22,7 +22,7 @@ class _RiskToggle extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: AppColors.text3,
-            size: AppSpacing.copyConfigurationRiskIcon,
+            size: TradeSpacingTokens.copyConfigurationRiskIcon,
           ),
           const SizedBox(width: _configurationCardSpace),
           Expanded(
@@ -69,7 +69,7 @@ class _ValidationCard extends StatelessWidget {
           Icon(
             _validationIcon(item.level),
             color: color,
-            size: AppSpacing.copyConfigurationValidationIcon,
+            size: TradeSpacingTokens.copyConfigurationValidationIcon,
           ),
           const SizedBox(width: _configurationSpace),
           Expanded(

@@ -14,6 +14,8 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/copy_audit_log_controls.dart';
 part '../widgets/copy_audit_log_events.dart';
@@ -186,7 +188,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.copyAuditSheetPadding,
+            padding: TradeSpacingTokens.copyAuditSheetPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -203,9 +205,7 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   'Chọn định dạng export',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 for (final format in snapshot.exportFormats) ...[
@@ -227,7 +227,9 @@ class _CopyAuditLogPageState extends ConsumerState<CopyAuditLogPage> {
                     },
                   ),
                   if (format != snapshot.exportFormats.last)
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                 ],
                 const SizedBox(height: AppSpacing.rowPy),
                 VitCtaButton(

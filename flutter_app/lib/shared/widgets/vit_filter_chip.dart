@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+
 import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 
 /// Thin wrapper over [VitChoicePill] for the common "single filter toggle

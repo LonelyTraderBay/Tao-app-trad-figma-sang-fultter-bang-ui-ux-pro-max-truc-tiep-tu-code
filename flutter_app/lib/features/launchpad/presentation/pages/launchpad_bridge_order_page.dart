@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/launchpad_bridge_order_hero.dart';
 part '../widgets/launchpad_bridge_order_timeline.dart';
@@ -76,7 +77,8 @@ class _LaunchpadBridgeOrderPageState
           semanticLabel: 'SC-303 LaunchpadBridgeOrderPage scroll surface',
           header: VitHeader(
             title: snapshot.title,
-            subtitle: '${snapshot.order.sourceChain} → ${snapshot.order.targetChain}',
+            subtitle:
+                '${snapshot.order.sourceChain} → ${snapshot.order.targetChain}',
             showBack: true,
             onBack: () => context.go(snapshot.backRoute),
           ),

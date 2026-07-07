@@ -38,18 +38,18 @@ class StakingCustodyLargeIconBox extends StatelessWidget {
         shape: RoundedRectangleBorder(
           side: BorderSide(
             color: color.withValues(alpha: 0.32),
-            width: AppSpacing.stakingCustodyActionBorderWidth,
+            width: EarnSpacingTokens.stakingCustodyActionBorderWidth,
           ),
           borderRadius: AppRadii.xlRadius,
         ),
       ),
       child: SizedBox(
-        width: AppSpacing.stakingCustodyActionIconBox,
-        height: AppSpacing.stakingCustodyActionIconBox,
+        width: EarnSpacingTokens.stakingCustodyActionIconBox,
+        height: EarnSpacingTokens.stakingCustodyActionIconBox,
         child: Icon(
           icon,
           color: color,
-          size: AppSpacing.stakingCustodyActionIcon,
+          size: EarnSpacingTokens.stakingCustodyActionIcon,
         ),
       ),
     );
@@ -74,7 +74,7 @@ class StakingCustodySmallPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,
@@ -99,13 +99,13 @@ class StakingCustodyFooterNote extends StatelessWidget {
     return VitCard(
       key: StakingCustodyKeys.footer,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingCustodyFooterLineHeight,
+          height: EarnSpacingTokens.stakingCustodyFooterLineHeight,
         ),
       ),
     );

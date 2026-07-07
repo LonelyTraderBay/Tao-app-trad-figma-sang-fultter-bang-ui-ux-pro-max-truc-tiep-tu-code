@@ -48,11 +48,13 @@ class _BenefitTierCard extends StatelessWidget {
             Material(
               color: accent.withValues(alpha: unlocked ? .12 : .04),
               child: Padding(
-                padding: AppSpacing.profileVipBenefitHeaderPadding,
+                padding: ProfileSpacingTokens.profileVipBenefitHeaderPadding,
                 child: Row(
                   children: [
                     _TierIcon(tier: tier),
-                    const SizedBox(width: AppSpacing.profileVipBenefitIconGap),
+                    const SizedBox(
+                      width: ProfileSpacingTokens.profileVipBenefitIconGap,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +66,9 @@ class _BenefitTierCard extends StatelessWidget {
                               fontWeight: AppTextStyles.heavy,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmCompactInnerGap,
+                          ),
                           Text(
                             'Volume >= ${_formatUsd(tier.monthlyVolume)}/th\u00E1ng ho\u1EB7c T\u00E0i s\u1EA3n >= ${_formatUsd(tier.assetHold)}',
                             maxLines: 2,
@@ -82,7 +86,7 @@ class _BenefitTierCard extends StatelessWidget {
                           ? Icons.check_circle_outline_rounded
                           : Icons.lock_outline_rounded,
                       color: accent,
-                      size: AppSpacing.profileVipBenefitStateIcon,
+                      size: ProfileSpacingTokens.profileVipBenefitStateIcon,
                     ),
                   ],
                 ),
@@ -93,7 +97,7 @@ class _BenefitTierCard extends StatelessWidget {
               color: AppColors.divider,
             ),
             Padding(
-              padding: AppSpacing.profileVipBenefitBodyPadding,
+              padding: ProfileSpacingTokens.profileVipBenefitBodyPadding,
               child: Column(
                 children: [
                   for (final feature in tier.features) ...[
@@ -103,7 +107,9 @@ class _BenefitTierCard extends StatelessWidget {
                       unlocked: unlocked,
                     ),
                     if (feature != tier.features.last)
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                   ],
                   const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                   const Divider(
@@ -119,7 +125,8 @@ class _BenefitTierCard extends StatelessWidget {
                         active: unlocked,
                       ),
                       const SizedBox(
-                        width: AppSpacing.profileVipBenefitMetricColumnGap,
+                        width: ProfileSpacingTokens
+                            .profileVipBenefitMetricColumnGap,
                       ),
                       _BenefitMetric(
                         label: 'Taker',
@@ -127,7 +134,8 @@ class _BenefitTierCard extends StatelessWidget {
                         active: unlocked,
                       ),
                       const SizedBox(
-                        width: AppSpacing.profileVipBenefitMetricColumnGap,
+                        width: ProfileSpacingTokens
+                            .profileVipBenefitMetricColumnGap,
                       ),
                       Expanded(
                         child: _BenefitMetric(
@@ -165,19 +173,21 @@ class _FeatureLine extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.profileVipBenefitFeatureIconBox,
-          height: AppSpacing.profileVipBenefitFeatureIconBox,
+          width: ProfileSpacingTokens.profileVipBenefitFeatureIconBox,
+          height: ProfileSpacingTokens.profileVipBenefitFeatureIconBox,
           child: Material(
             color: accent.withValues(alpha: unlocked ? .18 : .07),
             shape: const CircleBorder(),
             child: Icon(
               Icons.check_rounded,
               color: unlocked ? accent : _vipMuted,
-              size: AppSpacing.profileVipBenefitFeatureIcon,
+              size: ProfileSpacingTokens.profileVipBenefitFeatureIcon,
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.profileVipBenefitFeatureIconGap),
+        const SizedBox(
+          width: ProfileSpacingTokens.profileVipBenefitFeatureIconGap,
+        ),
         Expanded(
           child: Text(
             text,
@@ -235,23 +245,23 @@ class _UpgradeCta extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: _vipAccent.withValues(alpha: .24),
-      padding: AppSpacing.profileVipUpgradePadding,
+      padding: ProfileSpacingTokens.profileVipUpgradePadding,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.profileVipUpgradeIconBox,
-            height: AppSpacing.profileVipUpgradeIconBox,
+            width: ProfileSpacingTokens.profileVipUpgradeIconBox,
+            height: ProfileSpacingTokens.profileVipUpgradeIconBox,
             child: Material(
               color: AppColors.primary12,
               shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
               child: const Icon(
                 Icons.workspace_premium_outlined,
                 color: _vipAccent,
-                size: AppSpacing.profileVipUpgradeIcon,
+                size: ProfileSpacingTokens.profileVipUpgradeIcon,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.profileVipUpgradeIconGap),
+          const SizedBox(width: ProfileSpacingTokens.profileVipUpgradeIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,13 +285,13 @@ class _UpgradeCta extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.profileVipUpgradeCtaGap),
+          const SizedBox(width: ProfileSpacingTokens.profileVipUpgradeCtaGap),
           VitCtaButton(
             key: VIPPage.tradeCtaKey,
             onPressed: onTrade,
             fullWidth: false,
             density: VitDensity.compact,
-            padding: AppSpacing.profileVipUpgradeCtaPadding,
+            padding: ProfileSpacingTokens.profileVipUpgradeCtaPadding,
             child: Text(
               'Giao d\u1ECBch',
               style: AppTextStyles.micro.copyWith(
@@ -304,11 +314,11 @@ class _TierIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = large
-        ? AppSpacing.profileVipTierIconLarge
-        : AppSpacing.profileVipTierIconSmall;
+        ? ProfileSpacingTokens.profileVipTierIconLarge
+        : ProfileSpacingTokens.profileVipTierIconSmall;
     final iconSize = large
-        ? AppSpacing.profileVipTierIconGlyphLarge
-        : AppSpacing.profileVipTierIconGlyphSmall;
+        ? ProfileSpacingTokens.profileVipTierIconGlyphLarge
+        : ProfileSpacingTokens.profileVipTierIconGlyphSmall;
     return SizedBox(
       width: size,
       height: size,

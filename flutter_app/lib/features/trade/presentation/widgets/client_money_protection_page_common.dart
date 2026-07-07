@@ -59,11 +59,11 @@ class _Reconciliation extends StatelessWidget {
           density: VitDensity.compact,
           leading: const Icon(
             Icons.visibility_outlined,
-            size: AppSpacing.tradeBotCheckboxIcon,
+            size: TradeSpacingTokens.tradeBotCheckboxIcon,
           ),
           trailing: const Icon(
             Icons.chevron_right_rounded,
-            size: AppSpacing.tradeBotCheckboxIcon,
+            size: TradeSpacingTokens.tradeBotCheckboxIcon,
           ),
           child: Text(
             'View Full Reconciliation History',
@@ -104,8 +104,8 @@ class _Documents extends StatelessWidget {
               children: [
                 // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
-                  width: AppSpacing.tradeBotClientMoneyDocumentIcon,
-                  height: AppSpacing.tradeBotClientMoneyDocumentIcon,
+                  width: TradeSpacingTokens.tradeBotClientMoneyDocumentIcon,
+                  height: TradeSpacingTokens.tradeBotClientMoneyDocumentIcon,
                   variant: VitCardVariant.inner,
                   alignment: Alignment.center,
                   borderColor: document.$3.withValues(alpha: .35),
@@ -114,10 +114,10 @@ class _Documents extends StatelessWidget {
                         ? Icons.shield_outlined
                         : Icons.description_outlined,
                     color: document.$3,
-                    size: AppSpacing.tradeBotClientMoneyDocumentGlyph,
+                    size: TradeSpacingTokens.tradeBotClientMoneyDocumentGlyph,
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+                const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +142,7 @@ class _Documents extends StatelessWidget {
                 const Icon(
                   Icons.download_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.tradeBotClientMoneyDocumentGlyph,
+                  size: TradeSpacingTokens.tradeBotClientMoneyDocumentGlyph,
                 ),
               ],
             ),
@@ -206,7 +206,7 @@ class _ReconciliationRow extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: success ? _moneyGreen.withValues(alpha: .35) : null,
-      padding: AppSpacing.tradeBotClientMoneyRowPadding,
+      padding: TradeSpacingTokens.tradeBotClientMoneyRowPadding,
       child: Row(
         children: [
           Expanded(

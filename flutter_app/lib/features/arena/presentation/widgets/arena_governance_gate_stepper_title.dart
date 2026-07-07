@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 enum ArenaWizardStepperStyle { governance, studio, smartRule }
 
@@ -61,7 +62,7 @@ class ArenaWizardStepper extends StatelessWidget {
 
     if (style == ArenaWizardStepperStyle.studio) {
       return Padding(
-        padding: AppSpacing.arenaStudioStepperPadding,
+        padding: ArenaSpacingTokens.arenaStudioStepperPadding,
         child: row,
       );
     }
@@ -69,22 +70,22 @@ class ArenaWizardStepper extends StatelessWidget {
   }
 
   EdgeInsetsGeometry get _connectorPadding => switch (style) {
-        ArenaWizardStepperStyle.governance =>
-          AppSpacing.arenaGovernanceStepperLineMargin,
-        ArenaWizardStepperStyle.studio =>
-          AppSpacing.arenaStudioStepperLineMargin,
-        ArenaWizardStepperStyle.smartRule =>
-          AppSpacing.arenaSmartRuleStepperLineMargin,
-      };
+    ArenaWizardStepperStyle.governance =>
+      ArenaSpacingTokens.arenaGovernanceStepperLineMargin,
+    ArenaWizardStepperStyle.studio =>
+      ArenaSpacingTokens.arenaStudioStepperLineMargin,
+    ArenaWizardStepperStyle.smartRule =>
+      ArenaSpacingTokens.arenaSmartRuleStepperLineMargin,
+  };
 
   double get _connectorHeight => switch (style) {
-        ArenaWizardStepperStyle.governance =>
-          AppSpacing.arenaGovernanceStepperLineHeight,
-        ArenaWizardStepperStyle.studio =>
-          AppSpacing.arenaStudioStepperLineHeight,
-        ArenaWizardStepperStyle.smartRule =>
-          AppSpacing.arenaSmartRuleStepperLineHeight,
-      };
+    ArenaWizardStepperStyle.governance =>
+      ArenaSpacingTokens.arenaGovernanceStepperLineHeight,
+    ArenaWizardStepperStyle.studio =>
+      ArenaSpacingTokens.arenaStudioStepperLineHeight,
+    ArenaWizardStepperStyle.smartRule =>
+      ArenaSpacingTokens.arenaSmartRuleStepperLineHeight,
+  };
 }
 
 class _ArenaWizardStepMarker extends StatelessWidget {
@@ -107,66 +108,62 @@ class _ArenaWizardStepMarker extends StatelessWidget {
 
     final (dotSize, fill, borderSide, iconColor, labelStyle) = switch (style) {
       ArenaWizardStepperStyle.governance => (
-          active
-              ? AppSpacing.arenaGovernanceStepActive
-              : AppSpacing.arenaGovernanceStepDefault,
-          done
+        active
+            ? ArenaSpacingTokens.arenaGovernanceStepActive
+            : ArenaSpacingTokens.arenaGovernanceStepDefault,
+        done
+            ? AppColors.buy
+            : active
+            ? AppColors.accent
+            : AppColors.surface3,
+        null as BorderSide?,
+        active ? AppColors.onAccent : AppColors.text3,
+        AppTextStyles.micro.copyWith(
+          color: done
               ? AppColors.buy
               : active
               ? AppColors.accent
-              : AppColors.surface3,
-          null as BorderSide?,
-          active ? AppColors.onAccent : AppColors.text3,
-          AppTextStyles.micro.copyWith(
-            color: done
-                ? AppColors.buy
-                : active
-                ? AppColors.accent
-                : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-          ),
+              : AppColors.text3,
+          fontWeight: AppTextStyles.bold,
         ),
+      ),
       ArenaWizardStepperStyle.studio => (
-          AppSpacing.arenaStudioStepDot,
-          done
-              ? AppColors.buy
-              : active
+        ArenaSpacingTokens.arenaStudioStepDot,
+        done
+            ? AppColors.buy
+            : active
+            ? accentColor
+            : AppColors.surface2,
+        BorderSide(color: active ? AppColors.warn15 : AppColors.borderSolid),
+        active || done ? AppColors.navCenterIcon : AppColors.text3,
+        AppTextStyles.micro.copyWith(
+          color: active
               ? accentColor
-              : AppColors.surface2,
-          BorderSide(
-            color: active ? AppColors.warn15 : AppColors.borderSolid,
-          ),
-          active || done ? AppColors.navCenterIcon : AppColors.text3,
-          AppTextStyles.micro.copyWith(
-            color: active
-                ? accentColor
-                : done
-                ? AppColors.buy
-                : AppColors.text3,
-            fontWeight: AppTextStyles.medium,
-            height: AppSpacing.arenaStudioStepLabelLineHeight,
-          ),
+              : done
+              ? AppColors.buy
+              : AppColors.text3,
+          fontWeight: AppTextStyles.medium,
+          height: ArenaSpacingTokens.arenaStudioStepLabelLineHeight,
         ),
+      ),
       ArenaWizardStepperStyle.smartRule => (
-          AppSpacing.arenaSmartRuleStepDot,
-          done
+        ArenaSpacingTokens.arenaSmartRuleStepDot,
+        done
+            ? AppColors.buy
+            : active
+            ? AppColors.accent
+            : AppColors.surface2,
+        BorderSide(color: active ? AppColors.accent20 : AppColors.borderSolid),
+        active ? AppColors.navCenterIcon : AppColors.text3,
+        AppTextStyles.micro.copyWith(
+          color: done
               ? AppColors.buy
               : active
               ? AppColors.accent
-              : AppColors.surface2,
-          BorderSide(
-            color: active ? AppColors.accent20 : AppColors.borderSolid,
-          ),
-          active ? AppColors.navCenterIcon : AppColors.text3,
-          AppTextStyles.micro.copyWith(
-            color: done
-                ? AppColors.buy
-                : active
-                ? AppColors.accent
-                : AppColors.text3,
-            fontWeight: AppTextStyles.bold,
-          ),
+              : AppColors.text3,
+          fontWeight: AppTextStyles.bold,
         ),
+      ),
     };
 
     return Column(
@@ -185,8 +182,8 @@ class _ArenaWizardStepMarker extends StatelessWidget {
                       Icons.check_rounded,
                       color: iconColor,
                       size: style == ArenaWizardStepperStyle.governance
-                          ? AppSpacing.arenaGovernanceIcon
-                          : AppSpacing.arenaSmartRuleStepIcon,
+                          ? ArenaSpacingTokens.arenaGovernanceIcon
+                          : ArenaSpacingTokens.arenaSmartRuleStepIcon,
                     )
                   : Text(
                       '${item.index}',
@@ -231,7 +228,7 @@ class ArenaGovernanceGateHeader extends StatelessWidget {
           'Governance Gate tự động kiểm tra rule trước khi publish',
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.arenaGovernanceSubtitleLineHeight,
+            height: ArenaSpacingTokens.arenaGovernanceSubtitleLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmFormInnerGap),

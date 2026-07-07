@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 class P2PDisputePage extends ConsumerStatefulWidget {
   const P2PDisputePage({
@@ -67,9 +68,9 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.p2pDisputeBottomInsetVisual
+                  P2PSpacingTokens.p2pDisputeBottomInsetVisual
             : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pDisputeBottomInsetNative) +
+                  P2PSpacingTokens.p2pDisputeBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
 
     return VitPageLayout(
@@ -95,7 +96,9 @@ class _P2PDisputePageState extends ConsumerState<P2PDisputePage> {
                   child: SingleChildScrollView(
                     key: P2PDisputePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDisputeScrollPadding(bottomInset),
+                    padding: P2PSpacingTokens.p2pDisputeScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
@@ -371,9 +374,9 @@ class _DashedBorderPainter extends CustomPainter {
     for (final metric in path.computeMetrics()) {
       var distance = 0.0;
       while (distance < metric.length) {
-        final next = distance + AppSpacing.p2pDisputeDashLength;
+        final next = distance + P2PSpacingTokens.p2pDisputeDashLength;
         canvas.drawPath(metric.extractPath(distance, next), paint);
-        distance = next + AppSpacing.p2pDisputeDashGap;
+        distance = next + P2PSpacingTokens.p2pDisputeDashGap;
       }
     }
   }

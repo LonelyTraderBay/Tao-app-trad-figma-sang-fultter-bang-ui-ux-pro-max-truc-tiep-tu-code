@@ -68,7 +68,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                   child: SingleChildScrollView(
                     key: RewardsHubPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
@@ -85,8 +85,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                           VitErrorState(
                             key: RewardsHubPage.errorKey,
                             title: 'Không tải được phần thưởng',
-                            message:
-                                'Thử lại sau hoặc quay lại trang chủ.',
+                            message: 'Thử lại sau hoặc quay lại trang chủ.',
                             actionLabel: 'Thử lại',
                             onAction: () => context.go(snapshot.backRoute),
                           ),
@@ -103,15 +102,16 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                           ),
                         ],
                         RewardsScreenState.offline
-                            when snapshot.tasks.isEmpty => [
-                          VitEmptyState(
-                            key: RewardsHubPage.offlineKey,
-                            icon: Icons.wifi_off_rounded,
-                            title: 'Đang ngoại tuyến',
-                            message:
-                                'Kết nối lại để xem phần thưởng mới nhất.',
-                          ),
-                        ],
+                            when snapshot.tasks.isEmpty =>
+                          [
+                            VitEmptyState(
+                              key: RewardsHubPage.offlineKey,
+                              icon: Icons.wifi_off_rounded,
+                              title: 'Đang ngoại tuyến',
+                              message:
+                                  'Kết nối lại để xem phần thưởng mới nhất.',
+                            ),
+                          ],
                         _ => [
                           _RewardsHero(
                             summary: snapshot.summary,
@@ -123,8 +123,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                           ),
                           _CategoryProgress(
                             categories: snapshot.categories,
-                            completionLabel:
-                                snapshot.summary.completionLabel,
+                            completionLabel: snapshot.summary.completionLabel,
                           ),
                           _CheckInSection(checkIns: snapshot.checkIns),
                           _ReferralBanner(
@@ -134,8 +133,7 @@ class _RewardsHubPageState extends ConsumerState<RewardsHubPage> {
                             },
                           ),
                           _TaskSection(
-                            completionLabel:
-                                snapshot.summary.completionLabel,
+                            completionLabel: snapshot.summary.completionLabel,
                             filters: snapshot.filters,
                             activeFilter: _activeFilter,
                             tasks: visibleTasks,
@@ -195,7 +193,7 @@ class _RewardsHero extends StatelessWidget {
     return VitModuleHeroCard(
       accentColor: AppModuleAccents.rewards,
       density: VitDensity.compact,
-      padding: AppSpacing.arenaPaddingX5,
+      padding: ArenaSpacingTokens.arenaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -350,7 +348,7 @@ class _PendingClaimBanner extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: claimedAll ? AppColors.buy20 : AppColors.warningBorder,
       onTap: claimedAll ? null : onTap,
-      padding: AppSpacing.arenaPaddingX3,
+      padding: ArenaSpacingTokens.arenaPaddingX3,
       child: Row(
         children: [
           VitAccentIconBox(
@@ -403,13 +401,13 @@ class _ExpiringBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppColors.sell20,
-      padding: AppSpacing.arenaPointsExpiringPadding,
+      padding: ArenaSpacingTokens.arenaPointsExpiringPadding,
       child: Row(
         children: [
           const Icon(
             Icons.timer_outlined,
             color: AppColors.sell,
-            size: AppSpacing.arenaPointsSmallIcon,
+            size: ArenaSpacingTokens.arenaPointsSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

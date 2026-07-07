@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_top_header_tokens.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_trade_instrument_hero.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 /// Reusable instrument header for trade chart/detail surfaces.
 class VitTradeTerminalHeader extends StatelessWidget {
@@ -65,7 +66,7 @@ class VitTradeTerminalHeader extends StatelessWidget {
               onTap: onPairTap,
               variant: VitCardVariant.ghost,
               radius: VitCardRadius.standard,
-              padding: AppSpacing.tradeHeaderBodyPadding,
+              padding: TradeSpacingTokens.tradeHeaderBodyPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -82,11 +83,13 @@ class VitTradeTerminalHeader extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.tradeHeaderChevronGap),
+                  const SizedBox(
+                    width: TradeSpacingTokens.tradeHeaderChevronGap,
+                  ),
                   const Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text2,
-                    size: AppSpacing.tradeHeaderChevron,
+                    size: TradeSpacingTokens.tradeHeaderChevron,
                   ),
                 ],
               ),

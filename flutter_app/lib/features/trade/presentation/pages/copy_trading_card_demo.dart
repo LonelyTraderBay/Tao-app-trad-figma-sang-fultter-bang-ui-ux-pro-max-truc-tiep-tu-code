@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/copy_trading_card_demo_widgets.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/copy_trading_card_demo_sections.dart';
 part '../widgets/copy_trading_card_demo_common.dart';
@@ -61,27 +62,27 @@ class CopyTradingCardDemo extends ConsumerWidget {
                 child: SingleChildScrollView(
                   key: CopyTradingCardDemo.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.tradeBotCopyDemoScrollPadding(
+                  padding: TradeSpacingTokens.tradeBotCopyDemoScrollPadding(
                     bottomInset,
                   ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     gap: VitContentGap.loose,
                     children: tradeShellWithProductTabs(
                       context: context,
                       showProductTabs: false,
                       children: [
                         _AnalysisHeader(snapshot: snapshot),
-                      for (final variant in snapshot.variants)
-                        CopyTradingVariantSection(
-                          key: CopyTradingCardDemo.variantKey(variant.id),
-                          variant: variant,
-                          metrics: snapshot.metrics,
-                        ),
-                      _ComparisonMatrix(issues: snapshot.issues),
-                      _OriginalIssues(issues: snapshot.originalIssues),
-                      _Recommendation(snapshot: snapshot),
-                      _Guidelines(guidelines: snapshot.guidelines),
+                        for (final variant in snapshot.variants)
+                          CopyTradingVariantSection(
+                            key: CopyTradingCardDemo.variantKey(variant.id),
+                            variant: variant,
+                            metrics: snapshot.metrics,
+                          ),
+                        _ComparisonMatrix(issues: snapshot.issues),
+                        _OriginalIssues(issues: snapshot.originalIssues),
+                        _Recommendation(snapshot: snapshot),
+                        _Guidelines(guidelines: snapshot.guidelines),
                       ],
                     ),
                   ),

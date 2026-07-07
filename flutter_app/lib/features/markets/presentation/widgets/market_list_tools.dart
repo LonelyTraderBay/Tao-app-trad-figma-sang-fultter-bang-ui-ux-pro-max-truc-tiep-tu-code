@@ -5,11 +5,12 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 const double _marketToolsCompactHeight = AppSpacing.buttonCompact;
 const double _marketToolCompactGap = AppSpacing.x2;
 const EdgeInsets _marketToolCompactPadding =
-    AppSpacing.marketListToolCompactPadding;
+    MarketsSpacingTokens.marketListToolCompactPadding;
 const double _marketToolCompactIcon = AppSpacing.iconSm;
 
 class MarketListTools extends StatelessWidget {

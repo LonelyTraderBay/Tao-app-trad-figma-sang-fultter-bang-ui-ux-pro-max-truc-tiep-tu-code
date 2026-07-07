@@ -25,7 +25,7 @@ class _LayerButton extends StatelessWidget {
           ? ColoredBox(color: color.withValues(alpha: .08))
           : null,
       clip: active,
-      padding: AppSpacing.predictionAdvancedLayerPadding,
+      padding: PredictionsSpacingTokens.predictionAdvancedLayerPadding,
       child: Row(
         children: [
           Expanded(
@@ -40,7 +40,7 @@ class _LayerButton extends StatelessWidget {
           ),
           Icon(
             active ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-            size: AppSpacing.predictionAdvancedLayerIcon,
+            size: PredictionsSpacingTokens.predictionAdvancedLayerIcon,
             color: active ? color : AppColors.text3,
           ),
         ],
@@ -59,7 +59,7 @@ class _RsiCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
- rhythm: VitPageRhythm.flush,
+        rhythm: VitPageRhythm.flush,
         padding: VitContentPadding.none,
         fullBleed: true,
         gap: VitContentGap.tight,
@@ -94,10 +94,12 @@ class _RsiCard extends StatelessWidget {
             children: [
               const Icon(
                 Icons.info_outline_rounded,
-                size: AppSpacing.predictionAdvancedRsiInfoIcon,
+                size: PredictionsSpacingTokens.predictionAdvancedRsiInfoIcon,
                 color: AppColors.text3,
               ),
-              const SizedBox(width: AppSpacing.predictionAdvancedRsiInfoGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionAdvancedRsiInfoGap,
+              ),
               Expanded(
                 child: Text(
                   'RSI > 70: Overbought - RSI < 30: Oversold',
@@ -192,7 +194,9 @@ class _IndicatorCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.predictionAdvancedStrengthGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionAdvancedStrengthGap,
+              ),
               Text(
                 indicator.strength,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -230,7 +234,7 @@ class _OverallSignalCard extends StatelessWidget {
               const Icon(
                 Icons.trending_up_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.predictionAdvancedOverallIcon,
+                size: PredictionsSpacingTokens.predictionAdvancedOverallIcon,
               ),
             ],
           ),
@@ -260,7 +264,7 @@ class _OrderFlowCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
- rhythm: VitPageRhythm.flush,
+        rhythm: VitPageRhythm.flush,
         padding: VitContentPadding.none,
         fullBleed: true,
         gap: VitContentGap.tight,
@@ -372,7 +376,7 @@ class _LevelCard extends StatelessWidget {
           Icon(
             Icons.track_changes_rounded,
             color: color,
-            size: AppSpacing.predictionAdvancedLevelIcon,
+            size: PredictionsSpacingTokens.predictionAdvancedLevelIcon,
           ),
         ],
       ),
@@ -390,7 +394,7 @@ class _PatternRecognitionCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
-     rhythm: VitPageRhythm.flush,
+        rhythm: VitPageRhythm.flush,
         padding: VitContentPadding.none,
         fullBleed: true,
         gap: VitContentGap.tight,
@@ -432,12 +436,14 @@ class _PatternRow extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    width: AppSpacing.predictionAdvancedPatternIconGap,
+                    width: PredictionsSpacingTokens
+                        .predictionAdvancedPatternIconGap,
                   ),
                   Icon(
                     Icons.trending_up_rounded,
                     color: color,
-                    size: AppSpacing.predictionAdvancedPatternIcon,
+                    size:
+                        PredictionsSpacingTokens.predictionAdvancedPatternIcon,
                   ),
                 ],
               ),
@@ -459,7 +465,8 @@ class _PatternRow extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          width: AppSpacing.predictionAdvancedPatternConfidenceGap,
+          width:
+              PredictionsSpacingTokens.predictionAdvancedPatternConfidenceGap,
         ),
         Text(
           '${pattern.confidence}%',
@@ -488,9 +495,11 @@ class _AnalysisDisclaimer extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.warn,
-            size: AppSpacing.predictionAdvancedDisclaimerIcon,
+            size: PredictionsSpacingTokens.predictionAdvancedDisclaimerIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionAdvancedDisclaimerGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionAdvancedDisclaimerGap,
+          ),
           Expanded(
             child: Text(
               'Phan tich ky thuat chi mang tinh tham khao. Khong dam bao ket qua tuong lai. Ket hop voi nghien cuu co ban de quyet dinh.',

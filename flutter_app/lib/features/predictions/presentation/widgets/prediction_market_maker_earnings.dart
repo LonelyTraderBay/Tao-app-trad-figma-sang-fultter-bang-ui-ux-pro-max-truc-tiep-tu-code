@@ -31,7 +31,7 @@ class _EarningsTab extends StatelessWidget {
                     for (final point in snapshot.earningsHistory)
                       Expanded(
                         child: Padding(
-                          padding: AppSpacing
+                          padding: PredictionsSpacingTokens
                               .predictionMarketMakerEarningsBarPadding,
                           child: _FeeBar(point: point),
                         ),
@@ -152,13 +152,13 @@ class _AnalysisRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.predictionMarketMakerAnalysisRowPadding,
+      padding: PredictionsSpacingTokens.predictionMarketMakerAnalysisRowPadding,
       child: Row(
         children: [
           Icon(
             icon,
             color: AppColors.text3,
-            size: AppSpacing.predictionMarketMakerAnalysisIcon,
+            size: PredictionsSpacingTokens.predictionMarketMakerAnalysisIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

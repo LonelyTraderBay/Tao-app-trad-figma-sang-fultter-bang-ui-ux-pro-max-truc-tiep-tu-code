@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 /// Standard VitHeader subtitle for savings tool sub-routes.
 const kSavingsToolsHeaderSubtitle =
@@ -42,11 +43,7 @@ class EarnInfoBanner extends StatelessWidget {
 
 /// Warning-tone variant for risk and maturity disclosures.
 class EarnWarningBanner extends StatelessWidget {
-  const EarnWarningBanner({
-    super.key,
-    required this.text,
-    this.lineHeight,
-  });
+  const EarnWarningBanner({super.key, required this.text, this.lineHeight});
 
   final String text;
   final double? lineHeight;
@@ -139,7 +136,7 @@ class EarnCustodyRiskBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: borderColor ?? color.withValues(alpha: 0.2),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -157,7 +154,7 @@ class EarnCustodyRiskBanner extends StatelessWidget {
                   body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingCustodyBodyLineHeight,
+                    height: EarnSpacingTokens.stakingCustodyBodyLineHeight,
                   ),
                 ),
               ],
@@ -189,7 +186,7 @@ class EarnToneBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: 0.2),
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

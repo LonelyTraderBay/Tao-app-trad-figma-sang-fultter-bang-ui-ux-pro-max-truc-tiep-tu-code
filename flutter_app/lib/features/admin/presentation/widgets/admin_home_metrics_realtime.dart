@@ -30,7 +30,7 @@ class _MetricCard extends StatelessWidget {
       label:
           'Admin home metric ${metric.label}: ${metric.value}. ${metric.deltaLabel} ${metric.timeframeLabel}',
       child: VitCard(
-        padding: AppSpacing.adminCompactPadding,
+        padding: AdminSpacingTokens.adminCompactPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,7 +39,7 @@ class _MetricCard extends StatelessWidget {
                 Icon(
                   _metricIcon(metric.icon),
                   color: accent,
-                  size: AppSpacing.adminIconSm,
+                  size: AdminSpacingTokens.adminIconSm,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
@@ -132,7 +132,7 @@ class _RealTimeMetricsSection extends StatelessWidget {
         _MetricGrid(metrics: snapshot.liveStats),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
-          padding: AppSpacing.adminCardPadding,
+          padding: AdminSpacingTokens.adminCardPadding,
           child: Column(
             children: [
               Row(
@@ -140,7 +140,7 @@ class _RealTimeMetricsSection extends StatelessWidget {
                   const Icon(
                     Icons.offline_bolt_rounded,
                     color: AppColors.text1,
-                    size: AppSpacing.adminIconMd,
+                    size: AdminSpacingTokens.adminIconMd,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -176,7 +176,7 @@ class _RealTimeMetricsSection extends StatelessWidget {
             const Icon(
               Icons.access_time_rounded,
               color: AppColors.text3,
-              size: AppSpacing.adminIconXs,
+              size: AdminSpacingTokens.adminIconXs,
             ),
             const SizedBox(width: AppSpacing.x2),
             Text(
@@ -227,7 +227,7 @@ class _PauseButton extends StatelessWidget {
           onTap: onPressed,
           borderRadius: AppRadii.inputRadius,
           child: Padding(
-            padding: AppSpacing.adminSegmentButtonPadding,
+            padding: AdminSpacingTokens.adminSegmentButtonPadding,
             child: Text(
               isLive ? 'Tạm dừng' : 'Tiếp tục',
               style: AppTextStyles.caption.copyWith(

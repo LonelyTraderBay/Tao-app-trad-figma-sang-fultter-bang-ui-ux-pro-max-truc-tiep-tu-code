@@ -19,13 +19,14 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/my_arena_reports_page_sections.dart';
 part '../widgets/my_arena_reports_page_common.dart';
 
-const _reportsBodyLineRatio = AppSpacing.myArenaReportsBodyLineHeight;
-const _reportsDividerExtent = AppSpacing.myArenaReportsDividerHeight;
-const _reportsFilterExtent = AppSpacing.myArenaReportsFilterHeight;
+const _reportsBodyLineRatio = ArenaSpacingTokens.myArenaReportsBodyLineHeight;
+const _reportsDividerExtent = ArenaSpacingTokens.myArenaReportsDividerHeight;
+const _reportsFilterExtent = ArenaSpacingTokens.myArenaReportsFilterHeight;
 
 class MyArenaReportsPage extends ConsumerStatefulWidget {
   const MyArenaReportsPage({super.key, this.shellRenderMode});
@@ -83,9 +84,11 @@ class _MyArenaReportsPageState extends ConsumerState<MyArenaReportsPage> {
                   child: SingleChildScrollView(
                     key: MyArenaReportsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.compact,
+                      rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [

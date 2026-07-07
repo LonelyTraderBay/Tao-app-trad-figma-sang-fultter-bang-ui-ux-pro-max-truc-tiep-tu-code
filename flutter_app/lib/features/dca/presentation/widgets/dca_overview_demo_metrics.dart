@@ -19,7 +19,7 @@ class _ProfitRow extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: AppSpacing.devCompactChipPadding,
+            padding: AdminSpacingTokens.devCompactChipPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -28,7 +28,7 @@ class _ProfitRow extends StatelessWidget {
                       ? Icons.arrow_upward_rounded
                       : Icons.arrow_downward_rounded,
                   color: isProfit ? AppColors.buy : AppColors.sell,
-                  size: AppSpacing.dcaOverviewMetaIcon,
+                  size: DcaSpacingTokens.dcaOverviewMetaIcon,
                 ),
                 const SizedBox(width: AppSpacing.x1),
                 Text(
@@ -139,7 +139,7 @@ class _MetricTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.devCompactPadding,
+        padding: AdminSpacingTokens.devCompactPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -151,11 +151,11 @@ class _MetricTile extends StatelessWidget {
                     shape: const CircleBorder(),
                   ),
                   child: Padding(
-                    padding: AppSpacing.devTinyPadding,
+                    padding: AdminSpacingTokens.devTinyPadding,
                     child: Icon(
                       icon,
                       color: accent,
-                      size: AppSpacing.dcaOverviewMetricIcon,
+                      size: DcaSpacingTokens.dcaOverviewMetricIcon,
                     ),
                   ),
                 ),
@@ -168,14 +168,14 @@ class _MetricTile extends StatelessWidget {
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.portfolioTextDim,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.dcaOverviewMetricLabelLineHeight,
+                      height: DcaSpacingTokens.dcaOverviewMetricLabelLineHeight,
                     ),
                   ),
                 ),
                 Icon(
                   Icons.help_outline_rounded,
                   color: AppColors.portfolioTextMuted,
-                  size: AppSpacing.dcaOverviewMetricIcon,
+                  size: DcaSpacingTokens.dcaOverviewMetricIcon,
                 ),
               ],
             ),
@@ -223,7 +223,7 @@ class _NextExecutionRow extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.devCompactPadding,
+        padding: AdminSpacingTokens.devCompactPadding,
         child: Row(
           children: [
             const DecoratedBox(
@@ -232,11 +232,11 @@ class _NextExecutionRow extends StatelessWidget {
                 shape: CircleBorder(),
               ),
               child: Padding(
-                padding: AppSpacing.devCompactPadding,
+                padding: AdminSpacingTokens.devCompactPadding,
                 child: Icon(
                   Icons.schedule_rounded,
                   color: AppColors.primary,
-                  size: AppSpacing.dcaOverviewInlineIcon,
+                  size: DcaSpacingTokens.dcaOverviewInlineIcon,
                 ),
               ),
             ),
@@ -319,11 +319,15 @@ class _StatusBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.devInlinePillPadding,
+        padding: AdminSpacingTokens.devInlinePillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: color, size: AppSpacing.dcaOverviewMetricIcon),
+            Icon(
+              icon,
+              color: color,
+              size: DcaSpacingTokens.dcaOverviewMetricIcon,
+            ),
             const SizedBox(width: AppSpacing.x1),
             Text(
               '$count',

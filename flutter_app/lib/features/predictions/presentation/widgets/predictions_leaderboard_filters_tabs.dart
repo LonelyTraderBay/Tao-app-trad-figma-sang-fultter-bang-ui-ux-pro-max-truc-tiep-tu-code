@@ -13,9 +13,8 @@ class _TimeFilters extends StatelessWidget {
       child: VitTabBar(
         variant: VitTabBarVariant.pill,
         activeKey: active.name,
-        onChanged: (key) => onSelected(
-          PredictionLeaderboardTimeFilter.values.byName(key),
-        ),
+        onChanged: (key) =>
+            onSelected(PredictionLeaderboardTimeFilter.values.byName(key)),
         tabs: [
           VitTabItem(
             key: PredictionLeaderboardTimeFilter.today.name,

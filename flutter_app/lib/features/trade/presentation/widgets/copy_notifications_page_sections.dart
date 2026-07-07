@@ -14,8 +14,8 @@ class _UnreadSummary extends StatelessWidget {
     // card-tile: allow-start — fixed summary row, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
-      height: AppSpacing.tradeBotSheetActionHeight,
-      padding: AppSpacing.tradeBotChipPadding,
+      height: TradeSpacingTokens.tradeBotSheetActionHeight,
+      padding: TradeSpacingTokens.tradeBotChipPadding,
       borderColor: _notificationPrimary,
       child: Row(
         children: [
@@ -89,11 +89,11 @@ class _NotificationCard extends StatelessWidget {
             child: ColoredBox(
               color: color.withValues(alpha: .18),
               child: SizedBox.square(
-                dimension: AppSpacing.walletAddressIconSize,
+                dimension: WalletSpacingTokens.walletAddressIconSize,
                 child: Icon(
                   _notificationIcon(notification),
                   color: color,
-                  size: AppSpacing.homeNextActionIconSize,
+                  size: HomeSpacingTokens.homeNextActionIconSize,
                 ),
               ),
             ),
@@ -165,7 +165,9 @@ class _NotificationCard extends StatelessWidget {
                     ],
                   ),
                   if (notification.pair != null) ...[
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     _PairChip(notification: notification, color: color),
                   ],
                 ],

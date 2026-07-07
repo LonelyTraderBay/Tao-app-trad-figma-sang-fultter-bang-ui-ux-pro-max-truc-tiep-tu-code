@@ -144,7 +144,9 @@ class _SummaryStatContent extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.micro.copyWith(color: AppColors.portfolioTextMuted),
+          style: AppTextStyles.micro.copyWith(
+            color: AppColors.portfolioTextMuted,
+          ),
         ),
         const SizedBox(height: AppSpacing.x1),
         Text(

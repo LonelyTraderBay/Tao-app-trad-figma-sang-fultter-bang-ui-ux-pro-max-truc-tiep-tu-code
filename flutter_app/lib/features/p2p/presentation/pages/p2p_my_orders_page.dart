@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_my_orders_page_sections.dart';
 part '../widgets/p2p_my_orders_page_common.dart';
@@ -109,11 +110,11 @@ class _P2PMyOrdersPageState extends ConsumerState<P2PMyOrdersPage> {
                   child: SingleChildScrollView(
                     key: P2PMyOrdersPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pMyOrdersScrollPadding(
+                    padding: P2PSpacingTokens.p2pMyOrdersScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,

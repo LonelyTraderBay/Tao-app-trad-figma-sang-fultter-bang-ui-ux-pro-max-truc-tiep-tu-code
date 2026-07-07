@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class TransactionReportingComplianceNotice extends StatelessWidget {
   const TransactionReportingComplianceNotice({super.key});
@@ -14,7 +15,7 @@ class TransactionReportingComplianceNotice extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.transactionReportingComplianceNoticePadding,
+      padding: TradeSpacingTokens.transactionReportingComplianceNoticePadding,
       borderColor: transactionReportPrimary.withValues(alpha: .35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +34,8 @@ class TransactionReportingComplianceNotice extends StatelessWidget {
                   'MiFID II Article 26 Compliance',
                   style: AppTextStyles.badge.copyWith(
                     color: transactionReportPrimary,
-                    height: AppSpacing.transactionReportingLineHeightTight,
+                    height:
+                        TradeSpacingTokens.transactionReportingLineHeightTight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -41,7 +43,8 @@ class TransactionReportingComplianceNotice extends StatelessWidget {
                   'All transactions must be reported to ARM within T+1. Reports include 65+ RTS 22 fields. Auto-submission enabled.',
                   style: AppTextStyles.micro.copyWith(
                     color: transactionReportPrimary,
-                    height: AppSpacing.transactionReportingNoticeLineHeight,
+                    height:
+                        TradeSpacingTokens.transactionReportingNoticeLineHeight,
                   ),
                 ),
               ],
@@ -77,7 +80,7 @@ class TransactionReportingNoticePanel extends StatelessWidget {
         child: VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.standard,
-          padding: AppSpacing.transactionReportingNoticePanelPadding,
+          padding: TradeSpacingTokens.transactionReportingNoticePanelPadding,
           borderColor: AppColors.primary.withValues(alpha: .4),
           child: Row(
             children: [
@@ -90,9 +93,7 @@ class TransactionReportingNoticePanel extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text1,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text1),
                 ),
               ),
               VitInlineIconAction(

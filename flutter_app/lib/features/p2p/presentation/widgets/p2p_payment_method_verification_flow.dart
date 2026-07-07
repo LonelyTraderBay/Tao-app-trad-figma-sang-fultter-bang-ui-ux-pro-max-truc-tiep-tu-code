@@ -33,7 +33,7 @@ class _VerificationFlow extends StatelessWidget {
         _CenteredMethodIntro(method: method),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
-          padding: AppSpacing.p2pPaymentCardPadding,
+          padding: P2PSpacingTokens.p2pPaymentCardPadding,
           child: Column(
             children: [
               for (var i = 0; i < snapshot.microDepositSteps.length; i++) ...[
@@ -81,12 +81,12 @@ class _CenteredMethodIntro extends StatelessWidget {
           color: AppColors.primary12,
           shape: CircleBorder(),
           child: SizedBox(
-            width: AppSpacing.p2pPaymentVerificationIntroIconBox,
-            height: AppSpacing.p2pPaymentVerificationIntroIconBox,
+            width: P2PSpacingTokens.p2pPaymentVerificationIntroIconBox,
+            height: P2PSpacingTokens.p2pPaymentVerificationIntroIconBox,
             child: Icon(
               Icons.credit_card_rounded,
               color: AppColors.primary,
-              size: AppSpacing.p2pPaymentVerificationIntroIcon,
+              size: P2PSpacingTokens.p2pPaymentVerificationIntroIcon,
             ),
           ),
         ),
@@ -140,8 +140,8 @@ class _StepRow extends StatelessWidget {
           color: AppColors.primary12,
           shape: const CircleBorder(),
           child: SizedBox(
-            width: AppSpacing.p2pPaymentVerificationStepDot,
-            height: AppSpacing.p2pPaymentVerificationStepDot,
+            width: P2PSpacingTokens.p2pPaymentVerificationStepDot,
+            height: P2PSpacingTokens.p2pPaymentVerificationStepDot,
             child: Center(
               child: Text(
                 '$index',
@@ -194,7 +194,7 @@ class _WarningNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentCompactCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCompactCardPadding,
       borderColor: AppColors.warningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

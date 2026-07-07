@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_notification_preferences_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsNotificationEventsTab extends StatelessWidget {
   const SavingsNotificationEventsTab({
@@ -66,7 +67,7 @@ class _CategorySection extends StatelessWidget {
             Icon(
               savingsNotificationCategoryIcon(category),
               color: color,
-              size: AppSpacing.savingsNotificationInlineIcon,
+              size: EarnSpacingTokens.savingsNotificationInlineIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Text(
@@ -90,7 +91,8 @@ class _CategorySection extends StatelessWidget {
             disabled: !masterEnabled,
             onToggle: () => onToggle(alert.id),
           ),
-          if (alert != alerts.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (alert != alerts.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
       ],
@@ -118,11 +120,11 @@ class _AlertCard extends StatelessWidget {
     return VitCard(
       key: SavingsNotificationPreferencesKeys.alert(alert.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.savingsNotificationIconBox,
+            dimension: EarnSpacingTokens.savingsNotificationIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .14),
@@ -133,7 +135,7 @@ class _AlertCard extends StatelessWidget {
               child: Icon(
                 savingsNotificationAlertIcon(alert.iconKey),
                 color: color,
-                size: AppSpacing.savingsNotificationAlertIcon,
+                size: EarnSpacingTokens.savingsNotificationAlertIcon,
               ),
             ),
           ),
@@ -165,7 +167,8 @@ class _AlertCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.savingsNotificationAlertLineHeight,
+                    height:
+                        EarnSpacingTokens.savingsNotificationAlertLineHeight,
                   ),
                 ),
               ],

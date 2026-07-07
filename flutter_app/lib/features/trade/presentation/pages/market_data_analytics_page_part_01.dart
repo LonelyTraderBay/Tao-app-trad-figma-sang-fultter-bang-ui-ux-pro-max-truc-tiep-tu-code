@@ -35,37 +35,37 @@ class _MarketDataAnalyticsPageState
                   key: MarketDataAnalyticsPage.contentKey,
                   bottomInset: scrollClearance,
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: tradeShellWithProductTabs(
                       context: context,
                       children: [
                         VitTradeInstrumentHero(
-                        symbol: snapshot.selectedPair,
-                        priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
-                        changePct: snapshot.fundingRate.currentRatePct,
-                        highLabel: _formatCompactUsd(
-                          snapshot.openInterest.high24h,
+                          symbol: snapshot.selectedPair,
+                          priceLabel: '\$${_formatMoney(snapshot.markPrice)}',
+                          changePct: snapshot.fundingRate.currentRatePct,
+                          highLabel: _formatCompactUsd(
+                            snapshot.openInterest.high24h,
+                          ),
+                          lowLabel: _formatCompactUsd(
+                            snapshot.openInterest.low24h,
+                          ),
+                          volumeLabel: _formatCompactUsd(
+                            snapshot.openInterest.current,
+                          ),
                         ),
-                        lowLabel: _formatCompactUsd(
-                          snapshot.openInterest.low24h,
+                        _MarketAnalyticsRiskPanel(snapshot: snapshot),
+                        _UnderlineTabs(
+                          activeId: _tab,
+                          onChanged: (id) => setState(() => _tab = id),
                         ),
-                        volumeLabel: _formatCompactUsd(
-                          snapshot.openInterest.current,
-                        ),
-                      ),
-                      _MarketAnalyticsRiskPanel(snapshot: snapshot),
-                      _UnderlineTabs(
-                        activeId: _tab,
-                        onChanged: (id) => setState(() => _tab = id),
-                      ),
-                      if (_tab == 'market')
-                        _MarketDataTab(snapshot: snapshot)
-                      else if (_tab == 'liquidations')
-                        _LiquidationsTab(snapshot: snapshot)
-                      else
-                        _SentimentTab(snapshot: snapshot),
+                        if (_tab == 'market')
+                          _MarketDataTab(snapshot: snapshot)
+                        else if (_tab == 'liquidations')
+                          _LiquidationsTab(snapshot: snapshot)
+                        else
+                          _SentimentTab(snapshot: snapshot),
                       ],
                     ),
                   ),

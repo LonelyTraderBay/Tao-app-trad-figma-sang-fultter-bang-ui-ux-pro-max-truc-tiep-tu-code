@@ -26,12 +26,12 @@ class _ActivityFilterRow extends StatelessWidget {
               selected: filter.id == activeFilter,
               onTap: () => onChanged(filter.id),
               height: VitDensity.compact.controlHeight,
-              padding: AppSpacing.profileActivityFilterChipPadding,
+              padding: ProfileSpacingTokens.profileActivityFilterChipPadding,
               accentColor: _activityPrimary,
             ),
             if (filter != filters.last)
               const SizedBox(
-                width: AppSpacing.profileActivityFilterChipGap,
+                width: ProfileSpacingTokens.profileActivityFilterChipGap,
               ),
           ],
         ],
@@ -56,9 +56,11 @@ class _SuspiciousBanner extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _activityAmber,
-            size: AppSpacing.profileActivityBannerIcon,
+            size: ProfileSpacingTokens.profileActivityBannerIcon,
           ),
-          const SizedBox(width: AppSpacing.profileActivityBannerIconGap),
+          const SizedBox(
+            width: ProfileSpacingTokens.profileActivityBannerIconGap,
+          ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +115,9 @@ class _ActivityCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _ActivityIcon(config: type),
-              const SizedBox(width: AppSpacing.profileActivityIconGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileActivityIconGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +136,8 @@ class _ActivityCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          width: AppSpacing.profileActivityTitleStatusGap,
+                          width: ProfileSpacingTokens
+                              .profileActivityTitleStatusGap,
                         ),
                         _StatusPill(config: status),
                       ],
@@ -150,11 +155,13 @@ class _ActivityCard extends StatelessWidget {
                 ),
               ),
               if (suspicious) ...[
-                const SizedBox(width: AppSpacing.profileActivityWarningGap),
+                const SizedBox(
+                  width: ProfileSpacingTokens.profileActivityWarningGap,
+                ),
                 const Icon(
                   Icons.warning_amber_rounded,
                   color: _activityAmber,
-                  size: AppSpacing.profileActivityWarningIcon,
+                  size: ProfileSpacingTokens.profileActivityWarningIcon,
                 ),
               ],
             ],
@@ -185,15 +192,15 @@ class _ActivityIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.profileActivityIconBox,
-      height: AppSpacing.profileActivityIconBox,
+      width: ProfileSpacingTokens.profileActivityIconBox,
+      height: ProfileSpacingTokens.profileActivityIconBox,
       child: Material(
         color: config.color.withValues(alpha: .16),
         shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
         child: Icon(
           config.icon,
           color: config.color,
-          size: AppSpacing.profileActivityIcon,
+          size: ProfileSpacingTokens.profileActivityIcon,
         ),
       ),
     );
@@ -222,7 +229,7 @@ class _ActivityDetails extends StatelessWidget {
       color: _activityPanel2.withValues(alpha: .72),
       shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       child: Padding(
-        padding: AppSpacing.profileActivityDetailsPadding,
+        padding: ProfileSpacingTokens.profileActivityDetailsPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -236,7 +243,7 @@ class _ActivityDetails extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: AppSpacing.profileActivityDetailsColumnGap,
+                  width: ProfileSpacingTokens.profileActivityDetailsColumnGap,
                 ),
                 Expanded(
                   child: _DetailBlock(

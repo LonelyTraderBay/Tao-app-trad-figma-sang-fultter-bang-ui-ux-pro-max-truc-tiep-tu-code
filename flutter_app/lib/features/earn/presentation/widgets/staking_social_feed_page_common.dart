@@ -12,7 +12,7 @@ class _StatTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: stat.tone == 'success' ? AppColors.primary20 : null,
-      padding: AppSpacing.earnCardPaddingX2X4,
+      padding: EarnSpacingTokens.earnCardPaddingX2X4,
       child: Column(
         children: [
           Text(
@@ -48,13 +48,13 @@ class _FooterNote extends StatelessWidget {
       key: StakingSocialFeedPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.caption.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+          height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
         ),
       ),
     );
@@ -85,13 +85,13 @@ class _Pill extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+            height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
           ),
         ),
       ),

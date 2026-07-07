@@ -275,7 +275,7 @@ class _QuickChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaHomeQuickChipGapPadding,
+      padding: ArenaSpacingTokens.arenaHomeQuickChipGapPadding,
       child: IntrinsicWidth(
         child: VitCard(
           onTap: onTap,
@@ -290,7 +290,7 @@ class _QuickChip extends StatelessWidget {
               Icon(
                 icon,
                 color: AppColors.text2,
-                size: AppSpacing.arenaHomeQuickChipIcon,
+                size: ArenaSpacingTokens.arenaHomeQuickChipIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -471,10 +471,10 @@ class _TemplateSection extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: templates.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.arenaHomeTemplateColumns,
+            crossAxisCount: ArenaSpacingTokens.arenaHomeTemplateColumns,
             crossAxisSpacing: AppSpacing.x2,
             mainAxisSpacing: AppSpacing.x2,
-            mainAxisExtent: AppSpacing.arenaHomeTemplateExtent,
+            mainAxisExtent: ArenaSpacingTokens.arenaHomeTemplateExtent,
           ),
           itemBuilder: (context, index) {
             final template = templates[index];

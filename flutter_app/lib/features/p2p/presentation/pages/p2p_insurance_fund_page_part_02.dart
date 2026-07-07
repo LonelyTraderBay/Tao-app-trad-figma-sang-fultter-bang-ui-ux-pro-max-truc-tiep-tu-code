@@ -9,7 +9,7 @@ class _ClaimCalculatorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pTrustProgressCompactPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,7 +34,7 @@ class _ClaimCalculatorCard extends StatelessWidget {
             radius: VitCardRadius.standard,
             borderColor: AppColors.borderSolid,
             background: const ColoredBox(color: AppColors.surface2),
-            padding: AppSpacing.p2pTrustProgressInputPadding,
+            padding: P2PSpacingTokens.p2pTrustProgressInputPadding,
             clip: true,
             child: Text(
               'VD: 50.000.000',
@@ -61,7 +61,7 @@ class _PlatformStatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pTrustProgressCompactPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -171,10 +171,10 @@ class _InsuranceTourOverlay extends StatelessWidget {
         color: AppColors.bg.withValues(alpha: .82),
         child: SafeArea(
           child: Padding(
-            padding: AppSpacing.p2pTrustProgressTourPadding,
+            padding: P2PSpacingTokens.p2pTrustProgressTourPadding,
             child: VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.p2pTrustProgressCompactPadding,
+              padding: P2PSpacingTokens.p2pTrustProgressCompactPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -233,7 +233,9 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   Text(
                     'Chào mừng đến Quỹ Bảo Hiểm P2P',
                     textAlign: TextAlign.center,
@@ -250,7 +252,9 @@ class _InsuranceTourOverlay extends StatelessWidget {
                       height: _p2pInsuranceBodyLineHeight,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   _TourInfoCard(
                     title: 'Dành cho bạn',
                     icon: Icons.star_border_rounded,
@@ -279,7 +283,8 @@ class _InsuranceTourOverlay extends StatelessWidget {
                         variant: VitCtaButtonVariant.secondary,
                         fullWidth: false,
                         height: AppSpacing.buttonCompact,
-                        padding: AppSpacing.p2pInsuranceFundTourSkipPadding,
+                        padding:
+                            P2PSpacingTokens.p2pInsuranceFundTourSkipPadding,
                         child: const Text('Bỏ qua'),
                       ),
                       const SizedBox(width: AppSpacing.x3),
@@ -327,7 +332,7 @@ class _TourInfoCard extends StatelessWidget {
       variant: muted ? VitCardVariant.inner : VitCardVariant.standard,
       radius: VitCardRadius.standard,
       borderColor: muted ? AppColors.borderSolid : AppColors.warningBorder,
-      padding: AppSpacing.p2pTrustProgressCompactPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -374,7 +379,8 @@ class _TourInfoCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -392,7 +398,7 @@ class _ClaimCard extends StatelessWidget {
     final config = _claimStatusConfig(claim.status);
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pTrustProgressCompactPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressCompactPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(AppRoutePaths.p2pClaim(claim.id));

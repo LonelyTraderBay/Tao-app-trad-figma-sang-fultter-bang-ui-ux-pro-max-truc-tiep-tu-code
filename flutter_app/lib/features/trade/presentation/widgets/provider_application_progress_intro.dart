@@ -49,7 +49,7 @@ class _IntroStep extends StatelessWidget {
           'Trở thành Copy Trading Provider',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle.copyWith(
-            height: AppSpacing.providerApplicationIntroTitleLineHeight,
+            height: TradeSpacingTokens.providerApplicationIntroTitleLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -58,7 +58,8 @@ class _IntroStep extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.providerApplicationIntroDescriptionLineHeight,
+            height: TradeSpacingTokens
+                .providerApplicationIntroDescriptionLineHeight,
           ),
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
@@ -71,9 +72,7 @@ class _IntroStep extends StatelessWidget {
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         _ResponsibilitiesCard(items: snapshot.responsibilities),
-        const SizedBox(
-          height: AppSpacing.pageRhythmStandardInnerGap,
-        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         _SectionLabel(label: 'Yêu cầu cơ bản', color: AppColors.text3),
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final requirement in snapshot.requirements) ...[
@@ -94,8 +93,8 @@ class _BenefitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      constraints: AppSpacing.providerApplicationBenefitCardConstraints,
-      padding: AppSpacing.providerApplicationBenefitCardPadding,
+      constraints: TradeSpacingTokens.providerApplicationBenefitCardConstraints,
+      padding: TradeSpacingTokens.providerApplicationBenefitCardPadding,
       child: Row(
         children: [
           CircleAvatar(
@@ -120,7 +119,7 @@ class _BenefitCard extends StatelessWidget {
                   benefit.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing
+                    height: TradeSpacingTokens
                         .providerApplicationBenefitDescriptionLineHeight,
                   ),
                 ),
@@ -141,7 +140,7 @@ class _ResponsibilitiesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.providerApplicationPanelPadding,
+      padding: TradeSpacingTokens.providerApplicationPanelPadding,
       borderColor: _providerWarning.withValues(alpha: .55),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,13 +165,13 @@ class _ResponsibilitiesCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 for (final item in items)
                   Padding(
-                    padding:
-                        AppSpacing.providerApplicationResponsibilityItemPadding,
+                    padding: TradeSpacingTokens
+                        .providerApplicationResponsibilityItemPadding,
                     child: Text(
                       '• $item',
                       style: AppTextStyles.caption.copyWith(
                         color: _providerWarning,
-                        height: AppSpacing
+                        height: TradeSpacingTokens
                             .providerApplicationResponsibilityLineHeight,
                       ),
                     ),
@@ -197,7 +196,7 @@ class _RequirementPreview extends StatelessWidget {
     return VitCard(
       height:
           AppSpacing.buttonCompact - AppSpacing.x1 + AppSpacing.hairlineStroke,
-      padding: AppSpacing.providerApplicationRequirementPreviewPadding,
+      padding: TradeSpacingTokens.providerApplicationRequirementPreviewPadding,
       child: Row(
         children: [
           Expanded(

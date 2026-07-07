@@ -11,7 +11,7 @@ class _HeroBanner extends StatelessWidget {
       key: StakingGuidePage.heroKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,7 +52,7 @@ class _DifficultyTabs extends StatelessWidget {
       key: StakingGuidePage.tabsKey,
       color: AppColors.surface,
       child: Padding(
-        padding: AppSpacing.earnSurfaceTabsPadding,
+        padding: EarnSpacingTokens.earnSurfaceTabsPadding,
         child: VitTabBar(
           variant: VitTabBarVariant.underline,
           activeKey: active.name,
@@ -88,7 +88,7 @@ class _TutorialCard extends StatelessWidget {
       padding: AppSpacing.zeroInsets,
       onTap: onTap,
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX4,
+        padding: EarnSpacingTokens.earnCardPaddingX4,
         child: Row(
           children: [
             _RoundIcon(
@@ -175,7 +175,7 @@ class _QuickTipCard extends StatelessWidget {
     final color = _toneColor(tip.tone);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -217,11 +217,12 @@ class _CommonMistakes extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             children: [
               for (var i = 0; i < snapshot.mistakes.length; i++) ...[
-                if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                if (i > 0)
+                  const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 _MistakeRow(mistake: snapshot.mistakes[i]),
               ],
             ],
@@ -243,7 +244,7 @@ class _MistakeRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -290,7 +291,7 @@ class _StartStakingCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -352,7 +353,7 @@ class _ProgressHeader extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
-            minHeight: AppSpacing.earnGuideProgressHeight,
+            minHeight: EarnSpacingTokens.earnGuideProgressHeight,
             value: progress,
             backgroundColor: AppColors.borderSolid,
             valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),

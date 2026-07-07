@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pSourceFundsVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -87,7 +88,7 @@ class _P2PSourceOfFundsPageState extends ConsumerState<P2PSourceOfFundsPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pSourceOfFundsScrollPadding(
+                    padding: P2PSpacingTokens.p2pSourceOfFundsScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
@@ -158,7 +159,7 @@ class _SourceHero extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
-        padding: AppSpacing.p2pFinancialSafetyCardPadding,
+        padding: P2PSpacingTokens.p2pFinancialSafetyCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -168,8 +169,8 @@ class _SourceHero extends StatelessWidget {
                 borderRadius: AppRadii.lgRadius,
               ),
               child: SizedBox(
-                width: AppSpacing.p2pFinancialSafetyIconBox,
-                height: AppSpacing.p2pFinancialSafetyIconBox,
+                width: P2PSpacingTokens.p2pFinancialSafetyIconBox,
+                height: P2PSpacingTokens.p2pFinancialSafetyIconBox,
                 child: const Icon(
                   Icons.attach_money_rounded,
                   color: AppColors.onAccent,
@@ -198,7 +199,7 @@ class _SourceHero extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.onAccent.withValues(alpha: .90),
-                      height: AppSpacing.p2pFinancialSafetyBodyLineHeight,
+                      height: P2PSpacingTokens.p2pFinancialSafetyBodyLineHeight,
                     ),
                   ),
                 ],
@@ -270,7 +271,7 @@ class _FundSourceTile extends StatelessWidget {
       ),
       clip: true,
       constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
-      padding: AppSpacing.p2pFinancialSafetyCardPadding,
+      padding: P2PSpacingTokens.p2pFinancialSafetyCardPadding,
       child: Row(
         children: [
           Material(
@@ -281,8 +282,8 @@ class _FundSourceTile extends StatelessWidget {
               borderRadius: AppRadii.lgRadius,
             ),
             child: SizedBox(
-              width: AppSpacing.p2pFinancialSafetyCompactIconBox,
-              height: AppSpacing.p2pFinancialSafetyCompactIconBox,
+              width: P2PSpacingTokens.p2pFinancialSafetyCompactIconBox,
+              height: P2PSpacingTokens.p2pFinancialSafetyCompactIconBox,
               child: Icon(
                 _fundIcon(source.iconKey),
                 color: color,

@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 part '../widgets/savings_dca_summary.dart';
 part '../widgets/savings_dca_plans.dart';
 part '../widgets/savings_dca_history_sheet.dart';
@@ -79,7 +80,7 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
               ColoredBox(
                 color: AppColors.surface,
                 child: Padding(
-                  padding: AppSpacing.earnSurfaceTabsPadding,
+                  padding: EarnSpacingTokens.earnSurfaceTabsPadding,
                   child: _DcaTabs(
                     tabs: snapshot.tabs,
                     active: activeTab,
@@ -98,9 +99,11 @@ class _SavingsDCAPageState extends ConsumerState<SavingsDCAPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [

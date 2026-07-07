@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsSmartSuggestionsPage extends ConsumerStatefulWidget {
   const SavingsSmartSuggestionsPage({super.key, this.shellRenderMode});
@@ -80,7 +81,7 @@ class _SavingsSmartSuggestionsPageState
               ColoredBox(
                 color: AppColors.surface,
                 child: Padding(
-                  padding: AppSpacing.earnSurfaceTabsPadding,
+                  padding: EarnSpacingTokens.earnSurfaceTabsPadding,
                   child: SavingsSmartTabs(
                     tabs: snapshot.tabs,
                     active: activeTab,
@@ -99,7 +100,9 @@ class _SavingsSmartSuggestionsPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,

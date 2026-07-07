@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 import 'savings_autopilot_formatters.dart';
 
@@ -16,8 +17,8 @@ class IconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.savingsAutoPilotIconBadge,
-      height: AppSpacing.savingsAutoPilotIconBadge,
+      width: EarnSpacingTokens.savingsAutoPilotIconBadge,
+      height: EarnSpacingTokens.savingsAutoPilotIconBadge,
       child: Material(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.mdRadius,

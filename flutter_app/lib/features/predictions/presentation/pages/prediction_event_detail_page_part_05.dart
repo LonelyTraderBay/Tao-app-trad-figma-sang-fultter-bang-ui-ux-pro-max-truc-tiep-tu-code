@@ -20,7 +20,9 @@ class _QuickLinks extends StatelessWidget {
             onTap: onRewards,
           ),
         ),
-        const SizedBox(width: AppSpacing.predictionDetailQuickLinkGap),
+        const SizedBox(
+          width: PredictionsSpacingTokens.predictionDetailQuickLinkGap,
+        ),
         Expanded(
           child: _QuickLinkCard(
             key: PredictionEventDetailPage.globalActivityKey,
@@ -56,15 +58,17 @@ class _QuickLinkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      padding: AppSpacing.predictionDetailQuickLinkPadding,
+      padding: PredictionsSpacingTokens.predictionDetailQuickLinkPadding,
       child: Row(
         children: [
           Icon(
             icon,
             color: color,
-            size: AppSpacing.predictionDetailQuickLinkIcon,
+            size: PredictionsSpacingTokens.predictionDetailQuickLinkIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionDetailQuickLinkGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionDetailQuickLinkGap,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,9 +111,11 @@ class _MetaItem extends StatelessWidget {
         Icon(
           icon,
           color: AppColors.text3,
-          size: AppSpacing.predictionHomeStatIcon,
+          size: PredictionsSpacingTokens.predictionHomeStatIcon,
         ),
-        const SizedBox(width: AppSpacing.predictionHomeStatIconGap),
+        const SizedBox(
+          width: PredictionsSpacingTokens.predictionHomeStatIconGap,
+        ),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -133,7 +139,7 @@ class _ChangeLabel extends StatelessWidget {
         Icon(
           value >= 0 ? Icons.arrow_outward_rounded : Icons.south_east_rounded,
           color: color,
-          size: AppSpacing.predictionHomeTrendIcon,
+          size: PredictionsSpacingTokens.predictionHomeTrendIcon,
         ),
         Text(
           _formatPercent(value),
@@ -164,7 +170,7 @@ class _TinyBadge extends StatelessWidget {
       color: background,
       borderRadius: AppRadii.badgeRadius,
       child: Padding(
-        padding: AppSpacing.predictionHomeBadgePadding,
+        padding: PredictionsSpacingTokens.predictionHomeBadgePadding,
         child: Text(label, style: AppTextStyles.badge.copyWith(color: color)),
       ),
     );

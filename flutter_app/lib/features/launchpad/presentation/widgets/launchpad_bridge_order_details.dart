@@ -25,7 +25,7 @@ class _BridgeDetails extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeOrderPage.detailsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -78,7 +78,7 @@ class _DetailsRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.launchpadVerticalPaddingX2,
+          padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
           child: Row(
             children: [
               Expanded(
@@ -122,7 +122,7 @@ class _SimulationDisclosure extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: AppColors.primary.withValues(alpha: .16),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -156,7 +156,7 @@ class _BridgeSupportAction extends StatelessWidget {
       onTap: () => context.go(supportRoute),
       radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -188,7 +188,7 @@ class _BridgeSupportAction extends StatelessWidget {
           VitCtaButton(
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.launchpadSupportButtonPadding,
+            padding: LaunchpadSpacingTokens.launchpadSupportButtonPadding,
             onPressed: () => context.go(supportRoute),
             trailing: const Icon(Icons.chevron_right_rounded),
             child: const Text('Hỗ trợ'),

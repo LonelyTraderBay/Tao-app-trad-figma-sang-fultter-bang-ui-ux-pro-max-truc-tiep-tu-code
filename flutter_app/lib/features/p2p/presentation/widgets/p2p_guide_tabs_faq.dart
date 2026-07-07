@@ -17,7 +17,7 @@ class _GuideTabs extends StatelessWidget {
       key: P2PGuidePage.tabsKey,
       color: AppColors.surface,
       child: Padding(
-        padding: AppSpacing.p2pGuideTabsPadding,
+        padding: P2PSpacingTokens.p2pGuideTabsPadding,
         child: VitTabBar(
           variant: VitTabBarVariant.underline,
           activeKey: active,
@@ -95,7 +95,7 @@ class _FaqCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.p2pGuideFaqCardPadding,
+            padding: P2PSpacingTokens.p2pGuideFaqCardPadding,
             child: Row(
               children: [
                 _RoundIcon(
@@ -126,7 +126,7 @@ class _FaqCard extends StatelessWidget {
           ),
           if (expanded)
             Padding(
-              padding: AppSpacing.p2pGuideFaqAnswerPadding,
+              padding: P2PSpacingTokens.p2pGuideFaqAnswerPadding,
               child: Text(
                 faq.answer,
                 maxLines: 3,

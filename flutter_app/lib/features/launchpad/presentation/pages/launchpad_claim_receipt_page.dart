@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/launchpad_claim_receipt_hero_widgets.dart';
 part '../widgets/launchpad_claim_receipt_overview_widgets.dart';
@@ -113,7 +114,8 @@ class _LaunchpadClaimReceiptPageState
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Padding(
-                          padding: AppSpacing.launchpadHorizontalContentPadding,
+                          padding: LaunchpadSpacingTokens
+                              .launchpadHorizontalContentPadding,
                           child: VitTabBar(
                             tabs: const [
                               VitTabItem(key: 'overview', label: 'Tổng quan'),
@@ -146,7 +148,7 @@ class _LaunchpadClaimReceiptPageState
                           bottom: scrollEndPadding,
                         ),
                         child: VitPageContent(
-       rhythm: VitPageRhythm.standard,
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
                           children: [

@@ -28,7 +28,7 @@ class _ExportSheet extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            maxWidth: AppSpacing.launchpadSheetMaxWidth,
+            maxWidth: LaunchpadSpacingTokens.launchpadSheetMaxWidth,
           ),
           child: SizedBox(
             width: double.infinity,
@@ -40,14 +40,14 @@ class _ExportSheet extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: AppSpacing.launchpadConfirmSheetPadding,
+                padding: LaunchpadSpacingTokens.launchpadConfirmSheetPadding,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Center(
                       child: SizedBox(
-                        width: AppSpacing.launchpadBox44,
+                        width: LaunchpadSpacingTokens.launchpadBox44,
                         height: AppSpacing.x1,
                         child: DecoratedBox(
                           decoration: ShapeDecoration(
@@ -59,7 +59,9 @@ class _ExportSheet extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -80,7 +82,9 @@ class _ExportSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     Center(
                       child: Column(
                         children: [
@@ -103,14 +107,18 @@ class _ExportSheet extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Text(
                       'Dinh dang',
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         for (final format in formats) ...[
@@ -129,21 +137,26 @@ class _ExportSheet extends StatelessWidget {
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     VitCard(
                       variant: VitCardVariant.inner,
-                      padding: AppSpacing.launchpadPaddingX3,
+                      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                       child: Text(
                         _previewFor(activeFormat, count),
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
-                          height: AppSpacing.launchpadLineHeightShort,
+                          height:
+                              LaunchpadSpacingTokens.launchpadLineHeightShort,
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     VitCtaButton(
                       key: LaunchpadEventLogPage.copyButtonKey,
                       onPressed: onCopy,
@@ -153,7 +166,7 @@ class _ExportSheet extends StatelessWidget {
                       leading: Icon(
                         copied ? Icons.check_rounded : Icons.copy_rounded,
                         color: AppColors.onAccent,
-                        size: AppSpacing.launchpadIcon2xl,
+                        size: LaunchpadSpacingTokens.launchpadIcon2xl,
                       ),
                       child: Text(
                         copied
@@ -201,13 +214,13 @@ class _ExportFormatTile extends StatelessWidget {
       variant: active ? VitCardVariant.inner : VitCardVariant.standard,
       radius: VitCardRadius.standard,
       borderColor: active ? AppColors.primary30 : AppColors.cardBorder,
-      padding: AppSpacing.launchpadMetricCardPadding,
+      padding: LaunchpadSpacingTokens.launchpadMetricCardPadding,
       child: Column(
         children: [
           Icon(
             _formatIcon(format.iconKey),
             color: color,
-            size: AppSpacing.launchpadIcon3xl,
+            size: LaunchpadSpacingTokens.launchpadIcon3xl,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(

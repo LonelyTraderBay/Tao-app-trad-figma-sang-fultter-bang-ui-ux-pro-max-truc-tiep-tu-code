@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/launchpad_portfolio_hero_tabs.dart';
 part '../widgets/launchpad_portfolio_subscription.dart';
@@ -26,9 +27,9 @@ part '../widgets/launchpad_portfolio_empty_disclaimer_common.dart';
 const double _launchpadPortfolioVisualNavClearance = 112;
 const double _launchpadPortfolioNativeNavClearance = 88;
 const double _launchpadPortfolioLineHeightLabel =
-    AppSpacing.launchpadLineHeightLabel;
+    LaunchpadSpacingTokens.launchpadLineHeightLabel;
 const double _launchpadPortfolioLineHeightDense =
-    AppSpacing.launchpadLineHeightDense;
+    LaunchpadSpacingTokens.launchpadLineHeightDense;
 
 class LaunchpadPortfolioPage extends ConsumerStatefulWidget {
   const LaunchpadPortfolioPage({super.key, this.shellRenderMode});
@@ -88,7 +89,8 @@ class _LaunchpadPortfolioPageState
               key: LaunchpadPortfolioPage.contentKey,
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
-              child: VitPageContent(rhythm: VitPageRhythm.standard, 
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [

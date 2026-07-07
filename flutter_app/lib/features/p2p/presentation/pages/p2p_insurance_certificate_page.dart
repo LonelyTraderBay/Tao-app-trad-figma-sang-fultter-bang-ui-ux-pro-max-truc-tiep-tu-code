@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_insurance_certificate_page_sections.dart';
 part '../widgets/p2p_insurance_certificate_page_common.dart';
@@ -25,9 +26,9 @@ const double _p2pInsuranceVisualClearance = AppSpacing.x3;
 const double _p2pInsuranceNativeClearance = AppSpacing.x2;
 const double _p2pInsuranceSectionGap = AppSpacing.x3;
 const double _p2pInsuranceTightGap = AppSpacing.x2;
-const double _p2pInsuranceHeroIconBox = AppSpacing.p2pDocumentHeroIconBox;
+const double _p2pInsuranceHeroIconBox = P2PSpacingTokens.p2pDocumentHeroIconBox;
 const double _p2pInsuranceBodyLineHeight =
-    AppSpacing.p2pInsuranceCertificateBodyLineHeight;
+    P2PSpacingTokens.p2pInsuranceCertificateBodyLineHeight;
 
 class P2PInsuranceCertificatePage extends ConsumerStatefulWidget {
   const P2PInsuranceCertificatePage({super.key, this.shellRenderMode});

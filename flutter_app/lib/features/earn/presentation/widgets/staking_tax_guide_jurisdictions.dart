@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_tax_guide_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingTaxJurisdictionTab extends StatelessWidget {
   const StakingTaxJurisdictionTab({
@@ -51,13 +52,15 @@ class StakingTaxJurisdictionTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 children: [
                   for (final resource in selected.resources) ...[
                     _ResourceRow(resource: resource),
                     if (resource != selected.resources.last)
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                   ],
                 ],
               ),
@@ -93,7 +96,7 @@ class _JurisdictionChip extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       accentColor: AppColors.primary,
-      padding: AppSpacing.earnCardPaddingX3X2,
+      padding: EarnSpacingTokens.earnCardPaddingX3X2,
       leading: StakingTaxCodeBadge(code: jurisdiction.code, small: true),
     );
   }
@@ -108,7 +111,7 @@ class _JurisdictionDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -149,7 +152,7 @@ class _JurisdictionDetail extends StatelessWidget {
             jurisdiction.treatment,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingTaxFooterLineHeight,
+              height: EarnSpacingTokens.stakingTaxFooterLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
@@ -187,7 +190,7 @@ class _JurisdictionMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.stakingTaxJurisdictionMetricMinHeight,
+        minHeight: EarnSpacingTokens.stakingTaxJurisdictionMetricMinHeight,
       ),
       child: DecoratedBox(
         decoration: const ShapeDecoration(
@@ -195,7 +198,7 @@ class _JurisdictionMetric extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
         ),
         child: Padding(
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -209,7 +212,8 @@ class _JurisdictionMetric extends StatelessWidget {
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text1,
                   fontWeight: AppTextStyles.bold,
-                  height: AppSpacing.stakingTaxJurisdictionMetricLineHeight,
+                  height:
+                      EarnSpacingTokens.stakingTaxJurisdictionMetricLineHeight,
                 ),
               ),
             ],
@@ -233,13 +237,13 @@ class _ResourceRow extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: EarnSpacingTokens.earnCardPaddingX3,
         child: Row(
           children: [
             const Icon(
               Icons.public_rounded,
               color: AppColors.primary,
-              size: AppSpacing.stakingTaxResourceIcon,
+              size: EarnSpacingTokens.stakingTaxResourceIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -254,7 +258,7 @@ class _ResourceRow extends StatelessWidget {
             const Icon(
               Icons.open_in_new_rounded,
               color: AppColors.primary,
-              size: AppSpacing.stakingTaxResourceExternalIcon,
+              size: EarnSpacingTokens.stakingTaxResourceExternalIcon,
             ),
           ],
         ),

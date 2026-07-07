@@ -22,7 +22,7 @@ class _DexList extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'So s\u00E1nh DEX',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),

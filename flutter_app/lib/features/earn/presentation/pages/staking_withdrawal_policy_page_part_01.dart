@@ -36,7 +36,9 @@ class _StakingWithdrawalPolicyPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.form,
                     padding: VitContentPadding.compact,
@@ -112,7 +114,7 @@ class _InfoBanner extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -133,7 +135,9 @@ class _InfoBanner extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       snapshot.infoBody,
                       style: AppTextStyles.caption.copyWith(
@@ -461,7 +465,9 @@ class _PenaltiesTab extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const Padding(padding: AppSpacing.earnTopPaddingX3),
+                          const Padding(
+                            padding: EarnSpacingTokens.earnTopPaddingX3,
+                          ),
                           for (final rule in snapshot.penaltyRules) ...[
                             _BulletLine(
                               text: rule.label,
@@ -469,7 +475,7 @@ class _PenaltiesTab extends StatelessWidget {
                             ),
                             if (rule != snapshot.penaltyRules.last)
                               const Padding(
-                                padding: AppSpacing.earnTopPaddingX2,
+                                padding: EarnSpacingTokens.earnTopPaddingX2,
                               ),
                           ],
                         ],

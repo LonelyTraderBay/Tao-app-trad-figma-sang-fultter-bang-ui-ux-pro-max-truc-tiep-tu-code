@@ -8,7 +8,7 @@ class _VolumeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,7 +49,7 @@ class _HeatmapCard extends StatelessWidget {
     );
 
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,7 +92,9 @@ class _HeatmapCard extends StatelessWidget {
                               ),
                             ),
                           ] else
-                            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
                         ],
                       ),
                     ),
@@ -138,7 +140,7 @@ class _PaymentBreakdownCard extends StatelessWidget {
     );
 
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -229,7 +231,7 @@ class _CompetitorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -321,7 +323,7 @@ class _ComparisonTableRow extends StatelessWidget {
               color: AppColors.divider,
             ),
           Padding(
-            padding: AppSpacing.p2pMarketplaceAnalyticsTableCellPadding,
+            padding: P2PSpacingTokens.p2pMarketplaceAnalyticsTableCellPadding,
             child: Row(
               children: [
                 Expanded(
@@ -401,7 +403,7 @@ class _TipsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+      padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -437,7 +439,7 @@ class _TipRow extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: AppSpacing.p2pMarketplaceAnalyticsCompactPadding,
+        padding: P2PSpacingTokens.p2pMarketplaceAnalyticsCompactPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

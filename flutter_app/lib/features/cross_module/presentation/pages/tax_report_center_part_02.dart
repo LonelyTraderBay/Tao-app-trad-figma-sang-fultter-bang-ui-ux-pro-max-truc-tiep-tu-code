@@ -15,7 +15,7 @@ class _PresetButton extends StatelessWidget {
         onTap: onTap,
         tone: VitChoicePillTone.neutral,
         fullWidth: true,
-        padding: AppSpacing.crossModulePresetButtonPadding,
+        padding: CrossModuleSpacingTokens.crossModulePresetButtonPadding,
       ),
     );
   }
@@ -38,7 +38,7 @@ class _TaxActivityCard extends StatelessWidget {
     return Opacity(
       opacity: activity.taxable ? 1 : 0.58,
       child: VitCard(
-        padding: AppSpacing.crossModuleCardPadding,
+        padding: CrossModuleSpacingTokens.crossModuleCardPadding,
         radius: VitCardRadius.large,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +95,7 @@ class _TaxActivityCard extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: AppSpacing.crossModulePanelPadding,
+                  padding: CrossModuleSpacingTokens.crossModulePanelPadding,
                   child: Text(
                     activity.note!,
                     style: AppTextStyles.micro.copyWith(color: AppColors.warn),
@@ -121,7 +121,7 @@ class _NonTaxableBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.crossModulePillPadding,
+        padding: CrossModuleSpacingTokens.crossModulePillPadding,
         child: Text(
           'NON-TAXABLE',
           style: AppTextStyles.chartLabelTiny.copyWith(
@@ -143,7 +143,7 @@ class _ExportFormatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,7 +197,7 @@ class _FormatButton extends StatelessWidget {
       onTap: onTap,
       tone: VitChoicePillTone.primary,
       fullWidth: true,
-      padding: AppSpacing.crossModuleFormatButtonPadding,
+      padding: CrossModuleSpacingTokens.crossModuleFormatButtonPadding,
     );
   }
 }
@@ -216,7 +216,7 @@ class _JurisdictionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,7 +250,7 @@ class _JurisdictionCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
               ),
               child: Padding(
-                padding: AppSpacing.crossModuleSelectorPadding,
+                padding: CrossModuleSpacingTokens.crossModuleSelectorPadding,
                 child: Row(
                   children: [
                     Expanded(
@@ -335,7 +335,7 @@ class _ReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -361,7 +361,9 @@ class _ReportCard extends StatelessWidget {
                         _ReportStatusBadge(status: report.status),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       report.dateRange,
                       style: AppTextStyles.micro.copyWith(

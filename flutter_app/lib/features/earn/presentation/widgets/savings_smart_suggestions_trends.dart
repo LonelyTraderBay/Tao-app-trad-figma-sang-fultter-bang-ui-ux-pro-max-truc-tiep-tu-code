@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_smart_suggestions_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_smart_suggestions_suggestions.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsSmartTrendList extends StatelessWidget {
   const SavingsSmartTrendList({super.key, required this.trends});
@@ -20,7 +21,8 @@ class SavingsSmartTrendList extends StatelessWidget {
       children: [
         for (final trend in trends) ...[
           SavingsSmartTrendCard(trend: trend),
-          if (trend != trends.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          if (trend != trends.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -38,7 +40,7 @@ class SavingsSmartTrendCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -123,7 +125,7 @@ class SavingsSmartTrendMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -153,7 +155,8 @@ class SavingsSmartSignalList extends StatelessWidget {
       children: [
         for (final signal in signals) ...[
           SavingsSmartSignalCard(signal: signal),
-          if (signal != signals.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+          if (signal != signals.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
       ],
     );
@@ -171,7 +174,7 @@ class SavingsSmartSignalCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

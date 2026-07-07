@@ -23,7 +23,7 @@ class _ModificationCard extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.providerGovernanceModificationIcon,
+                size: TradeSpacingTokens.providerGovernanceModificationIcon,
               ),
             ],
           ),
@@ -43,7 +43,7 @@ class _ModificationCard extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.providerGovernanceModificationIcon,
+                size: TradeSpacingTokens.providerGovernanceModificationIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -65,18 +65,20 @@ class _ModificationCard extends StatelessWidget {
               const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: AppSpacing.providerGovernanceMetaIcon,
+                size: TradeSpacingTokens.providerGovernanceMetaIcon,
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
                 modification.date,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
-              const SizedBox(width: AppSpacing.providerGovernanceMetaGap),
+              const SizedBox(
+                width: TradeSpacingTokens.providerGovernanceMetaGap,
+              ),
               const Icon(
                 Icons.group_outlined,
                 color: AppColors.text3,
-                size: AppSpacing.providerGovernanceMetaIcon,
+                size: TradeSpacingTokens.providerGovernanceMetaIcon,
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
@@ -124,7 +126,8 @@ class _CommunicationTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       fullBleed: true,
@@ -148,7 +151,8 @@ class _FeesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       fullBleed: true,
@@ -177,7 +181,7 @@ class _ComplianceTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       fullBleed: true,

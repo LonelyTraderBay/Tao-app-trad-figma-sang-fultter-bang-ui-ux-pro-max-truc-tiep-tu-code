@@ -32,7 +32,7 @@ class _NetworkFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.walletAddressFilterHeight,
+      height: WalletSpacingTokens.walletAddressFilterHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
@@ -44,13 +44,13 @@ class _NetworkFilterBar extends StatelessWidget {
             label: filter,
             selected: selected,
             onTap: () => onChanged(filter),
-            height: AppSpacing.walletAddressFilterHeight,
-            padding: AppSpacing.walletAddressFilterPadding,
+            height: WalletSpacingTokens.walletAddressFilterHeight,
+            padding: WalletSpacingTokens.walletAddressFilterPadding,
             accentColor: AppColors.primary,
           );
         },
         separatorBuilder: (_, _) =>
-            const SizedBox(width: AppSpacing.walletAddressStatsGap),
+            const SizedBox(width: WalletSpacingTokens.walletAddressStatsGap),
         itemCount: filters.length,
       ),
     );
@@ -96,7 +96,9 @@ class _AddressStats extends StatelessWidget {
                       fontFeatures: AppTextStyles.tabularFigures,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.walletAddressCompactGap),
+                  const SizedBox(
+                    height: WalletSpacingTokens.walletAddressCompactGap,
+                  ),
                   Text(
                     stats[i].$2,
                     maxLines: 1,
@@ -109,7 +111,7 @@ class _AddressStats extends StatelessWidget {
             ),
           ),
           if (i != stats.length - 1)
-            const SizedBox(width: AppSpacing.walletAddressStatsGap),
+            const SizedBox(width: WalletSpacingTokens.walletAddressStatsGap),
         ],
       ],
     );

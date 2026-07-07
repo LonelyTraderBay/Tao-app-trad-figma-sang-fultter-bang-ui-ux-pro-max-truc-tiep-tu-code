@@ -54,16 +54,16 @@ void main() {
             !line.contains('rhythm:') &&
             !line.contains('customGap:')) {
           // Multi-line widget — check nearby added block
-          if (addedLines.any((l) => l.contains('rhythm:') || l.contains('customGap:'))) {
+          if (addedLines.any(
+            (l) => l.contains('rhythm:') || l.contains('customGap:'),
+          )) {
             continue;
           }
         }
         if (RegExp(r'AppSpacing\.sectionGap\b').hasMatch(line) &&
             !line.contains('pageRhythm') &&
             !line.contains('// legacy')) {
-          violations.add(
-            '$path: legacy sectionGap for page rhythm -> $line',
-          );
+          violations.add('$path: legacy sectionGap for page rhythm -> $line');
         }
         if (RegExp(r'class _SectionTitle\b').hasMatch(line)) {
           violations.add(
@@ -100,7 +100,10 @@ void main() {
       }
 
       final priorStructural = baseline[baselineKey] ?? '';
-      final currentStructural = _structuralViolationsForFile(content, normalized);
+      final currentStructural = _structuralViolationsForFile(
+        content,
+        normalized,
+      );
       if (_isNewStructuralDebt(priorStructural, currentStructural) &&
           !content.contains('page-rhythm: allow-single-child')) {
         violations.add(
@@ -208,36 +211,39 @@ void main() {
     );
   });
 
-  test('presentation files do not use compound x3/x4 rhythm SizedBox heights', () {
-    final violations = <String>[];
-    final libDir = Directory('lib/features');
-    if (!libDir.existsSync()) {
-      fail('lib/features not found — run from flutter_app/');
-    }
+  test(
+    'presentation files do not use compound x3/x4 rhythm SizedBox heights',
+    () {
+      final violations = <String>[];
+      final libDir = Directory('lib/features');
+      if (!libDir.existsSync()) {
+        fail('lib/features not found — run from flutter_app/');
+      }
 
-    for (final entity in libDir.listSync(recursive: true)) {
-      if (entity is! File || !entity.path.endsWith('.dart')) continue;
-      final normalized = entity.path.replaceAll('\\', '/');
-      if (!normalized.contains('/presentation/')) continue;
-      if (normalized.contains('/dev/')) continue;
+      for (final entity in libDir.listSync(recursive: true)) {
+        if (entity is! File || !entity.path.endsWith('.dart')) continue;
+        final normalized = entity.path.replaceAll('\\', '/');
+        if (!normalized.contains('/presentation/')) continue;
+        if (normalized.contains('/dev/')) continue;
 
-      final lines = entity.readAsStringSync().split('\n');
-      for (var i = 0; i < lines.length; i++) {
-        if (_legacyCompoundX34Height.hasMatch(lines[i]) &&
-            !lines[i].contains('pageRhythm')) {
-          violations.add('${entity.path}:${i + 1}: ${lines[i].trim()}');
+        final lines = entity.readAsStringSync().split('\n');
+        for (var i = 0; i < lines.length; i++) {
+          if (_legacyCompoundX34Height.hasMatch(lines[i]) &&
+              !lines[i].contains('pageRhythm')) {
+            violations.add('${entity.path}:${i + 1}: ${lines[i].trim()}');
+          }
         }
       }
-    }
 
-    expect(
-      violations,
-      isEmpty,
-      reason:
-          'Replace compound x3/x4 SizedBox heights with pageRhythm* tokens:\n'
-          '${violations.join('\n')}',
-    );
-  });
+      expect(
+        violations,
+        isEmpty,
+        reason:
+            'Replace compound x3/x4 SizedBox heights with pageRhythm* tokens:\n'
+            '${violations.join('\n')}',
+      );
+    },
+  );
 
   test('presentation files do not use magic literal rhythm spacing', () {
     final violations = <String>[];
@@ -332,9 +338,7 @@ final _legacyX34PlainHeight = RegExp(
   r'SizedBox\s*\(\s*height:\s*AppSpacing\.(?:x3|x4)\b',
 );
 
-final _legacyCustomGapRawScale = RegExp(
-  r'customGap:\s*AppSpacing\.(x[1-7])\b',
-);
+final _legacyCustomGapRawScale = RegExp(r'customGap:\s*AppSpacing\.(x[1-7])\b');
 
 final _legacyCompoundX34Height = RegExp(
   r'SizedBox\s*\(\s*height:\s*[^)]*AppSpacing\.(?:x3|x4)[^)]*[+\-][^)]*\)',
@@ -367,7 +371,9 @@ String _structuralViolationsForFile(String content, String relative) {
     parts.add('single_child_section_column');
   }
   if (_isTabRootPage(relative)) {
-    final declared = RegExp(r'rhythm:\s*VitPageRhythm\.(\w+)').firstMatch(content);
+    final declared = RegExp(
+      r'rhythm:\s*VitPageRhythm\.(\w+)',
+    ).firstMatch(content);
     if (declared != null && declared.group(1) != 'compact') {
       parts.add('tab_root_wrong_tier:${declared.group(1)}');
     }
@@ -404,10 +410,9 @@ bool _hasSingleChildSectionColumn(String source) {
     }
 
     final listBody = source.substring(listStart + 1, listEnd);
-    final items = _splitTopLevelListItems(listBody)
-        .map((item) => item.trim())
-        .where((item) => item.isNotEmpty)
-        .toList();
+    final items = _splitTopLevelListItems(
+      listBody,
+    ).map((item) => item.trim()).where((item) => item.isNotEmpty).toList();
 
     if (items.length == 1 && _looksLikeSectionAggregator(items.first)) {
       return true;
@@ -441,7 +446,9 @@ bool _isNewStructuralDebt(String prior, String current) {
 }
 
 Map<String, String> _loadStructuralBaseline() {
-  final csv = File('../docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Audit.csv');
+  final csv = File(
+    '../docs/02_FLUTTER_MIGRATION/VitTrade-Page-Rhythm-Audit.csv',
+  );
   if (!csv.existsSync()) return {};
   final lines = csv.readAsLinesSync();
   if (lines.isEmpty) return {};

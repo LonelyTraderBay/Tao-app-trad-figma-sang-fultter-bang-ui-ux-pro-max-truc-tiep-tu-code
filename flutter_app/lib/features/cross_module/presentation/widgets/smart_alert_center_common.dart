@@ -84,7 +84,7 @@ class _InfoPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: border,
-      padding: AppSpacing.crossModulePanelPadding,
+      padding: CrossModuleSpacingTokens.crossModulePanelPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

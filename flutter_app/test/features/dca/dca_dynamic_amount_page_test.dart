@@ -78,7 +78,10 @@ void main() {
     expect(source, contains('VitInsetScrollView'));
     expect(source, contains('VitContentPadding.compact'));
     expect(source, contains('VitDensity.compact'));
-    expect(pageSource, isNot(contains('AppSpacing.dcaBottomInsetPadding')));
+    expect(
+      pageSource,
+      isNot(contains('DcaSpacingTokens.dcaBottomInsetPadding')),
+    );
     expect(pageSource, isNot(contains('SingleChildScrollView')));
   });
 

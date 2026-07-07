@@ -8,7 +8,7 @@ class _WarningBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       variant: VitCardVariant.ghost,
       borderColor: _compAmber.withValues(alpha: .35),
       child: Row(
@@ -19,7 +19,7 @@ class _WarningBox extends StatelessWidget {
             color: _compAmber,
             size: AppSpacing.statusPillIconSizeLg,
           ),
-          const SizedBox(width: AppSpacing.tradeBotSmallGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
           Expanded(
             child: Text(
               text,
@@ -43,7 +43,7 @@ class _Eligibility extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -54,7 +54,7 @@ class _Eligibility extends StatelessWidget {
           children: [
             _Card(
               child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.none,
                 fullBleed: true,
                 density: VitDensity.compact,
@@ -190,7 +190,7 @@ class _Bullet extends StatelessWidget {
           color: color,
           size: AppSpacing.iconSm,
         ),
-        const SizedBox(width: AppSpacing.tradeBotSmallGap),
+        const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
         Expanded(
           child: Text(
             text,

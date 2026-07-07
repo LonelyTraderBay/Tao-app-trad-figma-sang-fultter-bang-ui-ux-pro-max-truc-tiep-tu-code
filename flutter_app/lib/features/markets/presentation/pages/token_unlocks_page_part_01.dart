@@ -47,7 +47,9 @@ class _TokenUnlocksPageState extends ConsumerState<TokenUnlocksPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: TokenUnlocksPage.contentKey,
-                    padding: AppSpacing.marketScrollPadding(scrollEndClearance),
+                    padding: MarketsSpacingTokens.marketScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,
@@ -142,7 +144,7 @@ class _UnlockTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDepthTabsHeight,
+        height: MarketsSpacingTokens.marketDepthTabsHeight,
         child: Column(
           children: [
             Expanded(
@@ -189,7 +191,7 @@ class _UnlockHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       width: double.infinity,
-      padding: AppSpacing.tokenUnlocksHeroPadding,
+      padding: MarketsSpacingTokens.tokenUnlocksHeroPadding,
       borderColor: _marketPrimary.withValues(alpha: .18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,7 +215,9 @@ class _UnlockHero extends StatelessWidget {
                 '${snapshot.highImpactCount} tác động cao',
                 style: AppTextStyles.micro.copyWith(color: AppColors.sell),
               ),
-              const SizedBox(width: AppSpacing.tokenUnlocksHeroMetaGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.tokenUnlocksHeroMetaGap,
+              ),
               Text(
                 'TB dilution: ${snapshot.avgDilution.toStringAsFixed(1)}%',
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -258,7 +262,7 @@ class _UnlockFilters extends StatelessWidget {
                 active: sortBy == MarketUnlockSort.nearest,
                 color: _marketPrimary,
                 onTap: () => onSortSelected(MarketUnlockSort.nearest),
-                padding: AppSpacing.tokenUnlocksFilterPadding,
+                padding: MarketsSpacingTokens.tokenUnlocksFilterPadding,
               ),
               const SizedBox(width: _unlockFilterGap),
               VitFilterChip(
@@ -267,7 +271,7 @@ class _UnlockFilters extends StatelessWidget {
                 active: sortBy == MarketUnlockSort.value,
                 color: _marketPrimary,
                 onTap: () => onSortSelected(MarketUnlockSort.value),
-                padding: AppSpacing.tokenUnlocksFilterPadding,
+                padding: MarketsSpacingTokens.tokenUnlocksFilterPadding,
               ),
               const SizedBox(width: _unlockFilterGap),
               VitFilterChip(
@@ -275,7 +279,7 @@ class _UnlockFilters extends StatelessWidget {
                 active: sortBy == MarketUnlockSort.impact,
                 color: _marketPrimary,
                 onTap: () => onSortSelected(MarketUnlockSort.impact),
-                padding: AppSpacing.tokenUnlocksFilterPadding,
+                padding: MarketsSpacingTokens.tokenUnlocksFilterPadding,
               ),
             ],
           ),
@@ -291,7 +295,7 @@ class _UnlockFilters extends StatelessWidget {
                 active: impactFilter == null,
                 color: AppColors.text3,
                 onTap: onAllImpacts,
-                padding: AppSpacing.tokenUnlocksFilterPadding,
+                padding: MarketsSpacingTokens.tokenUnlocksFilterPadding,
               ),
               const SizedBox(width: _unlockFilterGap),
               for (final entry in impactConfigs.entries) ...[
@@ -303,7 +307,7 @@ class _UnlockFilters extends StatelessWidget {
                   active: impactFilter == entry.key,
                   color: entry.value.color.resolve(),
                   onTap: () => onImpactSelected(entry.key),
-                  padding: AppSpacing.tokenUnlocksFilterPadding,
+                  padding: MarketsSpacingTokens.tokenUnlocksFilterPadding,
                 ),
                 if (entry.key != impactConfigs.keys.last)
                   const SizedBox(width: _unlockFilterGap),

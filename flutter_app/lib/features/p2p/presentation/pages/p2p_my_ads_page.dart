@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_my_ads_stats_cards.dart';
 part '../widgets/p2p_my_ads_empty_links.dart';
@@ -134,13 +135,11 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
               _EmptyMyAds(snapshot: snapshot)
             else
               for (var index = 0; index < filtered.length; index++) ...[
-                if (index > 0)
-                  const SizedBox(height: _p2pMyAdsSectionGap),
+                if (index > 0) const SizedBox(height: _p2pMyAdsSectionGap),
                 _MyAdCard(
                   ad: filtered[index],
-                  onAnalytics: () => context.go(
-                    AppRoutePaths.p2pAdAnalytics('sample'),
-                  ),
+                  onAnalytics: () =>
+                      context.go(AppRoutePaths.p2pAdAnalytics('sample')),
                   onToggle: () => _toggleStatus(filtered[index]),
                   onEdit: () => context.go(AppRoutePaths.p2pCreate),
                   onDelete: () => _confirmDelete(context, filtered[index]),
@@ -199,7 +198,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
               variant: VitCtaButtonVariant.secondary,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
+              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Hủy'),
             ),
             VitCtaButton(
@@ -207,7 +206,7 @@ class _P2PMyAdsPageState extends ConsumerState<P2PMyAdsPage> {
               variant: VitCtaButtonVariant.danger,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pMerchantCommerceDialogButtonPadding,
+              padding: P2PSpacingTokens.p2pMerchantCommerceDialogButtonPadding,
               child: const Text('Xóa'),
             ),
           ],

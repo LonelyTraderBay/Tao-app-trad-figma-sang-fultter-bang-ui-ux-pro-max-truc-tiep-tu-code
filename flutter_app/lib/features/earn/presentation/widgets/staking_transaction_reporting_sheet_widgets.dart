@@ -27,7 +27,8 @@ class _MethodSheet extends StatelessWidget {
               selected: method.value == selected,
               onTap: () => onChanged(method.value),
             ),
-            if (method != methods.last) const SizedBox(height: AppSpacing.rowGap),
+            if (method != methods.last)
+              const SizedBox(height: AppSpacing.rowGap),
           ],
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(

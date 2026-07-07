@@ -13,8 +13,7 @@ class PredictionsPortfolioArenaBridgeCard extends StatelessWidget {
     return VitDiscoveryActionCard(
       title: 'Khám phá Arena cùng chủ đề',
       badgeLabel: 'Arena Points',
-      subtitle:
-          'Social points-only · Không liên quan ví hay vị thế Prediction',
+      subtitle: 'Social points-only · Không liên quan ví hay vị thế Prediction',
       actionLabel:
           'Prediction positions and P/L stay separate from Arena Points.',
       icon: Icons.sports_esports_rounded,

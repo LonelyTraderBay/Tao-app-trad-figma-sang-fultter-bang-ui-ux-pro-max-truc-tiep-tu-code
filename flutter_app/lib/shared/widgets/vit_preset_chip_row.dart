@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_choice_pill.dart';
 
 class VitPresetChipItem<T> {

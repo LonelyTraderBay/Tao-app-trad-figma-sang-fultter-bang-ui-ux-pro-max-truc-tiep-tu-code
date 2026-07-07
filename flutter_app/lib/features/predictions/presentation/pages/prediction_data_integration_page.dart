@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 part '../widgets/prediction_data_integration_sources.dart';
 part '../widgets/prediction_data_integration_keys_webhooks.dart';
@@ -113,11 +114,12 @@ class _PredictionDataIntegrationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionDataIntegrationPage.contentKey,
-                    padding: AppSpacing.predictionDataScrollPadding(
-                      footerPadding,
-                    ),
+                    padding:
+                        PredictionsSpacingTokens.predictionDataScrollPadding(
+                          footerPadding,
+                        ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
                       children: switch (_activeTab) {
                         _DataIntegrationTab.sources => [

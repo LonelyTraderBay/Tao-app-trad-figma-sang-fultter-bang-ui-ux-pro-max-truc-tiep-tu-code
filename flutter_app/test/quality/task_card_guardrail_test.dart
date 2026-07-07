@@ -4,7 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final repoRoot = Directory.current.path;
-  final vitTaskCardFile = File('$repoRoot/lib/shared/widgets/vit_task_card.dart');
+  final vitTaskCardFile = File(
+    '$repoRoot/lib/shared/widgets/vit_task_card.dart',
+  );
 
   test('VitTaskCard implements mandatory intrinsic-height contract', () {
     expect(vitTaskCardFile.existsSync(), isTrue);

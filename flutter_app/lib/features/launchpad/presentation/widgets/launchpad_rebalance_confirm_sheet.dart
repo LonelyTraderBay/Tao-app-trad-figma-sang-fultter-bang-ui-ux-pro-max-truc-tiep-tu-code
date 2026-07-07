@@ -41,7 +41,7 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: AppSpacing.launchpadSheetPadding(
+                padding: LaunchpadSpacingTokens.launchpadSheetPadding(
                   AppSpacing.x4 + bottomReserve,
                 ).copyWith(top: AppSpacing.x3),
                 child: Column(
@@ -50,7 +50,7 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                   children: [
                     Center(
                       child: SizedBox(
-                        width: AppSpacing.launchpadBox40,
+                        width: LaunchpadSpacingTokens.launchpadBox40,
                         height: AppSpacing.x1,
                         child: DecoratedBox(
                           decoration: const ShapeDecoration(
@@ -62,13 +62,15 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Row(
                       children: [
                         const Icon(
                           Icons.check_circle_outline_rounded,
                           color: AppColors.buy,
-                          size: AppSpacing.launchpadIcon4xl,
+                          size: LaunchpadSpacingTokens.launchpadIcon4xl,
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Text(
@@ -79,22 +81,30 @@ class LaunchpadRebalanceConfirmSheet extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     for (final suggestion in executable)
                       _ConfirmActionRow(suggestion: suggestion),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     LaunchpadRebalanceSummaryRow(
                       label: 'Gas tong',
                       value: '~\$${totalGas.toStringAsFixed(2)}',
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     VitCtaButton(
                       key: confirmKey,
                       variant: VitCtaButtonVariant.success,
                       onPressed: onClose,
                       child: const Text('Xac nhan Rebalance (Mo phong)'),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     VitCtaButton(
                       key: cancelKey,
                       onPressed: onClose,
@@ -129,7 +139,7 @@ class _ConfirmActionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = launchpadRebalanceActionColor(suggestion.action);
     return Padding(
-      padding: AppSpacing.launchpadBottomPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadBottomPaddingX2,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .1),
@@ -138,7 +148,7 @@ class _ConfirmActionRow extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.launchpadPillPadding,
+          padding: LaunchpadSpacingTokens.launchpadPillPadding,
           child: Row(
             children: [
               Text(

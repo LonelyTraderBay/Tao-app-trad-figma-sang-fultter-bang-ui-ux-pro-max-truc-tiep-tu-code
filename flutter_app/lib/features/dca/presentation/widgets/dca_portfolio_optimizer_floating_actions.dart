@@ -13,7 +13,7 @@ class _OptimizerApplyAction extends StatelessWidget {
       children: [
         VitCard(
           borderColor: AppColors.warn15,
-          padding: AppSpacing.dcaPaddingX2,
+          padding: DcaSpacingTokens.dcaPaddingX2,
           child: Column(
             children: [
               VitInfoRow(
@@ -34,7 +34,7 @@ class _OptimizerApplyAction extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX3),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
         VitCtaButton(
           key: DCAPortfolioOptimizer.applyKey,
           onPressed: onApply,
@@ -78,7 +78,7 @@ class _MiniButton extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.dcaButtonChipPadding,
+          padding: DcaSpacingTokens.dcaButtonChipPadding,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

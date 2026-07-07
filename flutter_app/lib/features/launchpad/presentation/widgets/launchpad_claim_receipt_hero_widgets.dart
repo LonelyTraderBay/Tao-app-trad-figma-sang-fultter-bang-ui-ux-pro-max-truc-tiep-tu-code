@@ -15,7 +15,7 @@ class _RewardHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
-      padding: AppSpacing.launchpadPaddingX5,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -51,7 +51,8 @@ class _RewardHero extends StatelessWidget {
                         ),
                         const SizedBox(width: AppSpacing.x2),
                         Padding(
-                          padding: AppSpacing.launchpadBottomPaddingX1,
+                          padding:
+                              LaunchpadSpacingTokens.launchpadBottomPaddingX1,
                           child: Text(
                             receipt.rewardToken,
                             style: AppTextStyles.caption.copyWith(
@@ -180,7 +181,7 @@ class _TokenAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox48,
+      dimension: LaunchpadSpacingTokens.launchpadBox48,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: receipt.accent.resolve().withValues(alpha: .12),
@@ -219,7 +220,7 @@ class _HeroMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

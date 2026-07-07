@@ -67,20 +67,26 @@ class _EventInfoCard extends StatelessWidget {
               const Icon(
                 Icons.mode_comment_outlined,
                 color: AppColors.text3,
-                size: AppSpacing.predictionSocialEventIcon,
+                size: PredictionsSpacingTokens.predictionSocialEventIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionSocialEventCommentGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionSocialEventCommentGap,
+              ),
               Text(
                 '${snapshot.totalComments} comments',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(width: AppSpacing.predictionSocialEventMetricGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionSocialEventMetricGap,
+              ),
               const Icon(
                 Icons.trending_up_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.predictionSocialEventIcon,
+                size: PredictionsSpacingTokens.predictionSocialEventIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionSocialEventBullishGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionSocialEventBullishGap,
+              ),
               Text(
                 '${snapshot.bullishPercent}% Bullish',
                 style: AppTextStyles.caption.copyWith(
@@ -133,7 +139,9 @@ class _NewCommentCard extends StatelessWidget {
                   ),
                 ),
                 if (stance != PredictionSocialStance.neutral)
-                  const SizedBox(width: AppSpacing.predictionSocialStanceGap),
+                  const SizedBox(
+                    width: PredictionsSpacingTokens.predictionSocialStanceGap,
+                  ),
               ],
             ],
           ),

@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/referral_spacing_tokens.dart';
 
 part '../widgets/referral_rules_page_sections.dart';
 part '../widgets/referral_rules_page_common.dart';
@@ -79,11 +80,11 @@ class _ReferralRulesPageState extends ConsumerState<ReferralRulesPage> {
                   child: SingleChildScrollView(
                     key: ReferralRulesPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.referralPageScrollPadding(
+                    padding: ReferralSpacingTokens.referralPageScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [

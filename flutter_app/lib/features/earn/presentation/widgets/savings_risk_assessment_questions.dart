@@ -43,7 +43,8 @@ class _ProgressHeader extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
-          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+          child: SizedBox(
+            height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               fit: StackFit.expand,
               children: [
@@ -82,7 +83,7 @@ class _QuestionCard extends StatelessWidget {
     return VitCard(
       key: SavingsRiskAssessmentPage.questionCardKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -97,7 +98,9 @@ class _QuestionCard extends StatelessWidget {
                   children: [
                     Text(question.question, style: AppTextStyles.baseMedium),
                     if (question.helpText != null) ...[
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Text(
                         question.helpText!,
                         style: AppTextStyles.caption.copyWith(
@@ -196,7 +199,7 @@ class _RiskOptionTile extends StatelessWidget {
       radius: VitCardRadius.large,
       onTap: onTap,
       clip: true,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       background: DecoratedBox(
         decoration: ShapeDecoration(
           color: selected ? AppColors.primary12 : AppColors.surface2,

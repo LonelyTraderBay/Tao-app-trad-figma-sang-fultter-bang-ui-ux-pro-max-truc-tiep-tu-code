@@ -11,7 +11,7 @@ class _AccountAvatar extends StatelessWidget {
     return VitAssetAvatar(
       label: initial,
       accentColor: color,
-      size: AppSpacing.profileSubAccountAvatarSize,
+      size: ProfileSpacingTokens.profileSubAccountAvatarSize,
       radius: AppRadii.cardRadius,
     );
   }
@@ -31,7 +31,7 @@ class _SubAccountInfoNote extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.primary,
-            size: AppSpacing.profileSubAccountInfoNoteIcon,
+            size: ProfileSpacingTokens.profileSubAccountInfoNoteIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

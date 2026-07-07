@@ -83,8 +83,8 @@ class _FlowStepRow extends StatelessWidget {
         Column(
           children: [
             SizedBox(
-              width: AppSpacing.arenaEcosystemFlowDot,
-              height: AppSpacing.arenaEcosystemFlowDot,
+              width: ArenaSpacingTokens.arenaEcosystemFlowDot,
+              height: ArenaSpacingTokens.arenaEcosystemFlowDot,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: step.isBridge
@@ -93,7 +93,7 @@ class _FlowStepRow extends StatelessWidget {
                   shape: CircleBorder(
                     side: BorderSide(
                       color: step.isBridge ? color : AppColors.borderSolid,
-                      width: AppSpacing.arenaEcosystemFlowBorderWidth,
+                      width: ArenaSpacingTokens.arenaEcosystemFlowBorderWidth,
                     ),
                   ),
                 ),
@@ -102,7 +102,7 @@ class _FlowStepRow extends StatelessWidget {
                       ? Icon(
                           Icons.link_rounded,
                           color: color,
-                          size: AppSpacing.arenaEcosystemFlowBridgeIcon,
+                          size: ArenaSpacingTokens.arenaEcosystemFlowBridgeIcon,
                         )
                       : Text(
                           '${index + 1}',
@@ -116,7 +116,7 @@ class _FlowStepRow extends StatelessWidget {
             ),
             if (!isLast)
               SizedBox(
-                width: AppSpacing.arenaEcosystemFlowLineWidth,
+                width: ArenaSpacingTokens.arenaEcosystemFlowLineWidth,
                 height: _ecosystemFlowConnectorHeight,
                 child: ColoredBox(
                   color: (step.isBridge ? color : AppColors.borderSolid)
@@ -130,7 +130,7 @@ class _FlowStepRow extends StatelessWidget {
           child: Padding(
             padding: isLast
                 ? AppSpacing.zeroInsets
-                : AppSpacing.arenaBottomPaddingX3,
+                : ArenaSpacingTokens.arenaBottomPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -278,7 +278,8 @@ class _RegistryBoard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final item in items) ...[
             _RegistryItemRow(item: item, color: color),
-            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -300,7 +301,7 @@ class _RegistryItemRow extends StatelessWidget {
         Icon(
           Icons.check_rounded,
           color: color,
-          size: AppSpacing.arenaEcosystemCompactIcon,
+          size: ArenaSpacingTokens.arenaEcosystemCompactIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -348,7 +349,7 @@ class _ForbiddenPatternCard extends StatelessWidget {
           Icon(
             Icons.block_rounded,
             color: color,
-            size: AppSpacing.arenaEcosystemBlockIcon,
+            size: ArenaSpacingTokens.arenaEcosystemBlockIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

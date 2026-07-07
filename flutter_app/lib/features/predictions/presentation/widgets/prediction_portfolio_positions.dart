@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 class PredictionPortfolioPositionsList extends StatelessWidget {
   const PredictionPortfolioPositionsList({
@@ -59,11 +60,7 @@ class PredictionPortfolioPositionsList extends StatelessWidget {
 }
 
 class _PositionRow extends StatelessWidget {
-  const _PositionRow({
-    required this.position,
-    required this.event,
-    super.key,
-  });
+  const _PositionRow({required this.position, required this.event, super.key});
 
   final PredictionPortfolioPositionDraft position;
   final PredictionEventDraft event;
@@ -95,8 +92,10 @@ class _PositionRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: AppSpacing.predictionPortfolioPositionIconBox,
-              height: AppSpacing.predictionPortfolioPositionIconBox,
+              width:
+                  PredictionsSpacingTokens.predictionPortfolioPositionIconBox,
+              height:
+                  PredictionsSpacingTokens.predictionPortfolioPositionIconBox,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: statusColor.withValues(alpha: .12),
@@ -111,11 +110,14 @@ class _PositionRow extends StatelessWidget {
                       ? Icons.schedule_rounded
                       : Icons.cancel_outlined,
                   color: statusColor,
-                  size: AppSpacing.predictionPortfolioPositionIcon,
+                  size:
+                      PredictionsSpacingTokens.predictionPortfolioPositionIcon,
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionPortfolioPositionGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionPortfolioPositionGap,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,11 +132,14 @@ class _PositionRow extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: AppSpacing.predictionPortfolioPositionTitleGap,
+                    height: PredictionsSpacingTokens
+                        .predictionPortfolioPositionTitleGap,
                   ),
                   Wrap(
-                    spacing: AppSpacing.predictionPortfolioChipGap,
-                    runSpacing: AppSpacing.predictionPortfolioChipRunGap,
+                    spacing:
+                        PredictionsSpacingTokens.predictionPortfolioChipGap,
+                    runSpacing:
+                        PredictionsSpacingTokens.predictionPortfolioChipRunGap,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       VitAccentPill(
@@ -161,7 +166,8 @@ class _PositionRow extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: AppSpacing.predictionPortfolioPositionMetricsGap,
+                    height: PredictionsSpacingTokens
+                        .predictionPortfolioPositionMetricsGap,
                   ),
                   Row(
                     children: [
@@ -172,18 +178,21 @@ class _PositionRow extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        width: AppSpacing.predictionPortfolioPositionMetricsGap,
+                        width: PredictionsSpacingTokens
+                            .predictionPortfolioPositionMetricsGap,
                       ),
                       Expanded(
                         child: PredictionPortfolioSmallMetric(
                           label: 'Current:',
-                          value: '\$${position.currentPrice.toStringAsFixed(2)}',
+                          value:
+                              '\$${position.currentPrice.toStringAsFixed(2)}',
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(
-                    height: AppSpacing.predictionPortfolioPositionRowsGap,
+                    height: PredictionsSpacingTokens
+                        .predictionPortfolioPositionRowsGap,
                   ),
                   Row(
                     children: [
@@ -197,7 +206,8 @@ class _PositionRow extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        width: AppSpacing.predictionPortfolioPositionMetricsGap,
+                        width: PredictionsSpacingTokens
+                            .predictionPortfolioPositionMetricsGap,
                       ),
                       Expanded(
                         child: Row(
@@ -208,10 +218,12 @@ class _PositionRow extends StatelessWidget {
                                   ? Icons.arrow_outward_rounded
                                   : Icons.south_east_rounded,
                               color: pnlColor,
-                              size: AppSpacing.predictionPortfolioPnlArrowIcon,
+                              size: PredictionsSpacingTokens
+                                  .predictionPortfolioPnlArrowIcon,
                             ),
                             const SizedBox(
-                              width: AppSpacing.predictionPortfolioPnlArrowGap,
+                              width: PredictionsSpacingTokens
+                                  .predictionPortfolioPnlArrowGap,
                             ),
                             Flexible(
                               child: Text(
@@ -235,13 +247,16 @@ class _PositionRow extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionPortfolioTrailingGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionPortfolioTrailingGap,
+            ),
             const Padding(
-              padding: AppSpacing.predictionPortfolioTrailingIconPadding,
+              padding: PredictionsSpacingTokens
+                  .predictionPortfolioTrailingIconPadding,
               child: Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.predictionPortfolioTrailingIcon,
+                size: PredictionsSpacingTokens.predictionPortfolioTrailingIcon,
               ),
             ),
           ],
@@ -271,7 +286,9 @@ class PredictionPortfolioSmallMetric extends StatelessWidget {
           label,
           style: AppTextStyles.numericMicro.copyWith(color: AppColors.text3),
         ),
-        const SizedBox(width: AppSpacing.predictionPortfolioMetricGap),
+        const SizedBox(
+          width: PredictionsSpacingTokens.predictionPortfolioMetricGap,
+        ),
         Flexible(
           child: Text(
             value,

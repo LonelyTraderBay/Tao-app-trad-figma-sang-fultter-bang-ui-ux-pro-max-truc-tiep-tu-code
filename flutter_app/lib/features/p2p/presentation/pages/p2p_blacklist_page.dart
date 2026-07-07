@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_blacklist_summary_filters.dart';
 part '../widgets/p2p_blacklist_entries.dart';
@@ -123,21 +124,23 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: AppSpacing.p2pBlacklistScrollPadding(
+                      padding: P2PSpacingTokens.p2pBlacklistScrollPadding(
                         scrollEndPadding,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                            padding: AppSpacing.p2pBlacklistListSummaryPadding,
+                            padding:
+                                P2PSpacingTokens.p2pBlacklistListSummaryPadding,
                             child: _BlacklistStats(
                               snapshot: snapshot,
                               entries: entries,
                             ),
                           ),
                           Padding(
-                            padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                            padding:
+                                P2PSpacingTokens.p2pBlacklistHorizontalPadding,
                             child: VitSearchBar(
                               key: P2PBlacklistPage.searchKey,
                               controller: _searchController,
@@ -146,7 +149,9 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                               onChanged: (_) => setState(() {}),
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmCompactInnerGap,
+                          ),
                           _BlacklistReasonFilters(
                             snapshot: snapshot,
                             entries: entries,
@@ -160,7 +165,8 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                             },
                           ),
                           Padding(
-                            padding: AppSpacing.p2pBlacklistListResultPadding,
+                            padding:
+                                P2PSpacingTokens.p2pBlacklistListResultPadding,
                             child: Text(
                               '${filtered.length} kết quả',
                               style: AppTextStyles.micro.copyWith(
@@ -171,7 +177,8 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                             ),
                           ),
                           Padding(
-                            padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                            padding:
+                                P2PSpacingTokens.p2pBlacklistHorizontalPadding,
                             child: _EntryList(
                               snapshot: snapshot,
                               entries: filtered,
@@ -191,13 +198,16 @@ class _P2PBlacklistPageState extends ConsumerState<P2PBlacklistPage> {
                               },
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmCompactInnerGap,
+                          ),
                           Padding(
-                            padding: AppSpacing.p2pBlacklistHorizontalPadding,
+                            padding:
+                                P2PSpacingTokens.p2pBlacklistHorizontalPadding,
                             child: _InfoNote(snapshot: snapshot),
                           ),
                           VitPageContent(
-         rhythm: VitPageRhythm.standard,
+                            rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.compact,
                             children: const [
                               VitHighRiskStatePanel(

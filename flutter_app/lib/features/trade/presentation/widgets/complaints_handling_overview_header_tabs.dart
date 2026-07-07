@@ -14,7 +14,7 @@ class _RightsNotice extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: AppColors.text1,
-            size: AppSpacing.complaintCaseActionIcon,
+            size: TradeSpacingTokens.complaintCaseActionIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

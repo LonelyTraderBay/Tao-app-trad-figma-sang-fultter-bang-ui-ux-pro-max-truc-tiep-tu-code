@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_identity_verification_page_sections.dart';
 part '../widgets/p2p_identity_verification_page_common.dart';
@@ -52,9 +53,10 @@ class _P2PIdentityVerificationPageState
     final mode = widget.shellRenderMode ?? defaultShellRenderMode();
     final bottomInset =
         (mode.usesVisualQaFrame
-            ? DeviceMetrics.bottomChrome + AppSpacing.p2pKycBottomInsetVisual
+            ? DeviceMetrics.bottomChrome +
+                  P2PSpacingTokens.p2pKycBottomInsetVisual
             : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.p2pKycBottomInsetNative) +
+                  P2PSpacingTokens.p2pKycBottomInsetNative) +
         MediaQuery.paddingOf(context).bottom;
     final selectedDocument = _selectedTypeId == null
         ? null
@@ -89,9 +91,9 @@ class _P2PIdentityVerificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pKycScrollPadding(bottomInset),
+                    padding: P2PSpacingTokens.p2pKycScrollPadding(bottomInset),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.form,
+                      rhythm: VitPageRhythm.form,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,

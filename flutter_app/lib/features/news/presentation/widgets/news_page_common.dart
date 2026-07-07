@@ -12,13 +12,13 @@ class _ArticleSheet extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          maxWidth: AppSpacing.newsSheetMaxWidth,
+          maxWidth: NewsSpacingTokens.newsSheetMaxWidth,
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight:
                 MediaQuery.sizeOf(context).height *
-                AppSpacing.newsSheetMaxHeightFactor,
+                NewsSpacingTokens.newsSheetMaxHeightFactor,
           ),
           child: DecoratedBox(
             decoration: const ShapeDecoration(
@@ -31,10 +31,10 @@ class _ArticleSheet extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: AppSpacing.newsSheetHandleMargin,
+                  padding: NewsSpacingTokens.newsSheetHandleMargin,
                   child: SizedBox(
-                    width: AppSpacing.newsSheetHandleWidth,
-                    height: AppSpacing.newsSheetHandleHeight,
+                    width: NewsSpacingTokens.newsSheetHandleWidth,
+                    height: NewsSpacingTokens.newsSheetHandleHeight,
                     child: DecoratedBox(
                       decoration: const ShapeDecoration(
                         color: AppColors.borderSolid,
@@ -47,7 +47,7 @@ class _ArticleSheet extends StatelessWidget {
                 ),
                 Flexible(
                   child: SingleChildScrollView(
-                    padding: AppSpacing.newsSheetPadding,
+                    padding: NewsSpacingTokens.newsSheetPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -62,19 +62,23 @@ class _ArticleSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Text(
                           article.title,
                           style: AppTextStyles.sectionTitle.copyWith(
-                            height: AppSpacing.newsSheetTitleLineHeight,
+                            height: NewsSpacingTokens.newsSheetTitleLineHeight,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         Row(
                           children: [
                             const Icon(
                               Icons.calendar_today_rounded,
-                              size: AppSpacing.newsSheetCalendarIconSize,
+                              size: NewsSpacingTokens.newsSheetCalendarIconSize,
                               color: AppColors.text2,
                             ),
                             const SizedBox(width: AppSpacing.formFieldLabelGap),
@@ -86,7 +90,9 @@ class _ArticleSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         VitCard(
                           width: double.infinity,
                           density: VitDensity.compact,
@@ -97,18 +103,23 @@ class _ArticleSheet extends StatelessWidget {
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.text2,
                               fontStyle: FontStyle.italic,
-                              height: AppSpacing.newsSheetSummaryLineHeight,
+                              height:
+                                  NewsSpacingTokens.newsSheetSummaryLineHeight,
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         Text(
                           article.content,
                           style: AppTextStyles.body.copyWith(
-                            height: AppSpacing.newsSheetBodyLineHeight,
+                            height: NewsSpacingTokens.newsSheetBodyLineHeight,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.newsSectionBreak),
+                        const SizedBox(
+                          height: NewsSpacingTokens.newsSectionBreak,
+                        ),
                         Wrap(
                           spacing: AppSpacing.x3,
                           runSpacing: AppSpacing.x3,
@@ -122,7 +133,9 @@ class _ArticleSheet extends StatelessWidget {
                               ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardSectionGap,
+                        ),
                         VitCtaButton(
                           key: NewsPage.closeSheetKey,
                           height: VitDensity.compact.controlHeight,

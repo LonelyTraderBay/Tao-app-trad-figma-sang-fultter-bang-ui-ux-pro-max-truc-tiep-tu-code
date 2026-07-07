@@ -104,7 +104,7 @@ class _ConvertHeroCard extends StatelessWidget {
           if (favoritePairs.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
             SizedBox(
-              height: AppSpacing.convertFavoriteChipHeight,
+              height: TradeSpacingTokens.convertFavoriteChipHeight,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: favoritePairs.length,
@@ -121,7 +121,7 @@ class _ConvertHeroCard extends StatelessWidget {
                     selected: active,
                     onTap: () => onFavoriteSelected(pair),
                     accentColor: _tradePrimary,
-                    height: AppSpacing.convertChipHeight,
+                    height: TradeSpacingTokens.convertChipHeight,
                   );
                 },
               ),
@@ -233,7 +233,7 @@ class _AmountSection extends StatelessWidget {
             onTap: onPercent!,
             keyFor: ConvertPage.pctKey,
             accentColor: _tradePrimary,
-            height: AppSpacing.convertChipHeight,
+            height: TradeSpacingTokens.convertChipHeight,
             padding: AppSpacing.zeroInsets,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -273,7 +273,7 @@ class _AssetButton extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       variant: VitCardVariant.inner,
-      height: AppSpacing.convertControlHeight,
+      height: TradeSpacingTokens.convertControlHeight,
       density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
         left: AppSpacing.rowGapRegular,

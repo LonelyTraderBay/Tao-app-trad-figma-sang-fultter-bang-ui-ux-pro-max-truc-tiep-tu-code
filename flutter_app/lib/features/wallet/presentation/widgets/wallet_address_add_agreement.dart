@@ -8,6 +8,8 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_ad
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class AddressWhitelistCard extends StatelessWidget {
   const AddressWhitelistCard({
@@ -49,10 +51,10 @@ class AddressWhitelistCard extends StatelessWidget {
               child: Icon(
                 Icons.shield_outlined,
                 color: enabled ? addressAddGreen : AppColors.text3,
-                size: AppSpacing.walletAddressAddIcon,
+                size: WalletSpacingTokens.walletAddressAddIcon,
               ),
             ),
-            const SizedBox(width: AppSpacing.walletAddressPrimaryGap),
+            const SizedBox(width: WalletSpacingTokens.walletAddressPrimaryGap),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -79,10 +81,10 @@ class AddressWhitelistCard extends StatelessWidget {
             VitTogglePill(
               enabled: enabled,
               activeColor: addressAddGreen,
-              width: AppSpacing.walletAddressAddSwitchWidth,
-              height: AppSpacing.walletAddressAddSwitchHeight,
-              knobSize: AppSpacing.walletAddressAddSwitchKnob,
-              knobMargin: AppSpacing.walletAddressAddSwitchKnobMargin,
+              width: WalletSpacingTokens.walletAddressAddSwitchWidth,
+              height: WalletSpacingTokens.walletAddressAddSwitchHeight,
+              knobSize: WalletSpacingTokens.walletAddressAddSwitchKnob,
+              knobMargin: WalletSpacingTokens.walletAddressAddSwitchKnobMargin,
             ),
           ],
         ),
@@ -134,9 +136,9 @@ class AddressAgreementRow extends StatelessWidget {
           children: [
             // card-tile: allow-start — fixed surface, not horizontal strip tile
             VitCard(
-              width: AppSpacing.walletAddressAddAgreementBox,
-              height: AppSpacing.walletAddressAddAgreementBox,
-              margin: AppSpacing.walletAddressAddAgreementBoxMargin,
+              width: WalletSpacingTokens.walletAddressAddAgreementBox,
+              height: WalletSpacingTokens.walletAddressAddAgreementBox,
+              margin: WalletSpacingTokens.walletAddressAddAgreementBoxMargin,
               radius: VitCardRadius.standard,
               variant: VitCardVariant.ghost,
               borderColor: agreed ? addressAddGreen : AppColors.borderSolid,
@@ -149,7 +151,7 @@ class AddressAgreementRow extends StatelessWidget {
                   ? const Icon(
                       Icons.check_rounded,
                       color: AppColors.onAccent,
-                      size: AppSpacing.walletAddressAddAgreementIcon,
+                      size: WalletSpacingTokens.walletAddressAddAgreementIcon,
                     )
                   : const SizedBox.shrink(),
             ),
@@ -159,7 +161,7 @@ class AddressAgreementRow extends StatelessWidget {
                 'Tôi xác nhận địa chỉ ví và mạng lưới chính xác. Tôi hiểu rằng gửi tiền sai địa chỉ sẽ không thể hoàn lại.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.tradeBotLineHeightLoose,
+                  height: TradeSpacingTokens.tradeBotLineHeightLoose,
                   fontWeight: AppTextStyles.medium,
                 ),
               ),

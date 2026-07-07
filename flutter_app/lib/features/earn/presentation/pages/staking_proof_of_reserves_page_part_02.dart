@@ -10,7 +10,7 @@ class _AssetReserveCard extends StatelessWidget {
     final progress = math.min(asset.reserveRatio / 150, 1.0);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -73,7 +73,7 @@ class _AssetReserveCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.earnPaddingX3,
+            padding: EarnSpacingTokens.earnPaddingX3,
             child: Row(
               children: [
                 Expanded(
@@ -86,7 +86,9 @@ class _AssetReserveCard extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const Padding(padding: AppSpacing.earnTopPaddingX1),
+                      const Padding(
+                        padding: EarnSpacingTokens.earnTopPaddingX1,
+                      ),
                       Text(
                         asset.walletAddress,
                         maxLines: 1,
@@ -119,7 +121,7 @@ class _AuditReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -171,7 +173,7 @@ class _VerificationStepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -239,7 +241,7 @@ class _VerifySheetState extends State<_VerifySheet> {
       top: false,
       child: Padding(
         key: StakingProofOfReservesPage.verifySheetKey,
-        padding: AppSpacing.earnContentMargin,
+        padding: EarnSpacingTokens.earnContentMargin,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.86,
@@ -247,7 +249,7 @@ class _VerifySheetState extends State<_VerifySheet> {
           child: VitSheetSurface(
             color: AppColors.surface,
             borderRadius: AppRadii.cardLargeRadius,
-            padding: AppSpacing.earnPaddingX5,
+            padding: EarnSpacingTokens.earnPaddingX5,
             child: SingleChildScrollView(
               child: _proof == null ? _form(context) : _proofView(context),
             ),
@@ -267,7 +269,7 @@ class _VerifySheetState extends State<_VerifySheet> {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Text(
             widget.snapshot.verifyInfo,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -311,7 +313,7 @@ class _VerifySheetState extends State<_VerifySheet> {
           key: StakingProofOfReservesPage.proofResultKey,
           variant: VitCardVariant.inner,
           borderColor: AppColors.buy20,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Column(
             children: [
               const Icon(
@@ -339,7 +341,7 @@ class _VerifySheetState extends State<_VerifySheet> {
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.earnPaddingX3,
+          padding: EarnSpacingTokens.earnPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -434,7 +436,7 @@ class _HashCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Row(
         children: [
           Expanded(

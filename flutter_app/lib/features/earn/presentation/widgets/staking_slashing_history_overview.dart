@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_slashing_history_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingSlashingInsuranceBanner extends StatelessWidget {
   const StakingSlashingInsuranceBanner({super.key, required this.snapshot});
@@ -19,7 +20,7 @@ class StakingSlashingInsuranceBanner extends StatelessWidget {
       key: StakingSlashingHistoryKeys.info,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,7 +40,7 @@ class StakingSlashingInsuranceBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingSlashingBodyLineHeight,
+                    height: EarnSpacingTokens.stakingSlashingBodyLineHeight,
                   ),
                 ),
               ],
@@ -61,14 +62,14 @@ class StakingSlashingSummaryStats extends StatelessWidget {
     return VitCard(
       key: StakingSlashingHistoryKeys.stats,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: GridView.count(
-        crossAxisCount: AppSpacing.stakingSlashingStatsGridColumns,
+        crossAxisCount: EarnSpacingTokens.stakingSlashingStatsGridColumns,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         mainAxisSpacing: AppSpacing.x3,
         crossAxisSpacing: AppSpacing.x3,
-        childAspectRatio: AppSpacing.stakingSlashingStatsGridAspect,
+        childAspectRatio: EarnSpacingTokens.stakingSlashingStatsGridAspect,
         children: [
           _StatTile(
             label: 'Total Events',
@@ -121,7 +122,7 @@ class _StatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: borderColor,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -178,7 +179,7 @@ class StakingSlashingTabs extends StatelessWidget {
                 key: StakingSlashingHistoryKeys.tab(tab.name),
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
-                padding: AppSpacing.earnTopPaddingX4,
+                padding: EarnSpacingTokens.earnTopPaddingX4,
                 onTap: () => onChanged(tab),
                 child: Column(
                   children: [
@@ -193,7 +194,9 @@ class StakingSlashingTabs extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     TweenAnimationBuilder<double>(
                       duration: const Duration(milliseconds: 160),
                       tween: Tween<double>(
@@ -202,7 +205,8 @@ class StakingSlashingTabs extends StatelessWidget {
                       builder: (context, width, _) {
                         return SizedBox(
                           width: width,
-                          height: AppSpacing.stakingSlashingTabIndicatorHeight,
+                          height: EarnSpacingTokens
+                              .stakingSlashingTabIndicatorHeight,
                           child: DecoratedBox(
                             decoration: ShapeDecoration(
                               color: active == tab

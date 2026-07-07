@@ -40,7 +40,8 @@ class _QuickLinks extends StatelessWidget {
               ],
             ),
           ),
-          if (link != links.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (link != links.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

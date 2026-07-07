@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/launchpad_notif_sound_controls.dart';
 part '../widgets/launchpad_notif_sound_categories.dart';
@@ -97,7 +98,8 @@ class _LaunchpadNotifSoundPageState
           child: SingleChildScrollView(
             key: LaunchpadNotifSoundPage.contentKey,
             physics: const ClampingScrollPhysics(),
-            child: VitPageContent(rhythm: VitPageRhythm.standard, 
+            child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
               children: [

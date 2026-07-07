@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_custody_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingCustodySegregationSection extends StatelessWidget {
   const StakingCustodySegregationSection({super.key, required this.snapshot});
@@ -22,7 +23,7 @@ class StakingCustodySegregationSection extends StatelessWidget {
         VitCard(
           key: StakingCustodyKeys.segregation,
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -30,14 +31,14 @@ class StakingCustodySegregationSection extends StatelessWidget {
                 snapshot.segregationBody,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingCustodyBodyLineHeight,
+                  height: EarnSpacingTokens.stakingCustodyBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Center(
                 child: StakingCustodyPieChart(
                   allocations: snapshot.segregation,
-                  size: AppSpacing.stakingCustodySegregationChart,
+                  size: EarnSpacingTokens.stakingCustodySegregationChart,
                   donut: false,
                 ),
               ),
@@ -47,7 +48,9 @@ class StakingCustodySegregationSection extends StatelessWidget {
                   for (final item in snapshot.segregationLegend) ...[
                     StakingCustodyLegendRow(item: item),
                     if (item != snapshot.segregationLegend.last)
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                   ],
                 ],
               ),
@@ -73,7 +76,7 @@ class StakingCustodyHotColdSection extends StatelessWidget {
         VitCard(
           key: StakingCustodyKeys.hotCold,
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -81,14 +84,14 @@ class StakingCustodyHotColdSection extends StatelessWidget {
                 snapshot.hotColdBody,
                 style: AppTextStyles.body.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingCustodyBodyLineHeight,
+                  height: EarnSpacingTokens.stakingCustodyBodyLineHeight,
                 ),
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Center(
                 child: StakingCustodyPieChart(
                   allocations: snapshot.hotCold,
-                  size: AppSpacing.stakingCustodyHotColdChart,
+                  size: EarnSpacingTokens.stakingCustodyHotColdChart,
                   donut: true,
                 ),
               ),

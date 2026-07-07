@@ -44,7 +44,7 @@ class _HowItWorksTab extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
-          padding: AppSpacing.p2pGuideCardPadding,
+          padding: P2PSpacingTokens.p2pGuideCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -104,7 +104,7 @@ class _StepRow extends StatelessWidget {
         const SizedBox(width: AppSpacing.x3),
         Expanded(
           child: Padding(
-            padding: AppSpacing.p2pGuideStepContentPadding,
+            padding: P2PSpacingTokens.p2pGuideStepContentPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -159,7 +159,7 @@ class _SafetyTab extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.large,
           borderColor: AppColors.sell20,
-          padding: AppSpacing.p2pGuideCardPadding,
+          padding: P2PSpacingTokens.p2pGuideCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -195,7 +195,7 @@ class _SafetyTab extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.large,
           borderColor: AppColors.sell20,
-          padding: AppSpacing.p2pGuideCardPadding,
+          padding: P2PSpacingTokens.p2pGuideCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -246,7 +246,7 @@ class _SafetyTipCard extends StatelessWidget {
     final color = _toneColor(tip.toneKey);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pGuideSafetyTipPadding,
+      padding: P2PSpacingTokens.p2pGuideSafetyTipPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

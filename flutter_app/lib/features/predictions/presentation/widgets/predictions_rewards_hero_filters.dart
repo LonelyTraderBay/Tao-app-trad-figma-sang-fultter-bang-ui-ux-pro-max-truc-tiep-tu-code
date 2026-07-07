@@ -24,7 +24,7 @@ class _RewardsHero extends StatelessWidget {
                   child: const Icon(
                     Icons.card_giftcard_rounded,
                     color: AppColors.warn,
-                    size: AppSpacing.predictionRewardsHeroIcon,
+                    size: PredictionsSpacingTokens.predictionRewardsHeroIcon,
                   ),
                 ),
               ),
@@ -58,7 +58,7 @@ class _RewardsHero extends StatelessWidget {
               const Icon(
                 Icons.help_outline_rounded,
                 color: AppColors.portfolioTextMuted,
-                size: AppSpacing.predictionRewardsPoolIcon,
+                size: PredictionsSpacingTokens.predictionRewardsPoolIcon,
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
@@ -130,10 +130,10 @@ class _CategoryFilters extends StatelessWidget {
               selected: favoritesOnly,
               onTap: onFavoritesToggle,
               accentColor: AppColors.sell,
-              padding: AppSpacing.predictionRewardsFilterPadding,
+              padding: PredictionsSpacingTokens.predictionRewardsFilterPadding,
               leading: Icon(
                 Icons.favorite_rounded,
-                size: AppSpacing.predictionRewardsFilterIcon,
+                size: PredictionsSpacingTokens.predictionRewardsFilterIcon,
               ),
             );
           }
@@ -148,7 +148,7 @@ class _CategoryFilters extends StatelessWidget {
             selected: activeCategory == category,
             onTap: () => onCategoryChanged(category),
             accentColor: _predictionPrimary,
-            padding: AppSpacing.predictionRewardsFilterPadding,
+            padding: PredictionsSpacingTokens.predictionRewardsFilterPadding,
           );
         },
         separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.x2),

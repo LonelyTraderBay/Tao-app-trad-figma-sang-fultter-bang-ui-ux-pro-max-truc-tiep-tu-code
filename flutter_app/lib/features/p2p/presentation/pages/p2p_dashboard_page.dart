@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_dashboard_page_part_01.dart';
 part '../widgets/p2p_dashboard_page_part_02.dart';
@@ -99,7 +100,7 @@ class _P2PDashboardPageState extends ConsumerState<P2PDashboardPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDashboardPageScrollPadding(
+                    padding: P2PSpacingTokens.p2pDashboardPageScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(

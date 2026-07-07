@@ -45,7 +45,7 @@ class _EnforcementCard extends StatelessWidget {
     };
     return VitCard(
       density: VitDensity.compact,
-      padding: AppSpacing.copySafetyActionCardPadding,
+      padding: TradeSpacingTokens.copySafetyActionCardPadding,
       borderColor: AppColors.cardBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,10 +136,14 @@ class _IconTextRow extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       density: VitDensity.compact,
-      padding: AppSpacing.copySafetyIconTextPadding,
+      padding: TradeSpacingTokens.copySafetyIconTextPadding,
       child: Row(
         children: [
-          Icon(icon, color: color, size: AppSpacing.copySafetyIconTextIcon),
+          Icon(
+            icon,
+            color: color,
+            size: TradeSpacingTokens.copySafetyIconTextIcon,
+          ),
           const SizedBox(width: _safetySpace),
           Expanded(
             child: Text(
@@ -216,7 +220,9 @@ class _EmergencyPanel extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const VitSheetHandle(),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Text(
                       'Emergency stop activated',
                       style: AppTextStyles.baseMedium,
@@ -228,7 +234,9 @@ class _EmergencyPanel extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     VitCtaButton(
                       onPressed: onClose,
                       height: _safetySheetButtonHeight,

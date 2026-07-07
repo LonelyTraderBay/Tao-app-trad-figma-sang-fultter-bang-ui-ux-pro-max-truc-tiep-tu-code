@@ -21,7 +21,7 @@ class _ExampleCard extends StatelessWidget {
               Icon(
                 allowed ? Icons.check_rounded : Icons.close_rounded,
                 color: color,
-                size: AppSpacing.arenaBridgeChipIcon,
+                size: ArenaSpacingTokens.arenaBridgeChipIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -137,7 +137,7 @@ class _InlineTitle extends StatelessWidget {
         Icon(
           icon,
           color: AppColors.primary,
-          size: AppSpacing.arenaBridgeInlineIcon,
+          size: ArenaSpacingTokens.arenaBridgeInlineIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -168,7 +168,7 @@ class _MiniMetric extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.arenaBridgeMetricLabelWidth,
+          width: ArenaSpacingTokens.arenaBridgeMetricLabelWidth,
           child: Text(
             label,
             style: AppTextStyles.micro.copyWith(
@@ -215,7 +215,7 @@ class _InfoRow extends StatelessWidget {
         Icon(
           _toneIcon(tone),
           color: color,
-          size: AppSpacing.arenaBridgeMicroIcon,
+          size: ArenaSpacingTokens.arenaBridgeMicroIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -242,8 +242,8 @@ class _ToneIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _toneColor(tone);
     final size = small
-        ? AppSpacing.arenaBridgeCompactIconBox
-        : AppSpacing.arenaBridgeIconBox;
+        ? ArenaSpacingTokens.arenaBridgeCompactIconBox
+        : ArenaSpacingTokens.arenaBridgeIconBox;
     return SizedBox(
       width: size,
       height: size,
@@ -257,8 +257,8 @@ class _ToneIcon extends StatelessWidget {
           _toneIcon(tone),
           color: color,
           size: small
-              ? AppSpacing.arenaBridgeCompactGlyph
-              : AppSpacing.arenaBridgeGlyph,
+              ? ArenaSpacingTokens.arenaBridgeCompactGlyph
+              : ArenaSpacingTokens.arenaBridgeGlyph,
         ),
       ),
     );
@@ -281,7 +281,7 @@ class _DisclosureFooter extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: AppColors.text3,
-            size: AppSpacing.arenaBridgeSmallIcon,
+            size: ArenaSpacingTokens.arenaBridgeSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

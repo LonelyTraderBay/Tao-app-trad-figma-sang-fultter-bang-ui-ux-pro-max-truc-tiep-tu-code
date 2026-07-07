@@ -41,7 +41,8 @@ class StakingDashboardSummaryCard extends StatelessWidget {
                       child: _HeroKpi(
                         label: 'Tổng giá trị Staking',
                         value: stakingFormatUsd(snapshot.totalStakedUsd),
-                        caption: '${snapshot.activePositions} vị thế đang hoạt động',
+                        caption:
+                            '${snapshot.activePositions} vị thế đang hoạt động',
                         valueColor: AppColors.text1,
                       ),
                     ),

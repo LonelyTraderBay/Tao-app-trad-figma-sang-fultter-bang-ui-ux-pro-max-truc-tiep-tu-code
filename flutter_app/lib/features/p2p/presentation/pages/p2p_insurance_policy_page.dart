@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 class P2PInsurancePolicyPage extends ConsumerWidget {
   const P2PInsurancePolicyPage({super.key, this.shellRenderMode});
@@ -59,7 +60,9 @@ class P2PInsurancePolicyPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDocumentScrollPadding(bottomInset),
+                    padding: P2PSpacingTokens.p2pDocumentScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
@@ -188,7 +191,7 @@ class _PolicyMetaChip extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: color, size: AppSpacing.p2pDocumentTinyIcon),
+        Icon(icon, color: color, size: P2PSpacingTokens.p2pDocumentTinyIcon),
         const SizedBox(width: AppSpacing.x2),
         Text(
           label,
@@ -218,7 +221,7 @@ class _PolicyNoticeCard extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppModuleAccents.p2p,
-            size: AppSpacing.p2pDocumentRowIcon,
+            size: P2PSpacingTokens.p2pDocumentRowIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -251,7 +254,8 @@ class _PolicySectionList extends StatelessWidget {
       children: [
         for (var i = 0; i < sections.length; i++) ...[
           _PolicySectionCard(section: sections[i]),
-          if (i != sections.length - 1) const SizedBox(height: AppSpacing.rowGap),
+          if (i != sections.length - 1)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -300,9 +304,9 @@ class _PolicyBullet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.p2pDocumentBulletTopPadding,
+          padding: P2PSpacingTokens.p2pDocumentBulletTopPadding,
           child: const SizedBox.square(
-            dimension: AppSpacing.p2pDocumentBullet,
+            dimension: P2PSpacingTokens.p2pDocumentBullet,
             child: Material(color: AppColors.text3, shape: CircleBorder()),
           ),
         ),
@@ -339,7 +343,7 @@ class _PrivacyNoticeCard extends StatelessWidget {
           const Icon(
             Icons.lock_outline_rounded,
             color: AppColors.text3,
-            size: AppSpacing.p2pDocumentSmallIcon,
+            size: P2PSpacingTokens.p2pDocumentSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -347,7 +351,7 @@ class _PrivacyNoticeCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.p2pDocumentPrivacyLineHeight,
+                height: P2PSpacingTokens.p2pDocumentPrivacyLineHeight,
               ),
             ),
           ),

@@ -20,7 +20,7 @@ class _SummaryCard extends StatelessWidget {
     return VitCard(
       key: StakingEarningsCalendarPage.summaryKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: EarnSpacingTokens.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -36,7 +36,9 @@ class _SummaryCard extends StatelessWidget {
                         color: AppColors.text3,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       '+${_formatUsd(snapshot.totalUpcomingUsd)}',
                       style: AppTextStyles.sectionTitle.copyWith(
@@ -131,9 +133,7 @@ class _CalendarTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitTabBar(
       variant: VitTabBarVariant.segment,
-      tabs: [
-        for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
-      ],
+      tabs: [for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label)],
       activeKey: active,
       onChanged: onChanged,
     );

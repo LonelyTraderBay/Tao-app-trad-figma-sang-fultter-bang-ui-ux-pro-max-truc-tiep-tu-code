@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_selfie_verification_page_sections.dart';
 part '../widgets/p2p_selfie_verification_page_common.dart';
@@ -156,8 +157,9 @@ class _P2PSelfieVerificationPageState
       behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       child: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
-        padding: AppSpacing.p2pSelfieScrollPadding(scrollEndPadding),
-        child: VitPageContent(rhythm: VitPageRhythm.form, 
+        padding: P2PSpacingTokens.p2pSelfieScrollPadding(scrollEndPadding),
+        child: VitPageContent(
+          rhythm: VitPageRhythm.form,
           padding: VitContentPadding.none,
           fullBleed: true,
           gap: VitContentGap.tight,
@@ -165,7 +167,7 @@ class _P2PSelfieVerificationPageState
             stepBody,
             const VitCard(
               variant: VitCardVariant.inner,
-              padding: AppSpacing.p2pSelfieReviewPadding,
+              padding: P2PSpacingTokens.p2pSelfieReviewPadding,
               child: VitHighRiskStatePanel(
                 state: VitHighRiskUiState.riskReview,
                 title: 'Selfie verification review',

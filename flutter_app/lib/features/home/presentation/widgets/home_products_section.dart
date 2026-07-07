@@ -7,22 +7,6 @@ import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.da
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
-Widget homeServiceTile(
-  HomeQuickAction action,
-  VitServiceTileDensity tileDensity,
-  ValueChanged<String> onNavigate,
-) {
-  return VitServiceTile(
-    density: tileDensity,
-    icon: HomeActionTokens.icon(action.icon),
-    label: action.label,
-    accentColor: HomeActionTokens.accent(action.accentKey),
-    badgeLabel: action.stateLabel,
-    riskBadgeLabel: action.riskBadge,
-    onTap: () => onNavigate(action.routePath),
-  );
-}
-
 class HomeProductsSection extends StatelessWidget {
   const HomeProductsSection({
     super.key,
@@ -89,7 +73,15 @@ class HomeQuickActionsGrid extends StatelessWidget {
       maxVisibleItems: maxVisibleItems,
       itemBuilder: (context, index, tileDensity) {
         final action = actions[index];
-        return homeServiceTile(action, tileDensity, onNavigate);
+        return VitServiceTile.fromAction(
+          density: tileDensity,
+          icon: HomeActionTokens.icon(action.icon),
+          label: action.label,
+          accentColor: HomeActionTokens.accent(action.accentKey),
+          badgeLabel: action.stateLabel,
+          riskBadgeLabel: action.riskBadge,
+          onTap: () => onNavigate(action.routePath),
+        );
       },
     );
   }

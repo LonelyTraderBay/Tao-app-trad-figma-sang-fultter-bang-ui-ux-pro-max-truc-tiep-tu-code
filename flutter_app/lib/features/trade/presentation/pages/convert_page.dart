@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_simple_shell.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/convert_page_widgets.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part 'convert_page_part_01.dart';
 part 'convert_page_part_02.dart';
@@ -124,56 +125,56 @@ class _ConvertPageState extends ConsumerState<ConvertPage> {
       ],
       children: [
         if (isOffline)
-            const VitOfflineBanner(
-              message: 'Mất kết nối. Đang hiển thị tỷ giá đã lưu.',
-              detail: 'Thử làm mới sau khi có mạng.',
-            ),
-          if (!isOffline && hasError)
-            const VitBanner(
-              variant: VitBannerVariant.error,
-              icon: Icons.error_outline_rounded,
-              message: 'Không thể làm mới tỷ giá.',
-              detail: 'Đang hiển thị báo giá gần nhất.',
-            ),
-          VitTradeSection(
-            title: 'Đổi $_fromSymbol sang $_toSymbol',
-            child: _ConvertHeroCard(
-              fromAsset: fromAsset,
-              toAsset: toAsset,
-              amountController: _amountController,
-              quoteAmount: quote.toAmount,
-              quoteLabel: quote.quoteLabel,
-              countdown: '${quote.validSeconds}s',
-              favoritePairs: snapshot.favoritePairs,
-              activeFrom: fromAsset.symbol,
-              activeTo: toAsset.symbol,
-              onFromChanged: () => setState(() => _receipt = null),
-              onFromAssetTap: () => _showAssetPicker('from', snapshot.assets),
-              onToAssetTap: () => _showAssetPicker('to', snapshot.assets),
-              onPercent: (pct) => _setPercentAmount(fromAsset, pct),
-              onSwap: _swapAssets,
-              onFavoriteSelected: _selectFavoritePair,
-            ),
+          const VitOfflineBanner(
+            message: 'Mất kết nối. Đang hiển thị tỷ giá đã lưu.',
+            detail: 'Thử làm mới sau khi có mạng.',
           ),
-          _ConvertRiskReviewPanel(
-            quote: quote,
-            fromSymbol: fromAsset.symbol,
-            toSymbol: toAsset.symbol,
-            slippage: _slippage,
+        if (!isOffline && hasError)
+          const VitBanner(
+            variant: VitBannerVariant.error,
+            icon: Icons.error_outline_rounded,
+            message: 'Không thể làm mới tỷ giá.',
+            detail: 'Đang hiển thị báo giá gần nhất.',
           ),
-          _SubmitButton(
-            enabled: quote.canSubmit && !isOffline,
-            receipt: _receipt,
-            onPressed: () =>
-                _submitWithConfirm(request, quote, fromAsset, toAsset),
+        VitTradeSection(
+          title: 'Đổi $_fromSymbol sang $_toSymbol',
+          child: _ConvertHeroCard(
+            fromAsset: fromAsset,
+            toAsset: toAsset,
+            amountController: _amountController,
+            quoteAmount: quote.toAmount,
+            quoteLabel: quote.quoteLabel,
+            countdown: '${quote.validSeconds}s',
+            favoritePairs: snapshot.favoritePairs,
+            activeFrom: fromAsset.symbol,
+            activeTo: toAsset.symbol,
+            onFromChanged: () => setState(() => _receipt = null),
+            onFromAssetTap: () => _showAssetPicker('from', snapshot.assets),
+            onToAssetTap: () => _showAssetPicker('to', snapshot.assets),
+            onPercent: (pct) => _setPercentAmount(fromAsset, pct),
+            onSwap: _swapAssets,
+            onFavoriteSelected: _selectFavoritePair,
           ),
-          VitTradeSection(
-            title: 'Giao dịch gần đây',
-            actionLabel: 'Xem tất cả',
-            onAction: () {},
-            child: _HistoryList(records: snapshot.history),
-          ),
-        ],
+        ),
+        _ConvertRiskReviewPanel(
+          quote: quote,
+          fromSymbol: fromAsset.symbol,
+          toSymbol: toAsset.symbol,
+          slippage: _slippage,
+        ),
+        _SubmitButton(
+          enabled: quote.canSubmit && !isOffline,
+          receipt: _receipt,
+          onPressed: () =>
+              _submitWithConfirm(request, quote, fromAsset, toAsset),
+        ),
+        VitTradeSection(
+          title: 'Giao dịch gần đây',
+          actionLabel: 'Xem tất cả',
+          onAction: () {},
+          child: _HistoryList(records: snapshot.history),
+        ),
+      ],
     );
   }
 

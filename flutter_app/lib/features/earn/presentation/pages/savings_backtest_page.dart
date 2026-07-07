@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_bac
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_hero.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_results.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_setup.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsBacktestPage extends ConsumerStatefulWidget {
   const SavingsBacktestPage({super.key, this.shellRenderMode});
@@ -103,9 +104,11 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -214,7 +217,7 @@ class _SavingsBacktestPageState extends ConsumerState<SavingsBacktestPage> {
       ),
       EarnWarningBanner(
         text: snapshot.disclaimer,
-        lineHeight: AppSpacing.savingsBacktestWarningLineHeight,
+        lineHeight: EarnSpacingTokens.savingsBacktestWarningLineHeight,
       ),
       VitCtaButton(
         key: SavingsBacktestPage.runKey,

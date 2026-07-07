@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_d
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_overview.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_perpetual.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_derivatives_tabs.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class DerivativesOverviewPage extends ConsumerStatefulWidget {
   const DerivativesOverviewPage({super.key, this.shellRenderMode});
@@ -79,9 +80,10 @@ class _DerivativesOverviewPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: DerivativesOverviewPage.contentKey,
-                    padding: AppSpacing.marketDerivativesScrollPadding(
-                      scrollEndClearance,
-                    ),
+                    padding:
+                        MarketsSpacingTokens.marketDerivativesScrollPadding(
+                          scrollEndClearance,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,

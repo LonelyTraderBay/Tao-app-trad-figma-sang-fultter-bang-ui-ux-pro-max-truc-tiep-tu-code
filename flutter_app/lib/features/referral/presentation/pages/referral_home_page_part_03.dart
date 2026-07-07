@@ -9,7 +9,7 @@ class _PendingCommissionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -97,7 +97,7 @@ class _RewardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: color.withValues(alpha: .20),
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -231,7 +231,7 @@ class _DetailLinkRow extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.referralLedgerHeaderPadding,
+          padding: ReferralSpacingTokens.referralLedgerHeaderPadding,
           child: Row(
             children: [
               _IconBubble(
@@ -288,7 +288,7 @@ class _StepRow extends StatelessWidget {
     ];
     final color = colors[(step.step - 1).clamp(0, colors.length - 1)];
     return Padding(
-      padding: AppSpacing.referralStepRowPadding,
+      padding: ReferralSpacingTokens.referralStepRowPadding,
       child: Row(
         children: [
           _IconBubble(
@@ -353,7 +353,7 @@ class _CampaignHistoryCard extends StatelessWidget {
     return VitCard(
       key: ReferralHomePage.campaignHistoryKey(item.id),
       borderColor: active ? AppColors.buy20 : AppColors.cardBorder,
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -388,7 +388,7 @@ class _CampaignHistoryCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.referralInnerPadding,
+            padding: ReferralSpacingTokens.referralInnerPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -476,7 +476,7 @@ class _HistoryDatum extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.referralInnerPadding,
+      padding: ReferralSpacingTokens.referralInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

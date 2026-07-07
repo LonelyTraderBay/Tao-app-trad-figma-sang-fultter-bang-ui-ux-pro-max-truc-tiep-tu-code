@@ -54,7 +54,7 @@ class _SortChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: color,
-      padding: AppSpacing.marketCorrelationsSortChipPadding,
+      padding: MarketsSpacingTokens.marketCorrelationsSortChipPadding,
     );
   }
 }
@@ -93,32 +93,40 @@ class _PairCorrelationRow extends StatelessWidget {
           color: AppColors.surface.withValues(alpha: .92),
           borderRadius: AppRadii.mdRadius,
           child: Padding(
-            padding: AppSpacing.marketCorrelationsPairRowPadding,
+            padding: MarketsSpacingTokens.marketCorrelationsPairRowPadding,
             child: Row(
               children: [
                 SizedBox(
-                  width: AppSpacing.marketCorrelationsRankWidth,
+                  width: MarketsSpacingTokens.marketCorrelationsRankWidth,
                   child: Text(
                     '$rank',
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.marketCorrelationsRankGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.marketCorrelationsRankGap,
+                ),
                 _AssetDot(
                   symbol: pair.assetA,
                   color: AppAssetColors.forSymbol(pair.assetA),
                 ),
-                const SizedBox(width: AppSpacing.marketCorrelationsAssetDotGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.marketCorrelationsAssetDotGap,
+                ),
                 Text(
                   '↔',
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                 ),
-                const SizedBox(width: AppSpacing.marketCorrelationsAssetDotGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.marketCorrelationsAssetDotGap,
+                ),
                 _AssetDot(
                   symbol: pair.assetB,
                   color: AppAssetColors.forSymbol(pair.assetB),
                 ),
-                const SizedBox(width: AppSpacing.marketCorrelationsPairGap),
+                const SizedBox(
+                  width: MarketsSpacingTokens.marketCorrelationsPairGap,
+                ),
                 Expanded(
                   child: Text(
                     '${pair.assetA}/${pair.assetB}',
@@ -165,7 +173,7 @@ class _AssetDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: AppSpacing.marketCorrelationsAssetDot / 2,
+      radius: MarketsSpacingTokens.marketCorrelationsAssetDot / 2,
       backgroundColor: color.withValues(alpha: .18),
       child: Text(
         symbol.substring(0, 2),

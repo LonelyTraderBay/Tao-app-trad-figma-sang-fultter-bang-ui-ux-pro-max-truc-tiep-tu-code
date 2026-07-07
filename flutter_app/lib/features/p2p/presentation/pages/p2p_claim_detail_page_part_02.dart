@@ -11,7 +11,7 @@ class _ReasonShareRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.p2pClaimReasonLabelWidth,
+          width: P2PSpacingTokens.p2pClaimReasonLabelWidth,
           child: Text(
             row.label,
             style: AppTextStyles.micro.copyWith(
@@ -91,7 +91,7 @@ class _MiniStatTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.p2pClaimCompactCardPadding,
+        padding: P2PSpacingTokens.p2pClaimCompactCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -125,12 +125,15 @@ class _DescriptionCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.descriptionKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: P2PSpacingTokens.p2pClaimCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const VitSectionHeader(title: 'Mô tả',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap, density: VitDensity.compact),
+          const VitSectionHeader(
+            title: 'Mô tả',
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            density: VitDensity.compact,
+          ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             description,
@@ -233,7 +236,7 @@ class _TimelineEventRow extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                width: AppSpacing.p2pClaimTimelineNodeSize,
+                width: P2PSpacingTokens.p2pClaimTimelineNodeSize,
                 height: _p2pClaimTimelineNodeExtent,
                 child: Material(
                   color: _statusBackground(color),
@@ -241,13 +244,13 @@ class _TimelineEventRow extends StatelessWidget {
                   child: Icon(
                     _timelineIcon(event.statusKey),
                     color: color,
-                    size: AppSpacing.p2pClaimTimelineNodeIcon,
+                    size: P2PSpacingTokens.p2pClaimTimelineNodeIcon,
                   ),
                 ),
               ),
               if (!isLast)
                 const SizedBox(
-                  width: AppSpacing.p2pClaimTimelineConnectorWidth,
+                  width: P2PSpacingTokens.p2pClaimTimelineConnectorWidth,
                   height: _p2pClaimTimelineConnectorExtent,
                   child: ColoredBox(color: AppColors.divider),
                 ),
@@ -257,7 +260,7 @@ class _TimelineEventRow extends StatelessWidget {
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Padding(
-            padding: AppSpacing.p2pClaimTimelineRowPadding(isLast),
+            padding: P2PSpacingTokens.p2pClaimTimelineRowPadding(isLast),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -306,7 +309,8 @@ class _EvidenceSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final file in files) ...[
           _EvidenceFileCard(file: file),
-          if (file != files.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (file != files.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -324,7 +328,7 @@ class _UploadEvidenceCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: AppColors.borderSolid,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
+      padding: P2PSpacingTokens.p2pClaimCompactCardPadding,
       child: Column(
         children: [
           SizedBox(
@@ -369,7 +373,7 @@ class _EvidenceFileCard extends StatelessWidget {
     final isImage = file.type == 'image' || file.type == 'screenshot';
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCompactCardPadding,
+      padding: P2PSpacingTokens.p2pClaimCompactCardPadding,
       child: Row(
         children: [
           SizedBox(
@@ -432,13 +436,14 @@ class _NotesSection extends StatelessWidget {
       children: [
         for (final note in notes) ...[
           _ReviewerNoteCard(note: note),
-          if (note != notes.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (note != notes.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           variant: VitCardVariant.inner,
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pClaimCompactCardPadding,
+          padding: P2PSpacingTokens.p2pClaimCompactCardPadding,
           child: Row(
             children: [
               const Icon(

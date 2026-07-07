@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/advanced_trading_demo_page_sections.dart';
 part '../widgets/advanced_trading_demo_page_common.dart';
@@ -87,40 +88,40 @@ class _AdvancedTradingDemoPageState
                         bottom: scrollEndClearance,
                       ),
                       child: VitPageContent(
-     rhythm: VitPageRhythm.standard,
+                        rhythm: VitPageRhythm.standard,
                         padding: VitContentPadding.compact,
                         density: VitDensity.compact,
                         children: tradeShellWithProductTabs(
                           context: context,
                           children: [
                             _PositionModeCard(
-                            activeMode: _positionMode,
-                            onChanged: (mode) =>
-                                setState(() => _positionMode = mode),
-                          ),
-                          _UnderlineTabs(
-                            activeId: _tab,
-                            onChanged: (id) => setState(() => _tab = id),
-                          ),
-                          if (_tab == 'position')
-                            _PositionTab(
-                              snapshot: snapshot,
-                              onAction: (action) => setState(
-                                () => _activeSheetTitle = action.label,
-                              ),
-                            )
-                          else if (_tab == 'orders')
-                            _OrdersTab(snapshot: snapshot)
-                          else
-                            _AnalyticsTab(snapshot: snapshot),
-                          const VitHighRiskStatePanel(
-                            state: VitHighRiskUiState.riskReview,
-                            title: 'Giới hạn demo thực thi',
-                            message:
-                                'Điều khiển lệnh nâng cao chỉ hiển thị ở chế độ demo. Thực thi thật cần xem trước, ký quỹ, phí và rủi ro thanh lý.',
-                            contractId: 'SC-088',
-                            density: VitDensity.compact,
-                          ),
+                              activeMode: _positionMode,
+                              onChanged: (mode) =>
+                                  setState(() => _positionMode = mode),
+                            ),
+                            _UnderlineTabs(
+                              activeId: _tab,
+                              onChanged: (id) => setState(() => _tab = id),
+                            ),
+                            if (_tab == 'position')
+                              _PositionTab(
+                                snapshot: snapshot,
+                                onAction: (action) => setState(
+                                  () => _activeSheetTitle = action.label,
+                                ),
+                              )
+                            else if (_tab == 'orders')
+                              _OrdersTab(snapshot: snapshot)
+                            else
+                              _AnalyticsTab(snapshot: snapshot),
+                            const VitHighRiskStatePanel(
+                              state: VitHighRiskUiState.riskReview,
+                              title: 'Giới hạn demo thực thi',
+                              message:
+                                  'Điều khiển lệnh nâng cao chỉ hiển thị ở chế độ demo. Thực thi thật cần xem trước, ký quỹ, phí và rủi ro thanh lý.',
+                              contractId: 'SC-088',
+                              density: VitDensity.compact,
+                            ),
                           ],
                         ),
                       ),

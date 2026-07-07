@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pBlacklistAddVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -100,7 +101,7 @@ class _P2PBlacklistAddPageState extends ConsumerState<P2PBlacklistAddPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pBlacklistAddScrollPadding(
+                    padding: P2PSpacingTokens.p2pBlacklistAddScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
@@ -248,7 +249,8 @@ class _ReasonSelector extends StatelessWidget {
             selected: reason.id == selectedReasonId,
             onTap: () => onChanged(reason.id),
           ),
-          if (reason != reasons.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (reason != reasons.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

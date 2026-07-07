@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart'
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_state_cards.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_viewport_padding.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part 'arena_challenge_detail_page_part_01.dart';
 part 'arena_challenge_detail_page_part_02.dart';
@@ -128,9 +129,11 @@ class _ArenaChallengeDetailPageState
                   child: SingleChildScrollView(
                     key: ArenaChallengeDetailPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(bottomInset),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,

@@ -34,7 +34,9 @@ class _StakingInsurancePageState extends ConsumerState<StakingInsurancePage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
@@ -108,7 +110,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingInsurancePage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -180,7 +182,7 @@ class _OverviewTab extends StatelessWidget {
         VitCard(
           key: StakingInsurancePage.overviewSummaryKey,
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Column(
             children: [
               Row(
@@ -196,7 +198,9 @@ class _OverviewTab extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const Padding(padding: AppSpacing.earnTopPaddingX3),
+                        const Padding(
+                          padding: EarnSpacingTokens.earnTopPaddingX3,
+                        ),
                         Text(
                           _formatUsd(totalInsured),
                           style: AppTextStyles.heroNumber.copyWith(),
@@ -205,14 +209,15 @@ class _OverviewTab extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: AppSpacing.stakingInsuranceShieldIconBox,
-                    height: AppSpacing.stakingInsuranceShieldIconBox,
+                    width: EarnSpacingTokens.stakingInsuranceShieldIconBox,
+                    height: EarnSpacingTokens.stakingInsuranceShieldIconBox,
                     child: Material(
                       color: AppColors.buy10,
                       shape: const CircleBorder(
                         side: BorderSide(
                           color: AppColors.buy,
-                          width: AppSpacing.stakingInsuranceShieldBorderWidth,
+                          width: EarnSpacingTokens
+                              .stakingInsuranceShieldBorderWidth,
                         ),
                       ),
                       child: const Icon(
@@ -265,7 +270,7 @@ class _SummaryMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -307,10 +312,12 @@ class _BenefitsGrid extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.stakingInsuranceBenefitGridColumns,
+            crossAxisCount:
+                EarnSpacingTokens.stakingInsuranceBenefitGridColumns,
             crossAxisSpacing: AppSpacing.x4,
             mainAxisSpacing: AppSpacing.x4,
-            childAspectRatio: AppSpacing.stakingInsuranceBenefitGridAspect,
+            childAspectRatio:
+                EarnSpacingTokens.stakingInsuranceBenefitGridAspect,
           ),
           itemBuilder: (context, index) {
             final benefit = snapshot.benefits[index];
@@ -331,7 +338,7 @@ class _BenefitCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -384,7 +391,7 @@ class _WarningNote extends StatelessWidget {
       key: StakingInsurancePage.warningKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -402,12 +409,12 @@ class _WarningNote extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 for (final bullet in snapshot.warningBullets)
                   Padding(
-                    padding: AppSpacing.earnBottomPaddingX1,
+                    padding: EarnSpacingTokens.earnBottomPaddingX1,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: AppSpacing.earnBulletTopMarginX3,
+                          padding: EarnSpacingTokens.earnBulletTopMarginX3,
                           child: const SizedBox(
                             width: AppSpacing.x1,
                             height: AppSpacing.x1,

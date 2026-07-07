@@ -28,7 +28,7 @@ class _InfoSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Column(
             children: [
               const Icon(
@@ -44,7 +44,7 @@ class _InfoSheet extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                  height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                 ),
               ),
             ],
@@ -103,7 +103,7 @@ class _InfoItem extends StatelessWidget {
                 item.description,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text3,
-                  height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                  height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                 ),
               ),
             ],
@@ -176,7 +176,7 @@ class _ToggleSwitch extends StatelessWidget {
         onTap: onTap,
         child: VitTogglePill(
           enabled: on,
-          width: AppSpacing.autoCompoundSettingsSwitchWidth,
+          width: EarnSpacingTokens.autoCompoundSettingsSwitchWidth,
           height: AppSpacing.buttonCompact - AppSpacing.x2,
           knobSize: AppSpacing.x4,
           knobMargin: AppSpacing.zeroInsets.copyWith(
@@ -217,7 +217,7 @@ class _AssetBadge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+              height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
             ),
           ),
         ),

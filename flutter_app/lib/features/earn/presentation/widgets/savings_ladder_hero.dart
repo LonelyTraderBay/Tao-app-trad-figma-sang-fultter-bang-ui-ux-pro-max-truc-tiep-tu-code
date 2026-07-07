@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_ladder_page.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class LadderHero extends StatelessWidget {
   const LadderHero({
@@ -172,7 +173,7 @@ class _HeroStat extends StatelessWidget {
             children: [
               if (dot) ...[
                 const SizedBox.square(
-                  dimension: AppSpacing.savingsLadderHeroDot,
+                  dimension: EarnSpacingTokens.savingsLadderHeroDot,
                   child: Material(color: AppColors.buy, shape: CircleBorder()),
                 ),
                 const SizedBox(width: AppSpacing.x1),

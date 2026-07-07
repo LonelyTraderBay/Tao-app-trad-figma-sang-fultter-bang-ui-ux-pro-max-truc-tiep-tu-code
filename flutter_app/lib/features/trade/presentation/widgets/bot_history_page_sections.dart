@@ -105,4 +105,3 @@ class _SearchBox extends StatelessWidget {
     );
   }
 }
-

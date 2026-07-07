@@ -8,7 +8,7 @@ class _SectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pMerchantCommerceSectionLabelPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceSectionLabelPadding,
       child: Text(
         label,
         style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -95,7 +95,7 @@ class _PublishReadinessPanel extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
       background: const ColoredBox(color: AppColors.warn10),
-      padding: AppSpacing.p2pMerchantCommerceWarningPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceWarningPadding,
       child: Row(
         children: [
           const Icon(
@@ -152,7 +152,7 @@ class _ChipGroup extends StatelessWidget {
                 label: value,
                 selected: selected == value,
                 onTap: () => onSelected(value),
-                padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
+                padding: P2PSpacingTokens.p2pMerchantCommerceWideChipPadding,
               ),
           ],
         ),

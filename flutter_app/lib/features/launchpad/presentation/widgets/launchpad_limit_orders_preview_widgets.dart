@@ -32,7 +32,7 @@ class _OrderPreview extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX4,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

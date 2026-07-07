@@ -19,7 +19,7 @@ class _TopicRail extends StatelessWidget {
         SingleChildScrollView(
           key: TopicHubPage.topicRailKey,
           scrollDirection: Axis.horizontal,
-          padding: AppSpacing.discoveryRailPadding,
+          padding: LaunchpadSpacingTokens.discoveryRailPadding,
           child: Row(
             children: [
               for (final topic in topics) ...[
@@ -64,7 +64,7 @@ class _TopicChip extends StatelessWidget {
       onTap: onTap,
       accentColor: accent,
       height: AppSpacing.buttonCompact + AppSpacing.x2,
-      padding: AppSpacing.discoveryChipHorizontalPadding,
+      padding: LaunchpadSpacingTokens.discoveryChipHorizontalPadding,
     );
   }
 }
@@ -122,7 +122,7 @@ class _TopicHero extends StatelessWidget {
     return VitCard(
       key: TopicHubPage.heroKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: accent.withValues(alpha: .22),
       child: Column(
         children: [
@@ -234,7 +234,7 @@ class _HeroStat extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.discoveryHeroStatPadding,
+        padding: LaunchpadSpacingTokens.discoveryHeroStatPadding,
         child: Column(
           children: [
             Text(

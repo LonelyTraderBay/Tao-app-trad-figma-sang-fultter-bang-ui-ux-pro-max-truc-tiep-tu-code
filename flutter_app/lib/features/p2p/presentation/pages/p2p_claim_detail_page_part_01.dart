@@ -120,7 +120,7 @@ class _ClaimHeroCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.heroKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimHeroPadding,
+      padding: P2PSpacingTokens.p2pClaimHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -155,7 +155,7 @@ class _ClaimHeroCard extends StatelessWidget {
             trailing: Icon(
               Icons.open_in_new_rounded,
               color: AppModuleAccents.p2p,
-              size: AppSpacing.p2pClaimInlineIcon,
+              size: P2PSpacingTokens.p2pClaimInlineIcon,
             ),
           ),
           VitInfoRow(
@@ -265,13 +265,13 @@ class _ClaimBenchmarksCard extends StatelessWidget {
     return VitCard(
       key: P2PClaimDetailPage.benchmarksKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pClaimCardPadding,
+      padding: P2PSpacingTokens.p2pClaimCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const VitSectionHeader(
             title: 'So sánh với nền tảng',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             icon: Icons.bar_chart_rounded,
             iconColor: AppColors.accent,
             density: VitDensity.compact,
@@ -293,7 +293,7 @@ class _ClaimBenchmarksCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const VitSectionHeader(
             title: 'Phân bổ lý do claim',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             icon: Icons.groups_outlined,
             density: VitDensity.compact,
           ),
@@ -342,7 +342,7 @@ class _BenchmarkMetricRow extends StatelessWidget {
               Icon(
                 _benchmarkIcon(benchmark.id),
                 color: AppColors.text3,
-                size: AppSpacing.p2pClaimBenchmarkIcon,
+                size: P2PSpacingTokens.p2pClaimBenchmarkIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(

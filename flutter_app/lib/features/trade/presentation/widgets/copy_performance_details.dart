@@ -17,7 +17,7 @@ class _TradesTab extends StatelessWidget {
         for (final trade in snapshot.tradeComparisons) ...[
           VitCard(
             density: VitDensity.compact,
-            padding: AppSpacing.copyPerformanceTradeCardPadding,
+            padding: TradeSpacingTokens.copyPerformanceTradeCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -103,7 +103,7 @@ class _CostsTab extends StatelessWidget {
       children: [
         for (final item in snapshot.costAttribution)
           Padding(
-            padding: AppSpacing.copyPerformanceCostItemPadding,
+            padding: TradeSpacingTokens.copyPerformanceCostItemPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
               density: VitDensity.compact,
@@ -159,11 +159,11 @@ class _MetricsTab extends StatelessWidget {
       children: [
         for (final metric in snapshot.metrics)
           Padding(
-            padding: AppSpacing.copyPerformanceMetricItemPadding,
+            padding: TradeSpacingTokens.copyPerformanceMetricItemPadding,
             child: VitCard(
               variant: VitCardVariant.inner,
               density: VitDensity.compact,
-              padding: AppSpacing.copyPerformanceTradeCardPadding,
+              padding: TradeSpacingTokens.copyPerformanceTradeCardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -214,7 +214,7 @@ class _InfoBox extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       density: VitDensity.compact,
-      padding: AppSpacing.copyPerformanceInfoBoxPadding,
+      padding: TradeSpacingTokens.copyPerformanceInfoBoxPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -235,7 +235,7 @@ class _InfoBox extends StatelessWidget {
           const SizedBox(height: _performanceSpace),
           for (final line in lines)
             Padding(
-              padding: AppSpacing.copyPerformanceInfoLinePadding,
+              padding: TradeSpacingTokens.copyPerformanceInfoLinePadding,
               child: Text(
                 '• $line',
                 style: AppTextStyles.micro.copyWith(

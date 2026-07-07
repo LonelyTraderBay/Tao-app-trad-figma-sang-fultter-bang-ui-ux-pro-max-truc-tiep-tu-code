@@ -21,15 +21,16 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/arena_join_page_sections.dart';
 part '../widgets/arena_join_page_common.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 const _joinAcknowledgementLineRatio =
-    AppSpacing.arenaJoinAcknowledgementLineHeight;
-const _joinBodyLineRatio = AppSpacing.arenaJoinBodyLineHeight;
-const _joinNoticeLineRatio = AppSpacing.arenaJoinNoticeLineHeight;
+    ArenaSpacingTokens.arenaJoinAcknowledgementLineHeight;
+const _joinBodyLineRatio = ArenaSpacingTokens.arenaJoinBodyLineHeight;
+const _joinNoticeLineRatio = ArenaSpacingTokens.arenaJoinNoticeLineHeight;
 
 class ArenaJoinPage extends ConsumerStatefulWidget {
   const ArenaJoinPage({
@@ -96,13 +97,15 @@ class _ArenaJoinPageState extends ConsumerState<ArenaJoinPage> {
                 child: SingleChildScrollView(
                   key: ArenaJoinPage.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                  padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                    footerPadding,
+                  ),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       maxWidth: DeviceMetrics.width,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       density: VitDensity.compact,

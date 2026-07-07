@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/copy_confirmation_page_sections.dart';
 part '../widgets/copy_confirmation_page_common.dart';
@@ -92,7 +93,8 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
             child: VitInsetScrollView(
               key: CopyConfirmationPage.contentKey,
               bottomInset: scrollClearance,
-              child: VitPageContent(rhythm: VitPageRhythm.standard, 
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [
@@ -183,7 +185,7 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
             ),
           ),
           Padding(
-            padding: AppSpacing.copyConfirmationFooterPadding(
+            padding: TradeSpacingTokens.copyConfirmationFooterPadding(
               copyTradingScrollBottomInset(context, shellRenderMode: mode),
             ),
             child: VitStickyFooter(
@@ -201,7 +203,9 @@ class _CopyConfirmationPageState extends ConsumerState<CopyConfirmationPage> {
                     child: const Text('Xác nhận & Bắt đầu Copy'),
                   ),
                   if (!allRequiredAccepted) ...[
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     Text(
                       'Bạn cần đồng ý với tất cả điều khoản để tiếp tục',
                       textAlign: TextAlign.center,

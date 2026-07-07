@@ -96,7 +96,9 @@ class _RiskCategoryCard extends StatelessWidget {
                           _RiskLevelBadge(level: category.level),
                         ],
                       ),
-                      const Padding(padding: AppSpacing.earnTopPaddingX2),
+                      const Padding(
+                        padding: EarnSpacingTokens.earnTopPaddingX2,
+                      ),
                       Text(
                         category.description,
                         style: AppTextStyles.caption.copyWith(
@@ -211,7 +213,8 @@ class _DetailGroup extends StatelessWidget {
               ),
             ],
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (item != items.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );

@@ -10,7 +10,7 @@ class _ArenaRoomResultCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.resultKey('arenaRoom', room.id),
       onTap: () => context.go(room.route),
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: AppModuleAccents.arena.withValues(alpha: .18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +84,7 @@ class _CreatorResultCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.resultKey('creator', creator.id),
       onTap: () => context.go(creator.route),
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       child: Row(
         children: [
           _InitialsAvatar(initials: creator.initials),
@@ -144,7 +144,7 @@ class _TradingPairResultCard extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.resultKey('pair', pair.id),
       onTap: () => context.go(pair.route),
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: AppModuleAccents.markets.withValues(alpha: .14),
       child: Row(
         children: [

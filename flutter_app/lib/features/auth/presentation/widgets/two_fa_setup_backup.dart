@@ -16,7 +16,7 @@ class _BackupCodesStep extends StatelessWidget {
     return Column(
       children: [
         SizedBox.square(
-          dimension: AppSpacing.authHeroIconBoxSm,
+          dimension: AuthSpacingTokens.authHeroIconBoxSm,
           child: Material(
             color: AppColors.buy10,
             shape: const RoundedRectangleBorder(
@@ -26,33 +26,35 @@ class _BackupCodesStep extends StatelessWidget {
             child: const Icon(
               Icons.file_download_outlined,
               color: AppColors.buy,
-              size: AppSpacing.authHeroIconMd,
+              size: AuthSpacingTokens.authHeroIconMd,
             ),
           ),
         ),
-        const Padding(padding: AppSpacing.authTwoFaHeroTopPadding),
+        const Padding(padding: AuthSpacingTokens.authTwoFaHeroTopPadding),
         Text(
           'Bước 3: Mã dự phòng',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const Padding(padding: AppSpacing.authTopGapX3),
+        const Padding(padding: AuthSpacingTokens.authTopGapX3),
         Text(
           'Lưu các mã này ở nơi an toàn. Dùng khi mất thiết bị xác thực.',
           textAlign: TextAlign.center,
           style: AppTextStyles.caption.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.authFooterLineHeight,
+            height: AuthSpacingTokens.authFooterLineHeight,
           ),
         ),
-        const Padding(padding: AppSpacing.authTwoFaSectionTopPadding),
+        const Padding(padding: AuthSpacingTokens.authTwoFaSectionTopPadding),
         _BackupCodeList(codes: _backupCodes),
-        const Padding(padding: AppSpacing.authTwoFaSectionTopPadding),
+        const Padding(padding: AuthSpacingTokens.authTwoFaSectionTopPadding),
         const _WarningBanner(text: 'Mỗi mã chỉ dùng được 1 lần.'),
-        const Padding(padding: AppSpacing.authTwoFaBackupActionTopPadding),
+        const Padding(
+          padding: AuthSpacingTokens.authTwoFaBackupActionTopPadding,
+        ),
         _BackupSavedRow(saved: saved, onTap: onSavedChanged),
         if (error.isNotEmpty) ...[
-          const Padding(padding: AppSpacing.authTopGapX4),
+          const Padding(padding: AuthSpacingTokens.authTopGapX4),
           _ErrorBanner(error: error),
         ],
       ],
@@ -75,11 +77,12 @@ class _BackupCodeList extends StatelessWidget {
       child: Column(
         children: [
           for (var index = 0; index < codes.length; index++) ...[
-            if (index > 0) const Padding(padding: AppSpacing.authTopGapX3),
+            if (index > 0)
+              const Padding(padding: AuthSpacingTokens.authTopGapX3),
             Row(
               children: [
                 SizedBox.square(
-                  dimension: AppSpacing.authTwoFaBackupIndexSize,
+                  dimension: AuthSpacingTokens.authTwoFaBackupIndexSize,
                   child: Material(
                     color: _authPrimary20,
                     shape: const CircleBorder(),
@@ -136,22 +139,22 @@ class _BackupSavedRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: AppSpacing.authTwoFaBackupCheckMargin,
+              padding: AuthSpacingTokens.authTwoFaBackupCheckMargin,
               child: SizedBox.square(
-                dimension: AppSpacing.authTwoFaBackupCheckSize,
+                dimension: AuthSpacingTokens.authTwoFaBackupCheckSize,
                 child: Material(
                   color: saved ? _authPrimary : AppColors.transparent,
                   shape: CircleBorder(
                     side: BorderSide(
                       color: saved ? _authPrimary : AppColors.borderSolid,
-                      width: AppSpacing.authTwoFaBackupCheckBorder,
+                      width: AuthSpacingTokens.authTwoFaBackupCheckBorder,
                     ),
                   ),
                   child: saved
                       ? const Icon(
                           Icons.check_rounded,
                           color: AppColors.onAccent,
-                          size: AppSpacing.authTwoFaBackupCheckIcon,
+                          size: AuthSpacingTokens.authTwoFaBackupCheckIcon,
                         )
                       : null,
                 ),

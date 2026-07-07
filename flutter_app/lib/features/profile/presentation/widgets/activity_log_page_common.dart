@@ -18,9 +18,11 @@ class _DetailBlock extends StatelessWidget {
               Icon(
                 icon,
                 color: _activityMuted,
-                size: AppSpacing.profileActivityDetailIcon,
+                size: ProfileSpacingTokens.profileActivityDetailIcon,
               ),
-              const SizedBox(width: AppSpacing.profileActivityDetailIconGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileActivityDetailIconGap,
+              ),
             ],
             Flexible(
               child: Text(
@@ -75,9 +77,9 @@ class _ActivityFooter extends StatelessWidget {
           const Icon(
             Icons.shield_outlined,
             color: _activityPrimary,
-            size: AppSpacing.profileActivityFooterIcon,
+            size: ProfileSpacingTokens.profileActivityFooterIcon,
           ),
-          const SizedBox(width: AppSpacing.profileActivityFooterGap),
+          const SizedBox(width: ProfileSpacingTokens.profileActivityFooterGap),
           Expanded(
             child: Text(
               'Nh\u1EADt k\u00FD ho\u1EA1t \u0111\u1ED9ng gi\u00FAp b\u1EA1n theo d\u00F5i t\u1EA5t c\u1EA3 thao t\u00E1c tr\u00EAn t\u00E0i kho\u1EA3n. N\u1EBFu\n'

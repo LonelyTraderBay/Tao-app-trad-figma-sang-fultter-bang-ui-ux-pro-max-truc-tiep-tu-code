@@ -174,7 +174,7 @@ class _CanonicalSection extends StatelessWidget {
                   const Icon(
                     Icons.check_circle_outline,
                     color: AppColors.buy,
-                    size: AppSpacing.arenaEcosystemTabIcon,
+                    size: ArenaSpacingTokens.arenaEcosystemTabIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(

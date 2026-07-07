@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_recommendations_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingRecommendationsHeroCard extends StatelessWidget {
   const StakingRecommendationsHeroCard({super.key, required this.snapshot});
@@ -21,7 +22,7 @@ class StakingRecommendationsHeroCard extends StatelessWidget {
       key: StakingRecommendationsKeys.hero,
       variant: VitCardVariant.inner,
       borderColor: AppColors.accent20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +42,8 @@ class StakingRecommendationsHeroCard extends StatelessWidget {
                   snapshot.heroSubtitle,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingRecommendationsBodyLineHeight,
+                    height:
+                        EarnSpacingTokens.stakingRecommendationsBodyLineHeight,
                   ),
                 ),
               ],
@@ -64,7 +66,7 @@ class StakingRecommendationsProfileCard extends StatelessWidget {
     return VitCard(
       key: StakingRecommendationsKeys.profile,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -152,7 +154,7 @@ class StakingRecommendationsProfileMetric extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: EarnSpacingTokens.earnCardPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -193,7 +195,7 @@ class StakingRecommendationsAmountSimulator extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -217,7 +219,7 @@ class StakingRecommendationsAmountSimulator extends StatelessWidget {
               isDense: true,
               filled: true,
               fillColor: AppColors.surface2,
-              contentPadding: AppSpacing.earnCardPaddingX4X3,
+              contentPadding: EarnSpacingTokens.earnCardPaddingX4X3,
               enabledBorder: OutlineInputBorder(
                 borderRadius: AppRadii.inputRadius,
                 borderSide: BorderSide(color: AppColors.borderSolid),

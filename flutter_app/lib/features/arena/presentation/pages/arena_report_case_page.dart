@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_state_cards.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/arena_report_case_summary_timeline.dart';
 part '../widgets/arena_report_case_system_appeal.dart';
@@ -118,12 +119,12 @@ class _ArenaReportCasePageState extends ConsumerState<ArenaReportCasePage> {
                   child: SingleChildScrollView(
                     key: ArenaReportCasePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       scrollEndClearance,
                     ),
                     child: snapshot.reportCase == null
                         ? VitPageContent(
-         rhythm: VitPageRhythm.standard,
+                            rhythm: VitPageRhythm.standard,
                             key: ArenaReportCasePage.emptyKey,
                             padding: VitContentPadding.none,
                             children: [

@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 final class StakingRecommendationsKeys {
   const StakingRecommendationsKeys._();
@@ -39,7 +40,7 @@ class StakingRecommendationsSmallPill extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,
@@ -114,7 +115,7 @@ class StakingRecommendationsAssetBadge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.stakingRecommendationsAssetLineHeight,
+              height: EarnSpacingTokens.stakingRecommendationsAssetLineHeight,
             ),
           ),
         ),

@@ -66,7 +66,7 @@ class _LiquidityWarning extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.warn,
-            size: AppSpacing.predictionMarketMakerWarningIcon,
+            size: PredictionsSpacingTokens.predictionMarketMakerWarningIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

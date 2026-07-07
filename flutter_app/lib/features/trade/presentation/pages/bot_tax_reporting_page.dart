@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/bot_tax_reporting_notice_year.dart';
 part '../widgets/bot_tax_reporting_summary.dart';
@@ -95,69 +96,75 @@ class _BotTaxReportingPageState extends ConsumerState<BotTaxReportingPage> {
               child: VitInsetScrollView(
                 key: BotTaxReportingPage.contentKey,
                 bottomInset: scrollEndClearance,
-                child: VitPageContent(rhythm: VitPageRhythm.standard, 
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
                   children: tradeShellWithProductTabs(
                     context: context,
                     activeProductId: 'bots',
                     children: [
-                      VitTradeSection(title: 'Notice', child: const _TaxNotice()),
-                    VitTradeSection(
-                      title: 'Select Tax Year',
-                      child: _YearPicker(
-                        years: snapshot.taxYears,
-                        selectedYear: _selectedYear,
-                        onChanged: (year) {
-                          setState(() => _selectedYear = year);
-                        },
+                      VitTradeSection(
+                        title: 'Notice',
+                        child: const _TaxNotice(),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Summary for $_selectedYear',
-                      child: _SummaryCard(summary: snapshot.summary),
-                    ),
-                    VitTradeSection(
-                      title: 'Cost Basis Method',
-                      child: _CostBasisPicker(
-                        selectedMethod: _costBasisMethod,
-                        onChanged: (method) {
-                          setState(() => _costBasisMethod = method);
-                        },
+                      VitTradeSection(
+                        title: 'Select Tax Year',
+                        child: _YearPicker(
+                          years: snapshot.taxYears,
+                          selectedYear: _selectedYear,
+                          onChanged: (year) {
+                            setState(() => _selectedYear = year);
+                          },
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Select Report Types',
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          for (final report in snapshot.reportTypes)
-                            _ReportTypeCard(
-                              report: report,
-                              selected: _selectedReportIds.contains(report.id),
-                              onTap: () => _toggleReport(report.id),
-                            ),
-                        ],
+                      VitTradeSection(
+                        title: 'Summary for $_selectedYear',
+                        child: _SummaryCard(summary: snapshot.summary),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Capital Gains Breakdown',
-                      child: _BreakdownCard(
-                        summary: snapshot.summary,
-                        breakdown: snapshot.breakdown,
+                      VitTradeSection(
+                        title: 'Cost Basis Method',
+                        child: _CostBasisPicker(
+                          selectedMethod: _costBasisMethod,
+                          onChanged: (method) {
+                            setState(() => _costBasisMethod = method);
+                          },
+                        ),
                       ),
-                    ),
-                    VitTradeSection(
-                      title: 'Tax notes',
-                      child: _TaxNotesCard(notes: snapshot.taxNotes),
-                    ),
-                    const VitBotRiskReviewFooter(
-                      title: 'Tax export review required',
-                      message:
-                          'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
-                      contractId: 'bot-tax-reporting-review',
-                      statusLabel: 'Report preview before export',
-                    ),
+                      VitTradeSection(
+                        title: 'Select Report Types',
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            for (final report in snapshot.reportTypes)
+                              _ReportTypeCard(
+                                report: report,
+                                selected: _selectedReportIds.contains(
+                                  report.id,
+                                ),
+                                onTap: () => _toggleReport(report.id),
+                              ),
+                          ],
+                        ),
+                      ),
+                      VitTradeSection(
+                        title: 'Capital Gains Breakdown',
+                        child: _BreakdownCard(
+                          summary: snapshot.summary,
+                          breakdown: snapshot.breakdown,
+                        ),
+                      ),
+                      VitTradeSection(
+                        title: 'Tax notes',
+                        child: _TaxNotesCard(notes: snapshot.taxNotes),
+                      ),
+                      const VitBotRiskReviewFooter(
+                        title: 'Tax export review required',
+                        message:
+                            'Tax year, cost basis, report type, generated file, sensitive data masking and next steps are reviewed before export.',
+                        contractId: 'bot-tax-reporting-review',
+                        statusLabel: 'Report preview before export',
+                      ),
                     ],
                   ),
                 ),

@@ -8,7 +8,7 @@ class _RiskDisclosureTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -45,11 +45,11 @@ class _HistoryEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadBottomPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadBottomPaddingX3,
       child: VitCard(
         key: LaunchpadClaimReceiptPage.historyKey(entry.id),
         radius: VitCardRadius.standard,
-        padding: AppSpacing.launchpadPaddingX4,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -107,7 +107,7 @@ class _SummaryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         children: [
           Text(
@@ -141,7 +141,7 @@ class _DetailLine extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.launchpadVerticalPaddingX2,
+          padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
           child: Row(
             children: [
               Expanded(

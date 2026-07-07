@@ -22,6 +22,7 @@ import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart'
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_governance_gate_stepper_title.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_state_cards.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part 'arena_governance_gate_page_part_01.dart';
 part 'arena_governance_gate_page_part_02.dart';
@@ -39,8 +40,10 @@ part '../widgets/arena_governance_gate_helpers.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 final double _governanceActionExtent = VitDensity.compact.controlHeight;
-const _governanceBodyLineRatio = AppSpacing.arenaGovernanceBodyLineHeight;
-const _governanceNoticeLineRatio = AppSpacing.arenaGovernanceNoticeLineHeight;
+const _governanceBodyLineRatio =
+    ArenaSpacingTokens.arenaGovernanceBodyLineHeight;
+const _governanceNoticeLineRatio =
+    ArenaSpacingTokens.arenaGovernanceNoticeLineHeight;
 
 class ArenaGovernanceGatePage extends ConsumerStatefulWidget {
   const ArenaGovernanceGatePage({super.key, this.shellRenderMode});
@@ -133,11 +136,13 @@ class _ArenaGovernanceGatePageState
                   child: SingleChildScrollView(
                     key: ArenaGovernanceGatePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: Column(
                       children: [
                         VitPageContent(
-       rhythm: VitPageRhythm.form,
+                          rhythm: VitPageRhythm.form,
                           padding: VitContentPadding.compact,
                           gap: VitContentGap.tight,
                           children: [

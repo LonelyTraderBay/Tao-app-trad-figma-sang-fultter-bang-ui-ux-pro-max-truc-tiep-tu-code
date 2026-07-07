@@ -17,7 +17,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
     return VitCard(
       borderColor: AppColors.warningBorder,
       radius: VitCardRadius.large,
-      padding: AppSpacing.arenaStudioCardPadding,
+      padding: ArenaSpacingTokens.arenaStudioCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,8 +25,8 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: AppSpacing.arenaStudioFeeIconBox,
-                height: AppSpacing.arenaStudioFeeIconBox,
+                width: ArenaSpacingTokens.arenaStudioFeeIconBox,
+                height: ArenaSpacingTokens.arenaStudioFeeIconBox,
                 child: const DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.warn10,
@@ -84,7 +84,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
           VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
-            padding: AppSpacing.arenaStudioFeeTogglePadding,
+            padding: ArenaSpacingTokens.arenaStudioFeeTogglePadding,
             onTap: () {
               HapticFeedback.selectionClick();
               setState(() => _expanded = !_expanded);
@@ -95,7 +95,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
                 const Icon(
                   Icons.info_outline_rounded,
                   color: _arenaAccent,
-                  size: AppSpacing.arenaStudioFeeInfoIcon,
+                  size: ArenaSpacingTokens.arenaStudioFeeInfoIcon,
                 ),
                 const SizedBox(width: AppSpacing.x1),
                 Text(
@@ -111,7 +111,7 @@ class _PlatformFeeBannerState extends State<_PlatformFeeBanner> {
                       ? Icons.keyboard_arrow_up_rounded
                       : Icons.keyboard_arrow_down_rounded,
                   color: _arenaAccent,
-                  size: AppSpacing.arenaStudioFeeChevron,
+                  size: ArenaSpacingTokens.arenaStudioFeeChevron,
                 ),
               ],
             ),
@@ -159,13 +159,13 @@ class _FeeDetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaStudioFeeDetailPadding,
+      padding: ArenaSpacingTokens.arenaStudioFeeDetailPadding,
       child: Row(
         children: [
           Icon(
             icon,
             color: _arenaAccent,
-            size: AppSpacing.arenaStudioFeeDetailIcon,
+            size: ArenaSpacingTokens.arenaStudioFeeDetailIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

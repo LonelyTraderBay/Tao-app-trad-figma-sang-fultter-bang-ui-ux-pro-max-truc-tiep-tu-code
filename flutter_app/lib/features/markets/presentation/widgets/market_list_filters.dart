@@ -4,11 +4,12 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 const double _marketCategoryCompactHeight = AppSpacing.buttonCompact;
 const double _marketCategoryCompactGap = AppSpacing.x2;
 const EdgeInsets _marketFilterCompactPadding =
-    AppSpacing.marketListFilterCompactPadding;
+    MarketsSpacingTokens.marketListFilterCompactPadding;
 
 class MarketListSortSheet extends StatelessWidget {
   const MarketListSortSheet({
@@ -25,10 +26,10 @@ class MarketListSortSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketFilterSheetPadding,
+      padding: MarketsSpacingTokens.marketFilterSheetPadding,
       child: Wrap(
-        spacing: AppSpacing.marketFilterGap,
-        runSpacing: AppSpacing.marketFilterGap,
+        spacing: MarketsSpacingTokens.marketFilterGap,
+        runSpacing: MarketsSpacingTokens.marketFilterGap,
         children: [
           for (final option in sortOptions)
             VitFilterChip(
@@ -83,4 +84,3 @@ class MarketListCategoryTabs extends StatelessWidget {
     );
   }
 }
-

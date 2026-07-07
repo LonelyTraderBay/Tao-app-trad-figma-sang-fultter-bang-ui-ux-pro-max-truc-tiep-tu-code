@@ -18,7 +18,7 @@ class _GoalTile extends StatelessWidget {
 
     return VitCard(
       variant: selected ? VitCardVariant.inner : VitCardVariant.standard,
-      padding: AppSpacing.onboardingGoalTilePadding,
+      padding: OnboardingSpacingTokens.onboardingGoalTilePadding,
       borderColor: selected ? accent : AppColors.cardBorder,
       onTap: onTap,
       child: Stack(
@@ -61,7 +61,8 @@ class _GoalTile extends StatelessWidget {
                 color: accent,
                 shape: const CircleBorder(),
                 child: const Padding(
-                  padding: AppSpacing.onboardingSelectedCheckPadding,
+                  padding:
+                      OnboardingSpacingTokens.onboardingSelectedCheckPadding,
                   child: Icon(
                     Icons.check_rounded,
                     size: AppSpacing.iconSm,
@@ -88,7 +89,7 @@ class _RecommendationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.onboardingCardPadding,
+      padding: OnboardingSpacingTokens.onboardingCardPadding,
       radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
       onTap: onTap,
@@ -107,9 +108,7 @@ class _RecommendationCard extends StatelessWidget {
                 Text(recommendation.title, style: AppTextStyles.baseMedium),
                 Text(
                   recommendation.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),
@@ -145,8 +144,8 @@ class _BulletRow extends StatelessWidget {
           icon,
           color: color,
           size: icon == Icons.circle
-              ? AppSpacing.onboardingBulletDotIcon
-              : AppSpacing.onboardingBulletIcon,
+              ? OnboardingSpacingTokens.onboardingBulletDotIcon
+              : OnboardingSpacingTokens.onboardingBulletIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(

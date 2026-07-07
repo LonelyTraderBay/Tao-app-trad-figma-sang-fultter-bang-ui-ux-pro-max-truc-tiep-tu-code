@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_cta_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_toggle_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WalletTokenApprovalSettingsTab extends StatelessWidget {
   const WalletTokenApprovalSettingsTab({
@@ -40,22 +41,22 @@ class WalletTokenApprovalSettingsTab extends StatelessWidget {
           enabled: autoRevokeUnused,
           onTap: onAutoRevoke,
         ),
-        const SizedBox(height: AppSpacing.walletTokenStatValueGap),
+        const SizedBox(height: WalletSpacingTokens.walletTokenStatValueGap),
         WalletTokenApprovalSettingsRow(
           title: 'Warn Unlimited Approvals',
           description: 'Show warning before approving unlimited amounts',
           enabled: warnUnlimited,
           onTap: onWarnUnlimited,
         ),
-        const SizedBox(height: AppSpacing.walletTokenNoticeGap),
+        const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
         VitCtaButton(
           key: const Key('sc150_token_approval_scan_risky'),
           onPressed: onScanRisk,
-          height: AppSpacing.walletTokenScanButtonHeight,
+          height: WalletSpacingTokens.walletTokenScanButtonHeight,
           leading: const Icon(Icons.manage_search_rounded),
           child: const Text('Scan for Risky Approvals'),
         ),
-        const SizedBox(height: AppSpacing.walletTokenNoticeGap),
+        const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
         const WalletTokenApprovalBestPracticesCard(),
       ],
     );
@@ -112,10 +113,10 @@ class WalletTokenApprovalSettingsRow extends StatelessWidget {
             ),
             VitTogglePill(
               enabled: enabled,
-              width: AppSpacing.walletAddressSwitchWidth,
-              height: AppSpacing.walletAddressSwitchHeight,
-              knobSize: AppSpacing.walletTokenSwitchKnob,
-              knobMargin: AppSpacing.walletTokenSwitchPadding,
+              width: WalletSpacingTokens.walletAddressSwitchWidth,
+              height: WalletSpacingTokens.walletAddressSwitchHeight,
+              knobSize: WalletSpacingTokens.walletTokenSwitchKnob,
+              knobMargin: WalletSpacingTokens.walletTokenSwitchPadding,
               activeColor: walletTokenApprovalPrimary,
               inactiveColor: AppColors.surface3,
               inactiveKnobColor: AppColors.onAccent,
@@ -146,7 +147,9 @@ class WalletTokenApprovalBestPracticesCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAddressAddAssetLabelGap),
+          const SizedBox(
+            height: WalletSpacingTokens.walletAddressAddAssetLabelGap,
+          ),
           for (final tip in const [
             'Regularly review active approvals',
             'Revoke unused or old approvals',
@@ -158,7 +161,7 @@ class WalletTokenApprovalBestPracticesCard extends StatelessWidget {
                 const Icon(
                   Icons.check_circle_outline_rounded,
                   color: walletTokenApprovalGreen,
-                  size: AppSpacing.walletTokenNoticeIcon,
+                  size: WalletSpacingTokens.walletTokenNoticeIcon,
                 ),
                 const SizedBox(width: AppSpacing.rowGap),
                 Expanded(

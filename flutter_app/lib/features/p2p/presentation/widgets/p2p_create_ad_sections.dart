@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/controllers/p2p_controller.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_create_ad_preview_badge.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part 'p2p_create_ad_preview_confirm.dart';
 part 'p2p_create_ad_choice_chips.dart';
@@ -65,7 +66,7 @@ class P2PCreateAdFloatingPriceBlock extends StatelessWidget {
                 VitChoicePill(
                   label: '${value >= 0 ? '+' : ''}$value%',
                   selected: controller.text == value.toString(),
-                  padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
+                  padding: P2PSpacingTokens.p2pMerchantCommerceWideChipPadding,
                   onTap: () {
                     controller.text = value.toString();
                     onChanged();
@@ -137,7 +138,7 @@ class P2PCreateAdPaymentWindowBlock extends StatelessWidget {
                 key: P2PCreateAdUiKeys.paymentWindowKey(value),
                 label: '$value phút',
                 selected: selected == value,
-                padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
+                padding: P2PSpacingTokens.p2pMerchantCommerceWideChipPadding,
                 onTap: () => onSelected(value),
               ),
             ),
@@ -170,7 +171,7 @@ class P2PCreateAdRequirementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pMerchantCommerceCardPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -223,7 +224,8 @@ class P2PCreateAdRequirementCard extends StatelessWidget {
                   VitChoicePill(
                     label: 'Cấp $level',
                     selected: requiredKycLevel == level,
-                    padding: AppSpacing.p2pMerchantCommerceWideChipPadding,
+                    padding:
+                        P2PSpacingTokens.p2pMerchantCommerceWideChipPadding,
                     onTap: () => onLevelChanged(level),
                   ),
               ],
@@ -271,26 +273,26 @@ class P2PCreateAdMultilineBlock extends StatelessWidget {
       // card-tile: allow-start — fixed surface, not horizontal strip tile
       child: VitCard(
         constraints: const BoxConstraints(
-          minHeight: AppSpacing.p2pMerchantCommerceTextAreaMinHeight,
+          minHeight: P2PSpacingTokens.p2pMerchantCommerceTextAreaMinHeight,
         ),
         variant: VitCardVariant.ghost,
         radius: VitCardRadius.standard,
         borderColor: AppColors.borderSolid,
         background: const ColoredBox(color: AppColors.surface2),
-        padding: AppSpacing.p2pMerchantCommerceTextAreaPadding,
+        padding: P2PSpacingTokens.p2pMerchantCommerceTextAreaPadding,
         clip: true,
         child: TextField(
           controller: controller,
           maxLines: 3,
           cursorColor: AppColors.primary,
           style: AppTextStyles.body.copyWith(
-            height: AppSpacing.p2pMerchantCommerceBodyLineHeight,
+            height: P2PSpacingTokens.p2pMerchantCommerceBodyLineHeight,
           ),
           decoration: InputDecoration.collapsed(
             hintText: hintText,
             hintStyle: AppTextStyles.body.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.p2pMerchantCommerceBodyLineHeight,
+              height: P2PSpacingTokens.p2pMerchantCommerceBodyLineHeight,
             ),
           ),
         ),
@@ -311,7 +313,7 @@ class P2PCreateAdWarningCard extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
       background: const ColoredBox(color: AppColors.warn10),
-      padding: AppSpacing.p2pMerchantCommerceCompactPadding,
+      padding: P2PSpacingTokens.p2pMerchantCommerceCompactPadding,
       clip: true,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -327,7 +329,7 @@ class P2PCreateAdWarningCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
-                height: AppSpacing.p2pMerchantCommerceWarningLineHeight,
+                height: P2PSpacingTokens.p2pMerchantCommerceWarningLineHeight,
                 fontWeight: AppTextStyles.bold,
               ),
             ),

@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/device_management_page_sections.dart';
 part '../widgets/device_management_page_common.dart';
@@ -89,11 +90,11 @@ class _DeviceManagementPageState extends ConsumerState<DeviceManagementPage> {
                 child: SingleChildScrollView(
                   key: DeviceManagementPage.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.profileDevicesScrollPadding(
+                  padding: ProfileSpacingTokens.profileDevicesScrollPadding(
                     scrollClearance,
                   ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,
                     fullBleed: true,

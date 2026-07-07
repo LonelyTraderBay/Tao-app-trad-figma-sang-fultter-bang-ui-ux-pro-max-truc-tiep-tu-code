@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_slashing_history_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingSlashingPreventionTab extends StatelessWidget {
   const StakingSlashingPreventionTab({super.key, required this.snapshot});
@@ -31,7 +32,7 @@ class StakingSlashingPreventionTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.buy20,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -48,7 +49,7 @@ class StakingSlashingPreventionTab extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.stakingSlashingBodyLineHeight,
+                      height: EarnSpacingTokens.stakingSlashingBodyLineHeight,
                     ),
                     children: [
                       TextSpan(
@@ -56,7 +57,8 @@ class StakingSlashingPreventionTab extends StatelessWidget {
                             'Our multi-layered prevention system has reduced slashing events by 40% year-over-year. Continuous monitoring and automated rebalancing ensure your stake is always protected.',
                         style: AppTextStyles.caption.copyWith(
                           color: AppColors.text2,
-                          height: AppSpacing.stakingSlashingBodyLineHeight,
+                          height:
+                              EarnSpacingTokens.stakingSlashingBodyLineHeight,
                         ),
                       ),
                     ],
@@ -80,7 +82,7 @@ class _PreventionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -121,7 +123,7 @@ class _PreventionCard extends StatelessWidget {
                   measure.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.stakingSlashingMeasureLineHeight,
+                    height: EarnSpacingTokens.stakingSlashingMeasureLineHeight,
                   ),
                 ),
               ],

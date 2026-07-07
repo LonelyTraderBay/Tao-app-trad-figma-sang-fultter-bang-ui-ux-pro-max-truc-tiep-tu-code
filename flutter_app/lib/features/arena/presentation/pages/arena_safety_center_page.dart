@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/arena_safety_center_page_sections.dart';
 part '../widgets/arena_safety_center_page_common.dart';
@@ -87,11 +88,11 @@ class ArenaSafetyCenterPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       scrollEndClearance,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       gap: VitContentGap.tight,

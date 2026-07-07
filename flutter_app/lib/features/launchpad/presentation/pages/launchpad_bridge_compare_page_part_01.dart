@@ -15,7 +15,7 @@ class _InputSummaryHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -101,7 +101,7 @@ class _ChainAmount extends StatelessWidget {
         _ProviderBadge(
           label: _chainLabel(chain),
           accent: accent,
-          size: AppSpacing.launchpadIconHuge,
+          size: LaunchpadSpacingTokens.launchpadIconHuge,
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         Text(
@@ -136,7 +136,7 @@ class _QuickComparisonCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeComparePage.quickCompareKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -281,11 +281,11 @@ class _MetricBarRow extends StatelessWidget {
         ? AppColors.sell
         : route.accent.resolve();
     return Padding(
-      padding: AppSpacing.launchpadBottomPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadBottomPaddingX2,
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.launchpadBox28,
+            width: LaunchpadSpacingTokens.launchpadBox28,
             child: Text(
               route.providerIcon,
               textAlign: TextAlign.end,
@@ -315,7 +315,8 @@ class _MetricBarRow extends StatelessWidget {
                           ),
                         ),
                         child: Padding(
-                          padding: AppSpacing.launchpadRightPaddingX2,
+                          padding:
+                              LaunchpadSpacingTokens.launchpadRightPaddingX2,
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Text(
@@ -339,12 +340,12 @@ class _MetricBarRow extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x2),
           SizedBox(
-            width: AppSpacing.launchpadIconMd,
+            width: LaunchpadSpacingTokens.launchpadIconMd,
             child: best
                 ? const Icon(
                     Icons.star_rounded,
                     color: AppColors.buy,
-                    size: AppSpacing.launchpadIconXs,
+                    size: LaunchpadSpacingTokens.launchpadIconXs,
                   )
                 : const SizedBox.shrink(),
           ),
@@ -405,10 +406,10 @@ class _SortChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: AppColors.primary,
-      padding: AppSpacing.launchpadPillPadding,
+      padding: LaunchpadSpacingTokens.launchpadPillPadding,
       leading: Icon(
         _sortIcon(option.iconKey),
-        size: AppSpacing.launchpadIconSm,
+        size: LaunchpadSpacingTokens.launchpadIconSm,
       ),
       semanticLabel: 'Sort bridge routes by ${option.label}',
     );

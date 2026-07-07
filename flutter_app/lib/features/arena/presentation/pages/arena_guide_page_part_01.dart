@@ -14,7 +14,7 @@ class _GuideTabs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: AppSpacing.arenaGuideTabsPadding,
+            padding: ArenaSpacingTokens.arenaGuideTabsPadding,
             child: VitTabBar(
               variant: VitTabBarVariant.underline,
               activeKey: active.name,
@@ -69,7 +69,7 @@ class _GuideHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitModuleHeroCard(
       accentColor: _arenaAccent,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -120,7 +120,7 @@ class _ModeSwitch extends StatelessWidget {
           label: 'Tạo Challenge',
           leading: Icon(
             Icons.auto_awesome,
-            size: AppSpacing.arenaGuideModeIcon,
+            size: ArenaSpacingTokens.arenaGuideModeIcon,
           ),
           semanticLabel: 'Chế độ tạo challenge',
         ),
@@ -131,7 +131,7 @@ class _ModeSwitch extends StatelessWidget {
           label: 'Tham gia',
           leading: Icon(
             Icons.play_arrow_outlined,
-            size: AppSpacing.arenaGuideModeIcon,
+            size: ArenaSpacingTokens.arenaGuideModeIcon,
           ),
           semanticLabel: 'Chế độ tham gia challenge',
         ),
@@ -150,11 +150,11 @@ class _StepsTimeline extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          left: AppSpacing.arenaGuideTimelineLeft,
-          top: AppSpacing.arenaGuideTimelineInset,
-          bottom: AppSpacing.arenaGuideTimelineInset,
+          left: ArenaSpacingTokens.arenaGuideTimelineLeft,
+          top: ArenaSpacingTokens.arenaGuideTimelineInset,
+          bottom: ArenaSpacingTokens.arenaGuideTimelineInset,
           child: const SizedBox(
-            width: AppSpacing.arenaGuideTimelineLineWidth,
+            width: ArenaSpacingTokens.arenaGuideTimelineLineWidth,
             child: ColoredBox(color: AppColors.divider),
           ),
         ),
@@ -162,7 +162,7 @@ class _StepsTimeline extends StatelessWidget {
           children: [
             for (var index = 0; index < steps.length; index++)
               Padding(
-                padding: AppSpacing.arenaGuideTimelineStepPadding(
+                padding: ArenaSpacingTokens.arenaGuideTimelineStepPadding(
                   index == steps.length - 1,
                 ),
                 child: _StepRow(step: steps[index]),
@@ -186,15 +186,15 @@ class _StepRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.arenaGuideStepIconBox,
-          height: AppSpacing.arenaGuideStepIconBox,
+          width: ArenaSpacingTokens.arenaGuideStepIconBox,
+          height: ArenaSpacingTokens.arenaGuideStepIconBox,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: color.withValues(alpha: .12),
               shape: CircleBorder(
                 side: BorderSide(
                   color: color,
-                  width: AppSpacing.arenaGuideStepBorderWidth,
+                  width: ArenaSpacingTokens.arenaGuideStepBorderWidth,
                 ),
               ),
             ),
@@ -202,7 +202,7 @@ class _StepRow extends StatelessWidget {
               child: Icon(
                 _iconFor(step.iconKey),
                 color: color,
-                size: AppSpacing.arenaGuideStepGlyph,
+                size: ArenaSpacingTokens.arenaGuideStepGlyph,
               ),
             ),
           ),
@@ -210,7 +210,7 @@ class _StepRow extends StatelessWidget {
         const SizedBox(width: AppSpacing.x4),
         Expanded(
           child: Padding(
-            padding: AppSpacing.arenaGuideStepTextPadding,
+            padding: ArenaSpacingTokens.arenaGuideStepTextPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -279,14 +279,14 @@ class _StartCard extends StatelessWidget {
     final creating = mode == _GuideMode.create;
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Column(
         children: [
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.arenaGuideStartIconBox,
-                height: AppSpacing.arenaGuideStartIconBox,
+                width: ArenaSpacingTokens.arenaGuideStartIconBox,
+                height: ArenaSpacingTokens.arenaGuideStartIconBox,
                 child: const DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppColors.primary12,
@@ -298,7 +298,7 @@ class _StartCard extends StatelessWidget {
                     child: Icon(
                       Icons.bolt_outlined,
                       color: AppColors.primary,
-                      size: AppSpacing.arenaGuideStartGlyph,
+                      size: ArenaSpacingTokens.arenaGuideStartGlyph,
                     ),
                   ),
                 ),

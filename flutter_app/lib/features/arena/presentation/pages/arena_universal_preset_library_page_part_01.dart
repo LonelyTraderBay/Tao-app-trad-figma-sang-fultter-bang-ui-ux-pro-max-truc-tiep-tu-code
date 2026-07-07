@@ -20,7 +20,7 @@ class _SectionTabs extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         physics: const ClampingScrollPhysics(),
-        padding: AppSpacing.arenaPresetSectionTabsPadding,
+        padding: ArenaSpacingTokens.arenaPresetSectionTabsPadding,
         child: Row(
           children: [
             for (final section in sections) ...[
@@ -56,7 +56,7 @@ class _SectionChip extends StatelessWidget {
       variant: active ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: active ? AppColors.warn : AppColors.borderSolid,
       radius: VitCardRadius.large,
-      padding: AppSpacing.arenaPresetSectionChipPadding,
+      padding: ArenaSpacingTokens.arenaPresetSectionChipPadding,
       onTap: onTap,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -64,7 +64,7 @@ class _SectionChip extends StatelessWidget {
           Icon(
             _sectionIcon(section.id),
             color: active ? AppColors.warn : AppColors.text3,
-            size: AppSpacing.arenaPresetSmallIcon,
+            size: ArenaSpacingTokens.arenaPresetSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(
@@ -135,7 +135,7 @@ class _DomainPackCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.arenaPaddingX4,
+            padding: ArenaSpacingTokens.arenaPaddingX4,
             child: Row(
               children: [
                 _DomainIcon(id: pack.id),
@@ -153,7 +153,9 @@ class _DomainPackCard extends StatelessWidget {
                           fontWeight: AppTextStyles.bold,
                         ),
                       ),
-                      const Padding(padding: AppSpacing.arenaTopPaddingX1),
+                      const Padding(
+                        padding: ArenaSpacingTokens.arenaTopPaddingX1,
+                      ),
                       Text(
                         pack.description,
                         maxLines: expanded ? 3 : 1,
@@ -172,14 +174,14 @@ class _DomainPackCard extends StatelessWidget {
                       ? Icons.keyboard_arrow_up_rounded
                       : Icons.keyboard_arrow_down_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.arenaPresetDomainIcon,
+                  size: ArenaSpacingTokens.arenaPresetDomainIcon,
                 ),
               ],
             ),
           ),
           if (expanded)
             Padding(
-              padding: AppSpacing.arenaPresetDomainExpandedPadding,
+              padding: ArenaSpacingTokens.arenaPresetDomainExpandedPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -215,7 +217,7 @@ class _DomainPackCard extends StatelessWidget {
                   const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   for (final example in pack.examples)
                     Padding(
-                      padding: AppSpacing.arenaBottomPaddingX2,
+                      padding: ArenaSpacingTokens.arenaBottomPaddingX2,
                       child: _ExampleRow(text: example),
                     ),
                 ],
@@ -275,13 +277,13 @@ class _SuggestionsSection extends StatelessWidget {
                   active: pack.id == activeDomainId,
                   onTap: () => onDomainChanged(pack.id),
                   color: AppColors.warn,
-                  padding: AppSpacing.arenaPresetChipPadding,
+                  padding: ArenaSpacingTokens.arenaPresetChipPadding,
                   leading: Icon(
                     _domainIcon(pack.id),
                     color: pack.id == activeDomainId
                         ? AppColors.warn
                         : AppColors.text3,
-                    size: AppSpacing.arenaPresetSmallIcon,
+                    size: ArenaSpacingTokens.arenaPresetSmallIcon,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x2),
@@ -291,7 +293,7 @@ class _SuggestionsSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -318,7 +320,7 @@ class _SuggestionsSection extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -343,7 +345,7 @@ class _SuggestionsSection extends StatelessWidget {
             key: ArenaUniversalPresetLibraryPage.selectedSuggestionKey,
             variant: VitCardVariant.inner,
             borderColor: AppColors.warn,
-            padding: AppSpacing.arenaPaddingX3,
+            padding: ArenaSpacingTokens.arenaPaddingX3,
             child: Text(
               selectedSuggestion!,
               style: AppTextStyles.caption.copyWith(
@@ -376,7 +378,7 @@ class _DropdownsSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (final group in groups) ...[
           VitCard(
-            padding: AppSpacing.arenaPaddingX4,
+            padding: ArenaSpacingTokens.arenaPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -444,7 +446,7 @@ class _DemoFlowsSection extends StatelessWidget {
         _DemoFlowCard(flow: activeFlow),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
-          padding: AppSpacing.arenaPaddingX4,
+          padding: ArenaSpacingTokens.arenaPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

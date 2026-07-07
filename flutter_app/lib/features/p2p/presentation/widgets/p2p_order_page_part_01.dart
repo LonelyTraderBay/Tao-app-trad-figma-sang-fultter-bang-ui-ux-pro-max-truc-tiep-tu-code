@@ -56,7 +56,9 @@ class _P2POrderPageState extends ConsumerState<P2POrderPage> {
                   child: SingleChildScrollView(
                     key: P2POrderPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pOrderScrollPadding(scrollEndPadding),
+                    padding: P2PSpacingTokens.p2pOrderScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
@@ -440,7 +442,7 @@ class _EscrowBanner extends StatelessWidget {
             color: AppColors.buy10,
             borderRadius: AppRadii.inputRadius,
             child: Padding(
-              padding: AppSpacing.p2pOrderEscrowActionPadding,
+              padding: P2PSpacingTokens.p2pOrderEscrowActionPadding,
               child: Row(
                 children: [
                   Text(
@@ -474,7 +476,7 @@ class _OrderInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: P2PSpacingTokens.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

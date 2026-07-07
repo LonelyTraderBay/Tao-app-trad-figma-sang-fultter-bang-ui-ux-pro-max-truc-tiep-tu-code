@@ -14,10 +14,10 @@ class _AssetEarningsGrid extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: products.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: AppSpacing.earnAnalyticsGridColumns,
+          crossAxisCount: EarnSpacingTokens.earnAnalyticsGridColumns,
           mainAxisSpacing: AppSpacing.x3,
           crossAxisSpacing: AppSpacing.x3,
-          childAspectRatio: AppSpacing.stakingAnalyticsMetricGridAspect,
+          childAspectRatio: EarnSpacingTokens.stakingAnalyticsMetricGridAspect,
         ),
         itemBuilder: (context, index) {
           final product = products[index];
@@ -38,8 +38,8 @@ class _AssetEarningsGrid extends StatelessWidget {
                         ),
                       ),
                       child: const SizedBox(
-                        width: AppSpacing.earnAnalyticsAssetDot,
-                        height: AppSpacing.earnAnalyticsAssetDot,
+                        width: EarnSpacingTokens.earnAnalyticsAssetDot,
+                        height: EarnSpacingTokens.earnAnalyticsAssetDot,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.x2),
@@ -109,7 +109,9 @@ class _ApyTab extends StatelessWidget {
                               size: Size.infinite,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmCompactInnerGap,
+                          ),
                           _DateLabels(
                             dates: snapshot.apyTrends
                                 .map((p) => p.date)
@@ -302,7 +304,7 @@ class _ProductPerformanceCard extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.earnAnalyticsProgressMinHeight,
+              minHeight: EarnSpacingTokens.earnAnalyticsProgressMinHeight,
               value: progress,
               backgroundColor: AppColors.borderSolid,
               valueColor: AlwaysStoppedAnimation<Color>(color),
@@ -370,8 +372,8 @@ class _AssetAvatar extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        width: AppSpacing.earnAnalyticsAvatarBox,
-        height: AppSpacing.earnAnalyticsAvatarBox,
+        width: EarnSpacingTokens.earnAnalyticsAvatarBox,
+        height: EarnSpacingTokens.earnAnalyticsAvatarBox,
         child: Center(
           child: Text(
             asset.length > 3 ? asset.substring(0, 3) : asset,
@@ -406,7 +408,7 @@ class _InsightBox extends StatelessWidget {
             const Icon(
               Icons.lightbulb_outline_rounded,
               color: AppColors.primary,
-              size: AppSpacing.earnAnalyticsInsightIcon,
+              size: EarnSpacingTokens.earnAnalyticsInsightIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -455,7 +457,7 @@ class _YAxisLabels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.earnAnalyticsAxisWidth,
+      width: EarnSpacingTokens.earnAnalyticsAxisWidth,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,

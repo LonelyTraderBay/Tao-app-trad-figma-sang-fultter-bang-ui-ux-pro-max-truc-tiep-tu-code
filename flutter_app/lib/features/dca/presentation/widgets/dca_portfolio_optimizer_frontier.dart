@@ -39,10 +39,10 @@ class _FrontierContent extends StatelessWidget {
           ],
         ),
         if (showCompareHint) ...[
-          const Padding(padding: AppSpacing.dcaTopPaddingX3),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
           const _CompareHintCard(),
         ],
-        const Padding(padding: AppSpacing.dcaTopPaddingX3),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
         VitCard(
           padding: _dcaPortfolioCardPadding,
           child: Column(
@@ -54,7 +54,7 @@ class _FrontierContent extends StatelessWidget {
                 subtitle:
                     'Mỗi điểm đại diện một phân bổ tối ưu. Điểm càng cao = lợi nhuận lớn hơn.',
               ),
-              const Padding(padding: AppSpacing.dcaTopPaddingX3),
+              const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
               SizedBox(
                 height: _dcaPortfolioFrontierChartHeight,
                 width: double.infinity,
@@ -67,12 +67,12 @@ class _FrontierContent extends StatelessWidget {
                   ),
                 ),
               ),
-              const Padding(padding: AppSpacing.dcaTopPaddingX2),
+              const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
               _FrontierChartLegend(snapshot: snapshot),
             ],
           ),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX3),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
         SizedBox(
           height: _dcaPortfolioFrontierChipListHeight,
           child: ListView.separated(
@@ -87,11 +87,11 @@ class _FrontierContent extends StatelessWidget {
             },
           ),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX3),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
         _SelectedPortfolioCard(snapshot: snapshot),
-        const Padding(padding: AppSpacing.dcaTopPaddingX3),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
         _AllocationDeltaCard(snapshot: snapshot),
-        const Padding(padding: AppSpacing.dcaTopPaddingX3),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
         _SuggestionsCard(
           suggestions: snapshot.suggestions,
           expanded: showSuggestions,
@@ -110,7 +110,7 @@ class _CompareHintCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.dcaPaddingX3,
+      padding: DcaSpacingTokens.dcaPaddingX3,
       child: Row(
         children: [
           const _IconBubble(
@@ -180,7 +180,7 @@ class _SelectedPortfolioCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const Padding(padding: AppSpacing.dcaTopPaddingX1),
+                    const Padding(padding: DcaSpacingTokens.dcaTopPaddingX1),
                     Text(
                       'Optimal (Max Sharpe)',
                       style: AppTextStyles.caption.copyWith(
@@ -196,7 +196,7 @@ class _SelectedPortfolioCard extends StatelessWidget {
               ),
             ],
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX3),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
           VitCard(
             variant: VitCardVariant.inner,
             padding: _dcaPortfolioCardPadding,
@@ -225,11 +225,11 @@ class _SelectedPortfolioCard extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX3),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
           for (final allocation in optimalAllocations) ...[
             _SimpleAllocationBar(allocation: allocation),
             if (allocation != optimalAllocations.last)
-              const Padding(padding: AppSpacing.dcaTopPaddingX3),
+              const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
           ],
         ],
       ),
@@ -314,11 +314,11 @@ class _SuggestionsCard extends StatelessWidget {
             ),
           ),
           if (expanded) ...[
-            const Padding(padding: AppSpacing.dcaTopPaddingX3),
+            const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
             for (final suggestion in suggestions) ...[
               _SuggestionRow(suggestion: suggestion),
               if (suggestion != suggestions.last)
-                const Padding(padding: AppSpacing.dcaTopPaddingX3),
+                const Padding(padding: DcaSpacingTokens.dcaTopPaddingX3),
             ],
           ],
         ],

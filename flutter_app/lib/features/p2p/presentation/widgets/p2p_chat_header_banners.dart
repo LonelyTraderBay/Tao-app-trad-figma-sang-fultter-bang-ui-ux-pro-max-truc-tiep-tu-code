@@ -10,7 +10,7 @@ class _ChatHeader extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: Padding(
-        padding: AppSpacing.p2pChatHeaderPadding(
+        padding: P2PSpacingTokens.p2pChatHeaderPadding(
           MediaQuery.paddingOf(context).top,
         ),
         child: Row(
@@ -26,7 +26,7 @@ class _ChatHeader extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 CircleAvatar(
-                  radius: AppSpacing.p2pChatHeaderAvatarRadius,
+                  radius: P2PSpacingTokens.p2pChatHeaderAvatarRadius,
                   backgroundColor: AppColors.accent,
                   child: Text(
                     snapshot.merchantInitial,
@@ -37,16 +37,16 @@ class _ChatHeader extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: AppSpacing.p2pChatOnlineBadgeOffset,
-                  bottom: AppSpacing.p2pChatOnlineBadgeOffset,
+                  right: P2PSpacingTokens.p2pChatOnlineBadgeOffset,
+                  bottom: P2PSpacingTokens.p2pChatOnlineBadgeOffset,
                   child: SizedBox.square(
-                    dimension: AppSpacing.p2pChatOnlineBadgeSize,
+                    dimension: P2PSpacingTokens.p2pChatOnlineBadgeSize,
                     child: Material(
                       color: AppColors.buy,
                       shape: const CircleBorder(
                         side: BorderSide(
                           color: AppColors.surface,
-                          width: AppSpacing.p2pChatOnlineBadgeBorder,
+                          width: P2PSpacingTokens.p2pChatOnlineBadgeBorder,
                         ),
                       ),
                     ),
@@ -103,7 +103,7 @@ class _RiskBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pChatRiskBannerPadding,
+      padding: P2PSpacingTokens.p2pChatRiskBannerPadding,
       child: P2PNoticeCard(
         icon: Icons.warning_amber_rounded,
         message: message,
@@ -111,7 +111,7 @@ class _RiskBanner extends StatelessWidget {
         messageColor: AppColors.sell,
         borderColor: AppColors.sell20,
         variant: VitCardVariant.standard,
-        padding: AppSpacing.p2pDisputeCardPadding,
+        padding: P2PSpacingTokens.p2pDisputeCardPadding,
         messageStyle: AppTextStyles.micro.copyWith(
           color: AppColors.sell,
           height: 1.4,
@@ -139,7 +139,7 @@ class _E2EBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       background: const ColoredBox(color: AppColors.buy10),
-      padding: AppSpacing.p2pChatBannerPadding,
+      padding: P2PSpacingTokens.p2pChatBannerPadding,
       onTap: onOpen,
       clip: true,
       child: Row(
@@ -173,7 +173,7 @@ class _E2EBanner extends StatelessWidget {
               const Icon(
                 Icons.lock_outline_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.p2pChatTinyIcon,
+                size: P2PSpacingTokens.p2pChatTinyIcon,
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
@@ -190,7 +190,7 @@ class _E2EBanner extends StatelessWidget {
             tooltip: 'Close E2E encryption banner',
             onPressed: onClose,
             color: AppColors.buy,
-            size: AppSpacing.p2pChatCloseIcon,
+            size: P2PSpacingTokens.p2pChatCloseIcon,
             padding: AppSpacing.x1,
             borderRadius: AppRadii.pillRadius,
           ),

@@ -26,7 +26,7 @@ class _ConfirmTransferView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: AppSpacing.p2pWalletTransferConfirmHeroPadding,
+          padding: P2PSpacingTokens.p2pWalletTransferConfirmHeroPadding,
           child: Column(
             children: [
               Material(
@@ -92,7 +92,7 @@ class _ConfirmTransferView extends StatelessWidget {
           icon: Icons.info_outline_rounded,
           message: snapshot.confirmationNote,
           borderColor: AppModuleAccents.p2p.withValues(alpha: .32),
-          padding: AppSpacing.p2pWalletCompactCardPadding,
+          padding: P2PSpacingTokens.p2pWalletCompactCardPadding,
         ),
         const SizedBox(height: _p2pTransferMajorGap),
         Row(
@@ -136,7 +136,7 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pWalletTransferConfirmSummaryPadding,
+      padding: P2PSpacingTokens.p2pWalletTransferConfirmSummaryPadding,
       child: Row(
         children: [
           Expanded(

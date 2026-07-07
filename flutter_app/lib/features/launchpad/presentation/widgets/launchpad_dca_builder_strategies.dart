@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_e
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_dca_builder_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadDcaStrategiesSection extends StatelessWidget {
   const LaunchpadDcaStrategiesSection({
@@ -52,7 +53,7 @@ class _StrategyCard extends StatelessWidget {
     final isActive = strategy.status == LaunchpadDcaStrategyStatus.active;
     return VitCard(
       key: cardKey,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         children: [
           Row(
@@ -115,7 +116,7 @@ class _StrategyCard extends StatelessWidget {
               const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: AppSpacing.launchpadIconXs,
+                size: LaunchpadSpacingTokens.launchpadIconXs,
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
@@ -144,7 +145,7 @@ class _TrendIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox40,
+      dimension: LaunchpadSpacingTokens.launchpadBox40,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: accent.withValues(alpha: .12),
@@ -153,7 +154,7 @@ class _TrendIcon extends StatelessWidget {
         child: Icon(
           Icons.trending_up_rounded,
           color: accent,
-          size: AppSpacing.launchpadIcon3xl,
+          size: LaunchpadSpacingTokens.launchpadIcon3xl,
         ),
       ),
     );
@@ -193,10 +194,10 @@ class _StrategyMetricsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: AppSpacing.launchpadGridColumns,
+      crossAxisCount: LaunchpadSpacingTokens.launchpadGridColumns,
       mainAxisSpacing: AppSpacing.x3,
       crossAxisSpacing: AppSpacing.x3,
-      childAspectRatio: AppSpacing.launchpadGridAspectAction,
+      childAspectRatio: LaunchpadSpacingTokens.launchpadGridAspectAction,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
@@ -273,7 +274,7 @@ class _PnlBand extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPillPadding,
+        padding: LaunchpadSpacingTokens.launchpadPillPadding,
         child: Row(
           children: [
             Expanded(
@@ -314,13 +315,13 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadBadgePadding,
+        padding: LaunchpadSpacingTokens.launchpadBadgePadding,
         child: Text(
           status.name.toUpperCase(),
           style: AppTextStyles.chartLabelTiny.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.launchpadLineHeightTight,
+            height: LaunchpadSpacingTokens.launchpadLineHeightTight,
           ),
         ),
       ),

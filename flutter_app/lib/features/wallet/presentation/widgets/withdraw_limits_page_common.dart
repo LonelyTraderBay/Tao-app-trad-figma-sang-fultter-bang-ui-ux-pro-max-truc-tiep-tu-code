@@ -59,7 +59,7 @@ class _KycTierCard extends StatelessWidget {
               child: Icon(
                 stateIcon,
                 color: tierColor,
-                size: AppSpacing.transferActionIcon,
+                size: WalletSpacingTokens.transferActionIcon,
               ),
             ),
             const SizedBox(width: _limitsInlineGap),

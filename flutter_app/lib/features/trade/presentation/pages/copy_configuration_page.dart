@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/copy_configuration_provider_capital_mode.dart';
 part '../widgets/copy_configuration_risk_summary.dart';
@@ -129,7 +130,8 @@ class _CopyConfigurationPageState extends ConsumerState<CopyConfigurationPage> {
               child: VitInsetScrollView(
                 key: CopyConfigurationPage.contentKey,
                 bottomInset: scrollEndClearance,
-                child: VitPageContent(rhythm: VitPageRhythm.standard, 
+                child: VitPageContent(
+                  rhythm: VitPageRhythm.standard,
                   padding: VitContentPadding.compact,
                   density: VitDensity.compact,
                   children: tradeShellWithProductTabs(

@@ -14,7 +14,7 @@ class _AddAddressSheet extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            maxWidth: AppSpacing.launchpadSheetMaxWidth,
+            maxWidth: LaunchpadSpacingTokens.launchpadSheetMaxWidth,
           ),
           child: DecoratedBox(
             decoration: const ShapeDecoration(
@@ -24,14 +24,14 @@ class _AddAddressSheet extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: AppSpacing.launchpadPaddingX5,
+              padding: LaunchpadSpacingTokens.launchpadPaddingX5,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Center(
                     child: SizedBox(
-                      width: AppSpacing.launchpadBox44,
+                      width: LaunchpadSpacingTokens.launchpadBox44,
                       height: AppSpacing.x1,
                       child: DecoratedBox(
                         decoration: const ShapeDecoration(
@@ -57,7 +57,9 @@ class _AddAddressSheet extends StatelessWidget {
                       color: AppColors.text2,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   VitCtaButton(
                     key: LaunchpadAddressBookPage.addSheetCloseKey,
                     onPressed: onClose,
@@ -88,7 +90,7 @@ class _InfoBanner extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
       background: const ColoredBox(color: AppColors.primary08),
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       clip: true,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +98,7 @@ class _InfoBanner extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.primary,
-            size: AppSpacing.launchpadIconXl,
+            size: LaunchpadSpacingTokens.launchpadIconXl,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -104,7 +106,7 @@ class _InfoBanner extends StatelessWidget {
               'So dia chi duoc luu tren thiet bi. Luon kiem tra lai dia chi truoc khi thuc hien giao dich.',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightShort,
+                height: LaunchpadSpacingTokens.launchpadLineHeightShort,
               ),
             ),
           ),
@@ -131,11 +133,15 @@ class _StatPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: VitCardStat(
-        padding: AppSpacing.launchpadInlinePillPadding,
+        padding: LaunchpadSpacingTokens.launchpadInlinePillPadding,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: AppSpacing.launchpadIconMd),
+            Icon(
+              icon,
+              color: color,
+              size: LaunchpadSpacingTokens.launchpadIconMd,
+            ),
             const SizedBox(width: AppSpacing.x1),
             Text(
               value,
@@ -167,7 +173,7 @@ class _ChainIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox44,
+      dimension: LaunchpadSpacingTokens.launchpadBox44,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: address.accent.resolve().withValues(alpha: .16),
@@ -182,7 +188,7 @@ class _ChainIcon extends StatelessWidget {
           child: Icon(
             _chainIcon(address.iconKey),
             color: address.accent.resolve(),
-            size: AppSpacing.launchpadIcon3xl,
+            size: LaunchpadSpacingTokens.launchpadIcon3xl,
           ),
         ),
       ),
@@ -204,7 +210,7 @@ class _Badge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadLiveBadgePadding,
+        padding: LaunchpadSpacingTokens.launchpadLiveBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -226,7 +232,7 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadVerticalPaddingX1,
+      padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX1,
       child: Row(
         children: [
           Expanded(

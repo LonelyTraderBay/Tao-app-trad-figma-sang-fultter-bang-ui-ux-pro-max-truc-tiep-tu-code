@@ -18,7 +18,7 @@ class _BridgeRules extends StatelessWidget {
             leading: Icon(
               rule.allowed ? Icons.check_rounded : Icons.close_rounded,
               color: rule.allowed ? AppColors.buy : AppColors.sell,
-              size: AppSpacing.arenaEcosystemInlineIcon,
+              size: ArenaSpacingTokens.arenaEcosystemInlineIcon,
             ),
           ),
       ],
@@ -193,7 +193,7 @@ class _InfoLine extends StatelessWidget {
         Icon(
           icon,
           color: color ?? AppColors.text3,
-          size: AppSpacing.arenaEcosystemCompactIcon,
+          size: ArenaSpacingTokens.arenaEcosystemCompactIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
@@ -256,8 +256,8 @@ class _TintIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = small
-        ? AppSpacing.arenaEcosystemTintIconBoxSmall
-        : AppSpacing.arenaEcosystemTintIconBox;
+        ? ArenaSpacingTokens.arenaEcosystemTintIconBoxSmall
+        : ArenaSpacingTokens.arenaEcosystemTintIconBox;
     return SizedBox(
       width: size,
       height: size,
@@ -273,8 +273,8 @@ class _TintIcon extends StatelessWidget {
           icon,
           color: color,
           size: small
-              ? AppSpacing.arenaEcosystemTintGlyphSmall
-              : AppSpacing.arenaEcosystemTintGlyph,
+              ? ArenaSpacingTokens.arenaEcosystemTintGlyphSmall
+              : ArenaSpacingTokens.arenaEcosystemTintGlyph,
         ),
       ),
     );
@@ -297,7 +297,7 @@ class _EcosystemFooter extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text3,
-            size: AppSpacing.arenaEcosystemSmallIcon,
+            size: ArenaSpacingTokens.arenaEcosystemSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

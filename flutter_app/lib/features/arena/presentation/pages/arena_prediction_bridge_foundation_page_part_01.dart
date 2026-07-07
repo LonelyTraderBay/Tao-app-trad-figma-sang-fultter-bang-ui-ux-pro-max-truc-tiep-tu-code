@@ -42,11 +42,11 @@ class _ArenaPredictionBridgeFoundationPageState
                   child: SingleChildScrollView(
                     key: ArenaPredictionBridgeFoundationPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -289,7 +289,8 @@ class _PrincipleCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: AppSpacing.arenaBridgePrincipleNumberPadding,
+                      padding:
+                          ArenaSpacingTokens.arenaBridgePrincipleNumberPadding,
                       child: Text(
                         '#${principle.number}',
                         style: AppTextStyles.micro.copyWith(
@@ -351,7 +352,11 @@ class _RuleBoard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, color: color, size: AppSpacing.arenaBridgeChipIcon),
+              Icon(
+                icon,
+                color: color,
+                size: ArenaSpacingTokens.arenaBridgeChipIcon,
+              ),
               const SizedBox(width: AppSpacing.x2),
               Text(
                 title,
@@ -365,7 +370,8 @@ class _RuleBoard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           for (final item in items) ...[
             _RuleRow(item: item, color: color),
-            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -387,7 +393,7 @@ class _RuleRow extends StatelessWidget {
         Icon(
           item.allowed ? Icons.check_rounded : Icons.close_rounded,
           color: color,
-          size: AppSpacing.arenaBridgeMicroIcon,
+          size: ArenaSpacingTokens.arenaBridgeMicroIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(

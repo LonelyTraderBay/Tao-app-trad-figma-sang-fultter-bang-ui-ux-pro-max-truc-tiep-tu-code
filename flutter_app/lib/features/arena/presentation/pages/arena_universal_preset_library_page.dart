@@ -19,17 +19,18 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part 'arena_universal_preset_library_page_part_01.dart';
 part 'arena_universal_preset_library_page_part_02.dart';
 part 'arena_universal_preset_library_page_part_03.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
-const _presetBodyLineRatio = AppSpacing.arenaPresetBodyLineHeight;
-const _presetCaptionLineRatio = AppSpacing.arenaPresetCaptionLineHeight;
-const _presetCheckLineRatio = AppSpacing.arenaPresetCheckLineHeight;
-const _presetDividerExtent = AppSpacing.arenaPresetDividerHeight;
-const _presetNoticeLineRatio = AppSpacing.arenaPresetNoticeLineHeight;
+const _presetBodyLineRatio = ArenaSpacingTokens.arenaPresetBodyLineHeight;
+const _presetCaptionLineRatio = ArenaSpacingTokens.arenaPresetCaptionLineHeight;
+const _presetCheckLineRatio = ArenaSpacingTokens.arenaPresetCheckLineHeight;
+const _presetDividerExtent = ArenaSpacingTokens.arenaPresetDividerHeight;
+const _presetNoticeLineRatio = ArenaSpacingTokens.arenaPresetNoticeLineHeight;
 
 class ArenaUniversalPresetLibraryPage extends ConsumerStatefulWidget {
   const ArenaUniversalPresetLibraryPage({super.key, this.shellRenderMode});
@@ -99,9 +100,11 @@ class _ArenaUniversalPresetLibraryPageState
                   child: SingleChildScrollView(
                     key: ArenaUniversalPresetLibraryPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaPresetScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaPresetScrollPadding(
+                      footerPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [

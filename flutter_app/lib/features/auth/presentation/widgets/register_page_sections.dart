@@ -26,9 +26,9 @@ class _AgreementRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: AppSpacing.authAgreementCheckMargin,
+                  padding: AuthSpacingTokens.authAgreementCheckMargin,
                   child: SizedBox.square(
-                    dimension: AppSpacing.authAgreementCheckSize,
+                    dimension: AuthSpacingTokens.authAgreementCheckSize,
                     child: Material(
                       color: agreed ? _authPrimary : AppColors.transparent,
                       shape: CircleBorder(
@@ -38,14 +38,14 @@ class _AgreementRow extends StatelessWidget {
                               : agreed
                               ? _authPrimary
                               : AppColors.borderSolid,
-                          width: AppSpacing.authAgreementCheckBorder,
+                          width: AuthSpacingTokens.authAgreementCheckBorder,
                         ),
                       ),
                       child: agreed
                           ? const Icon(
                               Icons.check_rounded,
                               color: AppColors.onAccent,
-                              size: AppSpacing.authInlineCheckIcon,
+                              size: AuthSpacingTokens.authInlineCheckIcon,
                             )
                           : null,
                     ),
@@ -75,7 +75,7 @@ class _AgreementRow extends StatelessWidget {
                     ),
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.authAgreementLineHeight,
+                      height: AuthSpacingTokens.authAgreementLineHeight,
                     ),
                   ),
                 ),
@@ -84,7 +84,7 @@ class _AgreementRow extends StatelessWidget {
           ),
         ),
         if (hasError) ...[
-          const Padding(padding: AppSpacing.authTopGapX2),
+          const Padding(padding: AuthSpacingTokens.authTopGapX2),
           Text(
             error!,
             style: AppTextStyles.micro.copyWith(color: AppColors.sell),
@@ -143,7 +143,7 @@ class _PasswordStrength extends StatelessWidget {
                   child: ColoredBox(
                     color: index < score ? color : AppColors.borderSolid,
                     child: const SizedBox(
-                      height: AppSpacing.authPasswordStrengthHeight,
+                      height: AuthSpacingTokens.authPasswordStrengthHeight,
                     ),
                   ),
                 ),
@@ -151,7 +151,7 @@ class _PasswordStrength extends StatelessWidget {
             ],
           ],
         ),
-        const Padding(padding: AppSpacing.authTopGapX3),
+        const Padding(padding: AuthSpacingTokens.authTopGapX3),
         Wrap(
           spacing: AppSpacing.x3,
           runSpacing: AppSpacing.x2,
@@ -164,7 +164,7 @@ class _PasswordStrength extends StatelessWidget {
                     check.ok
                         ? Icons.check_circle_outline_rounded
                         : Icons.cancel_outlined,
-                    size: AppSpacing.authPasswordStrengthIcon,
+                    size: AuthSpacingTokens.authPasswordStrengthIcon,
                     color: check.ok ? AppColors.buy : AppColors.text3,
                   ),
                   const SizedBox(width: AppSpacing.x1),

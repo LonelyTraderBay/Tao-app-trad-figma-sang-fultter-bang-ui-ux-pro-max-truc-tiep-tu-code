@@ -12,7 +12,7 @@ class _RiskHero extends StatelessWidget {
       key: LaunchpadAbiDiffPage.heroKey,
       variant: VitCardVariant.hero,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +21,7 @@ class _RiskHero extends StatelessWidget {
               const Icon(
                 Icons.account_tree_outlined,
                 color: AppColors.portfolioTextMuted,
-                size: AppSpacing.launchpadIconXl,
+                size: LaunchpadSpacingTokens.launchpadIconXl,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -73,11 +73,11 @@ class _RiskHero extends StatelessWidget {
                 ),
               ),
               const Padding(
-                padding: AppSpacing.launchpadHorizontalPaddingX3,
+                padding: LaunchpadSpacingTokens.launchpadHorizontalPaddingX3,
                 child: Icon(
                   Icons.bolt_rounded,
                   color: AppColors.portfolioTextMuted,
-                  size: AppSpacing.launchpadIconXl,
+                  size: LaunchpadSpacingTokens.launchpadIconXl,
                 ),
               ),
               Expanded(
@@ -105,14 +105,14 @@ class _RiskScoreRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox64,
+      dimension: LaunchpadSpacingTokens.launchpadBox64,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .08),
           shape: CircleBorder(
             side: BorderSide(
               color: color,
-              width: AppSpacing.launchpadBorderWidthStrong,
+              width: LaunchpadSpacingTokens.launchpadBorderWidthStrong,
             ),
           ),
         ),
@@ -155,7 +155,7 @@ class _ImplCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -218,14 +218,14 @@ class _SummaryStats extends StatelessWidget {
               borderColor: activeFilter == stat.$1
                   ? stat.$1.color.withValues(alpha: .42)
                   : null,
-              padding: AppSpacing.launchpadTierChipPadding,
+              padding: LaunchpadSpacingTokens.launchpadTierChipPadding,
               child: Column(
                 key: LaunchpadAbiDiffPage.statKey(stat.$1.value),
                 children: [
                   Icon(
                     stat.$1.icon,
                     color: stat.$1.color,
-                    size: AppSpacing.launchpadIconXl,
+                    size: LaunchpadSpacingTokens.launchpadIconXl,
                   ),
                   const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                   Text(
@@ -294,7 +294,7 @@ class _UpgradeMetadata extends StatelessWidget {
     ];
     return VitCard(
       key: LaunchpadAbiDiffPage.metadataKey,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -303,7 +303,7 @@ class _UpgradeMetadata extends StatelessWidget {
               const Icon(
                 Icons.code_rounded,
                 color: AppColors.accent,
-                size: AppSpacing.launchpadIconXl,
+                size: LaunchpadSpacingTokens.launchpadIconXl,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -352,7 +352,7 @@ class _MetaRow extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadVerticalPaddingX2,
+        padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
         child: Row(
           children: [
             Expanded(
@@ -414,10 +414,10 @@ class _FilterRow extends StatelessWidget {
           selected: active,
           onTap: onChanged,
           accentColor: AppModuleAccents.launchpad,
-          padding: AppSpacing.launchpadPillPadding,
+          padding: LaunchpadSpacingTokens.launchpadPillPadding,
           leading: const Icon(
             Icons.code_rounded,
-            size: AppSpacing.launchpadIconMd,
+            size: LaunchpadSpacingTokens.launchpadIconMd,
           ),
           semanticLabel: 'Filter ABI diff to functions only',
         ),

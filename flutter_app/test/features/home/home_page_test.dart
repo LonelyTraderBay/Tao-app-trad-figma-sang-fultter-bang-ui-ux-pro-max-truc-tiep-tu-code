@@ -337,10 +337,7 @@ void main() {
       tester.getBottomLeft(find.byKey(HomePage.marketTickerKey)).dy,
       lessThan(navTop),
     );
-    expect(
-      tester.getTopLeft(find.text('Sản phẩm')).dy,
-      lessThan(navTop),
-    );
+    expect(tester.getTopLeft(find.text('Sản phẩm')).dy, lessThan(navTop));
   });
 
   testWidgets('SC-007 portfolio card toggles USD and BTC display', (

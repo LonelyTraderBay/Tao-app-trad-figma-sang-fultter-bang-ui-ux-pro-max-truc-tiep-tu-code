@@ -25,7 +25,7 @@ class _StepTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.providerApplicationStepTitlePadding,
+      padding: TradeSpacingTokens.providerApplicationStepTitlePadding,
       child: Text(title, style: AppTextStyles.sectionTitle),
     );
   }
@@ -139,7 +139,7 @@ class _ConsentTile extends StatelessWidget {
       key: tileKey,
       onTap: onTap,
       variant: checked ? VitCardVariant.inner : VitCardVariant.standard,
-      padding: AppSpacing.providerApplicationConsentPadding,
+      padding: TradeSpacingTokens.providerApplicationConsentPadding,
       borderColor: checked ? _providerPrimary : AppColors.cardBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +157,7 @@ class _ConsentTile extends StatelessWidget {
               text,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text1,
-                height: AppSpacing.providerApplicationConsentLineHeight,
+                height: TradeSpacingTokens.providerApplicationConsentLineHeight,
               ),
             ),
           ),
@@ -202,7 +202,7 @@ class _Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.providerApplicationPanelPadding,
+      padding: TradeSpacingTokens.providerApplicationPanelPadding,
       onTap: onTap,
       child: child,
     );
@@ -234,7 +234,7 @@ class _PanelHeader extends StatelessWidget {
 
 TextStyle get _panelDescriptionStyle => AppTextStyles.caption.copyWith(
   color: AppColors.text3,
-  height: AppSpacing.providerApplicationPanelDescriptionLineHeight,
+  height: TradeSpacingTokens.providerApplicationPanelDescriptionLineHeight,
 );
 
 InputDecoration _inputDecoration(String hint) {
@@ -243,7 +243,7 @@ InputDecoration _inputDecoration(String hint) {
     hintStyle: AppTextStyles.caption.copyWith(color: AppColors.text3),
     filled: true,
     fillColor: _providerField,
-    contentPadding: AppSpacing.providerApplicationInputContentPadding,
+    contentPadding: TradeSpacingTokens.providerApplicationInputContentPadding,
     border: OutlineInputBorder(
       borderSide: BorderSide.none,
       borderRadius: AppRadii.inputRadius,

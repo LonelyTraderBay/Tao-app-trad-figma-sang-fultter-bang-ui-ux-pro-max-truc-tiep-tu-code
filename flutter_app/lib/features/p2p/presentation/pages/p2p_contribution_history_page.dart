@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pContributionVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -77,14 +78,16 @@ class _P2PContributionHistoryPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pContributionScrollPadding(
+                    padding: P2PSpacingTokens.p2pContributionScrollPadding(
                       scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _ContributionSummaryCard(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         VitCtaButton(
                           key: P2PContributionHistoryPage.exportKey,
                           variant: VitCtaButtonVariant.secondary,
@@ -99,10 +102,14 @@ class _P2PContributionHistoryPageState
                           child: const Text('Xuất CSV'),
                         ),
                         if (_feedback != null) ...[
-                          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
                           _FeedbackBanner(message: _feedback!),
                         ],
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _MonthlyContributionGroups(
                           groups: snapshot.monthlyGroups,
                         ),
@@ -142,7 +149,7 @@ class _ContributionSummaryCard extends StatelessWidget {
     return VitCard(
       key: P2PContributionHistoryPage.summaryKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pTrustProgressHeroPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressHeroPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -184,7 +191,7 @@ class _ContributionSummaryCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
-            height: AppSpacing.p2pMerchantCommerceDividerHeight,
+            height: P2PSpacingTokens.p2pMerchantCommerceDividerHeight,
             color: AppColors.divider,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -281,13 +288,13 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pTrustProgressCardPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressCardPadding,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: AppSpacing.p2pTrustProgressSmallIcon,
+            size: P2PSpacingTokens.p2pTrustProgressSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -341,7 +348,7 @@ class _MonthGroup extends StatelessWidget {
             const Icon(
               Icons.calendar_month_outlined,
               color: AppColors.text2,
-              size: AppSpacing.p2pTrustProgressSmallIcon,
+              size: P2PSpacingTokens.p2pTrustProgressSmallIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -391,7 +398,7 @@ class _ContributionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pTrustProgressCardPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -430,7 +437,7 @@ class _ContributionCard extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x4),
           SizedBox(
-            width: AppSpacing.p2pTrustProgressContributionAmountWidth,
+            width: P2PSpacingTokens.p2pTrustProgressContributionAmountWidth,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

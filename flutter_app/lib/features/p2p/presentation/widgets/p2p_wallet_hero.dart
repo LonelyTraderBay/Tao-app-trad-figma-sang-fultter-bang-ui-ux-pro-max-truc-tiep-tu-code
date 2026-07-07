@@ -139,7 +139,7 @@ class _HeroActionButton extends StatelessWidget {
             : AppColors.onAccent.withValues(alpha: .18),
       ),
       constraints: const BoxConstraints(minHeight: _p2pWalletActionMinHeight),
-      padding: AppSpacing.p2pWalletHeroActionPadding,
+      padding: P2PSpacingTokens.p2pWalletHeroActionPadding,
       onTap: onTap,
       clip: true,
       child: Center(
@@ -181,8 +181,8 @@ class _WalletInfoBanner extends StatelessWidget {
       icon: Icons.info_outline_rounded,
       message: text,
       borderColor: AppModuleAccents.p2p.withValues(alpha: .28),
-      padding: AppSpacing.p2pWalletNoticePadding,
-      iconSize: AppSpacing.p2pWalletInfoIcon,
+      padding: P2PSpacingTokens.p2pWalletNoticePadding,
+      iconSize: P2PSpacingTokens.p2pWalletInfoIcon,
       messageStyle: AppTextStyles.caption.copyWith(color: AppColors.text2),
     );
   }

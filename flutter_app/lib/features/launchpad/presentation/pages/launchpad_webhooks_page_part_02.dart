@@ -100,7 +100,8 @@ class _SubscriptionExpanded extends StatelessWidget {
                             ? VitCtaButtonVariant.warning
                             : VitCtaButtonVariant.success,
                         height: _launchpadWebhooksActionButtonHeight,
-                        padding: AppSpacing.launchpadActionButtonPadding,
+                        padding:
+                            LaunchpadSpacingTokens.launchpadActionButtonPadding,
                         leading: Icon(
                           subscription.status == LaunchpadWebhookStatus.active
                               ? Icons.pause_rounded
@@ -120,7 +121,8 @@ class _SubscriptionExpanded extends StatelessWidget {
                       variant: VitCtaButtonVariant.danger,
                       fullWidth: false,
                       height: _launchpadWebhooksActionButtonHeight,
-                      padding: AppSpacing.launchpadActionButtonPadding,
+                      padding:
+                          LaunchpadSpacingTokens.launchpadActionButtonPadding,
                       leading: const Icon(Icons.delete_outline_rounded),
                       child: const Text('Xoa'),
                     ),
@@ -156,7 +158,7 @@ class _MetadataRows extends StatelessWidget {
           Column(
             children: [
               Padding(
-                padding: AppSpacing.launchpadVerticalPaddingX2,
+                padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
                 child: Row(
                   children: [
                     Text(

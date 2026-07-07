@@ -18,7 +18,7 @@ class _StrategyCard extends StatelessWidget {
     return VitCard(
       key: SavingsAutoRebalancePage.strategyKey(strategy.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       borderColor: active ? color.withValues(alpha: .42) : null,
       onTap: onTap,
       child: Column(
@@ -126,7 +126,8 @@ class _StrategyComparison extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
-      child: VitPageContent(rhythm: VitPageRhythm.standard, 
+      child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
@@ -191,7 +192,7 @@ class _HistoryCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Row(
         children: [
           SizedBox.square(
@@ -256,7 +257,8 @@ class _SettingsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -364,7 +366,7 @@ class _PreviewSheet extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
                 for (final action in actions.take(3))
                   Padding(
-                    padding: AppSpacing.earnBottomPaddingX2,
+                    padding: EarnSpacingTokens.earnBottomPaddingX2,
                     child: Row(
                       children: [
                         Icon(
@@ -428,7 +430,7 @@ class _MetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         children: [
           Icon(icon, color: color, size: _savingsRebalanceInlineIcon),

@@ -71,15 +71,15 @@ class _TradeSection extends StatelessWidget {
                     children: [
                       for (final option in event.outcomes)
                         Padding(
-                          padding: AppSpacing
+                          padding: PredictionsSpacingTokens
                               .predictionDetailTradeOutcomeChipPadding,
                           child: VitChoicePill(
                             label: option.label,
                             selected: option.label == selectedOutcome,
                             onTap: () => onOutcomeChanged(option.label),
                             accentColor: option.tone.resolve(),
-                            padding:
-                                AppSpacing.predictionDetailToggleChipPadding,
+                            padding: PredictionsSpacingTokens
+                                .predictionDetailToggleChipPadding,
                           ),
                         ),
                     ],
@@ -129,7 +129,7 @@ class _TradeSection extends StatelessWidget {
                 accentColor: _predictionPrimary,
                 height: VitDensity.compact.controlHeight,
                 padding: AppSpacing.zeroInsets,
-                gap: AppSpacing.predictionDetailTradePresetGap,
+                gap: PredictionsSpacingTokens.predictionDetailTradePresetGap,
                 items: const [
                   VitPresetChipItem(value: '10', label: r'$10'),
                   VitPresetChipItem(value: '25', label: r'$25'),

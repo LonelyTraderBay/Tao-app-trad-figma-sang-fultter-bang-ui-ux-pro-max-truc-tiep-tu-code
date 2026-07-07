@@ -12,7 +12,7 @@ class _OverallRiskCard extends StatelessWidget {
     return VitCard(
       key: StakingRiskDashboardPage.scoreKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -32,7 +32,8 @@ class _OverallRiskCard extends StatelessWidget {
                   shape: CircleBorder(
                     side: BorderSide(
                       color: color,
-                      width: AppSpacing.stakingRiskDashboardScoreBorderWidth,
+                      width: EarnSpacingTokens
+                          .stakingRiskDashboardScoreBorderWidth,
                     ),
                   ),
                 ),
@@ -68,7 +69,7 @@ class _OverallRiskCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+              height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -119,7 +120,7 @@ class _RiskMetricCard extends StatelessWidget {
       onTap: metric.actionRoute == null
           ? null
           : () => context.go(metric.actionRoute!),
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -168,7 +169,8 @@ class _RiskMetricCard extends StatelessWidget {
                       metric.description,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                        height:
+                            EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                       ),
                     ),
                   ],
@@ -201,7 +203,7 @@ class _ExposureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         children: [
           SizedBox(
@@ -216,7 +218,8 @@ class _ExposureCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final item in exposures) ...[
             _ExposureRow(item: item),
-            if (item != exposures.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (item != exposures.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),
@@ -234,7 +237,7 @@ class _ExposureRow extends StatelessWidget {
     final color = _exposureColor(item.risk);
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           SizedBox(
@@ -289,7 +292,7 @@ class _RiskEventCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: 0.22),
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -317,7 +320,7 @@ class _RiskEventCard extends StatelessWidget {
                   event.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                    height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
               ],
@@ -341,10 +344,11 @@ class _ActionsGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: actions.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: AppSpacing.stakingRiskDashboardActionGridColumns,
+        crossAxisCount: EarnSpacingTokens.stakingRiskDashboardActionGridColumns,
         mainAxisSpacing: AppSpacing.x3,
         crossAxisSpacing: AppSpacing.x3,
-        childAspectRatio: AppSpacing.stakingRiskDashboardActionGridAspect,
+        childAspectRatio:
+            EarnSpacingTokens.stakingRiskDashboardActionGridAspect,
       ),
       itemBuilder: (context, index) {
         final action = actions[index];
@@ -352,7 +356,7 @@ class _ActionsGrid extends StatelessWidget {
         return VitCard(
           key: StakingRiskDashboardPage.actionKey(action.title),
           onTap: () => context.go(action.route),
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

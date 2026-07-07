@@ -14,7 +14,7 @@ class _HistorySection extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Giao d\u1ECBch g\u1EA7n \u0111\u00E2y',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -56,7 +56,9 @@ class _HistorySection extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Row(
                           children: [
                             Expanded(
@@ -76,7 +78,9 @@ class _HistorySection extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Row(
                           children: [
                             Expanded(
@@ -162,7 +166,7 @@ class _SettingsSection extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Slippage & Gas',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -226,7 +230,7 @@ class _SettingsSection extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const VitSectionHeader(
             title: 'An to\u00E0n',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -246,7 +250,7 @@ class _SettingsSection extends StatelessWidget {
                     'Lu\u00F4n ki\u1EC3m tra \u0111\u1ECBa ch\u1EC9 h\u1EE3p \u0111\u1ED3ng v\u00E0 ch\u1EC9 swap tr\u00EAn c\u00E1c DEX uy t\u00EDn. Kh\u00F4ng chia s\u1EBB private key.',
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.launchpadLineHeightShort,
+                      height: LaunchpadSpacingTokens.launchpadLineHeightShort,
                     ),
                   ),
                 ),

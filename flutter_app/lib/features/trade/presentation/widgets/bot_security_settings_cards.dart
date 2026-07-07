@@ -14,7 +14,7 @@ class _TwoFaCard extends StatelessWidget {
           Icon(
             Icons.smartphone_rounded,
             color: enabled ? _securityGreen : AppColors.text3,
-            size: AppSpacing.tradeBotCheckbox,
+            size: TradeSpacingTokens.tradeBotCheckbox,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -103,7 +103,7 @@ class _ApiKeyCard extends StatelessWidget {
           const Icon(
             Icons.delete_outline_rounded,
             color: _securityRed,
-            size: AppSpacing.tradeBotQuestionIcon,
+            size: TradeSpacingTokens.tradeBotQuestionIcon,
           ),
         ],
       ),
@@ -161,7 +161,7 @@ class _ActivityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -197,7 +197,7 @@ class _ActivityCard extends StatelessWidget {
                       activity.status == TradeBotSecurityActivityStatus.success
                       ? _securityGreen
                       : _securityAmber,
-                  size: AppSpacing.tradeBotSmallGap,
+                  size: TradeSpacingTokens.tradeBotSmallGap,
                 ),
               ],
             ),
@@ -224,7 +224,7 @@ class _SecurityTipsCard extends StatelessWidget {
       density: VitDensity.compact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,

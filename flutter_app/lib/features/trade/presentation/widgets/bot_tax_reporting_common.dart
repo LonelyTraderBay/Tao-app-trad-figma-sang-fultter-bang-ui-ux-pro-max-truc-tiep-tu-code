@@ -12,7 +12,7 @@ class _RadioDot extends StatelessWidget {
           ? Icons.radio_button_checked_rounded
           : Icons.radio_button_unchecked_rounded,
       color: selected ? _taxPrimary : _taxOptionBorder,
-      size: AppSpacing.tradeBotSelectionDot,
+      size: TradeSpacingTokens.tradeBotSelectionDot,
     );
   }
 }
@@ -27,8 +27,8 @@ class _CheckBox extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       variant: VitCardVariant.ghost,
-      width: AppSpacing.tradeBotCheckbox,
-      height: AppSpacing.tradeBotCheckbox,
+      width: TradeSpacingTokens.tradeBotCheckbox,
+      height: TradeSpacingTokens.tradeBotCheckbox,
       alignment: Alignment.center,
       borderColor: selected ? _taxPrimary : _taxOptionBorder,
       child: selected

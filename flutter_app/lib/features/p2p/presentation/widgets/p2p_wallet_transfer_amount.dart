@@ -26,7 +26,7 @@ class _AmountInput extends StatelessWidget {
             const Expanded(
               child: VitSectionHeader(
                 title: 'Số tiền',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 icon: Icons.payments_outlined,
                 accentColor: AppModuleAccents.p2p,
                 density: VitDensity.compact,
@@ -38,7 +38,7 @@ class _AmountInput extends StatelessWidget {
               selected: true,
               onTap: onMax,
               accentColor: AppModuleAccents.p2p,
-              padding: AppSpacing.p2pWalletTransferChipPadding,
+              padding: P2PSpacingTokens.p2pWalletTransferChipPadding,
               semanticLabel: 'Chọn số dư tối đa',
             ),
           ],

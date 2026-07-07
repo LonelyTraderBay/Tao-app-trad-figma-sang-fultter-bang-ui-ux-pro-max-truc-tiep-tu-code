@@ -15,9 +15,7 @@ class _EmptyPortfolio extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitEmptyState(
       icon: Icons.business_center_outlined,
-      title: filtered
-          ? 'Không có dự án trong tab này'
-          : 'Chưa có dự án nào',
+      title: filtered ? 'Không có dự án trong tab này' : 'Chưa có dự án nào',
       message: filtered
           ? 'Thử xem tất cả hoặc chọn tab khác.'
           : 'Bạn chưa tham gia dự án Launchpad nào. Khám phá ngay.',
@@ -47,7 +45,7 @@ class _PortfolioDisclaimer extends StatelessWidget {
             'Phân bổ thực tế phụ thuộc vào tổng số đăng ký. Token mở khóa theo lịch vesting của từng dự án.',
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightShort,
+              height: LaunchpadSpacingTokens.launchpadLineHeightShort,
             ),
           ),
         ),

@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WalletPage extends ConsumerStatefulWidget {
   const WalletPage({super.key, this.shellRenderMode});
@@ -65,9 +66,9 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     final bottomInset =
         (mode.usesVisualQaFrame
             ? DeviceMetrics.bottomChrome +
-                  AppSpacing.walletBottomInsetVisualChrome
+                  WalletSpacingTokens.walletBottomInsetVisualChrome
             : DeviceMetrics.nativeBottomChrome +
-                  AppSpacing.walletBottomInsetNativeChrome) +
+                  WalletSpacingTokens.walletBottomInsetNativeChrome) +
         MediaQuery.paddingOf(context).bottom +
         AppSpacing.searchBarCompactHeight;
     final assets = _filteredAssets(snapshot.assets);

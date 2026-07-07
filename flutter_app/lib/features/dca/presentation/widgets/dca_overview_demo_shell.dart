@@ -57,8 +57,8 @@ class _DcaOverviewCardPreviewState extends State<_DcaOverviewCardPreview> {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       padding: widget.compact
-          ? AppSpacing.dcaPaddingX4
-          : AppSpacing.dcaContentPadding,
+          ? DcaSpacingTokens.dcaPaddingX4
+          : DcaSpacingTokens.dcaContentPadding,
       child: widget.isLoading
           ? const _OverviewSkeleton()
           : Column(
@@ -90,7 +90,9 @@ class _DcaOverviewCardPreviewState extends State<_DcaOverviewCardPreview> {
                 const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
                 _NextExecutionRow(data: widget.scenario.data),
                 if (widget.scenario.showActions) ...[
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   _ActionRow(scenarioId: widget.scenario.id),
                 ],
               ],
@@ -125,7 +127,7 @@ class _HeaderRow extends StatelessWidget {
           tooltip: balanceHidden ? 'Show balance' : 'Hide balance',
           onPressed: onToggle,
           color: AppColors.portfolioTextMuted,
-          size: AppSpacing.dcaOverviewInlineIcon,
+          size: DcaSpacingTokens.dcaOverviewInlineIcon,
           padding: AppSpacing.x1,
         ),
       ],
@@ -160,7 +162,7 @@ class _ValueRow extends StatelessWidget {
               maxLines: 1,
               style: AppTextStyles.numericDisplay2xl.copyWith(
                 fontWeight: AppTextStyles.heavy,
-                height: AppSpacing.dcaOverviewHeroLineHeight,
+                height: DcaSpacingTokens.dcaOverviewHeroLineHeight,
                 color: AppColors.text1,
               ),
             ),

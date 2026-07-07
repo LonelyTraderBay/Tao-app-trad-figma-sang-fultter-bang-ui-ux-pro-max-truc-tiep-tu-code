@@ -15,7 +15,7 @@ class _TermsCta extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCtaButton(
       key: BotTermsOfServicePage.ctaKey,
-      height: AppSpacing.tradeBotControlCompact,
+      height: TradeSpacingTokens.tradeBotControlCompact,
       onPressed: agreed ? onPressed : null,
       child: Text(
         agreed ? snapshot.enabledCta : snapshot.disabledCta,
@@ -39,20 +39,20 @@ class _ComplianceNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       constraints: const BoxConstraints(minHeight: _termsComplianceMinExtent),
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
       density: VitDensity.compact,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: AppSpacing.tradeBotIntroIconTopPadding,
+            padding: TradeSpacingTokens.tradeBotIntroIconTopPadding,
             child: Icon(
               Icons.shield_outlined,
               color: AppColors.text3,
-              size: AppSpacing.tradeBotMediumIcon,
+              size: TradeSpacingTokens.tradeBotMediumIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

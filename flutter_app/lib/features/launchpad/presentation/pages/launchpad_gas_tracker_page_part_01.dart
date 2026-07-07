@@ -15,7 +15,7 @@ class _FeaturedGasCard extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -24,7 +24,7 @@ class _FeaturedGasCard extends StatelessWidget {
               Icon(
                 Icons.local_gas_station_outlined,
                 color: AppModuleAccents.launchpad,
-                size: AppSpacing.launchpadIconLg,
+                size: LaunchpadSpacingTokens.launchpadIconLg,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -111,7 +111,7 @@ class _TierValue extends StatelessWidget {
               color: color,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.launchpadLineHeightTight,
+              height: LaunchpadSpacingTokens.launchpadLineHeightTight,
             ),
           ),
           const SizedBox(height: AppSpacing.x1),
@@ -119,7 +119,7 @@ class _TierValue extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightTight,
+              height: LaunchpadSpacingTokens.launchpadLineHeightTight,
             ),
           ),
         ],
@@ -253,7 +253,7 @@ class _ChainSelector extends StatelessWidget {
               accentColor: price.accent.resolve(),
               selected: selectedChain == price.chain,
               onTap: () => onSelected(price.chain),
-              padding: AppSpacing.launchpadPillPadding,
+              padding: LaunchpadSpacingTokens.launchpadPillPadding,
             ),
             const SizedBox(width: AppSpacing.x2),
           ],
@@ -272,7 +272,7 @@ class _GasChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadGasTrackerPage.chartKey,
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -306,7 +306,7 @@ class _Eip1559Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadGasTrackerPage.eipKey,
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -362,7 +362,7 @@ class _FeeBox extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
         child: Column(
           children: [
             Text(
@@ -433,7 +433,7 @@ class _ChainComparisonCard extends StatelessWidget {
       borderColor: selected
           ? price.accent.resolve().withValues(alpha: .35)
           : AppColors.cardBorder,
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       onTap: onTap,
       child: Row(
         children: [

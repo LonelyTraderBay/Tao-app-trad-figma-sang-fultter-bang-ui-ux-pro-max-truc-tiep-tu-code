@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part 'my_arena_page_part_01.dart';
 part 'my_arena_page_part_02.dart';
@@ -106,7 +107,9 @@ class _MyArenaPageState extends ConsumerState<MyArenaPage> {
                   child: SingleChildScrollView(
                     key: MyArenaPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.myArenaScrollPadding(scrollClearance),
+                    padding: ArenaSpacingTokens.myArenaScrollPadding(
+                      scrollClearance,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.compact,

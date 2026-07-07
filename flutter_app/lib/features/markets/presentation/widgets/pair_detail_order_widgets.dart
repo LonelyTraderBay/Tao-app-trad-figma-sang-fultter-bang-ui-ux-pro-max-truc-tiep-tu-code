@@ -8,9 +8,9 @@ class _OrderBookPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.pairOrderPanelPadding,
+      padding: MarketsSpacingTokens.pairOrderPanelPadding,
       child: VitCard(
-        padding: AppSpacing.pairOrderCardPadding,
+        padding: MarketsSpacingTokens.pairOrderCardPadding,
         child: Column(
           children: [
             Row(
@@ -57,7 +57,7 @@ class _DepthRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = side == MarketOrderSide.buy ? AppColors.buy : AppColors.sell;
     return Padding(
-      padding: AppSpacing.pairDepthRowPadding,
+      padding: MarketsSpacingTokens.pairDepthRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -98,9 +98,9 @@ class _TradesPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.pairOrderPanelPadding,
+      padding: MarketsSpacingTokens.pairOrderPanelPadding,
       child: VitCard(
-        padding: AppSpacing.pairOrderCardPadding,
+        padding: MarketsSpacingTokens.pairOrderCardPadding,
         child: Column(
           children: [
             const _TradeHeader(),
@@ -118,7 +118,7 @@ class _TradeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.pairTradeHeaderPadding,
+      padding: MarketsSpacingTokens.pairTradeHeaderPadding,
       child: Row(
         children: [
           Expanded(child: Text('Giá', style: _tableHeaderStyle())),
@@ -153,7 +153,7 @@ class _TradeRow extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return Padding(
-      padding: AppSpacing.pairTradeRowPadding,
+      padding: MarketsSpacingTokens.pairTradeRowPadding,
       child: Row(
         children: [
           Expanded(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 const executionQualityPrimary = AppColors.primary;
 const executionQualityCardBackground = AppColors.surface2;
@@ -27,7 +27,7 @@ enum ExecutionQualityTab { slippage, execution, amendment }
 class ExecutionQualityPanel extends StatelessWidget {
   const ExecutionQualityPanel({
     required this.child,
-    this.padding = AppSpacing.tradeToolRiskIntroPadding,
+    this.padding = TradeSpacingTokens.tradeToolRiskIntroPadding,
     this.borderColor = AppColors.cardBorder,
     super.key,
   });
@@ -140,7 +140,7 @@ class ExecutionQualitySuccessToast extends StatelessWidget {
     return Material(
       color: AppColors.transparent,
       child: VitCard(
-        padding: AppSpacing.tradeToolToastPadding,
+        padding: TradeSpacingTokens.tradeToolToastPadding,
         variant: VitCardVariant.inner,
         borderColor: AppColors.buy.withValues(alpha: .38),
         child: Row(
@@ -148,9 +148,9 @@ class ExecutionQualitySuccessToast extends StatelessWidget {
             const Icon(
               Icons.check_circle_rounded,
               color: AppColors.buy,
-              size: AppSpacing.tradeToolBodyIcon,
+              size: TradeSpacingTokens.tradeToolBodyIcon,
             ),
-            const SizedBox(width: AppSpacing.tradeToolIconGap),
+            const SizedBox(width: TradeSpacingTokens.tradeToolIconGap),
             Expanded(
               child: Text(
                 message,

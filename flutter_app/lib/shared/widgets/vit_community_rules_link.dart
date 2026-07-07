@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 /// Open Arena community rules entry — ghost chip with book icon.
 ///
@@ -29,14 +30,14 @@ class VitCommunityRulesLink extends StatelessWidget {
       onTap: onTap,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaCommunityRulesLinkPadding,
+      padding: ArenaSpacingTokens.arenaCommunityRulesLinkPadding,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(
             Icons.menu_book_outlined,
             color: AppColors.primary,
-            size: AppSpacing.arenaCommunityRulesLinkIcon,
+            size: ArenaSpacingTokens.arenaCommunityRulesLinkIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(
@@ -44,7 +45,7 @@ class VitCommunityRulesLink extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.primary,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.arenaCommunityRulesLinkLineHeight,
+              height: ArenaSpacingTokens.arenaCommunityRulesLinkLineHeight,
             ),
           ),
         ],

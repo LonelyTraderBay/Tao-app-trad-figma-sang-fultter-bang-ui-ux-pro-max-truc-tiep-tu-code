@@ -26,7 +26,7 @@ class _SummaryRow extends StatelessWidget {
         for (var i = 0; i < items.length; i++) ...[
           Expanded(
             child: _Card(
-              padding: AppSpacing.tradeBotCompactPanelPadding,
+              padding: TradeSpacingTokens.tradeBotCompactPanelPadding,
               child: SizedBox(
                 height: _equitySummaryMetricExtent,
                 child: Column(

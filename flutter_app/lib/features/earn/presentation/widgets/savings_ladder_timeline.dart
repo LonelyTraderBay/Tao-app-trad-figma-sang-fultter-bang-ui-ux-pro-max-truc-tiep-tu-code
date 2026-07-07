@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_lad
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_formatters.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 const _timelineBarHeight = 20.0;
 const _maturityBadgeHeight = 44.0;
@@ -37,7 +38,8 @@ class TimelineTab extends StatelessWidget {
     }
 
     final sorted = [...rungs]..sort((a, b) => a.lockDays.compareTo(b.lockDays));
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       key: SavingsLadderPage.timelineKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -88,7 +90,8 @@ class _TimelineChart extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final rung in rungs) ...[
             _TimelineBar(rung: rung, maxDays: maxDays),
-            if (rung != rungs.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (rung != rungs.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Wrap(
@@ -121,7 +124,7 @@ class _TimelineBar extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.savingsLadderTimelineLabelWidth,
+          width: EarnSpacingTokens.savingsLadderTimelineLabelWidth,
           child: Text(
             '${rung.asset} ${rung.lockDays}D',
             textAlign: TextAlign.right,
@@ -150,7 +153,7 @@ class _TimelineBar extends StatelessWidget {
                       side: BorderSide(color: color.withValues(alpha: .3)),
                     ),
                     child: Padding(
-                      padding: AppSpacing.earnHorizontalPaddingX2,
+                      padding: EarnSpacingTokens.earnHorizontalPaddingX2,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -192,7 +195,7 @@ class _MaturityTile extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.savingsLadderMaturityBadgeWidth,
+            width: EarnSpacingTokens.savingsLadderMaturityBadgeWidth,
             height: _maturityBadgeHeight,
             child: Material(
               color: color.withValues(alpha: .12),

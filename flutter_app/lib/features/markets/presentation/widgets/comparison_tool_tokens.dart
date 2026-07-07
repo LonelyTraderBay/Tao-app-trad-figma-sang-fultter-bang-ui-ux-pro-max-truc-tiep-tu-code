@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/domain/entities/market_entities.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/comparison_tool_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class ComparisonSelectedTokensStrip extends StatelessWidget {
   const ComparisonSelectedTokensStrip({
@@ -28,23 +29,23 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.comparisonToolStripHeight,
+      height: MarketsSpacingTokens.comparisonToolStripHeight,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         clipBehavior: Clip.none,
         itemCount: selectedPairs.length + (canAdd ? 1 : 0),
         separatorBuilder: (_, _) =>
-            const SizedBox(width: AppSpacing.comparisonToolStripGap),
+            const SizedBox(width: MarketsSpacingTokens.comparisonToolStripGap),
         itemBuilder: (context, index) {
           if (index == selectedPairs.length) {
             return SizedBox(
-              width: AppSpacing.comparisonToolAddWidth,
+              width: MarketsSpacingTokens.comparisonToolAddWidth,
               child: VitCtaButton(
                 key: ComparisonToolKeys.addToken,
                 onPressed: onAdd,
                 variant: VitCtaButtonVariant.ghost,
-                height: AppSpacing.comparisonToolStripHeight,
-                padding: AppSpacing.comparisonToolTokenPadding,
+                height: MarketsSpacingTokens.comparisonToolStripHeight,
+                padding: MarketsSpacingTokens.comparisonToolTokenPadding,
                 leading: const Icon(Icons.add_rounded),
                 child: const Text('Thêm'),
               ),
@@ -60,17 +61,17 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
               borderRadius: AppRadii.cardRadius,
             ),
             child: SizedBox(
-              height: AppSpacing.comparisonToolStripHeight,
+              height: MarketsSpacingTokens.comparisonToolStripHeight,
               child: Padding(
-                padding: AppSpacing.comparisonToolTokenPadding,
+                padding: MarketsSpacingTokens.comparisonToolTokenPadding,
                 child: Row(
                   children: [
                     ComparisonAvatar(
                       pair: pair,
-                      size: AppSpacing.comparisonToolTokenAvatar,
+                      size: MarketsSpacingTokens.comparisonToolTokenAvatar,
                     ),
                     const SizedBox(
-                      width: AppSpacing.comparisonToolTokenTextGap,
+                      width: MarketsSpacingTokens.comparisonToolTokenTextGap,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -81,11 +82,12 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
                           style: AppTextStyles.caption.copyWith(
                             color: AppColors.text1,
                             fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.marketLineHeightTight,
+                            height: MarketsSpacingTokens.marketLineHeightTight,
                           ),
                         ),
                         const SizedBox(
-                          height: AppSpacing.comparisonToolTokenMetricGap,
+                          height:
+                              MarketsSpacingTokens.comparisonToolTokenMetricGap,
                         ),
                         Text(
                           comparisonFormatPercent(pair.change24h),
@@ -94,20 +96,22 @@ class ComparisonSelectedTokensStrip extends StatelessWidget {
                                 ? AppColors.buy
                                 : AppColors.sell,
                             fontWeight: AppTextStyles.bold,
-                            height: AppSpacing.marketLineHeightTight,
+                            height: MarketsSpacingTokens.marketLineHeightTight,
                           ),
                         ),
                       ],
                     ),
                     if (canRemove) ...[
-                      const SizedBox(width: AppSpacing.comparisonToolRemoveGap),
+                      const SizedBox(
+                        width: MarketsSpacingTokens.comparisonToolRemoveGap,
+                      ),
                       VitInlineIconAction(
                         key: ComparisonToolKeys.removeToken(pair.id),
                         icon: Icons.close_rounded,
                         tooltip: 'Remove ${pair.baseAsset}',
                         onPressed: () => onRemove(pair.id),
                         color: AppColors.text3,
-                        size: AppSpacing.comparisonToolRemoveIcon,
+                        size: MarketsSpacingTokens.comparisonToolRemoveIcon,
                         padding: AppSpacing.zero,
                       ),
                     ],
@@ -154,7 +158,7 @@ class ComparisonTokenPickerCard extends StatelessWidget {
 
     return VitCard(
       key: ComparisonToolKeys.picker,
-      padding: AppSpacing.comparisonToolPickerPadding,
+      padding: MarketsSpacingTokens.comparisonToolPickerPadding,
       child: Column(
         children: [
           Row(
@@ -177,24 +181,25 @@ class ComparisonTokenPickerCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.comparisonToolPickerGap),
+          const SizedBox(height: MarketsSpacingTokens.comparisonToolPickerGap),
           Material(
             key: ComparisonToolKeys.pickerSearch,
             color: AppColors.surface2,
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              height: AppSpacing.comparisonToolPickerSearchHeight,
+              height: MarketsSpacingTokens.comparisonToolPickerSearchHeight,
               child: Padding(
-                padding: AppSpacing.comparisonToolPickerSearchPadding,
+                padding: MarketsSpacingTokens.comparisonToolPickerSearchPadding,
                 child: Row(
                   children: [
                     const Icon(
                       Icons.search_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.comparisonToolPickerIcon,
+                      size: MarketsSpacingTokens.comparisonToolPickerIcon,
                     ),
                     const SizedBox(
-                      width: AppSpacing.comparisonToolPickerSearchIconGap,
+                      width: MarketsSpacingTokens
+                          .comparisonToolPickerSearchIconGap,
                     ),
                     Expanded(
                       child: TextField(
@@ -216,13 +221,13 @@ class ComparisonTokenPickerCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.comparisonToolPickerGap),
+          const SizedBox(height: MarketsSpacingTokens.comparisonToolPickerGap),
           if (search.isEmpty)
             Align(
               alignment: Alignment.centerLeft,
               child: Wrap(
-                spacing: AppSpacing.comparisonToolPickerQuickGap,
-                runSpacing: AppSpacing.comparisonToolPickerQuickGap,
+                spacing: MarketsSpacingTokens.comparisonToolPickerQuickGap,
+                runSpacing: MarketsSpacingTokens.comparisonToolPickerQuickGap,
                 children: [
                   for (final id in snapshot.popularPairIds)
                     if (!selectedIds.contains(id))
@@ -242,10 +247,12 @@ class ComparisonTokenPickerCard extends StatelessWidget {
                 ],
               ),
             ),
-          const SizedBox(height: AppSpacing.comparisonToolPickerListGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.comparisonToolPickerListGap,
+          ),
           ConstrainedBox(
             constraints: const BoxConstraints(
-              maxHeight: AppSpacing.comparisonToolPickerListMaxHeight,
+              maxHeight: MarketsSpacingTokens.comparisonToolPickerListMaxHeight,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -279,8 +286,8 @@ class _PickerQuickChip extends StatelessWidget {
       selected: true,
       onTap: onTap,
       accentColor: AppAssetColors.forSymbol(pair.baseAsset),
-      height: AppSpacing.comparisonToolPickerQuickHeight,
-      padding: AppSpacing.comparisonToolPickerQuickPadding,
+      height: MarketsSpacingTokens.comparisonToolPickerQuickHeight,
+      padding: MarketsSpacingTokens.comparisonToolPickerQuickPadding,
     );
   }
 }
@@ -298,16 +305,18 @@ class _PickerRow extends StatelessWidget {
       key: ComparisonToolKeys.pickerToken(pair.id),
       variant: VitCardVariant.ghost,
       borderColor: AppColors.transparent,
-      height: AppSpacing.comparisonToolPickerRowHeight,
-      padding: AppSpacing.comparisonToolPickerRowPadding,
+      height: MarketsSpacingTokens.comparisonToolPickerRowHeight,
+      padding: MarketsSpacingTokens.comparisonToolPickerRowPadding,
       onTap: onTap,
       child: Row(
         children: [
           ComparisonAvatar(
             pair: pair,
-            size: AppSpacing.comparisonToolPickerRowAvatar,
+            size: MarketsSpacingTokens.comparisonToolPickerRowAvatar,
           ),
-          const SizedBox(width: AppSpacing.comparisonToolPickerRowGap),
+          const SizedBox(
+            width: MarketsSpacingTokens.comparisonToolPickerRowGap,
+          ),
           Expanded(
             child: Text(
               pair.baseAsset,

@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/dev/domain/entities/dev_tools_entities.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class DesignSystemFooter extends StatelessWidget {
   const DesignSystemFooter({super.key, required this.snapshot});
@@ -17,7 +18,7 @@ class DesignSystemFooter extends StatelessWidget {
         shape: Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: AppSpacing.devVerticalPaddingX5,
+        padding: AdminSpacingTokens.devVerticalPaddingX5,
         child: Column(
           children: [
             Text(

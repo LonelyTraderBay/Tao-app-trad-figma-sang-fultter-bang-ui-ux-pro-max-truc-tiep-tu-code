@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingProposalsPage extends ConsumerWidget {
   const StakingProposalsPage({super.key, this.shellRenderMode});
@@ -57,7 +58,9 @@ class StakingProposalsPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
@@ -119,7 +122,7 @@ class _ProposalCard extends StatelessWidget {
     return VitCard(
       key: StakingProposalsPage.proposalKey(proposal.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: onVote,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,7 +194,7 @@ class _ProposalCard extends StatelessWidget {
                 onPressed: onVote,
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: AppSpacing.earnHorizontalPaddingX4,
+                padding: EarnSpacingTokens.earnHorizontalPaddingX4,
                 child: const Text('Vote Now'),
               ),
             ],
@@ -211,7 +214,8 @@ class _VoteRatioBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.smRadius,
-      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+      child: SizedBox(
+        height: AppSpacing.pageRhythmCompactInnerGap,
         child: ColoredBox(
           color: AppColors.surface2,
           child: Align(

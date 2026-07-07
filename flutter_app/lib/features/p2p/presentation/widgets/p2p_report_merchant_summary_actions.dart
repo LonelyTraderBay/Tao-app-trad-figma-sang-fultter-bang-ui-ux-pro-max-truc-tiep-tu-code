@@ -9,13 +9,13 @@ class _MerchantSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final merchant = snapshot.merchant;
     return VitCard(
-      padding: AppSpacing.p2pRiskControlsInnerPadding,
+      padding: P2PSpacingTokens.p2pRiskControlsInnerPadding,
       child: Row(
         children: [
           VitAssetAvatar(
             label: merchant.name,
             accentColor: AppModuleAccents.p2p,
-            size: AppSpacing.p2pRiskControlsAvatarSize,
+            size: P2PSpacingTokens.p2pRiskControlsAvatarSize,
             radius: AppRadii.pillRadius,
             border: true,
           ),
@@ -98,7 +98,7 @@ class _ReportActionRow extends StatelessWidget {
       variant: VitCardVariant.ghost,
       borderColor: borderColor,
       background: ColoredBox(color: background),
-      padding: AppSpacing.p2pRiskControlsActionPadding,
+      padding: P2PSpacingTokens.p2pRiskControlsActionPadding,
       onTap: onTap,
       clip: true,
       child: Row(

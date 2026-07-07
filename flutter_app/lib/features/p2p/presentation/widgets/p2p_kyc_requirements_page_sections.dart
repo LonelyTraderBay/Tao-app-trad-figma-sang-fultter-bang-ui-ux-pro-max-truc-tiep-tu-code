@@ -11,7 +11,7 @@ class _KycHero extends StatelessWidget {
       key: P2PKycRequirementsPage.heroKey,
       radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pKycRequirementsCardPadding,
+      padding: P2PSpacingTokens.p2pKycRequirementsCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -75,7 +75,7 @@ class _KycNotice extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pKycRequirementsNoticePadding,
+      padding: P2PSpacingTokens.p2pKycRequirementsNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -135,7 +135,7 @@ class _KycTierCard extends StatelessWidget {
           ColoredBox(
             color: _tierHeaderBackground(tier),
             child: Padding(
-              padding: AppSpacing.p2pKycRequirementsCardPadding,
+              padding: P2PSpacingTokens.p2pKycRequirementsCardPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -176,7 +176,9 @@ class _KycTierCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Row(
                           children: [
                             const Icon(
@@ -214,7 +216,9 @@ class _KycTierCard extends StatelessWidget {
                 for (final requirement in tier.requirements) ...[
                   _RequirementRow(requirement: requirement),
                   if (requirement != tier.requirements.last)
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                 ],
               ],
             ),
@@ -239,14 +243,16 @@ class _KycTierCard extends StatelessWidget {
                 for (final benefit in tier.benefits) ...[
                   _BenefitRow(text: benefit, color: color),
                   if (benefit != tier.benefits.last)
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                 ],
               ],
             ),
           ),
           if (onUpgrade != null)
             Padding(
-              padding: AppSpacing.p2pKycRequirementsTierActionPadding,
+              padding: P2PSpacingTokens.p2pKycRequirementsTierActionPadding,
               child: VitCtaButton(
                 key: P2PKycRequirementsPage.upgradeKey(tier.id),
                 variant: tier.status == P2PKycTierStatus.available
@@ -304,7 +310,7 @@ class _TierSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pKycRequirementsTierSectionPadding,
+      padding: P2PSpacingTokens.p2pKycRequirementsTierSectionPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

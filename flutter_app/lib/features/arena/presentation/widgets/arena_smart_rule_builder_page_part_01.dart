@@ -59,7 +59,7 @@ class _ClarityScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final result = _ClarityResult(score);
     return VitCard(
-      padding: AppSpacing.arenaSmartRuleCardPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,7 +68,7 @@ class _ClarityScoreCard extends StatelessWidget {
               Icon(
                 Icons.shield_outlined,
                 color: result.color,
-                size: AppSpacing.arenaSmartRuleIcon,
+                size: ArenaSpacingTokens.arenaSmartRuleIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -102,7 +102,7 @@ class _ClarityScoreCard extends StatelessWidget {
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
               value: score / 100,
-              minHeight: AppSpacing.arenaSmartRuleProgressHeight,
+              minHeight: ArenaSpacingTokens.arenaSmartRuleProgressHeight,
               color: result.color,
               backgroundColor: AppColors.surface3,
             ),
@@ -139,14 +139,14 @@ class _GuidanceLink extends StatelessWidget {
       key: ArenaSmartRuleBuilderPage.guidanceKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.arenaSmartRuleLinkPadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleLinkPadding,
       onTap: onTap,
       child: Row(
         children: [
           const Icon(
             Icons.help_outline_rounded,
             color: AppColors.primary,
-            size: AppSpacing.arenaSmartRuleIcon,
+            size: ArenaSpacingTokens.arenaSmartRuleIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -161,7 +161,7 @@ class _GuidanceLink extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.primary,
-            size: AppSpacing.arenaSmartRuleIcon,
+            size: ArenaSpacingTokens.arenaSmartRuleIcon,
           ),
         ],
       ),
@@ -240,7 +240,7 @@ class _DomainField extends StatelessWidget {
         borderColor: domain == null
             ? AppColors.borderSolid
             : AppColors.accent20,
-        padding: AppSpacing.arenaSmartRuleSelectorPadding,
+        padding: ArenaSpacingTokens.arenaSmartRuleSelectorPadding,
         onTap: onTap,
         child: Row(
           children: [
@@ -287,7 +287,7 @@ class _ChallengeTypeGrid extends StatelessWidget {
         children: [
           for (final type in types)
             SizedBox(
-              width: AppSpacing.arenaSmartRuleChallengeTypeWidth,
+              width: ArenaSpacingTokens.arenaSmartRuleChallengeTypeWidth,
               child: _ChallengeTypeTile(
                 key: ArenaSmartRuleBuilderPage.challengeTypeKey(type.id),
                 type: type,
@@ -318,7 +318,7 @@ class _ChallengeTypeTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaSmartRuleTilePadding,
+      padding: ArenaSpacingTokens.arenaSmartRuleTilePadding,
       onTap: () {
         HapticFeedback.selectionClick();
         onTap();
@@ -328,7 +328,7 @@ class _ChallengeTypeTile extends StatelessWidget {
           Icon(
             _challengeTypeIcon(type.id),
             color: selected ? AppColors.buy : _challengeTypeColor(type.id),
-            size: AppSpacing.arenaSmartRuleTinyIcon,
+            size: ArenaSpacingTokens.arenaSmartRuleTinyIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

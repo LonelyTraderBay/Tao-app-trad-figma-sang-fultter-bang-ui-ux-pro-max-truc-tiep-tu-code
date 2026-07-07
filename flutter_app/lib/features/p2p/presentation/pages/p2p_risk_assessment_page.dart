@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pRiskVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -74,11 +75,11 @@ class P2PRiskAssessmentPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pRiskAssessmentScrollPadding(
+                    padding: P2PSpacingTokens.p2pRiskAssessmentScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -127,7 +128,7 @@ class _RiskScoreHero extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p),
       ),
       child: Padding(
-        padding: AppSpacing.p2pRiskAssessmentHeroPadding,
+        padding: P2PSpacingTokens.p2pRiskAssessmentHeroPadding,
         child: Column(
           children: [
             SizedBox.square(
@@ -185,14 +186,14 @@ class _RiskInfo extends StatelessWidget {
         side: BorderSide(color: AppModuleAccents.p2p.withValues(alpha: .24)),
       ),
       child: Padding(
-        padding: AppSpacing.p2pRiskAssessmentInnerPadding,
+        padding: P2PSpacingTokens.p2pRiskAssessmentInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.info_outline_rounded,
               color: AppModuleAccents.p2p,
-              size: AppSpacing.p2pRiskControlsInfoIcon,
+              size: P2PSpacingTokens.p2pRiskControlsInfoIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -248,7 +249,7 @@ class _RiskFactorRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2PRiskAssessmentPage.factorKey(factor.id),
-      padding: AppSpacing.p2pRiskAssessmentCardPadding,
+      padding: P2PSpacingTokens.p2pRiskAssessmentCardPadding,
       child: Row(
         children: [
           SizedBox.square(
@@ -281,9 +282,7 @@ class _RiskFactorRow extends StatelessWidget {
                   factor.value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),

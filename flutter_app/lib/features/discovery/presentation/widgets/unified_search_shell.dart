@@ -17,7 +17,7 @@ class _SearchBand extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: AppSpacing.discoverySearchBandPadding,
+          padding: LaunchpadSpacingTokens.discoverySearchBandPadding,
           child: VitSearchBar(
             key: UnifiedSearchPage.searchKey,
             controller: controller,
@@ -98,7 +98,7 @@ class _TrendingChip extends StatelessWidget {
       accentColor: accent,
       tone: VitChoicePillTone.neutral,
       height: AppSpacing.buttonCompact,
-      padding: AppSpacing.discoveryChipHorizontalPadding,
+      padding: LaunchpadSpacingTokens.discoveryChipHorizontalPadding,
       leading: Icon(_iconForKey(query.iconKey), color: accent, size: 13),
     );
   }
@@ -118,7 +118,7 @@ class _ModuleCard extends StatelessWidget {
         HapticFeedback.selectionClick();
         context.go(module.route);
       },
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       borderColor: accent.withValues(alpha: .12),
       child: Row(
         children: [

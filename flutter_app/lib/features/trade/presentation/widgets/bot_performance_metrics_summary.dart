@@ -42,10 +42,10 @@ class _AdvancedMetricsGrid extends StatelessWidget {
     ];
 
     return GridView.count(
-      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
       crossAxisSpacing: _analyticsSpace,
       mainAxisSpacing: _analyticsSpace,
-      childAspectRatio: AppSpacing.tradeBotAnalyticsMetricAspectRatio,
+      childAspectRatio: TradeSpacingTokens.tradeBotAnalyticsMetricAspectRatio,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       children: [for (final item in items) _AdvancedMetricCard(item: item)],
@@ -79,7 +79,7 @@ class _AdvancedMetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +116,7 @@ class _DurationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       density: VitDensity.compact,
       child: SizedBox(
         height: _analyticsDonutExtent,
@@ -146,7 +146,7 @@ class _PerformanceSummaryCard extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       density: VitDensity.compact,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -186,7 +186,7 @@ class _SummaryRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       constraints: const BoxConstraints(minHeight: _analyticsMetricMinExtent),
-      padding: AppSpacing.tradeBotControlPadding,
+      padding: TradeSpacingTokens.tradeBotControlPadding,
       density: VitDensity.compact,
       child: Row(
         children: [
@@ -229,7 +229,7 @@ class _RatingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       density: VitDensity.compact,
       borderColor: _analyticsGreen.withValues(alpha: .22),
       child: Row(

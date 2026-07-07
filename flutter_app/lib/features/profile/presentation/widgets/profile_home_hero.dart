@@ -27,11 +27,11 @@ class _ProfileHero extends StatelessWidget {
               VitAssetAvatar(
                 label: user.fullName,
                 accentColor: AppColors.primary,
-                size: AppSpacing.profileHeroAvatar,
+                size: ProfileSpacingTokens.profileHeroAvatar,
                 radius: AppRadii.cardRadius,
                 border: true,
               ),
-              const SizedBox(width: AppSpacing.profileMenuGap),
+              const SizedBox(width: ProfileSpacingTokens.profileMenuGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +44,9 @@ class _ProfileHero extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       user.email,
                       maxLines: 1,
@@ -53,7 +55,9 @@ class _ProfileHero extends StatelessWidget {
                         color: AppColors.text2,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x2,
@@ -83,7 +87,7 @@ class _ProfileHero extends StatelessWidget {
               Expanded(
                 child: _HeroInfoBox(label: 'UID', value: user.id),
               ),
-              const SizedBox(width: AppSpacing.profileHeroInfoGap),
+              const SizedBox(width: ProfileSpacingTokens.profileHeroInfoGap),
               Expanded(
                 child: Material(
                   color: AppColors.transparent,
@@ -102,7 +106,7 @@ class _ProfileHero extends StatelessWidget {
                         color: copiedReferral
                             ? _profileGreen
                             : AppColors.primarySoft,
-                        size: AppSpacing.profileModuleIcon,
+                        size: ProfileSpacingTokens.profileModuleIcon,
                       ),
                     ),
                   ),
@@ -152,7 +156,7 @@ class _HeroInfoBox extends StatelessWidget {
           side: BorderSide(color: AppColors.onAccent.withValues(alpha: .08)),
         ),
         child: Padding(
-          padding: AppSpacing.profileHeroInfoPadding,
+          padding: ProfileSpacingTokens.profileHeroInfoPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -177,7 +181,7 @@ class _HeroInfoBox extends StatelessWidget {
                   ),
                   if (trailing != null) ...[
                     const SizedBox(
-                      width: AppSpacing.profileHeroInfoTrailingGap,
+                      width: ProfileSpacingTokens.profileHeroInfoTrailingGap,
                     ),
                     trailing!,
                   ],

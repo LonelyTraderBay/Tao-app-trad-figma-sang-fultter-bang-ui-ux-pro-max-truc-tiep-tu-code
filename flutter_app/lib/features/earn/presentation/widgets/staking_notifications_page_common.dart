@@ -10,7 +10,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingNotificationsPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -38,10 +38,10 @@ class _ToggleSwitch extends StatelessWidget {
         onTap: onTap,
         child: VitTogglePill(
           enabled: on,
-          width: AppSpacing.stakingNotificationsSwitchWidth,
-          height: AppSpacing.stakingNotificationsSwitchHeight,
-          knobSize: AppSpacing.stakingNotificationsSwitchThumb,
-          knobMargin: AppSpacing.earnPaddingX1,
+          width: EarnSpacingTokens.stakingNotificationsSwitchWidth,
+          height: EarnSpacingTokens.stakingNotificationsSwitchHeight,
+          knobSize: EarnSpacingTokens.stakingNotificationsSwitchThumb,
+          knobMargin: EarnSpacingTokens.earnPaddingX1,
           activeColor: AppColors.buy,
           inactiveColor: AppColors.primary30,
           inactiveKnobColor: AppColors.onAccent,
@@ -84,9 +84,9 @@ class _UnreadDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnLeftPaddingX2(
+      padding: EarnSpacingTokens.earnLeftPaddingX2(
         true,
-      ).add(AppSpacing.earnTopPaddingX1),
+      ).add(EarnSpacingTokens.earnTopPaddingX1),
       child: SizedBox(
         width: AppSpacing.x2,
         height: AppSpacing.x2,

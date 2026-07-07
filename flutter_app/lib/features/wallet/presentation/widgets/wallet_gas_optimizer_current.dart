@@ -51,23 +51,23 @@ class _CurrentGasTab extends StatelessWidget {
   }
 
   List<Widget> get sectionChildren => [
-        _GasStatusCard(snapshot: snapshot),
-        VitPageSection(
-          label: 'Ch\u1ECDn t\u1ED1c \u0111\u1ED9 giao d\u1ECBch',
-          accentColor: _gasPrimary,
-          innerGap: AppSpacing.pageRhythmStandardInnerGap,
-          children: [
-            for (var i = 0; i < snapshot.levels.length; i++)
-              _GasLevelCard(
-                level: snapshot.levels[i],
-                selected: selectedSpeed == snapshot.levels[i].speed,
-                onTap: () => onSelectSpeed(snapshot.levels[i].speed),
-              ),
-          ],
-        ),
-        _ComparisonCard(comparisons: snapshot.comparisons),
-        _RefreshButton(onPressed: onRefresh),
-      ];
+    _GasStatusCard(snapshot: snapshot),
+    VitPageSection(
+      label: 'Ch\u1ECDn t\u1ED1c \u0111\u1ED9 giao d\u1ECBch',
+      accentColor: _gasPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
+      children: [
+        for (var i = 0; i < snapshot.levels.length; i++)
+          _GasLevelCard(
+            level: snapshot.levels[i],
+            selected: selectedSpeed == snapshot.levels[i].speed,
+            onTap: () => onSelectSpeed(snapshot.levels[i].speed),
+          ),
+      ],
+    ),
+    _ComparisonCard(comparisons: snapshot.comparisons),
+    _RefreshButton(onPressed: onRefresh),
+  ];
 }
 
 class _GasStatusCard extends StatelessWidget {
@@ -96,9 +96,9 @@ class _GasStatusCard extends StatelessWidget {
               Icon(
                 Icons.bolt_rounded,
                 color: color,
-                size: AppSpacing.walletGasIcon,
+                size: WalletSpacingTokens.walletGasIcon,
               ),
-              const SizedBox(width: AppSpacing.walletGasIconGap),
+              const SizedBox(width: WalletSpacingTokens.walletGasIconGap),
               Expanded(
                 child: Text(
                   title,

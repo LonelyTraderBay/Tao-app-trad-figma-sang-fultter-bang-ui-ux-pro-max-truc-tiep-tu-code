@@ -25,7 +25,7 @@ class _ActionTile extends StatelessWidget {
           Icon(
             icon,
             color: color,
-            size: AppSpacing.regulatoryDisclosuresActionIcon,
+            size: TradeSpacingTokens.regulatoryDisclosuresActionIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -40,7 +40,7 @@ class _ActionTile extends StatelessWidget {
           Icon(
             Icons.open_in_new_rounded,
             color: color,
-            size: AppSpacing.regulatoryDisclosuresExternalIcon,
+            size: TradeSpacingTokens.regulatoryDisclosuresExternalIcon,
           ),
         ],
       ),
@@ -65,7 +65,7 @@ class _ContactTile extends StatelessWidget {
           Icon(
             _contactIcon(contact.icon),
             color: _legalPrimary,
-            size: AppSpacing.regulatoryDisclosuresContactIcon,
+            size: TradeSpacingTokens.regulatoryDisclosuresContactIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -90,7 +90,7 @@ class _ContactTile extends StatelessWidget {
           const Icon(
             Icons.open_in_new_rounded,
             color: AppColors.text3,
-            size: AppSpacing.regulatoryDisclosuresExternalIcon,
+            size: TradeSpacingTokens.regulatoryDisclosuresExternalIcon,
           ),
         ],
       ),
@@ -114,7 +114,7 @@ class _DocumentTile extends StatelessWidget {
           Icon(
             _documentIcon(document.icon),
             color: _legalPrimary,
-            size: AppSpacing.regulatoryDisclosuresActionIcon,
+            size: TradeSpacingTokens.regulatoryDisclosuresActionIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -129,7 +129,7 @@ class _DocumentTile extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.regulatoryDisclosuresExternalIcon,
+            size: TradeSpacingTokens.regulatoryDisclosuresExternalIcon,
           ),
         ],
       ),

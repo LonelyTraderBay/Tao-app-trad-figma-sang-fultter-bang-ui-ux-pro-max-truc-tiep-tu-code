@@ -11,7 +11,7 @@ class _SuccessToast extends StatelessWidget {
       key: StakingAutoCompoundPage.successToastKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -54,7 +54,7 @@ class _CheckBoxIndicator extends StatelessWidget {
           borderRadius: AppRadii.smRadius,
           side: BorderSide(
             color: checked ? AppColors.buy : AppColors.borderSolid,
-            width: AppSpacing.stakingAutoCompoundCheckBorderWidth,
+            width: EarnSpacingTokens.stakingAutoCompoundCheckBorderWidth,
           ),
         ),
         child: checked
@@ -87,10 +87,10 @@ class _ToggleSwitch extends StatelessWidget {
         onTap: onTap,
         child: VitTogglePill(
           enabled: enabled,
-          width: AppSpacing.stakingAutoCompoundToggleWidth,
-          height: AppSpacing.stakingAutoCompoundToggleHeight,
+          width: EarnSpacingTokens.stakingAutoCompoundToggleWidth,
+          height: EarnSpacingTokens.stakingAutoCompoundToggleHeight,
           knobSize: AppSpacing.x5,
-          knobMargin: AppSpacing.earnPaddingX1,
+          knobMargin: EarnSpacingTokens.earnPaddingX1,
           activeColor: AppColors.buy,
           inactiveColor: AppColors.surface3,
           inactiveKnobColor: AppColors.onAccent,

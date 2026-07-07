@@ -18,11 +18,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-const _blockedBodyLineRatio = AppSpacing.arenaBlockedBodyLineHeight;
-const _blockedDialogLineRatio = AppSpacing.arenaBlockedDialogLineHeight;
-const _blockedDividerExtent = AppSpacing.arenaPointsDividerHeight;
-const _blockedTinyGap = AppSpacing.arenaBlockedTinyGap;
+const _blockedBodyLineRatio = ArenaSpacingTokens.arenaBlockedBodyLineHeight;
+const _blockedDialogLineRatio = ArenaSpacingTokens.arenaBlockedDialogLineHeight;
+const _blockedDividerExtent = ArenaSpacingTokens.arenaPointsDividerHeight;
+const _blockedTinyGap = ArenaSpacingTokens.arenaBlockedTinyGap;
 
 class ArenaBlockedUsersPage extends ConsumerStatefulWidget {
   const ArenaBlockedUsersPage({super.key, this.shellRenderMode});
@@ -90,10 +91,12 @@ class _ArenaBlockedUsersPageState extends ConsumerState<ArenaBlockedUsersPage> {
                   child: SingleChildScrollView(
                     key: ArenaBlockedUsersPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: _blockedUsers.isEmpty
                         ? VitPageContent(
-         rhythm: VitPageRhythm.standard,
+                            rhythm: VitPageRhythm.standard,
                             key: ArenaBlockedUsersPage.emptyKey,
                             padding: VitContentPadding.none,
                             children: [
@@ -171,7 +174,7 @@ class _BlockInfoBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaBlockedCardPadding,
+      padding: ArenaSpacingTokens.arenaBlockedCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,7 +260,7 @@ class _BlockedUserRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.arenaBlockedRowPadding,
+          padding: ArenaSpacingTokens.arenaBlockedRowPadding,
           child: Row(
             children: [
               _BlockedAvatar(user: user),
@@ -341,7 +344,7 @@ class _BlockedAvatar extends StatelessWidget {
         : Icons.smart_toy_outlined;
 
     return SizedBox.square(
-      dimension: AppSpacing.arenaBlockedAvatarBox,
+      dimension: ArenaSpacingTokens.arenaBlockedAvatarBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: 0.12),
@@ -351,7 +354,7 @@ class _BlockedAvatar extends StatelessWidget {
           child: Icon(
             icon,
             color: color.withValues(alpha: 0.78),
-            size: AppSpacing.arenaBlockedAvatarIcon,
+            size: ArenaSpacingTokens.arenaBlockedAvatarIcon,
           ),
         ),
       ),
@@ -375,14 +378,14 @@ class _SmallActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        minWidth: AppSpacing.arenaBlockedActionMinWidth,
+        minWidth: ArenaSpacingTokens.arenaBlockedActionMinWidth,
       ),
       child: VitChoicePill(
         label: label,
         selected: true,
         onTap: onTap,
         accentColor: accentColor,
-        padding: AppSpacing.arenaBlockedActionPadding,
+        padding: ArenaSpacingTokens.arenaBlockedActionPadding,
       ),
     );
   }
@@ -449,7 +452,7 @@ class _ToneIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.arenaBlockedToneIconBox,
+      dimension: ArenaSpacingTokens.arenaBlockedToneIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: 0.12),
@@ -459,7 +462,7 @@ class _ToneIcon extends StatelessWidget {
           child: Icon(
             icon,
             color: color,
-            size: AppSpacing.arenaBlockedToneIcon,
+            size: ArenaSpacingTokens.arenaBlockedToneIcon,
           ),
         ),
       ),

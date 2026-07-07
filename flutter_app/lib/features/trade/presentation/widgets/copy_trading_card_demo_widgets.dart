@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/copy_trading_card_demo_primitives.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 final class CopyTradingCardDemoUiKeys {
   const CopyTradingCardDemoUiKeys._();
@@ -50,7 +51,7 @@ class CopyTradingVariantSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           variant: VitCardVariant.standard,
-          padding: AppSpacing.tradeBotCopyDemoCardPadding,
+          padding: TradeSpacingTokens.tradeBotCopyDemoCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -102,14 +103,14 @@ class _HeroCopyCard extends StatelessWidget {
       key: CopyTradingCardDemoUiKeys.cardKey('hero'),
       variant: VitCardVariant.standard,
       radius: VitCardRadius.large,
-      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoPanelPadding,
       borderColor: AppColors.borderSolid,
       child: Column(
         children: [
           VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.large,
-            padding: AppSpacing.tradeBotCopyDemoPanelPadding,
+            padding: TradeSpacingTokens.tradeBotCopyDemoPanelPadding,
             borderColor: AppColors.cardBorder,
             background: const ColoredBox(color: AppColors.surface),
             child: Column(
@@ -178,7 +179,7 @@ class _TabularCopyCard extends StatelessWidget {
       key: CopyTradingCardDemoUiKeys.cardKey('tabular'),
       variant: VitCardVariant.standard,
       radius: VitCardRadius.large,
-      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoPanelPadding,
       child: Column(
         children: [
           _CopyCardHeader(),
@@ -236,7 +237,7 @@ class _CompactCopyCard extends StatelessWidget {
       key: CopyTradingCardDemoUiKeys.cardKey('compact'),
       variant: VitCardVariant.standard,
       radius: VitCardRadius.large,
-      padding: AppSpacing.tradeBotCopyDemoPanelPadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoPanelPadding,
       child: Column(
         children: [
           _CopyCardHeader(),
@@ -280,12 +281,12 @@ class _CopyCardHeader extends StatelessWidget {
         const VitCard(
           variant: VitCardVariant.ghost,
           radius: VitCardRadius.standard,
-          padding: AppSpacing.tradeBotCopyDemoCardPadding,
+          padding: TradeSpacingTokens.tradeBotCopyDemoCardPadding,
           background: ColoredBox(color: AppColors.primary),
           child: Icon(
             Icons.dashboard_customize_outlined,
             color: AppColors.navCenterIcon,
-            size: AppSpacing.tradeBotClientMoneyProtectionGap,
+            size: TradeSpacingTokens.tradeBotClientMoneyProtectionGap,
           ),
         ),
         const SizedBox(width: AppSpacing.x4),
@@ -327,7 +328,7 @@ class _SecondaryMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCopyDemoCardPadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -374,7 +375,7 @@ class _TableMetricRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.tradeBotCopyDemoDividerPadding,
+          padding: TradeSpacingTokens.tradeBotCopyDemoDividerPadding,
           child: Row(
             children: [
               if (icon != null) ...[
@@ -434,7 +435,7 @@ class _CompactMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.tradeBotCopyDemoCompactPadding,
+      padding: TradeSpacingTokens.tradeBotCopyDemoCompactPadding,
       borderColor: emphasized ? AppColors.primary40 : null,
       background: const ColoredBox(color: AppColors.bg),
       child: Column(

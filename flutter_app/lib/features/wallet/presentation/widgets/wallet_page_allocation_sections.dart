@@ -23,7 +23,9 @@ class WalletAllocationCard extends StatelessWidget {
       child: Row(
         children: [
           CustomPaint(
-            size: const Size.square(AppSpacing.walletAllocationChartSize),
+            size: const Size.square(
+              WalletSpacingTokens.walletAllocationChartSize,
+            ),
             painter: _AllocationPainter(assets: assets, total: total),
           ),
           const SizedBox(width: AppSpacing.contentPad),
@@ -34,14 +36,15 @@ class WalletAllocationCard extends StatelessWidget {
                   Row(
                     children: [
                       SizedBox(
-                        width: AppSpacing.walletAllocationLegendMarker,
-                        height: AppSpacing.walletAllocationLegendMarker,
+                        width: WalletSpacingTokens.walletAllocationLegendMarker,
+                        height:
+                            WalletSpacingTokens.walletAllocationLegendMarker,
                         child: ClipOval(
                           child: ColoredBox(color: Color(asset.colorHex)),
                         ),
                       ),
                       const SizedBox(
-                        width: AppSpacing.walletAllocationLegendGap,
+                        width: WalletSpacingTokens.walletAllocationLegendGap,
                       ),
                       Expanded(
                         child: Text(
@@ -64,7 +67,7 @@ class WalletAllocationCard extends StatelessWidget {
                   ),
                   if (asset != assets.take(6).last)
                     const SizedBox(
-                      height: AppSpacing.walletAllocationLegendItemGap,
+                      height: WalletSpacingTokens.walletAllocationLegendItemGap,
                     ),
                 ],
               ],
@@ -87,11 +90,11 @@ class _AllocationPainter extends CustomPainter {
     if (total <= 0) {
       final trackPaint = Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = AppSpacing.walletAllocationChartStroke
+        ..strokeWidth = WalletSpacingTokens.walletAllocationChartStroke
         ..color = AppColors.surface3;
       final rect = Offset.zero & size;
       canvas.drawArc(
-        rect.deflate(AppSpacing.walletAllocationChartInset),
+        rect.deflate(WalletSpacingTokens.walletAllocationChartInset),
         -math.pi / 2,
         math.pi * 2,
         false,
@@ -100,7 +103,7 @@ class _AllocationPainter extends CustomPainter {
       final centerPaint = Paint()..color = _walletPanel;
       canvas.drawCircle(
         rect.center,
-        AppSpacing.walletAllocationCenterRadius,
+        WalletSpacingTokens.walletAllocationCenterRadius,
         centerPaint,
       );
       return;
@@ -110,12 +113,12 @@ class _AllocationPainter extends CustomPainter {
     var start = -math.pi / 2;
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = AppSpacing.walletAllocationChartStroke;
+      ..strokeWidth = WalletSpacingTokens.walletAllocationChartStroke;
     for (final asset in assets.take(6)) {
       final sweep = (asset.usdValue / total) * math.pi * 2;
       paint.color = Color(asset.colorHex).withValues(alpha: .88);
       canvas.drawArc(
-        rect.deflate(AppSpacing.walletAllocationChartInset),
+        rect.deflate(WalletSpacingTokens.walletAllocationChartInset),
         start,
         sweep,
         false,
@@ -126,7 +129,7 @@ class _AllocationPainter extends CustomPainter {
     final centerPaint = Paint()..color = _walletPanel;
     canvas.drawCircle(
       rect.center,
-      AppSpacing.walletAllocationCenterRadius,
+      WalletSpacingTokens.walletAllocationCenterRadius,
       centerPaint,
     );
   }

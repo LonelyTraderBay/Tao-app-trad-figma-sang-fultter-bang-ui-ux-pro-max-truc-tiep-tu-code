@@ -60,8 +60,9 @@ void main() {
   });
 
   test('VitTabBar segment tier implements mandatory S1 contract', () {
-    final source = File('$repoRoot/lib/shared/widgets/vit_tab_bar.dart')
-        .readAsStringSync();
+    final source = File(
+      '$repoRoot/lib/shared/widgets/vit_tab_bar.dart',
+    ).readAsStringSync();
 
     expect(source, contains('VitTabBarVariant.segment'));
     expect(source, contains('AppColors.primary12'));
@@ -70,18 +71,18 @@ void main() {
   });
 
   test('VitSegmentedTabBar delegates to VitTabBar.segment', () {
-    final source =
-        File('$repoRoot/lib/shared/widgets/vit_segmented_tab_bar.dart')
-            .readAsStringSync();
+    final source = File(
+      '$repoRoot/lib/shared/widgets/vit_segmented_tab_bar.dart',
+    ).readAsStringSync();
 
     expect(source, contains('VitTabBarVariant.segment'));
     expect(source, contains('Do **not** wrap in [VitCard]'));
   });
 
   test('VitSegmentedChoice implements mandatory S2 contract', () {
-    final source =
-        File('$repoRoot/lib/shared/widgets/vit_segmented_choice.dart')
-            .readAsStringSync();
+    final source = File(
+      '$repoRoot/lib/shared/widgets/vit_segmented_choice.dart',
+    ).readAsStringSync();
 
     expect(source, contains('buySell'));
     expect(source, contains('borderless = true'));
@@ -89,8 +90,9 @@ void main() {
   });
 
   test('AppSpacing exposes segment pill tokens', () {
-    final source = File('$repoRoot/lib/app/theme/app_spacing.dart')
-        .readAsStringSync();
+    final source = File(
+      '$repoRoot/lib/app/theme/app_spacing.dart',
+    ).readAsStringSync();
 
     for (final token in [
       'tabBarPillVertical',

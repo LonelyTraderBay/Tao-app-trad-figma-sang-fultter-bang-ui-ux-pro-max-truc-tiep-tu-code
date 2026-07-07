@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_high_risk_state_panel.dart'
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WalletTokenRevokeSheet extends StatelessWidget {
   const WalletTokenRevokeSheet({super.key, required this.preview});
@@ -42,7 +43,7 @@ class WalletTokenRevokeSheet extends StatelessWidget {
                   : 'Single approval review',
               density: VitDensity.compact,
             ),
-            const SizedBox(height: AppSpacing.walletTokenNoticeGap),
+            const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
             VitCard(
               density: VitDensity.compact,
               variant: VitCardVariant.inner,
@@ -60,7 +61,7 @@ class WalletTokenRevokeSheet extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.walletTokenNoticeGap),
+            const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
             Row(
               children: [
                 Expanded(
@@ -128,7 +129,7 @@ class _TokenSheetButton extends StatelessWidget {
         variant: danger
             ? VitCtaButtonVariant.danger
             : VitCtaButtonVariant.secondary,
-        height: AppSpacing.walletTokenSheetButtonHeight,
+        height: WalletSpacingTokens.walletTokenSheetButtonHeight,
         child: Text(label),
       ),
     );

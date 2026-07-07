@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part 'launchpad_webhooks_page_part_01.dart';
 part 'launchpad_webhooks_page_part_02.dart';
@@ -174,7 +175,8 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
                           color: AppColors.divider,
                         ),
                         Padding(
-                          padding: AppSpacing.launchpadHorizontalContentPadding,
+                          padding: LaunchpadSpacingTokens
+                              .launchpadHorizontalContentPadding,
                           child: _WebhookTabs(
                             activeTab: _activeTab,
                             onChanged: (tab) =>
@@ -200,7 +202,7 @@ class _LaunchpadWebhooksPageState extends ConsumerState<LaunchpadWebhooksPage> {
                           bottom: scrollEndPadding,
                         ),
                         child: VitPageContent(
-       rhythm: VitPageRhythm.standard,
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
                           children: [

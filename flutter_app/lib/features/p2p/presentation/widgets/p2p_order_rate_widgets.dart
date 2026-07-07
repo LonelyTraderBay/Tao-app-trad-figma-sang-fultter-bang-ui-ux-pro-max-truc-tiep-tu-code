@@ -9,7 +9,7 @@ class _MerchantSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pOrderRateCardPadding,
+      padding: P2PSpacingTokens.p2pOrderRateCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -58,7 +58,7 @@ class _RatingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderRateCardPadding,
+      padding: P2PSpacingTokens.p2pOrderRateCardPadding,
       child: Column(
         children: [
           Text(
@@ -117,7 +117,7 @@ class _StarButton extends StatelessWidget {
       selected: selected,
       onTap: onPressed,
       height: AppSpacing.buttonCompact + AppSpacing.x3,
-      padding: AppSpacing.p2pOrderRateStarChipPadding,
+      padding: P2PSpacingTokens.p2pOrderRateStarChipPadding,
       accentColor: AppColors.warn,
       leading: Icon(selected ? Icons.star_rounded : Icons.star_border_rounded),
       semanticLabel: '$rating stars',
@@ -189,7 +189,7 @@ class _TagChip extends StatelessWidget {
       selected: selected,
       onTap: onPressed,
       height: AppSpacing.buttonCompact,
-      padding: AppSpacing.p2pOrderRateTagChipPadding,
+      padding: P2PSpacingTokens.p2pOrderRateTagChipPadding,
       accentColor: AppColors.warn,
       leading: Icon(_tagIcon(tag.iconKey)),
     );
@@ -283,7 +283,7 @@ class _SuccessView extends StatelessWidget {
     return Center(
       child: VitCard(
         radius: VitCardRadius.large,
-        padding: AppSpacing.p2pOrderLifecycleSuccessPadding,
+        padding: P2PSpacingTokens.p2pOrderLifecycleSuccessPadding,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -291,8 +291,8 @@ class _SuccessView extends StatelessWidget {
               color: AppColors.buy15,
               borderRadius: AppRadii.cardLargeRadius,
               child: const SizedBox(
-                width: AppSpacing.p2pOrderRatingSuccessIconBox,
-                height: AppSpacing.p2pOrderRatingSuccessIconBox,
+                width: P2PSpacingTokens.p2pOrderRatingSuccessIconBox,
+                height: P2PSpacingTokens.p2pOrderRatingSuccessIconBox,
                 child: Center(
                   child: Icon(
                     Icons.check_circle_outline,

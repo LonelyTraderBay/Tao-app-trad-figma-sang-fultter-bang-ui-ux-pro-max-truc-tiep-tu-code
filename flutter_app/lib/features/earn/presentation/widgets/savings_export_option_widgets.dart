@@ -52,13 +52,13 @@ class _FormatCard extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: selected ? AppModuleAccents.earn : AppColors.cardBorder,
       onTap: onTap,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         children: [
           Icon(
             Icons.description_outlined,
             color: color,
-            size: AppSpacing.earnExportFormatIcon,
+            size: EarnSpacingTokens.earnExportFormatIcon,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
@@ -75,7 +75,7 @@ class _FormatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.earnExportCardLineHeight,
+              height: EarnSpacingTokens.earnExportCardLineHeight,
             ),
           ),
         ],
@@ -193,7 +193,7 @@ class _OptionRow extends StatelessWidget {
       variant: VitCardVariant.standard,
       radius: VitCardRadius.standard,
       onTap: onTap,
-      padding: AppSpacing.earnCardPaddingX4X3,
+      padding: EarnSpacingTokens.earnCardPaddingX4X3,
       child: Row(
         children: [
           Icon(_iconFor(option.iconKey), color: color, size: AppSpacing.iconMd),

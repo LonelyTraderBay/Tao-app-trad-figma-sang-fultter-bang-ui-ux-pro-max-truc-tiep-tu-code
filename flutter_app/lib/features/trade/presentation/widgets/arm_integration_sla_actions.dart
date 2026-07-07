@@ -20,7 +20,7 @@ class _LatencyCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
-            height: AppSpacing.armIntegrationDividerHeight,
+            height: TradeSpacingTokens.armIntegrationDividerHeight,
             color: _armBorder,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -111,7 +111,7 @@ class _ProgressRow extends StatelessWidget {
         ClipRRect(
           borderRadius: AppRadii.xlRadius,
           child: SizedBox(
-            height: AppSpacing.armIntegrationProgressHeight,
+            height: TradeSpacingTokens.armIntegrationProgressHeight,
             child: Stack(
               children: [
                 const ColoredBox(color: _armPanel2),
@@ -212,7 +212,7 @@ class _SectionLabel extends StatelessWidget {
         Expanded(
           child: VitSectionHeader(
             title: text,
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             variant: VitSectionHeaderVariant.accentBar,
             accentColor: _armPrimary,
           ),

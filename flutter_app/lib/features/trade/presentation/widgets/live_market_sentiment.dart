@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/live_market_common_widgets.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class LiveMarketSentimentTab extends StatelessWidget {
   const LiveMarketSentimentTab({required this.snapshot, super.key});
@@ -25,7 +26,7 @@ class LiveMarketSentimentTab extends StatelessWidget {
                 color: liveMarketPurple,
                 title: 'Market Sentiment',
               ),
-              const SizedBox(height: AppSpacing.liveMarketCardGap),
+              const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
               Text(
                 '${snapshot.sentiment.score}',
                 textAlign: TextAlign.center,
@@ -36,7 +37,7 @@ class LiveMarketSentimentTab extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: AppSpacing.liveMarketCardGap),
+        const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
         LiveMarketCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,7 +49,7 @@ class LiveMarketSentimentTab extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.liveMarketCardGap),
+              const SizedBox(height: MarketsSpacingTokens.liveMarketCardGap),
               for (final indexed in const [
                 'Open Interest',
                 'Long/Short Ratio',
@@ -78,7 +79,7 @@ class _SourceRow extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppColors.transparent,
-      padding: AppSpacing.liveMarketRowPadding,
+      padding: MarketsSpacingTokens.liveMarketRowPadding,
       child: Row(
         children: [
           Expanded(

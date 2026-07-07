@@ -11,7 +11,8 @@ class _ProjectsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (final project in projects) ...[
-          if (project != projects.first) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (project != projects.first)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _HistoricalProjectCard(project: project),
         ],
       ],

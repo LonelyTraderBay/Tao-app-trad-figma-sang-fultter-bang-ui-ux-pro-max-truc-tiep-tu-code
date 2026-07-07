@@ -10,7 +10,7 @@ class _ComponentLine extends StatelessWidget {
     final color = _componentColor(component.type);
 
     return Padding(
-      padding: AppSpacing.arenaBottomPaddingX3,
+      padding: ArenaSpacingTokens.arenaBottomPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,7 +25,7 @@ class _ComponentLine extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaProductionCompactLineHeight,
+                    height: ArenaSpacingTokens.arenaProductionCompactLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -33,7 +33,7 @@ class _ComponentLine extends StatelessWidget {
                   component.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaProductionBodyLineHeight,
+                    height: ArenaSpacingTokens.arenaProductionBodyLineHeight,
                   ),
                 ),
               ],
@@ -74,7 +74,7 @@ class _DictionaryLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaBottomPaddingX3,
+      padding: ArenaSpacingTokens.arenaBottomPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -89,7 +89,7 @@ class _DictionaryLine extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaProductionCompactLineHeight,
+                    height: ArenaSpacingTokens.arenaProductionCompactLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -97,7 +97,7 @@ class _DictionaryLine extends StatelessWidget {
                   item.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaProductionBodyLineHeight,
+                    height: ArenaSpacingTokens.arenaProductionBodyLineHeight,
                   ),
                 ),
               ],
@@ -117,14 +117,14 @@ class _ChecklistLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaBottomPaddingX2,
+      padding: ArenaSpacingTokens.arenaBottomPaddingX2,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.check_circle_outline,
             color: AppColors.buy,
-            size: AppSpacing.arenaProductionChecklistIcon,
+            size: ArenaSpacingTokens.arenaProductionChecklistIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -132,7 +132,7 @@ class _ChecklistLine extends StatelessWidget {
               label,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.arenaProductionCheckLineHeight,
+                height: ArenaSpacingTokens.arenaProductionCheckLineHeight,
               ),
             ),
           ),
@@ -158,7 +158,7 @@ class _InternalOnlyFooter extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text3,
-            size: AppSpacing.arenaProductionChecklistIcon,
+            size: ArenaSpacingTokens.arenaProductionChecklistIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -166,7 +166,7 @@ class _InternalOnlyFooter extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.arenaProductionBodyLineHeight,
+                height: ArenaSpacingTokens.arenaProductionBodyLineHeight,
               ),
             ),
           ),
@@ -221,8 +221,8 @@ class _TintIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = small
-        ? AppSpacing.arenaEcosystemTintIconBoxSmall
-        : AppSpacing.arenaEcosystemTintIconBox;
+        ? ArenaSpacingTokens.arenaEcosystemTintIconBoxSmall
+        : ArenaSpacingTokens.arenaEcosystemTintIconBox;
     return SizedBox(
       width: size,
       height: size,
@@ -238,8 +238,8 @@ class _TintIcon extends StatelessWidget {
           icon,
           color: color,
           size: small
-              ? AppSpacing.arenaEcosystemTintGlyphSmall
-              : AppSpacing.arenaEcosystemTintGlyph,
+              ? ArenaSpacingTokens.arenaEcosystemTintGlyphSmall
+              : ArenaSpacingTokens.arenaEcosystemTintGlyph,
         ),
       ),
     );
@@ -340,7 +340,7 @@ class _StateLegendItem extends StatelessWidget {
         Icon(
           _stateIcon(state),
           color: color,
-          size: AppSpacing.arenaProductionStateIcon,
+          size: ArenaSpacingTokens.arenaProductionStateIcon,
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(
@@ -368,20 +368,20 @@ class _StateMatrixPill extends StatelessWidget {
       opacity: active ? 1 : .32,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          minWidth: AppSpacing.arenaProductionStateMatrixMinWidth,
+          minWidth: ArenaSpacingTokens.arenaProductionStateMatrixMinWidth,
         ),
         child: Material(
           color: active ? color.withValues(alpha: .12) : AppColors.surface2,
           borderRadius: AppRadii.xsRadius,
           child: Padding(
-            padding: AppSpacing.arenaProductionPillPadding,
+            padding: ArenaSpacingTokens.arenaProductionPillPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   _stateIcon(state),
                   color: color,
-                  size: AppSpacing.arenaProductionStateMatrixIcon,
+                  size: ArenaSpacingTokens.arenaProductionStateMatrixIcon,
                 ),
                 const SizedBox(width: AppSpacing.x1),
                 Flexible(

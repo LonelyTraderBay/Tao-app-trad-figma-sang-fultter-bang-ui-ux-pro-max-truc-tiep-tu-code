@@ -19,6 +19,8 @@ import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_formatters.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_terminal_header.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/advanced_chart_header_toolbar.dart';
 part '../widgets/advanced_chart_area_actions.dart';
@@ -101,7 +103,8 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                     VitTradeTerminalHeader(
                       symbol: pair.symbol,
                       showBack: true,
-                      onBack: () => context.go(AppRoutePaths.tradePair(pair.id)),
+                      onBack: () =>
+                          context.go(AppRoutePaths.tradePair(pair.id)),
                       pairTapKey: AdvancedChartPage.pairSelectorKey,
                       onPairTap: () => context.go(AppRoutePaths.markets),
                       priceLabel: formatTradePrice(pair.price),
@@ -118,7 +121,8 @@ class _AdvancedChartPageState extends ConsumerState<AdvancedChartPage> {
                           setState(() => _timeframe = value),
                       onChartTypeChanged: (value) =>
                           setState(() => _chartType = value),
-                      onIndicators: () => setState(() => _showIndicators = true),
+                      onIndicators: () =>
+                          setState(() => _showIndicators = true),
                     ),
                     _ChartArea(
                       candles: snapshot.candles,

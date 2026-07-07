@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 part 'staking_custody_actions_common.dart';
 part 'staking_custody_pie_chart.dart';
@@ -40,7 +41,7 @@ class StakingCustodyMetricTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +58,7 @@ class StakingCustodyMetricTile extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.baseMedium.copyWith(
-              height: AppSpacing.stakingCustodyMetricValueLineHeight,
+              height: EarnSpacingTokens.stakingCustodyMetricValueLineHeight,
             ),
           ),
         ],
@@ -76,7 +77,7 @@ class StakingCustodyLegendRow extends StatelessWidget {
     final color = stakingCustodyToneColor(item.tone);
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -102,7 +103,8 @@ class StakingCustodyLegendRow extends StatelessWidget {
                   item.description,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.stakingCustodyDescriptionLineHeight,
+                    height:
+                        EarnSpacingTokens.stakingCustodyDescriptionLineHeight,
                   ),
                 ),
               ],
@@ -133,7 +135,7 @@ class StakingCustodyStorageTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: 0.18),
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -159,7 +161,7 @@ class StakingCustodyStorageTile extends StatelessWidget {
             description,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingCustodyDescriptionLineHeight,
+              height: EarnSpacingTokens.stakingCustodyDescriptionLineHeight,
             ),
           ),
         ],
@@ -177,7 +179,7 @@ class StakingCustodyReconciliationLogCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         children: [
           Row(
@@ -276,8 +278,8 @@ class StakingCustodyMatchStatus extends StatelessWidget {
             shape: CircleBorder(),
           ),
           child: SizedBox(
-            width: AppSpacing.stakingCustodyStatusDot,
-            height: AppSpacing.stakingCustodyStatusDot,
+            width: EarnSpacingTokens.stakingCustodyStatusDot,
+            height: EarnSpacingTokens.stakingCustodyStatusDot,
           ),
         ),
         const SizedBox(width: AppSpacing.x1),
@@ -302,7 +304,7 @@ class StakingCustodyAddressRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           Expanded(

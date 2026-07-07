@@ -20,17 +20,16 @@ List<Widget> _newsPageChildren({
       ),
     ],
     NewsScreenState.empty ||
-    NewsScreenState.offline when snapshot.articles.isEmpty =>
-      [
-        VitEmptyState(
-          key: NewsPage.emptyKey,
-          icon: Icons.newspaper_rounded,
-          title: 'Không có tin tức nào',
-          message: activeType == null
-              ? 'Hãy quay lại sau để xem cập nhật mới.'
-              : 'Không có tin thuộc danh mục đã chọn.',
-        ),
-      ],
+    NewsScreenState.offline when snapshot.articles.isEmpty => [
+      VitEmptyState(
+        key: NewsPage.emptyKey,
+        icon: Icons.newspaper_rounded,
+        title: 'Không có tin tức nào',
+        message: activeType == null
+            ? 'Hãy quay lại sau để xem cập nhật mới.'
+            : 'Không có tin thuộc danh mục đã chọn.',
+      ),
+    ],
     _ => _newsFeedSections(snapshot: snapshot, onArticleTap: onArticleTap),
   };
 }
@@ -97,17 +96,17 @@ class _NewsFilterBar extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: SizedBox(
-        height: AppSpacing.newsFilterBarHeight,
+        height: NewsSpacingTokens.newsFilterBarHeight,
         child: ListView(
           scrollDirection: Axis.horizontal,
-          padding: AppSpacing.newsFilterBarPadding,
+          padding: NewsSpacingTokens.newsFilterBarPadding,
           children: [
             VitFilterChip(
               key: NewsPage.filterAllKey,
               label: 'Tất cả',
               active: activeType == null,
               color: AppColors.primary,
-              padding: AppSpacing.newsFilterChipPadding,
+              padding: NewsSpacingTokens.newsFilterChipPadding,
               onTap: () => onSelected(null),
             ),
             const SizedBox(width: AppSpacing.x3),
@@ -117,7 +116,7 @@ class _NewsFilterBar extends StatelessWidget {
                 label: '${type.emoji}  ${type.label}',
                 active: activeType == type,
                 color: type.color,
-                padding: AppSpacing.newsFilterChipPadding,
+                padding: NewsSpacingTokens.newsFilterChipPadding,
                 onTap: () => onSelected(type),
               ),
               const SizedBox(width: AppSpacing.x3),
@@ -165,11 +164,13 @@ class _NewsArticleCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _ArticleMeta(article: article, pinned: pinned),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     Text(
                       article.title,
                       style: AppTextStyles.body.copyWith(
-                        height: AppSpacing.newsTitleLineHeight,
+                        height: NewsSpacingTokens.newsTitleLineHeight,
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
@@ -180,7 +181,7 @@ class _NewsArticleCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.newsSummaryLineHeight,
+                        height: NewsSpacingTokens.newsSummaryLineHeight,
                       ),
                     ),
                   ],
@@ -188,11 +189,11 @@ class _NewsArticleCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.rowGap),
               const Padding(
-                padding: AppSpacing.newsChevronPadding,
+                padding: NewsSpacingTokens.newsChevronPadding,
                 child: Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.newsChevronIconSize,
+                  size: NewsSpacingTokens.newsChevronIconSize,
                 ),
               ),
             ],
@@ -236,7 +237,7 @@ class _ArticleMeta extends StatelessWidget {
         if (pinned)
           const Icon(
             Icons.push_pin_rounded,
-            size: AppSpacing.newsSheetCalendarIconSize,
+            size: NewsSpacingTokens.newsSheetCalendarIconSize,
             color: AppColors.primary,
           ),
         VitAccentPill(
@@ -249,7 +250,7 @@ class _ArticleMeta extends StatelessWidget {
           children: [
             const Icon(
               Icons.calendar_today_rounded,
-              size: AppSpacing.newsCalendarIconSize,
+              size: NewsSpacingTokens.newsCalendarIconSize,
               color: AppColors.text3,
             ),
             const SizedBox(width: AppSpacing.x1),
@@ -257,7 +258,7 @@ class _ArticleMeta extends StatelessWidget {
               article.publishedAtLabel,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.newsLineHeightTight,
+                height: NewsSpacingTokens.newsLineHeightTight,
               ),
             ),
           ],
@@ -275,7 +276,7 @@ class _TypeAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.newsArticleAvatarSize,
+      dimension: NewsSpacingTokens.newsArticleAvatarSize,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: type.color.withValues(alpha: .18),

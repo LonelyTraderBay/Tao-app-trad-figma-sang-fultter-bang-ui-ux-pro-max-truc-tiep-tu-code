@@ -9,7 +9,7 @@ class _StepsBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -82,7 +82,7 @@ class _BulletsBlock extends StatelessWidget {
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
       child: VitPageContent(
-     rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
@@ -93,8 +93,7 @@ class _BulletsBlock extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          for (final item in items)
-            _BulletRow(item: item, color: titleColor),
+          for (final item in items) _BulletRow(item: item, color: titleColor),
         ],
       ),
     );

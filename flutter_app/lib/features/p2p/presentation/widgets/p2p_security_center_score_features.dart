@@ -80,7 +80,9 @@ class _SecurityScoreCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Điểm bảo mật', style: AppTextStyles.sectionTitle),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       snapshot.scoreSubtitle,
                       style: AppTextStyles.micro.copyWith(
@@ -109,7 +111,8 @@ class _SecurityScoreCard extends StatelessWidget {
                     dimension: _p2pSecurityScoreTrack,
                     child: CircularProgressIndicator(
                       value: progress,
-                      strokeWidth: AppSpacing.p2pSecurityCenterScoreStroke,
+                      strokeWidth:
+                          P2PSpacingTokens.p2pSecurityCenterScoreStroke,
                       strokeCap: StrokeCap.round,
                       backgroundColor: AppColors.surface2,
                       color: AppColors.buy,
@@ -144,7 +147,7 @@ class _SecurityScoreCard extends StatelessWidget {
             color: AppColors.buy10,
             borderRadius: AppRadii.mdRadius,
             child: Padding(
-              padding: AppSpacing.p2pSecurityCenterNoticePadding,
+              padding: P2PSpacingTokens.p2pSecurityCenterNoticePadding,
               child: Text(
                 snapshot.scoreBody,
                 style: AppTextStyles.caption.copyWith(

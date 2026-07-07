@@ -8,7 +8,7 @@ class _PerformanceScoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,7 +73,7 @@ class _SummaryTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.devTokenCardPadding,
+        padding: AdminSpacingTokens.devTokenCardPadding,
         child: Column(
           children: [
             FittedBox(
@@ -106,7 +106,7 @@ class _VitalsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         children: [
@@ -130,7 +130,7 @@ class _VitalRow extends StatelessWidget {
     final toneColor = _toneColor(metric.tone);
 
     return Padding(
-      padding: AppSpacing.devVerticalPaddingX2,
+      padding: AdminSpacingTokens.devVerticalPaddingX2,
       child: Column(
         children: [
           Row(
@@ -138,9 +138,7 @@ class _VitalRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   metric.label,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
               Text(
@@ -169,7 +167,7 @@ class _MemoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         children: [
@@ -219,7 +217,7 @@ class _LazyChunksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -248,7 +246,7 @@ class _LazyChunksCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
               ),
               child: Padding(
-                padding: AppSpacing.devTokenCardPadding,
+                padding: AdminSpacingTokens.devTokenCardPadding,
                 child: Text(
                   chunk,
                   maxLines: 1,
@@ -276,7 +274,7 @@ class _ResourcesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         children: [
@@ -298,7 +296,7 @@ class _ResourceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.devVerticalPaddingX2,
+      padding: AdminSpacingTokens.devVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(

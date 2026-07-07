@@ -110,9 +110,9 @@ class _PortfolioOverview extends StatelessWidget {
                       ? Icons.trending_up_rounded
                       : Icons.trending_down_rounded,
                   color: color,
-                  size: AppSpacing.activeCopiesPnlIcon,
+                  size: TradeSpacingTokens.activeCopiesPnlIcon,
                 ),
-                const SizedBox(width: AppSpacing.walletAssetSmallGap),
+                const SizedBox(width: WalletSpacingTokens.walletAssetSmallGap),
                 Text(
                   'P/L tổng',
                   style: AppTextStyles.micro.copyWith(
@@ -236,17 +236,21 @@ class _ActiveCopyCard extends StatelessWidget {
                           const Icon(
                             Icons.check_circle_rounded,
                             color: _copyPrimary,
-                            size: AppSpacing.activeCopiesVerifiedIcon,
+                            size: TradeSpacingTokens.activeCopiesVerifiedIcon,
                           ),
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         _StatusPill(style: status),
                         if (copy.coolingOffUntil != null) ...[
-                          const SizedBox(width: AppSpacing.walletAssetSmallGap),
+                          const SizedBox(
+                            width: WalletSpacingTokens.walletAssetSmallGap,
+                          ),
                           Flexible(
                             child: Text(
                               'đến ${copy.coolingOffUntil}',
@@ -274,8 +278,8 @@ class _ActiveCopyCard extends StatelessWidget {
                     : 'Expand copy details',
                 onPressed: onToggle,
                 color: AppColors.text3,
-                size: AppSpacing.activeCopiesExpandIcon,
-                padding: AppSpacing.activeCopiesExpandPadding,
+                size: TradeSpacingTokens.activeCopiesExpandIcon,
+                padding: TradeSpacingTokens.activeCopiesExpandPadding,
               ),
             ],
           ),
@@ -332,7 +336,7 @@ class _ProviderAvatar extends StatelessWidget {
     return VitAssetAvatar(
       label: copy.providerAvatar,
       accentColor: _copyPrimary,
-      size: AppSpacing.walletTokenHeroIcon,
+      size: WalletSpacingTokens.walletTokenHeroIcon,
       radius: AppRadii.avatarRadius,
       border: true,
     );

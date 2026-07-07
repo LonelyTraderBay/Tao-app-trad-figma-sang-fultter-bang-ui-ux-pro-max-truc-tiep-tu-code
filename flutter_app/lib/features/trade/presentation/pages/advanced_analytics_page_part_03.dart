@@ -9,14 +9,14 @@ class _RiskAnalysisTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final risk = snapshot.risk;
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
       children: [
         _Card(
           child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+            rhythm: VitPageRhythm.standard,
             padding: VitContentPadding.none,
             fullBleed: true,
             density: VitDensity.compact,
@@ -35,7 +35,8 @@ class _RiskAnalysisTab extends StatelessWidget {
                     const Icon(
                       Icons.shield_outlined,
                       color: _advancedAmber,
-                      size: AppSpacing.tradeBotClientCategoryHeroIconGlyph,
+                      size: TradeSpacingTokens
+                          .tradeBotClientCategoryHeroIconGlyph,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -124,7 +125,7 @@ class _TradeJournalTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final journal = snapshot.journal;
     return VitPageContent(
-     rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -314,11 +315,11 @@ class _FeaturesCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: AppSpacing.tradeBotGridColumns,
+              crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
               mainAxisExtent:
                   AppSpacing.buttonCompact + AppSpacing.hairlineStroke * 2,
-              crossAxisSpacing: AppSpacing.tradeBotSmallGap,
-              mainAxisSpacing: AppSpacing.tradeBotSmallGap,
+              crossAxisSpacing: TradeSpacingTokens.tradeBotSmallGap,
+              mainAxisSpacing: TradeSpacingTokens.tradeBotSmallGap,
             ),
             itemBuilder: (context, index) {
               return VitCard(
@@ -359,7 +360,7 @@ class _SectionHeader extends StatelessWidget {
     required this.color,
     required this.title,
     required this.subtitle,
-    this.iconSize = AppSpacing.tradeBotDisputeDropdownIcon,
+    this.iconSize = TradeSpacingTokens.tradeBotDisputeDropdownIcon,
   });
 
   final IconData icon;

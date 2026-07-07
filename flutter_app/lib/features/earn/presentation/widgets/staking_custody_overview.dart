@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_custody_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingCustodyHeroCard extends StatelessWidget {
   const StakingCustodyHeroCard({super.key, required this.snapshot});
@@ -19,7 +20,7 @@ class StakingCustodyHeroCard extends StatelessWidget {
       key: StakingCustodyKeys.hero,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,7 +40,7 @@ class StakingCustodyHeroCard extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingCustodyBodyLineHeight,
+                    height: EarnSpacingTokens.stakingCustodyBodyLineHeight,
                   ),
                 ),
               ],
@@ -62,7 +63,7 @@ class StakingCustodyFeedbackNote extends StatelessWidget {
       key: StakingCustodyKeys.feedback,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(
@@ -100,7 +101,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
         VitCard(
           key: StakingCustodyKeys.custodian,
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -124,7 +125,9 @@ class StakingCustodyCustodianSection extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Wrap(
                           spacing: AppSpacing.x2,
                           runSpacing: AppSpacing.x2,
@@ -148,8 +151,10 @@ class StakingCustodyCustodianSection extends StatelessWidget {
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: AppSpacing.stakingCustodyMetricGridColumns,
-                childAspectRatio: AppSpacing.stakingCustodyMetricGridAspect,
+                crossAxisCount:
+                    EarnSpacingTokens.stakingCustodyMetricGridColumns,
+                childAspectRatio:
+                    EarnSpacingTokens.stakingCustodyMetricGridAspect,
                 crossAxisSpacing: AppSpacing.x3,
                 mainAxisSpacing: AppSpacing.x3,
                 children: [
@@ -175,7 +180,7 @@ class StakingCustodyCustodianSection extends StatelessWidget {
               VitCard(
                 variant: VitCardVariant.inner,
                 borderColor: AppColors.buy20,
-                padding: AppSpacing.earnCardPaddingX3,
+                padding: EarnSpacingTokens.earnCardPaddingX3,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -196,7 +201,9 @@ class StakingCustodyCustodianSection extends StatelessWidget {
                               fontWeight: AppTextStyles.bold,
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmCompactInnerGap,
+                          ),
                           Text(
                             custodian.insurance,
                             style: AppTextStyles.caption.copyWith(

@@ -41,7 +41,7 @@ class _PercentRow extends StatelessWidget {
     return VitPresetChipRow<int>(
       onTap: onPercent,
       gap: AppSpacing.x2,
-      height: AppSpacing.walletTransactionStepLineHeight,
+      height: WalletSpacingTokens.walletTransactionStepLineHeight,
       padding: AppSpacing.zeroInsets,
       tone: VitChoicePillTone.neutral,
       items: [

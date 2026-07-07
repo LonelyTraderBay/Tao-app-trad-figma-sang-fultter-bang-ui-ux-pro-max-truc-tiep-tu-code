@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_tax_guide_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingTaxCalculatorTab extends StatelessWidget {
   const StakingTaxCalculatorTab({
@@ -37,21 +38,21 @@ class StakingTaxCalculatorTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 children: [
                   SizedBox.square(
-                    dimension: AppSpacing.stakingTaxCalculatorIconBox,
+                    dimension: EarnSpacingTokens.stakingTaxCalculatorIconBox,
                     child: DecoratedBox(
                       decoration: const ShapeDecoration(
                         color: AppColors.primary12,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(
                             color: AppColors.primary20,
-                            width: AppSpacing.stakingTaxBorderWidth,
+                            width: EarnSpacingTokens.stakingTaxBorderWidth,
                           ),
                           borderRadius: AppRadii.cardRadius,
                         ),
@@ -59,7 +60,7 @@ class StakingTaxCalculatorTab extends StatelessWidget {
                       child: const Icon(
                         Icons.calculate_rounded,
                         color: AppColors.primary,
-                        size: AppSpacing.stakingTaxCalculatorIcon,
+                        size: EarnSpacingTokens.stakingTaxCalculatorIcon,
                       ),
                     ),
                   ),
@@ -165,7 +166,7 @@ class _TaxResultCard extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: AppRadii.cardLargeRadius),
         ),
         child: Padding(
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -252,7 +253,7 @@ class _FaqCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -268,7 +269,7 @@ class _FaqCard extends StatelessWidget {
             faq.answer,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingTaxFooterLineHeight,
+              height: EarnSpacingTokens.stakingTaxFooterLineHeight,
             ),
           ),
         ],

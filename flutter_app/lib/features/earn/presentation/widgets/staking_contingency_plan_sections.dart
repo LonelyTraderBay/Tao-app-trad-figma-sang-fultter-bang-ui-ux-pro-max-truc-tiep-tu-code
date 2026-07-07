@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingContingencyPlanPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class _InfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingContingencyBodyLineHeight,
+                    height: EarnSpacingTokens.stakingContingencyBodyLineHeight,
                   ),
                 ),
               ],
@@ -53,7 +53,7 @@ class _RecoveryMetrics extends StatelessWidget {
     return VitCard(
       key: StakingContingencyPlanPage.metricsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -64,10 +64,12 @@ class _RecoveryMetrics extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: metrics.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: AppSpacing.stakingContingencyMetricGridColumns,
+              crossAxisCount:
+                  EarnSpacingTokens.stakingContingencyMetricGridColumns,
               crossAxisSpacing: AppSpacing.x3,
               mainAxisSpacing: AppSpacing.x3,
-              childAspectRatio: AppSpacing.stakingContingencyMetricGridAspect,
+              childAspectRatio:
+                  EarnSpacingTokens.stakingContingencyMetricGridAspect,
             ),
             itemBuilder: (context, index) {
               return _MetricTile(metric: metrics[index]);
@@ -90,7 +92,7 @@ class _MetricTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: metric.tone == 'success' ? AppColors.buy20 : null,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -144,7 +146,7 @@ class _ScenarioCard extends StatelessWidget {
     return VitCard(
       key: StakingContingencyPlanPage.scenarioKey(scenario.scenario),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -165,7 +167,7 @@ class _ScenarioCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.earnCardPaddingX4,
+            padding: EarnSpacingTokens.earnCardPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -179,7 +181,7 @@ class _ScenarioCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 for (var i = 0; i < scenario.response.length; i++)
                   Padding(
-                    padding: AppSpacing.earnBottomPaddingX2,
+                    padding: EarnSpacingTokens.earnBottomPaddingX2,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -197,7 +199,7 @@ class _ScenarioCard extends StatelessWidget {
                             scenario.response[i],
                             style: AppTextStyles.micro.copyWith(
                               color: AppColors.text2,
-                              height: AppSpacing
+                              height: EarnSpacingTokens
                                   .stakingContingencyResponseLineHeight,
                             ),
                           ),

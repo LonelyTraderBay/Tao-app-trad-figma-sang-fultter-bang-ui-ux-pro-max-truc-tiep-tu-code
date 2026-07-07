@@ -12,7 +12,7 @@ class _Disclosure extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: AppColors.divider,
-      padding: AppSpacing.p2pFraudInnerPadding,
+      padding: P2PSpacingTokens.p2pFraudInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

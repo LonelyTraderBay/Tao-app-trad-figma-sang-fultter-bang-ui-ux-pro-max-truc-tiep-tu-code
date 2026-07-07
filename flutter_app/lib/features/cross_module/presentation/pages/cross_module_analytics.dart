@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/cross_module_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 part '../widgets/cross_module_analytics_tabs.dart';
 part '../widgets/cross_module_analytics_cards.dart';
 part '../widgets/cross_module_analytics_common.dart';

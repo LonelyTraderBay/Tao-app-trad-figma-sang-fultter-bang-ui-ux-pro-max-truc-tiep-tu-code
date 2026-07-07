@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/kyc_status_levels.dart';
 part '../widgets/kyc_details_privacy.dart';
@@ -79,7 +80,9 @@ class _KYCPageState extends ConsumerState<KYCPage> {
                 child: SingleChildScrollView(
                   key: KYCPage.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.kycScrollPadding(scrollClearance),
+                  padding: ProfileSpacingTokens.kycScrollPadding(
+                    scrollClearance,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.form,
                     padding: VitContentPadding.none,

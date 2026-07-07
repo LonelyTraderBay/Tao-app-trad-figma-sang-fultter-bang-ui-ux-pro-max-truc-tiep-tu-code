@@ -22,7 +22,7 @@ class _TransactionCard extends StatelessWidget {
         context.go(receiptRoute);
       },
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: EarnSpacingTokens.earnCardPaddingX3,
         child: Row(
           children: [
             DecoratedBox(
@@ -38,7 +38,7 @@ class _TransactionCard extends StatelessWidget {
                 child: Icon(
                   _typeIcon(tx.type),
                   color: typeColor,
-                  size: AppSpacing.savingsHistoryTransactionIcon,
+                  size: EarnSpacingTokens.savingsHistoryTransactionIcon,
                 ),
               ),
             ),
@@ -62,7 +62,7 @@ class _TransactionCard extends StatelessWidget {
                       ),
                       if (tx.status == SavingsHistoryTransactionStatus.pending)
                         Padding(
-                          padding: AppSpacing.earnLeftPaddingX2(true),
+                          padding: EarnSpacingTokens.earnLeftPaddingX2(true),
                           child: _StatusPill(
                             label: 'Đang xử lý',
                             color: AppColors.warn,
@@ -122,13 +122,13 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+            height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
           ),
         ),
       ),

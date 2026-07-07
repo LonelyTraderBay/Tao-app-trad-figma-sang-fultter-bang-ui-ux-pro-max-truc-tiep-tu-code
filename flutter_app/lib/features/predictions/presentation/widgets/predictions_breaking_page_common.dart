@@ -148,7 +148,7 @@ class _BreakingEmptyState extends StatelessWidget {
           Icon(
             Icons.bolt_outlined,
             color: AppColors.text3.withValues(alpha: .40),
-            size: AppSpacing.predictionHomeEmptyIcon,
+            size: PredictionsSpacingTokens.predictionHomeEmptyIcon,
           ),
           const SizedBox(height: _breakingSpace),
           Text(

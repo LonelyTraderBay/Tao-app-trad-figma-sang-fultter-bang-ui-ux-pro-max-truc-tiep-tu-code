@@ -18,7 +18,7 @@ class _AllocationComparisonCard extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
       child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
@@ -42,7 +42,7 @@ class _AllocationComparisonCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: AppSpacing.earnHorizontalPaddingX2,
+                padding: EarnSpacingTokens.earnHorizontalPaddingX2,
                 child: Column(
                   children: [
                     const Icon(
@@ -91,7 +91,7 @@ class _AllocationRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -253,7 +253,7 @@ class _DriftStatusCard extends StatelessWidget {
               variant: VitCtaButtonVariant.secondary,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.earnCardPaddingX3X2,
+              padding: EarnSpacingTokens.earnCardPaddingX3X2,
               child: const Text('Xem trước'),
             ),
         ],
@@ -274,7 +274,7 @@ class _DriftHistoryCard extends StatelessWidget {
       radius: VitCardRadius.large,
       padding: _savingsRebalanceCardPadding,
       child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [
@@ -369,7 +369,7 @@ class _AutoStatusCard extends StatelessWidget {
     return VitCard(
       key: SavingsAutoRebalancePage.autoStatusKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         children: [
           SizedBox.square(

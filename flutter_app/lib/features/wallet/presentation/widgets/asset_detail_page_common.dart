@@ -54,8 +54,8 @@ class _AssetTransactionRow extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
-            width: AppSpacing.walletAssetTransactionIcon,
-            height: AppSpacing.walletAssetTransactionIcon,
+            width: WalletSpacingTokens.walletAssetTransactionIcon,
+            height: WalletSpacingTokens.walletAssetTransactionIcon,
             alignment: Alignment.center,
             borderColor: color.withValues(alpha: .20),
             child: Icon(
@@ -63,10 +63,10 @@ class _AssetTransactionRow extends StatelessWidget {
                   ? Icons.trending_up_rounded
                   : Icons.trending_down_rounded,
               color: color,
-              size: AppSpacing.walletAssetTransactionGlyph,
+              size: WalletSpacingTokens.walletAssetTransactionGlyph,
             ),
           ),
-          const SizedBox(width: AppSpacing.walletAssetTransactionsGap),
+          const SizedBox(width: WalletSpacingTokens.walletAssetTransactionsGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +77,7 @@ class _AssetTransactionRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                const SizedBox(height: WalletSpacingTokens.walletAssetSmallGap),
                 Text(
                   tx.createdAt,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -98,7 +98,7 @@ class _AssetTransactionRow extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                const SizedBox(height: WalletSpacingTokens.walletAssetSmallGap),
                 VitStatusPill(
                   label: tx.status,
                   status: tx.isIncoming

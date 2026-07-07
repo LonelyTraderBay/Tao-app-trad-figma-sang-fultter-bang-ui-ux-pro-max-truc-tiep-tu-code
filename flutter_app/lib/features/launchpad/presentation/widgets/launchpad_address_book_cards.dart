@@ -34,7 +34,7 @@ class _AddressCard extends StatelessWidget {
             key: LaunchpadAddressBookPage.expandKey(address.id),
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
-            padding: AppSpacing.launchpadPaddingX4,
+            padding: LaunchpadSpacingTokens.launchpadPaddingX4,
             onTap: onExpand,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +69,7 @@ class _AddressCard extends StatelessWidget {
                             const Icon(
                               Icons.verified_user_outlined,
                               color: AppColors.buy,
-                              size: AppSpacing.launchpadIconMd,
+                              size: LaunchpadSpacingTokens.launchpadIconMd,
                             ),
                           ],
                         ],
@@ -82,7 +82,9 @@ class _AddressCard extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Wrap(
                         spacing: AppSpacing.x1,
                         runSpacing: AppSpacing.x1,
@@ -149,12 +151,12 @@ class _ExpandedAddress extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Divider(
-            height: AppSpacing.launchpadDividerWidth,
-            thickness: AppSpacing.launchpadDividerWidth,
+            height: LaunchpadSpacingTokens.launchpadDividerWidth,
+            thickness: LaunchpadSpacingTokens.launchpadDividerWidth,
             color: AppColors.divider,
           ),
           Padding(
-            padding: AppSpacing.launchpadPaddingX4,
+            padding: LaunchpadSpacingTokens.launchpadPaddingX4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -166,12 +168,12 @@ class _ExpandedAddress extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: AppSpacing.launchpadPaddingX3,
+                    padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                     child: Text(
                       address.address,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text1,
-                        height: AppSpacing.launchpadLineHeightShort,
+                        height: LaunchpadSpacingTokens.launchpadLineHeightShort,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -199,7 +201,7 @@ class _ExpandedAddress extends StatelessWidget {
                     address.notes!,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.launchpadLineHeightMicro,
+                      height: LaunchpadSpacingTokens.launchpadLineHeightMicro,
                     ),
                   ),
                 ],
@@ -209,11 +211,11 @@ class _ExpandedAddress extends StatelessWidget {
                     key: LaunchpadAddressBookPage.defaultKey(address.id),
                     onPressed: onDefault,
                     variant: VitCtaButtonVariant.secondary,
-                    height: AppSpacing.launchpadBox42,
+                    height: LaunchpadSpacingTokens.launchpadBox42,
                     leading: const Icon(
                       Icons.verified_user_outlined,
                       color: AppColors.text1,
-                      size: AppSpacing.launchpadIconXl,
+                      size: LaunchpadSpacingTokens.launchpadIconXl,
                     ),
                     child: const Text('Dat lam mac dinh'),
                   ),

@@ -87,7 +87,9 @@ class _StrategyCard extends StatelessWidget {
                           _DifficultyBadge(difficulty: strategy.difficulty),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Text(
                         strategy.description,
                         maxLines: 3,
@@ -151,7 +153,8 @@ class _StrategyDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [

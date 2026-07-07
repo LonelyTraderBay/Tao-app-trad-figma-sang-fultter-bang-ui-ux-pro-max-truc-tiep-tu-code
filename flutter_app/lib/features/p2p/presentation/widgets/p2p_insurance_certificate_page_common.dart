@@ -11,13 +11,13 @@ class _FeedbackBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pInsuranceCertificateCardPadding,
+      padding: P2PSpacingTokens.p2pInsuranceCertificateCardPadding,
       child: Row(
         children: [
           const Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: AppSpacing.p2pDocumentCalloutIcon,
+            size: P2PSpacingTokens.p2pDocumentCalloutIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -45,14 +45,14 @@ class _DisclosureCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pInsuranceCertificateCardPadding,
+      padding: P2PSpacingTokens.p2pInsuranceCertificateCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.text3,
-            size: AppSpacing.p2pDocumentInlineIcon,
+            size: P2PSpacingTokens.p2pDocumentInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -88,14 +88,14 @@ class _CertificateInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pDocumentInfoRowPadding(bottomGap),
+      padding: P2PSpacingTokens.p2pDocumentInfoRowPadding(bottomGap),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             icon,
             color: AppColors.text3,
-            size: AppSpacing.p2pDocumentRowIcon,
+            size: P2PSpacingTokens.p2pDocumentRowIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -130,7 +130,7 @@ class _CoverageLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pInsuranceCertificateBulletPadding,
+      padding: P2PSpacingTokens.p2pInsuranceCertificateBulletPadding,
       child: Row(
         children: [
           Expanded(

@@ -51,7 +51,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   ) {
     if (notification.metrics.axis != Axis.vertical) return false;
     if (notification.metrics.pixels <
-        AppSpacing.homeAnnouncementAutoHideScrollOffset) {
+        HomeSpacingTokens.homeAnnouncementAutoHideScrollOffset) {
       return false;
     }
 
@@ -104,7 +104,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   HomeDensityVariant _homeDensityVariant(double screenWidth) {
-    return screenWidth <= AppSpacing.homeQuickActionDensityBreakpoint
+    return screenWidth <= HomeSpacingTokens.homeQuickActionDensityBreakpoint
         ? HomeDensityVariant.compact
         : HomeDensityVariant.comfortable;
   }
@@ -132,8 +132,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   int _primaryQuickActionCount(HomeDensityVariant variant) {
     return variant == HomeDensityVariant.compact
-        ? AppSpacing.homeQuickActionCompactCount
-        : AppSpacing.homeQuickActionStandardCount;
+        ? HomeSpacingTokens.homeQuickActionCompactCount
+        : HomeSpacingTokens.homeQuickActionStandardCount;
   }
 
   @override

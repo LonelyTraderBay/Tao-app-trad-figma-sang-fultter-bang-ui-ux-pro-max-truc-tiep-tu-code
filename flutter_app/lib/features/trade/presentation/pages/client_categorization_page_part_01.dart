@@ -150,7 +150,9 @@ class _ClientOptUpRequestPageState
                             fontWeight: AppTextStyles.bold,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Text(
                           'Compliance review is required before any categorization change takes effect.',
                           style: AppTextStyles.micro.copyWith(
@@ -308,7 +310,7 @@ class _CurrentCategoryCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -318,8 +320,9 @@ class _CurrentCategoryCard extends StatelessWidget {
             children: [
               _CategoryIcon(
                 style: style,
-                size: AppSpacing.tradeBotClientCategoryHeroIcon,
-                iconSize: AppSpacing.tradeBotClientCategoryHeroIconGlyph,
+                size: TradeSpacingTokens.tradeBotClientCategoryHeroIcon,
+                iconSize:
+                    TradeSpacingTokens.tradeBotClientCategoryHeroIconGlyph,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -339,7 +342,9 @@ class _CurrentCategoryCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+                        const SizedBox(
+                          width: TradeSpacingTokens.tradeBotDisclosureGap,
+                        ),
                         VitStatusPill(
                           label: 'CURRENT',
                           status: style.color == _clientAmber
@@ -366,7 +371,7 @@ class _CurrentCategoryCard extends StatelessWidget {
               Icon(
                 Icons.check_circle_outline,
                 color: style.color,
-                size: AppSpacing.tradeBotClientCurrentIcon,
+                size: TradeSpacingTokens.tradeBotClientCurrentIcon,
               ),
             ],
           ),
@@ -378,12 +383,12 @@ class _CurrentCategoryCard extends StatelessWidget {
                 const Icon(
                   Icons.shield_outlined,
                   color: AppColors.text1,
-                  size: AppSpacing.tradeBotMediumIcon,
+                  size: TradeSpacingTokens.tradeBotMediumIcon,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
                   child: VitPageContent(
-         rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.none,
                     fullBleed: true,
                     density: VitDensity.compact,
@@ -428,7 +433,7 @@ class _InfoNotice extends StatelessWidget {
           const Icon(
             Icons.info_outline,
             color: AppColors.text1,
-            size: AppSpacing.tradeBotCheckboxIcon,
+            size: TradeSpacingTokens.tradeBotCheckboxIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

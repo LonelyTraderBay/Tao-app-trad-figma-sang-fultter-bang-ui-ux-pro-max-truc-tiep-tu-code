@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_s
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_sector_comparison_table.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketSectorDetailSummary extends StatelessWidget {
   const MarketSectorDetailSummary({required this.sector, super.key});
@@ -21,7 +22,7 @@ class MarketSectorDetailSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketSectorCardPadding,
+      padding: MarketsSpacingTokens.marketSectorCardPadding,
       borderColor: sector.color.resolve().withValues(alpha: 0.22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,15 +33,17 @@ class MarketSectorDetailSummary extends StatelessWidget {
                 color: sector.color.resolve().withValues(alpha: 0.16),
                 shape: const CircleBorder(),
                 child: SizedBox.square(
-                  dimension: AppSpacing.marketSectorDetailIcon,
+                  dimension: MarketsSpacingTokens.marketSectorDetailIcon,
                   child: Icon(
                     MarketIconTokens.icon(sector.icon),
                     color: sector.color.resolve(),
-                    size: AppSpacing.marketSectorDetailIconGlyph,
+                    size: MarketsSpacingTokens.marketSectorDetailIconGlyph,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketSectorCardHeaderGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketSectorCardHeaderGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,15 +51,19 @@ class MarketSectorDetailSummary extends StatelessWidget {
                     Text(
                       sector.nameVi,
                       style: AppTextStyles.baseMedium.copyWith(
-                        height: AppSpacing.marketSectorLineHeightTitle,
+                        height:
+                            MarketsSpacingTokens.marketSectorLineHeightTitle,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.marketSectorTitleGap),
+                    const SizedBox(
+                      height: MarketsSpacingTokens.marketSectorTitleGap,
+                    ),
                     Text(
                       '${sector.coinCount} coins · ${formatMarketSectorDominance(sector.dominance)}% dominance',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.marketSectorLineHeightTight,
+                        height:
+                            MarketsSpacingTokens.marketSectorLineHeightTight,
                       ),
                     ),
                   ],
@@ -74,7 +81,9 @@ class MarketSectorDetailSummary extends StatelessWidget {
                   value: formatMarketSectorBillions(sector.totalMarketCap),
                 ),
               ),
-              const SizedBox(width: AppSpacing.marketSectorControlGroupGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketSectorControlGroupGap,
+              ),
               Expanded(
                 child: _DetailMetric(
                   label: 'KL 24h',
@@ -83,7 +92,7 @@ class MarketSectorDetailSummary extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.marketSectorMetricGap),
+          const SizedBox(height: MarketsSpacingTokens.marketSectorMetricGap),
           MarketSectorDominanceBar(sector: sector),
         ],
       ),
@@ -110,7 +119,7 @@ class MarketSectorTopCoinsSection extends StatelessWidget {
       accentColor: sector.color.resolve(),
       children: [
         VitCard(
-          padding: AppSpacing.marketSectorTopCoinsPadding,
+          padding: MarketsSpacingTokens.marketSectorTopCoinsPadding,
           child: Column(
             children: [
               for (final coin in coins) ...[
@@ -136,7 +145,7 @@ class _DetailMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.marketSectorDetailMetricPadding,
+      padding: MarketsSpacingTokens.marketSectorDetailMetricPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -144,7 +153,7 @@ class _DetailMetric extends StatelessWidget {
             label,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.marketSectorLegendGap),
+          const SizedBox(height: MarketsSpacingTokens.marketSectorLegendGap),
           Text(
             value,
             maxLines: 1,
@@ -175,16 +184,18 @@ class _TopCoinRow extends StatelessWidget {
       padding: EdgeInsets.zero,
       onTap: onTap,
       child: SizedBox(
-        height: AppSpacing.marketSectorTopCoinRowHeight,
+        height: MarketsSpacingTokens.marketSectorTopCoinRowHeight,
         child: Row(
           children: [
             VitAssetAvatar(
               label: coin.symbol,
               accentColor: coin.color,
-              size: AppSpacing.marketSectorTopCoinAvatar,
+              size: MarketsSpacingTokens.marketSectorTopCoinAvatar,
               radius: AppRadii.avatarRadius,
             ),
-            const SizedBox(width: AppSpacing.marketSectorControlGroupGap),
+            const SizedBox(
+              width: MarketsSpacingTokens.marketSectorControlGroupGap,
+            ),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -195,7 +206,8 @@ class _TopCoinRow extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.marketSectorLineHeightCompact,
+                      height:
+                          MarketsSpacingTokens.marketSectorLineHeightCompact,
                     ),
                   ),
                   Text(
@@ -204,7 +216,8 @@ class _TopCoinRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.micro.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.marketSectorLineHeightCompact,
+                      height:
+                          MarketsSpacingTokens.marketSectorLineHeightCompact,
                     ),
                   ),
                 ],
@@ -218,7 +231,9 @@ class _TopCoinRow extends StatelessWidget {
                 fontFeatures: AppTextStyles.tabularFigures,
               ),
             ),
-            const SizedBox(width: AppSpacing.marketSectorTopCoinPriceGap),
+            const SizedBox(
+              width: MarketsSpacingTokens.marketSectorTopCoinPriceGap,
+            ),
             MarketSectorChangePill(value: coin.change24h),
           ],
         ),

@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pSuspiciousIconBox = AppSpacing.buttonCompact + AppSpacing.x1;
 
@@ -66,13 +67,10 @@ class _P2PSuspiciousActivityPageState
         if (_alerts.isEmpty)
           _EmptyState(snapshot: snapshot)
         else
-          _AlertList(
-            alerts: _alerts,
-            onDismiss: _markReviewed,
-          ),
+          _AlertList(alerts: _alerts, onDismiss: _markReviewed),
         const VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.p2pComplianceCompactCardPadding,
+          padding: P2PSpacingTokens.p2pComplianceCompactCardPadding,
           child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Suspicious activity review',
@@ -108,7 +106,7 @@ class _SummaryCard extends StatelessWidget {
       key: P2PSuspiciousActivityPage.summaryKey,
       radius: VitCardRadius.large,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pComplianceCardPadding,
+      padding: P2PSpacingTokens.p2pComplianceCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,7 +121,7 @@ class _SummaryCard extends StatelessWidget {
               child: Icon(
                 Icons.warning_amber_rounded,
                 color: AppColors.warn,
-                size: AppSpacing.p2pComplianceUnavailableIcon,
+                size: P2PSpacingTokens.p2pComplianceUnavailableIcon,
               ),
             ),
           ),
@@ -166,7 +164,8 @@ class _AlertList extends StatelessWidget {
       children: [
         for (var index = 0; index < alerts.length; index++) ...[
           _AlertCard(alert: alerts[index], onDismiss: onDismiss),
-          if (index != alerts.length - 1) const SizedBox(height: AppSpacing.rowGap),
+          if (index != alerts.length - 1)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -187,7 +186,7 @@ class _AlertCard extends StatelessWidget {
       key: P2PSuspiciousActivityPage.alertKey(alert.id),
       radius: VitCardRadius.large,
       borderColor: alert.reviewed ? null : color,
-      padding: AppSpacing.p2pComplianceCardPadding,
+      padding: P2PSpacingTokens.p2pComplianceCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -202,7 +201,7 @@ class _AlertCard extends StatelessWidget {
               child: Icon(
                 Icons.warning_amber_rounded,
                 color: color,
-                size: AppSpacing.p2pComplianceUnavailableIcon,
+                size: P2PSpacingTokens.p2pComplianceUnavailableIcon,
               ),
             ),
           ),
@@ -223,7 +222,7 @@ class _AlertCard extends StatelessWidget {
                     const Icon(
                       Icons.access_time_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.p2pComplianceMetaIcon,
+                      size: P2PSpacingTokens.p2pComplianceMetaIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -259,7 +258,7 @@ class _DismissButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.p2pComplianceDismissButton,
+      dimension: P2PSpacingTokens.p2pComplianceDismissButton,
       child: VitInlineIconAction(
         key: P2PSuspiciousActivityPage.dismissKey(alertId),
         icon: Icons.close_rounded,
@@ -296,7 +295,7 @@ class _EmptyState extends StatelessWidget {
     return VitCard(
       key: P2PSuspiciousActivityPage.emptyKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pComplianceCardPadding,
+      padding: P2PSpacingTokens.p2pComplianceCardPadding,
       child: Column(
         children: [
           const Icon(

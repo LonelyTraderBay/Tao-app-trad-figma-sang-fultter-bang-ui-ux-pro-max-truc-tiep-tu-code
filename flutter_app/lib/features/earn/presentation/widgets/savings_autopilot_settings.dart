@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 
 import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_autopilot_page.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 import 'savings_autopilot_common.dart';
 import 'savings_autopilot_formatters.dart';
@@ -150,7 +151,7 @@ class _ModeCard extends StatelessWidget {
       variant: selected ? VitCardVariant.standard : VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: selected ? color.withValues(alpha: .4) : null,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +220,7 @@ class _BudgetCard extends StatelessWidget {
           variant: VitCardVariant.inner,
           radius: VitCardRadius.large,
           borderColor: AppColors.primary30,
-          padding: AppSpacing.earnCardPaddingX3X2,
+          padding: EarnSpacingTokens.earnCardPaddingX3X2,
           child: Row(
             children: [
               const Icon(
@@ -287,7 +288,7 @@ class _SwitchRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3X2,
+      padding: EarnSpacingTokens.earnCardPaddingX3X2,
       child: Row(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconSm),
@@ -345,7 +346,7 @@ class _RiskParameter extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         children: [
           Row(
@@ -358,7 +359,7 @@ class _RiskParameter extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.savingsAutoPilotRiskProgressHeight,
+              minHeight: EarnSpacingTokens.savingsAutoPilotRiskProgressHeight,
               value: .42,
               color: color,
               backgroundColor: AppColors.surface3,

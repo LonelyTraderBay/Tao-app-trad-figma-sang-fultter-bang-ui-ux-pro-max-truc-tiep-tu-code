@@ -19,7 +19,7 @@ class _EarningCalculator extends StatelessWidget {
 
     return VitCard(
       key: ReferralHomePage.calculatorKey,
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -152,7 +152,7 @@ class _LeaderboardSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: VitPageSection(
         label: 'Bảng xếp hạng',
         accentColor: AppColors.accent,
@@ -233,7 +233,7 @@ class _HowItWorksSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -416,7 +416,7 @@ class _SocialProofMetric extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.referralCompactPillPadding,
+        padding: ReferralSpacingTokens.referralCompactPillPadding,
         child: Row(
           children: [
             Icon(Icons.insights_rounded, color: color, size: AppSpacing.iconSm),
@@ -467,7 +467,7 @@ class _MilestoneCard extends StatelessWidget {
       width: _milestoneCardWidth,
       child: VitCard(
         borderColor: color.withValues(alpha: .24),
-        padding: AppSpacing.referralInnerPadding,
+        padding: ReferralSpacingTokens.referralInnerPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

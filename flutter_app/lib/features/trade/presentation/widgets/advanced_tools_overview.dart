@@ -13,7 +13,7 @@ class _IntroCard extends StatelessWidget {
           _IconTile(
             icon: Icons.bolt_rounded,
             color: _toolsPrimary,
-            size: AppSpacing.tradeToolIconTileSm,
+            size: TradeSpacingTokens.tradeToolIconTileSm,
           ),
           const SizedBox(width: _toolsCardSpace),
           Expanded(
@@ -60,7 +60,7 @@ class _FeatureCard extends StatelessWidget {
           _IconTile(
             icon: _iconFor(feature.id),
             color: color,
-            size: AppSpacing.tradeToolIconTileMd,
+            size: TradeSpacingTokens.tradeToolIconTileMd,
           ),
           const SizedBox(width: _toolsCardSpace),
           Expanded(

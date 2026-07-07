@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_guide_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsGuideTutorialsTab extends StatelessWidget {
   const SavingsGuideTutorialsTab({
@@ -93,7 +94,7 @@ class _HeroCard extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX4,
+        padding: EarnSpacingTokens.earnCardPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -118,7 +119,7 @@ class _HeroCard extends StatelessWidget {
                     snapshot.heroSubtitle,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.earnGuideHeroLineHeight,
+                      height: EarnSpacingTokens.earnGuideHeroLineHeight,
                     ),
                   ),
                 ],
@@ -146,7 +147,7 @@ class _LearningProgressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -230,7 +231,7 @@ class _TutorialCard extends StatelessWidget {
       padding: AppSpacing.zeroInsets,
       onTap: onTap,
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: EarnSpacingTokens.earnCardPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -261,7 +262,7 @@ class _TutorialCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.earnGuideCardLineHeight,
+                      height: EarnSpacingTokens.earnGuideCardLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -338,7 +339,7 @@ class _QuickTipCard extends StatelessWidget {
     final color = savingsGuideRiskColor(tip.tone);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -363,7 +364,7 @@ class _QuickTipCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.earnGuideBodyLineHeight,
+              height: EarnSpacingTokens.earnGuideBodyLineHeight,
             ),
           ),
         ],
@@ -381,7 +382,7 @@ class _StartSavingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -391,7 +392,7 @@ class _StartSavingsCard extends StatelessWidget {
             'Khám phá các sản phẩm tiết kiệm đang có lãi suất hấp dẫn.',
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.earnGuideTipLineHeight,
+              height: EarnSpacingTokens.earnGuideTipLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),

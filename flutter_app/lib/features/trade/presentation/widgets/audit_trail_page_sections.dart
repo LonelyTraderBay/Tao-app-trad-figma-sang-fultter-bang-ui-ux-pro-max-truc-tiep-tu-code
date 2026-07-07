@@ -14,9 +14,9 @@ class _ComplianceNotice extends StatelessWidget {
         const Icon(
           Icons.description_outlined,
           color: AppColors.text1,
-          size: AppSpacing.tradeToolCloseIcon,
+          size: TradeSpacingTokens.tradeToolCloseIcon,
         ),
-        const SizedBox(width: AppSpacing.tradeToolIconGap),
+        const SizedBox(width: TradeSpacingTokens.tradeToolIconGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +53,7 @@ class _StatsRow extends StatelessWidget {
         for (final stat in stats) ...[
           Expanded(child: _StatCard(stat: stat)),
           if (stat != stats.last)
-            const SizedBox(width: AppSpacing.tradeToolPageTopGap),
+            const SizedBox(width: TradeSpacingTokens.tradeToolPageTopGap),
         ],
       ],
     );
@@ -69,8 +69,8 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      height: AppSpacing.tradeToolMetricHeight,
-      padding: AppSpacing.tradeToolMetricPadding,
+      height: TradeSpacingTokens.tradeToolMetricHeight,
+      padding: TradeSpacingTokens.tradeToolMetricPadding,
       radius: VitCardRadius.standard,
       borderColor: _auditBorder.withValues(alpha: .76),
       child: Column(
@@ -82,7 +82,7 @@ class _StatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.tradeToolTinyGap),
+          const SizedBox(height: TradeSpacingTokens.tradeToolTinyGap),
           Text(
             stat.value,
             style: AppTextStyles.baseMedium.copyWith(
@@ -114,7 +114,7 @@ class _SearchAndFilter extends StatelessWidget {
             onChanged: onChanged,
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeToolInlineGap),
+        const SizedBox(width: TradeSpacingTokens.tradeToolInlineGap),
         VitIconButton(
           icon: Icons.filter_alt_outlined,
           tooltip: 'Filter audit trail',

@@ -81,7 +81,7 @@ class _PaymentOptionChip extends StatelessWidget {
       label: label,
       selected: selected,
       onTap: onTap,
-      padding: AppSpacing.p2pPaymentAddFormOptionPadding,
+      padding: P2PSpacingTokens.p2pPaymentAddFormOptionPadding,
       accentColor: AppModuleAccents.p2p,
       showSelectedIcon: true,
       selectedIcon: Icons.check_circle_outline_rounded,
@@ -101,7 +101,7 @@ class _PaymentPreview extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodAddPage.previewKey,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentAddFormCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentAddFormCardPadding,
       borderColor: AppColors.primary20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +168,7 @@ class _SecurityNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentAddFormCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentAddFormCardPadding,
       borderColor: AppColors.warningBorder,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

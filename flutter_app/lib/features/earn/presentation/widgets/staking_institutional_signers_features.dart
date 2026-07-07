@@ -14,7 +14,7 @@ class _AuthorizedSigners extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Column(
             children: [
               for (var i = 0; i < snapshot.signers.length; i++) ...[
@@ -38,7 +38,7 @@ class _SignerRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final approved = signer.status == StakingInstitutionalSignerStatus.approved;
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX1,
+      padding: EarnSpacingTokens.earnVerticalPaddingX1,
       child: Row(
         children: [
           Expanded(
@@ -84,11 +84,11 @@ class _EnterpriseFeatures extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.stakingProductGridColumns,
+            crossAxisCount: EarnSpacingTokens.stakingProductGridColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
             childAspectRatio:
-                AppSpacing.stakingProductInstitutionalFeatureAspect,
+                EarnSpacingTokens.stakingProductInstitutionalFeatureAspect,
           ),
           itemBuilder: (context, index) =>
               _FeatureCard(feature: snapshot.features[index]),
@@ -107,7 +107,7 @@ class _FeatureCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -148,7 +148,7 @@ class _ComplianceNote extends StatelessWidget {
       key: StakingInstitutionalPage.complianceKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

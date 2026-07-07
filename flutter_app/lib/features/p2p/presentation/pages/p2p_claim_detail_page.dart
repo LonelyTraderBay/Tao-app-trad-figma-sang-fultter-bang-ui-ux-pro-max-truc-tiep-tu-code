@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part 'p2p_claim_detail_page_part_01.dart';
 part 'p2p_claim_detail_page_part_02.dart';
@@ -23,14 +24,15 @@ enum _ClaimDetailSection { timeline, evidence, notes }
 
 const double _p2pClaimDividerExtent = AppSpacing.dividerHairline;
 const double _p2pClaimProgressLineExtent =
-    AppSpacing.p2pClaimProgressLineHeight;
+    P2PSpacingTokens.p2pClaimProgressLineHeight;
 const double _p2pClaimIconBoxExtent = AppSpacing.x7;
-const double _p2pClaimTimelineNodeExtent = AppSpacing.p2pClaimTimelineNodeSize;
+const double _p2pClaimTimelineNodeExtent =
+    P2PSpacingTokens.p2pClaimTimelineNodeSize;
 const double _p2pClaimTimelineConnectorExtent =
-    AppSpacing.p2pClaimTimelineConnectorHeight;
-const double _p2pClaimBodyLine = AppSpacing.p2pClaimBodyLineHeight;
+    P2PSpacingTokens.p2pClaimTimelineConnectorHeight;
+const double _p2pClaimBodyLine = P2PSpacingTokens.p2pClaimBodyLineHeight;
 const double _p2pClaimDescriptionLine =
-    AppSpacing.p2pClaimDescriptionLineHeight;
+    P2PSpacingTokens.p2pClaimDescriptionLineHeight;
 
 class P2PClaimDetailPage extends ConsumerStatefulWidget {
   const P2PClaimDetailPage({

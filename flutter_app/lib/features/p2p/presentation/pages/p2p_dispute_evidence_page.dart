@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pDisputeEvidenceVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -89,7 +90,7 @@ class _P2PDisputeEvidencePageState
                   child: SingleChildScrollView(
                     key: P2PDisputeEvidencePage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pDisputeEvidenceScrollPadding(
+                    padding: P2PSpacingTokens.p2pDisputeEvidenceScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
@@ -163,7 +164,7 @@ class _HeroCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppModuleAccents.p2p.withValues(alpha: .24),
-      padding: AppSpacing.p2pDisputeCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -195,7 +196,7 @@ class _MockActionNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pDisputeCompactCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCompactCardPadding,
       borderColor: AppColors.warningBorder,
       child: Text(
         text,
@@ -218,7 +219,7 @@ class _EvidenceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = document.uploaded ? AppColors.buy : AppModuleAccents.p2p;
     return VitCard(
-      padding: AppSpacing.p2pDisputeCardPadding,
+      padding: P2PSpacingTokens.p2pDisputeCardPadding,
       child: Row(
         children: [
           Material(
@@ -283,7 +284,7 @@ class _UploadButton extends StatelessWidget {
       label: 'Upload',
       selected: false,
       onTap: onPressed,
-      padding: AppSpacing.p2pDisputeEvidenceButtonPadding,
+      padding: P2PSpacingTokens.p2pDisputeEvidenceButtonPadding,
       accentColor: AppModuleAccents.p2p,
       semanticLabel: 'Upload dispute evidence',
     );

@@ -37,7 +37,7 @@ class _OwnershipHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class _OwnershipHero extends StatelessWidget {
               child: Icon(
                 Icons.shield_outlined,
                 color: AppColors.text1,
-                size: AppSpacing.p2pPaymentHeroIcon,
+                size: P2PSpacingTokens.p2pPaymentHeroIcon,
               ),
             ),
           ),
@@ -91,7 +91,7 @@ class _VerificationMethodCard extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodVerificationPage.methodKey(method.id),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCardPadding,
       borderColor: method.recommended
           ? AppColors.primary30
           : AppColors.borderSolid,
@@ -138,7 +138,7 @@ class _VerificationMethodCard extends StatelessWidget {
                     const Icon(
                       Icons.schedule_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.p2pPaymentMetaIcon,
+                      size: P2PSpacingTokens.p2pPaymentMetaIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(
@@ -156,7 +156,7 @@ class _VerificationMethodCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.p2pPaymentChevronIcon,
+            size: P2PSpacingTokens.p2pPaymentChevronIcon,
           ),
         ],
       ),

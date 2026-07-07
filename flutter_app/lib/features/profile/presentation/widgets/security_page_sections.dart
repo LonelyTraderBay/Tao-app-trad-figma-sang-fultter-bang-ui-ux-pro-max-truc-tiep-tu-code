@@ -41,7 +41,8 @@ class _ScoreCard extends StatelessWidget {
             children: [
               for (var i = 0; i < 4; i++) ...[
                 Expanded(
-                  child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+                  child: SizedBox(
+                    height: AppSpacing.pageRhythmCompactInnerGap,
                     child: Material(
                       color: i < snapshot.score
                           ? scoreColor
@@ -53,7 +54,9 @@ class _ScoreCard extends StatelessWidget {
                   ),
                 ),
                 if (i < 3)
-                  const SizedBox(width: AppSpacing.securityScoreBarGap),
+                  const SizedBox(
+                    width: ProfileSpacingTokens.securityScoreBarGap,
+                  ),
               ],
             ],
           ),
@@ -65,16 +68,16 @@ class _ScoreCard extends StatelessWidget {
               side: BorderSide(color: _securityAmber.withValues(alpha: .28)),
             ),
             child: Padding(
-              padding: AppSpacing.securityScoreAlertPadding,
+              padding: ProfileSpacingTokens.securityScoreAlertPadding,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Icon(
                     Icons.warning_amber_rounded,
                     color: _securityAmber,
-                    size: AppSpacing.securitySmallIcon,
+                    size: ProfileSpacingTokens.securitySmallIcon,
                   ),
-                  const SizedBox(width: AppSpacing.securityIconGap),
+                  const SizedBox(width: ProfileSpacingTokens.securityIconGap),
                   Expanded(
                     child: Text(
                       'B\u1EADt t\u1EA5t c\u1EA3 t\u00EDnh n\u0103ng b\u1EA3o m\u1EADt \u0111\u1EC3 b\u1EA3o v\u1EC7 t\u00E0i s\u1EA3n c\u1EE7a b\u1EA1n\n'
@@ -146,12 +149,12 @@ class _SecurityRow extends StatelessWidget {
           minHeight: VitDensity.compact.controlHeight + AppSpacing.x5,
         ),
         child: Padding(
-          padding: AppSpacing.securityRowPadding,
+          padding: ProfileSpacingTokens.securityRowPadding,
           child: Row(
             children: [
               SizedBox(
-                width: AppSpacing.securityRowIconBox,
-                height: AppSpacing.securityRowIconBox,
+                width: ProfileSpacingTokens.securityRowIconBox,
+                height: ProfileSpacingTokens.securityRowIconBox,
                 child: Material(
                   color: accent.withValues(alpha: .13),
                   shape: RoundedRectangleBorder(
@@ -160,11 +163,11 @@ class _SecurityRow extends StatelessWidget {
                   child: Icon(
                     _iconFor(item.iconKey),
                     color: accent,
-                    size: AppSpacing.securityRowIcon,
+                    size: ProfileSpacingTokens.securityRowIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.securityRowGap),
+              const SizedBox(width: ProfileSpacingTokens.securityRowGap),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -193,14 +196,14 @@ class _SecurityRow extends StatelessWidget {
                 ),
               ),
               if (item.status != null) ...[
-                const SizedBox(width: AppSpacing.securityStatusGap),
+                const SizedBox(width: ProfileSpacingTokens.securityStatusGap),
                 _StatusPill(label: item.status!, color: Color(item.statusHex!)),
               ],
-              const SizedBox(width: AppSpacing.securityChevronGap),
+              const SizedBox(width: ProfileSpacingTokens.securityChevronGap),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.securityChevron,
+                size: ProfileSpacingTokens.securityChevron,
               ),
             ],
           ),
@@ -270,19 +273,19 @@ class _DeviceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.securityDeviceMinHeight,
+        minHeight: ProfileSpacingTokens.securityDeviceMinHeight,
       ),
       child: Padding(
-        padding: AppSpacing.securityDevicePadding,
+        padding: ProfileSpacingTokens.securityDevicePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.laptop_mac_rounded,
               color: AppColors.text3,
-              size: AppSpacing.securityDeviceIcon,
+              size: ProfileSpacingTokens.securityDeviceIcon,
             ),
-            const SizedBox(width: AppSpacing.securityDeviceGap),
+            const SizedBox(width: ProfileSpacingTokens.securityDeviceGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,7 +304,9 @@ class _DeviceRow extends StatelessWidget {
                         ),
                       ),
                       if (device.isCurrent) ...[
-                        const SizedBox(width: AppSpacing.securityStatusGap),
+                        const SizedBox(
+                          width: ProfileSpacingTokens.securityStatusGap,
+                        ),
                         _StatusPill(
                           label: 'Hi\u1EC7n t\u1EA1i',
                           color: _securityGreen,
@@ -329,7 +334,7 @@ class _DeviceRow extends StatelessWidget {
               ),
             ),
             if (!device.isCurrent) ...[
-              const SizedBox(width: AppSpacing.securityStatusGap),
+              const SizedBox(width: ProfileSpacingTokens.securityStatusGap),
               const _StatusPill(
                 label: '\u0110\u0103ng xu\u1EA5t',
                 color: _securityRed,

@@ -11,7 +11,7 @@ class _ActionRequiredCard extends StatelessWidget {
       key: StakingValidatorHealthMonitorPage.actionKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn.withValues(alpha: 0.35),
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class _ActionRequiredCard extends StatelessWidget {
                   snapshot.actionBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                    height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -43,7 +43,7 @@ class _ActionRequiredCard extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: AppSpacing.earnVerticalPaddingX3,
+                    padding: EarnSpacingTokens.earnVerticalPaddingX3,
                     child: Center(
                       child: Text(
                         snapshot.actionLabel,
@@ -74,13 +74,13 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingValidatorHealthMonitorPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+          height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
         ),
       ),
     );
@@ -101,7 +101,7 @@ class _StatusPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.pillRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -129,7 +129,7 @@ class _SmallButton extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnVerticalPaddingX2,
+        padding: EarnSpacingTokens.earnVerticalPaddingX2,
         child: Center(
           child: Text(
             label,

@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/predictions/domain/entities/predictions_entities.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/widgets/prediction_portfolio_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
   const PredictionPortfolioOpenOrdersSection({
@@ -28,7 +29,9 @@ class PredictionPortfolioOpenOrdersSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const VitSectionHeader(
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,title: 'Open Orders'),
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          title: 'Open Orders',
+        ),
         const SizedBox(height: AppSpacing.x1),
         Row(
           children: [
@@ -104,7 +107,8 @@ class _OrderRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox.square(
-              dimension: AppSpacing.predictionPortfolioOrderIconBox,
+              dimension:
+                  PredictionsSpacingTokens.predictionPortfolioOrderIconBox,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: color.withValues(alpha: .12),
@@ -115,11 +119,13 @@ class _OrderRow extends StatelessWidget {
                 child: Icon(
                   Icons.attach_money_rounded,
                   color: color,
-                  size: AppSpacing.predictionPortfolioOrderIcon,
+                  size: PredictionsSpacingTokens.predictionPortfolioOrderIcon,
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionPortfolioOrderGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionPortfolioOrderGap,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,11 +140,14 @@ class _OrderRow extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: AppSpacing.predictionPortfolioOrderTitleGap,
+                    height: PredictionsSpacingTokens
+                        .predictionPortfolioOrderTitleGap,
                   ),
                   Wrap(
-                    spacing: AppSpacing.predictionPortfolioChipGap,
-                    runSpacing: AppSpacing.predictionPortfolioChipRunGap,
+                    spacing:
+                        PredictionsSpacingTokens.predictionPortfolioChipGap,
+                    runSpacing:
+                        PredictionsSpacingTokens.predictionPortfolioChipRunGap,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       VitAccentPill(
@@ -162,12 +171,14 @@ class _OrderRow extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: AppSpacing.predictionPortfolioOrderProgressGap,
+                    height: PredictionsSpacingTokens
+                        .predictionPortfolioOrderProgressGap,
                   ),
                   ClipRRect(
                     borderRadius: AppRadii.pillRadius,
                     child: SizedBox(
-                      height: AppSpacing.predictionPortfolioOrderProgressHeight,
+                      height: PredictionsSpacingTokens
+                          .predictionPortfolioOrderProgressHeight,
                       child: LinearProgressIndicator(
                         value: fillPct,
                         backgroundColor: AppColors.surface3,
@@ -179,7 +190,8 @@ class _OrderRow extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              width: AppSpacing.predictionPortfolioOrderTrailingGap,
+              width:
+                  PredictionsSpacingTokens.predictionPortfolioOrderTrailingGap,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -187,10 +199,12 @@ class _OrderRow extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.text3,
-                  size: AppSpacing.predictionPortfolioOrderChevron,
+                  size:
+                      PredictionsSpacingTokens.predictionPortfolioOrderChevron,
                 ),
                 const SizedBox(
-                  height: AppSpacing.predictionPortfolioOrderCancelGap,
+                  height: PredictionsSpacingTokens
+                      .predictionPortfolioOrderCancelGap,
                 ),
                 // card-tile: allow-start — fixed surface, not horizontal strip tile
                 VitCard(
@@ -201,18 +215,22 @@ class _OrderRow extends StatelessWidget {
                   borderColor: AppColors.sell20,
                   background: const ColoredBox(color: AppColors.sell10),
                   clip: true,
-                  height: AppSpacing.predictionPortfolioOrderCancelHeight,
-                  padding: AppSpacing.predictionPortfolioOrderCancelPadding,
+                  height: PredictionsSpacingTokens
+                      .predictionPortfolioOrderCancelHeight,
+                  padding: PredictionsSpacingTokens
+                      .predictionPortfolioOrderCancelPadding,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Icon(
                         Icons.close_rounded,
                         color: AppColors.sell,
-                        size: AppSpacing.predictionPortfolioOrderCancelIcon,
+                        size: PredictionsSpacingTokens
+                            .predictionPortfolioOrderCancelIcon,
                       ),
                       const SizedBox(
-                        width: AppSpacing.predictionPortfolioOrderCancelIconGap,
+                        width: PredictionsSpacingTokens
+                            .predictionPortfolioOrderCancelIconGap,
                       ),
                       Text(
                         'Cancel',

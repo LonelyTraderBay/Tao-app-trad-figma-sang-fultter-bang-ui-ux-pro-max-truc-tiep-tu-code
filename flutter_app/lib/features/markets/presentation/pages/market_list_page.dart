@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_page_rhythm.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
@@ -17,6 +16,7 @@ import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_l
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_movers.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_pairs.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_list_tools.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketListPage extends ConsumerStatefulWidget {
   const MarketListPage({super.key, this.shellRenderMode});
@@ -125,8 +125,8 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
         bottomChrome +
         MediaQuery.paddingOf(context).bottom +
         (nativeShell
-            ? AppSpacing.marketNativeBottomExtra
-            : AppSpacing.marketVisualBottomExtra);
+            ? MarketsSpacingTokens.marketNativeBottomExtra
+            : MarketsSpacingTokens.marketVisualBottomExtra);
     final filtered = _filteredPairs(snapshot.marketPairs);
     final visiblePairs = filtered.take(8).toList();
     final searchActive = _searchController.text.trim().isNotEmpty;
@@ -141,7 +141,9 @@ class _MarketListPageState extends ConsumerState<MarketListPage> {
           behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
           child: SingleChildScrollView(
             key: MarketListPage.contentKey,
-            padding: AppSpacing.marketScrollPadding(bottomScrollInset),
+            padding: MarketsSpacingTokens.marketScrollPadding(
+              bottomScrollInset,
+            ),
             child: VitPageContent(
               rhythm: VitPageRhythm.compact,
               padding: VitContentPadding.compact,

@@ -20,9 +20,7 @@ class _LeverageSlider extends StatelessWidget {
       children: [
         Text(
           'Kéo để điều chỉnh',
-          style: AppTextStyles.caption.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
+          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
         const SizedBox(height: _leverageSpace),
         SliderTheme(
@@ -52,7 +50,7 @@ class _LeverageSlider extends StatelessWidget {
         VitPresetChipRow<int>(
           selectedValue: leverage,
           onTap: onChanged,
-          gap: AppSpacing.transferCardGap,
+          gap: WalletSpacingTokens.transferCardGap,
           height: _leverageControlHeight,
           padding: AppSpacing.zeroInsets,
           items: [
@@ -88,9 +86,7 @@ class _PresetGrid extends StatelessWidget {
       children: [
         Text(
           'Chọn nhanh',
-          style: AppTextStyles.caption.copyWith(
-            fontWeight: AppTextStyles.bold,
-          ),
+          style: AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.bold),
         ),
         const SizedBox(height: _leverageSpace),
         GridView.builder(
@@ -99,10 +95,10 @@ class _PresetGrid extends StatelessWidget {
           padding: AppSpacing.zeroInsets,
           itemCount: presets.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.leveragePresetGridColumns,
-            crossAxisSpacing: AppSpacing.transferCardGap,
+            crossAxisCount: TradeSpacingTokens.leveragePresetGridColumns,
+            crossAxisSpacing: WalletSpacingTokens.transferCardGap,
             mainAxisSpacing: _leverageSpace,
-            childAspectRatio: AppSpacing.leveragePresetGridAspectRatio,
+            childAspectRatio: TradeSpacingTokens.leveragePresetGridAspectRatio,
           ),
           itemBuilder: (context, index) {
             final leverage = presets[index];

@@ -25,12 +25,8 @@ List<Widget> _unifiedSearchPageChildren({
         message: 'Hãy thử lại sau hoặc tìm kiếm trực tiếp.',
       ),
     ],
-    _ when snapshot.hasQuery => [
-      _ResultsState(snapshot: snapshot),
-    ],
-    _ => [
-      _NoQueryState(snapshot: snapshot, onQuerySelected: onQuerySelected),
-    ],
+    _ when snapshot.hasQuery => [_ResultsState(snapshot: snapshot)],
+    _ => [_NoQueryState(snapshot: snapshot, onQuerySelected: onQuerySelected)],
   };
 }
 
@@ -44,7 +40,7 @@ class _BoundaryDisclosure extends StatelessWidget {
     return VitCard(
       key: UnifiedSearchPage.disclosureKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.discoveryCardPadding,
+      padding: LaunchpadSpacingTokens.discoveryCardPadding,
       child: Text(
         'Lưu ý: Prediction Markets sử dụng USDT thật. Arena Challenges chỉ dùng Arena Points (không liên quan ví). Đây là trang khám phá, không phải trang giao dịch.\n$notes',
         textAlign: TextAlign.center,
@@ -76,7 +72,7 @@ class _ModuleBadge extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.discoveryBadgePadding,
+        padding: LaunchpadSpacingTokens.discoveryBadgePadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -109,7 +105,7 @@ class _CountBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.discoveryBadgePadding,
+        padding: LaunchpadSpacingTokens.discoveryBadgePadding,
         child: Text(
           '$count',
           style: AppTextStyles.micro.copyWith(

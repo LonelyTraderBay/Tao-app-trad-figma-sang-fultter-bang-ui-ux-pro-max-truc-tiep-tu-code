@@ -28,7 +28,7 @@ class _AnalyticsTabs extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: AppSpacing.crossModuleTabBarPadding,
+        padding: CrossModuleSpacingTokens.crossModuleTabBarPadding,
         child: VitSegmentedTabBar(
           tabs: tabItems,
           activeKey: active.name,

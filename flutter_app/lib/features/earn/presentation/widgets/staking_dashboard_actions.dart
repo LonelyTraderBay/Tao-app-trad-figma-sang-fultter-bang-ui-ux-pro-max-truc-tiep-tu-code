@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingDashboardQuickActions extends StatelessWidget {
   const StakingDashboardQuickActions({
@@ -100,7 +101,7 @@ class StakingMaturityAlert extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           const Icon(
@@ -127,7 +128,7 @@ class StakingMaturityAlert extends StatelessWidget {
             variant: VitCtaButtonVariant.warning,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.earnHorizontalPaddingX4,
+            padding: EarnSpacingTokens.earnHorizontalPaddingX4,
             onPressed: () => context.go(snapshot.calendarRoute),
             child: const Text('Xem'),
           ),
@@ -157,7 +158,7 @@ class _NavCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: () => context.go(route),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -28,7 +28,9 @@ class _PenaltyCalculatorSheetState extends State<_PenaltyCalculatorSheet> {
         color: AppColors.surface,
         borderRadius: AppRadii.sheetTopLargeRadius,
         child: SingleChildScrollView(
-          padding: AppSpacing.earnSheetPadding(bottomPadding - AppSpacing.x5),
+          padding: EarnSpacingTokens.earnSheetPadding(
+            bottomPadding - AppSpacing.x5,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
@@ -261,7 +263,7 @@ class _WarningBox extends StatelessWidget {
         side: BorderSide(color: AppColors.warningBorder),
       ),
       child: Padding(
-        padding: AppSpacing.earnPaddingX3,
+        padding: EarnSpacingTokens.earnPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

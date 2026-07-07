@@ -12,7 +12,7 @@ class _MetricTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,7 +53,7 @@ class _ImpactBadge extends StatelessWidget {
       color: color.withValues(alpha: .12),
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -62,7 +62,7 @@ class _ImpactBadge extends StatelessWidget {
                   ? Icons.arrow_upward_rounded
                   : Icons.arrow_downward_rounded,
               color: color,
-              size: AppSpacing.savingsWhatIfBadgeIcon,
+              size: EarnSpacingTokens.savingsWhatIfBadgeIcon,
             ),
             const SizedBox(width: AppSpacing.x1),
             Text(
@@ -91,12 +91,12 @@ class _RiskPill extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           _riskLabel(level),
           style: _microBold.copyWith(
             color: color,
-            height: AppSpacing.savingsWhatIfRiskPillLineHeight,
+            height: EarnSpacingTokens.savingsWhatIfRiskPillLineHeight,
           ),
         ),
       ),
@@ -131,14 +131,14 @@ class _RoundIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.savingsWhatIfRoundIconBox,
+      dimension: EarnSpacingTokens.savingsWhatIfRoundIconBox,
       child: Material(
         color: color.withValues(alpha: .12),
         borderRadius: AppRadii.lgRadius,
         child: Icon(
           icon,
           color: color,
-          size: AppSpacing.savingsWhatIfInlineIcon,
+          size: EarnSpacingTokens.savingsWhatIfInlineIcon,
         ),
       ),
     );
@@ -163,12 +163,16 @@ class _InfoCallout extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       borderColor: color.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: AppSpacing.savingsWhatIfInlineIcon),
+          Icon(
+            icon,
+            color: color,
+            size: EarnSpacingTokens.savingsWhatIfInlineIcon,
+          ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
             child: Column(
@@ -201,8 +205,8 @@ class _ScoreRing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.savingsWhatIfScoreRing,
-      height: AppSpacing.savingsWhatIfScoreRing,
+      width: EarnSpacingTokens.savingsWhatIfScoreRing,
+      height: EarnSpacingTokens.savingsWhatIfScoreRing,
       child: CustomPaint(
         painter: _RingPainter(score: score, color: color),
         child: Center(
@@ -231,7 +235,7 @@ class _LegendDot extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox.square(
-          dimension: AppSpacing.savingsWhatIfLegendDot,
+          dimension: EarnSpacingTokens.savingsWhatIfLegendDot,
           child: Material(color: color, shape: const CircleBorder()),
         ),
         const SizedBox(width: AppSpacing.x2),

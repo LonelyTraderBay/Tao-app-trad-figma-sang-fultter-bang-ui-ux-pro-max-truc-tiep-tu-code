@@ -98,7 +98,7 @@ class _DueDiligenceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _scoreColor(score);
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         children: [
           Row(
@@ -113,7 +113,7 @@ class _DueDiligenceCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: AppSpacing.launchpadBox58,
+                width: LaunchpadSpacingTokens.launchpadBox58,
                 child: _ScoreProgress(value: score, color: color),
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -149,7 +149,8 @@ class _DueDiligenceCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (row != rows.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

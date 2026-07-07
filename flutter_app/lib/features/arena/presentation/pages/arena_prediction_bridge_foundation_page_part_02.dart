@@ -173,7 +173,7 @@ class _BoundaryBanner extends StatelessWidget {
                   style: AppTextStyles.micro.copyWith(
                     color: tone,
                     fontWeight: AppTextStyles.bold,
-                    letterSpacing: AppSpacing.arenaBridgeLetterSpacing,
+                    letterSpacing: ArenaSpacingTokens.arenaBridgeLetterSpacing,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.x1),
@@ -376,7 +376,7 @@ class _ModuleStatButton extends StatelessWidget {
                 Icon(
                   _toneIcon(tone),
                   color: color,
-                  size: AppSpacing.arenaBridgeActionIcon,
+                  size: ArenaSpacingTokens.arenaBridgeActionIcon,
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 Text(

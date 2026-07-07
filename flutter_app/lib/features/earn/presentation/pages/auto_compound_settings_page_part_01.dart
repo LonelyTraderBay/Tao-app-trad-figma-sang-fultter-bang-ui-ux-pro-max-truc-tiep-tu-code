@@ -215,7 +215,7 @@ class _SummaryCard extends StatelessWidget {
       key: AutoCompoundSettingsPage.summaryKey,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -331,7 +331,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: AutoCompoundSettingsPage.positionKey(position.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -403,7 +403,7 @@ class _PositionCard extends StatelessWidget {
                 variant: VitCtaButtonVariant.secondary,
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: AppSpacing.earnCardPaddingX3X2,
+                padding: EarnSpacingTokens.earnCardPaddingX3X2,
                 leading: const Icon(Icons.settings_outlined),
                 child: const Text('Cài đặt'),
               ),
@@ -507,7 +507,7 @@ class _DisabledWarning extends StatelessWidget {
               'Auto-compound đang tắt — lãi sẽ tích luỹ riêng, không cộng vào gốc',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warn,
-                height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
               ),
             ),
           ),

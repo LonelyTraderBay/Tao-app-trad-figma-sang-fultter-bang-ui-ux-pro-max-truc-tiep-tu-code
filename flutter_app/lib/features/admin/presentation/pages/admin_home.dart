@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 export 'admin_settings_page.dart';
 
@@ -121,7 +122,7 @@ class AdminDashboardPageShell extends StatelessWidget {
               child: SingleChildScrollView(
                 key: scrollKey,
                 physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.adminScrollPadding(scrollBottom),
+                padding: AdminSpacingTokens.adminScrollPadding(scrollBottom),
                 child: child,
               ),
             ),

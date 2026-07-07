@@ -76,75 +76,75 @@ class _ActivityRow extends StatelessWidget {
                           children: [
                             Text(
                               activity.user,
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text1,
-                              fontWeight: AppTextStyles.bold,
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.text1,
+                                fontWeight: AppTextStyles.bold,
+                              ),
                             ),
-                          ),
-                          Text(
-                            isBuy ? 'bought' : 'sold',
-                            style: AppTextStyles.caption.copyWith(
-                              color: sideColor,
-                              fontWeight: AppTextStyles.bold,
+                            Text(
+                              isBuy ? 'bought' : 'sold',
+                              style: AppTextStyles.caption.copyWith(
+                                color: sideColor,
+                                fontWeight: AppTextStyles.bold,
+                              ),
                             ),
+                            _OutcomeBadge(
+                              label: activity.outcome,
+                              color: activity.outcome == 'Yes'
+                                  ? AppColors.buy
+                                  : AppColors.sell,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          event.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
                           ),
-                          _OutcomeBadge(
-                            label: activity.outcome,
-                            color: activity.outcome == 'Yes'
-                                ? AppColors.buy
-                                : AppColors.sell,
+                        ),
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          '${_formatWhole(activity.shares)} shares @ \$${activity.price.toStringAsFixed(2)}',
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text2,
+                            fontFeatures: AppTextStyles.tabularFigures,
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        event.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        '${_formatWhole(activity.shares)} shares @ \$${activity.price.toStringAsFixed(2)}',
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text2,
-                          fontFeatures: AppTextStyles.tabularFigures,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.x2),
-                SizedBox(
-                  width: _activityAmountExtent,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        _formatAmount(activity.amount),
-                        textAlign: TextAlign.right,
-                        style: AppTextStyles.caption.copyWith(
-                          color: sideColor,
-                          fontWeight: AppTextStyles.bold,
-                          fontFeatures: AppTextStyles.tabularFigures,
+                  const SizedBox(width: AppSpacing.x2),
+                  SizedBox(
+                    width: _activityAmountExtent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          _formatAmount(activity.amount),
+                          textAlign: TextAlign.right,
+                          style: AppTextStyles.caption.copyWith(
+                            color: sideColor,
+                            fontWeight: AppTextStyles.bold,
+                            fontFeatures: AppTextStyles.tabularFigures,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: AppSpacing.x1),
-                      Text(
-                        activity.timestamp,
-                        textAlign: TextAlign.right,
-                        style: AppTextStyles.micro.copyWith(
-                          color: AppColors.text3,
+                        const SizedBox(height: AppSpacing.x1),
+                        Text(
+                          activity.timestamp,
+                          textAlign: TextAlign.right,
+                          style: AppTextStyles.micro.copyWith(
+                            color: AppColors.text3,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
             ),
             if (!last)
               const Divider(height: 1, thickness: 1, color: AppColors.divider),

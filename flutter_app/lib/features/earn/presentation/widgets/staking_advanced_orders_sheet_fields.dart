@@ -10,7 +10,7 @@ class _SheetFrame extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: AppSpacing.earnContentMargin,
+        padding: EarnSpacingTokens.earnContentMargin,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.88,
@@ -22,7 +22,10 @@ class _SheetFrame extends StatelessWidget {
                 borderRadius: AppRadii.cardLargeRadius,
               ),
             ),
-            child: Padding(padding: AppSpacing.earnPaddingX5, child: child),
+            child: Padding(
+              padding: EarnSpacingTokens.earnPaddingX5,
+              child: child,
+            ),
           ),
         ),
       ),
@@ -76,7 +79,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
                 )
                   Expanded(
                     child: Padding(
-                      padding: AppSpacing.earnLeftPaddingX2(i > 0),
+                      padding: EarnSpacingTokens.earnLeftPaddingX2(i > 0),
                       child: _TypeButton(
                         type: widget.snapshot.orderTypeOptions[i],
                         selected:
@@ -129,7 +132,7 @@ class _CreateOrderSheetState extends State<_CreateOrderSheet> {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
-            padding: AppSpacing.earnPaddingX3,
+            padding: EarnSpacingTokens.earnPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -216,7 +219,7 @@ class _StaticField extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnStaticSelectPadding,
+      padding: EarnSpacingTokens.earnStaticSelectPadding,
       child: Row(
         children: [
           Expanded(child: Text(value, style: AppTextStyles.body)),
@@ -239,7 +242,7 @@ class _InputPreview extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnCardPaddingX4X3,
+      padding: EarnSpacingTokens.earnCardPaddingX4X3,
       child: Row(
         children: [
           Expanded(
@@ -255,7 +258,7 @@ class _InputPreview extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
               ),
               child: Padding(
-                padding: AppSpacing.earnPillPadding,
+                padding: EarnSpacingTokens.earnPillPadding,
                 child: Text(
                   suffix,
                   style: AppTextStyles.micro.copyWith(

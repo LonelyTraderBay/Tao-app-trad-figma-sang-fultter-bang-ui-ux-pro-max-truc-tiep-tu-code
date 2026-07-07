@@ -12,7 +12,7 @@ class _RiskMetricsSection extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Risk Exposure',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           density: VitDensity.compact,
         ),
@@ -64,7 +64,7 @@ class _CategoryRiskCard extends StatelessWidget {
         children: [
           const VitSectionHeader(
             title: 'Risk by Category',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             density: VitDensity.compact,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -104,9 +104,11 @@ class _DiversificationCard extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.buy,
-                size: AppSpacing.predictionAnalyzerRiskIcon,
+                size: PredictionsSpacingTokens.predictionAnalyzerRiskIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionAnalyzerRiskIconGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionAnalyzerRiskIconGap,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +140,8 @@ class _DiversificationCard extends StatelessWidget {
                 style: AppTextStyles.amountMd.copyWith(color: AppColors.buy),
               ),
               const SizedBox(
-                width: AppSpacing.predictionAnalyzerScoreSuffixGap,
+                width:
+                    PredictionsSpacingTokens.predictionAnalyzerScoreSuffixGap,
               ),
               Text(
                 '/ 10',
@@ -216,14 +219,17 @@ class _CategoryLegendItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.predictionAnalyzerLegendSwatchMargin,
+          padding:
+              PredictionsSpacingTokens.predictionAnalyzerLegendSwatchMargin,
           child: SizedBox(
-            width: AppSpacing.predictionAnalyzerLegendSwatch,
-            height: AppSpacing.predictionAnalyzerLegendSwatch,
+            width: PredictionsSpacingTokens.predictionAnalyzerLegendSwatch,
+            height: PredictionsSpacingTokens.predictionAnalyzerLegendSwatch,
             child: Material(color: color, borderRadius: AppRadii.swatchRadius),
           ),
         ),
-        const SizedBox(width: AppSpacing.predictionAnalyzerLegendItemGap),
+        const SizedBox(
+          width: PredictionsSpacingTokens.predictionAnalyzerLegendItemGap,
+        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,15 +272,17 @@ class _RiskMetricRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.predictionAnalyzerRiskMetricPadding,
+      padding: PredictionsSpacingTokens.predictionAnalyzerRiskMetricPadding,
       child: Row(
         children: [
           Icon(
             icon,
             color: AppColors.text3,
-            size: AppSpacing.predictionAnalyzerRiskIcon,
+            size: PredictionsSpacingTokens.predictionAnalyzerRiskIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionAnalyzerRiskIconGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionAnalyzerRiskIconGap,
+          ),
           Expanded(
             child: Text(
               label,
@@ -303,7 +311,7 @@ class _CategoryRiskBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = 30 + category.invested.clamp(0, 95);
     return Padding(
-      padding: AppSpacing.predictionAnalyzerRiskBarPadding,
+      padding: PredictionsSpacingTokens.predictionAnalyzerRiskBarPadding,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

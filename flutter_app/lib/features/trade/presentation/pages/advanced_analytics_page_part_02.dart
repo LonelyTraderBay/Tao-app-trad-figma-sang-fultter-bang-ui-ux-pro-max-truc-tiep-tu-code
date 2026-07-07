@@ -31,7 +31,7 @@ class _SignalCard extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: tone,
-                  size: AppSpacing.tradeBotDisputeDropdownIcon,
+                  size: TradeSpacingTokens.tradeBotDisputeDropdownIcon,
                 ),
               ),
               const SizedBox(width: AppSpacing.x2),
@@ -68,7 +68,7 @@ class _SignalCard extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.tradeBotDisputeDropdownIcon,
+                size: TradeSpacingTokens.tradeBotDisputeDropdownIcon,
               ),
             ],
           ),

@@ -37,7 +37,7 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pMyOrdersStatPadding,
+      padding: P2PSpacingTokens.p2pMyOrdersStatPadding,
       child: Column(
         children: [
           Text(
@@ -118,7 +118,7 @@ class _SearchSortRow extends StatelessWidget {
           label: sort == _OrdersSort.date ? 'Ngày' : 'Số tiền',
           selected: true,
           onTap: onSort,
-          padding: AppSpacing.p2pMyOrdersChipPadding,
+          padding: P2PSpacingTokens.p2pMyOrdersChipPadding,
           leading: const Icon(
             Icons.sort_rounded,
             color: AppColors.text2,
@@ -147,7 +147,7 @@ class _OrderCard extends StatelessWidget {
     return VitCard(
       key: P2PMyOrdersPage.orderKey(order.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pMyOrdersCardPadding,
+      padding: P2PSpacingTokens.p2pMyOrdersCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -255,7 +255,7 @@ class _OrderCard extends StatelessWidget {
                 variant: VitCtaButtonVariant.ghost,
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: AppSpacing.p2pMyOrdersChipPadding,
+                padding: P2PSpacingTokens.p2pMyOrdersChipPadding,
                 onPressed: onDispute,
                 leading: const Icon(
                   Icons.report_problem_outlined,
@@ -325,7 +325,7 @@ class _EmptyOrders extends StatelessWidget {
     return VitCard(
       key: P2PMyOrdersPage.emptyKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pMyOrdersLargePadding,
+      padding: P2PSpacingTokens.p2pMyOrdersLargePadding,
       child: Column(
         children: [
           const Icon(

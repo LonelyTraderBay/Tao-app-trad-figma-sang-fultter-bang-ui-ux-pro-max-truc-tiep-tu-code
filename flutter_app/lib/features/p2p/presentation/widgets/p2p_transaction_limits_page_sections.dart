@@ -12,7 +12,7 @@ class _TierHero extends StatelessWidget {
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.p2p,
       background: const ColoredBox(color: AppModuleAccents.p2p),
-      padding: AppSpacing.p2pTransactionLimitsCardPadding,
+      padding: P2PSpacingTokens.p2pTransactionLimitsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -55,7 +55,7 @@ class _TierHero extends StatelessWidget {
                 color: AppColors.onAccent.withValues(alpha: .20),
                 borderRadius: AppRadii.inputRadius,
                 child: Padding(
-                  padding: AppSpacing.p2pTransactionLimitsBadgePadding,
+                  padding: P2PSpacingTokens.p2pTransactionLimitsBadgePadding,
                   child: Text(
                     tier.statusLabel,
                     style: AppTextStyles.micro.copyWith(
@@ -104,7 +104,7 @@ class _TierMetric extends StatelessWidget {
       color: AppColors.onAccent.withValues(alpha: .18),
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: AppSpacing.p2pTransactionLimitsInnerPadding,
+        padding: P2PSpacingTokens.p2pTransactionLimitsInnerPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -149,7 +149,7 @@ class _CurrentUsage extends StatelessWidget {
             const Expanded(
               child: VitSectionHeader(
                 title: 'Sử dụng hiện tại',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+                bottomGap: AppSpacing.pageRhythmStandardInnerGap,
                 icon: Icons.bar_chart_rounded,
                 accentColor: AppModuleAccents.p2p,
                 density: VitDensity.compact,
@@ -164,7 +164,7 @@ class _CurrentUsage extends StatelessWidget {
               variant: VitCtaButtonVariant.ghost,
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.p2pTransactionLimitsTrackerPadding,
+              padding: P2PSpacingTokens.p2pTransactionLimitsTrackerPadding,
               trailing: const Icon(Icons.chevron_right_rounded),
               child: const Text('Xem chi tiết'),
             ),
@@ -173,14 +173,15 @@ class _CurrentUsage extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pTransactionLimitsCardPadding,
+          padding: P2PSpacingTokens.p2pTransactionLimitsCardPadding,
           child: Column(
             children: [
               for (var index = 0; index < snapshot.usageItems.length; index++)
                 Padding(
-                  padding: AppSpacing.p2pTransactionLimitsUsageItemPadding(
-                    index == snapshot.usageItems.length - 1,
-                  ),
+                  padding:
+                      P2PSpacingTokens.p2pTransactionLimitsUsageItemPadding(
+                        index == snapshot.usageItems.length - 1,
+                      ),
                   child: _UsageLimitRow(item: snapshot.usageItems[index]),
                 ),
             ],
@@ -231,7 +232,8 @@ class _UsageLimitRow extends StatelessWidget {
           borderRadius: AppRadii.xsRadius,
           child: ColoredBox(
             color: AppColors.surface2,
-            child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+            child: SizedBox(
+              height: AppSpacing.pageRhythmCompactInnerGap,
               child: FractionallySizedBox(
                 widthFactor: item.percentage.clamp(0, 100) / 100,
                 alignment: Alignment.centerLeft,
@@ -276,7 +278,7 @@ class _LimitDetails extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Chi tiết giới hạn',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           icon: Icons.tune_rounded,
           accentColor: AppModuleAccents.p2p,
           density: VitDensity.compact,

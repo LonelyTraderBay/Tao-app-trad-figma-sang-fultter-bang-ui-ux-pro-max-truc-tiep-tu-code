@@ -86,7 +86,9 @@ class _ChartPeriodTabs extends StatelessWidget {
             ),
           ),
           if (index != tabs.length - 1)
-            const SizedBox(width: AppSpacing.predictionDetailChartPeriodGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionDetailChartPeriodGap,
+            ),
         ],
       ],
     );
@@ -110,11 +112,13 @@ class _VolumeBars extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: FractionallySizedBox(
                 heightFactor: math.max(
-                  AppSpacing.predictionDetailChartVolumeBarMinFactor,
+                  PredictionsSpacingTokens
+                      .predictionDetailChartVolumeBarMinFactor,
                   value / maxValue,
                 ),
                 child: Padding(
-                  padding: AppSpacing.predictionDetailChartVolumeBarMargin,
+                  padding: PredictionsSpacingTokens
+                      .predictionDetailChartVolumeBarMargin,
                   child: Material(
                     color: _predictionPrimary.withValues(alpha: .30),
                     borderRadius: AppRadii.predictionDetailChartVolumeBarRadius,

@@ -74,7 +74,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
                 child: Padding(
-                  padding: AppSpacing.arenaVerticalPaddingX2,
+                  padding: ArenaSpacingTokens.arenaVerticalPaddingX2,
                   child: Row(
                     children: [
                       Expanded(
@@ -89,7 +89,7 @@ class _RewardAnalyticsSection extends StatelessWidget {
                       const Icon(
                         Icons.keyboard_arrow_down_rounded,
                         color: AppColors.text3,
-                        size: AppSpacing.myArenaAnalyticsIcon,
+                        size: ArenaSpacingTokens.myArenaAnalyticsIcon,
                       ),
                     ],
                   ),
@@ -122,7 +122,7 @@ class _RewardMetric extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.arenaPresetSectionChipPadding,
+        padding: ArenaSpacingTokens.arenaPresetSectionChipPadding,
         child: Column(
           children: [
             Text(
@@ -161,7 +161,7 @@ class _DistributionRow extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: AppSpacing.myArenaDistributionLabelWidth,
+          width: ArenaSpacingTokens.myArenaDistributionLabelWidth,
           child: Text(
             item.label,
             maxLines: 1,
@@ -176,7 +176,7 @@ class _DistributionRow extends StatelessWidget {
           child: ClipRRect(
             borderRadius: AppRadii.xsRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.myArenaDistributionProgressHeight,
+              minHeight: ArenaSpacingTokens.myArenaDistributionProgressHeight,
               value: ratio,
               backgroundColor: AppColors.surface3,
               color: color,
@@ -185,7 +185,7 @@ class _DistributionRow extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.x3),
         SizedBox(
-          width: AppSpacing.myArenaDistributionValueWidth,
+          width: ArenaSpacingTokens.myArenaDistributionValueWidth,
           child: Text(
             '${item.wins}/${item.total}',
             textAlign: TextAlign.right,
@@ -301,7 +301,7 @@ class _SafetyActionCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.myArenaSafetyChevron,
+            size: ArenaSpacingTokens.myArenaSafetyChevron,
           ),
         ],
       ),
@@ -328,7 +328,7 @@ class _ArenaFooter extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppColors.accent,
-                size: AppSpacing.myArenaFooterShieldIcon,
+                size: ArenaSpacingTokens.myArenaFooterShieldIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -361,10 +361,14 @@ class _EmptyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPaddingX5,
+      padding: ArenaSpacingTokens.arenaPaddingX5,
       child: Column(
         children: [
-          Icon(icon, color: _arenaAccent, size: AppSpacing.myArenaEmptyIcon),
+          Icon(
+            icon,
+            color: _arenaAccent,
+            size: ArenaSpacingTokens.myArenaEmptyIcon,
+          ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
             title,
@@ -382,9 +386,9 @@ class _EmptyCard extends StatelessWidget {
             leading: Icon(
               Icons.add_rounded,
               color: _arenaAccent,
-              size: AppSpacing.myArenaAccentPillIcon,
+              size: ArenaSpacingTokens.myArenaAccentPillIcon,
             ),
-            padding: AppSpacing.arenaHorizontalPaddingX4,
+            padding: ArenaSpacingTokens.arenaHorizontalPaddingX4,
           ),
         ],
       ),
@@ -401,14 +405,18 @@ class _ActionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.myArenaActionIconBox,
-      height: AppSpacing.myArenaActionIconBox,
+      width: ArenaSpacingTokens.myArenaActionIconBox,
+      height: ArenaSpacingTokens.myArenaActionIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .12),
           shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
         ),
-        child: Icon(icon, color: color, size: AppSpacing.myArenaActionIcon),
+        child: Icon(
+          icon,
+          color: color,
+          size: ArenaSpacingTokens.myArenaActionIcon,
+        ),
       ),
     );
   }
@@ -431,7 +439,7 @@ class _ArenaStatusPill extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.arenaPresetChipPadding,
+        padding: ArenaSpacingTokens.arenaPresetChipPadding,
         child: Text(
           label,
           maxLines: 1,

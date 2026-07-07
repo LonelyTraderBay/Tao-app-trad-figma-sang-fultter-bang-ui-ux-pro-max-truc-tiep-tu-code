@@ -7,7 +7,8 @@ class _ProvidersTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -78,7 +79,8 @@ class _HistoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -91,7 +93,7 @@ class _HistoryTab extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      width: AppSpacing.tradeToolDateColumnWidth,
+                      width: TradeSpacingTokens.tradeToolDateColumnWidth,
                       child: Text(
                         point.date,
                         style: AppTextStyles.micro.copyWith(
@@ -102,7 +104,7 @@ class _HistoryTab extends StatelessWidget {
                     Expanded(
                       child: LinearProgressIndicator(
                         value: (point.max / 120).clamp(0, 1).toDouble(),
-                        minHeight: AppSpacing.tradeToolProgressHeight,
+                        minHeight: TradeSpacingTokens.tradeToolProgressHeight,
                         color: _slipRed,
                         backgroundColor: _slipPanel2,
                         borderRadius: AppRadii.pillRadius,
@@ -134,7 +136,7 @@ class _AlertsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [

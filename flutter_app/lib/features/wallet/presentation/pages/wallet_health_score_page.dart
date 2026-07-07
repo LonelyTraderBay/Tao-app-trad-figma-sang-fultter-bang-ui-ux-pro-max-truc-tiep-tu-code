@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/wallet_health_score_page_shell.dart';
 part '../widgets/wallet_health_score_cards.dart';
@@ -41,8 +42,8 @@ const _tabDiversification = '\u0110a d\u1EA1ng h\u00F3a';
 
 double _healthScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? AppSpacing.walletBottomInsetVisualChrome
-          : AppSpacing.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletBottomInsetVisualChrome
+          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
 }
 

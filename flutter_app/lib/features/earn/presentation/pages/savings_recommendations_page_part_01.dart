@@ -49,9 +49,11 @@ class _SavingsRecommendationsPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.defaultGap,
                     children: [
@@ -149,7 +151,7 @@ class _SavingsRecommendationsPageState
               top: false,
               child: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.earnSheetContentPadding,
+                padding: EarnSpacingTokens.earnSheetContentPadding,
                 child: _StrategyDetailSheet(
                   strategy: strategy,
                   amount: _amount,
@@ -183,7 +185,7 @@ class _SavingsRecommendationsPageState
               top: false,
               child: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.earnSheetContentPadding,
+                padding: EarnSpacingTokens.earnSheetContentPadding,
                 child: _CompareSheet(strategies: strategies, amount: _amount),
               ),
             ),
@@ -208,12 +210,12 @@ class _HeroCard extends StatelessWidget {
           borderRadius: AppRadii.cardLargeRadius,
           side: BorderSide(
             color: AppColors.accent20,
-            width: AppSpacing.savingsConsumerBorderWidth,
+            width: EarnSpacingTokens.savingsConsumerBorderWidth,
           ),
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnPaddingX3,
+        padding: EarnSpacingTokens.earnPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -256,7 +258,7 @@ class _ProfileCard extends StatelessWidget {
     final profile = snapshot.profile;
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -346,7 +348,7 @@ class _ProfileMetric extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnPaddingX3,
+        padding: EarnSpacingTokens.earnPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -392,7 +394,7 @@ class _AmountSimulator extends StatelessWidget {
     final activeAmount = int.tryParse(amountText);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

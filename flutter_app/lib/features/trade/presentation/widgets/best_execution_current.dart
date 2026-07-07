@@ -86,7 +86,9 @@ class _VenueCard extends StatelessWidget {
                           ),
                         ),
                         if (isWinner) ...[
-                          const SizedBox(width: AppSpacing.walletAssetPillGap),
+                          const SizedBox(
+                            width: WalletSpacingTokens.walletAssetPillGap,
+                          ),
                           const Icon(
                             Icons.workspace_premium_outlined,
                             color: _bestAmber,

@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/controllers/market_controller.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_depth_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketDepthChartView extends StatelessWidget {
   const MarketDepthChartView({
@@ -58,7 +59,7 @@ class _DepthMiniStats extends StatelessWidget {
             sub: '${depth.spreadPct.toStringAsFixed(4)}%',
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsCompactGap),
         Expanded(
           child: _MiniStat(
             label: 'Bid Wall',
@@ -67,7 +68,7 @@ class _DepthMiniStats extends StatelessWidget {
             color: AppColors.buy,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsCompactGap),
         Expanded(
           child: _MiniStat(
             label: 'Ask Wall',
@@ -97,34 +98,34 @@ class _MiniStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketDepthMiniStatPadding,
+      padding: MarketsSpacingTokens.marketDepthMiniStatPadding,
       child: Column(
         children: [
           Text(
             label,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsSmallGap),
+          const SizedBox(height: MarketsSpacingTokens.marketAnalyticsSmallGap),
           Text(
             value,
             style: AppTextStyles.baseMedium.copyWith(
               color: color ?? AppColors.text1,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightCaption,
+              height: MarketsSpacingTokens.marketLineHeightCaption,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsTinyGap),
+          const SizedBox(height: MarketsSpacingTokens.marketAnalyticsTinyGap),
           Text(
             sub,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.marketLineHeightCaption,
+              height: MarketsSpacingTokens.marketLineHeightCaption,
             ),
           ),
         ],
@@ -147,7 +148,7 @@ class _DepthChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.marketDepthChartPadding,
+      padding: MarketsSpacingTokens.marketDepthChartPadding,
       child: Column(
         children: [
           Row(
@@ -158,7 +159,7 @@ class _DepthChartCard extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.marketLineHeightTight,
+                    height: MarketsSpacingTokens.marketLineHeightTight,
                   ),
                 ),
               ),
@@ -170,24 +171,28 @@ class _DepthChartCard extends StatelessWidget {
                   onTap: () => onLevelSelected(level),
                 ),
                 if (level != snapshot.availableLevels.last)
-                  const SizedBox(width: AppSpacing.marketAnalyticsSmallGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.marketAnalyticsSmallGap,
+                  ),
               ],
             ],
           ),
-          const SizedBox(height: AppSpacing.marketHeatmapSummaryGap),
+          const SizedBox(height: MarketsSpacingTokens.marketHeatmapSummaryGap),
           SizedBox(
-            height: AppSpacing.marketDepthChartHeight,
+            height: MarketsSpacingTokens.marketDepthChartHeight,
             width: double.infinity,
             child: CustomPaint(
               painter: _DepthChartPainter(depth: snapshot.depth),
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsCompactGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketAnalyticsCompactGap,
+          ),
           const Divider(
             height: AppSpacing.dividerHairline,
             color: AppColors.borderSolid,
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsMediumGap),
+          const SizedBox(height: MarketsSpacingTokens.marketAnalyticsMediumGap),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -220,7 +225,7 @@ class _LevelChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: marketDepthPrimary,
-      padding: AppSpacing.marketDepthLevelChipPadding,
+      padding: MarketsSpacingTokens.marketDepthLevelChipPadding,
     );
   }
 }
@@ -236,7 +241,7 @@ class _DepthChartPainter extends CustomPainter {
     final asks = depth.asks;
     if (bids.isEmpty || asks.isEmpty) return;
 
-    const padding = AppSpacing.marketDepthPainterPadding;
+    const padding = MarketsSpacingTokens.marketDepthPainterPadding;
     final chartHeight = size.height - padding * 2;
     final maxCumulative = math.max(bids.last.cumulative, asks.last.cumulative);
     final minPrice = bids.last.price;
@@ -311,7 +316,7 @@ class _DepthChartPainter extends CustomPainter {
 
     final linePaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = AppSpacing.marketDepthStroke
+      ..strokeWidth = MarketsSpacingTokens.marketDepthStroke
       ..strokeCap = StrokeCap.square
       ..color = AppColors.buy;
     _drawSteppedLine(canvas, bids, pointFor, linePaint, midX, size.height);
@@ -321,16 +326,16 @@ class _DepthChartPainter extends CustomPainter {
 
     final dashPaint = Paint()
       ..color = AppColors.sell
-      ..strokeWidth = AppSpacing.marketDepthDashedStroke
+      ..strokeWidth = MarketsSpacingTokens.marketDepthDashedStroke
       ..style = PaintingStyle.stroke;
     var y = padding;
     while (y < size.height - padding) {
       canvas.drawLine(
         Offset(midX, y),
-        Offset(midX, y + AppSpacing.marketDepthPainterDash),
+        Offset(midX, y + MarketsSpacingTokens.marketDepthPainterDash),
         dashPaint,
       );
-      y += AppSpacing.marketDepthPainterDashGap;
+      y += MarketsSpacingTokens.marketDepthPainterDashGap;
     }
   }
 
@@ -343,7 +348,7 @@ class _DepthChartPainter extends CustomPainter {
     double height,
   ) {
     final path = Path()
-      ..moveTo(midX, height - AppSpacing.marketDepthPainterPadding);
+      ..moveTo(midX, height - MarketsSpacingTokens.marketDepthPainterPadding);
     for (var index = 0; index < levels.length; index += 1) {
       final point = pointFor(levels[index]);
       if (index == 0) {
@@ -378,15 +383,15 @@ class _LegendItem extends StatelessWidget {
           color: color.withValues(alpha: .35),
           shape: const CircleBorder(),
           child: const SizedBox.square(
-            dimension: AppSpacing.marketDepthLegendDot,
+            dimension: MarketsSpacingTokens.marketDepthLegendDot,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsCompactGap),
         Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text3,
-            height: AppSpacing.marketLineHeightTight,
+            height: MarketsSpacingTokens.marketLineHeightTight,
           ),
         ),
       ],
@@ -403,7 +408,7 @@ class _DepthRatioCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bidPct = depth.bidRatioPct;
     return VitCard(
-      padding: AppSpacing.marketDepthRatioPadding,
+      padding: MarketsSpacingTokens.marketDepthRatioPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -412,15 +417,15 @@ class _DepthRatioCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsMediumGap),
+          const SizedBox(height: MarketsSpacingTokens.marketAnalyticsMediumGap),
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: SizedBox(
               width: double.infinity,
-              height: AppSpacing.marketDepthRatioBarHeight,
+              height: MarketsSpacingTokens.marketDepthRatioBarHeight,
               child: Row(
                 children: [
                   Expanded(
@@ -435,7 +440,9 @@ class _DepthRatioCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsCompactGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketAnalyticsCompactGap,
+          ),
           Row(
             children: [
               Text(
@@ -444,7 +451,7 @@ class _DepthRatioCard extends StatelessWidget {
                   color: AppColors.buy,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
-                  height: AppSpacing.marketLineHeightTight,
+                  height: MarketsSpacingTokens.marketLineHeightTight,
                 ),
               ),
               const Spacer(),
@@ -454,7 +461,7 @@ class _DepthRatioCard extends StatelessWidget {
                   color: AppColors.sell,
                   fontWeight: AppTextStyles.bold,
                   fontFeatures: AppTextStyles.tabularFigures,
-                  height: AppSpacing.marketLineHeightTight,
+                  height: MarketsSpacingTokens.marketLineHeightTight,
                 ),
               ),
             ],

@@ -40,7 +40,7 @@ class _MasterSoundHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -111,7 +111,7 @@ class _MasterSoundHero extends StatelessWidget {
                 inactiveTrackColor: AppColors.surface3,
                 thumbColor: AppModuleAccents.launchpad,
                 overlayColor: AppColors.primary12,
-                trackHeight: AppSpacing.launchpadGapXxs,
+                trackHeight: LaunchpadSpacingTokens.launchpadGapXxs,
               ),
               child: Slider(
                 value: volume,
@@ -205,7 +205,7 @@ class _QuickToggleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           _IconBubble(icon: icon, accent: accent, small: true),

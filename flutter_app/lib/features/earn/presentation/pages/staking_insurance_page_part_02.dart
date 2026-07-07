@@ -11,7 +11,7 @@ class _PlanCard extends StatelessWidget {
     return VitCard(
       key: StakingInsurancePage.planKey(plan.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -24,7 +24,9 @@ class _PlanCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(plan.name, style: AppTextStyles.baseMedium),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Wrap(
                       spacing: AppSpacing.x2,
                       runSpacing: AppSpacing.x2,
@@ -96,7 +98,7 @@ class _StatusPill extends StatelessWidget {
       color: color == AppColors.buy ? AppColors.buy15 : AppColors.primary15,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.earnPillPadding,
+        padding: EarnSpacingTokens.earnPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -120,7 +122,7 @@ class _PlanMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -186,7 +188,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: StakingInsurancePage.positionKey(position.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -236,7 +238,7 @@ class _PositionCard extends StatelessWidget {
             VitCard(
               variant: VitCardVariant.inner,
               radius: VitCardRadius.standard,
-              padding: AppSpacing.earnPaddingX4,
+              padding: EarnSpacingTokens.earnPaddingX4,
               child: Column(
                 children: [
                   _SheetRow(label: 'Plan:', value: plan!.name),
@@ -289,7 +291,7 @@ class _ClaimsTab extends StatelessWidget {
             VitCtaButton(
               fullWidth: false,
               height: AppSpacing.buttonCompact,
-              padding: AppSpacing.earnHorizontalPaddingX4,
+              padding: EarnSpacingTokens.earnHorizontalPaddingX4,
               onPressed: onFileClaim,
               child: const Text('File Claim'),
             ),
@@ -315,7 +317,7 @@ class _ClaimCard extends StatelessWidget {
     return VitCard(
       key: StakingInsurancePage.claimKey(claim.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         children: [
           Row(
@@ -389,7 +391,7 @@ class _ClaimMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnPaddingX2,
+      padding: EarnSpacingTokens.earnPaddingX2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -426,7 +428,7 @@ class _SheetFrame extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: AppSpacing.earnContentMargin,
+        padding: EarnSpacingTokens.earnContentMargin,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.86,
@@ -434,7 +436,10 @@ class _SheetFrame extends StatelessWidget {
           child: Material(
             color: AppColors.surface,
             borderRadius: AppRadii.cardLargeRadius,
-            child: Padding(padding: AppSpacing.earnPaddingX5, child: child),
+            child: Padding(
+              padding: EarnSpacingTokens.earnPaddingX5,
+              child: child,
+            ),
           ),
         ),
       ),

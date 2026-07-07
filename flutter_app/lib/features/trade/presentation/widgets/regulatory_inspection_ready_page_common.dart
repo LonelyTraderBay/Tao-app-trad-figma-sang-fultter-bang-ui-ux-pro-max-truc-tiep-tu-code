@@ -179,7 +179,7 @@ class _SectionLabel extends StatelessWidget {
         Expanded(
           child: VitSectionHeader(
             title: label,
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             variant: VitSectionHeaderVariant.accentBar,
             accentColor: _inspectionPrimary,
           ),

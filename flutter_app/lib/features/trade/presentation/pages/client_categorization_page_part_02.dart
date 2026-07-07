@@ -12,7 +12,7 @@ class _OverviewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -51,7 +51,7 @@ class _CategoryCard extends StatelessWidget {
       key: ClientCategorizationPage.categoryKey(category.id),
       density: VitDensity.compact,
       child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -61,8 +61,8 @@ class _CategoryCard extends StatelessWidget {
             children: [
               _CategoryIcon(
                 style: style,
-                size: AppSpacing.tradeBotClientCategoryIcon,
-                iconSize: AppSpacing.tradeBotClientCategoryIconGlyph,
+                size: TradeSpacingTokens.tradeBotClientCategoryIcon,
+                iconSize: TradeSpacingTokens.tradeBotClientCategoryIconGlyph,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -87,7 +87,8 @@ class _CategoryCard extends StatelessWidget {
                           Icon(
                             Icons.check_circle_outline,
                             color: style.color,
-                            size: AppSpacing.tradeBotSectionMarkerHeight,
+                            size:
+                                TradeSpacingTokens.tradeBotSectionMarkerHeight,
                           ),
                         ],
                       ],
@@ -136,7 +137,7 @@ class _OptUpCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -149,8 +150,8 @@ class _OptUpCard extends StatelessWidget {
                   color: _clientPrimary,
                   icon: Icons.trending_up_rounded,
                 ),
-                size: AppSpacing.tradeBotClientCategoryIcon,
-                iconSize: AppSpacing.tradeBotClientCategoryIconGlyph,
+                size: TradeSpacingTokens.tradeBotClientCategoryIcon,
+                iconSize: TradeSpacingTokens.tradeBotClientCategoryIconGlyph,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -187,7 +188,7 @@ class _OptUpCard extends StatelessWidget {
                 const Icon(
                   Icons.warning_amber_rounded,
                   color: _clientAmber,
-                  size: AppSpacing.tradeBotSectionMarkerHeight,
+                  size: TradeSpacingTokens.tradeBotSectionMarkerHeight,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
@@ -294,7 +295,7 @@ class _ListCard extends StatelessWidget {
               Icon(
                 Icons.square_rounded,
                 color: style.color,
-                size: AppSpacing.tradeBotClientMarker,
+                size: TradeSpacingTokens.tradeBotClientMarker,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -321,9 +322,7 @@ class _ListCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     value,
-                    style: AppTextStyles.micro.copyWith(
-                      color: AppColors.text2,
-                    ),
+                    style: AppTextStyles.micro.copyWith(color: AppColors.text2),
                   ),
                 ),
               ],
@@ -359,8 +358,8 @@ class _HistoryTab extends StatelessWidget {
                     color: _clientPrimary,
                     icon: Icons.schedule_rounded,
                   ),
-                  size: AppSpacing.tradeBotClientHistoryIcon,
-                  iconSize: AppSpacing.tradeBotClientHistoryIconGlyph,
+                  size: TradeSpacingTokens.tradeBotClientHistoryIcon,
+                  iconSize: TradeSpacingTokens.tradeBotClientHistoryIconGlyph,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(

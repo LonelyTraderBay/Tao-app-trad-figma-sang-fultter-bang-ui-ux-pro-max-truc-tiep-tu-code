@@ -12,8 +12,8 @@ class _ApiDocsCard extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.profileApiDocsIconBox,
-            height: AppSpacing.profileApiDocsIconBox,
+            width: ProfileSpacingTokens.profileApiDocsIconBox,
+            height: ProfileSpacingTokens.profileApiDocsIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: _apiPrimary.withValues(alpha: .1),
@@ -24,7 +24,7 @@ class _ApiDocsCard extends StatelessWidget {
               child: const Icon(
                 Icons.info_outline_rounded,
                 color: _apiPrimary,
-                size: AppSpacing.profileApiDocsIcon,
+                size: ProfileSpacingTokens.profileApiDocsIcon,
               ),
             ),
           ),
@@ -53,7 +53,7 @@ class _ApiDocsCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: _apiMuted,
-            size: AppSpacing.profileApiDocsChevron,
+            size: ProfileSpacingTokens.profileApiDocsChevron,
           ),
         ],
       ),

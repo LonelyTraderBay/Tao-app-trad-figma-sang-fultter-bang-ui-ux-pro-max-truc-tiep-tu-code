@@ -20,7 +20,7 @@ class _StatCell extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX2),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
         Text(
           value,
           style: AppTextStyles.sectionTitle.copyWith(
@@ -48,7 +48,7 @@ class _MiniStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX3,
+      padding: DcaSpacingTokens.dcaPaddingX3,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -59,7 +59,7 @@ class _MiniStatCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX2),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -90,7 +90,7 @@ class _CorrelationCell extends StatelessWidget {
         ? AppColors.warn
         : AppColors.buy;
     return Padding(
-      padding: AppSpacing.dcaHorizontalPaddingX1,
+      padding: DcaSpacingTokens.dcaHorizontalPaddingX1,
       child: SizedBox(
         height: AppSpacing.x7,
         child: DecoratedBox(
@@ -125,7 +125,7 @@ class _DisclaimerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.warn15,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

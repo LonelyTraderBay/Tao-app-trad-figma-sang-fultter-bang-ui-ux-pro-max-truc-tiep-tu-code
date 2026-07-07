@@ -39,9 +39,9 @@ class _FuturesPageState extends ConsumerState<FuturesPage> {
       _marginController.clear();
     });
     if (Scaffold.maybeOf(context) != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Đã gửi ${receipt.orderId}')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Đã gửi ${receipt.orderId}')));
     }
   }
 

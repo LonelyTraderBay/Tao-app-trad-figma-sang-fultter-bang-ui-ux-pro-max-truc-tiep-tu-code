@@ -71,7 +71,7 @@ class _NetworkCard extends StatelessWidget {
                   child: Icon(
                     _healthIcon(network.health),
                     color: healthColor,
-                    size: AppSpacing.walletNetworkActionIcon,
+                    size: WalletSpacingTokens.walletNetworkActionIcon,
                   ),
                 ),
               ],
@@ -245,7 +245,7 @@ class _CongestionBar extends StatelessWidget {
       child: ClipRRect(
         borderRadius: AppRadii.pillRadius,
         child: LinearProgressIndicator(
-          minHeight: AppSpacing.walletNetworkProgressHeight,
+          minHeight: WalletSpacingTokens.walletNetworkProgressHeight,
           value: (percent / 100).clamp(0, 1).toDouble(),
           color: color.withValues(alpha: .55),
           backgroundColor: color.withValues(alpha: .08),
@@ -289,7 +289,7 @@ class _NetworkNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletNetworkNotePadding,
+      padding: WalletSpacingTokens.walletNetworkNotePadding,
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
       background: ColoredBox(color: _networkAmber.withValues(alpha: .06)),

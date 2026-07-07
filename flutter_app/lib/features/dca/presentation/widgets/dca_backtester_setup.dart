@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/dca/domain/entities/dca_entities.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 
 class DcaBacktesterSetup extends StatelessWidget {
   const DcaBacktesterSetup({
@@ -101,7 +102,7 @@ class _AssetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -136,7 +137,7 @@ class _DateRangeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -183,7 +184,7 @@ class _InvestmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -275,7 +276,7 @@ class _StrategyCard extends StatelessWidget {
       variant: VitCardVariant.ghost,
       width: double.infinity,
       borderColor: selected ? AppColors.primary : AppColors.cardBorder,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,7 +306,7 @@ class _DipThresholdCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: const DcaReadOnlyField(label: 'Dip Threshold (%)', value: '5'),
     );
   }
@@ -325,7 +326,7 @@ class _BacktestDisclaimer extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.dcaPaddingX4,
+        padding: DcaSpacingTokens.dcaPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -340,7 +341,7 @@ class _BacktestDisclaimer extends StatelessWidget {
                 'Backtest dựa trên dữ liệu lịch sử. Hiệu suất quá khứ không đảm bảo kết quả tương lai. Chỉ mang tính tham khảo.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.dcaBacktesterBodyLineHeight,
+                  height: DcaSpacingTokens.dcaBacktesterBodyLineHeight,
                 ),
               ),
             ),

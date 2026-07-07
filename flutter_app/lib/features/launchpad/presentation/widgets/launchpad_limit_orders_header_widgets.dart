@@ -12,7 +12,7 @@ class _Tabs extends StatelessWidget {
       key: LaunchpadLimitOrdersPage.tabsKey,
       color: AppColors.surface,
       child: Padding(
-        padding: AppSpacing.launchpadHorizontalContentPadding,
+        padding: LaunchpadSpacingTokens.launchpadHorizontalContentPadding,
         child: VitTabBar(
           tabs: const [
             VitTabItem(key: 'active', label: 'Hoat dong'),
@@ -37,7 +37,7 @@ class _StatsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: LaunchpadLimitOrdersPage.statsKey,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         children: [
           _StatCell(

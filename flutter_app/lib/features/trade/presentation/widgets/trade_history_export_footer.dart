@@ -108,7 +108,7 @@ class _ExportFooter extends StatelessWidget {
                       ),
                       const SizedBox(width: AppSpacing.x2),
                       Expanded(
-                        flex: AppSpacing.tradeToolFooterButtonFlex,
+                        flex: TradeSpacingTokens.tradeToolFooterButtonFlex,
                         child: VitCtaButton(
                           key: TradeHistoryExportPage.downloadKey,
                           variant: VitCtaButtonVariant.success,

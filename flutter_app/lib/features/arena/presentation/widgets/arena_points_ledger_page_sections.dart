@@ -187,7 +187,7 @@ class _LedgerRow extends StatelessWidget {
         variant: VitCardVariant.ghost,
         radius: VitCardRadius.standard,
         child: Padding(
-          padding: AppSpacing.arenaPointsLedgerRowPadding,
+          padding: ArenaSpacingTokens.arenaPointsLedgerRowPadding,
           child: Row(
             children: [
               _LedgerIcon(typeId: entry.typeId, color: color),
@@ -246,10 +246,12 @@ class _LedgerRow extends StatelessWidget {
                       const Icon(
                         Icons.arrow_forward_rounded,
                         color: AppColors.text3,
-                        size: AppSpacing.arenaPointsLedgerBalanceArrowIcon,
+                        size: ArenaSpacingTokens
+                            .arenaPointsLedgerBalanceArrowIcon,
                       ),
                       const SizedBox(
-                        width: AppSpacing.arenaPointsLedgerBalanceArrowGap,
+                        width:
+                            ArenaSpacingTokens.arenaPointsLedgerBalanceArrowGap,
                       ),
                       Text(
                         formatArenaPoints(entry.balanceAfter),
@@ -280,7 +282,7 @@ class _LedgerIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.arenaPointsLedgerIconBox,
+      dimension: ArenaSpacingTokens.arenaPointsLedgerIconBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: _entryTint(typeId),
@@ -290,7 +292,7 @@ class _LedgerIcon extends StatelessWidget {
           child: Icon(
             _entryIcon(typeId),
             color: color,
-            size: AppSpacing.arenaPointsLedgerGlyph,
+            size: ArenaSpacingTokens.arenaPointsLedgerGlyph,
           ),
         ),
       ),
@@ -312,7 +314,7 @@ class _TypeBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.arenaPointsLedgerBadgePadding,
+        padding: ArenaSpacingTokens.arenaPointsLedgerBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -334,14 +336,14 @@ class _AuditNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPointsLedgerNoticePadding,
+      padding: ArenaSpacingTokens.arenaPointsLedgerNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.accent,
-            size: AppSpacing.arenaPointsInlineIcon,
+            size: ArenaSpacingTokens.arenaPointsInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

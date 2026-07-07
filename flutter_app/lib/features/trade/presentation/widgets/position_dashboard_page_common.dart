@@ -223,7 +223,7 @@ class _EmptyPositions extends StatelessWidget {
             color: AppColors.borderSolid,
             size: AppSpacing.searchBarCompactHeight,
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+          const SizedBox(height: WalletSpacingTokens.walletAssetHeroTopGap),
           Text(
             'Không có vị thế nào',
             style: AppTextStyles.caption.copyWith(color: AppColors.text3),

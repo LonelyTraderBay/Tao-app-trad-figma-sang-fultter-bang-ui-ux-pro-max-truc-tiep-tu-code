@@ -81,7 +81,7 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCompactPanelPadding,
+      padding: TradeSpacingTokens.tradeBotCompactPanelPadding,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +122,7 @@ class _UnderwaterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         children: [
           SizedBox(
@@ -152,7 +152,7 @@ class _DurationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: SizedBox(
         height: _drawdownDurationExtent,
         child: CustomPaint(
@@ -175,7 +175,8 @@ class _EventsList extends StatelessWidget {
       children: [
         for (final event in events) ...[
           _EventCard(event: event),
-          if (event != events.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (event != events.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -190,7 +191,7 @@ class _EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         children: [
           Row(
@@ -270,7 +271,7 @@ class _EventStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCompactPanelPadding,
+      padding: TradeSpacingTokens.tradeBotCompactPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -72,7 +72,7 @@ class _ActionButton extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
         ),
         child: Padding(
-          padding: AppSpacing.dcaOverviewActionButtonPadding,
+          padding: DcaSpacingTokens.dcaOverviewActionButtonPadding,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -82,11 +82,11 @@ class _ActionButton extends StatelessWidget {
                   shape: const CircleBorder(),
                 ),
                 child: Padding(
-                  padding: AppSpacing.dcaPaddingX3,
+                  padding: DcaSpacingTokens.dcaPaddingX3,
                   child: Icon(
                     spec.icon,
                     color: spec.color,
-                    size: AppSpacing.dcaOverviewInlineIcon,
+                    size: DcaSpacingTokens.dcaOverviewInlineIcon,
                   ),
                 ),
               ),
@@ -129,13 +129,13 @@ class _OverviewSkeleton extends StatelessWidget {
         Row(
           children: [
             VitSkeleton(
-              width: AppSpacing.dcaOverviewSkeletonTitleWidth,
-              height: AppSpacing.dcaOverviewSkeletonTitleHeight,
+              width: DcaSpacingTokens.dcaOverviewSkeletonTitleWidth,
+              height: DcaSpacingTokens.dcaOverviewSkeletonTitleHeight,
             ),
             Spacer(),
             VitSkeleton(
-              width: AppSpacing.dcaOverviewSkeletonToggleSize,
-              height: AppSpacing.dcaOverviewSkeletonToggleSize,
+              width: DcaSpacingTokens.dcaOverviewSkeletonToggleSize,
+              height: DcaSpacingTokens.dcaOverviewSkeletonToggleSize,
               borderRadius: AppRadii.xlRadius,
             ),
           ],
@@ -150,14 +150,14 @@ class _OverviewSkeleton extends StatelessWidget {
         Row(
           children: [
             VitSkeleton(
-              width: AppSpacing.dcaOverviewSkeletonChipWidth,
+              width: DcaSpacingTokens.dcaOverviewSkeletonChipWidth,
               height: AppSpacing.x5,
               borderRadius: AppRadii.smRadius,
             ),
             SizedBox(width: AppSpacing.x3),
             VitSkeleton(
-              width: AppSpacing.dcaOverviewSkeletonMetaWidth,
-              height: AppSpacing.dcaOverviewSkeletonMetaHeight,
+              width: DcaSpacingTokens.dcaOverviewSkeletonMetaWidth,
+              height: DcaSpacingTokens.dcaOverviewSkeletonMetaHeight,
             ),
           ],
         ),
@@ -246,7 +246,7 @@ class _DemoFooter extends StatelessWidget {
     return VitCard(
       key: DCAOverviewDemo.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Text(
         'Component: ${snapshot.componentName} · Location: ${snapshot.componentLocation}',
         textAlign: TextAlign.center,

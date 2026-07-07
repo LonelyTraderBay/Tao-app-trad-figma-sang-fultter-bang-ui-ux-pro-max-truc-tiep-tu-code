@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingForumPage extends ConsumerWidget {
   const StakingForumPage({super.key, this.shellRenderMode});
@@ -58,7 +59,9 @@ class StakingForumPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.defaultPadding,
@@ -102,7 +105,7 @@ class _ForumHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: AppColors.accent30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -115,7 +118,7 @@ class _ForumHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingCommunityBodyLineHeight,
+              height: EarnSpacingTokens.stakingCommunityBodyLineHeight,
             ),
           ),
         ],
@@ -141,10 +144,10 @@ class _CategoryGrid extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: categories.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.stakingCommunityGridColumns,
+            crossAxisCount: EarnSpacingTokens.stakingCommunityGridColumns,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
-            childAspectRatio: AppSpacing.stakingCommunityForumGridAspect,
+            childAspectRatio: EarnSpacingTokens.stakingCommunityForumGridAspect,
           ),
           itemBuilder: (context, index) =>
               _CategoryCard(category: categories[index]),
@@ -164,7 +167,7 @@ class _CategoryCard extends StatelessWidget {
     return VitCard(
       key: StakingForumPage.categoryKey(category.name),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       onTap: () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +225,7 @@ class _ThreadCard extends StatelessWidget {
     return VitCard(
       key: StakingForumPage.threadKey(index),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3X4,
+      padding: EarnSpacingTokens.earnCardPaddingX3X4,
       onTap: () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -8,12 +8,12 @@ class _SummaryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       mainAxisSpacing: AppSpacing.x3,
       crossAxisSpacing: AppSpacing.x3,
-      childAspectRatio: AppSpacing.tradeBotAttributionMetricAspectRatio,
+      childAspectRatio: TradeSpacingTokens.tradeBotAttributionMetricAspectRatio,
       children: [
         _MetricTile(
           label: 'Total Return',
@@ -129,7 +129,8 @@ class _AttributionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [

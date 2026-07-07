@@ -55,7 +55,7 @@ class _ProductChip extends StatelessWidget {
       key: SavingsComparisonPage.productChipKey(product.id),
       variant: VitCardVariant.inner,
       borderColor: accent.withValues(alpha: 0.35),
-      padding: AppSpacing.earnCardPaddingX4X3,
+      padding: EarnSpacingTokens.earnCardPaddingX4X3,
       child: Row(
         children: [
           _EarnAssetBadge(asset: product.asset, color: accent),
@@ -153,7 +153,7 @@ class _ProductPickerSheet extends StatelessWidget {
         if (availableProducts.isEmpty)
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.earnCardPaddingX5,
+            padding: EarnSpacingTokens.earnCardPaddingX5,
             child: Text(
               'Đã chọn hết sản phẩm',
               textAlign: TextAlign.center,
@@ -185,7 +185,7 @@ class _PickerProductTile extends StatelessWidget {
     return VitCard(
       key: SavingsComparisonPage.pickerOptionKey(product.id),
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         children: [
@@ -233,7 +233,7 @@ class _EmptyComparisonState extends StatelessWidget {
     return VitCard(
       key: SavingsComparisonPage.emptyStateKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: EarnSpacingTokens.earnCardPaddingX5,
       child: Column(
         children: [
           const Icon(
@@ -274,7 +274,7 @@ class _ComparisonDisclaimer extends StatelessWidget {
     return EarnInfoBanner(
       key: SavingsComparisonPage.disclaimerKey,
       text: text,
-      lineHeight: AppSpacing.savingsConsumerBodyLineHeight,
+      lineHeight: EarnSpacingTokens.savingsConsumerBodyLineHeight,
     );
   }
 }
@@ -304,7 +304,7 @@ class _EarnAssetBadge extends StatelessWidget {
             style: AppTextStyles.micro.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.savingsConsumerPillLineHeight,
+              height: EarnSpacingTokens.savingsConsumerPillLineHeight,
             ),
           ),
         ),

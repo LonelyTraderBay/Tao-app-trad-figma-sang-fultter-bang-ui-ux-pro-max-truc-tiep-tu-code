@@ -21,7 +21,7 @@ class _MetricCard extends StatelessWidget {
       radius: VitCardRadius.large,
       variant: toneBg == null ? VitCardVariant.standard : VitCardVariant.inner,
       borderColor: toneBg == null ? null : tone.withValues(alpha: .18),
-      padding: AppSpacing.p2pTaxCardPadding,
+      padding: P2PSpacingTokens.p2pTaxCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +30,7 @@ class _MetricCard extends StatelessWidget {
               Icon(
                 icon,
                 color: tone == AppColors.text1 ? AppColors.text3 : tone,
-                size: AppSpacing.p2pDocumentInlineIcon,
+                size: P2PSpacingTokens.p2pDocumentInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -99,7 +99,7 @@ class _TaxDocumentRow extends StatelessWidget {
     final color = _toneColor(document.toneKey);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pTaxCardPadding,
+      padding: P2PSpacingTokens.p2pTaxCardPadding,
       child: Row(
         children: [
           SizedBox.square(
@@ -146,7 +146,7 @@ class _TaxDocumentRow extends StatelessWidget {
             onTap: () => HapticFeedback.selectionClick(),
             accentColor: color,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pDocumentDownloadPadding,
+            padding: P2PSpacingTokens.p2pDocumentDownloadPadding,
             leading: const Icon(Icons.download_rounded),
             semanticLabel: 'Tải báo cáo ${document.format}',
           ),
@@ -171,14 +171,14 @@ class _TaxDisclaimer extends StatelessWidget {
         side: BorderSide(color: AppColors.sell20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pTaxCardPadding,
+        padding: P2PSpacingTokens.p2pTaxCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.error_outline_rounded,
               color: AppColors.sell,
-              size: AppSpacing.p2pDocumentInlineIcon,
+              size: P2PSpacingTokens.p2pDocumentInlineIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(

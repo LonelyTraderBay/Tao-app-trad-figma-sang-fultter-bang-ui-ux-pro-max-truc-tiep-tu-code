@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_ins
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_insurance_fund_status_card.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingInsuranceFundHistoryTab extends StatelessWidget {
   const StakingInsuranceFundHistoryTab({super.key, required this.snapshot});
@@ -26,11 +27,11 @@ class StakingInsuranceFundHistoryTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 children: [
                   SizedBox(
-                    height: AppSpacing.stakingProductHistoryChartHeight,
+                    height: EarnSpacingTokens.stakingProductHistoryChartHeight,
                     child: CustomPaint(
                       painter: StakingInsuranceFundHistoryPainter(
                         history: snapshot.history,
@@ -38,7 +39,9 @@ class StakingInsuranceFundHistoryTab extends StatelessWidget {
                       child: const SizedBox.expand(),
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   Row(
                     children: [
                       const Expanded(
@@ -87,7 +90,7 @@ class StakingInsuranceFundAuditRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           const Icon(

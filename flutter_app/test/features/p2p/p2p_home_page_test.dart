@@ -83,7 +83,10 @@ void main() {
     expect(find.text('₫45.20B'), findsOneWidget);
     expect(find.text('94.5%'), findsOneWidget);
     expect(find.byKey(P2PHomePage.kycBannerKey), findsOneWidget);
-    expect(find.text('P2P yêu cầu xác minh KYC trước khi giao dịch'), findsOneWidget);
+    expect(
+      find.text('P2P yêu cầu xác minh KYC trước khi giao dịch'),
+      findsOneWidget,
+    );
     expect(find.text('Xác minh KYC'), findsOneWidget);
     expect(find.byKey(P2PHomePage.escrowDisclaimerKey), findsOneWidget);
     expect(find.byKey(P2PHomePage.tradeTabsKey), findsOneWidget);

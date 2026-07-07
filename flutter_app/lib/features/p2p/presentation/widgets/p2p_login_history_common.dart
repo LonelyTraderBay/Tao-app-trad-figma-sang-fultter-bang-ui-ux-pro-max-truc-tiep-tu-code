@@ -61,7 +61,7 @@ class _InlineMeta extends StatelessWidget {
         Icon(
           icon,
           color: AppColors.text3,
-          size: AppSpacing.p2pLoginHistoryMetaIcon,
+          size: P2PSpacingTokens.p2pLoginHistoryMetaIcon,
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(
@@ -105,7 +105,7 @@ class _SecurityInfo extends StatelessWidget {
       color: AppModuleAccents.p2p.withValues(alpha: .10),
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: AppSpacing.p2pLoginHistoryNoticePadding,
+        padding: P2PSpacingTokens.p2pLoginHistoryNoticePadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -159,7 +159,7 @@ class _EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2PLoginHistoryPage.emptyKey,
-      padding: AppSpacing.p2pLoginHistoryEmptyPadding,
+      padding: P2PSpacingTokens.p2pLoginHistoryEmptyPadding,
       child: Column(
         children: [
           const Icon(

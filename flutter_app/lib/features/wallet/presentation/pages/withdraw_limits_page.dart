@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/app/providers/wallet_controller_providers.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part '../widgets/withdraw_limits_page_sections.dart';
 part '../widgets/withdraw_limits_page_common.dart';
@@ -28,8 +29,8 @@ const _limitsProgressHeight = AppSpacing.x2 + AppSpacing.dividerHairline;
 
 double _limitsScrollBottomInset(BuildContext context, ShellRenderMode mode) {
   return (mode.usesVisualQaFrame
-          ? AppSpacing.walletBottomInsetVisualChrome
-          : AppSpacing.walletBottomInsetNativeChrome) +
+          ? WalletSpacingTokens.walletBottomInsetVisualChrome
+          : WalletSpacingTokens.walletBottomInsetNativeChrome) +
       MediaQuery.paddingOf(context).bottom;
 }
 
@@ -80,7 +81,8 @@ class WithdrawLimitsPage extends ConsumerWidget {
                       _QuickStats(tier: snapshot.currentTier),
                       const _LimitWarning(),
                       VitPageSection(
-                        label: 'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
+                        label:
+                            'So s\u00E1nh h\u1EA1n m\u1EE9c theo c\u1EA5p KYC',
                         headerIcon: Icons.verified_user_outlined,
                         headerVariant: VitSectionHeaderVariant.accentBar,
                         headerDensity: VitDensity.compact,

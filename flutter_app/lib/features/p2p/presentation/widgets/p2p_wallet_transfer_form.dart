@@ -60,7 +60,7 @@ class _TransferForm extends StatelessWidget {
           keyFor: P2PWalletTransferPage.percentKey,
           accentColor: AppModuleAccents.p2p,
           height: AppSpacing.buttonCompact,
-          padding: AppSpacing.p2pWalletTransferPercentPadding,
+          padding: P2PSpacingTokens.p2pWalletTransferPercentPadding,
         ),
         P2PNoticeCard(
           key: P2PWalletTransferPage.feeKey,
@@ -71,14 +71,14 @@ class _TransferForm extends StatelessWidget {
           iconColor: AppColors.buy,
           titleColor: AppColors.buy,
           borderColor: AppColors.buy.withValues(alpha: .30),
-          padding: AppSpacing.p2pWalletCompactCardPadding,
+          padding: P2PSpacingTokens.p2pWalletCompactCardPadding,
         ),
         P2PNoticeCard(
           key: P2PWalletTransferPage.escrowNoteKey,
           icon: Icons.info_outline_rounded,
           message: snapshot.escrowNote,
           borderColor: AppModuleAccents.p2p.withValues(alpha: .32),
-          padding: AppSpacing.p2pWalletCompactCardPadding,
+          padding: P2PSpacingTokens.p2pWalletCompactCardPadding,
         ),
         _SubmitButton(
           enabled: canTransfer,
@@ -116,14 +116,14 @@ class _DirectionCard extends StatelessWidget {
     return VitCard(
       key: P2PWalletTransferPage.directionKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pWalletTransferCardPadding,
+      padding: P2PSpacingTokens.p2pWalletTransferCardPadding,
       child: Row(
         children: [
           Expanded(
             child: _WalletSide(label: 'Từ', balance: source),
           ),
           Padding(
-            padding: AppSpacing.p2pWalletTransferDirectionSwitchPadding,
+            padding: P2PSpacingTokens.p2pWalletTransferDirectionSwitchPadding,
             child: Material(
               key: P2PWalletTransferPage.switchKey,
               color: AppModuleAccents.p2p.withValues(alpha: .16),
@@ -219,7 +219,7 @@ class _AssetSelection extends StatelessWidget {
       children: [
         const VitSectionHeader(
           title: 'Chọn tài sản',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           icon: Icons.account_balance_wallet_outlined,
           accentColor: AppModuleAccents.p2p,
           density: VitDensity.compact,
@@ -273,7 +273,7 @@ class _AssetTile extends StatelessWidget {
       constraints: const BoxConstraints(
         minHeight: _p2pTransferAssetTileMinHeight,
       ),
-      padding: AppSpacing.p2pWalletTransferAssetChipPadding,
+      padding: P2PSpacingTokens.p2pWalletTransferAssetChipPadding,
       clip: true,
       onTap: onTap,
       child: Column(

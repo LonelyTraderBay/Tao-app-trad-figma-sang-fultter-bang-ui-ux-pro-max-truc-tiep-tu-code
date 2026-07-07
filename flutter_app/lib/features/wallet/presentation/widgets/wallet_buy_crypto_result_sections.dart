@@ -82,12 +82,14 @@ class BuyConfirmContent extends StatelessWidget {
                 'Bạn sẽ nhận được',
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(height: AppSpacing.walletBuyCompactGap),
+              const SizedBox(height: WalletSpacingTokens.walletBuyCompactGap),
               Text(
                 '${_formatCrypto(receiveAmount)} ${crypto.symbol}',
                 style: AppTextStyles.sectionTitle.copyWith(color: _buyGreen),
               ),
-              const SizedBox(height: AppSpacing.walletBuyConfirmAmountGap),
+              const SizedBox(
+                height: WalletSpacingTokens.walletBuyConfirmAmountGap,
+              ),
               VitInfoRow(
                 label: 'Thanh toán',
                 value: '${_formatInt(amountVnd)} VND',
@@ -153,7 +155,7 @@ class BuySuccessState extends StatelessWidget {
             subtitle: 'Giao dịch · Wallet',
           ),
           child: VitInsetScrollView(
-            bottomInset: AppSpacing.walletBuySuccessCtaGap,
+            bottomInset: WalletSpacingTokens.walletBuySuccessCtaGap,
             child: VitPageContent(
               rhythm: VitPageRhythm.form,
               padding: VitContentPadding.compact,
@@ -166,23 +168,25 @@ class BuySuccessState extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const CircleAvatar(
-                        radius: AppSpacing.walletBuySuccessIconRadius,
+                        radius: WalletSpacingTokens.walletBuySuccessIconRadius,
                         backgroundColor: AppColors.buy10,
                         child: Icon(
                           Icons.check_circle_outline_rounded,
                           color: _buyGreen,
-                          size: AppSpacing.walletBuySuccessGlyph,
+                          size: WalletSpacingTokens.walletBuySuccessGlyph,
                         ),
                       ),
                       const SizedBox(
-                        height: AppSpacing.walletBuySuccessTitleGap,
+                        height: WalletSpacingTokens.walletBuySuccessTitleGap,
                       ),
                       Text(
                         'Đặt lệnh thành công!',
                         textAlign: TextAlign.center,
                         style: AppTextStyles.sectionTitle,
                       ),
-                      const SizedBox(height: AppSpacing.walletBuyCompactGap),
+                      const SizedBox(
+                        height: WalletSpacingTokens.walletBuyCompactGap,
+                      ),
                       Text(
                         'Lệnh mua ${_formatCrypto(receiveAmount)} ${crypto.symbol} từ ${_formatInt(amountVnd)} VND đã được đặt.',
                         textAlign: TextAlign.center,
@@ -286,7 +290,7 @@ class BuyCryptoOptionRow extends StatelessWidget {
       child: Row(
         children: [
           _CryptoLogo(option: option),
-          const SizedBox(width: AppSpacing.walletBuyInlineGap),
+          const SizedBox(width: WalletSpacingTokens.walletBuyInlineGap),
           Expanded(
             child: Text(
               '${option.symbol} · ${option.name}',
@@ -308,7 +312,7 @@ class BuyCryptoOptionRow extends StatelessWidget {
 class _CryptoLogo extends StatelessWidget {
   const _CryptoLogo({
     required this.option,
-    this.size = AppSpacing.walletBuyCryptoLogoSize,
+    this.size = WalletSpacingTokens.walletBuyCryptoLogoSize,
   });
 
   final WalletBuyCryptoOption option;

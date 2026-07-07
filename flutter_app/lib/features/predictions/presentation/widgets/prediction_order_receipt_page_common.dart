@@ -19,7 +19,7 @@ class _SummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.predictionReceiptSummaryRowPadding,
+      padding: PredictionsSpacingTokens.predictionReceiptSummaryRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -50,7 +50,8 @@ class _SummaryRow extends StatelessWidget {
                   Icon(
                     trailingIcon,
                     color: valueColor,
-                    size: AppSpacing.predictionReceiptSummaryTrailingIcon,
+                    size: PredictionsSpacingTokens
+                        .predictionReceiptSummaryTrailingIcon,
                   ),
                 ],
               ],
@@ -73,7 +74,7 @@ class _FillProgress extends StatelessWidget {
       children: [
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         const SizedBox(
-          height: AppSpacing.predictionReceiptTimelineLineWidth,
+          height: PredictionsSpacingTokens.predictionReceiptTimelineLineWidth,
           child: ColoredBox(color: AppColors.divider),
         ),
         const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -125,7 +126,8 @@ class _TimelineStep extends StatelessWidget {
           Column(
             children: [
               SizedBox.square(
-                dimension: AppSpacing.predictionReceiptTimelineDot,
+                dimension:
+                    PredictionsSpacingTokens.predictionReceiptTimelineDot,
                 child: Material(
                   color: step.done ? AppColors.buy15 : AppColors.surface2,
                   shape: CircleBorder(
@@ -135,7 +137,8 @@ class _TimelineStep extends StatelessWidget {
                   ),
                   child: Icon(
                     step.done ? Icons.check_rounded : Icons.schedule_rounded,
-                    size: AppSpacing.predictionReceiptTimelineIcon,
+                    size:
+                        PredictionsSpacingTokens.predictionReceiptTimelineIcon,
                     color: color,
                   ),
                 ),
@@ -143,9 +146,11 @@ class _TimelineStep extends StatelessWidget {
               if (!isLast)
                 Expanded(
                   child: Padding(
-                    padding: AppSpacing.predictionReceiptTimelineLineMargin,
+                    padding: PredictionsSpacingTokens
+                        .predictionReceiptTimelineLineMargin,
                     child: const SizedBox(
-                      width: AppSpacing.predictionReceiptTimelineLineWidth,
+                      width: PredictionsSpacingTokens
+                          .predictionReceiptTimelineLineWidth,
                       child: ColoredBox(color: AppColors.borderSolid),
                     ),
                   ),
@@ -169,7 +174,8 @@ class _TimelineStep extends StatelessWidget {
                     step.date,
                     style: AppTextStyles.micro.copyWith(color: AppColors.text3),
                   ),
-                if (!isLast) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                if (!isLast)
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
             ),
           ),

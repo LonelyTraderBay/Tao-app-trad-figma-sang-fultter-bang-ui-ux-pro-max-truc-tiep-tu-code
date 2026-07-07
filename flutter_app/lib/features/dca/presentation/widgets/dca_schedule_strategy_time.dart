@@ -33,9 +33,7 @@ class _InfoBanner extends StatelessWidget {
                   'Tự động điều chỉnh thời điểm DCA theo volatility, gas hoặc khối lượng — giữ kỷ luật mua định kỳ.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text2,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ],
             ),

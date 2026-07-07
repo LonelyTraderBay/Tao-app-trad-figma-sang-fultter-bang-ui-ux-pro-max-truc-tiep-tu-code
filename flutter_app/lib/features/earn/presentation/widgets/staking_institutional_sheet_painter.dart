@@ -10,7 +10,7 @@ class _SheetFrame extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: AppSpacing.earnContentMargin,
+        padding: EarnSpacingTokens.earnContentMargin,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.88,
@@ -22,7 +22,10 @@ class _SheetFrame extends StatelessWidget {
                 borderRadius: AppRadii.cardLargeRadius,
               ),
             ),
-            child: Padding(padding: AppSpacing.earnPaddingX5, child: child),
+            child: Padding(
+              padding: EarnSpacingTokens.earnPaddingX5,
+              child: child,
+            ),
           ),
         ),
       ),
@@ -76,7 +79,7 @@ class _CreateBatchSheet extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: Padding(
-                  padding: AppSpacing.earnPaddingX4,
+                  padding: EarnSpacingTokens.earnPaddingX4,
                   child: Column(
                     children: [
                       const Icon(
@@ -84,7 +87,9 @@ class _CreateBatchSheet extends StatelessWidget {
                         color: AppColors.text3,
                         size: AppSpacing.iconLg,
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Text(
                         'Drop CSV or click to upload',
                         style: AppTextStyles.caption.copyWith(
@@ -148,7 +153,7 @@ class _StaticField extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnStaticSelectPadding,
+      padding: EarnSpacingTokens.earnStaticSelectPadding,
       child: Row(
         children: [
           Expanded(child: Text(value, style: AppTextStyles.body)),

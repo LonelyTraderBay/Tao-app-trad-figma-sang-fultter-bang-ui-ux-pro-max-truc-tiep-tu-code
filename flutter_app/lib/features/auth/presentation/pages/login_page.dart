@@ -13,6 +13,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -113,12 +114,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         builder: (context, constraints) {
           return SingleChildScrollView(
             key: LoginPage.contentKey,
-            padding: AppSpacing.authScrollBottomPadding,
+            padding: AuthSpacingTokens.authScrollBottomPadding,
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: IntrinsicHeight(
                 child: Padding(
-                  padding: AppSpacing.authStandaloneContentPadding,
+                  padding: AuthSpacingTokens.authStandaloneContentPadding,
                   child: VitPageContent(
                     rhythm: VitPageRhythm.form,
                     padding: VitContentPadding.none,
@@ -126,7 +127,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     fullBleed: true,
                     children: [
                       const _LoginHero(),
-                      const Padding(padding: AppSpacing.authHeroFormTopPadding),
+                      const Padding(
+                        padding: AuthSpacingTokens.authHeroFormTopPadding,
+                      ),
                       _LoginForm(
                         identifierController: _identifierController,
                         passwordController: _passwordController,
@@ -144,7 +147,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         onDemoLogin: _handleDemoLogin,
                       ),
                       const Padding(
-                        padding: AppSpacing.authFormFooterTopPadding,
+                        padding: AuthSpacingTokens.authFormFooterTopPadding,
                       ),
                       const _LegalFooter(),
                     ],
@@ -167,24 +170,24 @@ class _LoginHero extends StatelessWidget {
     return Column(
       children: [
         SizedBox.square(
-          dimension: AppSpacing.authLogoBoxSize,
+          dimension: AuthSpacingTokens.authLogoBoxSize,
           child: Material(
             color: AppColors.primaryDark,
-            elevation: AppSpacing.authLogoElevation,
+            elevation: AuthSpacingTokens.authLogoElevation,
             shadowColor: AppColors.primary40,
             borderRadius: AppRadii.cardRadius,
             child: const Center(child: _VitTradeLogoMark()),
           ),
         ),
-        const Padding(padding: AppSpacing.authTopGapX4),
+        const Padding(padding: AuthSpacingTokens.authTopGapX4),
         Text('VitTrade', style: AppTextStyles.pageTitle),
-        const Padding(padding: AppSpacing.authTopGapX2),
+        const Padding(padding: AuthSpacingTokens.authTopGapX2),
         Text(
           'Đăng nhập an toàn',
           textAlign: TextAlign.center,
           style: AppTextStyles.sectionTitle,
         ),
-        const Padding(padding: AppSpacing.authTopGapX2),
+        const Padding(padding: AuthSpacingTokens.authTopGapX2),
         Text(
           'Truy cập tài khoản được bảo vệ end-to-end',
           textAlign: TextAlign.center,
@@ -242,7 +245,7 @@ class _LoginForm extends StatelessWidget {
             autofillHints: const [AutofillHints.username, AutofillHints.email],
             onChanged: (_) => onChanged(),
           ),
-          const Padding(padding: AppSpacing.authTopGapX4),
+          const Padding(padding: AuthSpacingTokens.authTopGapX4),
           VitInput(
             controller: passwordController,
             fieldKey: LoginPage.passwordFieldKey,
@@ -267,10 +270,10 @@ class _LoginForm extends StatelessWidget {
             onSubmitted: (_) => onLogin(),
           ),
           if (error.isNotEmpty) ...[
-            const Padding(padding: AppSpacing.authTopGapX4),
+            const Padding(padding: AuthSpacingTokens.authTopGapX4),
             _authInlineErrorBanner(error),
           ],
-          const Padding(padding: AppSpacing.authTopGapX4),
+          const Padding(padding: AuthSpacingTokens.authTopGapX4),
           VitCtaButton(
             key: LoginPage.submitKey,
             onPressed: submitting ? null : onLogin,
@@ -279,9 +282,9 @@ class _LoginForm extends StatelessWidget {
             child: const Text('Đăng nhập'),
           ),
           if (showDemoLogin) ...[
-            const Padding(padding: AppSpacing.authTopGapX4),
+            const Padding(padding: AuthSpacingTokens.authTopGapX4),
             const _DividerLabel(),
-            const Padding(padding: AppSpacing.authTopGapX4),
+            const Padding(padding: AuthSpacingTokens.authTopGapX4),
             VitCtaButton(
               key: LoginPage.demoSubmitKey,
               onPressed: submitting ? null : onDemoLogin,
@@ -293,7 +296,7 @@ class _LoginForm extends StatelessWidget {
               child: const Text('Dùng tài khoản demo'),
             ),
           ],
-          const Padding(padding: AppSpacing.authTopGapX4),
+          const Padding(padding: AuthSpacingTokens.authTopGapX4),
           _AuthLinkRow(submitting: submitting),
         ],
       ),
@@ -318,8 +321,8 @@ class _AuthLinkRow extends StatelessWidget {
               : () => context.go(AppRoutePaths.authForgotPassword),
           variant: VitCtaButtonVariant.ghost,
           fullWidth: false,
-          height: AppSpacing.authTextButtonHeight,
-          padding: AppSpacing.authInlineTextButtonPadding,
+          height: AuthSpacingTokens.authTextButtonHeight,
+          padding: AuthSpacingTokens.authInlineTextButtonPadding,
           child: Text(
             'Quên mật khẩu?',
             style: AppTextStyles.caption.copyWith(color: AppColors.primary),
@@ -336,8 +339,8 @@ class _AuthLinkRow extends StatelessWidget {
               : () => context.go(AppRoutePaths.authRegister),
           variant: VitCtaButtonVariant.ghost,
           fullWidth: false,
-          height: AppSpacing.authTextButtonHeight,
-          padding: AppSpacing.authInlineTextButtonPadding,
+          height: AuthSpacingTokens.authTextButtonHeight,
+          padding: AuthSpacingTokens.authInlineTextButtonPadding,
           child: Text(
             'Đăng ký',
             style: AppTextStyles.caption.copyWith(
@@ -365,7 +368,7 @@ class _DividerLabel extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: AppSpacing.authDividerLabelPadding,
+          padding: AuthSpacingTokens.authDividerLabelPadding,
           child: Text(
             'hoặc',
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -416,8 +419,8 @@ class _VitTradeLogoMark extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       size: const Size(
-        AppSpacing.authLogoMarkSize,
-        AppSpacing.authLogoMarkSize,
+        AuthSpacingTokens.authLogoMarkSize,
+        AuthSpacingTokens.authLogoMarkSize,
       ),
       painter: _VitTradeLogoPainter(),
     );
@@ -467,13 +470,13 @@ Widget _authInlineErrorBanner(String error) {
       side: BorderSide(color: AppColors.sell20),
     ),
     child: Padding(
-      padding: AppSpacing.authErrorBannerPaddingSm,
+      padding: AuthSpacingTokens.authErrorBannerPaddingSm,
       child: Row(
         children: [
           const Icon(
             Icons.error_outline_rounded,
             color: AppColors.sell,
-            size: AppSpacing.authErrorIcon,
+            size: AuthSpacingTokens.authErrorIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

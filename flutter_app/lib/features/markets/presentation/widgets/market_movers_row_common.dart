@@ -36,26 +36,34 @@ class _MoverRow extends StatelessWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: AppSpacing.marketMoverRowPadding,
+                padding: MarketsSpacingTokens.marketMoverRowPadding,
                 child: Row(
                   children: [
                     _ListRankBadge(rank: rank),
-                    const SizedBox(width: AppSpacing.marketMoverRowGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketMoverRowGap,
+                    ),
                     _CoinAvatar(mover: mover),
-                    const SizedBox(width: AppSpacing.marketMoverHeaderGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketMoverHeaderGap,
+                    ),
                     Expanded(child: _MoverIdentity(mover: mover)),
-                    const SizedBox(width: AppSpacing.marketMoverRowGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketMoverRowGap,
+                    ),
                     SizedBox(
-                      width: AppSpacing.marketMoverSparklineWidth,
+                      width: MarketsSpacingTokens.marketMoverSparklineWidth,
                       height: _marketMoverSparklineExtent,
                       child: VitSparkline(
                         values: mover.sparkline,
                         color: metricColor,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.marketMoverHeaderGap),
+                    const SizedBox(
+                      width: MarketsSpacingTokens.marketMoverHeaderGap,
+                    ),
                     SizedBox(
-                      width: AppSpacing.marketMoverPriceColumnWidth,
+                      width: MarketsSpacingTokens.marketMoverPriceColumnWidth,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -71,7 +79,7 @@ class _MoverRow extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            height: AppSpacing.marketMoverMetricGap,
+                            height: MarketsSpacingTokens.marketMoverMetricGap,
                           ),
                           Text(
                             metric.label,
@@ -136,7 +144,7 @@ class _ListRankBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.marketMoverRankWidth,
+      width: MarketsSpacingTokens.marketMoverRankWidth,
       child: Text(
         '$rank',
         textAlign: TextAlign.center,
@@ -160,7 +168,7 @@ class _CoinAvatar extends StatelessWidget {
     return VitAssetAvatar(
       label: mover.symbol,
       accentColor: AppAssetColors.forSymbol(mover.symbol),
-      size: AppSpacing.marketMoverAvatar,
+      size: MarketsSpacingTokens.marketMoverAvatar,
       radius: AppRadii.pillRadius,
       border: true,
     );
@@ -190,15 +198,19 @@ class _MoverIdentity extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: AppSpacing.marketMoverIdentityBadgeGap),
+            const SizedBox(
+              width: MarketsSpacingTokens.marketMoverIdentityBadgeGap,
+            ),
             _MarketCapRankBadge(rank: mover.marketCapRank),
             if (mover.isNew) ...[
-              const SizedBox(width: AppSpacing.marketMoverIdentityBadgeGap),
+              const SizedBox(
+                width: MarketsSpacingTokens.marketMoverIdentityBadgeGap,
+              ),
               const _NewBadge(),
             ],
           ],
         ),
-        const SizedBox(height: AppSpacing.marketMoverMetricGap),
+        const SizedBox(height: MarketsSpacingTokens.marketMoverMetricGap),
         Text(
           mover.name,
           maxLines: 1,
@@ -221,7 +233,7 @@ class _MarketCapRankBadge extends StatelessWidget {
       color: AppColors.surface3,
       shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       child: Padding(
-        padding: AppSpacing.marketMoverRankBadgePadding,
+        padding: MarketsSpacingTokens.marketMoverRankBadgePadding,
         child: Text(
           '#$rank',
           style: AppTextStyles.micro.copyWith(

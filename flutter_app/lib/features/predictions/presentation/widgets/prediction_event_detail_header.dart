@@ -81,7 +81,9 @@ class _EventHeader extends StatelessWidget {
                   ),
                 ),
                 if (index == 0)
-                  const SizedBox(width: AppSpacing.predictionDetailOutcomeGap),
+                  const SizedBox(
+                    width: PredictionsSpacingTokens.predictionDetailOutcomeGap,
+                  ),
               ],
             ],
           )
@@ -130,10 +132,12 @@ class _OutcomeCard extends StatelessWidget {
           Row(
             children: [
               SizedBox.square(
-                dimension: AppSpacing.predictionDetailOutcomeDot,
+                dimension: PredictionsSpacingTokens.predictionDetailOutcomeDot,
                 child: Material(color: color, shape: const CircleBorder()),
               ),
-              const SizedBox(width: AppSpacing.predictionDetailOutcomeLabelGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionDetailOutcomeLabelGap,
+              ),
               Text(
                 outcome.label,
                 style: AppTextStyles.body.copyWith(
@@ -164,7 +168,8 @@ class _OutcomeCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: AppSpacing.predictionDetailOutcomeChanceGap,
+                width:
+                    PredictionsSpacingTokens.predictionDetailOutcomeChanceGap,
               ),
               Flexible(
                 child: Text(
@@ -248,10 +253,12 @@ class _MultiOutcomeRow extends StatelessWidget {
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.predictionDetailMultiOutcomeDot,
+            dimension: PredictionsSpacingTokens.predictionDetailMultiOutcomeDot,
             child: Material(color: color, shape: const CircleBorder()),
           ),
-          const SizedBox(width: AppSpacing.predictionDetailMultiOutcomeGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionDetailMultiOutcomeGap,
+          ),
           Expanded(
             child: Text(
               outcome.label,
@@ -285,7 +292,8 @@ class _ProbabilityBar extends StatelessWidget {
     final no = outcomes.last;
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
-      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+      child: SizedBox(
+        height: AppSpacing.pageRhythmCompactInnerGap,
         child: Row(
           children: [
             Expanded(

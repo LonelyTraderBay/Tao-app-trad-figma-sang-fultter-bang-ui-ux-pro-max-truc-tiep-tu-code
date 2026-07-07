@@ -12,7 +12,7 @@ class _SubmissionFooter extends StatelessWidget {
     return VitCard(
       height: _submissionFooterHeight,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.complaintSubmissionFooterPadding,
+      padding: TradeSpacingTokens.complaintSubmissionFooterPadding,
       borderColor: _submissionBorder.withValues(alpha: .35),
       child: VitCtaButton(
         key: ComplaintSubmissionPage.submitKey,

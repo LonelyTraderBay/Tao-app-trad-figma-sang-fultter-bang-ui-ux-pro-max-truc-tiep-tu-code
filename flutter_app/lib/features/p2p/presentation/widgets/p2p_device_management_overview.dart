@@ -16,7 +16,7 @@ class _DeviceStatsCard extends StatelessWidget {
     return VitCard(
       key: P2PDeviceManagementPage.statsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDevicesCardPadding,
+      padding: P2PSpacingTokens.p2pDevicesCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -106,7 +106,7 @@ class _TrustedDeviceNotice extends StatelessWidget {
         side: BorderSide(color: AppColors.primary20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pDevicesInnerPadding,
+        padding: P2PSpacingTokens.p2pDevicesInnerPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

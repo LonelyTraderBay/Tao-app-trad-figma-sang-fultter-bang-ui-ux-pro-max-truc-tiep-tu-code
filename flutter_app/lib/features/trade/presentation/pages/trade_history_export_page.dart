@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -111,73 +112,76 @@ class _TradeHistoryExportPageState
                         context: context,
                         children: [
                           VitTradeSection(
-                          title: 'Tổng quan',
-                          child: _SummaryCard(stats: snapshot.stats),
-                        ),
-                        VitTradeSection(
-                          title: 'Định dạng file',
-                          child: _FormatSelector(
-                            formats: snapshot.formats,
-                            activeFormat: _format,
-                            onChanged: (format) {
-                              setState(() {
-                                _format = format;
-                                _result = null;
-                              });
-                            },
+                            title: 'Tổng quan',
+                            child: _SummaryCard(stats: snapshot.stats),
                           ),
-                        ),
-                        VitTradeSection(
-                          title: 'Khoảng thời gian',
-                          child: _PeriodSelector(
-                            periods: snapshot.periods,
-                            activePeriod: _period,
-                            onChanged: (period) {
-                              setState(() {
-                                _period = period;
-                                _result = null;
-                              });
-                            },
-                          ),
-                        ),
-                        VitTradeSection(
-                          title: 'Bao gồm dữ liệu',
-                          child: _IncludeList(
-                            includes: _includes,
-                            onToggle: _toggleInclude,
-                          ),
-                        ),
-                        VitTradeSection(title: 'Thuế', child: const _TaxNote()),
-                        VitTradeSection(
-                          title: 'Đánh giá xuất',
-                          child: const VitCard(
-                            variant: VitCardVariant.inner,
-                            padding: EdgeInsetsDirectional.symmetric(
-                              horizontal: AppSpacing.x3,
-                              vertical: AppSpacing.x2,
-                            ),
-                            child: VitHighRiskStatePanel(
-                              state: VitHighRiskUiState.riskReview,
-                              title: 'Export review state',
-                              message:
-                                  'Format, period, included records, tax note, generated result and download next step are reviewed before export.',
-                              contractId: 'trade-history-export-review',
-                              density: VitDensity.compact,
+                          VitTradeSection(
+                            title: 'Định dạng file',
+                            child: _FormatSelector(
+                              formats: snapshot.formats,
+                              activeFormat: _format,
+                              onChanged: (format) {
+                                setState(() {
+                                  _format = format;
+                                  _result = null;
+                                });
+                              },
                             ),
                           ),
-                        ),
-                        const TradeBodyReviewSection(
-                          title: 'Export body review',
-                          message: 'Trade export body reviewed',
-                          detail:
-                              'Format, period, includes, tax note, export, download, and result states stay visible.',
-                          primary:
-                              'Export selectors remain above generated result state.',
-                          secondary:
-                              'Tax note stays visible before export confirmation.',
-                          tertiary:
-                              'Download/new-export actions remain in the sticky footer.',
-                        ),
+                          VitTradeSection(
+                            title: 'Khoảng thời gian',
+                            child: _PeriodSelector(
+                              periods: snapshot.periods,
+                              activePeriod: _period,
+                              onChanged: (period) {
+                                setState(() {
+                                  _period = period;
+                                  _result = null;
+                                });
+                              },
+                            ),
+                          ),
+                          VitTradeSection(
+                            title: 'Bao gồm dữ liệu',
+                            child: _IncludeList(
+                              includes: _includes,
+                              onToggle: _toggleInclude,
+                            ),
+                          ),
+                          VitTradeSection(
+                            title: 'Thuế',
+                            child: const _TaxNote(),
+                          ),
+                          VitTradeSection(
+                            title: 'Đánh giá xuất',
+                            child: const VitCard(
+                              variant: VitCardVariant.inner,
+                              padding: EdgeInsetsDirectional.symmetric(
+                                horizontal: AppSpacing.x3,
+                                vertical: AppSpacing.x2,
+                              ),
+                              child: VitHighRiskStatePanel(
+                                state: VitHighRiskUiState.riskReview,
+                                title: 'Export review state',
+                                message:
+                                    'Format, period, included records, tax note, generated result and download next step are reviewed before export.',
+                                contractId: 'trade-history-export-review',
+                                density: VitDensity.compact,
+                              ),
+                            ),
+                          ),
+                          const TradeBodyReviewSection(
+                            title: 'Export body review',
+                            message: 'Trade export body reviewed',
+                            detail:
+                                'Format, period, includes, tax note, export, download, and result states stay visible.',
+                            primary:
+                                'Export selectors remain above generated result state.',
+                            secondary:
+                                'Tax note stays visible before export confirmation.',
+                            tertiary:
+                                'Download/new-export actions remain in the sticky footer.',
+                          ),
                         ],
                       ),
                     ),

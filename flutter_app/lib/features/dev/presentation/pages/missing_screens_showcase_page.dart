@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 part '../widgets/missing_screens_showcase_page_sections.dart';
 part '../widgets/missing_screens_showcase_page_common.dart';
@@ -78,9 +79,9 @@ class _MissingScreensShowcasePageState
                 child: SingleChildScrollView(
                   key: MissingScreensShowcasePage.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.devScrollPadding(bottomInset),
+                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
                   child: VitPageContent(
- rhythm: VitPageRhythm.flush,
+                    rhythm: VitPageRhythm.flush,
                     gap: VitContentGap.defaultGap,
                     children: [
                       _DevStateBar(

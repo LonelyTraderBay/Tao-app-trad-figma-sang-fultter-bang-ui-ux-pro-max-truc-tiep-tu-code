@@ -27,7 +27,7 @@ class _AmountCard extends StatelessWidget {
         ? AppColors.buy
         : AppColors.sell;
     return VitCard(
-      padding: AppSpacing.p2pExpressCompactCardPadding,
+      padding: P2PSpacingTokens.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -60,7 +60,7 @@ class _AmountCard extends StatelessWidget {
                     : amount > 0
                     ? color.withValues(alpha: .45)
                     : AppColors.borderSolid,
-                width: AppSpacing.p2pExpressAmountBorderWidth,
+                width: P2PSpacingTokens.p2pExpressAmountBorderWidth,
               ),
             ),
             child: SizedBox(
@@ -117,7 +117,7 @@ class _AmountCard extends StatelessWidget {
             selectedValue: amount > 0 ? amount : null,
             accentColor: color,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pExpressChoiceChipPadding,
+            padding: P2PSpacingTokens.p2pExpressChoiceChipPadding,
           ),
         ],
       ),
@@ -139,7 +139,7 @@ class _PaymentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pExpressCompactCardPadding,
+      padding: P2PSpacingTokens.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -231,7 +231,7 @@ class _BestOfferCard extends StatelessWidget {
       children: [
         VitCard(
           borderColor: color.withValues(alpha: .35),
-          padding: AppSpacing.p2pExpressCompactCardPadding,
+          padding: P2PSpacingTokens.p2pExpressCompactCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -313,7 +313,7 @@ class _BestOfferCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             onTap: onMarketplace,
-            padding: AppSpacing.p2pExpressTightCardPadding,
+            padding: P2PSpacingTokens.p2pExpressTightCardPadding,
             child: Row(
               children: [
                 const Icon(
@@ -365,7 +365,7 @@ class _EscrowCard extends StatelessWidget {
         side: const BorderSide(color: AppColors.buy20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pExpressEscrowPadding,
+        padding: P2PSpacingTokens.p2pExpressEscrowPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -409,7 +409,7 @@ class _HowItWorksCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pExpressCompactCardPadding,
+      padding: P2PSpacingTokens.p2pExpressCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -437,7 +437,7 @@ class _HowItWorksCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final step in steps)
             Padding(
-              padding: AppSpacing.p2pExpressHowStepPadding,
+              padding: P2PSpacingTokens.p2pExpressHowStepPadding,
               child: Row(
                 children: [
                   SizedBox.square(
@@ -479,7 +479,7 @@ class _NoOfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.sell20,
-      padding: AppSpacing.p2pExpressTightCardPadding,
+      padding: P2PSpacingTokens.p2pExpressTightCardPadding,
       child: Row(
         children: [
           const Icon(

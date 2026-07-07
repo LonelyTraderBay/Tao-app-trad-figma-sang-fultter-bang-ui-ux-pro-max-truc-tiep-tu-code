@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -28,7 +29,7 @@ const _settingsChipHeightSm = 30.0;
 const _settingsToggleWidth = 42.0;
 const _settingsToggleHeight = 24.0;
 const _settingsToggleKnob = 18.0;
-const _settingsToggleKnobMargin = AppSpacing.settingsSwitchKnobMargin;
+const _settingsToggleKnobMargin = ProfileSpacingTokens.settingsSwitchKnobMargin;
 const _settingsButtonHeight = 44.0;
 
 class TradeSettingsPage extends ConsumerStatefulWidget {

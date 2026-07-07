@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 
 class UnifiedPortfolioDashboard extends ConsumerStatefulWidget {
   const UnifiedPortfolioDashboard({super.key, this.shellRenderMode});
@@ -73,7 +74,9 @@ class _UnifiedPortfolioDashboardState
                 child: SingleChildScrollView(
                   key: UnifiedPortfolioDashboard.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.crossModuleScrollPadding(bottomInset),
+                  padding: CrossModuleSpacingTokens.crossModuleScrollPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     gap: VitContentGap.defaultGap,

@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_bottom_sheet.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingRecommendationsPage extends ConsumerStatefulWidget {
   const StakingRecommendationsPage({super.key, this.shellRenderMode});
@@ -79,7 +80,9 @@ class _StakingRecommendationsPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
@@ -172,7 +175,7 @@ class _StakingRecommendationsPageState
               top: false,
               child: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.earnSheetContentPadding,
+                padding: EarnSpacingTokens.earnSheetContentPadding,
                 child: StakingRecommendationsStrategyDetailSheet(
                   strategy: strategy,
                   amount: _amount,

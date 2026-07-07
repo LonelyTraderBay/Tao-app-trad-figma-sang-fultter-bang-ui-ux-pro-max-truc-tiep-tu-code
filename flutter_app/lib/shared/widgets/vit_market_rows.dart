@@ -4,6 +4,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sparkline.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 enum VitTrendDirection { positive, negative, neutral }
 
@@ -53,13 +54,13 @@ class VitMarketPairRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final content = Padding(
       padding: const EdgeInsetsDirectional.symmetric(
-        horizontal: AppSpacing.homeSectionHorizontalPadding,
-        vertical: AppSpacing.homeSectionVerticalPadding,
+        horizontal: HomeSpacingTokens.homeSectionHorizontalPadding,
+        vertical: HomeSpacingTokens.homeSectionVerticalPadding,
       ),
       child: Row(
         children: [
           leading,
-          const SizedBox(width: AppSpacing.homeMarketIconGap),
+          const SizedBox(width: HomeSpacingTokens.homeMarketIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,14 +85,14 @@ class VitMarketPairRow extends StatelessWidget {
           ),
           if (showSparkline && sparkline != null) ...[
             SizedBox(
-              width: AppSpacing.homeSparklineWidth,
-              height: AppSpacing.homeSparklineHeight,
+              width: HomeSpacingTokens.homeSparklineWidth,
+              height: HomeSpacingTokens.homeSparklineHeight,
               child: VitSparkline(values: sparkline!, color: trend.foreground),
             ),
-            const SizedBox(width: AppSpacing.homeMarketIconGap),
+            const SizedBox(width: HomeSpacingTokens.homeMarketIconGap),
           ],
           SizedBox(
-            width: AppSpacing.homeRankedValueColumnWidth,
+            width: HomeSpacingTokens.homeRankedValueColumnWidth,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [

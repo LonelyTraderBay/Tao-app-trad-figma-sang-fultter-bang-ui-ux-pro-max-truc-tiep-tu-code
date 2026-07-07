@@ -27,7 +27,7 @@ class _PaymentInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: P2PSpacingTokens.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -64,7 +64,7 @@ class _PaymentInfoCard extends StatelessWidget {
             radius: VitCardRadius.standard,
             padding: AppSpacing.zeroInsets,
             child: Padding(
-              padding: AppSpacing.p2pOrderQrTogglePadding,
+              padding: P2PSpacingTokens.p2pOrderQrTogglePadding,
               child: Row(
                 children: [
                   const Icon(
@@ -122,22 +122,22 @@ class _QrPanel extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.borderSolid,
-      padding: AppSpacing.p2pOrderQrPanelPadding,
+      padding: P2PSpacingTokens.p2pOrderQrPanelPadding,
       child: Column(
         children: [
           Material(
             color: AppColors.onAccent,
             borderRadius: AppRadii.mdRadius,
             child: Padding(
-              padding: AppSpacing.p2pOrderQrInnerPadding,
+              padding: P2PSpacingTokens.p2pOrderQrInnerPadding,
               child: CustomPaint(
                 painter: _QrPatternPainter(
                   data:
                       '${order.bankName}|${order.accountNumber}|${order.accountName}|${order.totalVnd}|${order.transferContent}',
                 ),
                 size: const Size(
-                  AppSpacing.p2pOrderQrSize,
-                  AppSpacing.p2pOrderQrSize,
+                  P2PSpacingTokens.p2pOrderQrSize,
+                  P2PSpacingTokens.p2pOrderQrSize,
                 ),
               ),
             ),
@@ -181,7 +181,7 @@ class _PaymentFieldLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pOrderPaymentFieldPadding,
+      padding: P2PSpacingTokens.p2pOrderPaymentFieldPadding,
       child: Row(
         children: [
           Expanded(
@@ -234,7 +234,7 @@ class _ProofCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: P2PSpacingTokens.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -286,7 +286,7 @@ class _TimelineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: P2PSpacingTokens.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -343,7 +343,7 @@ class _TimelineItem extends StatelessWidget {
                   child: Icon(
                     _timelineIcon(item.iconKey),
                     color: color,
-                    size: AppSpacing.p2pOrderTimelineIcon,
+                    size: P2PSpacingTokens.p2pOrderTimelineIcon,
                   ),
                 ),
               ),
@@ -361,7 +361,7 @@ class _TimelineItem extends StatelessWidget {
           child: Padding(
             padding: isLast
                 ? AppSpacing.zeroInsets
-                : AppSpacing.p2pOrderTimelineItemPadding,
+                : P2PSpacingTokens.p2pOrderTimelineItemPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -417,7 +417,7 @@ class _PaymentWarning extends StatelessWidget {
       messageColor: AppColors.sell,
       borderColor: AppColors.sell20,
       variant: VitCardVariant.standard,
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: P2PSpacingTokens.p2pOrderCompactCardPadding,
       messageStyle: AppTextStyles.micro.copyWith(
         color: AppColors.sell,
         height: 1.4,
@@ -477,7 +477,7 @@ class _QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pOrderCompactCardPadding,
+      padding: P2PSpacingTokens.p2pOrderCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

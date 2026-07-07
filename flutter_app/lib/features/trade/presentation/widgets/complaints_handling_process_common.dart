@@ -7,14 +7,15 @@ class _ProcessContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
       children: [
         const VitSectionHeader(
           title: 'How We Handle Complaints',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
@@ -31,7 +32,7 @@ class _ProcessContent extends StatelessWidget {
         ),
         const VitSectionHeader(
           title: 'Financial Ombudsman Service',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           variant: VitSectionHeaderVariant.accentBar,
           accentColor: _complaintsPrimary,
         ),
@@ -54,7 +55,7 @@ class _ProcessStep extends StatelessWidget {
         const Icon(
           Icons.check_circle_outline_rounded,
           color: _complaintsGreen,
-          size: AppSpacing.complaintCaseActionIcon,
+          size: TradeSpacingTokens.complaintCaseActionIcon,
         ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(

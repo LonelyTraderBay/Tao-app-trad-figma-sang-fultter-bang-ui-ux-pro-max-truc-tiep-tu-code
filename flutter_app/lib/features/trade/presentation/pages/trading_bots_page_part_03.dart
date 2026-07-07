@@ -10,7 +10,7 @@ class _StrategyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Color(strategy.colorHex);
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -42,7 +42,9 @@ class _StrategyCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       strategy.description,
                       maxLines: 2,
@@ -163,7 +165,7 @@ class _CreateBotSheetState extends State<_CreateBotSheet> {
             ),
             const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
-              padding: AppSpacing.tradeBotCardPadding,
+              padding: TradeSpacingTokens.tradeBotCardPadding,
               variant: VitCardVariant.inner,
               borderColor: color.withValues(alpha: .22),
               child: Text(
@@ -242,7 +244,7 @@ class _ParamPreview extends StatelessWidget {
             minHeight: AppSpacing.inputHeight - AppSpacing.formFieldLabelGap,
           ),
           alignment: Alignment.centerLeft,
-          padding: AppSpacing.tradeBotActionButtonPadding(false),
+          padding: TradeSpacingTokens.tradeBotActionButtonPadding(false),
           variant: VitCardVariant.inner,
           borderColor: color.withValues(alpha: .26),
           child: Text(

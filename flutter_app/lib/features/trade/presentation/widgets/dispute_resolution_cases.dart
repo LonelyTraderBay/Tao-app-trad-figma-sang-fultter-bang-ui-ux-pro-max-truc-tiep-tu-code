@@ -61,7 +61,7 @@ class _DisputeTabs extends StatelessWidget {
                     // card-tile: allow-start — fixed surface, not horizontal strip tile
                     VitCard(
                       width: tab.id == activeId
-                          ? AppSpacing.tradeBotDisputeTabIndicatorWidth
+                          ? TradeSpacingTokens.tradeBotDisputeTabIndicatorWidth
                           : 0,
                       height: AppSpacing.dividerHairline,
                       variant: VitCardVariant.inner,
@@ -174,7 +174,7 @@ class _DisputeCaseCard extends StatelessWidget {
                   status: _statusPillStatus(disputeCase.status),
                   size: VitStatusPillSize.sm,
                 ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
               Expanded(
                 child: Text(
                   resolved

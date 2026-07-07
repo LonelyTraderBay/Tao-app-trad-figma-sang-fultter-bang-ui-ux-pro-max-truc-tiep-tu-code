@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/news_spacing_tokens.dart';
 
 part '../widgets/news_page_sections.dart';
 part '../widgets/news_page_common.dart';
@@ -115,7 +116,7 @@ class _NewsPageState extends ConsumerState<NewsPage> {
                   child: SingleChildScrollView(
                     key: NewsPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.newsScrollPadding(bottomInset),
+                    padding: NewsSpacingTokens.newsScrollPadding(bottomInset),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,

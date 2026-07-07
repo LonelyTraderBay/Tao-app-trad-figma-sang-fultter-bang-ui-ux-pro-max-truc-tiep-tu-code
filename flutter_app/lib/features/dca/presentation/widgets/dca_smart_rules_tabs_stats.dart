@@ -54,14 +54,14 @@ class _StatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         children: [
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.dcaSmartStatsIconBox,
-                height: AppSpacing.dcaSmartStatsIconBox,
+                width: DcaSpacingTokens.dcaSmartStatsIconBox,
+                height: DcaSpacingTokens.dcaSmartStatsIconBox,
                 child: DecoratedBox(
                   decoration: const ShapeDecoration(
                     color: AppColors.accent10,
@@ -72,7 +72,7 @@ class _StatsCard extends StatelessWidget {
                   child: const Icon(
                     Icons.bolt_rounded,
                     color: AppColors.accent,
-                    size: AppSpacing.dcaSmartStatsIcon,
+                    size: DcaSpacingTokens.dcaSmartStatsIcon,
                   ),
                 ),
               ),

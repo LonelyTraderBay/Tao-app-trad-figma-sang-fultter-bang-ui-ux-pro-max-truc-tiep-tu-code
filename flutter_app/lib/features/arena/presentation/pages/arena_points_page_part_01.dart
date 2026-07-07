@@ -50,8 +50,11 @@ class _ArenaPointsPageState extends ConsumerState<ArenaPointsPage> {
             child: SingleChildScrollView(
               key: ArenaPointsPage.contentKey,
               physics: const ClampingScrollPhysics(),
-              padding: AppSpacing.arenaBottomScrollPadding(scrollEndClearance),
-              child: VitPageContent(rhythm: VitPageRhythm.standard, 
+              padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                scrollEndClearance,
+              ),
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.compact,
                 gap: VitContentGap.tight,
                 children: [
@@ -131,7 +134,7 @@ class _RewardsHero extends StatelessWidget {
     return VitModuleHeroCard(
       accentColor: AppColors.accent,
       density: VitDensity.compact,
-      padding: AppSpacing.arenaPaddingX5,
+      padding: ArenaSpacingTokens.arenaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -286,7 +289,7 @@ class _PendingClaimBanner extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: claimedAll ? AppColors.buy20 : AppColors.warningBorder,
       onTap: claimedAll ? null : onTap,
-      padding: AppSpacing.arenaPaddingX3,
+      padding: ArenaSpacingTokens.arenaPaddingX3,
       child: Row(
         children: [
           VitAccentIconBox(
@@ -339,13 +342,13 @@ class _ExpiringBanner extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: AppColors.sell20,
-      padding: AppSpacing.arenaPointsExpiringPadding,
+      padding: ArenaSpacingTokens.arenaPointsExpiringPadding,
       child: Row(
         children: [
           const Icon(
             Icons.timer_outlined,
             color: AppColors.sell,
-            size: AppSpacing.arenaPointsSmallIcon,
+            size: ArenaSpacingTokens.arenaPointsSmallIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

@@ -80,7 +80,7 @@ class _ChoiceGroup extends StatelessWidget {
                   accentColor: colorFor(item),
                   selected: active == item,
                   onTap: () => onChanged(item),
-                  padding: AppSpacing.launchpadPillPadding,
+                  padding: LaunchpadSpacingTokens.launchpadPillPadding,
                 ),
                 const SizedBox(width: AppSpacing.x2),
               ],

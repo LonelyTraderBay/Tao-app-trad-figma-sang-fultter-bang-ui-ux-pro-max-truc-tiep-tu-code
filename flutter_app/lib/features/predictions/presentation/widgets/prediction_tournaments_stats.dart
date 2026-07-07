@@ -8,12 +8,15 @@ class _TournamentStatsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: AppSpacing.predictionTournamentStatsColumns,
+      crossAxisCount: PredictionsSpacingTokens.predictionTournamentStatsColumns,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: AppSpacing.predictionTournamentStatsMainGap,
-      crossAxisSpacing: AppSpacing.predictionTournamentStatsCrossGap,
-      childAspectRatio: AppSpacing.predictionTournamentStatsAspect,
+      mainAxisSpacing:
+          PredictionsSpacingTokens.predictionTournamentStatsMainGap,
+      crossAxisSpacing:
+          PredictionsSpacingTokens.predictionTournamentStatsCrossGap,
+      childAspectRatio:
+          PredictionsSpacingTokens.predictionTournamentStatsAspect,
       children: [
         _StatCell(
           icon: Icons.attach_money_rounded,
@@ -64,9 +67,11 @@ class _StatCell extends StatelessWidget {
             Icon(
               icon,
               color: AppColors.text3,
-              size: AppSpacing.predictionTournamentStatIcon,
+              size: PredictionsSpacingTokens.predictionTournamentStatIcon,
             ),
-            const SizedBox(width: AppSpacing.predictionTournamentStatIconGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionTournamentStatIconGap,
+            ),
             Text(
               label,
               style: AppTextStyles.numericMicro.copyWith(
@@ -105,7 +110,7 @@ class _StatusPill extends StatelessWidget {
       color: color.withValues(alpha: .14),
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.predictionTournamentPillPadding,
+        padding: PredictionsSpacingTokens.predictionTournamentPillPadding,
         child: Text(
           _statusLabel(status),
           style: AppTextStyles.numericMicro.copyWith(
@@ -129,7 +134,7 @@ class _CategoryChip extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.predictionTournamentPillPadding,
+        padding: PredictionsSpacingTokens.predictionTournamentPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(color: AppColors.text2),
@@ -154,9 +159,11 @@ class _TournamentInfoCard extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _predictionPrimary,
-            size: AppSpacing.predictionTournamentInfoIcon,
+            size: PredictionsSpacingTokens.predictionTournamentInfoIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionTournamentInfoGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionTournamentInfoGap,
+          ),
           Expanded(
             child: Text(
               'Tournaments are skill-based competitions. Prizes distributed based on prediction accuracy. Read rules carefully before joining.',

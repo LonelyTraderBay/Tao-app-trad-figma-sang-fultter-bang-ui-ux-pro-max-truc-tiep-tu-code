@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_backt
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class CompareTab extends StatelessWidget {
   const CompareTab({
@@ -30,7 +31,7 @@ class CompareTab extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -101,7 +102,7 @@ class _CompareBar extends StatelessWidget {
           borderRadius: AppRadii.xsRadius,
           child: LinearProgressIndicator(
             value: pct,
-            minHeight: AppSpacing.savingsBacktestProgressHeight,
+            minHeight: EarnSpacingTokens.savingsBacktestProgressHeight,
             color: color,
             backgroundColor: AppColors.surface3,
           ),
@@ -127,7 +128,7 @@ class _CompareCard extends StatelessWidget {
       borderColor: preset.id == SavingsBacktestPreset.aggressive
           ? AppColors.buy20
           : AppColors.cardBorder,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         children: [
           RoundIcon(icon: iconFor(preset.iconKey), color: color),
@@ -176,7 +177,7 @@ class NoResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX6,
+      padding: EarnSpacingTokens.earnPaddingX6,
       child: Column(
         children: [
           const Icon(

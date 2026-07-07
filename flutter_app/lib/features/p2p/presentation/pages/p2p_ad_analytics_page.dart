@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_ad_analytics_page_part_01.dart';
 part '../widgets/p2p_ad_analytics_page_part_02.dart';
@@ -27,26 +28,26 @@ part '../widgets/p2p_ad_analytics_page_part_03.dart';
 const double _p2pAdAnalyticsVisualNavClearance = 112;
 const double _p2pAdAnalyticsNativeNavClearance = 88;
 const double _p2pAdAnalyticsIdentityExtent =
-    AppSpacing.p2pMarketplaceAnalyticsIdentityHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsIdentityHeight;
 const double _p2pAdAnalyticsMetricCardExtent =
-    AppSpacing.p2pMarketplaceAnalyticsMetricCardHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsMetricCardHeight;
 const double _p2pAdAnalyticsMetricIconExtent = AppSpacing.x6;
 const double _p2pAdAnalyticsQuickStatsExtent =
-    AppSpacing.p2pMarketplaceAnalyticsQuickStatsHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsQuickStatsHeight;
 const double _p2pAdAnalyticsLegendDotExtent =
-    AppSpacing.p2pMarketplaceAnalyticsLegendDot;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsLegendDot;
 const double _p2pAdAnalyticsDividerExtent =
-    AppSpacing.p2pMarketplaceAnalyticsDividerHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsDividerHeight;
 const double _p2pAdAnalyticsChartLargeExtent =
-    AppSpacing.p2pMarketplaceAnalyticsChartLargeHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsChartLargeHeight;
 const double _p2pAdAnalyticsChartTallExtent =
-    AppSpacing.p2pMarketplaceAnalyticsChartTallHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsChartTallHeight;
 const double _p2pAdAnalyticsRadarExtent =
-    AppSpacing.p2pMarketplaceAnalyticsRadarHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsRadarHeight;
 const double _p2pAdAnalyticsTightLine =
-    AppSpacing.p2pMarketplaceAnalyticsTightLineHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsTightLineHeight;
 const double _p2pAdAnalyticsBodyLine =
-    AppSpacing.p2pMarketplaceAnalyticsBodyLineHeight;
+    P2PSpacingTokens.p2pMarketplaceAnalyticsBodyLineHeight;
 
 class P2PAdAnalyticsPage extends ConsumerWidget {
   const P2PAdAnalyticsPage({
@@ -101,7 +102,7 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       density: VitDensity.compact,
@@ -121,7 +122,7 @@ class P2PAdAnalyticsPage extends ConsumerWidget {
                           children: [
                             VitCard(
                               variant: VitCardVariant.inner,
-                              padding: AppSpacing
+                              padding: P2PSpacingTokens
                                   .p2pMarketplaceAnalyticsCompactPadding,
                               child: VitHighRiskStatePanel(
                                 density: VitDensity.compact,

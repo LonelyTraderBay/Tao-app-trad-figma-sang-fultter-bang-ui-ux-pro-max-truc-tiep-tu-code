@@ -6,19 +6,19 @@ InputDecoration _inputDecoration(String hint) {
     hintStyle: AppTextStyles.base.copyWith(color: AppColors.text3),
     filled: true,
     fillColor: AppColors.surface2,
-    contentPadding: AppSpacing.arenaGovernanceInputPadding,
+    contentPadding: ArenaSpacingTokens.arenaGovernanceInputPadding,
     enabledBorder: const OutlineInputBorder(
       borderRadius: AppRadii.inputRadius,
       borderSide: BorderSide(
         color: AppColors.borderSolid,
-        width: AppSpacing.arenaGovernanceInputBorderWidth,
+        width: ArenaSpacingTokens.arenaGovernanceInputBorderWidth,
       ),
     ),
     focusedBorder: const OutlineInputBorder(
       borderRadius: AppRadii.inputRadius,
       borderSide: BorderSide(
         color: AppColors.accent,
-        width: AppSpacing.arenaGovernanceInputBorderWidth,
+        width: ArenaSpacingTokens.arenaGovernanceInputBorderWidth,
       ),
     ),
   );

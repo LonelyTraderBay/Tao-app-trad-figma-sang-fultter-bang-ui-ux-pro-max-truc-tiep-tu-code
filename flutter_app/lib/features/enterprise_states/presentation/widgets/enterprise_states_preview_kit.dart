@@ -20,48 +20,49 @@ class _StateKitSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-          Text(
-            '5 state pattern chuẩn enterprise, match 100% visual style hiện tại. Chọn state để xem preview.',
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.text2,
-              height: AppSpacing.enterpriseStatesLineHeightBody,
-            ),
+        Text(
+          '5 state pattern chuẩn enterprise, match 100% visual style hiện tại. Chọn state để xem preview.',
+          style: AppTextStyles.body.copyWith(
+            color: AppColors.text2,
+            height:
+                EnterpriseStatesSpacingTokens.enterpriseStatesLineHeightBody,
           ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          VitPresetChipRow<EnterprisePreviewState>(
-            items: [
-              for (final state in snapshot.previewStates)
-                VitPresetChipItem(
-                  value: state.state,
-                  label: state.label,
-                  key: EnterpriseStatesPage.stateKey(state.state),
-                ),
-            ],
-            selectedValue: activeState,
-            onTap: onStateChanged,
-            accentColor: AppModuleAccents.enterpriseStates,
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          _PreviewFrame(
-            activeState: activeState,
-            onMarkets: onMarkets,
-            onKyc: onKyc,
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          Text(
-            'Banner Variants',
-            style: AppTextStyles.baseMedium.copyWith(
-              color: AppColors.text1,
-              fontWeight: AppTextStyles.bold,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
-          for (final banner in snapshot.banners) ...[
-            _ReferenceBanner(banner: banner),
-            if (banner != snapshot.banners.last)
-              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        VitPresetChipRow<EnterprisePreviewState>(
+          items: [
+            for (final state in snapshot.previewStates)
+              VitPresetChipItem(
+                value: state.state,
+                label: state.label,
+                key: EnterpriseStatesPage.stateKey(state.state),
+              ),
           ],
+          selectedValue: activeState,
+          onTap: onStateChanged,
+          accentColor: AppModuleAccents.enterpriseStates,
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        _PreviewFrame(
+          activeState: activeState,
+          onMarkets: onMarkets,
+          onKyc: onKyc,
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        Text(
+          'Banner Variants',
+          style: AppTextStyles.baseMedium.copyWith(
+            color: AppColors.text1,
+            fontWeight: AppTextStyles.bold,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+        for (final banner in snapshot.banners) ...[
+          _ReferenceBanner(banner: banner),
+          if (banner != snapshot.banners.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         ],
+      ],
     );
   }
 }
@@ -90,7 +91,8 @@ class _PreviewFrame extends StatelessWidget {
               shape: Border(bottom: BorderSide(color: AppColors.divider)),
             ),
             child: Padding(
-              padding: AppSpacing.enterpriseStatesFrameHeaderPadding,
+              padding: EnterpriseStatesSpacingTokens
+                  .enterpriseStatesFrameHeaderPadding,
               child: Row(
                 children: [
                   const VitSkeleton(
@@ -135,7 +137,7 @@ class _SkeletonPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.enterpriseStatesCardPadding,
+      padding: EnterpriseStatesSpacingTokens.enterpriseStatesCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -155,7 +157,8 @@ class _SkeletonPreview extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           for (var i = 0; i < 5; i++) ...[
             const _SkeletonMarketRow(),
-            if (i < 4) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+            if (i < 4)
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           const VitSkeleton(width: double.infinity, height: AppSpacing.x6),
@@ -210,7 +213,8 @@ class _EmptyPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.enterpriseStatesPreviewLargePadding,
+      padding:
+          EnterpriseStatesSpacingTokens.enterpriseStatesPreviewLargePadding,
       child: VitEmptyState(
         icon: Icons.star_border_rounded,
         title: 'Bạn chưa theo dõi cặp nào',
@@ -230,7 +234,8 @@ class _ErrorPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: AppSpacing.enterpriseStatesPreviewLargePadding,
+      padding:
+          EnterpriseStatesSpacingTokens.enterpriseStatesPreviewLargePadding,
       child: VitErrorState(
         title: 'Có lỗi xảy ra',
         message: 'Vui lòng thử lại. Nếu lỗi tiếp tục, hãy kiểm tra kết nối.',
@@ -245,7 +250,7 @@ class _OfflinePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: AppSpacing.enterpriseStatesPreviewPadding,
+      padding: EnterpriseStatesSpacingTokens.enterpriseStatesPreviewPadding,
       child: Column(
         children: [
           VitOfflineBanner(message: 'Mất kết nối. Đang hiển thị dữ liệu cũ.'),
@@ -265,7 +270,7 @@ class _GatePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.enterpriseStatesPreviewPadding,
+      padding: EnterpriseStatesSpacingTokens.enterpriseStatesPreviewPadding,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: AppColors.surface2,
@@ -275,7 +280,7 @@ class _GatePreview extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.enterpriseStatesPreviewPadding,
+          padding: EnterpriseStatesSpacingTokens.enterpriseStatesPreviewPadding,
           child: Column(
             children: [
               const Icon(

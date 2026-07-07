@@ -26,8 +26,8 @@ class _FunnelSelector extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: funnels.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppSpacing.adminGridColumns,
-            mainAxisExtent: AppSpacing.adminMetricTileExtent,
+            crossAxisCount: AdminSpacingTokens.adminGridColumns,
+            mainAxisExtent: AdminSpacingTokens.adminMetricTileExtent,
             crossAxisSpacing: AppSpacing.x3,
             mainAxisSpacing: AppSpacing.x3,
           ),
@@ -41,7 +41,7 @@ class _FunnelSelector extends StatelessWidget {
               child: VitCard(
                 key: FunnelDashboard.selectorKey(funnel.id),
                 onTap: () => onChanged(funnel.id),
-                padding: AppSpacing.adminCardPadding,
+                padding: AdminSpacingTokens.adminCardPadding,
                 borderColor: selected
                     ? AppColors.accent
                     : AppColors.transparent,
@@ -60,7 +60,7 @@ class _FunnelSelector extends StatelessWidget {
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text1,
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.adminLineHeightShort,
+                        height: AdminSpacingTokens.adminLineHeightShort,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -70,7 +70,7 @@ class _FunnelSelector extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing.adminLineHeightShort,
+                        height: AdminSpacingTokens.adminLineHeightShort,
                       ),
                     ),
                   ],
@@ -149,14 +149,14 @@ class _MetricCard extends StatelessWidget {
     return Semantics(
       label: 'Admin funnel metric $title: $value. $caption. $delta $timeframe',
       child: VitCard(
-        padding: AppSpacing.adminCardPadding,
+        padding: AdminSpacingTokens.adminCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 SizedBox.square(
-                  dimension: AppSpacing.adminBox40,
+                  dimension: AdminSpacingTokens.adminBox40,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: tint,
@@ -167,7 +167,7 @@ class _MetricCard extends StatelessWidget {
                     child: Icon(
                       icon,
                       color: accent,
-                      size: AppSpacing.adminIconXl,
+                      size: AdminSpacingTokens.adminIconXl,
                     ),
                   ),
                 ),

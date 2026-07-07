@@ -14,13 +14,14 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_payment_method_add_page_sections.dart';
 part '../widgets/p2p_payment_method_add_page_common.dart';
 
 enum P2PPaymentAddType { bank, ewallet }
 
-const double _p2pPaymentAddSectionGap = AppSpacing.p2pPaymentCardGap;
+const double _p2pPaymentAddSectionGap = P2PSpacingTokens.p2pPaymentCardGap;
 const double _p2pPaymentAddTypeExtent = AppSpacing.searchBarCompactHeight;
 const double _p2pPaymentAddIconBox = AppSpacing.buttonCompact;
 const double _p2pPaymentAddPreviewLabelWidth = 96;
@@ -168,9 +169,7 @@ class _P2PPaymentMethodAddPageState
             onPressed: _isValidFor(controller) && !_submitting
                 ? () => _confirmSave(context, controller)
                 : null,
-            child: Text(
-              _submitting ? 'Đang lưu...' : 'Thêm phương thức',
-            ),
+            child: Text(_submitting ? 'Đang lưu...' : 'Thêm phương thức'),
           ),
         ),
       ],
@@ -235,7 +234,7 @@ class _P2PPaymentMethodAddPageState
             variant: VitCtaButtonVariant.secondary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pPaymentDialogActionPadding,
+            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
             child: const Text('Hủy'),
           ),
           VitCtaButton(
@@ -244,7 +243,7 @@ class _P2PPaymentMethodAddPageState
             variant: VitCtaButtonVariant.primary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pPaymentDialogActionPadding,
+            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
             child: const Text('Xác nhận'),
           ),
         ],

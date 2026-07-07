@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_recommendations_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingRecommendationsStrategyCard extends StatelessWidget {
   const StakingRecommendationsStrategyCard({
@@ -24,7 +25,7 @@ class StakingRecommendationsStrategyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       borderColor: strategy.recommended ? AppColors.primary : null,
       onTap: onTap,
       child: Column(
@@ -62,7 +63,7 @@ class StakingRecommendationsStrategyCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text3,
-                        height: AppSpacing
+                        height: EarnSpacingTokens
                             .stakingRecommendationsDescriptionLineHeight,
                       ),
                     ),
@@ -148,7 +149,7 @@ class StakingRecommendationsAllocationTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnPaddingX2,
+        padding: EarnSpacingTokens.earnPaddingX2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -184,7 +185,7 @@ class StakingRecommendationsTipCard extends StatelessWidget {
     final color = stakingRecommendationsTipColor(tip.tone);
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -209,8 +210,8 @@ class StakingRecommendationsTipCard extends StatelessWidget {
                   tip.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height:
-                        AppSpacing.stakingRecommendationsDescriptionLineHeight,
+                    height: EarnSpacingTokens
+                        .stakingRecommendationsDescriptionLineHeight,
                   ),
                 ),
               ],
@@ -232,7 +233,7 @@ class StakingRecommendationsDisclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -247,7 +248,7 @@ class StakingRecommendationsDisclaimer extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingRecommendationsBodyLineHeight,
+                height: EarnSpacingTokens.stakingRecommendationsBodyLineHeight,
               ),
             ),
           ),

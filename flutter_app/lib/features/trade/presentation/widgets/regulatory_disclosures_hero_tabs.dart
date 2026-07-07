@@ -19,7 +19,7 @@ class _LegalHero extends StatelessWidget {
             child: Icon(
               Icons.balance_rounded,
               color: _legalPrimary,
-              size: AppSpacing.regulatoryDisclosuresHeroIcon,
+              size: TradeSpacingTokens.regulatoryDisclosuresHeroIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),

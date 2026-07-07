@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 class P2PNoticeCard extends StatelessWidget {
   const P2PNoticeCard({
@@ -18,7 +19,7 @@ class P2PNoticeCard extends StatelessWidget {
     this.borderColor,
     this.variant = VitCardVariant.inner,
     this.radius = VitCardRadius.standard,
-    this.padding = AppSpacing.p2pDisputeCardPadding,
+    this.padding = P2PSpacingTokens.p2pDisputeCardPadding,
     this.iconSize = AppSpacing.iconSm,
     this.titleStyle,
     this.messageStyle,
@@ -74,7 +75,7 @@ class P2PNoticeCard extends StatelessWidget {
                       messageStyle ??
                       AppTextStyles.micro.copyWith(
                         color: messageColor,
-                        height: AppSpacing.p2pDisputeReadableLineHeight,
+                        height: P2PSpacingTokens.p2pDisputeReadableLineHeight,
                       ),
                 ),
               ],
@@ -104,11 +105,11 @@ class P2PHelpBullet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.p2pDisputeNoticeIconPadding,
+          padding: P2PSpacingTokens.p2pDisputeNoticeIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: iconColor,
-            size: AppSpacing.p2pDisputeNoticeBulletIcon,
+            size: P2PSpacingTokens.p2pDisputeNoticeBulletIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

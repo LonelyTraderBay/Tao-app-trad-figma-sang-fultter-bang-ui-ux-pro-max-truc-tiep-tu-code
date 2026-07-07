@@ -58,13 +58,13 @@ class _JoinContextCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaJoinCardPadding,
+      padding: ArenaSpacingTokens.arenaJoinCardPadding,
       child: Column(
         children: [
           Row(
             children: [
               SizedBox.square(
-                dimension: AppSpacing.arenaJoinCreatorAvatar,
+                dimension: ArenaSpacingTokens.arenaJoinCreatorAvatar,
                 child: DecoratedBox(
                   decoration: const ShapeDecoration(
                     color: AppColors.surface2,
@@ -132,7 +132,7 @@ class _InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaJoinInfoRowPadding,
+      padding: ArenaSpacingTokens.arenaJoinInfoRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -144,7 +144,7 @@ class _InfoRow extends StatelessWidget {
           if (icon != null) ...[
             Icon(
               icon,
-              size: AppSpacing.arenaJoinInlineIcon,
+              size: ArenaSpacingTokens.arenaJoinInlineIcon,
               color: AppColors.primary,
             ),
             const SizedBox(width: AppSpacing.x1),
@@ -171,7 +171,7 @@ class _RulesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final visibleRules = rules.take(4).toList();
     return VitCard(
-      padding: AppSpacing.arenaJoinCardPadding,
+      padding: ArenaSpacingTokens.arenaJoinCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -213,7 +213,7 @@ class _RuleLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.arenaJoinRuleNumberWidth,
+          width: ArenaSpacingTokens.arenaJoinRuleNumberWidth,
           child: Text(
             '$index.',
             style: AppTextStyles.caption.copyWith(
@@ -252,7 +252,7 @@ class _BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaJoinCardPadding,
+      padding: ArenaSpacingTokens.arenaJoinCardPadding,
       child: Column(
         children: [
           _BalanceRow(
@@ -327,13 +327,13 @@ class _NoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaJoinCardPadding,
+      padding: ArenaSpacingTokens.arenaJoinCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
-            size: AppSpacing.arenaJoinInlineIcon,
+            size: ArenaSpacingTokens.arenaJoinInlineIcon,
             color: AppColors.primary,
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -368,7 +368,7 @@ class _SafetyPolicyLink extends StatelessWidget {
         density: VitDensity.compact,
         leading: const Icon(
           Icons.shield_outlined,
-          size: AppSpacing.arenaJoinInlineIcon,
+          size: ArenaSpacingTokens.arenaJoinInlineIcon,
         ),
         child: Text(
           'Xem chính sách hủy/void',

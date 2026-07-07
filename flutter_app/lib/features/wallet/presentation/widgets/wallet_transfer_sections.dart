@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_info_row.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_input.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_sheet_handle.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part 'wallet_transfer_confirm_sheet.dart';
 part 'wallet_transfer_wallet_cards.dart';
@@ -25,7 +26,7 @@ const _transferPrimary = AppColors.primary;
 const _transferGreen = AppColors.buy;
 const _transferInlineGap = AppSpacing.rowGap;
 const _transferIconBox = AppSpacing.buttonCompact;
-const _transferActionIcon = AppSpacing.transferActionIcon;
+const _transferActionIcon = WalletSpacingTokens.transferActionIcon;
 
 String formatTransferUsd(double value) {
   return '\$${_withCommas(value.toStringAsFixed(2))}';

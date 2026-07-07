@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_e
 import 'package:vit_trade_flutter/features/launchpad/presentation/widgets/launchpad_dca_builder_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadDcaCreateSection extends StatelessWidget {
   const LaunchpadDcaCreateSection({
@@ -62,7 +63,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               VitCard(
-                padding: AppSpacing.launchpadPaddingX4,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX4,
                 child: _LabeledField(
                   fieldKey: tokenFieldKey,
                   label: 'Chon token',
@@ -79,10 +80,11 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               GridView.count(
-                crossAxisCount: AppSpacing.launchpadGridColumns,
+                crossAxisCount: LaunchpadSpacingTokens.launchpadGridColumns,
                 mainAxisSpacing: AppSpacing.x3,
                 crossAxisSpacing: AppSpacing.x3,
-                childAspectRatio: AppSpacing.launchpadGridAspectCompact,
+                childAspectRatio:
+                    LaunchpadSpacingTokens.launchpadGridAspectCompact,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
@@ -104,7 +106,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
             accentColor: AppColors.primary,
             children: [
               VitCard(
-                padding: AppSpacing.launchpadPaddingX4,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX4,
                 child: Column(
                   children: [
                     _LabeledField(
@@ -118,7 +120,9 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
                       prefixIcon: Icons.attach_money_rounded,
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     _LabeledField(
                       fieldKey: budgetFieldKey,
                       label: 'Tong ngan sach (USD)',
@@ -130,7 +134,9 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
                       prefixIcon: Icons.attach_money_rounded,
                       onChanged: onInputChanged,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     _LabeledField(
                       fieldKey: startDateFieldKey,
                       label: 'Ngay bat dau',
@@ -165,7 +171,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
           if (submissionMessage != null) ...[
             const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
             VitCard(
-              padding: AppSpacing.launchpadPaddingX3,
+              padding: LaunchpadSpacingTokens.launchpadPaddingX3,
               borderColor: AppColors.buy20,
               child: Row(
                 children: [
@@ -179,7 +185,7 @@ class LaunchpadDcaCreateSection extends StatelessWidget {
                       submissionMessage!,
                       style: AppTextStyles.micro.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.launchpadLineHeightShort,
+                        height: LaunchpadSpacingTokens.launchpadLineHeightShort,
                       ),
                     ),
                   ),
@@ -212,7 +218,7 @@ class _FrequencyChoice extends StatelessWidget {
       key: choiceKey,
       radius: VitCardRadius.standard,
       borderColor: active ? AppColors.primary : AppColors.cardBorder,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       onTap: onTap,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -296,7 +302,7 @@ class _StrategyPreview extends StatelessWidget {
       key: previewKey,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

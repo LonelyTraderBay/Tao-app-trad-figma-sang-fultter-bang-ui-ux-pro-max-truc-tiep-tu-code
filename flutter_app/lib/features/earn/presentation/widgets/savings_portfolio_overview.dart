@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_por
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_maturity.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class OverviewTab extends StatelessWidget {
   const OverviewTab({
@@ -53,8 +54,7 @@ class OverviewTab extends StatelessWidget {
         ),
         SectionLabel(label: 'Lịch đáo hạn', color: AppColors.warn),
         MaturitySummary(events: snapshot.maturityEvents),
-        for (final event in snapshot.maturityEvents)
-          MaturityCard(event: event),
+        for (final event in snapshot.maturityEvents) MaturityCard(event: event),
         EarnWarningBanner(
           text:
               'Khi đáo hạn, bạn có thể gia hạn để tiếp tục nhận lãi hoặc rút về ví. Rút trước hạn có thể mất lãi tích lũy.',
@@ -138,7 +138,7 @@ class AllocationRow extends StatelessWidget {
           children: [
             TinyDot(
               color: color,
-              size: AppSpacing.savingsPortfolioAllocationDot,
+              size: EarnSpacingTokens.savingsPortfolioAllocationDot,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -160,7 +160,7 @@ class AllocationRow extends StatelessWidget {
             ),
             const SizedBox(width: AppSpacing.x3),
             SizedBox(
-              width: AppSpacing.savingsPortfolioAllocationPercentWidth,
+              width: EarnSpacingTokens.savingsPortfolioAllocationPercentWidth,
               child: Text(
                 position.allocationLabel,
                 textAlign: TextAlign.right,

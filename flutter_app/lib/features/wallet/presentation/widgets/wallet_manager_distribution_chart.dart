@@ -3,11 +3,12 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/wallet/domain/entities/wallet_entities.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_manager_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WalletManagerDistributionCard extends StatelessWidget {
   const WalletManagerDistributionCard({super.key, required this.snapshot});
@@ -18,8 +19,8 @@ class WalletManagerDistributionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      height: AppSpacing.walletManagerDistributionHeight,
-      padding: AppSpacing.walletManagerDistributionPadding,
+      height: WalletSpacingTokens.walletManagerDistributionHeight,
+      padding: WalletSpacingTokens.walletManagerDistributionPadding,
       variant: VitCardVariant.ghost,
       borderColor: walletManagerBorder,
       background: const ColoredBox(color: walletManagerPanel),
@@ -31,10 +32,12 @@ class WalletManagerDistributionCard extends StatelessWidget {
             'Portfolio Distribution',
             style: AppTextStyles.baseMedium.copyWith(
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.tradeBotLineHeightTight,
+              height: TradeSpacingTokens.tradeBotLineHeightTight,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletManagerDistributionTitleGap),
+          const SizedBox(
+            height: WalletSpacingTokens.walletManagerDistributionTitleGap,
+          ),
           Expanded(
             child: CustomPaint(
               painter: _DistributionPainter(wallets: _chartWallets(snapshot)),
@@ -63,12 +66,12 @@ class _DistributionPainter extends CustomPainter {
 
     final center = Offset(
       size.width / 2,
-      size.height * AppSpacing.walletManagerDistributionCenterY,
+      size.height * WalletSpacingTokens.walletManagerDistributionCenterY,
     );
     final radius =
         math.min(size.width, size.height) *
-        AppSpacing.walletManagerDistributionRadiusFactor;
-    const strokeWidth = AppSpacing.walletManagerDistributionStroke;
+        WalletSpacingTokens.walletManagerDistributionRadiusFactor;
+    const strokeWidth = WalletSpacingTokens.walletManagerDistributionStroke;
     final rect = Rect.fromCircle(center: center, radius: radius);
 
     final gapPaint = Paint()
@@ -79,7 +82,7 @@ class _DistributionPainter extends CustomPainter {
     canvas.drawCircle(center, radius, gapPaint);
 
     var start = -math.pi / 2;
-    const gap = AppSpacing.walletManagerDistributionArcGap;
+    const gap = WalletSpacingTokens.walletManagerDistributionArcGap;
     for (final wallet in wallets) {
       final sweep = (wallet.balanceUsd / total) * math.pi * 2;
       final paint = Paint()

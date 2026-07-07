@@ -25,7 +25,8 @@ class _ArenaRooms extends StatelessWidget {
                   const Icon(
                     Icons.star_rounded,
                     color: AppColors.warn,
-                    size: AppSpacing.predictionRewardsArenaLabelIcon,
+                    size: PredictionsSpacingTokens
+                        .predictionRewardsArenaLabelIcon,
                   ),
                   const SizedBox(width: AppSpacing.x1),
                   Text(
@@ -49,7 +50,8 @@ class _ArenaRooms extends StatelessWidget {
                       child: const Icon(
                         Icons.sports_esports_rounded,
                         color: AppColors.warn,
-                        size: AppSpacing.predictionRewardsArenaIcon,
+                        size:
+                            PredictionsSpacingTokens.predictionRewardsArenaIcon,
                       ),
                     ),
                   ),
@@ -101,7 +103,8 @@ class _ArenaRooms extends StatelessWidget {
                   const Icon(
                     Icons.chevron_right_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.predictionRewardsArenaChevron,
+                    size:
+                        PredictionsSpacingTokens.predictionRewardsArenaChevron,
                   ),
                 ],
               ),
@@ -134,14 +137,15 @@ class _TinyBadge extends StatelessWidget {
       color: background,
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.predictionRewardsTinyBadgePadding,
+        padding: PredictionsSpacingTokens.predictionRewardsTinyBadgePadding,
         child: Text(
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.micro.copyWith(
             color: color,
-            height: AppSpacing.predictionRewardsTinyBadgeLineHeight,
+            height:
+                PredictionsSpacingTokens.predictionRewardsTinyBadgeLineHeight,
             fontWeight: AppTextStyles.bold,
           ),
         ),

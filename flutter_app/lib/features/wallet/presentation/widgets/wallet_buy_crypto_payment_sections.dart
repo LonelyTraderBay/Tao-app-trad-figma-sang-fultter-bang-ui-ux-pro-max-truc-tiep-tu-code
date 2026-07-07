@@ -23,14 +23,14 @@ class _PaymentMethodGroup extends StatelessWidget {
         Row(
           children: [
             Icon(icon, color: AppColors.text3, size: 13),
-            const SizedBox(width: AppSpacing.walletBuyGroupIconGap),
+            const SizedBox(width: WalletSpacingTokens.walletBuyGroupIconGap),
             Text(
               label,
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.walletBuyPaymentCardGap),
+        const SizedBox(height: WalletSpacingTokens.walletBuyPaymentCardGap),
         for (var i = 0; i < methods.length; i++) ...[
           _PaymentMethodCard(
             method: methods[i],
@@ -38,7 +38,7 @@ class _PaymentMethodGroup extends StatelessWidget {
             onTap: () => onChanged(methods[i].id),
           ),
           if (i != methods.length - 1)
-            const SizedBox(height: AppSpacing.walletBuyPaymentCardGap),
+            const SizedBox(height: WalletSpacingTokens.walletBuyPaymentCardGap),
         ],
       ],
     );
@@ -71,8 +71,8 @@ class _PaymentMethodCard extends StatelessWidget {
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
-            width: AppSpacing.walletBuyPaymentLogoSize,
-            height: AppSpacing.walletBuyPaymentLogoSize,
+            width: WalletSpacingTokens.walletBuyPaymentLogoSize,
+            height: WalletSpacingTokens.walletBuyPaymentLogoSize,
             alignment: Alignment.center,
             radius: VitCardRadius.large,
             clip: true,
@@ -107,13 +107,15 @@ class _PaymentMethodCard extends StatelessWidget {
                     ),
                     if (method.isPopular) ...[
                       const SizedBox(
-                        width: AppSpacing.walletBuyPaymentPopularGap,
+                        width: WalletSpacingTokens.walletBuyPaymentPopularGap,
                       ),
                       const _PopularBadge(),
                     ],
                   ],
                 ),
-                const SizedBox(height: AppSpacing.walletBuyGroupIconGap),
+                const SizedBox(
+                  height: WalletSpacingTokens.walletBuyGroupIconGap,
+                ),
                 Row(
                   children: [
                     Icon(
@@ -123,11 +125,13 @@ class _PaymentMethodCard extends StatelessWidget {
                       color: instant ? _buyGreen : AppColors.text3,
                       size: AppSpacing.iconSm,
                     ),
-                    const SizedBox(width: AppSpacing.walletBuyPaymentMetaGap),
+                    const SizedBox(
+                      width: WalletSpacingTokens.walletBuyPaymentMetaGap,
+                    ),
                     Text(
                       method.processingTime,
                       style: AppTextStyles.micro.copyWith(
-                        height: AppSpacing.walletBuyMetaLineHeight,
+                        height: WalletSpacingTokens.walletBuyMetaLineHeight,
                         color: instant ? _buyGreen : AppColors.text3,
                       ),
                     ),
@@ -149,7 +153,7 @@ class _PopularBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletBuyPopularBadgePadding,
+      padding: WalletSpacingTokens.walletBuyPopularBadgePadding,
       radius: VitCardRadius.standard,
       clip: true,
       background: const ColoredBox(color: AppColors.buy10),

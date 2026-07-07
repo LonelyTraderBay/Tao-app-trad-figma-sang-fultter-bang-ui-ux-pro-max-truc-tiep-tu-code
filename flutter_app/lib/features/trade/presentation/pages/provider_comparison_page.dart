@@ -13,6 +13,8 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -76,7 +78,7 @@ class ProviderComparisonPage extends ConsumerWidget {
                       variant: VitCtaButtonVariant.ghost,
                       fullWidth: false,
                       height: AppSpacing.buttonCompact,
-                      padding: AppSpacing.authInlineTextButtonPadding,
+                      padding: AuthSpacingTokens.authInlineTextButtonPadding,
                       leading: const Icon(Icons.add_rounded),
                       child: const Text('+ Thêm provider'),
                     ),
@@ -135,7 +137,7 @@ class _WarningBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.providerComparisonPanelPadding,
+      padding: TradeSpacingTokens.providerComparisonPanelPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -150,7 +152,7 @@ class _WarningBanner extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.warningText,
-                height: AppSpacing.providerComparisonWarningLineHeight,
+                height: TradeSpacingTokens.providerComparisonWarningLineHeight,
               ),
             ),
           ),
@@ -171,7 +173,7 @@ class _ComparisonTable extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.providerComparisonMetricHeaderPadding,
+          padding: TradeSpacingTokens.providerComparisonMetricHeaderPadding,
           child: Text(
             'Metric',
             style: AppTextStyles.micro.copyWith(
@@ -187,7 +189,7 @@ class _ComparisonTable extends StatelessWidget {
             (metric) => metric.category == group,
           )) ...[
             Padding(
-              padding: AppSpacing.providerComparisonMetricLabelPadding,
+              padding: TradeSpacingTokens.providerComparisonMetricLabelPadding,
               child: SizedBox(
                 height: AppSpacing.x5 + AppSpacing.x2,
                 child: Align(
@@ -240,7 +242,7 @@ class _CategoryRow extends StatelessWidget {
     };
 
     return Padding(
-      padding: AppSpacing.providerComparisonCategoryPadding,
+      padding: TradeSpacingTokens.providerComparisonCategoryPadding,
       child: Row(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconSm),
@@ -266,7 +268,7 @@ class _LegendPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.providerComparisonPanelPadding,
+      padding: TradeSpacingTokens.providerComparisonPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -289,7 +291,7 @@ class _LegendPanel extends StatelessWidget {
             text,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.providerComparisonLegendLineHeight,
+              height: TradeSpacingTokens.providerComparisonLegendLineHeight,
             ),
           ),
         ],

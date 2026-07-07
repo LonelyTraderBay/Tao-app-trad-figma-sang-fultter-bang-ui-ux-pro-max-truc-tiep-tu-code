@@ -8,7 +8,7 @@ class _SafeInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -17,7 +17,7 @@ class _SafeInfoCard extends StatelessWidget {
               const Icon(
                 Icons.info_outline_rounded,
                 color: AppColors.accent,
-                size: AppSpacing.launchpadIconMd,
+                size: LaunchpadSpacingTokens.launchpadIconMd,
               ),
               const SizedBox(width: AppSpacing.x2),
               Text(
@@ -56,14 +56,14 @@ class _SecurityNotice extends StatelessWidget {
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
       background: const ColoredBox(color: AppColors.accent08),
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.lock_outline_rounded,
             color: AppModuleAccents.launchpad,
-            size: AppSpacing.launchpadIconLg,
+            size: LaunchpadSpacingTokens.launchpadIconLg,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -71,7 +71,7 @@ class _SecurityNotice extends StatelessWidget {
               'Multi-sig yêu cầu ${safe.threshold}/${safe.owners.length} chữ ký trước khi thực hiện. Mỗi giao dịch có thời hạn 7 ngày. Đảm bảo tất cả signers xác nhận trước khi hết hạn.',
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.launchpadLineHeightShort,
+                height: LaunchpadSpacingTokens.launchpadLineHeightShort,
               ),
             ),
           ),
@@ -138,13 +138,13 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                 ),
               ),
               child: SingleChildScrollView(
-                padding: AppSpacing.launchpadCreateSheetPadding,
+                padding: LaunchpadSpacingTokens.launchpadCreateSheetPadding,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Center(
                       child: SizedBox(
-                        width: AppSpacing.launchpadBox40,
+                        width: LaunchpadSpacingTokens.launchpadBox40,
                         height: AppSpacing.x1,
                         child: DecoratedBox(
                           decoration: ShapeDecoration(
@@ -156,7 +156,9 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -179,42 +181,56 @@ class _CreateTxSheetState extends State<_CreateTxSheet> {
                       ],
                     ),
                     _SafeSheetBadge(safe: widget.safe),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     VitInput(
                       label: 'Tên giao dịch',
                       hintText: 'VD: Withdraw rewards',
                       controller: _labelController,
                       onChanged: (_) => setState(() {}),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     VitInput(
                       label: 'Mô tả',
                       hintText: 'Chi tiết giao dịch...',
                       controller: _descriptionController,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     VitInput(
                       label: 'Contract Address',
                       hintText: '0x...',
                       controller: _contractController,
                       onChanged: (_) => setState(() {}),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     VitInput(
                       label: 'Function Name',
                       hintText: 'VD: transfer, approve, claimRewards',
                       controller: _functionController,
                       onChanged: (_) => setState(() {}),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     VitInput(
                       label: 'Value (native token)',
                       hintText: '0',
                       controller: _valueController,
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                     _CreateWarning(safe: widget.safe),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     VitCtaButton(
                       key: LaunchpadMultisigPage.submitCreateKey,
                       onPressed: canSubmit ? _submit : null,
@@ -271,13 +287,13 @@ class _SafeSheetBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX2,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX2,
         child: Row(
           children: [
             Icon(
               Icons.shield_outlined,
               color: safe.accent.resolve(),
-              size: AppSpacing.launchpadIconLg,
+              size: LaunchpadSpacingTokens.launchpadIconLg,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -316,14 +332,14 @@ class _CreateWarning extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.warning_amber_rounded,
               color: AppColors.warn,
-              size: AppSpacing.launchpadIconMd,
+              size: LaunchpadSpacingTokens.launchpadIconMd,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -353,7 +369,7 @@ class _SignatureProgress extends StatelessWidget {
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
       child: LinearProgressIndicator(
-        minHeight: AppSpacing.launchpadDotSm,
+        minHeight: LaunchpadSpacingTokens.launchpadDotSm,
         value: ratio.clamp(0, 1),
         backgroundColor: AppColors.surface3,
         valueColor: AlwaysStoppedAnimation<Color>(color),

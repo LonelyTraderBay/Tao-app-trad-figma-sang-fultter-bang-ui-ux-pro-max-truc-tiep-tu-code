@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_wallet_hero.dart';
 part '../widgets/p2p_wallet_balances.dart';
@@ -35,7 +36,7 @@ const double _p2pWalletActionMinHeight = AppSpacing.inputHeight - AppSpacing.x1;
 const double _p2pWalletDividerExtent = AppSpacing.dividerHairline;
 const double _p2pWalletTransactionAmountMaxWidth = 132;
 const EdgeInsetsGeometry _p2pWalletCardPadding =
-    AppSpacing.p2pWalletCompactCardPadding;
+    P2PSpacingTokens.p2pWalletCompactCardPadding;
 const EdgeInsetsGeometry _p2pWalletHeroPadding = EdgeInsetsDirectional.all(
   AppSpacing.x4,
 );
@@ -110,11 +111,11 @@ class _P2PWalletPageState extends ConsumerState<P2PWalletPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pWalletScrollPadding(
+                    padding: P2PSpacingTokens.p2pWalletScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,

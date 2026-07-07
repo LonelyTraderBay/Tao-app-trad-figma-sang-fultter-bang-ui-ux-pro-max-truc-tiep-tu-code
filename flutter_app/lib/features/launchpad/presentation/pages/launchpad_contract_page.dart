@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadContractPage extends ConsumerWidget {
   const LaunchpadContractPage({
@@ -62,7 +63,8 @@ class LaunchpadContractPage extends ConsumerWidget {
           child: SingleChildScrollView(
             key: contentKey,
             physics: const ClampingScrollPhysics(),
-            child: VitPageContent(rhythm: VitPageRhythm.standard, 
+            child: VitPageContent(
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.compact,
               gap: VitContentGap.tight,
               children: [
@@ -87,7 +89,7 @@ class _ContractProjectNotFound extends StatelessWidget {
     return VitCard(
       key: LaunchpadContractPage.notFoundKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadEmptyStatePadding,
+      padding: LaunchpadSpacingTokens.launchpadEmptyStatePadding,
       child: Column(
         children: [
           const Icon(
@@ -170,7 +172,7 @@ class _ContractProjectHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .22),
-      padding: AppSpacing.launchpadPaddingX5,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX5,
       child: Row(
         children: [
           SizedBox(
@@ -230,7 +232,7 @@ class _ContractNetworksSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -268,7 +270,7 @@ class _ContractFunctionsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -319,7 +321,8 @@ class _ContractFunctionsSection extends StatelessWidget {
                 ),
               ],
             ),
-            if (fn != functions.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (fn != functions.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -343,7 +346,7 @@ class _ContractSimulationCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -397,7 +400,7 @@ class _ContractRiskDisclosure extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.warn15,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

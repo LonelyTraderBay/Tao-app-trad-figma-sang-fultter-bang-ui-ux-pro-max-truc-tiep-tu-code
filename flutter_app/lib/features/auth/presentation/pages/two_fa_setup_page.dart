@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
 
 part '../widgets/two_fa_setup_steps.dart';
 part '../widgets/two_fa_setup_qr.dart';
@@ -208,7 +209,7 @@ class _TwoFASetupPageState extends ConsumerState<TwoFASetupPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: TwoFASetupPage.contentKey,
-                padding: AppSpacing.authScrollBottomPadding,
+                padding: AuthSpacingTokens.authScrollBottomPadding,
                 child: VitPageContent(
                   rhythm: VitPageRhythm.form,
                   children: [

@@ -133,7 +133,7 @@ class _SheetRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.tradeToolSheetRowPadding,
+      padding: TradeSpacingTokens.tradeToolSheetRowPadding,
       child: Row(
         children: [
           Expanded(
@@ -166,14 +166,14 @@ class _SuccessToast extends StatelessWidget {
       color: AppColors.transparent,
       child: VitCard(
         variant: VitCardVariant.inner,
-        padding: AppSpacing.tradeToolToastPadding,
+        padding: TradeSpacingTokens.tradeToolToastPadding,
         borderColor: AppColors.buy.withValues(alpha: .38),
         child: Row(
           children: [
             const Icon(
               Icons.check_circle_rounded,
               color: AppColors.buy,
-              size: AppSpacing.tradeToolBodyIcon,
+              size: TradeSpacingTokens.tradeToolBodyIcon,
             ),
             const SizedBox(width: _riskSpace),
             Expanded(

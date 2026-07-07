@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_governance_gate_stepper_title.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/arena_smart_rule_builder_page_part_01.dart';
 part '../widgets/arena_smart_rule_builder_page_part_02.dart';
@@ -28,8 +29,9 @@ part 'arena_smart_rule_builder_page_part_03.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
 final double _smartRuleActionExtent = VitDensity.compact.controlHeight;
-const _smartRuleBodyLineRatio = AppSpacing.arenaSmartRuleBodyLineHeight;
-const _smartRuleSubtitleLineRatio = AppSpacing.arenaSmartRuleSubtitleLineHeight;
+const _smartRuleBodyLineRatio = ArenaSpacingTokens.arenaSmartRuleBodyLineHeight;
+const _smartRuleSubtitleLineRatio =
+    ArenaSpacingTokens.arenaSmartRuleSubtitleLineHeight;
 
 String _formatArenaRuleDateInput(String isoDate) {
   final parts = isoDate.split('-');
@@ -169,9 +171,11 @@ class _ArenaSmartRuleBuilderPageState
                 child: SingleChildScrollView(
                   key: ArenaSmartRuleBuilderPage.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                  padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                    footerPadding,
+                  ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [

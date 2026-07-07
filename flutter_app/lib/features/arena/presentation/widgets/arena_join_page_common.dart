@@ -58,13 +58,13 @@ class _AcknowledgementRow extends StatelessWidget {
         radius: VitCardRadius.standard,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            minHeight: AppSpacing.arenaJoinAcknowledgementMinHeight,
+            minHeight: ArenaSpacingTokens.arenaJoinAcknowledgementMinHeight,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox.square(
-                dimension: AppSpacing.arenaJoinCheckboxSize,
+                dimension: ArenaSpacingTokens.arenaJoinCheckboxSize,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: checked ? AppColors.primary : AppColors.transparent,
@@ -74,7 +74,7 @@ class _AcknowledgementRow extends StatelessWidget {
                         color: checked
                             ? AppColors.primary
                             : AppColors.borderSolid,
-                        width: AppSpacing.arenaJoinCheckboxBorderWidth,
+                        width: ArenaSpacingTokens.arenaJoinCheckboxBorderWidth,
                       ),
                     ),
                   ),
@@ -82,7 +82,7 @@ class _AcknowledgementRow extends StatelessWidget {
                       ? const Center(
                           child: Icon(
                             Icons.check_rounded,
-                            size: AppSpacing.arenaJoinCheckboxIcon,
+                            size: ArenaSpacingTokens.arenaJoinCheckboxIcon,
                             color: AppColors.onAccent,
                           ),
                         )

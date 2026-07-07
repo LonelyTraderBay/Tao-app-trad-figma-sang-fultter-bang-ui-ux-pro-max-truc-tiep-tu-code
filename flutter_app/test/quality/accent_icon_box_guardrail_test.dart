@@ -4,9 +4,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final repoRoot = Directory.current.path;
-  final accentIconBoxFile =
-      File('$repoRoot/lib/shared/widgets/vit_accent_icon_box.dart');
-  final vitTaskCardFile = File('$repoRoot/lib/shared/widgets/vit_task_card.dart');
+  final accentIconBoxFile = File(
+    '$repoRoot/lib/shared/widgets/vit_accent_icon_box.dart',
+  );
+  final vitTaskCardFile = File(
+    '$repoRoot/lib/shared/widgets/vit_task_card.dart',
+  );
   final featuresRoot = Directory('$repoRoot/lib/features');
 
   test('VitAccentIconBox implements mandatory accent icon contract', () {
@@ -38,17 +41,20 @@ void main() {
     );
   });
 
-  test('VitTaskCard uses VitAccentIconBox — no local accent icon duplicate', () {
-    expect(vitTaskCardFile.existsSync(), isTrue);
-    final source = vitTaskCardFile.readAsStringSync();
+  test(
+    'VitTaskCard uses VitAccentIconBox — no local accent icon duplicate',
+    () {
+      expect(vitTaskCardFile.existsSync(), isTrue);
+      final source = vitTaskCardFile.readAsStringSync();
 
-    expect(source, contains('VitAccentIconBox'));
-    expect(
-      source,
-      isNot(contains('_VitTaskCardAccentIcon')),
-      reason: 'VitTaskCard must not define local accent icon widget',
-    );
-  });
+      expect(source, contains('VitAccentIconBox'));
+      expect(
+        source,
+        isNot(contains('_VitTaskCardAccentIcon')),
+        reason: 'VitTaskCard must not define local accent icon widget',
+      );
+    },
+  );
 
   test('Feature modules must not define local _AccentIcon classes', () {
     expect(featuresRoot.existsSync(), isTrue);

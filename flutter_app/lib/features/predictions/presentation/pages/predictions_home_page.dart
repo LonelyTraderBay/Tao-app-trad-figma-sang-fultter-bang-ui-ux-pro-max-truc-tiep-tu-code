@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 part '../widgets/predictions_home_filters.dart';
 part '../widgets/predictions_home_highlights.dart';
@@ -131,9 +132,10 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsHomePage.contentKey,
-                    padding: AppSpacing.predictionHomeScrollPadding(
-                      scrollEndPadding,
-                    ),
+                    padding:
+                        PredictionsSpacingTokens.predictionHomeScrollPadding(
+                          scrollEndPadding,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
@@ -160,15 +162,17 @@ class _PredictionsHomePageState extends ConsumerState<PredictionsHomePage> {
                             variant: VitTabBarVariant.pill,
                             activeKey: _filter.name,
                             onChanged: (key) => setState(
-                              () => _filter =
-                                  PredictionFilterTab.values.byName(key),
+                              () => _filter = PredictionFilterTab.values.byName(
+                                key,
+                              ),
                             ),
                             tabs: const [
                               VitTabItem(
                                 key: 'trending',
                                 label: 'Xu hướng',
                                 icon: Icons.trending_up_outlined,
-                                widgetKey: PredictionsHomePage.trendingFilterKey,
+                                widgetKey:
+                                    PredictionsHomePage.trendingFilterKey,
                               ),
                               VitTabItem(
                                 key: 'newEvents',

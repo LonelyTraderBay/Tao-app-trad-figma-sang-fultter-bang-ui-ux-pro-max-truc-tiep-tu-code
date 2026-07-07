@@ -76,11 +76,12 @@ class _PredictionAdvancedChartPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionAdvancedChartPage.contentKey,
-                    padding: AppSpacing.predictionAdvancedScrollPadding(
-                      footerPadding,
-                    ),
+                    padding:
+                        PredictionsSpacingTokens.predictionAdvancedScrollPadding(
+                          footerPadding,
+                        ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.flush,
+                      rhythm: VitPageRhythm.flush,
                       density: VitDensity.compact,
                       children: [
                         ...switch (_activeTab) {
@@ -216,7 +217,9 @@ class _TimeframeSelector extends StatelessWidget {
             ),
           ),
           if (index != timeframes.length - 1)
-            const SizedBox(width: AppSpacing.predictionAdvancedTimeframeGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionAdvancedTimeframeGap,
+            ),
         ],
       ],
     );
@@ -274,19 +277,23 @@ class _ProbabilitySummaryCard extends StatelessWidget {
                 style: AppTextStyles.amountMd,
               ),
               const SizedBox(
-                width: AppSpacing.predictionAdvancedSummaryValueGap,
+                width:
+                    PredictionsSpacingTokens.predictionAdvancedSummaryValueGap,
               ),
               Padding(
-                padding: AppSpacing.predictionAdvancedSummaryChangePadding,
+                padding: PredictionsSpacingTokens
+                    .predictionAdvancedSummaryChangePadding,
                 child: Row(
                   children: [
                     const Icon(
                       Icons.north_east_rounded,
                       color: AppColors.buy,
-                      size: AppSpacing.predictionAdvancedTrendIcon,
+                      size:
+                          PredictionsSpacingTokens.predictionAdvancedTrendIcon,
                     ),
                     const SizedBox(
-                      width: AppSpacing.predictionAdvancedTrendIconGap,
+                      width: PredictionsSpacingTokens
+                          .predictionAdvancedTrendIconGap,
                     ),
                     Text(
                       '+${snapshot.priceChangePercent.toStringAsFixed(2)}%',
@@ -416,12 +423,14 @@ class _ChartLayerControls extends StatelessWidget {
       density: VitDensity.compact,
       children: [
         GridView.count(
-          crossAxisCount: AppSpacing.predictionAdvancedLayerColumns,
+          crossAxisCount:
+              PredictionsSpacingTokens.predictionAdvancedLayerColumns,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: AppSpacing.predictionAdvancedLayerGap,
-          crossAxisSpacing: AppSpacing.predictionAdvancedLayerGap,
-          childAspectRatio: AppSpacing.predictionAdvancedLayerAspect,
+          mainAxisSpacing: PredictionsSpacingTokens.predictionAdvancedLayerGap,
+          crossAxisSpacing: PredictionsSpacingTokens.predictionAdvancedLayerGap,
+          childAspectRatio:
+              PredictionsSpacingTokens.predictionAdvancedLayerAspect,
           children: [
             _LayerButton(
               key: PredictionAdvancedChartPage.ma7ToggleKey,

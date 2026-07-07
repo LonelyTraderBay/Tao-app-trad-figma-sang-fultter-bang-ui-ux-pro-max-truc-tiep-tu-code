@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class AdminSettingsPage extends ConsumerWidget {
   const AdminSettingsPage({super.key, this.shellRenderMode});
@@ -53,13 +54,13 @@ class AdminSettingsPage extends ConsumerWidget {
               child: SingleChildScrollView(
                 key: contentKey,
                 physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.adminScrollPadding(bottomInset),
+                padding: AdminSpacingTokens.adminScrollPadding(bottomInset),
                 child: VitPageContent(
                   rhythm: VitPageRhythm.standard,
                   children: [
                     VitCard(
                       key: routingKey,
-                      padding: AppSpacing.adminCardPadding,
+                      padding: AdminSpacingTokens.adminCardPadding,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -82,7 +83,7 @@ class AdminSettingsPage extends ConsumerWidget {
                       ),
                     ),
                     VitCard(
-                      padding: AppSpacing.adminCardPadding,
+                      padding: AdminSpacingTokens.adminCardPadding,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -101,7 +102,7 @@ class AdminSettingsPage extends ConsumerWidget {
                       ),
                     ),
                     VitCard(
-                      padding: AppSpacing.adminCardPadding,
+                      padding: AdminSpacingTokens.adminCardPadding,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -147,13 +148,13 @@ class _AdminSettingsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = Padding(
-      padding: AppSpacing.adminRowPadding,
+      padding: AdminSpacingTokens.adminRowPadding,
       child: Row(
         children: [
           Icon(
             icon,
             color: AppModuleAccents.admin,
-            size: AppSpacing.adminIconLg,
+            size: AdminSpacingTokens.adminIconLg,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -176,7 +177,7 @@ class _AdminSettingsRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.adminLineHeightCompact,
+                    height: AdminSpacingTokens.adminLineHeightCompact,
                   ),
                 ),
               ],
@@ -200,7 +201,7 @@ class _AdminSettingsRow extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: AppSpacing.adminIconLg,
+              size: AdminSpacingTokens.adminIconLg,
             ),
           ],
         ],
@@ -229,7 +230,11 @@ class _SettingsSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text1, size: AppSpacing.adminIconLg),
+        Icon(
+          icon,
+          color: AppColors.text1,
+          size: AdminSpacingTokens.adminIconLg,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(

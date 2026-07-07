@@ -10,7 +10,11 @@ class _CardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: AppColors.text1, size: AppSpacing.adminIconLg),
+        Icon(
+          icon,
+          color: AppColors.text1,
+          size: AdminSpacingTokens.adminIconLg,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -33,7 +37,7 @@ class _StepNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.adminBox24,
+      dimension: AdminSpacingTokens.adminBox24,
       child: DecoratedBox(
         decoration: const ShapeDecoration(
           color: AppColors.accent30,
@@ -86,7 +90,7 @@ class _DropoutChartPainter extends CustomPainter {
         Offset(2, y - 7),
         style: AppTextStyles.numericMicro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.adminLineHeightTight,
+          height: AdminSpacingTokens.adminLineHeightTight,
         ),
       );
     }
@@ -114,7 +118,7 @@ class _DropoutChartPainter extends CustomPainter {
     final painter = TextPainter(
       text: TextSpan(text: text, style: style),
       textDirection: TextDirection.ltr,
-    )..layout(maxWidth: AppSpacing.adminPainterLabelMaxWidth);
+    )..layout(maxWidth: AdminSpacingTokens.adminPainterLabelMaxWidth);
     painter.paint(canvas, offset);
   }
 
@@ -127,13 +131,13 @@ class _DropoutChartPainter extends CustomPainter {
         text: text,
         style: AppTextStyles.chartLabelXs.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.adminLineHeightTight,
+          height: AdminSpacingTokens.adminLineHeightTight,
         ),
       ),
       textDirection: TextDirection.ltr,
       maxLines: 1,
       ellipsis: '...',
-    )..layout(maxWidth: AppSpacing.adminPainterWideLabelMaxWidth);
+    )..layout(maxWidth: AdminSpacingTokens.adminPainterWideLabelMaxWidth);
     painter.paint(canvas, Offset.zero);
     canvas.restore();
   }

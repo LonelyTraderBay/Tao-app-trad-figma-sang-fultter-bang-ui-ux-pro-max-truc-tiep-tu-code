@@ -21,7 +21,7 @@ class _ProviderRankCard extends StatelessWidget {
       height: redFlags.isEmpty
           ? AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x4
           : AppSpacing.x7 + AppSpacing.x7 + AppSpacing.x6,
-      padding: AppSpacing.providerLeaderboardCardPadding,
+      padding: TradeSpacingTokens.providerLeaderboardCardPadding,
       density: VitDensity.compact,
       borderColor: AppColors.cardBorder,
       onTap: onOpen,
@@ -55,7 +55,7 @@ class _ProviderRankCard extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x3),
           const Padding(
-            padding: AppSpacing.providerLeaderboardTrailingIconPadding,
+            padding: TradeSpacingTokens.providerLeaderboardTrailingIconPadding,
             child: Icon(
               Icons.visibility_outlined,
               color: AppColors.text3,
@@ -116,14 +116,18 @@ class _ProviderTitle extends StatelessWidget {
           ),
         ),
         if (_isProviderVerified(provider)) ...[
-          const SizedBox(width: AppSpacing.providerLeaderboardVerifiedIconGap),
+          const SizedBox(
+            width: TradeSpacingTokens.providerLeaderboardVerifiedIconGap,
+          ),
           const Icon(
             Icons.check_circle_outline_rounded,
             color: _leaderPrimary,
-            size: AppSpacing.providerLeaderboardVerifiedIcon,
+            size: TradeSpacingTokens.providerLeaderboardVerifiedIcon,
           ),
         ],
-        const SizedBox(width: AppSpacing.providerLeaderboardVerifiedIconGap),
+        const SizedBox(
+          width: TradeSpacingTokens.providerLeaderboardVerifiedIconGap,
+        ),
         _RiskBadge(riskLevel: provider.riskLevel),
       ],
     );
@@ -226,7 +230,7 @@ class _FollowersLabel extends StatelessWidget {
         const Icon(
           Icons.group_outlined,
           color: AppColors.text3,
-          size: AppSpacing.providerLeaderboardFollowersIcon,
+          size: TradeSpacingTokens.providerLeaderboardFollowersIcon,
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(

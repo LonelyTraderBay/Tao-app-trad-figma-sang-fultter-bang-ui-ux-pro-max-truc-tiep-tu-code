@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_validator_selection_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingValidatorSelectionInfoBanner extends StatelessWidget {
   const StakingValidatorSelectionInfoBanner({
@@ -22,7 +23,7 @@ class StakingValidatorSelectionInfoBanner extends StatelessWidget {
       key: StakingValidatorSelectionKeys.info,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,7 +38,8 @@ class StakingValidatorSelectionInfoBanner extends StatelessWidget {
               snapshot.infoBody,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.stakingValidatorSelectionBodyLineHeight,
+                height:
+                    EarnSpacingTokens.stakingValidatorSelectionBodyLineHeight,
               ),
             ),
           ),
@@ -71,7 +73,7 @@ class StakingValidatorSelectionStatsSummary extends StatelessWidget {
     return VitCard(
       key: StakingValidatorSelectionKeys.summary,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           Expanded(

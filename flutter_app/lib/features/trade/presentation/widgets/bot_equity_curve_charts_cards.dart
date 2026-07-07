@@ -8,7 +8,7 @@ class _EquityChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         children: [
           SizedBox(
@@ -54,7 +54,7 @@ class _SharpeCard extends StatelessWidget {
         .where((point) => point.rollingSharpe != null)
         .toList();
     return _Card(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         children: [
           SizedBox(
@@ -110,7 +110,7 @@ class _MiniStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.tradeBotCompactPanelPadding,
+      padding: TradeSpacingTokens.tradeBotCompactPanelPadding,
       child: Column(
         children: [
           Text(
@@ -142,7 +142,7 @@ class _MonthlyAlphaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         children: [
           for (final month in months) ...[
@@ -188,7 +188,8 @@ class _MonthlyAlphaCard extends StatelessWidget {
                 ),
               ),
             ),
-            if (month != months.last) const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+            if (month != months.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           ],
         ],
       ),
@@ -204,12 +205,13 @@ class _PerformanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: GridView.count(
-        crossAxisCount: AppSpacing.tradeBotGridColumns,
+        crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
         crossAxisSpacing: AppSpacing.x3,
         mainAxisSpacing: AppSpacing.x3,
-        childAspectRatio: AppSpacing.tradeBotEquityPerformanceAspectRatio,
+        childAspectRatio:
+            TradeSpacingTokens.tradeBotEquityPerformanceAspectRatio,
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: [for (final stat in stats) _PerformanceTile(stat: stat)],
@@ -234,7 +236,7 @@ class _PerformanceTile extends StatelessWidget {
     };
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCompactPanelPadding,
+      padding: TradeSpacingTokens.tradeBotCompactPanelPadding,
       child: Row(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),

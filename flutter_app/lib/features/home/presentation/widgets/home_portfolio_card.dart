@@ -10,9 +10,10 @@ import 'package:vit_trade_flutter/features/home/domain/entities/home_entities.da
 import 'package:vit_trade_flutter/features/home/presentation/pages/home_page.dart';
 import 'package:vit_trade_flutter/features/home/presentation/widgets/home_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 const double _heroActionExtent = AppSpacing.buttonCompact + AppSpacing.x2;
-const double _homePortfolioTrendHeight = AppSpacing.homeSparklineHeight;
+const double _homePortfolioTrendHeight = HomeSpacingTokens.homeSparklineHeight;
 
 class HomePortfolioCard extends StatefulWidget {
   const HomePortfolioCard({
@@ -74,7 +75,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: AppSpacing.homeCardPaddingDefault,
+      padding: HomeSpacingTokens.homeCardPaddingDefault,
       background: const VitHeroGlow(center: Alignment(0, -0.96)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -229,7 +230,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
                   if (!balanceHidden) ...[
                     Icon(
                       Icons.swap_horiz_rounded,
-                      size: AppSpacing.homePortfolioBadgeIcon,
+                      size: HomeSpacingTokens.homePortfolioBadgeIcon,
                       color: AppColors.portfolioTextMuted,
                     ),
                     const SizedBox(width: AppSpacing.x1),
@@ -262,7 +263,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
             child: const Text('Nạp'),
           ),
         ),
-        const SizedBox(width: AppSpacing.homePortfolioActionSpacing),
+        const SizedBox(width: HomeSpacingTokens.homePortfolioActionSpacing),
         Expanded(
           child: VitCtaButton(
             height: _heroActionExtent,
@@ -274,7 +275,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
             child: const Text('Rút'),
           ),
         ),
-        const SizedBox(width: AppSpacing.homePortfolioActionSpacing),
+        const SizedBox(width: HomeSpacingTokens.homePortfolioActionSpacing),
         Expanded(
           child: VitCtaButton(
             height: _heroActionExtent,
@@ -296,7 +297,7 @@ class _HomePortfolioCardState extends State<HomePortfolioCard> {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       clip: true,
-      padding: AppSpacing.homeCardPaddingDefault,
+      padding: HomeSpacingTokens.homeCardPaddingDefault,
       background: const VitHeroGlow(center: Alignment(0, -0.96)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -372,75 +373,33 @@ class HomePortfolioBreakdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      (
-        'Spot',
-        snapshot.spotBalance,
-        Icons.swap_horiz_rounded,
-        'Ví spot — tiền dùng mua/bán coin ngay lập tức',
-        AppRoutePaths.wallet,
-      ),
-      (
-        'Earn',
-        snapshot.earnBalance,
-        Icons.savings_outlined,
-        'Tài sản stake hoặc savings — sinh lãi theo thời gian',
-        AppRoutePaths.earnStaking,
-      ),
-      (
-        'Funding',
-        snapshot.fundingBalance,
-        Icons.account_balance_outlined,
-        'Ví funding cho margin, futures và chuyển nội bộ',
-        AppRoutePaths.walletTransfer,
-      ),
-    ];
+    String formatted(double value) => balanceHidden ? '••••' : formatUsd(value);
 
-    return VitCard(
-      variant: VitCardVariant.inner,
-      radius: VitCardRadius.standard,
-      padding: VitDensity.compact.cardPadding,
-      borderColor: AppColors.onAccent.withValues(alpha: .08),
-      child: Row(
-        children: [
-          for (var i = 0; i < items.length; i++) ...[
-            Expanded(
-              child: Semantics(
-                button: true,
-                label: '${items[i].$1}: mở ${items[i].$1}',
-                child: InkWell(
-                  onTap: () => onNavigate(items[i].$5),
-                  borderRadius: AppRadii.inputRadius,
-                  child: Tooltip(
-                    message: items[i].$4,
-                    child: Column(
-                      children: [
-                        VitStatusPill(
-                          label: items[i].$1,
-                          status: VitStatusPillStatus.neutral,
-                          icon: items[i].$3,
-                          size: VitStatusPillSize.sm,
-                        ),
-                        const SizedBox(height: AppSpacing.x1),
-                        Text(
-                          balanceHidden ? '••••' : formatUsd(items[i].$2),
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.text1,
-                            fontWeight: AppTextStyles.bold,
-                            fontFeatures: AppTextStyles.tabularFigures,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            if (i != items.length - 1) const SizedBox(width: AppSpacing.x1),
-          ],
-        ],
-      ),
+    return VitBalanceBreakdownRow(
+      onNavigate: onNavigate,
+      items: [
+        VitBalanceBreakdownItem(
+          label: 'Spot',
+          value: formatted(snapshot.spotBalance),
+          icon: Icons.swap_horiz_rounded,
+          tooltip: 'Ví spot — tiền dùng mua/bán coin ngay lập tức',
+          route: AppRoutePaths.wallet,
+        ),
+        VitBalanceBreakdownItem(
+          label: 'Earn',
+          value: formatted(snapshot.earnBalance),
+          icon: Icons.savings_outlined,
+          tooltip: 'Tài sản stake hoặc savings — sinh lãi theo thời gian',
+          route: AppRoutePaths.earnStaking,
+        ),
+        VitBalanceBreakdownItem(
+          label: 'Funding',
+          value: formatted(snapshot.fundingBalance),
+          icon: Icons.account_balance_outlined,
+          tooltip: 'Ví funding cho margin, futures và chuyển nội bộ',
+          route: AppRoutePaths.walletTransfer,
+        ),
+      ],
     );
   }
 }

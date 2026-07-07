@@ -17,7 +17,7 @@ class _CenteredStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCompactCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCompactCardPadding,
       child: Column(
         children: [
           Icon(icon, color: color, size: AppSpacing.iconMd),
@@ -129,7 +129,7 @@ class _MerchantRow extends StatelessWidget {
       key: P2PDashboardPage.merchantKey(merchant.id),
       variant: VitCardVariant.ghost,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pDashboardMerchantPadding,
+      padding: P2PSpacingTokens.p2pDashboardMerchantPadding,
       onTap: onTap,
       child: Row(
         children: [
@@ -168,7 +168,7 @@ class _MerchantRow extends StatelessWidget {
           const Icon(
             Icons.star_rounded,
             color: AppColors.warn,
-            size: AppSpacing.p2pDashboardMerchantStar,
+            size: P2PSpacingTokens.p2pDashboardMerchantStar,
           ),
           const SizedBox(width: AppSpacing.x1),
           Text(
@@ -230,7 +230,7 @@ class _ActivityRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pDashboardActivityPadding,
+          padding: P2PSpacingTokens.p2pDashboardActivityPadding,
           child: Row(
             children: [
               _IconBubble(
@@ -302,7 +302,7 @@ class _TextLinkButton extends StatelessWidget {
       variant: VitCtaButtonVariant.ghost,
       fullWidth: false,
       height: AppSpacing.buttonCompact,
-      padding: AppSpacing.p2pDashboardTextLinkPadding,
+      padding: P2PSpacingTokens.p2pDashboardTextLinkPadding,
       trailing: const Icon(Icons.chevron_right_rounded),
       child: Text(label),
     );
@@ -428,14 +428,14 @@ class _MonthlyBarPainter extends CustomPainter {
     Color color,
   ) {
     final barHeight = math.max(
-      AppSpacing.p2pDashboardMonthlyBarMinHeight,
+      P2PSpacingTokens.p2pDashboardMonthlyBarMinHeight,
       height * factor,
     );
     final rect = RRect.fromRectAndRadius(
       Rect.fromLTWH(
         x,
         top + height - barHeight,
-        AppSpacing.p2pDashboardMonthlyBarWidth,
+        P2PSpacingTokens.p2pDashboardMonthlyBarWidth,
         barHeight,
       ),
       AppRadii.swatchCorner,

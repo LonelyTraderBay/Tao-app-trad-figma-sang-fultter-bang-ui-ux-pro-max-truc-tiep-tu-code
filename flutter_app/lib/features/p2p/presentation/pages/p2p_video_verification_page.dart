@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const _p2pVideoMajorGap = AppSpacing.x3;
 const _p2pVideoSectionGap = AppSpacing.x2;
@@ -73,7 +74,7 @@ class _P2PVideoVerificationPageState
         ),
         const VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.p2pVideoCompactCardPadding,
+          padding: P2PSpacingTokens.p2pVideoCompactCardPadding,
           child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Video verification review',
@@ -98,7 +99,7 @@ class _VideoHero extends StatelessWidget {
       key: P2PVideoVerificationPage.heroKey,
       radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pVideoCardPadding,
+      padding: P2PSpacingTokens.p2pVideoCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -134,7 +135,7 @@ class _VideoHero extends StatelessWidget {
                   snapshot.heroBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.p2pComplianceReadableLineHeight,
+                    height: P2PSpacingTokens.p2pComplianceReadableLineHeight,
                   ),
                 ),
               ],
@@ -156,14 +157,14 @@ class _PreparationCard extends StatelessWidget {
     return VitCard(
       key: P2PVideoVerificationPage.preparationKey,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pVideoCardPadding,
+      padding: P2PSpacingTokens.p2pVideoCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const VitSectionHeader(
             icon: Icons.info_outline_rounded,
             title: 'Chuẩn bị',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+            bottomGap: AppSpacing.pageRhythmStandardInnerGap,
             iconColor: AppModuleAccents.p2p,
             accentColor: AppModuleAccents.p2p,
           ),
@@ -236,7 +237,7 @@ class _SlotCard extends StatelessWidget {
         radius: VitCardRadius.large,
         variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
         borderColor: selected ? AppColors.primary20 : AppColors.borderSolid,
-        padding: AppSpacing.p2pVideoCardPadding,
+        padding: P2PSpacingTokens.p2pVideoCardPadding,
         onTap: slot.available ? onTap : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -303,11 +304,11 @@ class _ChecklistRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: AppSpacing.p2pComplianceChecklistIconPadding,
+          padding: P2PSpacingTokens.p2pComplianceChecklistIconPadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: AppColors.buy,
-            size: AppSpacing.p2pComplianceChecklistIcon,
+            size: P2PSpacingTokens.p2pComplianceChecklistIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -316,7 +317,7 @@ class _ChecklistRow extends StatelessWidget {
             text,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.p2pComplianceReadableLineHeight,
+              height: P2PSpacingTokens.p2pComplianceReadableLineHeight,
             ),
           ),
         ),

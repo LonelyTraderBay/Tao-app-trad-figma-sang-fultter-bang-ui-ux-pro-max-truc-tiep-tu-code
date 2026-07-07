@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/referral_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/referral_spacing_tokens.dart';
 
 part '../widgets/referral_history_page_sections.dart';
 part '../widgets/referral_history_page_common.dart';
@@ -95,9 +96,11 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                   child: SingleChildScrollView(
                     key: ReferralHistoryPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.referralPageScrollPadding(bottomInset),
+                    padding: ReferralSpacingTokens.referralPageScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       children: [
                         VitCard(
@@ -106,7 +109,8 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Padding(
-                                padding: AppSpacing.referralCardPadding,
+                                padding:
+                                    ReferralSpacingTokens.referralCardPadding,
                                 child: _StatsRow(stats: snapshot.stats),
                               ),
                               const Divider(
@@ -125,7 +129,8 @@ class _ReferralHistoryPageState extends ConsumerState<ReferralHistoryPage> {
                                 color: AppColors.divider,
                               ),
                               Padding(
-                                padding: AppSpacing.referralCardPadding,
+                                padding:
+                                    ReferralSpacingTokens.referralCardPadding,
                                 child: _ReferralFriendFilters(
                                   filters: snapshot.filters,
                                   active: snapshot.filter,

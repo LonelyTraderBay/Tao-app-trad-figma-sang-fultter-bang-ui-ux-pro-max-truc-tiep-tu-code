@@ -10,7 +10,7 @@ class _HealthCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: _portfolioGreen.withValues(alpha: .30),
-      padding: AppSpacing.tradeBotCardPaddingTall,
+      padding: TradeSpacingTokens.tradeBotCardPaddingTall,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +21,7 @@ class _HealthCard extends StatelessWidget {
                 size: AppSpacing.iconSm,
                 color: _portfolioGreen,
               ),
-              const SizedBox(width: AppSpacing.tradeBotSmallGap),
+              const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
               Expanded(
                 child: Text(
                   'Portfolio Health: Excellent',
@@ -45,7 +45,7 @@ class _HealthCard extends StatelessWidget {
                   color: AppColors.text3,
                   size: AppSpacing.x1,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotRowGap),
+                const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
                 Expanded(
                   child: Text(
                     item,
@@ -56,7 +56,8 @@ class _HealthCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

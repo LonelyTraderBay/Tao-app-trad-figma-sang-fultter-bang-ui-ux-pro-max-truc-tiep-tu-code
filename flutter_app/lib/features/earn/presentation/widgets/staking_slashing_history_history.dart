@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_slashing_history_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingSlashingHistoryTab extends StatelessWidget {
   const StakingSlashingHistoryTab({super.key, required this.snapshot});
@@ -37,7 +38,7 @@ class _SlashingEventCard extends StatelessWidget {
     return VitCard(
       key: StakingSlashingHistoryKeys.event(event.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -68,7 +69,7 @@ class _SlashingEventCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           VitCard(
             variant: VitCardVariant.inner,
-            padding: AppSpacing.earnCardPaddingX3,
+            padding: EarnSpacingTokens.earnCardPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -90,7 +90,7 @@ class _TransactionRow extends StatelessWidget {
       variant: VitCardVariant.ghost,
       density: VitDensity.compact,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletHistoryItemMinHeight,
+        minHeight: WalletSpacingTokens.walletHistoryItemMinHeight,
       ),
       borderColor: AppColors.transparent,
       child: Column(
@@ -115,8 +115,8 @@ class _TransactionRow extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           const Divider(
-            height: AppSpacing.walletHistoryDividerHeight,
-            thickness: AppSpacing.walletHistoryDividerHeight,
+            height: WalletSpacingTokens.walletHistoryDividerHeight,
+            thickness: WalletSpacingTokens.walletHistoryDividerHeight,
             color: AppColors.divider,
           ),
         ],
@@ -183,7 +183,7 @@ class _TransactionInfo extends StatelessWidget {
             fontWeight: AppTextStyles.bold,
           ),
         ),
-        const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
+        const SizedBox(height: WalletSpacingTokens.walletHistoryLineSpacing),
         Text(
           _timePart(tx.createdAt),
           maxLines: 1,
@@ -191,7 +191,7 @@ class _TransactionInfo extends StatelessWidget {
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),
         ),
         if (tx.network != null) ...[
-          const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
+          const SizedBox(height: WalletSpacingTokens.walletHistoryLineSpacing),
           Text(
             'Mạng: ${tx.network}',
             maxLines: 1,
@@ -200,7 +200,7 @@ class _TransactionInfo extends StatelessWidget {
           ),
         ],
         if (tx.txHash != null) ...[
-          const SizedBox(height: AppSpacing.walletHistoryLineSpacing),
+          const SizedBox(height: WalletSpacingTokens.walletHistoryLineSpacing),
           Text(
             _maskTxHash(tx.txHash!),
             maxLines: 1,

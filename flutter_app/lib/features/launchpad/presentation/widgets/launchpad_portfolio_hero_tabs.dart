@@ -154,7 +154,7 @@ class _HeroMetric extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.portfolioTextMuted,
-            height: AppSpacing.launchpadLineHeightTight,
+            height: LaunchpadSpacingTokens.launchpadLineHeightTight,
           ),
         ),
       ],

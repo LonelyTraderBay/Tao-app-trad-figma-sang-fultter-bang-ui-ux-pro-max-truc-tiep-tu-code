@@ -16,11 +16,11 @@ class _StrategyGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final itemWidth =
-            (constraints.maxWidth - AppSpacing.tradeBotRowGap) /
-            AppSpacing.tradeBotGridColumns;
+            (constraints.maxWidth - TradeSpacingTokens.tradeBotRowGap) /
+            TradeSpacingTokens.tradeBotGridColumns;
         return Wrap(
-          spacing: AppSpacing.tradeBotRowGap,
-          runSpacing: AppSpacing.tradeBotRowGap,
+          spacing: TradeSpacingTokens.tradeBotRowGap,
+          runSpacing: TradeSpacingTokens.tradeBotRowGap,
           children: [
             for (final strategy in strategies)
               _StrategyButton(
@@ -61,11 +61,11 @@ class _StrategyButton extends StatelessWidget {
       onTap: onTap,
       variant: selected ? VitCardVariant.ghost : VitCardVariant.inner,
       borderColor: selected ? color : AppColors.borderSolid,
-      padding: AppSpacing.tradeBotChipPadding,
+      padding: TradeSpacingTokens.tradeBotChipPadding,
       child: Row(
         children: [
           Icon(Icons.circle, color: color, size: AppSpacing.iconSm),
-          const SizedBox(width: AppSpacing.tradeBotInlineIconGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotInlineIconGap),
           Expanded(
             child: Text(
               strategy.name,
@@ -98,7 +98,7 @@ class _PairGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8,
-      runSpacing: AppSpacing.tradeBotRowGap,
+      runSpacing: TradeSpacingTokens.tradeBotRowGap,
       children: [
         for (final pair in pairs)
           VitChoicePill(
@@ -140,7 +140,7 @@ class _DateRangeGrid extends StatelessWidget {
             ),
           ),
           if (range != ranges.last)
-            const SizedBox(width: AppSpacing.tradeBotSmallGap),
+            const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
         ],
       ],
     );
@@ -183,7 +183,7 @@ class _BacktestPeriodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCardPadding,
+      padding: TradeSpacingTokens.tradeBotCardPadding,
       borderColor: _backtestPrimary.withValues(alpha: .22),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +193,7 @@ class _BacktestPeriodCard extends StatelessWidget {
             color: _backtestPrimary,
             size: 18,
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,12 +205,10 @@ class _BacktestPeriodCard extends StatelessWidget {
                     fontWeight: AppTextStyles.bold,
                   ),
                 ),
-                const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                const SizedBox(height: TradeSpacingTokens.tradeBotSmallGap),
                 Text(
                   'Testing ${strategyId.toUpperCase()} strategy on $pair from ${range.periodLabel} with \$$capital initial capital.',
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -230,12 +228,12 @@ class _RunFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      height: AppSpacing.tradeBotControlTall,
-      padding: AppSpacing.tradeBotFooterPadding,
+      height: TradeSpacingTokens.tradeBotControlTall,
+      padding: TradeSpacingTokens.tradeBotFooterPadding,
       child: VitCtaButton(
         key: BotBacktestingPage.runKey,
         onPressed: onRun,
-        height: AppSpacing.tradeBotFooterButtonHeight,
+        height: TradeSpacingTokens.tradeBotFooterButtonHeight,
         leading: const Icon(Icons.play_arrow_outlined, size: 19),
         child: Text(
           'Run Backtest',

@@ -20,7 +20,7 @@ class _GovernanceSummary extends StatelessWidget {
         : 'Unlisted';
     return VitCard(
       borderColor: AppColors.accent20,
-      padding: AppSpacing.arenaGovernanceCardPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,14 +45,14 @@ class _GovernanceSummary extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.warningBorder,
-            padding: AppSpacing.arenaGovernanceInnerPadding,
+            padding: ArenaSpacingTokens.arenaGovernanceInnerPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.lightbulb_outline_rounded,
                   color: AppColors.warn,
-                  size: AppSpacing.arenaGovernanceIcon,
+                  size: ArenaSpacingTokens.arenaGovernanceIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
@@ -103,7 +103,7 @@ class _GovernanceFooter extends StatelessWidget {
         shape: Border(top: BorderSide(color: AppColors.borderSolid)),
       ),
       child: Padding(
-        padding: AppSpacing.arenaGovernanceFooterPadding,
+        padding: ArenaSpacingTokens.arenaGovernanceFooterPadding,
         child: Column(
           children: [
             Row(
@@ -117,7 +117,7 @@ class _GovernanceFooter extends StatelessWidget {
                   child: const Icon(
                     Icons.chevron_left_rounded,
                     color: AppColors.text2,
-                    size: AppSpacing.arenaGovernanceFooterIcon,
+                    size: ArenaSpacingTokens.arenaGovernanceFooterIcon,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.x3),
@@ -135,7 +135,7 @@ class _GovernanceFooter extends StatelessWidget {
                           color: canContinue
                               ? AppColors.onAccent
                               : AppColors.text3,
-                          size: AppSpacing.arenaGovernanceIcon,
+                          size: ArenaSpacingTokens.arenaGovernanceIcon,
                         ),
                       ],
                     ),
@@ -149,14 +149,14 @@ class _GovernanceFooter extends StatelessWidget {
                 VitCard(
                   key: ArenaGovernanceGatePage.saveKey,
                   variant: VitCardVariant.ghost,
-                  padding: AppSpacing.arenaGovernanceSavePadding,
+                  padding: ArenaSpacingTokens.arenaGovernanceSavePadding,
                   onTap: onSave,
                   child: Row(
                     children: [
                       const Icon(
                         Icons.save_outlined,
                         color: AppColors.text3,
-                        size: AppSpacing.arenaGovernanceSmallIcon,
+                        size: ArenaSpacingTokens.arenaGovernanceSmallIcon,
                       ),
                       const SizedBox(width: AppSpacing.x1),
                       Text(

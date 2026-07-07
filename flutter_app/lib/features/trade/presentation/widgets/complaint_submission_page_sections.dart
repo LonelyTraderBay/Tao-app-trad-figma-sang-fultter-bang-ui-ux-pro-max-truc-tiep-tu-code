@@ -9,7 +9,7 @@ class _ProcessNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.complaintSubmissionNoticePadding,
+      padding: TradeSpacingTokens.complaintSubmissionNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,7 +92,7 @@ class _CategoryField extends StatelessWidget {
             key: ComplaintSubmissionPage.categoryKey,
             height: _submissionCategoryHeight,
             variant: VitCardVariant.inner,
-            padding: AppSpacing.complaintSubmissionCategoryPadding,
+            padding: TradeSpacingTokens.complaintSubmissionCategoryPadding,
             density: VitDensity.compact,
             borderColor: _submissionBorder.withValues(alpha: .76),
             child: Row(
@@ -188,8 +188,10 @@ class _TextInputBlock extends StatelessWidget {
                 filled: true,
                 fillColor: _submissionPanel2,
                 contentPadding: multiline
-                    ? AppSpacing.complaintSubmissionMultilineContentPadding
-                    : AppSpacing.complaintSubmissionSingleLineContentPadding,
+                    ? TradeSpacingTokens
+                          .complaintSubmissionMultilineContentPadding
+                    : TradeSpacingTokens
+                          .complaintSubmissionSingleLineContentPadding,
                 enabledBorder: _inputBorder,
                 focusedBorder: _inputBorder,
               ),
@@ -214,7 +216,7 @@ class _EvidenceUploadCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.complaintSubmissionEvidencePadding,
+      padding: TradeSpacingTokens.complaintSubmissionEvidencePadding,
       child: SizedBox(
         height: _submissionEvidenceHeight,
         child: Column(
@@ -281,7 +283,7 @@ class _TermsCard extends StatelessWidget {
       key: ComplaintSubmissionPage.acceptKey,
       onTap: () => onChanged(!accepted),
       density: VitDensity.compact,
-      padding: AppSpacing.complaintSubmissionTermsPadding,
+      padding: TradeSpacingTokens.complaintSubmissionTermsPadding,
       borderColor: _submissionBorder.withValues(alpha: .76),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

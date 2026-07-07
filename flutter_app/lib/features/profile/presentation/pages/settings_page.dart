@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/settings_page_sections.dart';
 part '../widgets/settings_page_common.dart';
@@ -68,7 +69,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
       body: SingleChildScrollView(
         key: SettingsPage.contentKey,
         physics: const ClampingScrollPhysics(),
-        padding: AppSpacing.settingsScrollPadding(scrollClearance),
+        padding: ProfileSpacingTokens.settingsScrollPadding(scrollClearance),
         child: VitPageContent(
           rhythm: VitPageRhythm.standard,
           padding: VitContentPadding.none,

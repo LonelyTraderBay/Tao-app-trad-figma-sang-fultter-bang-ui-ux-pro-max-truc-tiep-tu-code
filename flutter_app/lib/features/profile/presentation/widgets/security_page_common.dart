@@ -24,9 +24,9 @@ class _AntiPhishingCard extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: _securityPrimary,
-                size: AppSpacing.securityAntiPhishingIcon,
+                size: ProfileSpacingTokens.securityAntiPhishingIcon,
               ),
-              const SizedBox(width: AppSpacing.securityIconGap),
+              const SizedBox(width: ProfileSpacingTokens.securityIconGap),
               Text(
                 'M\u00E3 ch\u1ED1ng l\u1EEBa \u0111\u1EA3o',
                 style: AppTextStyles.control.copyWith(
@@ -51,7 +51,7 @@ class _AntiPhishingCard extends StatelessWidget {
             hintText: 'Nh\u1EADp m\u00E3 4\u20138 k\u00FD t\u1EF1',
             inputFormatters: [LengthLimitingTextInputFormatter(8)],
             suffix: SizedBox(
-              width: AppSpacing.securitySaveButtonWidth,
+              width: ProfileSpacingTokens.securitySaveButtonWidth,
               child: VitCtaButton(
                 key: SecurityPage.antiPhishingSaveKey,
                 onPressed: saving ? null : onSave,
@@ -83,19 +83,19 @@ class _SecuritySupportCard extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.securitySupportIconBox,
-            height: AppSpacing.securitySupportIconBox,
+            width: ProfileSpacingTokens.securitySupportIconBox,
+            height: ProfileSpacingTokens.securitySupportIconBox,
             child: Material(
               color: _securityPrimary.withValues(alpha: .13),
               shape: RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
               child: const Icon(
                 Icons.support_agent_rounded,
                 color: _securityPrimary,
-                size: AppSpacing.securitySupportIcon,
+                size: ProfileSpacingTokens.securitySupportIcon,
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.securitySupportGap),
+          const SizedBox(width: ProfileSpacingTokens.securitySupportGap),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +124,7 @@ class _SecuritySupportCard extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text3,
-            size: AppSpacing.securityChevron,
+            size: ProfileSpacingTokens.securityChevron,
           ),
         ],
       ),

@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pLargeTxVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -105,7 +106,7 @@ class _P2PLargeTransactionJustificationPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pLargeTransactionScrollPadding(
+                    padding: P2PSpacingTokens.p2pLargeTransactionScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
@@ -187,7 +188,7 @@ class _LargeTransactionHero extends StatelessWidget {
         side: BorderSide(color: AppColors.warningBorder),
       ),
       child: Padding(
-        padding: AppSpacing.p2pFinancialSafetyCardPadding,
+        padding: P2PSpacingTokens.p2pFinancialSafetyCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -197,8 +198,8 @@ class _LargeTransactionHero extends StatelessWidget {
                 borderRadius: AppRadii.lgRadius,
               ),
               child: SizedBox(
-                width: AppSpacing.p2pFinancialSafetyIconBox,
-                height: AppSpacing.p2pFinancialSafetyIconBox,
+                width: P2PSpacingTokens.p2pFinancialSafetyIconBox,
+                height: P2PSpacingTokens.p2pFinancialSafetyIconBox,
                 child: const Icon(
                   Icons.error_outline_rounded,
                   color: AppColors.warn,
@@ -228,7 +229,7 @@ class _LargeTransactionHero extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.p2pFinancialSafetyBodyLineHeight,
+                      height: P2PSpacingTokens.p2pFinancialSafetyBodyLineHeight,
                     ),
                   ),
                 ],
@@ -299,7 +300,7 @@ class _PurposeTile extends StatelessWidget {
       clip: true,
       constraints: const BoxConstraints(minHeight: AppSpacing.ctaHeight),
       alignment: Alignment.centerLeft,
-      padding: AppSpacing.p2pFinancialSafetyTilePadding,
+      padding: P2PSpacingTokens.p2pFinancialSafetyTilePadding,
       child: Text(
         purpose,
         maxLines: 1,

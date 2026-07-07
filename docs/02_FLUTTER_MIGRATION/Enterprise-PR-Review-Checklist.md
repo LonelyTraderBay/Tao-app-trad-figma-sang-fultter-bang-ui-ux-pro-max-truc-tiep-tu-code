@@ -31,6 +31,15 @@ diff, tests, and CI output.
       added in feature or shared code without documented exception.
 - [ ] Changed files do not increase design-token debt; `dart run
       tool/design_token_consistency_audit.dart --check` passes.
+- [ ] UI changes follow the Home reference standard ("SC-007 HomePage", see
+      [Flutter-Module-Identity-Standard.md](./Flutter-Module-Identity-Standard.md));
+      `dart run tool/home_reference_consistency_audit.dart --check` passes and
+      `flutter test test/quality/home_reference_consistency_guardrail_test.dart`
+      passes. This gate is hard-enforced for every module, not just P0.
+- [ ] Home page visuals are pinned by golden tests; run `flutter test
+      test/features/home/golden/` and, for deliberate UI changes, regenerate
+      with `flutter test --update-goldens test/features/home/golden/` and
+      review the diffed PNGs before committing.
 - [ ] Changed presentation pages follow page rhythm standard; `dart run
       tool/page_rhythm_audit.dart --check` passes and
       `flutter test test/quality/page_rhythm_guardrail_test.dart` passes.
@@ -122,6 +131,23 @@ dart run tool/design_token_consistency_audit.dart --check
 flutter test test/quality/design_token_consistency_guardrail_test.dart --reporter=compact
 ```
 
+Home-reference checks (required for every PR with UI changes):
+
+```bash
+cd flutter_app
+dart run tool/home_reference_consistency_audit.dart --check
+flutter test test/quality/home_reference_consistency_guardrail_test.dart --reporter=compact
+flutter test test/features/home/golden/ --reporter=compact
+```
+
+To update the Home reference baseline after a deliberate, reviewed UI change:
+
+```bash
+cd flutter_app
+dart run tool/home_reference_consistency_audit.dart   # regenerate the audit artifact
+flutter test --update-goldens test/features/home/golden/  # regenerate goldens; review the PNG diff
+```
+
 Page-rhythm checks (required for every PR with layout / presentation changes):
 
 ```bash
@@ -169,8 +195,9 @@ flutter test test/quality/segment_pill_guardrail_test.dart --reporter=compact
 ```
 
 CI uploads the design-token audit `.csv` (and regenerated markdown when the
-tool emits it) as the `design-token-consistency-audit` artifact so reviewers
-can compare debt trends.
+tool emits it) as the `design-token-consistency-audit` artifact, and the
+home-reference audit `.csv`/`.md` as the `home-reference-consistency-audit`
+artifact, so reviewers can compare debt/divergence trends.
 
 ## Merge Criteria
 

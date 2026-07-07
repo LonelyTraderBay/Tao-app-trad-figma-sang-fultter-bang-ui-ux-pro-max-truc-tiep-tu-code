@@ -40,14 +40,16 @@ class _ReportTypeCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                    const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
                     _Pill(
                       text: report.format,
                       color: AppColors.text3,
                       background: _taxPanel2,
                     ),
                     if (report.recommended) ...[
-                      const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                      const SizedBox(
+                        width: TradeSpacingTokens.tradeBotSmallGap,
+                      ),
                       const _Pill(
                         text: 'Recommended',
                         color: _taxGreen,
@@ -171,7 +173,7 @@ class _TaxNotesCard extends StatelessWidget {
                   color: AppColors.text3,
                   size: AppSpacing.x1,
                 ),
-                const SizedBox(width: AppSpacing.tradeBotRowGap),
+                const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
                 Expanded(
                   child: Text(
                     note,
@@ -180,7 +182,8 @@ class _TaxNotesCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (note != notes.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (note != notes.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

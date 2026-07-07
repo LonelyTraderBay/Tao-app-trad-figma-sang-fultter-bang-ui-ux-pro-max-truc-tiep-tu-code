@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/api_management_keys.dart';
 part '../widgets/api_management_key_controls.dart';
@@ -97,9 +98,11 @@ class _ApiManagementPageState extends ConsumerState<ApiManagementPage> {
                 child: SingleChildScrollView(
                   key: ApiManagementPage.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.profileApiScrollPadding(scrollClearance),
+                  padding: ProfileSpacingTokens.profileApiScrollPadding(
+                    scrollClearance,
+                  ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.none,
                     density: VitDensity.compact,
                     fullBleed: true,

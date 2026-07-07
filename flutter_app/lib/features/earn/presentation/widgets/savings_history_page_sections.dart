@@ -55,7 +55,7 @@ class _SummaryMetricTile extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3X2,
+        padding: EarnSpacingTokens.earnCardPaddingX3X2,
         child: FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
@@ -101,7 +101,7 @@ class _SearchField extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3,
+        padding: EarnSpacingTokens.earnCardPaddingX3,
         child: Row(
           children: [
             const Icon(
@@ -155,7 +155,7 @@ class _TypeFilterRow extends StatelessWidget {
               selected: filter == active,
               onTap: () => onChanged(filter),
               accentColor: AppModuleAccents.earn,
-              padding: AppSpacing.earnWidePillPadding,
+              padding: EarnSpacingTokens.earnWidePillPadding,
             ),
             if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
           ],
@@ -203,8 +203,8 @@ class _DateFilterRow extends StatelessWidget {
             shape: CircleBorder(),
           ),
           child: const SizedBox(
-            width: AppSpacing.savingsHistoryFilterButton,
-            height: AppSpacing.savingsHistoryFilterButton,
+            width: EarnSpacingTokens.savingsHistoryFilterButton,
+            height: EarnSpacingTokens.savingsHistoryFilterButton,
             child: Icon(
               Icons.filter_alt_outlined,
               color: AppColors.text3,
@@ -237,7 +237,7 @@ class _ResultsHeader extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
           ),
           child: Padding(
-            padding: AppSpacing.earnPillPadding,
+            padding: EarnSpacingTokens.earnPillPadding,
             child: Row(
               children: [
                 const Icon(

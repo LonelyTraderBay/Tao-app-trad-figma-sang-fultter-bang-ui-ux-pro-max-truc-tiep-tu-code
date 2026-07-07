@@ -20,7 +20,7 @@ class _HoursSection extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pSettingsPageCardPadding,
+          padding: P2PSpacingTokens.p2pSettingsPageCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -72,7 +72,7 @@ class _AutoReplySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pSettingsPageCardPadding,
+          padding: P2PSpacingTokens.p2pSettingsPageCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -114,7 +114,7 @@ class _AutoReplySection extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 VitCard(
                   variant: VitCardVariant.inner,
-                  padding: AppSpacing.p2pSettingsPageCompactCardPadding,
+                  padding: P2PSpacingTokens.p2pSettingsPageCompactCardPadding,
                   child: Text(
                     autoReply.buyTemplate,
                     style: AppTextStyles.caption.copyWith(
@@ -204,7 +204,7 @@ class _SwitchButton extends StatelessWidget {
           width: _p2pSettingsSwitchWidth,
           height: _p2pSettingsSwitchHeight,
           knobSize: _p2pSettingsSwitchThumbSize,
-          knobMargin: AppSpacing.p2pSettingsSwitchPadding,
+          knobMargin: P2PSpacingTokens.p2pSettingsSwitchPadding,
           activeColor: color,
         ),
       ),

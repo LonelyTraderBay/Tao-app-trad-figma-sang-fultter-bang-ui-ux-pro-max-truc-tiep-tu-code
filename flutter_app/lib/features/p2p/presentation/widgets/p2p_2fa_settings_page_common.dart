@@ -12,7 +12,7 @@ class _SecurityRecommendation extends StatelessWidget {
       radius: VitCardRadius.standard,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pTwoFactorInnerPadding,
+      padding: P2PSpacingTokens.p2pTwoFactorInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -99,13 +99,13 @@ class _InlineNotice extends StatelessWidget {
       color: color.withValues(alpha: .1),
       borderRadius: AppRadii.lgRadius,
       child: Padding(
-        padding: AppSpacing.p2pSecurityDetailsActionPadding,
+        padding: P2PSpacingTokens.p2pSecurityDetailsActionPadding,
         child: Row(
           children: [
             Icon(
               Icons.info_outline_rounded,
               color: color,
-              size: AppSpacing.p2pSecurityDetailsInlineIcon,
+              size: P2PSpacingTokens.p2pSecurityDetailsInlineIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(

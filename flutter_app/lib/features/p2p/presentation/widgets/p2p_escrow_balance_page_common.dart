@@ -10,7 +10,7 @@ class _EscrowHelpCard extends StatelessWidget {
     return VitCard(
       key: P2PEscrowBalancePage.helpKey,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pEscrowBalanceCardPadding,
+      padding: P2PSpacingTokens.p2pEscrowBalanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,7 +55,7 @@ class _EscrowEmptyState extends StatelessWidget {
     return VitCard(
       key: P2PEscrowBalancePage.emptyKey,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pEscrowBalanceLargePadding,
+      padding: P2PSpacingTokens.p2pEscrowBalanceLargePadding,
       child: Column(
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile

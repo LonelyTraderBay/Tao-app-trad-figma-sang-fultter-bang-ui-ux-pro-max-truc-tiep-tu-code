@@ -11,7 +11,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingMultiChainPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,7 +43,7 @@ class _TotalStats extends StatelessWidget {
     return VitCard(
       key: StakingMultiChainPage.totalStatsKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -146,7 +146,7 @@ class _GainPill extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -169,14 +169,14 @@ class _AllocationCard extends StatelessWidget {
     return VitCard(
       key: StakingMultiChainPage.allocationKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Chain Allocation', style: AppTextStyles.baseMedium),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.stakingProductDonutChartHeight,
+            height: EarnSpacingTokens.stakingProductDonutChartHeight,
             child: CustomPaint(
               painter: _DonutPainter(
                 positions: snapshot.positions,
@@ -212,7 +212,7 @@ class _LegendItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.stakingProductLegendWidth,
+      width: EarnSpacingTokens.stakingProductLegendWidth,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

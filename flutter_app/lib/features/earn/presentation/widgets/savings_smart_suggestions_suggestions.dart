@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_smart_suggestions_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsSmartSuggestionList extends StatelessWidget {
   const SavingsSmartSuggestionList({
@@ -66,7 +67,7 @@ class SavingsSmartSuggestionCard extends StatelessWidget {
     return VitCard(
       key: SavingsSmartSuggestionsKeys.suggestion(suggestion.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -149,7 +150,7 @@ class SavingsSmartSuggestionCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           const Divider(
             color: AppColors.divider,
-            height: AppSpacing.savingsConsumerDividerHeight,
+            height: EarnSpacingTokens.savingsConsumerDividerHeight,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Row(
@@ -289,13 +290,13 @@ class SavingsSmartMetaPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.savingsConsumerPillLineHeight,
+            height: EarnSpacingTokens.savingsConsumerPillLineHeight,
           ),
         ),
       ),
@@ -309,7 +310,7 @@ class SavingsSmartNewDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: AppSpacing.earnTopPaddingX1,
+      padding: EarnSpacingTokens.earnTopPaddingX1,
       child: Icon(Icons.circle, color: AppColors.sell, size: AppSpacing.x2),
     );
   }
@@ -353,7 +354,7 @@ class SavingsSmartDisclaimer extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       borderColor: AppColors.warn15,
       child: Row(
         children: [

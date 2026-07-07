@@ -10,7 +10,7 @@ class _HeroCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +30,7 @@ class _HeroCard extends StatelessWidget {
                   snapshot.heroSubtitle,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                    height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
               ],
@@ -120,7 +120,8 @@ class _FAQList extends StatelessWidget {
             expanded: expandedIds.contains(item.id),
             onTap: () => onToggle(item.id),
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (item != items.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -149,7 +150,7 @@ class _FAQCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.earnPillPadding,
+            padding: EarnSpacingTokens.earnPillPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -161,7 +162,8 @@ class _FAQCard extends StatelessWidget {
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text1,
                       fontWeight: AppTextStyles.bold,
-                      height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                      height:
+                          EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                     ),
                   ),
                 ),
@@ -180,7 +182,7 @@ class _FAQCard extends StatelessWidget {
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
-              padding: AppSpacing.earnDisclosureDetailsPadding,
+              padding: EarnSpacingTokens.earnDisclosureDetailsPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -188,7 +190,8 @@ class _FAQCard extends StatelessWidget {
                     item.answer,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                      height:
+                          EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),

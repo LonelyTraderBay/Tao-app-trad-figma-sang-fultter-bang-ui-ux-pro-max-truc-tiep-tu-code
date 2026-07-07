@@ -85,7 +85,7 @@ class _DeviceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: AppSpacing.p2pDevicesCardPadding,
+            padding: P2PSpacingTokens.p2pDevicesCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -131,7 +131,7 @@ class _DeviceIconBadge extends StatelessWidget {
         child: Icon(
           _deviceIcon(device.type),
           color: color,
-          size: AppSpacing.p2pSecurityDetailsDeviceIcon,
+          size: P2PSpacingTokens.p2pSecurityDetailsDeviceIcon,
         ),
       ),
     );
@@ -170,7 +170,7 @@ class _DeviceMainInfo extends StatelessWidget {
               const Icon(
                 Icons.shield_outlined,
                 color: AppModuleAccents.p2p,
-                size: AppSpacing.p2pSecurityDetailsTinyIcon,
+                size: P2PSpacingTokens.p2pSecurityDetailsTinyIcon,
               ),
             ],
           ],
@@ -220,7 +220,7 @@ class _InlineMeta extends StatelessWidget {
         Icon(
           icon,
           color: AppColors.text3,
-          size: AppSpacing.p2pSecurityDetailsMetaIcon,
+          size: P2PSpacingTokens.p2pSecurityDetailsMetaIcon,
         ),
         const SizedBox(width: AppSpacing.x1),
         Text(text, style: AppTextStyles.micro.copyWith(color: AppColors.text3)),
@@ -252,7 +252,7 @@ class _ExpandedDeviceDetails extends StatelessWidget {
           color: AppColors.divider,
         ),
         Padding(
-          padding: AppSpacing.p2pDevicesCardPadding,
+          padding: P2PSpacingTokens.p2pDevicesCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -358,7 +358,7 @@ class _CurrentDeviceMessage extends StatelessWidget {
       radius: VitCardRadius.standard,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.p2pSecurityDetailsActionPadding,
+      padding: P2PSpacingTokens.p2pSecurityDetailsActionPadding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -404,7 +404,7 @@ class _ActionButton extends StatelessWidget {
       selected: true,
       onTap: onTap,
       fullWidth: !compact,
-      padding: AppSpacing.p2pSecurityDetailsDeviceActionPadding(compact),
+      padding: P2PSpacingTokens.p2pSecurityDetailsDeviceActionPadding(compact),
       accentColor: color,
       leading: Icon(icon),
       semanticLabel: 'P2P device action $label',

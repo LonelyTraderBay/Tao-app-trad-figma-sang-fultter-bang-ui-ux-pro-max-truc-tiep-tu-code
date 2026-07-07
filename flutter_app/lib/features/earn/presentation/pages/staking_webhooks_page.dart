@@ -15,6 +15,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingWebhooksPage extends ConsumerWidget {
   const StakingWebhooksPage({super.key, this.shellRenderMode});
@@ -63,7 +64,9 @@ class StakingWebhooksPage extends ConsumerWidget {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.defaultPadding,
@@ -115,7 +118,7 @@ class _WebhooksHero extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: AppColors.accent30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -128,7 +131,7 @@ class _WebhooksHero extends StatelessWidget {
             snapshot.heroBody,
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.stakingCommunityBodyLineHeight,
+              height: EarnSpacingTokens.stakingCommunityBodyLineHeight,
             ),
           ),
         ],
@@ -165,7 +168,7 @@ class _WebhookCard extends StatelessWidget {
     return VitCard(
       key: StakingWebhooksPage.webhookKey(webhook.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3X4,
+      padding: EarnSpacingTokens.earnCardPaddingX3X4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -185,7 +188,9 @@ class _WebhookCard extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Row(
                       children: [
                         Icon(
@@ -254,7 +259,7 @@ class _AvailableEvents extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Wrap(
             spacing: AppSpacing.x2,
             runSpacing: AppSpacing.x2,
@@ -291,7 +296,7 @@ class _EventChip extends StatelessWidget {
       label: label,
       selected: selected,
       onTap: onTap,
-      padding: AppSpacing.earnSmallPillPadding,
+      padding: EarnSpacingTokens.earnSmallPillPadding,
       semanticLabel: 'Webhook event $label',
     );
   }
@@ -307,7 +312,7 @@ class _SheetFrame extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: AppSpacing.earnContentMargin,
+        padding: EarnSpacingTokens.earnContentMargin,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.88,
@@ -319,7 +324,10 @@ class _SheetFrame extends StatelessWidget {
                 borderRadius: AppRadii.cardLargeRadius,
               ),
             ),
-            child: Padding(padding: AppSpacing.earnCardPaddingX5, child: child),
+            child: Padding(
+              padding: EarnSpacingTokens.earnCardPaddingX5,
+              child: child,
+            ),
           ),
         ),
       ),

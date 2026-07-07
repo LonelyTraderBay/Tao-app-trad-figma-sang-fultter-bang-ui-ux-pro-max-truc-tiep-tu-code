@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_inline_icon_action.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 class VitNextActionCard extends StatelessWidget {
   const VitNextActionCard({
@@ -16,7 +17,7 @@ class VitNextActionCard extends StatelessWidget {
     required this.subtitle,
     required this.statusLabel,
     required this.ctaLabel,
-    required     this.accentColor,
+    required this.accentColor,
     this.onTap,
     this.onDismiss,
   });
@@ -35,14 +36,14 @@ class VitNextActionCard extends StatelessWidget {
     return VitCard(
       onTap: onTap,
       padding: const EdgeInsetsDirectional.all(
-        AppSpacing.homeNextActionCardPadding,
+        HomeSpacingTokens.homeNextActionCardPadding,
       ),
       borderColor: accentColor.withValues(alpha: .28),
       child: Row(
         children: [
           SizedBox(
-            width: AppSpacing.homeNextActionIconContainer,
-            height: AppSpacing.homeNextActionIconContainer,
+            width: HomeSpacingTokens.homeNextActionIconContainer,
+            height: HomeSpacingTokens.homeNextActionIconContainer,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: accentColor.withValues(alpha: .14),
@@ -54,12 +55,12 @@ class VitNextActionCard extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: accentColor,
-                  size: AppSpacing.homeNextActionIconSize,
+                  size: HomeSpacingTokens.homeNextActionIconSize,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.homeCommandRowSpacing),
+          const SizedBox(width: HomeSpacingTokens.homeCommandRowSpacing),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +82,7 @@ class VitNextActionCard extends StatelessWidget {
                     VitAccentPill(label: statusLabel, accentColor: accentColor),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.homeSectionInnerGap),
+                const SizedBox(height: HomeSpacingTokens.homeSectionInnerGap),
                 Text(
                   subtitle,
                   maxLines: 1,
@@ -108,11 +109,11 @@ class VitNextActionCard extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(width: AppSpacing.homeChevronGap),
+          const SizedBox(width: HomeSpacingTokens.homeChevronGap),
           Icon(
             Icons.chevron_right_rounded,
             color: accentColor,
-            size: AppSpacing.homeActionChevronSize,
+            size: HomeSpacingTokens.homeActionChevronSize,
           ),
         ],
       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/dev/domain/entities/dev_tools_entities.dart';
 import 'package:vit_trade_flutter/features/dev/presentation/widgets/design_system_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class DesignSystemTokensSection extends StatelessWidget {
   const DesignSystemTokensSection({
@@ -25,7 +25,7 @@ class DesignSystemTokensSection extends StatelessWidget {
       label: 'Design Tokens',
       children: [
         VitCard(
-          padding: AppSpacing.devTokenCardPadding,
+          padding: AdminSpacingTokens.devTokenCardPadding,
           radius: VitCardRadius.large,
           child: Column(
             children: [
@@ -49,7 +49,7 @@ class _TokenRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.devVerticalPaddingX3,
+      padding: AdminSpacingTokens.devVerticalPaddingX3,
       child: Row(
         children: [
           Expanded(

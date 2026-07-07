@@ -41,7 +41,7 @@ class _FeaturedModesSection extends StatelessWidget {
             children: [
               for (final item in modes) ...[
                 SizedBox(
-                  width: AppSpacing.arenaHomeModeCardWidth,
+                  width: ArenaSpacingTokens.arenaHomeModeCardWidth,
                   child: _ModeCard(mode: item, onTap: () => onMode(item.id)),
                 ),
                 if (item != modes.last) const SizedBox(width: AppSpacing.x3),
@@ -357,7 +357,7 @@ class _CreatorSpotlightSection extends StatelessWidget {
             children: [
               for (final creator in creators) ...[
                 SizedBox(
-                  width: AppSpacing.arenaHomeCreatorCardWidth,
+                  width: ArenaSpacingTokens.arenaHomeCreatorCardWidth,
                   child: _CreatorCard(
                     creator: creator,
                     onTap: () => onCreator(creator.id),
@@ -389,8 +389,8 @@ class _CreatorCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            width: AppSpacing.arenaHomeCreatorAvatar,
-            height: AppSpacing.arenaHomeCreatorAvatar,
+            width: ArenaSpacingTokens.arenaHomeCreatorAvatar,
+            height: ArenaSpacingTokens.arenaHomeCreatorAvatar,
             child: DecoratedBox(
               decoration: const ShapeDecoration(
                 color: AppColors.surface2,
@@ -402,7 +402,7 @@ class _CreatorCard extends StatelessWidget {
               child: const Icon(
                 Icons.person_rounded,
                 color: AppColors.warn,
-                size: AppSpacing.arenaHomeCreatorIcon,
+                size: ArenaSpacingTokens.arenaHomeCreatorIcon,
               ),
             ),
           ),
@@ -521,7 +521,7 @@ class _PredictionBridge extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.accent,
-            size: AppSpacing.arenaHomeBridgeChevron,
+            size: ArenaSpacingTokens.arenaHomeBridgeChevron,
           ),
         ],
       ),

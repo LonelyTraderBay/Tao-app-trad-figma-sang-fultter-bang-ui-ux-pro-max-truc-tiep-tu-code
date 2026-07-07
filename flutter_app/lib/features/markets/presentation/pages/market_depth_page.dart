@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketDepthPage extends ConsumerStatefulWidget {
   const MarketDepthPage({
@@ -93,7 +94,9 @@ class _MarketDepthPageState extends ConsumerState<MarketDepthPage> {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: MarketDepthPage.contentKey,
-                    padding: AppSpacing.marketScrollPadding(scrollEndClearance),
+                    padding: MarketsSpacingTokens.marketScrollPadding(
+                      scrollEndClearance,
+                    ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.flush,
                       padding: VitContentPadding.compact,

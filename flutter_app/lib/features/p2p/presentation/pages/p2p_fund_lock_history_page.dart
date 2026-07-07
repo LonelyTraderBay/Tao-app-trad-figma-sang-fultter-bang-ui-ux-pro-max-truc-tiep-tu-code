@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 class P2PFundLockHistoryPage extends ConsumerWidget {
   const P2PFundLockHistoryPage({
@@ -44,7 +45,7 @@ class P2PFundLockHistoryPage extends ConsumerWidget {
         _FundLockList(records: snapshot.records),
         const VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.p2pFinancialSafetyInnerPadding,
+          padding: P2PSpacingTokens.p2pFinancialSafetyInnerPadding,
           child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Fund lock history review',
@@ -71,7 +72,7 @@ class _FundLockHero extends StatelessWidget {
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.p2p,
       background: const ColoredBox(color: AppModuleAccents.p2p),
-      padding: AppSpacing.p2pFinancialSafetyCardPadding,
+      padding: P2PSpacingTokens.p2pFinancialSafetyCardPadding,
       clip: true,
       child: Row(
         children: [
@@ -79,8 +80,8 @@ class _FundLockHero extends StatelessWidget {
             color: AppColors.onAccent.withValues(alpha: .20),
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              width: AppSpacing.p2pFinancialSafetyIconBox,
-              height: AppSpacing.p2pFinancialSafetyIconBox,
+              width: P2PSpacingTokens.p2pFinancialSafetyIconBox,
+              height: P2PSpacingTokens.p2pFinancialSafetyIconBox,
               child: const Icon(
                 Icons.lock_outline_rounded,
                 color: AppColors.onAccent,
@@ -151,7 +152,7 @@ class _FundLockRecordCard extends StatelessWidget {
     return VitCard(
       key: P2PFundLockHistoryPage.recordKey(record.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pFinancialSafetyCardPadding,
+      padding: P2PSpacingTokens.p2pFinancialSafetyCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -159,8 +160,8 @@ class _FundLockRecordCard extends StatelessWidget {
             color: color.withValues(alpha: .14),
             borderRadius: AppRadii.smRadius,
             child: SizedBox(
-              width: AppSpacing.p2pFinancialSafetyIconBox,
-              height: AppSpacing.p2pFinancialSafetyIconBox,
+              width: P2PSpacingTokens.p2pFinancialSafetyIconBox,
+              height: P2PSpacingTokens.p2pFinancialSafetyIconBox,
               child: Icon(
                 isLock ? Icons.lock_outline_rounded : Icons.lock_open_rounded,
                 color: color,
@@ -207,7 +208,7 @@ class _FundLockRecordCard extends StatelessWidget {
                     const Icon(
                       Icons.access_time_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.p2pFinancialSafetyTinyIcon,
+                      size: P2PSpacingTokens.p2pFinancialSafetyTinyIcon,
                     ),
                     const SizedBox(width: AppSpacing.x1),
                     Text(

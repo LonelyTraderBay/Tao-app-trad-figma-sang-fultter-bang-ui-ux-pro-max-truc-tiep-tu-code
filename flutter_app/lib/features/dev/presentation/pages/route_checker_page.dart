@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 part '../widgets/route_checker_page_sections.dart';
 part '../widgets/route_checker_page_common.dart';
@@ -77,9 +78,9 @@ class _RouteCheckerState extends ConsumerState<RouteChecker> {
                 child: SingleChildScrollView(
                   key: RouteChecker.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.devScrollPadding(bottomInset),
+                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
                   child: VitPageContent(
- rhythm: VitPageRhythm.flush,
+                    rhythm: VitPageRhythm.flush,
                     gap: VitContentGap.defaultGap,
                     children: [
                       _DevStateBar(
@@ -132,9 +133,8 @@ class _RouteCheckerState extends ConsumerState<RouteChecker> {
                                     message:
                                         'Pick another phase or reset the filter.',
                                     actionLabel: 'Show all routes',
-                                    onAction: () => setState(
-                                      () => _activePhase = null,
-                                    ),
+                                    onAction: () =>
+                                        setState(() => _activePhase = null),
                                   ),
                                 ]
                               : _liveSections(

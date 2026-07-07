@@ -47,9 +47,9 @@ class _SummaryBanner extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletPendingSummaryHeight,
+        minHeight: WalletSpacingTokens.walletPendingSummaryHeight,
       ),
-      padding: AppSpacing.walletPendingCardPadding,
+      padding: WalletSpacingTokens.walletPendingCardPadding,
       borderColor: AppColors.overlayStroke,
       child: Row(
         children: [
@@ -60,14 +60,14 @@ class _SummaryBanner extends StatelessWidget {
               border: Border.all(color: color.withValues(alpha: .22)),
             ),
             child: SizedBox(
-              width: AppSpacing.walletPendingAssetIconBox,
-              height: AppSpacing.walletPendingAssetIconBox,
+              width: WalletSpacingTokens.walletPendingAssetIconBox,
+              height: WalletSpacingTokens.walletPendingAssetIconBox,
               child: Icon(
                 hasPending
                     ? Icons.access_time_rounded
                     : Icons.check_circle_outline_rounded,
                 color: color,
-                size: AppSpacing.walletPendingSummaryIconGlyph,
+                size: WalletSpacingTokens.walletPendingSummaryIconGlyph,
               ),
             ),
           ),
@@ -181,7 +181,7 @@ class _DepositCard extends StatelessWidget {
     final config = _statusConfig(deposit.status);
     return VitCard(
       key: PendingDepositsPage.depositKey(deposit.id),
-      padding: AppSpacing.walletPendingCardPadding,
+      padding: WalletSpacingTokens.walletPendingCardPadding,
       borderColor: AppColors.overlayStroke,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -197,12 +197,12 @@ class _DepositCard extends StatelessWidget {
                   ),
                 ),
                 child: SizedBox(
-                  width: AppSpacing.walletPendingAssetIconBox,
-                  height: AppSpacing.walletPendingAssetIconBox,
+                  width: WalletSpacingTokens.walletPendingAssetIconBox,
+                  height: WalletSpacingTokens.walletPendingAssetIconBox,
                   child: Icon(
                     Icons.south_west_rounded,
                     color: config.color,
-                    size: AppSpacing.walletPendingAssetIconGlyph,
+                    size: WalletSpacingTokens.walletPendingAssetIconGlyph,
                   ),
                 ),
               ),
@@ -346,7 +346,7 @@ class _ConfirmationProgress extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: SizedBox(
-              height: AppSpacing.walletPendingProgressHeight,
+              height: WalletSpacingTokens.walletPendingProgressHeight,
               child: LinearProgressIndicator(
                 value: deposit.progress.clamp(.05, 1),
                 backgroundColor: AppColors.surface3,
@@ -362,8 +362,8 @@ class _ConfirmationProgress extends StatelessWidget {
                 ClipRRect(
                   borderRadius: AppRadii.pillRadius,
                   child: SizedBox(
-                    width: AppSpacing.walletPendingProgressDot,
-                    height: AppSpacing.walletPendingProgressDot,
+                    width: WalletSpacingTokens.walletPendingProgressDot,
+                    height: WalletSpacingTokens.walletPendingProgressDot,
                     child: ColoredBox(
                       color: i < deposit.confirmations
                           ? color

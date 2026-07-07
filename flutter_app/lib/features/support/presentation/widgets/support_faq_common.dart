@@ -34,7 +34,8 @@ class _FaqPanel extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         for (var i = 0; i < items.length; i++) ...[
-          if (i > 0) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (i > 0)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           _FaqCard(
             index: i,
             item: items[i],
@@ -45,7 +46,7 @@ class _FaqPanel extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.supportCardPadding,
+          padding: SupportSpacingTokens.supportCardPadding,
           borderColor: AppColors.primary20,
           child: Text(
             'Không tìm thấy câu trả lời? Hãy tạo ticket hoặc liên hệ support qua email/hotline.',
@@ -75,7 +76,7 @@ class _FaqCard extends StatelessWidget {
     return VitCard(
       key: SupportPage.faqKey(index),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.supportCardPadding,
+      padding: SupportSpacingTokens.supportCardPadding,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,7 +96,7 @@ class _FaqCard extends StatelessWidget {
                 turns: expanded ? .5 : 0,
                 duration: const Duration(milliseconds: 160),
                 child: SizedBox.square(
-                  dimension: AppSpacing.supportFaqToggleIconBox,
+                  dimension: SupportSpacingTokens.supportFaqToggleIconBox,
                   child: const Material(
                     color: AppColors.primary12,
                     shape: CircleBorder(),

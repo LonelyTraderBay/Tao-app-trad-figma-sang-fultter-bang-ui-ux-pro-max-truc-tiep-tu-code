@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_api_documentation_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingApiDocumentationExamplesTab extends StatelessWidget {
   const StakingApiDocumentationExamplesTab({
@@ -59,7 +60,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: AppSpacing.earnCardPaddingX3,
+                    padding: EarnSpacingTokens.earnCardPaddingX3,
                     child: Row(
                       children: [
                         Expanded(
@@ -81,10 +82,10 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                   ),
                   const Divider(
                     color: AppColors.borderSolid,
-                    height: AppSpacing.stakingApiDividerHeight,
+                    height: EarnSpacingTokens.stakingApiDividerHeight,
                   ),
                   Padding(
-                    padding: AppSpacing.earnCardPaddingX3,
+                    padding: EarnSpacingTokens.earnCardPaddingX3,
                     child: StakingApiDocumentationCodeBlock(
                       text: selected.source,
                       tall: true,
@@ -102,7 +103,7 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnCardPaddingX4,
+              padding: EarnSpacingTokens.earnCardPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -134,12 +135,15 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                               'Sandbox Environment',
                               style: AppTextStyles.baseMedium,
                             ),
-                            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmCompactInnerGap,
+                            ),
                             Text(
                               'Test your integration with fake data before going live. No real funds involved.',
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: AppSpacing.stakingApiSandboxLineHeight,
+                                height: EarnSpacingTokens
+                                    .stakingApiSandboxLineHeight,
                               ),
                             ),
                           ],
@@ -147,10 +151,12 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   VitCard(
                     variant: VitCardVariant.inner,
-                    padding: AppSpacing.earnCardPaddingX3,
+                    padding: EarnSpacingTokens.earnCardPaddingX3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -160,7 +166,9 @@ class StakingApiDocumentationExamplesTab extends StatelessWidget {
                             color: AppColors.text3,
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmCompactInnerGap,
+                        ),
                         Row(
                           children: [
                             Expanded(
@@ -217,7 +225,7 @@ class _LanguageButton extends StatelessWidget {
       label: example.label,
       selected: selected,
       onTap: onTap,
-      padding: AppSpacing.earnPillPaddingLarge,
+      padding: EarnSpacingTokens.earnPillPaddingLarge,
       semanticLabel: 'API example language ${example.label}',
     );
   }

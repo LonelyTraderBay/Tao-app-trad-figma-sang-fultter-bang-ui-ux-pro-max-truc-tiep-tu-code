@@ -9,7 +9,7 @@ class _DistributionLegend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [
@@ -53,7 +53,7 @@ class _DistributionLegend extends StatelessWidget {
             ),
           ),
         VitCard(
-          padding: AppSpacing.tradeBotCompactCardPadding,
+          padding: TradeSpacingTokens.tradeBotCompactCardPadding,
           variant: VitCardVariant.ghost,
           borderColor: _dashBorder,
           child: Row(
@@ -95,7 +95,7 @@ class _ProviderCard extends StatelessWidget {
     final healthy = provider.status == 'healthy';
     final color = healthy ? _dashGreen : _dashAmber;
     return _Card(
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -104,8 +104,8 @@ class _ProviderCard extends StatelessWidget {
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
                 variant: VitCardVariant.ghost,
-                width: AppSpacing.tradeBotCorrelationLegendDot,
-                height: AppSpacing.tradeBotCorrelationLegendDot,
+                width: TradeSpacingTokens.tradeBotCorrelationLegendDot,
+                height: TradeSpacingTokens.tradeBotCorrelationLegendDot,
                 clip: true,
                 background: ColoredBox(color: color),
                 child: const SizedBox.shrink(),
@@ -170,13 +170,13 @@ class _QueueTab extends StatelessWidget {
       children: [
         for (final stat in snapshot.dailyStats.take(4))
           _Card(
-            padding: AppSpacing.tradeBotInnerPanelPadding,
+            padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
             child: Row(
               children: [
                 const Icon(
                   Icons.calendar_today_outlined,
                   color: _dashPrimary,
-                  size: AppSpacing.tradeBotActionIcon,
+                  size: TradeSpacingTokens.tradeBotActionIcon,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -230,9 +230,9 @@ class _ComplianceTab extends StatelessWidget {
       density: VitDensity.compact,
       children: [
         _Card(
-          padding: AppSpacing.tradeBotCardPadding,
+          padding: TradeSpacingTokens.tradeBotCardPadding,
           child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+            rhythm: VitPageRhythm.standard,
             padding: VitContentPadding.none,
             density: VitDensity.compact,
             children: [
@@ -244,7 +244,7 @@ class _ComplianceTab extends StatelessWidget {
                   color: item.$4,
                 ),
               VitCard(
-                padding: AppSpacing.tradeBotInnerPanelPadding,
+                padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
                 variant: VitCardVariant.inner,
                 borderColor: _dashGreen.withValues(alpha: .25),
                 child: Row(
@@ -252,7 +252,7 @@ class _ComplianceTab extends StatelessWidget {
                     const Icon(
                       Icons.emoji_events_outlined,
                       color: _dashGreen,
-                      size: AppSpacing.tradeBotMediumIcon,
+                      size: TradeSpacingTokens.tradeBotMediumIcon,
                     ),
                     const SizedBox(width: AppSpacing.x3),
                     Expanded(
@@ -331,26 +331,26 @@ class _ExportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       onTap: onTap,
-      padding: AppSpacing.tradeBotInnerPanelPadding,
+      padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
       child: Row(
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
             variant: VitCardVariant.ghost,
-            width: AppSpacing.tradeBotQuestionIconBox,
-            height: AppSpacing.tradeBotQuestionIconBox,
+            width: TradeSpacingTokens.tradeBotQuestionIconBox,
+            height: TradeSpacingTokens.tradeBotQuestionIconBox,
             alignment: Alignment.center,
             borderColor: color.withValues(alpha: .18),
             child: Icon(
               icon,
               color: color,
-              size: AppSpacing.tradeBotActionIcon,
+              size: TradeSpacingTokens.tradeBotActionIcon,
             ),
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: VitPageContent(
-             rhythm: VitPageRhythm.standard,
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.none,
               density: VitDensity.compact,
               children: [
@@ -371,7 +371,7 @@ class _ExportCard extends StatelessWidget {
           const Icon(
             Icons.download_rounded,
             color: AppColors.text3,
-            size: AppSpacing.tradeBotActionIcon,
+            size: TradeSpacingTokens.tradeBotActionIcon,
           ),
         ],
       ),
@@ -452,7 +452,7 @@ class _QuickActions extends StatelessWidget {
             onTap: onQueue,
           ),
         ),
-        const SizedBox(width: AppSpacing.tradeBotCardGap),
+        const SizedBox(width: TradeSpacingTokens.tradeBotCardGap),
         Expanded(
           child: _QuickAction(
             key: RegulatoryReportsDashboardPage.actionKey('arm-status'),

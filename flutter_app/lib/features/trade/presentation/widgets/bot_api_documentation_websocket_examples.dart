@@ -9,7 +9,7 @@ class _WebSocketView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       density: VitDensity.compact,
@@ -20,7 +20,7 @@ class _WebSocketView extends StatelessWidget {
           children: [
             _InfoCard(
               child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.none,
                 fullBleed: true,
                 density: VitDensity.compact,

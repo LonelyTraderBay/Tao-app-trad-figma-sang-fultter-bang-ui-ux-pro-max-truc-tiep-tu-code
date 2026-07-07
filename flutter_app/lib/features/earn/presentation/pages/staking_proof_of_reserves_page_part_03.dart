@@ -73,7 +73,7 @@ class _InnerMetric extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: subtleBuy ? AppColors.buy20 : null,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -126,7 +126,7 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingProofOfReservesPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Text(
         note,
         textAlign: TextAlign.center,

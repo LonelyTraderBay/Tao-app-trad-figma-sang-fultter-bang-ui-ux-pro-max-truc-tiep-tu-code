@@ -31,7 +31,8 @@ class _ProtectionCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.x4),
               Expanded(
                 child: Padding(
-                  padding: AppSpacing.tradeBotDisputeDescriptionLabelPadding,
+                  padding:
+                      TradeSpacingTokens.tradeBotDisputeDescriptionLabelPadding,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -63,7 +64,7 @@ class _ProtectionCard extends StatelessWidget {
                 color: AppColors.text1,
                 size: AppSpacing.iconSm + AppSpacing.hairlineStroke,
               ),
-              const SizedBox(width: AppSpacing.walletAssetSmallGap),
+              const SizedBox(width: WalletSpacingTokens.walletAssetSmallGap),
               Expanded(
                 child: Text(
                   snapshot.coveredMessage,
@@ -99,7 +100,7 @@ class _InfoNotice extends StatelessWidget {
             color: AppColors.text1,
             size: AppSpacing.inputPrefixIcon - AppSpacing.hairlineStroke,
           ),
-          const SizedBox(width: AppSpacing.tradeBotRowGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotRowGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,7 +194,9 @@ class _Overview extends StatelessWidget {
                   for (final item in snapshot.overviewItems) ...[
                     _InfoRow(item: item),
                     if (item != snapshot.overviewItems.last)
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                   ],
                 ],
               ),
@@ -225,7 +228,7 @@ class _InfoRow extends StatelessWidget {
           color: _compGreen,
           size: AppSpacing.inputPrefixIcon - AppSpacing.hairlineStroke,
         ),
-        const SizedBox(width: AppSpacing.walletAssetPillGap),
+        const SizedBox(width: WalletSpacingTokens.walletAssetPillGap),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -9,7 +9,7 @@ class _AnalysisCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.inner,
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,7 +53,8 @@ class _AnalysisCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (insight != insights.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (insight != insights.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),

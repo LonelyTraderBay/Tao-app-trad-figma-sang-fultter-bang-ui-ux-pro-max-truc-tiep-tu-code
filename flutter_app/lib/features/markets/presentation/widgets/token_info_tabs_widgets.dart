@@ -23,7 +23,7 @@ class _TokenTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDepthTabsHeight,
+        height: MarketsSpacingTokens.marketDepthTabsHeight,
         child: Column(
           children: [
             Expanded(
@@ -87,7 +87,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         VitSectionHeader(
           title: 'Thống kê thị trường',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: AppAssetColors.forSymbol(pair.baseAsset),
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -134,7 +134,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Cung token',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: _marketPrimary,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -142,7 +142,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Phan bo cung',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: AppColors.accent,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -150,7 +150,7 @@ class _OverviewTab extends StatelessWidget {
         const SizedBox(height: _tokenInfoSectionGap),
         const VitSectionHeader(
           title: 'Ky luc gia',
-      bottomGap: AppSpacing.pageRhythmStandardInnerGap,
+          bottomGap: AppSpacing.pageRhythmStandardInnerGap,
           accentColor: AppColors.warn,
           variant: VitSectionHeaderVariant.accentBar,
         ),
@@ -226,7 +226,9 @@ class _HeroCard extends StatelessWidget {
               VitAccentPill(
                 label:
                     '${pair.change24h >= 0 ? '+' : ''}${pair.change24h.toStringAsFixed(2)}%',
-                accentColor: pair.change24h >= 0 ? AppColors.buy : AppColors.sell,
+                accentColor: pair.change24h >= 0
+                    ? AppColors.buy
+                    : AppColors.sell,
                 semanticStatus: pair.change24h >= 0
                     ? VitStatusPillStatus.success
                     : VitStatusPillStatus.error,

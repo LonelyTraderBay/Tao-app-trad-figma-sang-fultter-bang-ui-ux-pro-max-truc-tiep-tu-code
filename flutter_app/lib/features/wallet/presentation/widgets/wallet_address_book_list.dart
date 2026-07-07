@@ -29,7 +29,7 @@ class _AddressCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _ShieldBadge(whitelisted: address.isWhitelisted),
-              const SizedBox(width: AppSpacing.walletAddressActionGap),
+              const SizedBox(width: WalletSpacingTokens.walletAddressActionGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,22 +48,26 @@ class _AddressCard extends StatelessWidget {
                         ),
                         if (address.isWhitelisted) ...[
                           const SizedBox(
-                            width: AppSpacing.walletAddressCompactGap,
+                            width: WalletSpacingTokens.walletAddressCompactGap,
                           ),
                           const _WhitelistBadge(),
                         ],
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.walletAddressCompactGap),
+                    const SizedBox(
+                      height: WalletSpacingTokens.walletAddressCompactGap,
+                    ),
                     Wrap(
-                      spacing: AppSpacing.walletAddressCompactGap,
-                      runSpacing: AppSpacing.walletAddressCompactGap,
+                      spacing: WalletSpacingTokens.walletAddressCompactGap,
+                      runSpacing: WalletSpacingTokens.walletAddressCompactGap,
                       children: [
                         _MiniTag(address.network),
                         _MiniTag(address.asset),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.walletAddressCompactGap),
+                    const SizedBox(
+                      height: WalletSpacingTokens.walletAddressCompactGap,
+                    ),
                     Text(
                       _maskAddress(address.address),
                       maxLines: 1,
@@ -74,7 +78,7 @@ class _AddressCard extends StatelessWidget {
                     ),
                     if (address.lastUsed != null) ...[
                       const SizedBox(
-                        height: AppSpacing.walletAddressCompactGap,
+                        height: WalletSpacingTokens.walletAddressCompactGap,
                       ),
                       Text(
                         'D\u00F9ng g\u1EA7n nh\u1EA5t: ${address.lastUsed}',
@@ -90,7 +94,7 @@ class _AddressCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAddressActionGap),
+          const SizedBox(height: WalletSpacingTokens.walletAddressActionGap),
           Row(
             children: [
               Expanded(
@@ -100,7 +104,9 @@ class _AddressCard extends StatelessWidget {
                   addressId: address.id,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAddressCompactGap),
+              const SizedBox(
+                width: WalletSpacingTokens.walletAddressCompactGap,
+              ),
               _RoundActionButton(
                 key: AddressBookPage.favoriteKey(address.id),
                 icon: address.isFavorite
@@ -110,14 +116,18 @@ class _AddressCard extends StatelessWidget {
                 filled: address.isFavorite,
                 onTap: onFavorite,
               ),
-              const SizedBox(width: AppSpacing.walletAddressCompactGap),
+              const SizedBox(
+                width: WalletSpacingTokens.walletAddressCompactGap,
+              ),
               _RoundActionButton(
                 key: AddressBookPage.editKey(address.id),
                 icon: Icons.edit_rounded,
                 tooltip: 'S\u1EEDa \u0111\u1ECBa ch\u1EC9',
                 onTap: onEdit,
               ),
-              const SizedBox(width: AppSpacing.walletAddressCompactGap),
+              const SizedBox(
+                width: WalletSpacingTokens.walletAddressCompactGap,
+              ),
               _RoundActionButton(
                 key: AddressBookPage.deleteKey(address.id),
                 icon: Icons.delete_outline_rounded,
@@ -207,7 +217,7 @@ class _CopyButton extends StatelessWidget {
         label: copied ? '\u0110\u00E3 copy' : 'Sao ch\u00E9p',
         selected: copied,
         onTap: onTap,
-        height: AppSpacing.walletAddressCopyHeight,
+        height: WalletSpacingTokens.walletAddressCopyHeight,
         fullWidth: true,
         accentColor: AppColors.primary,
         leading: Icon(

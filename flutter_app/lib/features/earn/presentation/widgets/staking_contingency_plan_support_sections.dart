@@ -15,7 +15,7 @@ class _ValidationSection extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -24,7 +24,7 @@ class _ValidationSection extends StatelessWidget {
                 body,
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.stakingContingencyBodyLineHeight,
+                  height: EarnSpacingTokens.stakingContingencyBodyLineHeight,
                 ),
               ),
             ],
@@ -47,7 +47,7 @@ class _ValidationRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: AppSpacing.earnBottomPaddingX3,
+          padding: EarnSpacingTokens.earnBottomPaddingX3,
           child: Row(
             children: [
               Expanded(
@@ -117,7 +117,7 @@ class _DocumentRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           const Icon(
@@ -149,7 +149,7 @@ class _DocumentRow extends StatelessWidget {
           const Icon(
             Icons.open_in_new_rounded,
             color: AppColors.text3,
-            size: AppSpacing.stakingContingencyExternalIcon,
+            size: EarnSpacingTokens.stakingContingencyExternalIcon,
           ),
         ],
       ),
@@ -167,13 +167,13 @@ class _FooterNote extends StatelessWidget {
     return VitCard(
       key: StakingContingencyPlanPage.footerKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         note,
         textAlign: TextAlign.center,
         style: AppTextStyles.micro.copyWith(
           color: AppColors.text3,
-          height: AppSpacing.stakingContingencyFooterLineHeight,
+          height: EarnSpacingTokens.stakingContingencyFooterLineHeight,
         ),
       ),
     );
@@ -199,7 +199,7 @@ class _Pill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

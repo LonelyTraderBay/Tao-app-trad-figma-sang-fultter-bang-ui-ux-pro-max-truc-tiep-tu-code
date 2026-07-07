@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_fraud_score_patterns.dart';
 part '../widgets/p2p_fraud_checklist_actions.dart';
@@ -101,9 +102,11 @@ class _P2PFraudPreventionPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pFraudScrollPadding(scrollEndPadding),
+                    padding: P2PSpacingTokens.p2pFraudScrollPadding(
+                      scrollEndPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.none,
                       fullBleed: true,
                       gap: VitContentGap.tight,
@@ -128,7 +131,7 @@ class _P2PFraudPreventionPageState
                         _Disclosure(text: snapshot.disclosure),
                         const VitCard(
                           variant: VitCardVariant.inner,
-                          padding: AppSpacing.p2pFraudInnerPadding,
+                          padding: P2PSpacingTokens.p2pFraudInnerPadding,
                           child: VitHighRiskStatePanel(
                             state: VitHighRiskUiState.riskReview,
                             title: 'Rà soát phòng chống gian lận',

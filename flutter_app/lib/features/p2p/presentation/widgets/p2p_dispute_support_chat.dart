@@ -31,7 +31,7 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: AppSpacing.p2pDisputeChatHeaderPadding,
+                  padding: P2PSpacingTokens.p2pDisputeChatHeaderPadding,
                   child: Row(
                     children: [
                       const Icon(
@@ -64,7 +64,7 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: AppSpacing.p2pDisputeChatBodyPadding,
+            padding: P2PSpacingTokens.p2pDisputeChatBodyPadding,
             child: Column(
               children: [
                 for (final message in messages)
@@ -81,7 +81,7 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
                   height: AppSpacing.dividerHairline,
                 ),
                 Padding(
-                  padding: AppSpacing.p2pDisputeChatInputPadding,
+                  padding: P2PSpacingTokens.p2pDisputeChatInputPadding,
                   child: Row(
                     children: [
                       Expanded(
@@ -112,7 +112,7 @@ class P2PDisputeSupportChatCard extends StatelessWidget {
                         shape: const CircleBorder(),
                         child: SizedBox.square(
                           key: sendKey,
-                          dimension: AppSpacing.p2pDisputeSendButtonSize,
+                          dimension: P2PSpacingTokens.p2pDisputeSendButtonSize,
                           child: Center(
                             child: VitInlineIconAction(
                               icon: Icons.send_rounded,
@@ -149,10 +149,10 @@ class _SupportMessageBubble extends StatelessWidget {
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Padding(
-        padding: AppSpacing.p2pDisputeBubbleMargin,
+        padding: P2PSpacingTokens.p2pDisputeBubbleMargin,
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            maxWidth: AppSpacing.p2pDisputeBubbleMaxWidth,
+            maxWidth: P2PSpacingTokens.p2pDisputeBubbleMaxWidth,
           ),
           child: Material(
             color: isUser ? AppModuleAccents.p2p : AppColors.surface2,
@@ -160,7 +160,7 @@ class _SupportMessageBubble extends StatelessWidget {
               borderRadius: AppRadii.disputeMessageBubbleRadius(isUser: isUser),
             ),
             child: Padding(
-              padding: AppSpacing.p2pDisputeBubblePadding,
+              padding: P2PSpacingTokens.p2pDisputeBubblePadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -11,21 +11,21 @@ class _InfoBanner extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: _termsInfoMinExtent),
-      padding: AppSpacing.tradeBotCardPaddingLoose,
+      padding: TradeSpacingTokens.tradeBotCardPaddingLoose,
       density: VitDensity.compact,
       borderColor: _termsPrimary.withValues(alpha: .24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: AppSpacing.tradeBotIntroIconTopPadding,
+            padding: TradeSpacingTokens.tradeBotIntroIconTopPadding,
             child: Icon(
               Icons.description_outlined,
               color: _termsPrimary,
-              size: AppSpacing.tradeBotActionIcon,
+              size: TradeSpacingTokens.tradeBotActionIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +73,7 @@ class _TermsCard extends StatelessWidget {
         child: SingleChildScrollView(
           key: BotTermsOfServicePage.termsScrollKey,
           controller: controller,
-          padding: AppSpacing.tradeBotTermsScrollPadding,
+          padding: TradeSpacingTokens.tradeBotTermsScrollPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -153,7 +153,7 @@ class _TermsSection extends StatelessWidget {
           const SizedBox(height: _termsSpace),
           for (final bullet in section.bullets)
             Padding(
-              padding: AppSpacing.tradeBotTermsBulletPadding,
+              padding: TradeSpacingTokens.tradeBotTermsBulletPadding,
               child: Text(
                 '- $bullet',
                 style: AppTextStyles.body.copyWith(
@@ -177,20 +177,20 @@ class _CriticalWarning extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       variant: VitCardVariant.ghost,
-      padding: AppSpacing.tradeBotTermsWarningPadding,
+      padding: TradeSpacingTokens.tradeBotTermsWarningPadding,
       borderColor: _termsRed.withValues(alpha: .35),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: AppSpacing.tradeBotIntroIconTopPadding,
+            padding: TradeSpacingTokens.tradeBotIntroIconTopPadding,
             child: Icon(
               Icons.warning_amber_rounded,
               color: _termsRed,
-              size: AppSpacing.tradeBotMediumIcon,
+              size: TradeSpacingTokens.tradeBotMediumIcon,
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotDisclosureGap),
           Expanded(
             child: RichText(
               text: TextSpan(
@@ -228,7 +228,7 @@ class _ScrollWarning extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       constraints: const BoxConstraints(minHeight: _termsWarningMinExtent),
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       density: VitDensity.compact,
       borderColor: _termsAmber.withValues(alpha: .32),
       child: Row(
@@ -236,9 +236,9 @@ class _ScrollWarning extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _termsAmber,
-            size: AppSpacing.tradeBotCheckboxIcon,
+            size: TradeSpacingTokens.tradeBotCheckboxIcon,
           ),
-          const SizedBox(width: AppSpacing.tradeBotDisclosureGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotDisclosureGap),
           Expanded(
             child: Text(
               snapshot.scrollWarning,
@@ -276,23 +276,23 @@ class _AgreementCard extends StatelessWidget {
         key: BotTermsOfServicePage.agreementKey,
         onTap: enabled ? onTap : null,
         constraints: const BoxConstraints(minHeight: _termsAgreementMinExtent),
-        padding: AppSpacing.tradeBotAgreementPadding,
+        padding: TradeSpacingTokens.tradeBotAgreementPadding,
         density: VitDensity.compact,
         variant: enabled ? VitCardVariant.inner : VitCardVariant.standard,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: AppSpacing.tradeBotAgreementIconMargin,
+              padding: TradeSpacingTokens.tradeBotAgreementIconMargin,
               child: Icon(
                 agreed
                     ? Icons.check_circle_outline_rounded
                     : Icons.radio_button_unchecked_rounded,
                 color: agreed ? AppColors.primary : AppColors.borderSolid,
-                size: AppSpacing.tradeBotCheckbox,
+                size: TradeSpacingTokens.tradeBotCheckbox,
               ),
             ),
-            const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+            const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

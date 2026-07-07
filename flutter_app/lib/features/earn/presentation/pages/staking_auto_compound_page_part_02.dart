@@ -18,7 +18,7 @@ class _FrequencyTile extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: selected ? AppColors.buy : AppColors.borderSolid,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +61,7 @@ class _GasOptimizationTile extends StatelessWidget {
       key: StakingAutoCompoundPage.gasOptimizationKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       onTap: onTap,
       child: Row(
         children: [
@@ -101,7 +101,7 @@ class _PositionCard extends StatelessWidget {
     return VitCard(
       key: StakingAutoCompoundPage.positionKey(position.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -135,7 +135,7 @@ class _PositionCard extends StatelessWidget {
               color: AppColors.buy10,
               borderRadius: AppRadii.inputRadius,
               child: Padding(
-                padding: AppSpacing.earnCardPaddingX3X4,
+                padding: EarnSpacingTokens.earnCardPaddingX3X4,
                 child: Row(
                   children: [
                     const Icon(
@@ -184,7 +184,7 @@ class _SimulationCard extends StatelessWidget {
     return VitCard(
       key: StakingAutoCompoundPage.simulationKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -220,7 +220,7 @@ class _SimulationCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
           SizedBox(
-            height: AppSpacing.stakingAutoCompoundChartHeight,
+            height: EarnSpacingTokens.stakingAutoCompoundChartHeight,
             child: Stack(
               children: [
                 Positioned.fill(
@@ -293,7 +293,7 @@ class _SimulationCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
-            padding: AppSpacing.earnPaddingX4,
+            padding: EarnSpacingTokens.earnPaddingX4,
             child: Column(
               children: [
                 Text(
@@ -356,7 +356,7 @@ class _MiniInput extends StatelessWidget {
             side: BorderSide(color: AppColors.borderSolid),
           ),
           child: Padding(
-            padding: AppSpacing.earnHorizontalPaddingX3,
+            padding: EarnSpacingTokens.earnHorizontalPaddingX3,
             child: TextField(
               key: fieldKey,
               controller: controller,
@@ -373,7 +373,7 @@ class _MiniInput extends StatelessWidget {
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 isDense: true,
-                contentPadding: AppSpacing.earnVerticalPaddingX3,
+                contentPadding: EarnSpacingTokens.earnVerticalPaddingX3,
               ),
             ),
           ),
@@ -416,7 +416,7 @@ class _ResultCard extends StatelessWidget {
       color: tone,
       borderRadius: AppRadii.cardRadius,
       child: Padding(
-        padding: AppSpacing.earnPaddingX4,
+        padding: EarnSpacingTokens.earnPaddingX4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -424,7 +424,8 @@ class _ResultCard extends StatelessWidget {
               children: [
                 SizedBox(
                   width: AppSpacing.x4,
-                  height: AppSpacing.stakingAutoCompoundResultMarkerHeight,
+                  height:
+                      EarnSpacingTokens.stakingAutoCompoundResultMarkerHeight,
                   child: Material(
                     color: color,
                     borderRadius: AppRadii.xsRadius,
@@ -469,7 +470,7 @@ class _FooterNote extends StatelessWidget {
       key: StakingAutoCompoundPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX5,
+      padding: EarnSpacingTokens.earnPaddingX5,
       child: Text(
         snapshot.footerNote,
         textAlign: TextAlign.center,

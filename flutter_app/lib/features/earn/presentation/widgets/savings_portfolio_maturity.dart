@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class MaturitySummary extends StatelessWidget {
   const MaturitySummary({super.key, required this.events});
@@ -244,11 +245,11 @@ class DonutPainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.butt
-      ..strokeWidth = AppSpacing.savingsPortfolioDonutStrokeWidth;
+      ..strokeWidth = EarnSpacingTokens.savingsPortfolioDonutStrokeWidth;
     final rect = Rect.fromCenter(
       center: Offset(size.width / 2, size.height / 2),
-      width: AppSpacing.savingsPortfolioDonutDiameter,
-      height: AppSpacing.savingsPortfolioDonutDiameter,
+      width: EarnSpacingTokens.savingsPortfolioDonutDiameter,
+      height: EarnSpacingTokens.savingsPortfolioDonutDiameter,
     );
     var start = -math.pi / 2;
     for (final segment in segments) {

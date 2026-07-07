@@ -25,7 +25,7 @@ class _ProsConsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -84,7 +84,7 @@ class _ProsConsList extends StatelessWidget {
               Icon(
                 icon,
                 color: warning ? AppColors.warn : AppColors.buy,
-                size: AppSpacing.dcaPerformanceCompareSmallIcon,
+                size: DcaSpacingTokens.dcaPerformanceCompareSmallIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -95,7 +95,8 @@ class _ProsConsList extends StatelessWidget {
               ),
             ],
           ),
-          if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (item != items.last)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
         ],
       ],
     );
@@ -118,14 +119,14 @@ class _InfoCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             icon,
             color: AppColors.primary,
-            size: AppSpacing.dcaPerformanceCompareInlineIcon,
+            size: DcaSpacingTokens.dcaPerformanceCompareInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -163,14 +164,14 @@ class _WarningCard extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.warn,
-            size: AppSpacing.dcaPerformanceCompareInlineIcon,
+            size: DcaSpacingTokens.dcaPerformanceCompareInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(

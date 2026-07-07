@@ -35,7 +35,7 @@ class _ResultsTab extends StatelessWidget {
         ),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           borderColor: impactColor.withValues(alpha: .35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,13 +156,13 @@ class _EmptyResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX5,
+      padding: EarnSpacingTokens.earnPaddingX5,
       child: Column(
         children: [
           const Icon(
             Icons.analytics_outlined,
             color: AppColors.text3,
-            size: AppSpacing.savingsWhatIfEmptyIcon,
+            size: EarnSpacingTokens.savingsWhatIfEmptyIcon,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
@@ -196,7 +196,7 @@ class _ComparisonChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -206,7 +206,7 @@ class _ComparisonChart extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.savingsWhatIfComparisonChartHeight,
+            height: EarnSpacingTokens.savingsWhatIfComparisonChartHeight,
             width: double.infinity,
             child: CustomPaint(
               painter: _LineChartPainter(points: result.monthlyData),

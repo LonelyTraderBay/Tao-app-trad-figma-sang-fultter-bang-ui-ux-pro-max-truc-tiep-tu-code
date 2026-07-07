@@ -149,7 +149,7 @@ class _SectionShell extends StatelessWidget {
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
                 borderColor: AppColors.transparent,
-                padding: AppSpacing.discoveryInlineActionPadding,
+                padding: LaunchpadSpacingTokens.discoveryInlineActionPadding,
                 child: Padding(
                   padding: EdgeInsets.zero,
                   child: _InlineCta(label: actionLabel!, color: color),

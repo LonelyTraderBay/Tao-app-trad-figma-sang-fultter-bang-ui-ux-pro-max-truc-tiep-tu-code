@@ -71,7 +71,7 @@ class _StrategyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: color.withValues(alpha: 0.28),
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -111,7 +111,7 @@ class _WinnerBanner extends StatelessWidget {
     final color = dcaWins ? AppColors.buy : AppColors.primary;
     return VitCard(
       borderColor: color.withValues(alpha: 0.28),
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

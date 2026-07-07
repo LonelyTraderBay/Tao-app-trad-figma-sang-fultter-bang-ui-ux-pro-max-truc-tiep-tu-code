@@ -23,13 +23,13 @@ class _ReasonCard extends StatelessWidget {
       background: ColoredBox(
         color: selected ? tone.withValues(alpha: 0.10) : AppColors.surface2,
       ),
-      padding: AppSpacing.p2pRiskControlsReasonPadding,
+      padding: P2PSpacingTokens.p2pRiskControlsReasonPadding,
       onTap: onTap,
       clip: true,
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.p2pRiskControlsReasonIconBox,
+            dimension: P2PSpacingTokens.p2pRiskControlsReasonIconBox,
             child: Material(
               color: tone.withValues(alpha: 0.12),
               shape: const RoundedRectangleBorder(
@@ -38,7 +38,7 @@ class _ReasonCard extends StatelessWidget {
               child: Icon(
                 _reasonIcon(reason.iconKey),
                 color: tone,
-                size: AppSpacing.p2pRiskControlsReasonIcon,
+                size: P2PSpacingTokens.p2pRiskControlsReasonIcon,
               ),
             ),
           ),
@@ -141,14 +141,14 @@ class _NoticeCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.border,
-      padding: AppSpacing.p2pRiskControlsInnerPadding,
+      padding: P2PSpacingTokens.p2pRiskControlsInnerPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppModuleAccents.p2p,
-            size: AppSpacing.p2pRiskControlsNoticeIcon,
+            size: P2PSpacingTokens.p2pRiskControlsNoticeIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -156,7 +156,7 @@ class _NoticeCard extends StatelessWidget {
               text,
               style: AppTextStyles.micro.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.p2pRiskControlsNoticeLineHeight,
+                height: P2PSpacingTokens.p2pRiskControlsNoticeLineHeight,
               ),
             ),
           ),

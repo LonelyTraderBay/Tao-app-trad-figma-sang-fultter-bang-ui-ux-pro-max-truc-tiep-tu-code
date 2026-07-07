@@ -18,13 +18,17 @@ class _StatusNotice extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.walletPendingNoticeMinHeight,
+        minHeight: WalletSpacingTokens.walletPendingNoticeMinHeight,
       ),
-      padding: AppSpacing.walletPendingNoticePadding,
+      padding: WalletSpacingTokens.walletPendingNoticePadding,
       borderColor: color.withValues(alpha: .22),
       child: Row(
         children: [
-          Icon(icon, color: color, size: AppSpacing.walletPendingNoticeIcon),
+          Icon(
+            icon,
+            color: color,
+            size: WalletSpacingTokens.walletPendingNoticeIcon,
+          ),
           const SizedBox(width: _pendingInlineGap),
           Expanded(
             child: Text(
@@ -147,7 +151,7 @@ class _InfoNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.walletPendingInfoPadding,
+      padding: WalletSpacingTokens.walletPendingInfoPadding,
       borderColor: AppColors.primary.withValues(alpha: .15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +159,7 @@ class _InfoNotice extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: AppColors.primary,
-            size: AppSpacing.walletPendingNoticeIcon,
+            size: WalletSpacingTokens.walletPendingNoticeIcon,
           ),
           const SizedBox(width: _pendingInlineGap),
           Expanded(

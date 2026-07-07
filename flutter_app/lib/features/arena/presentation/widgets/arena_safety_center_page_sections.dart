@@ -90,7 +90,8 @@ class _SafetySection extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         for (final child in children) ...[
           child,
-          if (child != children.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (child != children.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );
@@ -173,7 +174,8 @@ class _BannedContentCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -313,7 +315,8 @@ class _InfoCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           for (final item in info.items) ...[
             _SafetyCheckRow(item: item),
-            if (item != info.items.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (item != info.items.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

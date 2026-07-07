@@ -9,7 +9,7 @@ class _EmptyWatchlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.watchlistEmptyPadding,
+      padding: MarketsSpacingTokens.watchlistEmptyPadding,
       child: VitEmptyState(
         icon: Icons.star_border_rounded,
         title: searchActive

@@ -28,19 +28,19 @@ class _NoticePanel extends StatelessWidget {
       right: AppSpacing.contentPad,
       top:
           MediaQuery.paddingOf(context).top +
-          AppSpacing.executionVenueNoticeTopOffset,
+          TradeSpacingTokens.executionVenueNoticeTopOffset,
       child: Material(
         color: AppColors.transparent,
         child: VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.executionVenueNoticePadding,
+          padding: TradeSpacingTokens.executionVenueNoticePadding,
           borderColor: _venueBorder,
           child: Row(
             children: [
               const Icon(
                 Icons.check_circle_outline,
                 color: _venueGreen,
-                size: AppSpacing.executionVenueNoticeIcon,
+                size: TradeSpacingTokens.executionVenueNoticeIcon,
               ),
               const SizedBox(width: AppSpacing.pageRhythmStandardInnerGap),
               Expanded(
@@ -54,7 +54,7 @@ class _NoticePanel extends StatelessWidget {
                 tooltip: 'Dismiss notice',
                 onPressed: onClose,
                 color: AppColors.text3,
-                size: AppSpacing.executionVenueNoticeIcon,
+                size: TradeSpacingTokens.executionVenueNoticeIcon,
                 padding: AppSpacing.x1,
               ),
             ],

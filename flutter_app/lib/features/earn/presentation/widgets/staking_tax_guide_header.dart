@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_tax_guide_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingTaxDisclaimerBanner extends StatelessWidget {
   const StakingTaxDisclaimerBanner({super.key, required this.snapshot});
@@ -18,7 +19,7 @@ class StakingTaxDisclaimerBanner extends StatelessWidget {
     return ConstrainedBox(
       key: StakingTaxGuideKeys.disclaimer,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.stakingTaxDisclaimerMinHeight,
+        minHeight: EarnSpacingTokens.stakingTaxDisclaimerMinHeight,
       ),
       child: DecoratedBox(
         decoration: const ShapeDecoration(
@@ -26,20 +27,20 @@ class StakingTaxDisclaimerBanner extends StatelessWidget {
           shape: RoundedRectangleBorder(
             side: BorderSide(
               color: AppColors.sell20,
-              width: AppSpacing.stakingTaxBorderWidth,
+              width: EarnSpacingTokens.stakingTaxBorderWidth,
             ),
             borderRadius: AppRadii.cardLargeRadius,
           ),
         ),
         child: Padding(
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Icon(
                 Icons.warning_amber_rounded,
                 color: AppColors.sell,
-                size: AppSpacing.stakingTaxDisclaimerIcon,
+                size: EarnSpacingTokens.stakingTaxDisclaimerIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -53,12 +54,14 @@ class StakingTaxDisclaimerBanner extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       snapshot.disclaimerBody,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.stakingTaxFooterLineHeight,
+                        height: EarnSpacingTokens.stakingTaxFooterLineHeight,
                       ),
                     ),
                   ],
@@ -90,10 +93,7 @@ class StakingTaxTabs extends StatelessWidget {
       variant: VitTabBarVariant.underline,
       activeKey: active,
       onChanged: onChanged,
-      tabs: [
-        for (final tab in tabs)
-          VitTabItem(key: tab.id, label: tab.label),
-      ],
+      tabs: [for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label)],
     );
   }
 }

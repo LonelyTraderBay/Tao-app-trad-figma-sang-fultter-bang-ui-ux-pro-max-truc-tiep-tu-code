@@ -10,7 +10,7 @@ class _VestingTimelineCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -63,7 +63,7 @@ class _ClaimHistoryCard extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.launchpadPaddingX4,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX4,
           child: Row(
             children: [
               Expanded(
@@ -114,7 +114,7 @@ class _VestingMiniRow extends StatelessWidget {
       key: LaunchpadClaimReceiptPage.vestingKey(entry.id),
       children: [
         Padding(
-          padding: AppSpacing.launchpadVerticalPaddingX3,
+          padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX3,
           child: Row(
             children: [
               Icon(
@@ -186,11 +186,11 @@ class _VestingTimelineRow extends StatelessWidget {
         entry.status == LaunchpadVestingEntryStatus.unlocking;
     return Padding(
       key: LaunchpadClaimReceiptPage.vestingKey(entry.id),
-      padding: AppSpacing.launchpadBottomPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadBottomPaddingX3,
       child: VitCard(
         variant: claimable ? VitCardVariant.inner : VitCardVariant.standard,
         radius: VitCardRadius.standard,
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
         child: Row(
           children: [
             Icon(
@@ -223,7 +223,7 @@ class _VestingTimelineRow extends StatelessWidget {
                 variant: VitCtaButtonVariant.success,
                 fullWidth: false,
                 height: AppSpacing.buttonCompact,
-                padding: AppSpacing.launchpadHorizontalPaddingX3,
+                padding: LaunchpadSpacingTokens.launchpadHorizontalPaddingX3,
                 child: const Text('Nhận'),
               )
             else

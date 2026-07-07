@@ -29,11 +29,11 @@ class _MoverTabs extends StatelessWidget {
                 active: tab == activeTab,
                 color: _marketPrimary,
                 height: _marketMoverFilterMinHeight,
-                padding: AppSpacing.marketFilterChipPadding,
+                padding: MarketsSpacingTokens.marketFilterChipPadding,
                 onTap: () => onSelected(tab),
               ),
               if (tab != tabs.last)
-                const SizedBox(width: AppSpacing.marketFilterGap),
+                const SizedBox(width: MarketsSpacingTokens.marketFilterGap),
             ],
           ],
         ),
@@ -71,7 +71,7 @@ class _TimeframeSelector extends StatelessWidget {
           'Khung thời gian:',
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(width: AppSpacing.marketTimeframeLabelGap),
+        const SizedBox(width: MarketsSpacingTokens.marketTimeframeLabelGap),
         Expanded(
           child: SizedBox(
             height: VitDensity.compact.controlHeight,
@@ -80,7 +80,7 @@ class _TimeframeSelector extends StatelessWidget {
               clipBehavior: Clip.none,
               itemCount: timeframes.length,
               separatorBuilder: (_, _) =>
-                  const SizedBox(width: AppSpacing.marketFilterGap),
+                  const SizedBox(width: MarketsSpacingTokens.marketFilterGap),
               itemBuilder: (context, index) {
                 final timeframe = timeframes[index];
                 return VitFilterChip(
@@ -91,7 +91,7 @@ class _TimeframeSelector extends StatelessWidget {
                   active: timeframe == activeTimeframe,
                   color: _marketPrimary,
                   height: _marketMoverFilterMinHeight,
-                  padding: AppSpacing.marketFilterChipPadding,
+                  padding: MarketsSpacingTokens.marketFilterChipPadding,
                   onTap: () => onSelected(timeframe),
                 );
               },
@@ -129,7 +129,7 @@ class _CategoryDropdown extends StatelessWidget {
         child: SizedBox(
           height: VitDensity.compact.controlHeight,
           child: Padding(
-            padding: AppSpacing.marketCategoryDropdownPadding,
+            padding: MarketsSpacingTokens.marketCategoryDropdownPadding,
             child: Row(
               children: [
                 Expanded(
@@ -173,8 +173,8 @@ class _CategoryPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.marketFilterGap,
-      runSpacing: AppSpacing.marketFilterGap,
+      spacing: MarketsSpacingTokens.marketFilterGap,
+      runSpacing: MarketsSpacingTokens.marketFilterGap,
       children: [
         for (final category in categories)
           VitFilterChip(
@@ -183,7 +183,7 @@ class _CategoryPicker extends StatelessWidget {
             active: category == activeCategory,
             color: _marketPrimary,
             height: _marketMoverFilterMinHeight,
-            padding: AppSpacing.marketFilterChipPadding,
+            padding: MarketsSpacingTokens.marketFilterChipPadding,
             onTap: () => onSelected(category),
           ),
       ],
@@ -205,8 +205,8 @@ class _SortSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.marketFilterGap,
-      runSpacing: AppSpacing.marketFilterGap,
+      spacing: MarketsSpacingTokens.marketFilterGap,
+      runSpacing: MarketsSpacingTokens.marketFilterGap,
       children: [
         for (final option in options)
           VitFilterChip(
@@ -215,7 +215,7 @@ class _SortSelector extends StatelessWidget {
             active: option.id == activeSort,
             color: _marketPrimary,
             height: _marketMoverFilterMinHeight,
-            padding: AppSpacing.marketFilterChipPadding,
+            padding: MarketsSpacingTokens.marketFilterChipPadding,
             onTap: () => onSelected(option.id),
           ),
       ],
@@ -253,7 +253,7 @@ class _ResultSummary extends StatelessWidget {
             fontWeight: AppTextStyles.medium,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketFilterGap),
+        const SizedBox(width: MarketsSpacingTokens.marketFilterGap),
         const VitAccentPill(label: 'LIVE', accentColor: AppColors.buy),
         const Expanded(child: SizedBox.shrink()),
         Flexible(
@@ -269,4 +269,3 @@ class _ResultSummary extends StatelessWidget {
     );
   }
 }
-

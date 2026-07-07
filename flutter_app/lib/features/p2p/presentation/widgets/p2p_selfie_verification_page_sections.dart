@@ -55,7 +55,7 @@ class _SelfieHero extends StatelessWidget {
       key: P2PSelfieVerificationPage.heroKey,
       radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pSelfieCardPadding,
+      padding: P2PSpacingTokens.p2pSelfieCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -115,7 +115,7 @@ class _SampleCard extends StatelessWidget {
       borderColor: AppColors.primary20,
       padding: AppSpacing.zeroInsets,
       child: AspectRatio(
-        aspectRatio: AppSpacing.p2pSelfieSampleAspectRatio,
+        aspectRatio: P2PSpacingTokens.p2pSelfieSampleAspectRatio,
         child: Material(
           color: AppColors.primary12,
           shape: const RoundedRectangleBorder(
@@ -159,7 +159,7 @@ class _GuidelinesCard extends StatelessWidget {
     return VitCard(
       key: P2PSelfieVerificationPage.guidelinesKey,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pSelfieCardPadding,
+      padding: P2PSpacingTokens.p2pSelfieCardPadding,
       child: Column(
         children: [
           for (final guide in snapshot.guidelines) ...[
@@ -183,7 +183,7 @@ class _TipsCard extends StatelessWidget {
     return VitCard(
       key: P2PSelfieVerificationPage.tipsKey,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pSelfieCardPadding,
+      padding: P2PSpacingTokens.p2pSelfieCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -216,10 +216,10 @@ class _CaptureStep extends StatelessWidget {
       radius: VitCardRadius.large,
       variant: VitCardVariant.ghost,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pSelfieLargeCardPadding,
+      padding: P2PSpacingTokens.p2pSelfieLargeCardPadding,
       onTap: onCapture,
       child: AspectRatio(
-        aspectRatio: AppSpacing.p2pSelfieCaptureAspectRatio,
+        aspectRatio: P2PSpacingTokens.p2pSelfieCaptureAspectRatio,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -284,7 +284,7 @@ class _LivenessStep extends StatelessWidget {
         const SizedBox(height: _p2pSelfieMajorGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.p2pSelfieLargeCardPadding,
+          padding: P2PSpacingTokens.p2pSelfieLargeCardPadding,
           child: Column(
             children: [
               Icon(
@@ -309,12 +309,12 @@ class _LivenessStep extends StatelessWidget {
         ),
         const SizedBox(height: _p2pSelfieMajorGap),
         GridView.count(
-          crossAxisCount: AppSpacing.p2pSelfieLivenessGridColumns,
+          crossAxisCount: P2PSpacingTokens.p2pSelfieLivenessGridColumns,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisSpacing: _p2pSelfieSectionGap,
           mainAxisSpacing: _p2pSelfieSectionGap,
-          childAspectRatio: AppSpacing.p2pSelfieLivenessGridAspectRatio,
+          childAspectRatio: P2PSpacingTokens.p2pSelfieLivenessGridAspectRatio,
           children: [
             for (final action in snapshot.livenessActions)
               _LivenessActionTile(

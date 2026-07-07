@@ -13,10 +13,10 @@ class _CategoryBreakdown extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: AppSpacing.tradeBotGridColumns,
+      crossAxisCount: TradeSpacingTokens.tradeBotGridColumns,
       crossAxisSpacing: AppSpacing.x3,
       mainAxisSpacing: AppSpacing.x3,
-      childAspectRatio: AppSpacing.tradeBotGridAspectRatio,
+      childAspectRatio: TradeSpacingTokens.tradeBotGridAspectRatio,
       children: [
         for (final category in categories)
           _CategoryScoreCard(
@@ -164,7 +164,8 @@ class _RegulatoryCard extends StatelessWidget {
       density: VitDensity.compact,
       padding: AppSpacing.cardPaddingCompact,
       variant: VitCardVariant.inner,
-      child: VitPageContent(rhythm: VitPageRhythm.standard, 
+      child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         density: VitDensity.compact,
         children: [

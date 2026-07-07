@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/pages/savings_backt
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class BacktestTabs extends StatelessWidget {
   const BacktestTabs({
@@ -59,8 +60,8 @@ class SectionTitle extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
           ),
           child: const SizedBox(
-            width: AppSpacing.savingsBacktestSectionMarkerWidth,
-            height: AppSpacing.savingsBacktestSectionMarkerHeight,
+            width: EarnSpacingTokens.savingsBacktestSectionMarkerWidth,
+            height: EarnSpacingTokens.savingsBacktestSectionMarkerHeight,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),
@@ -235,7 +236,7 @@ class _PresetCard extends StatelessWidget {
       radius: VitCardRadius.large,
       borderColor: selected ? color : AppColors.cardBorder,
       onTap: onTap,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Row(
         children: [
           RoundIcon(icon: iconFor(preset.iconKey), color: color),

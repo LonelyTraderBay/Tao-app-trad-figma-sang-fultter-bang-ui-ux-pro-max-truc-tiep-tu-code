@@ -14,7 +14,7 @@ class _SheetMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX2,
+      padding: EarnSpacingTokens.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -163,7 +163,8 @@ class _ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.xlRadius,
-      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+      child: SizedBox(
+        height: AppSpacing.pageRhythmCompactInnerGap,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -246,13 +247,13 @@ class _TinyPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.savingsGoalSheetTitleLineHeight,
+            height: EarnSpacingTokens.savingsGoalSheetTitleLineHeight,
           ),
         ),
       ),

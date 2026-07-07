@@ -21,6 +21,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsGuidePage extends ConsumerStatefulWidget {
   const SavingsGuidePage({super.key, this.shellRenderMode});
@@ -81,7 +82,9 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.defaultPadding,
@@ -142,7 +145,7 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                   top: false,
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.earnSheetContentPadding,
+                    padding: EarnSpacingTokens.earnSheetContentPadding,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -165,17 +168,25 @@ class _SavingsGuidePageState extends ConsumerState<SavingsGuidePage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         SavingsGuideProgressHeader(
                           stepIndex: stepIndex,
                           total: tutorial.steps.length,
                           progress: progress,
                         ),
-                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmFormSectionGap,
+                        ),
                         SavingsGuideStepDetail(step: step),
-                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmFormSectionGap,
+                        ),
                         SavingsGuideTipPanel(tips: step.tips),
-                        const SizedBox(height: AppSpacing.pageRhythmFormSectionGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmFormSectionGap,
+                        ),
                         Row(
                           children: [
                             Expanded(

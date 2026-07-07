@@ -12,7 +12,7 @@ class _RewardChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: ReferralRewardsPage.chartKey,
-      padding: AppSpacing.referralChartPadding,
+      padding: ReferralSpacingTokens.referralChartPadding,
       child: SizedBox(
         height: _rewardChartExtent,
         child: CustomPaint(
@@ -87,7 +87,7 @@ class _SortRail extends StatelessWidget {
           const Icon(
             Icons.swap_vert_rounded,
             color: AppColors.text3,
-            size: AppSpacing.referralSortIcon,
+            size: ReferralSpacingTokens.referralSortIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Text(
@@ -129,7 +129,7 @@ class _SortChip extends StatelessWidget {
       onTap: onTap,
       accentColor: AppColors.primary,
       height: AppSpacing.buttonCompact - AppSpacing.x1,
-      padding: AppSpacing.referralSortChipPadding,
+      padding: ReferralSpacingTokens.referralSortChipPadding,
     );
   }
 }
@@ -148,7 +148,7 @@ class _RewardLedger extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.referralLedgerHeaderPadding,
+            padding: ReferralSpacingTokens.referralLedgerHeaderPadding,
             child: Row(
               children: [
                 Expanded(
@@ -181,7 +181,7 @@ class _RewardLedger extends StatelessWidget {
           ),
           if (snapshot.records.isEmpty)
             const Padding(
-              padding: AppSpacing.referralEmptyPadding,
+              padding: ReferralSpacingTokens.referralEmptyPadding,
               child: VitEmptyState(
                 key: ReferralRewardsPage.emptyKey,
                 title: 'Chưa có giao dịch',
@@ -226,7 +226,7 @@ class _RewardRecordRow extends StatelessWidget {
       opacity: pending ? 0.74 : 1,
       child: Padding(
         key: ReferralRewardsPage.recordKey(record.id),
-        padding: AppSpacing.referralLedgerHeaderPadding,
+        padding: ReferralSpacingTokens.referralLedgerHeaderPadding,
         child: Row(
           children: [
             _RecordIcon(type: record.type),

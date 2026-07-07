@@ -10,7 +10,7 @@ class _OverallStatusCard extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.statusCardKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pKycCompactCardPadding,
+      padding: P2PSpacingTokens.p2pKycCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -93,7 +93,7 @@ class _OverallStatusCard extends StatelessWidget {
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
             borderColor: AppColors.primary20,
-            padding: AppSpacing.p2pKycNoticePadding,
+            padding: P2PSpacingTokens.p2pKycNoticePadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -110,7 +110,7 @@ class _OverallStatusCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.p2pKycReadableLineHeight,
+                      height: P2PSpacingTokens.p2pKycReadableLineHeight,
                     ),
                   ),
                 ),
@@ -134,7 +134,8 @@ class _ProgressTrack extends StatelessWidget {
       borderRadius: AppRadii.xsRadius,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+          return SizedBox(
+            height: AppSpacing.pageRhythmCompactInnerGap,
             child: ColoredBox(
               color: AppColors.surface3,
               child: Align(
@@ -170,7 +171,7 @@ class _StatusTimeline extends StatelessWidget {
     return VitCard(
       key: P2PKycStatusPage.timelineKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pKycNoticePadding,
+      padding: P2PSpacingTokens.p2pKycNoticePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -209,7 +210,7 @@ class _StepTimelineRow extends StatelessWidget {
                       borderRadius: AppRadii.lgRadius,
                       side: BorderSide(
                         color: color,
-                        width: AppSpacing.p2pKycTimelineNodeBorder,
+                        width: P2PSpacingTokens.p2pKycTimelineNodeBorder,
                       ),
                     ),
                     child: Icon(
@@ -222,7 +223,7 @@ class _StepTimelineRow extends StatelessWidget {
                 if (!isLast)
                   Expanded(
                     child: SizedBox(
-                      width: AppSpacing.p2pKycTimelineLineWidth,
+                      width: P2PSpacingTokens.p2pKycTimelineLineWidth,
                       child: ColoredBox(
                         color: step.status == P2PKycStepStatus.completed
                             ? AppColors.buy
@@ -238,7 +239,7 @@ class _StepTimelineRow extends StatelessWidget {
             child: Padding(
               padding: isLast
                   ? AppSpacing.zeroInsets
-                  : AppSpacing.p2pKycStatusTimelineRowPadding,
+                  : P2PSpacingTokens.p2pKycStatusTimelineRowPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -337,7 +338,7 @@ class _StepMeta extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: color, size: AppSpacing.p2pKycTimelineMetaIcon),
+        Icon(icon, color: color, size: P2PSpacingTokens.p2pKycTimelineMetaIcon),
         const SizedBox(width: AppSpacing.x1),
         Expanded(
           child: Text(
@@ -368,7 +369,7 @@ class _StepActionButton extends StatelessWidget {
       },
       fullWidth: false,
       height: AppSpacing.buttonCompact,
-      padding: AppSpacing.p2pKycInlineActionPadding,
+      padding: P2PSpacingTokens.p2pKycInlineActionPadding,
       trailing: const Icon(Icons.chevron_right_rounded),
       child: Text(step.actionLabel!),
     );

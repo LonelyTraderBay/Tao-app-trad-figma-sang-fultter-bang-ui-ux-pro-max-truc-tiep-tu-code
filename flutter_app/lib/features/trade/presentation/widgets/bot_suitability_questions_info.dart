@@ -20,7 +20,8 @@ class _QuestionView extends StatelessWidget {
     final progress = answers.length / totalQuestions;
     final selected = answers[question.id];
 
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [

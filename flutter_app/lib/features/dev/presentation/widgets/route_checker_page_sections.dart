@@ -8,7 +8,7 @@ class _IntroBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -53,7 +53,7 @@ class _ProgressCard extends StatelessWidget {
     final progress = totalCount == 0 ? 0.0 : testedCount / totalCount;
 
     return VitCard(
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -159,7 +159,7 @@ class _PhaseChip extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       accentColor: AppColors.primary,
-      padding: AppSpacing.devWideChipPadding,
+      padding: AdminSpacingTokens.devWideChipPadding,
     );
   }
 }
@@ -207,7 +207,7 @@ class _RouteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: RouteChecker.routeKey(route.path),
-      padding: AppSpacing.devCardPadding,
+      padding: AdminSpacingTokens.devCardPadding,
       radius: VitCardRadius.large,
       borderColor: tested ? AppColors.buy20 : AppColors.borderSolid,
       onTap: onTap,
@@ -284,7 +284,7 @@ class _FeaturedBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.devInlinePillPadding,
+        padding: AdminSpacingTokens.devInlinePillPadding,
         child: Text(
           'FEATURED',
           style: AppTextStyles.chartLabelTiny.copyWith(
@@ -310,7 +310,7 @@ class _PhaseBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
       ),
       child: Padding(
-        padding: AppSpacing.devChipPadding,
+        padding: AdminSpacingTokens.devChipPadding,
         child: Text(
           'Phase $phase',
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),

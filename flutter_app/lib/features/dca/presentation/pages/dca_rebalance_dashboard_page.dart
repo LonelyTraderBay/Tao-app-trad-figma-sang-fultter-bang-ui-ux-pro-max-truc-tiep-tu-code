@@ -115,10 +115,7 @@ class DCARebalanceDashboard extends ConsumerWidget {
 }
 
 class _MissingConfigPanel extends StatelessWidget {
-  const _MissingConfigPanel({
-    required this.message,
-    required this.onConfigure,
-  });
+  const _MissingConfigPanel({required this.message, required this.onConfigure});
 
   final String message;
   final VoidCallback onConfigure;
@@ -160,7 +157,9 @@ class _MissingConfigPanel extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       'Chưa có cấu hình cân bằng danh mục. Thiết lập tỷ lệ mục tiêu và ngưỡng drift trước khi xem lịch sử thực thi.',
                       style: AppTextStyles.caption.copyWith(

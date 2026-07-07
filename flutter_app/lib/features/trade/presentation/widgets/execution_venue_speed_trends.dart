@@ -29,10 +29,10 @@ class _SpeedTab extends StatelessWidget {
                     Icon(
                       Icons.bolt_rounded,
                       color: venue.avgFillTime < .4 ? _venueGreen : _venueAmber,
-                      size: AppSpacing.executionVenueBodyIcon,
+                      size: TradeSpacingTokens.executionVenueBodyIcon,
                     ),
                     const SizedBox(
-                      width: AppSpacing.executionVenueSortLabelGap,
+                      width: TradeSpacingTokens.executionVenueSortLabelGap,
                     ),
                     Text(
                       '${_formatSpeed(venue.avgFillTime)}s',
@@ -89,7 +89,7 @@ class _TrendsTab extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      width: AppSpacing.homeHeroActionHeight,
+                      width: HomeSpacingTokens.homeHeroActionHeight,
                       child: Text(
                         trend.month,
                         style: AppTextStyles.caption.copyWith(
@@ -113,7 +113,8 @@ class _TrendsTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (trend != trends.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                if (trend != trends.last)
+                  const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               ],
               const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitCard(
@@ -146,7 +147,8 @@ class _TrendBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.pillRadius,
-      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+      child: SizedBox(
+        height: AppSpacing.pageRhythmCompactInnerGap,
         child: Stack(
           children: [
             const ColoredBox(color: _venuePanel2),
@@ -198,7 +200,8 @@ class _ProgressMetric extends StatelessWidget {
         const SizedBox(height: AppSpacing.x1),
         ClipRRect(
           borderRadius: AppRadii.pillRadius,
-          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+          child: SizedBox(
+            height: AppSpacing.pageRhythmCompactInnerGap,
             child: Stack(
               children: [
                 const ColoredBox(color: _venuePanel2),

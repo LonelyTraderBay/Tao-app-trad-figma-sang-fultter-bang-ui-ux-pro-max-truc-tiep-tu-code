@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/dca/domain/entities/dca_entities.dart
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_charts.dart';
 import 'package:vit_trade_flutter/features/dca/presentation/widgets/dca_backtester_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
 
 class DcaBacktesterResults extends StatelessWidget {
   const DcaBacktesterResults({super.key, required this.snapshot});
@@ -67,7 +68,7 @@ class _ResultSummary extends StatelessWidget {
               SizedBox(
                 width: width,
                 child: VitCard(
-                  padding: AppSpacing.dcaPaddingX4,
+                  padding: DcaSpacingTokens.dcaPaddingX4,
                   borderColor: item.$3 == AppColors.buy
                       ? AppColors.buy20
                       : AppColors.cardBorder,
@@ -80,7 +81,9 @@ class _ResultSummary extends StatelessWidget {
                           color: AppColors.text3,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       Text(
                         item.$2,
                         style: AppTextStyles.sectionTitle.copyWith(
@@ -107,7 +110,7 @@ class _GrowthChartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -156,7 +159,7 @@ class _MetricsCard extends StatelessWidget {
     ];
 
     return VitCard(
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -190,7 +193,8 @@ class _MetricsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (metric != metrics.last) const SizedBox(height: AppSpacing.rowGap),
+            if (metric != metrics.last)
+              const SizedBox(height: AppSpacing.rowGap),
           ],
         ],
       ),
@@ -207,7 +211,7 @@ class _DcaAdvantageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.buy20,
-      padding: AppSpacing.dcaPaddingX4,
+      padding: DcaSpacingTokens.dcaPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -222,7 +226,7 @@ class _DcaAdvantageCard extends StatelessWidget {
               'DCA strategy outperformed lump sum by +${(result.returnPercent - 54.76).toStringAsFixed(2)}%',
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text2,
-                height: AppSpacing.dcaBacktesterBodyLineHeight,
+                height: DcaSpacingTokens.dcaBacktesterBodyLineHeight,
               ),
             ),
           ),

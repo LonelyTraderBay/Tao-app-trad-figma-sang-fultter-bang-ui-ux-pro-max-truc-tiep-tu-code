@@ -23,7 +23,7 @@ class _SideChoice extends StatelessWidget {
       background: ColoredBox(
         color: active ? color.withValues(alpha: .10) : AppColors.surface,
       ),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         children: [
           Icon(
@@ -114,7 +114,7 @@ class _ExpiryButton extends StatelessWidget {
       onTap: onTap,
       accentColor: AppColors.primary,
       fullWidth: true,
-      height: AppSpacing.launchpadBox40,
+      height: LaunchpadSpacingTokens.launchpadBox40,
     );
   }
 }

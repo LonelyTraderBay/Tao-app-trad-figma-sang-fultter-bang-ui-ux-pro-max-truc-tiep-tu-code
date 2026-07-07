@@ -18,13 +18,13 @@ class _CompactStateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaCreatorEmptyPadding,
+      padding: ArenaSpacingTokens.arenaCreatorEmptyPadding,
       child: Column(
         children: [
           Icon(
             icon,
             color: AppColors.text3,
-            size: AppSpacing.arenaCreatorEmptyIcon,
+            size: ArenaSpacingTokens.arenaCreatorEmptyIcon,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           Text(
@@ -68,14 +68,14 @@ class _PolicyLink extends StatelessWidget {
         onTap: onTap,
         variant: VitCardVariant.ghost,
         radius: VitCardRadius.standard,
-        padding: AppSpacing.arenaCreatorPolicyPadding,
+        padding: ArenaSpacingTokens.arenaCreatorPolicyPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(
               Icons.info_outline_rounded,
               color: AppColors.accent,
-              size: AppSpacing.arenaCreatorInlineIcon,
+              size: ArenaSpacingTokens.arenaCreatorInlineIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Text(
@@ -89,7 +89,7 @@ class _PolicyLink extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.accent,
-              size: AppSpacing.arenaCreatorInlineIcon,
+              size: ArenaSpacingTokens.arenaCreatorInlineIcon,
             ),
           ],
         ),

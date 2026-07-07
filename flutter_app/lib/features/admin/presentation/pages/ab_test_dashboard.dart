@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/admin_controller_providers.dart';
 import 'package:vit_trade_flutter/features/admin/presentation/widgets/admin_dashboard_state_content.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 part '../widgets/ab_test_dashboard_sections.dart';
 part '../widgets/ab_test_dashboard_common.dart';
@@ -65,7 +66,7 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
               child: SingleChildScrollView(
                 key: ABTestDashboard.contentKey,
                 physics: const ClampingScrollPhysics(),
-                padding: AppSpacing.adminScrollPadding(scrollBottom),
+                padding: AdminSpacingTokens.adminScrollPadding(scrollBottom),
                 child: VitPageContent(
                   rhythm: VitPageRhythm.standard,
                   children: [
@@ -84,8 +85,7 @@ class _ABTestDashboardState extends ConsumerState<ABTestDashboard> {
                           const AdminInlineEmptyState(
                             icon: Icons.science_outlined,
                             title: 'Chưa có A/B test nào',
-                            message:
-                                'Tạo test mới để bắt đầu thử nghiệm',
+                            message: 'Tạo test mới để bắt đầu thử nghiệm',
                           )
                         else
                           for (final test in snapshot.tests) ...[

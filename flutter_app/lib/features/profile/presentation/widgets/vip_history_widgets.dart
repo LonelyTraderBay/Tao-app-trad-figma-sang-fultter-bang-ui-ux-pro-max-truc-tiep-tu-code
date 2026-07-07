@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/profile/domain/entities/profile_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 class VipHistoryTab extends StatelessWidget {
   const VipHistoryTab({super.key, required this.snapshot});
@@ -34,7 +35,7 @@ class _VipHistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isVip = row.level != 'Standard';
     return VitCard(
-      padding: AppSpacing.profileVipHistoryCardPadding,
+      padding: ProfileSpacingTokens.profileVipHistoryCardPadding,
       child: Column(
         children: [
           Row(

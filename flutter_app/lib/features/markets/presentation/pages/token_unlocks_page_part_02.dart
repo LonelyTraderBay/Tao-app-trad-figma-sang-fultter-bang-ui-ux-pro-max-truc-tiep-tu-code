@@ -29,22 +29,23 @@ class _UnlockCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
-            padding: AppSpacing.tokenUnlocksCardHeaderPadding,
+            padding: MarketsSpacingTokens.tokenUnlocksCardHeaderPadding,
             onTap: onToggle,
             child: Row(
               children: [
                 _TokenAvatar(
                   unlock: unlock,
-                  size: AppSpacing.tokenUnlocksAvatarLg,
+                  size: MarketsSpacingTokens.tokenUnlocksAvatarLg,
                 ),
-                const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
+                const SizedBox(width: MarketsSpacingTokens.tokenUnlocksCardGap),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Wrap(
-                        spacing: AppSpacing.tokenUnlocksBadgeSpacing,
-                        runSpacing: AppSpacing.tokenUnlocksBadgeRunSpacing,
+                        spacing: MarketsSpacingTokens.tokenUnlocksBadgeSpacing,
+                        runSpacing:
+                            MarketsSpacingTokens.tokenUnlocksBadgeRunSpacing,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(
@@ -70,7 +71,7 @@ class _UnlockCard extends StatelessWidget {
                         children: [
                           const Icon(
                             Icons.schedule_rounded,
-                            size: AppSpacing.tokenUnlocksDateIcon,
+                            size: MarketsSpacingTokens.tokenUnlocksDateIcon,
                             color: AppColors.text3,
                           ),
                           const SizedBox(width: _unlockDateGap),
@@ -97,7 +98,7 @@ class _UnlockCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: AppSpacing.tokenUnlocksCardGap),
+                const SizedBox(width: MarketsSpacingTokens.tokenUnlocksCardGap),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -150,7 +151,7 @@ class _UnlockExpandedDetails extends StatelessWidget {
           color: AppColors.cardBorder,
         ),
         Padding(
-          padding: AppSpacing.tokenUnlocksExpandedPadding,
+          padding: MarketsSpacingTokens.tokenUnlocksExpandedPadding,
           child: Column(
             children: [
               Row(
@@ -195,16 +196,17 @@ class _UnlockExpandedDetails extends StatelessWidget {
                 VitCard(
                   variant: VitCardVariant.ghost,
                   borderColor: AppColors.sell.withValues(alpha: .12),
-                  padding: AppSpacing.tokenUnlocksPriceWarningPadding,
+                  padding: MarketsSpacingTokens.tokenUnlocksPriceWarningPadding,
                   child: Row(
                     children: [
                       const Icon(
                         Icons.trending_down_rounded,
                         color: AppColors.sell,
-                        size: AppSpacing.tokenUnlocksPriceWarningIcon,
+                        size: MarketsSpacingTokens.tokenUnlocksPriceWarningIcon,
                       ),
                       const SizedBox(
-                        width: AppSpacing.tokenUnlocksPriceWarningIconGap,
+                        width: MarketsSpacingTokens
+                            .tokenUnlocksPriceWarningIconGap,
                       ),
                       Expanded(
                         child: Text(
@@ -263,7 +265,7 @@ class _ImpactOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tokenUnlocksAnalysisCardPadding,
+      padding: MarketsSpacingTokens.tokenUnlocksAnalysisCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -293,7 +295,9 @@ class _ImpactOverview extends StatelessWidget {
                   ),
                 ),
                 if (entry.key != snapshot.impactConfigs.keys.last)
-                  const SizedBox(width: AppSpacing.tokenUnlocksImpactStatGap),
+                  const SizedBox(
+                    width: MarketsSpacingTokens.tokenUnlocksImpactStatGap,
+                  ),
               ],
             ],
           ),
@@ -319,7 +323,7 @@ class _ImpactStat extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       borderColor: config.color.resolve().withValues(alpha: .10),
-      padding: AppSpacing.tokenUnlocksImpactStatPadding,
+      padding: MarketsSpacingTokens.tokenUnlocksImpactStatPadding,
       child: Column(
         children: [
           Text(
@@ -365,7 +369,7 @@ class _CategoryBreakdown extends StatelessWidget {
     );
 
     return VitCard(
-      padding: AppSpacing.tokenUnlocksAnalysisCardPadding,
+      padding: MarketsSpacingTokens.tokenUnlocksAnalysisCardPadding,
       child: Column(
         children: [
           for (final entry in snapshot.categoryConfigs.entries) ...[
@@ -406,9 +410,11 @@ class _CategoryBar extends StatelessWidget {
             Icon(
               Icons.square_rounded,
               color: color,
-              size: AppSpacing.tokenUnlocksCategoryDot,
+              size: MarketsSpacingTokens.tokenUnlocksCategoryDot,
             ),
-            const SizedBox(width: AppSpacing.tokenUnlocksCategoryDotGap),
+            const SizedBox(
+              width: MarketsSpacingTokens.tokenUnlocksCategoryDotGap,
+            ),
             Expanded(
               child: Text(
                 label,

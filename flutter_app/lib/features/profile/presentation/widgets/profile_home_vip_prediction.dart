@@ -21,7 +21,7 @@ class _VipCard extends StatelessWidget {
                 'Ti\u1EBFn \u0111\u1ED9 VIP',
                 style: AppTextStyles.control.copyWith(color: AppColors.text2),
               ),
-              const SizedBox(width: AppSpacing.profileModuleStatGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleStatGap),
               Flexible(
                 child: Text(
                   '${vip.label} \u2192 ${vip.nextLabel}',
@@ -37,7 +37,7 @@ class _VipCard extends StatelessWidget {
           ClipRRect(
             borderRadius: AppRadii.pillRadius,
             child: LinearProgressIndicator(
-              minHeight: AppSpacing.profileVipProgressHeight,
+              minHeight: ProfileSpacingTokens.profileVipProgressHeight,
               value: vip.progress,
               color: AppColors.primary,
               backgroundColor: _profilePanel2,
@@ -79,9 +79,9 @@ class _PredictionCard extends StatelessWidget {
               const Icon(
                 Icons.adjust_rounded,
                 color: _profilePurple,
-                size: AppSpacing.profileModuleIcon,
+                size: ProfileSpacingTokens.profileModuleIcon,
               ),
-              const SizedBox(width: AppSpacing.profileModuleGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleGap),
               Expanded(
                 child: Text(
                   'Prediction Portfolio',
@@ -92,7 +92,7 @@ class _PredictionCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileModuleGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleGap),
               _TinyTag(label: 'Prediction Market', color: _profilePurple),
             ],
           ),
@@ -105,14 +105,14 @@ class _PredictionCard extends StatelessWidget {
                   value: '${prediction.positions}',
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileModuleStatGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleStatGap),
               Expanded(
                 child: _ModuleStat(
                   label: 'L\u1EC7nh m\u1EDF',
                   value: '${prediction.openOrders}',
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileModuleStatGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleStatGap),
               Expanded(
                 child: _ModuleStat(
                   label: 'P/L',
@@ -133,19 +133,23 @@ class _PredictionCard extends StatelessWidget {
                   style: AppTextStyles.badge.copyWith(color: _profilePurple),
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileHeroInfoTrailingGap,
+              ),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: _profilePurple,
-                size: AppSpacing.profileModuleLinkIcon,
+                size: ProfileSpacingTokens.profileModuleLinkIcon,
               ),
-              const SizedBox(width: AppSpacing.profileModuleEndGap),
+              const SizedBox(width: ProfileSpacingTokens.profileModuleEndGap),
               const Icon(
                 Icons.emoji_events_outlined,
                 color: _profileMuted,
-                size: AppSpacing.profileModuleLinkIcon,
+                size: ProfileSpacingTokens.profileModuleLinkIcon,
               ),
-              const SizedBox(width: AppSpacing.profileHeroInfoTrailingGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileHeroInfoTrailingGap,
+              ),
               Flexible(
                 child: Text(
                   'Leaderboard',

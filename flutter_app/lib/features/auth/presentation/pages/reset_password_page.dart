@@ -16,6 +16,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/auth_controller_providers.dart';
 import 'package:vit_trade_flutter/features/auth/presentation/controllers/password_reset_flow_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/auth_spacing_tokens.dart';
 
 part '../widgets/reset_password_page_sections.dart';
 
@@ -182,7 +183,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
             Expanded(
               child: SingleChildScrollView(
                 key: ResetPasswordPage.contentKey,
-                padding: AppSpacing.authScrollBottomPadding,
+                padding: AuthSpacingTokens.authScrollBottomPadding,
                 child: VitPageContent(
                   rhythm: VitPageRhythm.form,
                   children: _success
@@ -228,34 +229,34 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
           autofillHints: const [AutofillHints.newPassword],
           onChanged: (_) => _handleNewPasswordChanged(),
         ),
-        const Padding(padding: AppSpacing.authOtpDigitTopPadding),
+        const Padding(padding: AuthSpacingTokens.authOtpDigitTopPadding),
         _PasswordRulesList(password: _newPassword),
       ],
     ),
     VitInput(
-        controller: _confirmPasswordController,
-        fieldKey: ResetPasswordPage.confirmPasswordFieldKey,
-        label: 'Nhập lại mật khẩu',
-        hintText: '••••••••',
-        prefix: const Icon(Icons.lock_outline_rounded),
-        suffix: VitIconButton(
-          key: ResetPasswordPage.confirmPasswordToggleKey,
-          icon: _showConfirmPassword
-              ? Icons.visibility_off_outlined
-              : Icons.visibility_outlined,
-          tooltip: _showConfirmPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu',
-          onPressed: () {
-            setState(() => _showConfirmPassword = !_showConfirmPassword);
-          },
-          variant: VitIconButtonVariant.transparent,
-          size: VitIconButtonSize.sm,
-        ),
-        errorText: _showMismatch ? 'Mật khẩu không khớp' : null,
-        obscureText: !_showConfirmPassword,
-        textInputAction: TextInputAction.done,
-        autofillHints: const [AutofillHints.newPassword],
-        onChanged: (_) => _handleConfirmPasswordChanged(),
-        onSubmitted: (_) => _handleSubmit(),
+      controller: _confirmPasswordController,
+      fieldKey: ResetPasswordPage.confirmPasswordFieldKey,
+      label: 'Nhập lại mật khẩu',
+      hintText: '••••••••',
+      prefix: const Icon(Icons.lock_outline_rounded),
+      suffix: VitIconButton(
+        key: ResetPasswordPage.confirmPasswordToggleKey,
+        icon: _showConfirmPassword
+            ? Icons.visibility_off_outlined
+            : Icons.visibility_outlined,
+        tooltip: _showConfirmPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu',
+        onPressed: () {
+          setState(() => _showConfirmPassword = !_showConfirmPassword);
+        },
+        variant: VitIconButtonVariant.transparent,
+        size: VitIconButtonSize.sm,
+      ),
+      errorText: _showMismatch ? 'Mật khẩu không khớp' : null,
+      obscureText: !_showConfirmPassword,
+      textInputAction: TextInputAction.done,
+      autofillHints: const [AutofillHints.newPassword],
+      onChanged: (_) => _handleConfirmPasswordChanged(),
+      onSubmitted: (_) => _handleSubmit(),
     ),
     if (_showMatch) const _InlinePasswordState(success: true),
     if (_error.isNotEmpty) _InlinePasswordState(error: _error),
@@ -271,8 +272,8 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       onPressed: _submitting ? null : () => context.go(AppRoutePaths.authLogin),
       variant: VitCtaButtonVariant.ghost,
       fullWidth: false,
-      height: AppSpacing.authTextButtonHeightLg,
-      padding: AppSpacing.authInlineTextButtonPadding,
+      height: AuthSpacingTokens.authTextButtonHeightLg,
+      padding: AuthSpacingTokens.authInlineTextButtonPadding,
       child: Text(
         'Quay lại đăng nhập',
         style: AppTextStyles.caption.copyWith(
@@ -296,8 +297,8 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
       onPressed: () => context.go(AppRoutePaths.authLogin),
       variant: VitCtaButtonVariant.ghost,
       fullWidth: false,
-      height: AppSpacing.authTextButtonHeightLg,
-      padding: AppSpacing.authInlineTextButtonPadding,
+      height: AuthSpacingTokens.authTextButtonHeightLg,
+      padding: AuthSpacingTokens.authInlineTextButtonPadding,
       child: Text(
         'Quay lại đăng nhập',
         style: AppTextStyles.caption.copyWith(

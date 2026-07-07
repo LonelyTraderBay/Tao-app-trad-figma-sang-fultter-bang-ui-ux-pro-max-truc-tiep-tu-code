@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/support_spacing_tokens.dart';
 
 part '../widgets/help_center_hero_actions.dart';
 part '../widgets/help_center_sections.dart';
@@ -113,9 +114,11 @@ class _HelpCenterPageState extends ConsumerState<HelpCenterPage> {
                   child: SingleChildScrollView(
                     key: HelpCenterPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.supportScrollPadding(bottomInset),
+                    padding: SupportSpacingTokens.supportScrollPadding(
+                      bottomInset,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
                       gap: VitContentGap.relaxed,
                       children: _helpCenterPageChildren(

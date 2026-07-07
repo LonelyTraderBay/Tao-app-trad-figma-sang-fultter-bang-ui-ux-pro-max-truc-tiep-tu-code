@@ -21,7 +21,7 @@ class _FrontierChip extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: AppSpacing.dcaPaddingX3,
+          padding: DcaSpacingTokens.dcaPaddingX3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +35,7 @@ class _FrontierChip extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const Padding(padding: AppSpacing.dcaTopPaddingX2),
+              const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Row(
@@ -147,7 +147,7 @@ class _SuggestionRow extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.dcaPaddingX3,
+      padding: DcaSpacingTokens.dcaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -184,7 +184,7 @@ class _SuggestionRow extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: AppSpacing.dcaTopPaddingX2),
+                const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
                 Text(
                   suggestion.reason,
                   style: AppTextStyles.caption.copyWith(

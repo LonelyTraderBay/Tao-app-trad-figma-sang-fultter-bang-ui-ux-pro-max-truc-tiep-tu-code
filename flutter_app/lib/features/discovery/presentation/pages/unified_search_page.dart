@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/unified_search_shell.dart';
 part '../widgets/unified_search_results.dart';
@@ -90,7 +91,7 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
               if (snapshot.showOfflineBanner)
                 Padding(
                   key: UnifiedSearchPage.offlineKey,
-                  padding: AppSpacing.discoveryOfflineBannerPadding,
+                  padding: LaunchpadSpacingTokens.discoveryOfflineBannerPadding,
                   child: VitOfflineBanner(
                     message: snapshot.staleMessage,
                     detail: snapshot.staleDetail,
@@ -104,9 +105,10 @@ class _UnifiedSearchPageState extends ConsumerState<UnifiedSearchPage> {
                   child: SingleChildScrollView(
                     key: UnifiedSearchPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.discoveryContentScrollPadding(
-                      scrollEndClearance,
-                    ),
+                    padding:
+                        LaunchpadSpacingTokens.discoveryContentScrollPadding(
+                          scrollEndClearance,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       padding: VitContentPadding.none,

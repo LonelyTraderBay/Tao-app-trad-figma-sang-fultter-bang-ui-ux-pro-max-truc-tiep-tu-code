@@ -80,7 +80,7 @@ class _DynamicHero extends StatelessWidget {
                       'Lần mua tiếp theo',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.portfolioTextMuted,
-                        height: AppSpacing.dcaDynamicCaptionLineHeight,
+                        height: DcaSpacingTokens.dcaDynamicCaptionLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -138,7 +138,7 @@ class _DynamicHero extends StatelessWidget {
               shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
             ),
             child: Padding(
-              padding: AppSpacing.dcaPaddingX3,
+              padding: DcaSpacingTokens.dcaPaddingX3,
               child: Row(
                 children: [
                   Icon(
@@ -171,7 +171,7 @@ class _DynamicHero extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.portfolioTextDim,
-                        height: AppSpacing.dcaDynamicBodyLineHeight,
+                        height: DcaSpacingTokens.dcaDynamicBodyLineHeight,
                       ),
                     ),
                   ),
@@ -213,7 +213,7 @@ class _TinyPill extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.dcaButtonChipPadding,
+        padding: DcaSpacingTokens.dcaButtonChipPadding,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 132),
           child: Row(
@@ -306,7 +306,7 @@ class _StrategyChip extends StatelessWidget {
       selected: selected,
       onTap: onTap,
       accentColor: accent,
-      padding: AppSpacing.dcaPrimaryChipPadding,
+      padding: DcaSpacingTokens.dcaPrimaryChipPadding,
       leading: Icon(_iconFor(option.icon)),
       semanticLabel: option.title,
     );
@@ -336,7 +336,7 @@ class _StrategyVisualization extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: AppSpacing.dcaSectionHeaderPadding,
+            padding: DcaSpacingTokens.dcaSectionHeaderPadding,
             child: _SectionHeader(
               icon: Icons.show_chart_rounded,
               title: 'Biến động & Hệ số',
@@ -345,7 +345,7 @@ class _StrategyVisualization extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: AppSpacing.dcaChartPadding,
+            padding: DcaSpacingTokens.dcaChartPadding,
             child: SizedBox(
               height: _dcaDynamicChartHeight,
               child: CustomPaint(
@@ -355,7 +355,7 @@ class _StrategyVisualization extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: AppSpacing.dcaChartFooterPadding,
+            padding: DcaSpacingTokens.dcaChartFooterPadding,
             child: Wrap(
               spacing: AppSpacing.x4,
               runSpacing: AppSpacing.x2,
@@ -403,12 +403,12 @@ class _GenericStrategyCard extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: AppSpacing.dcaPaddingX4,
+              padding: DcaSpacingTokens.dcaPaddingX4,
               child: Text(
                 option.description,
                 style: AppTextStyles.base.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.dcaDynamicDescriptionLineHeight,
+                  height: DcaSpacingTokens.dcaDynamicDescriptionLineHeight,
                 ),
               ),
             ),

@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -161,11 +162,12 @@ class _PredictionEventDetailPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionEventDetailPage.contentKey,
-                    padding: AppSpacing.predictionDetailScrollPadding(
-                      footerPadding,
-                    ),
+                    padding:
+                        PredictionsSpacingTokens.predictionDetailScrollPadding(
+                          footerPadding,
+                        ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       density: VitDensity.compact,
                       children: [
                         _EventHeader(

@@ -6,8 +6,9 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/arena/domain/entities/arena_entities.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/widgets/arena_mode_detail_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
-const _modeTitleLineRatio = AppSpacing.arenaModeTitleLineHeight;
+const _modeTitleLineRatio = ArenaSpacingTokens.arenaModeTitleLineHeight;
 
 class ArenaModeHero extends StatelessWidget {
   const ArenaModeHero({
@@ -30,7 +31,7 @@ class ArenaModeHero extends StatelessWidget {
     final templateColor = arenaTemplateColor(snapshot.template.kind);
     return VitModuleHeroCard(
       accentColor: templateColor,
-      padding: AppSpacing.arenaPaddingX5,
+      padding: ArenaSpacingTokens.arenaPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -39,7 +40,7 @@ class ArenaModeHero extends StatelessWidget {
               ArenaModeActionIcon(
                 icon: arenaTemplateIcon(snapshot.template.kind),
                 color: templateColor,
-                size: AppSpacing.arenaModeHeroIcon,
+                size: ArenaSpacingTokens.arenaModeHeroIcon,
               ),
               const SizedBox(width: AppSpacing.x4),
               Expanded(
@@ -166,13 +167,13 @@ class _CreatorRow extends StatelessWidget {
         variant: VitCardVariant.ghost,
         radius: VitCardRadius.standard,
         child: Padding(
-          padding: AppSpacing.arenaVerticalPaddingX2,
+          padding: ArenaSpacingTokens.arenaVerticalPaddingX2,
           child: Row(
             children: [
               const ArenaModeActionIcon(
                 icon: Icons.person_rounded,
                 color: arenaModeAccent,
-                size: AppSpacing.arenaModeCreatorIcon,
+                size: ArenaSpacingTokens.arenaModeCreatorIcon,
               ),
               const SizedBox(width: AppSpacing.x3),
               Expanded(
@@ -204,7 +205,7 @@ class _CreatorRow extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.arenaModeChevron,
+                size: ArenaSpacingTokens.arenaModeChevron,
               ),
             ],
           ),

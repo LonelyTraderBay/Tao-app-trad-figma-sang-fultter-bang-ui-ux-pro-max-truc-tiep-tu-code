@@ -28,7 +28,7 @@ class _ScenarioInputs extends StatelessWidget {
     return VitCard(
       key: StakingRiskScoreCalculatorPage.formKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -140,7 +140,7 @@ class _RiskDropdown extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       onTap: () => _showOptions(context),
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           Expanded(
@@ -174,7 +174,7 @@ class _RiskDropdown extends StatelessWidget {
         return SafeArea(
           top: false,
           child: Padding(
-            padding: AppSpacing.earnSheetContentPadding,
+            padding: EarnSpacingTokens.earnSheetContentPadding,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -210,12 +210,12 @@ class _RiskOptionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnBottomPaddingX2,
+      padding: EarnSpacingTokens.earnBottomPaddingX2,
       child: VitCard(
         variant: VitCardVariant.inner,
         borderColor: selected ? AppColors.primary30 : null,
         onTap: onTap,
-        padding: AppSpacing.earnCardPaddingX4,
+        padding: EarnSpacingTokens.earnCardPaddingX4,
         child: Row(
           children: [
             Expanded(

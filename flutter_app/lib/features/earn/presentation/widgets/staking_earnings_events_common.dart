@@ -40,7 +40,7 @@ class _EventCard extends StatelessWidget {
     final color = _eventColor(event.type);
 
     return VitCard(
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         children: [
           DecoratedBox(
@@ -56,7 +56,7 @@ class _EventCard extends StatelessWidget {
               child: Icon(
                 _eventIcon(event.type),
                 color: color,
-                size: AppSpacing.stakingEarningsEventIcon,
+                size: EarnSpacingTokens.stakingEarningsEventIcon,
               ),
             ),
           ),
@@ -130,13 +130,13 @@ class _TimingPill extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
             color: AppColors.primarySoft,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.stakingEarningsPillLineHeight,
+            height: EarnSpacingTokens.stakingEarningsPillLineHeight,
           ),
         ),
       ),
@@ -204,7 +204,7 @@ class _InfoBanner extends StatelessWidget {
       key: StakingEarningsCalendarPage.infoKey,
       variant: VitCardVariant.inner,
       borderColor: AppColors.primary30,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -227,12 +227,12 @@ class _InfoBanner extends StatelessWidget {
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
                 for (final bullet in snapshot.infoBullets)
                   Padding(
-                    padding: AppSpacing.earnBottomPaddingX1,
+                    padding: EarnSpacingTokens.earnBottomPaddingX1,
                     child: Text(
                       bullet,
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.text2,
-                        height: AppSpacing.stakingEarningsInfoLineHeight,
+                        height: EarnSpacingTokens.stakingEarningsInfoLineHeight,
                       ),
                     ),
                   ),

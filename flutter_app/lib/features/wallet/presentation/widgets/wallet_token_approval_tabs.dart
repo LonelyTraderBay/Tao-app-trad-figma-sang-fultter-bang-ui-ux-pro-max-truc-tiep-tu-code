@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_token_approval_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_tab_bar.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WalletTokenApprovalTabs extends StatelessWidget {
   const WalletTokenApprovalTabs({
@@ -22,7 +23,7 @@ class WalletTokenApprovalTabs extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: AppSpacing.walletTokenTabsHeight,
+            height: WalletSpacingTokens.walletTokenTabsHeight,
             child: Semantics(
               container: true,
               label:

@@ -51,7 +51,7 @@ class _ChainFilters extends StatelessWidget {
               selected: activeFilter == filter,
               onTap: () => onChanged(filter),
               accentColor: _chainColor(filter),
-              padding: AppSpacing.launchpadPillPadding,
+              padding: LaunchpadSpacingTokens.launchpadPillPadding,
             ),
             if (filter != filters.last) const SizedBox(width: AppSpacing.x2),
           ],

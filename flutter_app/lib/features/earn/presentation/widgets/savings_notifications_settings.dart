@@ -57,13 +57,13 @@ class _SettingsSummary extends StatelessWidget {
         shape: RoundedRectangleBorder(
           side: const BorderSide(
             color: AppColors.primary20,
-            width: AppSpacing.savingsNotificationSummaryBorderWidth,
+            width: EarnSpacingTokens.savingsNotificationSummaryBorderWidth,
           ),
           borderRadius: AppRadii.cardLargeRadius,
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX4,
+        padding: EarnSpacingTokens.earnCardPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -83,7 +83,8 @@ class _SettingsSummary extends StatelessWidget {
                     subtitle,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.savingsNotificationSummaryLineHeight,
+                      height: EarnSpacingTokens
+                          .savingsNotificationSummaryLineHeight,
                     ),
                   ),
                 ],
@@ -150,7 +151,7 @@ class _SettingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       onTap: onToggle,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +178,7 @@ class _SettingCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.savingsNotificationCardLineHeight,
+                    height: EarnSpacingTokens.savingsNotificationCardLineHeight,
                   ),
                 ),
               ],
@@ -209,10 +210,10 @@ class _ToggleSwitch extends StatelessWidget {
         onTap: onTap,
         child: VitTogglePill(
           enabled: on,
-          width: AppSpacing.savingsNotificationSwitchWidth,
-          height: AppSpacing.savingsNotificationSwitchHeight,
-          knobSize: AppSpacing.savingsNotificationSwitchThumb,
-          knobMargin: AppSpacing.savingsNotificationSwitchInset,
+          width: EarnSpacingTokens.savingsNotificationSwitchWidth,
+          height: EarnSpacingTokens.savingsNotificationSwitchHeight,
+          knobSize: EarnSpacingTokens.savingsNotificationSwitchThumb,
+          knobMargin: EarnSpacingTokens.savingsNotificationSwitchInset,
           activeColor: AppColors.primary,
           inactiveColor: AppColors.borderSolid,
           inactiveKnobColor: AppColors.onAccent,

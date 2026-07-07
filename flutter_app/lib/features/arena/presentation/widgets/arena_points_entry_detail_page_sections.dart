@@ -120,7 +120,7 @@ class _BalanceCard extends StatelessWidget {
       title: 'Biến động số dư',
       accentColor: AppColors.buy,
       child: VitCard(
-        padding: AppSpacing.arenaPointsEntryCardPadding,
+        padding: ArenaSpacingTokens.arenaPointsEntryCardPadding,
         child: Row(
           children: [
             Expanded(
@@ -130,7 +130,7 @@ class _BalanceCard extends StatelessWidget {
               ),
             ),
             SizedBox.square(
-              dimension: AppSpacing.arenaPointsEntryBalanceArrowBox,
+              dimension: ArenaSpacingTokens.arenaPointsEntryBalanceArrowBox,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: entry.amount >= 0 ? AppColors.buy10 : AppColors.sell10,
@@ -142,7 +142,7 @@ class _BalanceCard extends StatelessWidget {
                   child: Icon(
                     Icons.arrow_forward_rounded,
                     color: entry.amount >= 0 ? AppColors.buy : AppColors.sell,
-                    size: AppSpacing.arenaPointsInlineIcon,
+                    size: ArenaSpacingTokens.arenaPointsInlineIcon,
                   ),
                 ),
               ),
@@ -177,7 +177,7 @@ class _ReferenceCard extends StatelessWidget {
       title: 'Mã tham chiếu',
       accentColor: AppColors.text3,
       child: VitCard(
-        padding: AppSpacing.arenaPointsEntryCardPadding,
+        padding: ArenaSpacingTokens.arenaPointsEntryCardPadding,
         child: Row(
           children: [
             Expanded(
@@ -215,14 +215,14 @@ class _AuditNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaPointsEntryNoticePadding,
+      padding: ArenaSpacingTokens.arenaPointsEntryNoticePadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.accent,
-            size: AppSpacing.arenaPointsInlineIcon,
+            size: ArenaSpacingTokens.arenaPointsInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -265,7 +265,7 @@ class _EntryActions extends StatelessWidget {
           onPressed: onSupport,
           leading: const Icon(
             Icons.help_outline_rounded,
-            size: AppSpacing.arenaPointsInlineIcon,
+            size: ArenaSpacingTokens.arenaPointsInlineIcon,
           ),
           child: const Text('Liên hệ hỗ trợ'),
         ),
@@ -293,7 +293,7 @@ class _Section extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              width: AppSpacing.arenaPointsEntrySectionMarkerWidth,
+              width: ArenaSpacingTokens.arenaPointsEntrySectionMarkerWidth,
               height: _entrySectionMarkerExtent,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
@@ -332,12 +332,12 @@ class _DetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaPointsEntryRowPadding,
+      padding: ArenaSpacingTokens.arenaPointsEntryRowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.arenaPointsEntryDetailLabelWidth,
+            width: ArenaSpacingTokens.arenaPointsEntryDetailLabelWidth,
             child: Text(
               label,
               style: AppTextStyles.caption.copyWith(color: AppColors.text3),

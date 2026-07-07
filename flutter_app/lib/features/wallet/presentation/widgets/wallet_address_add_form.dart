@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_ad
 import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_address_add_selectors.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_section_header.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class AddressAddForm {
   const AddressAddForm._();
@@ -94,7 +95,7 @@ class AddressAddForm {
                 ),
               ),
               Padding(
-                padding: AppSpacing.walletAddressAddHelperPadding,
+                padding: WalletSpacingTokens.walletAddressAddHelperPadding,
                 child: Row(
                   children: [
                     Expanded(
@@ -130,9 +131,8 @@ class AddressAddForm {
                 ),
               ),
               Padding(
-                padding: AppSpacing.walletAddressAddHintPadding.copyWith(
-                  top: AppSpacing.walletAddressAddHintGap,
-                ),
+                padding: WalletSpacingTokens.walletAddressAddHintPadding
+                    .copyWith(top: WalletSpacingTokens.walletAddressAddHintGap),
                 child: Text(
                   selectedNetwork.addressHint,
                   style: AppTextStyles.micro.copyWith(color: AppColors.text3),

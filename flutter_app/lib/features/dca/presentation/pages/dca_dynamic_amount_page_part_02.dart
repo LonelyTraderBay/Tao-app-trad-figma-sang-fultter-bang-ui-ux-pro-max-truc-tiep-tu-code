@@ -13,7 +13,7 @@ class _AmountHistoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: AppSpacing.dcaSectionHeaderPadding,
+            padding: DcaSpacingTokens.dcaSectionHeaderPadding,
             child: _SectionHeader(
               icon: Icons.bar_chart_rounded,
               title: 'Lịch sử điều chỉnh',
@@ -22,7 +22,7 @@ class _AmountHistoryCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: AppSpacing.dcaChartPadding,
+            padding: DcaSpacingTokens.dcaChartPadding,
             child: SizedBox(
               height: _dcaDynamicChartHeight,
               child: CustomPaint(
@@ -32,7 +32,7 @@ class _AmountHistoryCard extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: AppSpacing.dcaChartFooterPadding,
+            padding: DcaSpacingTokens.dcaChartFooterPadding,
             child: Wrap(
               spacing: AppSpacing.x5,
               children: [
@@ -105,7 +105,7 @@ class _HistoryRow extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.cardRadius),
       ),
       child: Padding(
-        padding: AppSpacing.dcaPaddingX3,
+        padding: DcaSpacingTokens.dcaPaddingX3,
         child: Row(
           children: [
             SizedBox(
@@ -172,7 +172,7 @@ class _HistoryRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.dcaDynamicHistoryLineHeight,
+                      height: DcaSpacingTokens.dcaDynamicHistoryLineHeight,
                     ),
                   ),
                 ],
@@ -203,7 +203,7 @@ class _ChangeBadge extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.dcaTinyChipPadding,
+        padding: DcaSpacingTokens.dcaTinyChipPadding,
         child: Text(
           '${change > 0 ? '+' : ''}${change.toStringAsFixed(0)}%',
           style: AppTextStyles.micro.copyWith(
@@ -368,7 +368,7 @@ class _StrategyExplainer extends StatelessWidget {
                   option.description,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.dcaDynamicExplainerLineHeight,
+                    height: DcaSpacingTokens.dcaDynamicExplainerLineHeight,
                   ),
                 ),
               ],
@@ -394,7 +394,7 @@ class _DynamicDisclaimer extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.dcaPaddingX4,
+        padding: DcaSpacingTokens.dcaPaddingX4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -409,7 +409,7 @@ class _DynamicDisclaimer extends StatelessWidget {
                 'Dynamic Amount tự điều chỉnh lượng mua dựa trên chiến lược bạn chọn. Bạn có thể thay đổi chiến lược hoặc quay về "Cố định" bất cứ lúc nào.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.dcaDynamicExplainerLineHeight,
+                  height: DcaSpacingTokens.dcaDynamicExplainerLineHeight,
                 ),
               ),
             ),

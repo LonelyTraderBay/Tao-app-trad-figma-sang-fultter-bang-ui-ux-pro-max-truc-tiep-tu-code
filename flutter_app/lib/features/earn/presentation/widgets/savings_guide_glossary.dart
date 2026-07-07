@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_guide_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsGuideGlossaryTab extends StatelessWidget {
   const SavingsGuideGlossaryTab({super.key, required this.snapshot});
@@ -45,7 +46,7 @@ class SavingsGuideGlossaryTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
-          padding: AppSpacing.earnCardPaddingX3,
+          padding: EarnSpacingTokens.earnCardPaddingX3,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -60,7 +61,7 @@ class SavingsGuideGlossaryTab extends StatelessWidget {
                   snapshot.disclaimer,
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.primary,
-                    height: AppSpacing.earnGuideBodyLineHeight,
+                    height: EarnSpacingTokens.earnGuideBodyLineHeight,
                   ),
                 ),
               ),
@@ -81,7 +82,7 @@ class _TermCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,7 +108,7 @@ class _TermCard extends StatelessWidget {
                   term.definition,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.earnGuideTipLineHeight,
+                    height: EarnSpacingTokens.earnGuideTipLineHeight,
                   ),
                 ),
               ],

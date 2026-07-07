@@ -64,7 +64,10 @@ void main() {
     expect(find.text('Tiến trình #p2p001'), findsOneWidget);
     expect(find.text('Đơn hàng - P2P'), findsOneWidget);
     expect(find.text('Tiến trình đơn hàng'), findsOneWidget);
-    expect(find.text('Cập nhật trạng thái theo thời gian thực'), findsOneWidget);
+    expect(
+      find.text('Cập nhật trạng thái theo thời gian thực'),
+      findsOneWidget,
+    );
     expect(find.text('Order Created'), findsOneWidget);
     expect(find.text('Matched with Seller'), findsOneWidget);
     expect(find.text('Funds Locked in Escrow'), findsOneWidget);

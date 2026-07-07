@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pNotificationsVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -82,7 +83,7 @@ class _P2PNotificationsSettingsPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pNotificationsScrollPadding(
+                    padding: P2PSpacingTokens.p2pNotificationsScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
@@ -150,7 +151,7 @@ class _Hero extends StatelessWidget {
       key: P2PNotificationsSettingsPage.heroKey,
       radius: VitCardRadius.standard,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pNotificationsCardPadding,
+      padding: P2PSpacingTokens.p2pNotificationsCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -248,7 +249,7 @@ class _SettingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pNotificationsCardPadding,
+      padding: P2PSpacingTokens.p2pNotificationsCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -311,7 +312,7 @@ class _ChannelButton extends StatelessWidget {
       tone: selected ? VitChoicePillTone.success : VitChoicePillTone.primary,
       accentColor: selected ? AppColors.buy : AppModuleAccents.p2p,
       height: AppSpacing.buttonCompact + AppSpacing.x4,
-      padding: AppSpacing.p2pNotificationsChannelPadding,
+      padding: P2PSpacingTokens.p2pNotificationsChannelPadding,
       leading: Icon(
         channel.icon,
         size: AppSpacing.iconSm,

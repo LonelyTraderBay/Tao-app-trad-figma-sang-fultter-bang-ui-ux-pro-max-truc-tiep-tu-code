@@ -104,7 +104,7 @@ class _TaxTabs extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: AppSpacing.crossModuleTabBarPadding,
+        padding: CrossModuleSpacingTokens.crossModuleTabBarPadding,
         child: VitSegmentedTabBar(
           tabs: tabItems,
           activeKey: active.name,
@@ -213,7 +213,7 @@ class _TaxSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,7 +344,7 @@ class _TaxPeriodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       radius: VitCardRadius.large,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -415,7 +415,7 @@ class _DateField extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: AppRadii.xlRadius),
           ),
           child: Padding(
-            padding: AppSpacing.crossModuleSelectorPadding,
+            padding: CrossModuleSpacingTokens.crossModuleSelectorPadding,
             child: Row(
               children: [
                 Expanded(

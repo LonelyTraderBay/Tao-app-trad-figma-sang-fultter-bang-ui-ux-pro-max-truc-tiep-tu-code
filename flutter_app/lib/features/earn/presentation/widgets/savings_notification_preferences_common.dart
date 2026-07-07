@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 TextStyle get savingsNotificationCaptionMedium =>
     AppTextStyles.caption.copyWith(fontWeight: AppTextStyles.medium);
@@ -41,7 +42,7 @@ class SavingsNotificationSeverityPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           savingsNotificationSeverityLabel(severity),
           style: AppTextStyles.micro.copyWith(
@@ -105,8 +106,8 @@ class SavingsNotificationTokenSwitch extends StatelessWidget {
                 progress,
               )!;
               return SizedBox(
-                width: AppSpacing.savingsNotificationTokenSwitchWidth,
-                height: AppSpacing.savingsNotificationTokenSwitchHeight,
+                width: EarnSpacingTokens.savingsNotificationTokenSwitchWidth,
+                height: EarnSpacingTokens.savingsNotificationTokenSwitchHeight,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: animatedTrackColor,
@@ -116,12 +117,13 @@ class SavingsNotificationTokenSwitch extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: AppSpacing.savingsNotificationTokenSwitchInset,
+                    padding:
+                        EarnSpacingTokens.savingsNotificationTokenSwitchInset,
                     child: Align(
                       alignment: alignment,
                       child: SizedBox.square(
-                        dimension:
-                            AppSpacing.savingsNotificationTokenSwitchThumb,
+                        dimension: EarnSpacingTokens
+                            .savingsNotificationTokenSwitchThumb,
                         child: DecoratedBox(
                           decoration: ShapeDecoration(
                             color: animatedThumbColor,

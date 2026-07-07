@@ -33,7 +33,12 @@ class _CreateSubAccountForm extends StatefulWidget {
 class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
   String _accountType = 'Spot';
 
-  static const _accountTypes = ['Spot', 'Margin', 'Futures', 'T\u1EA5t c\u1EA3'];
+  static const _accountTypes = [
+    'Spot',
+    'Margin',
+    'Futures',
+    'T\u1EA5t c\u1EA3',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +70,7 @@ class _CreateSubAccountFormState extends State<_CreateSubAccountForm> {
               ),
               const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
               VitPresetChipRow<String>(
-                gap: AppSpacing.profileSubAccountFormPillGap,
+                gap: ProfileSpacingTokens.profileSubAccountFormPillGap,
                 selectedValue: _accountType,
                 onTap: (value) => setState(() => _accountType = value),
                 items: [
@@ -112,14 +117,11 @@ class _FormPermissionPreview extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.x1),
         Wrap(
-          spacing: AppSpacing.profileSubAccountFormPillGap,
-          runSpacing: AppSpacing.profileSubAccountFormPillGap,
+          spacing: ProfileSpacingTokens.profileSubAccountFormPillGap,
+          runSpacing: ProfileSpacingTokens.profileSubAccountFormPillGap,
           children: [
             for (final permission in _permissions)
-              VitAccentPill(
-                label: permission,
-                accentColor: AppColors.primary,
-              ),
+              VitAccentPill(label: permission, accentColor: AppColors.primary),
           ],
         ),
       ],
@@ -154,7 +156,7 @@ class _FormFieldPreview extends StatelessWidget {
               side: const BorderSide(color: AppColors.borderSolid),
             ),
             child: Padding(
-              padding: AppSpacing.profileSubAccountFormInputPadding,
+              padding: ProfileSpacingTokens.profileSubAccountFormInputPadding,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(

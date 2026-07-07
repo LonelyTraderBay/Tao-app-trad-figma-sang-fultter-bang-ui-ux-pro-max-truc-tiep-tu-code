@@ -13,7 +13,7 @@ class _BatchSummaryHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppColors.buy.withValues(alpha: .18),
-      padding: AppSpacing.launchpadPaddingX5,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,7 +52,7 @@ class _BatchSummaryHero extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.x2),
               Padding(
-                padding: AppSpacing.launchpadBottomPaddingX1,
+                padding: LaunchpadSpacingTokens.launchpadBottomPaddingX1,
                 child: Text(
                   'USD',
                   style: AppTextStyles.caption.copyWith(
@@ -92,7 +92,7 @@ class _TokenPill extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.inputRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadTimelineMarkerPadding,
+        padding: LaunchpadSpacingTokens.launchpadTimelineMarkerPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -135,11 +135,11 @@ class _GasSavingsBanner extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadEventFooterPadding,
+        padding: LaunchpadSpacingTokens.launchpadEventFooterPadding,
         child: Row(
           children: [
             const SizedBox.square(
-              dimension: AppSpacing.launchpadBox36,
+              dimension: LaunchpadSpacingTokens.launchpadBox36,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: AppColors.buy15,

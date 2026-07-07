@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/p2p_notice_widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 class P2POrderCancelPage extends ConsumerStatefulWidget {
   const P2POrderCancelPage({
@@ -77,9 +78,10 @@ class _P2POrderCancelPageState extends ConsumerState<P2POrderCancelPage> {
                   child: SingleChildScrollView(
                     key: P2POrderCancelPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pRiskControlsBottomScrollPadding(
-                      bottomInset,
-                    ),
+                    padding:
+                        P2PSpacingTokens.p2pRiskControlsBottomScrollPadding(
+                          bottomInset,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
@@ -183,7 +185,7 @@ class _CancelHero extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: AppSpacing.p2pRiskControlsOrderHeroMaxWidth,
+              maxWidth: P2PSpacingTokens.p2pRiskControlsOrderHeroMaxWidth,
             ),
             child: Text(
               'Vui lòng chọn lý do hủy. Hủy đơn quá nhiều có thể ảnh hưởng đến uy tín.',
@@ -218,7 +220,7 @@ class _OrderSummary extends StatelessWidget {
       _SummaryRowDraft(label: 'Merchant', value: order.merchant),
     ];
     return VitCard(
-      padding: AppSpacing.p2pRiskControlsInnerPadding,
+      padding: P2PSpacingTokens.p2pRiskControlsInnerPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -249,7 +251,7 @@ class _SummaryRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: AppSpacing.p2pRiskControlsSummaryRowPadding,
+          padding: P2PSpacingTokens.p2pRiskControlsSummaryRowPadding,
           child: Row(
             children: [
               Expanded(
@@ -371,7 +373,7 @@ class _CancelWarning extends StatelessWidget {
       messageColor: AppColors.warn,
       borderColor: AppColors.warningBorder,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pRiskControlsInnerPadding,
+      padding: P2PSpacingTokens.p2pRiskControlsInnerPadding,
     );
   }
 }

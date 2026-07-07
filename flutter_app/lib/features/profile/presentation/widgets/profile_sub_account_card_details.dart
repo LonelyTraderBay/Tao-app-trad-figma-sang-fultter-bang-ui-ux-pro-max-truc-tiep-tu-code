@@ -9,12 +9,12 @@ class _SubAccountDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.profileSubAccountDetailsPadding,
+      padding: ProfileSpacingTokens.profileSubAccountDetailsPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Divider(
-            height: AppSpacing.profileSubAccountDetailsDividerHeight,
+            height: ProfileSpacingTokens.profileSubAccountDetailsDividerHeight,
             color: AppColors.divider,
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -50,8 +50,8 @@ class _SubAccountDetails extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.x1),
           Wrap(
-            spacing: AppSpacing.profileSubAccountPermissionGap,
-            runSpacing: AppSpacing.profileSubAccountPermissionGap,
+            spacing: ProfileSpacingTokens.profileSubAccountPermissionGap,
+            runSpacing: ProfileSpacingTokens.profileSubAccountPermissionGap,
             children: [
               for (final permission in account.permissions)
                 VitAccentPill(
@@ -84,7 +84,9 @@ class _SubAccountDetails extends StatelessWidget {
                   background: AppColors.primary08,
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileSubAccountActionGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileSubAccountActionGap,
+              ),
               Expanded(
                 child: _ActionChip(
                   icon: Icons.key_rounded,
@@ -93,7 +95,9 @@ class _SubAccountDetails extends StatelessWidget {
                   background: AppColors.warn08,
                 ),
               ),
-              const SizedBox(width: AppSpacing.profileSubAccountActionGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileSubAccountActionGap,
+              ),
               Expanded(
                 child: _ActionChip(
                   icon: Icons.settings_outlined,
@@ -173,9 +177,11 @@ class _ActionChip extends StatelessWidget {
             Icon(
               icon,
               color: color,
-              size: AppSpacing.profileSubAccountActionIcon,
+              size: ProfileSpacingTokens.profileSubAccountActionIcon,
             ),
-            const SizedBox(width: AppSpacing.profileSubAccountActionIconGap),
+            const SizedBox(
+              width: ProfileSpacingTokens.profileSubAccountActionIconGap,
+            ),
             Flexible(
               child: Text(
                 label,

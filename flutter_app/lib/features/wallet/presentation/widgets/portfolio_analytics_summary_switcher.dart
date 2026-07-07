@@ -40,7 +40,7 @@ class _ValueSummary extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.walletAnalyticsReturnPillWidth,
+                width: WalletSpacingTokens.walletAnalyticsReturnPillWidth,
                 child: VitMetricDeltaPill(
                   label:
                       '+${_formatUsd(snapshot.totalReturnUsd, symbol: false)} (+${snapshot.totalReturnPct.toStringAsFixed(2)}%)',
@@ -48,7 +48,9 @@ class _ValueSummary extends StatelessWidget {
                   icon: Icons.trending_up_rounded,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAnalyticsReturnMetaGap),
+              const SizedBox(
+                width: WalletSpacingTokens.walletAnalyticsReturnMetaGap,
+              ),
               Expanded(
                 child: Text(
                   'so v\u1EDBi \u0111\u1EA7u k\u1EF3',
@@ -70,7 +72,9 @@ class _ValueSummary extends StatelessWidget {
                   color: _analyticsGreen,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAnalyticsQuickStatGap),
+              const SizedBox(
+                width: WalletSpacingTokens.walletAnalyticsQuickStatGap,
+              ),
               Expanded(
                 child: _QuickStat(
                   label: 'Thua l\u1ED7 nh\u1EA5t',
@@ -80,7 +84,9 @@ class _ValueSummary extends StatelessWidget {
                   color: _analyticsRed,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAnalyticsQuickStatGap),
+              const SizedBox(
+                width: WalletSpacingTokens.walletAnalyticsQuickStatGap,
+              ),
               Expanded(
                 child: _QuickStat(
                   label: 'T\u00E0i s\u1EA3n',
@@ -113,7 +119,7 @@ class _QuickStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.walletAnalyticsQuickStatPadding,
+      padding: WalletSpacingTokens.walletAnalyticsQuickStatPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

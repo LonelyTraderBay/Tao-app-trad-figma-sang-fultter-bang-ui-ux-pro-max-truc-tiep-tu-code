@@ -26,7 +26,7 @@ class _DashboardFilterRow extends StatelessWidget {
               active: filter.id == snapshot.selectedFilter.id,
               onTap: () => onChanged(filter.id),
               color: AppModuleAccents.p2p,
-              padding: AppSpacing.p2pDashboardFilterChipPadding,
+              padding: P2PSpacingTokens.p2pDashboardFilterChipPadding,
               semanticLabel: 'P2P dashboard filter ${filter.label}',
             ),
             const SizedBox(width: AppSpacing.x2),
@@ -48,7 +48,7 @@ class _VolumeHero extends StatelessWidget {
       key: P2PDashboardPage.volumeHeroKey,
       radius: VitCardRadius.large,
       borderColor: AppColors.primary20,
-      padding: AppSpacing.p2pDashboardCompactCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -59,7 +59,7 @@ class _VolumeHero extends StatelessWidget {
                 color: AppModuleAccents.p2p,
                 small: true,
               ),
-              const SizedBox(width: AppSpacing.p2pDashboardMetricRowGap),
+              const SizedBox(width: P2PSpacingTokens.p2pDashboardMetricRowGap),
               Expanded(
                 child: Text(
                   'Tổng Volume (${snapshot.selectedFilter.label})',
@@ -155,7 +155,7 @@ class _MetricsGrid extends StatelessWidget {
             ],
           ),
           if (row == 0)
-            const SizedBox(height: AppSpacing.p2pDashboardMetricRowGap),
+            const SizedBox(height: P2PSpacingTokens.p2pDashboardMetricRowGap),
         ],
       ],
     );
@@ -189,7 +189,7 @@ class _MetricCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCompactCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -234,7 +234,7 @@ class _WeeklyVolumeCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.weeklyChartKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -266,7 +266,7 @@ class _MonthlyOrdersCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.monthlyChartKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -308,7 +308,7 @@ class _AssetDistributionCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.assetDistributionKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -321,8 +321,8 @@ class _AssetDistributionCard extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.p2pDashboardDonutSize,
-                height: AppSpacing.p2pDashboardDonutSize,
+                width: P2PSpacingTokens.p2pDashboardDonutSize,
+                height: P2PSpacingTokens.p2pDashboardDonutSize,
                 child: CustomPaint(
                   painter: _DonutPainter(snapshot.assetDistribution),
                 ),
@@ -353,15 +353,15 @@ class _AssetLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _assetColor(item.asset);
     return Padding(
-      padding: AppSpacing.p2pDashboardAssetLinePadding,
+      padding: P2PSpacingTokens.p2pDashboardAssetLinePadding,
       child: Row(
         children: [
           Material(
             color: color,
             borderRadius: AppRadii.xsRadius,
             child: const SizedBox(
-              width: AppSpacing.p2pDashboardAssetSwatch,
-              height: AppSpacing.p2pDashboardAssetSwatch,
+              width: P2PSpacingTokens.p2pDashboardAssetSwatch,
+              height: P2PSpacingTokens.p2pDashboardAssetSwatch,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
@@ -403,7 +403,7 @@ class _LevelCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.levelKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -435,7 +435,7 @@ class _LevelCard extends StatelessWidget {
           VitCard(
             radius: VitCardRadius.large,
             variant: VitCardVariant.inner,
-            padding: AppSpacing.p2pDashboardCompactCardPadding,
+            padding: P2PSpacingTokens.p2pDashboardCompactCardPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -476,7 +476,7 @@ class _PlatformComparisonCard extends StatelessWidget {
     return VitCard(
       key: P2PDashboardPage.comparisonKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pDashboardCardPadding,
+      padding: P2PSpacingTokens.p2pDashboardCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -19,10 +19,12 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
-const _verifiedFeatureLineRatio = AppSpacing.arenaVerifiedFeatureLineHeight;
-const _verifiedHeroLineRatio = AppSpacing.arenaVerifiedHeroLineHeight;
+const _verifiedFeatureLineRatio =
+    ArenaSpacingTokens.arenaVerifiedFeatureLineHeight;
+const _verifiedHeroLineRatio = ArenaSpacingTokens.arenaVerifiedHeroLineHeight;
 
 class VerifiedChallengesPage extends ConsumerWidget {
   const VerifiedChallengesPage({super.key, this.shellRenderMode});
@@ -68,9 +70,11 @@ class VerifiedChallengesPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       gap: VitContentGap.tight,
                       children: [
@@ -110,7 +114,7 @@ class _VerifiedHero extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox.square(
-            dimension: AppSpacing.arenaVerifiedHeroIconBox,
+            dimension: ArenaSpacingTokens.arenaVerifiedHeroIconBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: AppColors.accent12,
@@ -137,7 +141,7 @@ class _VerifiedHero extends StatelessWidget {
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: AppSpacing.arenaVerifiedHeroTextMaxWidth,
+              maxWidth: ArenaSpacingTokens.arenaVerifiedHeroTextMaxWidth,
             ),
             child: Text(
               snapshot.subtitle,
@@ -169,14 +173,14 @@ class _VerifiedInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: VerifiedChallengesPage.infoCardKey,
-      padding: AppSpacing.arenaVerifiedInfoPadding,
+      padding: ArenaSpacingTokens.arenaVerifiedInfoPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.primary,
-            size: AppSpacing.arenaVerifiedInfoIcon,
+            size: ArenaSpacingTokens.arenaVerifiedInfoIcon,
           ),
           const SizedBox(width: AppSpacing.x3),
           Expanded(
@@ -216,11 +220,11 @@ class _FeatureRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: AppSpacing.arenaVerifiedFeatureIconPadding,
+          padding: ArenaSpacingTokens.arenaVerifiedFeatureIconPadding,
           child: Icon(
             _featureIcon(feature.kind),
             color: AppColors.accent,
-            size: AppSpacing.arenaVerifiedFeatureIcon,
+            size: ArenaSpacingTokens.arenaVerifiedFeatureIcon,
           ),
         ),
         const SizedBox(width: AppSpacing.x2),

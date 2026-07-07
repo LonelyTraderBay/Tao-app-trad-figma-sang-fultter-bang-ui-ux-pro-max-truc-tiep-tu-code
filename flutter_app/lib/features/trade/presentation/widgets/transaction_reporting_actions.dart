@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/transaction_reporting_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 class TransactionReportingQuickActions extends StatelessWidget {
   const TransactionReportingQuickActions({
@@ -69,7 +70,7 @@ class _QuickActionCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       height: AppSpacing.buttonHero,
-      padding: AppSpacing.transactionReportingQuickActionCardPadding,
+      padding: TradeSpacingTokens.transactionReportingQuickActionCardPadding,
       borderColor: transactionReportBorder,
       onTap: onTap,
       child: Column(
@@ -82,7 +83,7 @@ class _QuickActionCard extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: AppColors.text1,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.transactionReportingLineHeightTight,
+              height: TradeSpacingTokens.transactionReportingLineHeightTight,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -92,7 +93,7 @@ class _QuickActionCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.transactionReportingLineHeightTight,
+              height: TradeSpacingTokens.transactionReportingLineHeightTight,
             ),
           ),
         ],

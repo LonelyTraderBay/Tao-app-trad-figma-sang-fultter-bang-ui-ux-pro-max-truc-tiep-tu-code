@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/features/wallet/presentation/widgets/wallet_to
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 class WalletTokenApprovalHistoryTab extends StatelessWidget {
   const WalletTokenApprovalHistoryTab({required this.snapshot, super.key});
@@ -35,7 +36,9 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
                   color: walletTokenApprovalGreen,
                   size: AppSpacing.iconMd,
                 ),
-                const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
+                const SizedBox(
+                  width: WalletSpacingTokens.walletTokenApprovalHeaderGap,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +71,7 @@ class WalletTokenApprovalHistoryTab extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.walletTokenStatValueGap),
+          const SizedBox(height: WalletSpacingTokens.walletTokenStatValueGap),
         ],
         VitCard(
           density: VitDensity.compact,

@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart'
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/vit_trade_compliance_section.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 import '../widgets/trade_body_review_widgets.dart';
 
@@ -120,7 +121,7 @@ class _IntroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.complaintCaseCardPadding,
+      padding: TradeSpacingTokens.complaintCaseCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -140,7 +141,7 @@ class _IntroCard extends StatelessWidget {
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Padding(
-              padding: AppSpacing.complaintCaseTitleNudgePadding,
+              padding: TradeSpacingTokens.complaintCaseTitleNudgePadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -175,7 +176,7 @@ class _EligibilityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.ombudsmanEligibilityPadding,
+      padding: TradeSpacingTokens.ombudsmanEligibilityPadding,
       child: Column(
         children: [
           for (final item in items) ...[
@@ -199,7 +200,7 @@ class _EligibilityRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: AppSpacing.complaintCaseIconNudgePadding,
+          padding: TradeSpacingTokens.complaintCaseIconNudgePadding,
           child: Icon(
             Icons.check_circle_outline_rounded,
             color: _ombudsmanGreen,
@@ -238,7 +239,7 @@ class _ContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.complaintCaseCardPadding,
+      padding: TradeSpacingTokens.complaintCaseCardPadding,
       child: Column(
         children: [
           for (final contact in contacts) ...[
@@ -326,7 +327,7 @@ class _ProcessStepCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Card(
-      padding: AppSpacing.ombudsmanProcessPadding,
+      padding: TradeSpacingTokens.ombudsmanProcessPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -348,7 +349,7 @@ class _ProcessStepCard extends StatelessWidget {
           const SizedBox(width: AppSpacing.x4),
           Expanded(
             child: Padding(
-              padding: AppSpacing.complaintCaseIconNudgePadding,
+              padding: TradeSpacingTokens.complaintCaseIconNudgePadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -385,7 +386,7 @@ class _VisitButton extends StatelessWidget {
       onPressed: () {},
       leading: const Icon(
         Icons.open_in_new_rounded,
-        size: AppSpacing.complaintCaseTrailingIcon,
+        size: TradeSpacingTokens.complaintCaseTrailingIcon,
       ),
       child: Text(
         snapshot.ctaLabel,

@@ -37,7 +37,7 @@ class _LimitOrderCard extends StatelessWidget {
         : AppColors.warn;
     return VitCard(
       key: LaunchpadLimitOrdersPage.orderKey(order.id),
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         children: [
           Row(
@@ -125,7 +125,7 @@ class _LimitOrderCard extends StatelessWidget {
               const Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.text3,
-                size: AppSpacing.launchpadIconXs,
+                size: LaunchpadSpacingTokens.launchpadIconXs,
               ),
               const SizedBox(width: AppSpacing.x1),
               Expanded(
@@ -154,7 +154,7 @@ class _SideIcon extends StatelessWidget {
     final isBuy = side == LaunchpadLimitOrderSide.buy;
     final color = isBuy ? AppColors.buy : AppColors.sell;
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox40,
+      dimension: LaunchpadSpacingTokens.launchpadBox40,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: color.withValues(alpha: .12),
@@ -164,7 +164,7 @@ class _SideIcon extends StatelessWidget {
           child: Icon(
             isBuy ? Icons.south_rounded : Icons.north_rounded,
             color: color,
-            size: AppSpacing.launchpadIcon3xl,
+            size: LaunchpadSpacingTokens.launchpadIcon3xl,
           ),
         ),
       ),
@@ -205,10 +205,10 @@ class _OrderMetricsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: AppSpacing.launchpadGridColumns,
+      crossAxisCount: LaunchpadSpacingTokens.launchpadGridColumns,
       mainAxisSpacing: AppSpacing.x3,
       crossAxisSpacing: AppSpacing.x3,
-      childAspectRatio: AppSpacing.launchpadGridAspectAction,
+      childAspectRatio: LaunchpadSpacingTokens.launchpadGridAspectAction,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: AppSpacing.zeroInsets,
@@ -279,7 +279,7 @@ class _ProgressBar extends StatelessWidget {
         return ClipRRect(
           borderRadius: AppRadii.pillRadius,
           child: SizedBox(
-            height: AppSpacing.launchpadDotSm,
+            height: LaunchpadSpacingTokens.launchpadDotSm,
             child: Stack(
               children: [
                 const Positioned.fill(child: ColoredBox(color: AppColors.bg)),
@@ -330,13 +330,13 @@ class _TinyPill extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadCompactChipPadding,
+        padding: LaunchpadSpacingTokens.launchpadCompactChipPadding,
         child: Text(
           label,
           style: AppTextStyles.badge.copyWith(
             color: color,
             fontWeight: AppTextStyles.bold,
-            height: AppSpacing.launchpadLineHeightTight,
+            height: LaunchpadSpacingTokens.launchpadLineHeightTight,
           ),
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_portfolio_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SectionLabel extends StatelessWidget {
   const SectionLabel({super.key, required this.label, required this.color});
@@ -27,7 +28,7 @@ class SectionLabel extends StatelessWidget {
             ),
           ),
           child: const SizedBox(
-            width: AppSpacing.savingsPortfolioSectionMarkerWidth,
+            width: EarnSpacingTokens.savingsPortfolioSectionMarkerWidth,
             height: savingsPortfolioSectionMarkerExtent,
           ),
         ),
@@ -109,7 +110,7 @@ class StatusPill extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           maxLines: 1,
@@ -237,7 +238,8 @@ class ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.xlRadius,
-      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+      child: SizedBox(
+        height: AppSpacing.pageRhythmCompactInnerGap,
         child: Stack(
           fit: StackFit.expand,
           children: [

@@ -27,7 +27,7 @@ class _AbiEntryCard extends StatelessWidget {
             top: 0,
             bottom: 0,
             child: SizedBox(
-              width: AppSpacing.launchpadVerticalMarkerWidth,
+              width: LaunchpadSpacingTokens.launchpadVerticalMarkerWidth,
               child: ColoredBox(color: change.color),
             ),
           ),
@@ -37,7 +37,7 @@ class _AbiEntryCard extends StatelessWidget {
                 key: LaunchpadAbiDiffPage.expandKey(entry.name),
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
-                padding: AppSpacing.launchpadPaddingX3,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                 onTap: onToggle,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,9 @@ class _AbiEntryCard extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmCompactInnerGap,
+                          ),
                           Wrap(
                             spacing: AppSpacing.x1,
                             runSpacing: AppSpacing.x1,
@@ -92,7 +94,7 @@ class _AbiEntryCard extends StatelessWidget {
                           ? Icons.keyboard_arrow_up_rounded
                           : Icons.keyboard_arrow_down_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.launchpadIcon2xl,
+                      size: LaunchpadSpacingTokens.launchpadIcon2xl,
                     ),
                   ],
                 ),
@@ -114,7 +116,7 @@ class _ChangeIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
-      dimension: AppSpacing.launchpadBox30,
+      dimension: LaunchpadSpacingTokens.launchpadBox30,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: change.color.withValues(alpha: .14),
@@ -123,7 +125,7 @@ class _ChangeIcon extends StatelessWidget {
         child: Icon(
           change.icon,
           color: change.color,
-          size: AppSpacing.launchpadIconXl,
+          size: LaunchpadSpacingTokens.launchpadIconXl,
         ),
       ),
     );
@@ -148,13 +150,17 @@ class _SmallBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: AppSpacing.launchpadMiniChipPadding,
+            padding: LaunchpadSpacingTokens.launchpadMiniChipPadding,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (icon != null) ...[
-                  Icon(icon, color: color, size: AppSpacing.launchpadIconXxs),
-                  const SizedBox(width: AppSpacing.launchpadGapXxs),
+                  Icon(
+                    icon,
+                    color: color,
+                    size: LaunchpadSpacingTokens.launchpadIconXxs,
+                  ),
+                  const SizedBox(width: LaunchpadSpacingTokens.launchpadGapXxs),
                 ],
                 Text(
                   label,
@@ -186,7 +192,7 @@ class _AbiEntryDetails extends StatelessWidget {
           shape: Border(top: BorderSide(color: AppColors.divider)),
         ),
         child: Padding(
-          padding: AppSpacing.launchpadPaddingX4,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -222,7 +228,7 @@ class _AbiEntryDetails extends StatelessWidget {
                 ),
               if (entry.riskNote != null)
                 Padding(
-                  padding: AppSpacing.launchpadTopPaddingX2,
+                  padding: LaunchpadSpacingTokens.launchpadTopPaddingX2,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: entry.riskLevel.color.withValues(alpha: .08),
@@ -234,14 +240,14 @@ class _AbiEntryDetails extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: AppSpacing.launchpadPaddingX3,
+                      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(
                             entry.riskLevel.icon,
                             color: entry.riskLevel.color,
-                            size: AppSpacing.launchpadIconMd,
+                            size: LaunchpadSpacingTokens.launchpadIconMd,
                           ),
                           const SizedBox(width: AppSpacing.x2),
                           Expanded(
@@ -249,7 +255,8 @@ class _AbiEntryDetails extends StatelessWidget {
                               entry.riskNote!,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.text2,
-                                height: AppSpacing.launchpadLineHeightCompact,
+                                height: LaunchpadSpacingTokens
+                                    .launchpadLineHeightCompact,
                               ),
                             ),
                           ),
@@ -280,7 +287,7 @@ class _SignatureBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadTopPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadTopPaddingX2,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -299,13 +306,13 @@ class _SignatureBlock extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: AppSpacing.launchpadPaddingX2,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX2,
                 child: Text(
                   value,
                   style: AppTextStyles.micro.copyWith(
                     color: color,
                     fontWeight: AppTextStyles.extraBold,
-                    height: AppSpacing.launchpadLineHeightCompact,
+                    height: LaunchpadSpacingTokens.launchpadLineHeightCompact,
                   ),
                 ),
               ),
@@ -326,7 +333,7 @@ class _DetailLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadTopPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadTopPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -363,14 +370,14 @@ class _RiskWarning extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadPaddingX3,
+        padding: LaunchpadSpacingTokens.launchpadPaddingX3,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Icon(
               Icons.warning_amber_rounded,
               color: AppColors.warn,
-              size: AppSpacing.launchpadIconXl,
+              size: LaunchpadSpacingTokens.launchpadIconXl,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -378,7 +385,7 @@ class _RiskWarning extends StatelessWidget {
                 'Day la so sanh ABI tu dong. Can kiem tra source code thuc te de hieu day du anh huong cua cac thay doi.',
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.text2,
-                  height: AppSpacing.launchpadLineHeightShort,
+                  height: LaunchpadSpacingTokens.launchpadLineHeightShort,
                 ),
               ),
             ),

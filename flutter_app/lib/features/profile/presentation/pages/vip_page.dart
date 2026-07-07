@@ -20,6 +20,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/profile_controller_providers.dart';
 import 'package:vit_trade_flutter/features/profile/presentation/widgets/vip_history_widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/profile_vip_hero.dart';
 part '../widgets/profile_vip_overview.dart';
@@ -88,15 +89,14 @@ class _VIPPageState extends ConsumerState<VIPPage> {
                   physics: const ClampingScrollPhysics(),
                   padding: EdgeInsetsDirectional.only(bottom: scrollClearance),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     density: VitDensity.compact,
                     children: _vipPageChildren(
                       context: context,
                       snapshot: snapshot,
                       selectedTab: _selectedTab,
-                      onTabChanged: (tab) =>
-                          setState(() => _selectedTab = tab),
+                      onTabChanged: (tab) => setState(() => _selectedTab = tab),
                       onTrade: _openTrade,
                     ),
                   ),

@@ -41,8 +41,8 @@ class _RiskScoreCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: AppSpacing.launchpadBox64,
-                height: AppSpacing.launchpadBox64,
+                width: LaunchpadSpacingTokens.launchpadBox64,
+                height: LaunchpadSpacingTokens.launchpadBox64,
                 child: CustomPaint(
                   painter: _RiskRingPainter(
                     percent: snapshot.riskScore / 100,
@@ -53,8 +53,8 @@ class _RiskScoreCard extends StatelessWidget {
                       child: ColoredBox(
                         color: AppColors.surface,
                         child: SizedBox(
-                          width: AppSpacing.launchpadBox56,
-                          height: AppSpacing.launchpadBox56,
+                          width: LaunchpadSpacingTokens.launchpadBox56,
+                          height: LaunchpadSpacingTokens.launchpadBox56,
                           child: Icon(
                             Icons.shield_outlined,
                             color: color,

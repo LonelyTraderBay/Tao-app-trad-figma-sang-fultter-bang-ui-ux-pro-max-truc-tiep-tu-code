@@ -13,7 +13,7 @@ class _QuickActionButton extends StatelessWidget {
       selected: true,
       onTap: () => context.go(action.route),
       fullWidth: true,
-      padding: AppSpacing.p2pOrderQuickButtonPadding,
+      padding: P2PSpacingTokens.p2pOrderQuickButtonPadding,
       accentColor: color,
       leading: Icon(_quickActionIcon(action.iconKey)),
       semanticLabel: action.label,
@@ -97,11 +97,15 @@ class _SmallPill extends StatelessWidget {
       color: color.withValues(alpha: .10),
       borderRadius: AppRadii.inputRadius,
       child: Padding(
-        padding: AppSpacing.p2pOrderSmallPillPadding,
+        padding: P2PSpacingTokens.p2pOrderSmallPillPadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: color, size: AppSpacing.p2pOrderSmallPillIcon),
+            Icon(
+              icon,
+              color: color,
+              size: P2PSpacingTokens.p2pOrderSmallPillIcon,
+            ),
             const SizedBox(width: AppSpacing.x1),
             Flexible(
               child: Text(
@@ -140,7 +144,7 @@ class _SmallButton extends StatelessWidget {
       label: label,
       selected: true,
       onTap: onPressed,
-      padding: AppSpacing.p2pOrderSmallButtonPadding,
+      padding: P2PSpacingTokens.p2pOrderSmallButtonPadding,
       accentColor: color,
       leading: Icon(icon),
       semanticLabel: label,
@@ -168,7 +172,7 @@ class _TextActionButton extends StatelessWidget {
       label: label,
       selected: false,
       onTap: onPressed,
-      padding: AppSpacing.p2pOrderTextActionPadding,
+      padding: P2PSpacingTokens.p2pOrderTextActionPadding,
       accentColor: color,
       leading: icon,
       semanticLabel: label,
@@ -214,7 +218,7 @@ class _InlineWarning extends StatelessWidget {
         borderRadius: AppRadii.cardRadius,
       ),
       child: Padding(
-        padding: AppSpacing.p2pOrderInlineWarningPadding,
+        padding: P2PSpacingTokens.p2pOrderInlineWarningPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -23,7 +23,7 @@ class _ViewTabs extends StatelessWidget {
     return Material(
       color: AppColors.surface,
       child: SizedBox(
-        height: AppSpacing.marketDepthTabsHeight,
+        height: MarketsSpacingTokens.marketDepthTabsHeight,
         child: Column(
           children: [
             Expanded(
@@ -73,12 +73,12 @@ class _TimeframeRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.pairTimeframePadding,
+      padding: MarketsSpacingTokens.pairTimeframePadding,
       child: VitPresetChipRow<String>(
         selectedValue: active,
         onTap: onChanged,
         accentColor: _marketPrimary,
-        height: AppSpacing.pairTimeframeHeight,
+        height: MarketsSpacingTokens.pairTimeframeHeight,
         padding: EdgeInsets.zero,
         gap: AppSpacing.x1,
         items: const [
@@ -111,7 +111,7 @@ class _IndicatorRow extends StatelessWidget {
     return SizedBox(
       height: VitDensity.compact.controlHeight,
       child: ListView(
-        padding: AppSpacing.pairIndicatorListPadding,
+        padding: MarketsSpacingTokens.pairIndicatorListPadding,
         scrollDirection: Axis.horizontal,
         children: [
           for (final item in items) ...[
@@ -120,7 +120,7 @@ class _IndicatorRow extends StatelessWidget {
               selected: active.contains(item),
               onTap: () => onToggle(item),
             ),
-            const SizedBox(width: AppSpacing.pairIndicatorGap),
+            const SizedBox(width: MarketsSpacingTokens.pairIndicatorGap),
           ],
           _AdvancedChip(onTap: onAdvanced),
         ],
@@ -195,7 +195,7 @@ class _RiskWarning extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: AppSpacing.pairRiskMargin,
+      padding: MarketsSpacingTokens.pairRiskMargin,
       child: VitBanner(
         variant: VitBannerVariant.warning,
         icon: Icons.warning_amber_rounded,
@@ -225,13 +225,13 @@ class _LinkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.pairLinkMargin,
+      padding: MarketsSpacingTokens.pairLinkMargin,
       child: VitCard(
         borderColor: iconColor.withValues(alpha: .18),
         padding: EdgeInsets.zero,
         onTap: onTap,
         child: Padding(
-          padding: AppSpacing.pairLinkPadding,
+          padding: MarketsSpacingTokens.pairLinkPadding,
           child: Row(
             children: [
               Material(
@@ -240,16 +240,16 @@ class _LinkCard extends StatelessWidget {
                   borderRadius: AppRadii.smRadius,
                 ),
                 child: SizedBox(
-                  width: AppSpacing.pairLinkIconBox,
-                  height: AppSpacing.pairLinkIconBox,
+                  width: MarketsSpacingTokens.pairLinkIconBox,
+                  height: MarketsSpacingTokens.pairLinkIconBox,
                   child: Icon(
                     icon,
                     color: iconColor,
-                    size: AppSpacing.pairLinkIcon,
+                    size: MarketsSpacingTokens.pairLinkIcon,
                   ),
                 ),
               ),
-              const SizedBox(width: AppSpacing.pairLinkGap),
+              const SizedBox(width: MarketsSpacingTokens.pairLinkGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,7 +275,7 @@ class _LinkCard extends StatelessWidget {
               Icon(
                 Icons.chevron_right_rounded,
                 color: iconColor,
-                size: AppSpacing.pairLinkChevron,
+                size: MarketsSpacingTokens.pairLinkChevron,
               ),
             ],
           ),
@@ -293,7 +293,7 @@ class _TradeCtas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.pairTradeCtaPadding,
+      padding: MarketsSpacingTokens.pairTradeCtaPadding,
       child: Row(
         children: [
           Expanded(
@@ -306,7 +306,7 @@ class _TradeCtas extends StatelessWidget {
               child: const Text('MUA'),
             ),
           ),
-          const SizedBox(width: AppSpacing.pairTradeCtaGap),
+          const SizedBox(width: MarketsSpacingTokens.pairTradeCtaGap),
           Expanded(
             child: VitCtaButton(
               key: PairDetailPage.sellButtonKey,

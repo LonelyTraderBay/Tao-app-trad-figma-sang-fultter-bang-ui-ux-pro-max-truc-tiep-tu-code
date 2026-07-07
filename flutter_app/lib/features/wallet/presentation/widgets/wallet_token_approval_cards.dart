@@ -33,11 +33,15 @@ class WalletTokenApprovalCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 WalletTokenCategoryIcon(approval: approval),
-                const SizedBox(width: AppSpacing.walletTokenApprovalHeaderGap),
+                const SizedBox(
+                  width: WalletSpacingTokens.walletTokenApprovalHeaderGap,
+                ),
                 Expanded(
                   child: WalletTokenApprovalHeaderText(approval: approval),
                 ),
-                const SizedBox(width: AppSpacing.walletTokenApprovalActionGap),
+                const SizedBox(
+                  width: WalletSpacingTokens.walletTokenApprovalActionGap,
+                ),
                 VitIconButton(
                   key: walletTokenApprovalRevokeKey(approval.id),
                   icon: Icons.delete_outline_rounded,
@@ -49,9 +53,13 @@ class WalletTokenApprovalCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: AppSpacing.walletTokenApprovalContentGap),
+            const SizedBox(
+              height: WalletSpacingTokens.walletTokenApprovalContentGap,
+            ),
             WalletTokenApprovalAmount(approval: approval),
-            const SizedBox(height: AppSpacing.walletTokenApprovalAmountGap),
+            const SizedBox(
+              height: WalletSpacingTokens.walletTokenApprovalAmountGap,
+            ),
             Row(
               children: [
                 WalletTokenApprovalStat(
@@ -69,7 +77,9 @@ class WalletTokenApprovalCard extends StatelessWidget {
               ],
             ),
             if (showUnusedWarning) ...[
-              const SizedBox(height: AppSpacing.walletTokenApprovalUnusedGap),
+              const SizedBox(
+                height: WalletSpacingTokens.walletTokenApprovalUnusedGap,
+              ),
               VitCard(
                 density: VitDensity.compact,
                 variant: VitCardVariant.inner,
@@ -80,10 +90,11 @@ class WalletTokenApprovalCard extends StatelessWidget {
                     const Icon(
                       Icons.warning_amber_rounded,
                       color: walletTokenApprovalRed,
-                      size: AppSpacing.walletTokenApprovalUnusedIcon,
+                      size: WalletSpacingTokens.walletTokenApprovalUnusedIcon,
                     ),
                     const SizedBox(
-                      width: AppSpacing.walletTokenApprovalUnusedTextGap,
+                      width:
+                          WalletSpacingTokens.walletTokenApprovalUnusedTextGap,
                     ),
                     Expanded(
                       child: Text(
@@ -121,8 +132,8 @@ class WalletTokenCategoryIcon extends StatelessWidget {
     };
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
-      width: AppSpacing.walletTokenCategoryIcon,
-      height: AppSpacing.walletTokenCategoryIcon,
+      width: WalletSpacingTokens.walletTokenCategoryIcon,
+      height: WalletSpacingTokens.walletTokenCategoryIcon,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
       borderColor: color.withValues(alpha: .20),
@@ -130,7 +141,7 @@ class WalletTokenCategoryIcon extends StatelessWidget {
       child: Icon(
         icon,
         color: color,
-        size: AppSpacing.walletTokenCategoryGlyph,
+        size: WalletSpacingTokens.walletTokenCategoryGlyph,
       ),
     );
   }
@@ -148,8 +159,8 @@ class WalletTokenApprovalHeaderText extends StatelessWidget {
       children: [
         Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: AppSpacing.walletTokenHeaderWrapSpacing,
-          runSpacing: AppSpacing.walletTokenHeaderRunSpacing,
+          spacing: WalletSpacingTokens.walletTokenHeaderWrapSpacing,
+          runSpacing: WalletSpacingTokens.walletTokenHeaderRunSpacing,
           children: [
             Text(
               approval.token,
@@ -170,20 +181,20 @@ class WalletTokenApprovalHeaderText extends StatelessWidget {
                 color: approval.verified
                     ? walletTokenApprovalGreen
                     : walletTokenApprovalRed,
-                size: AppSpacing.walletTokenVerifiedIcon,
+                size: WalletSpacingTokens.walletTokenVerifiedIcon,
               ),
             ),
             WalletTokenRiskBadge(risk: approval.riskLevel),
           ],
         ),
-        const SizedBox(height: AppSpacing.walletTokenSpenderGap),
+        const SizedBox(height: WalletSpacingTokens.walletTokenSpenderGap),
         Text(
           '\u2192 ${approval.spenderName}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles.caption.copyWith(color: AppColors.text2),
         ),
-        const SizedBox(height: AppSpacing.walletTokenMaskedGap),
+        const SizedBox(height: WalletSpacingTokens.walletTokenMaskedGap),
         Text(
           approval.maskedSpender,
           style: AppTextStyles.micro.copyWith(color: AppColors.text3),

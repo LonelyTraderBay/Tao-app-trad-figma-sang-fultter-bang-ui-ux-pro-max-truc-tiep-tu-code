@@ -287,7 +287,8 @@ class _PlansList extends StatelessWidget {
     return Column(
       children: [
         for (var index = 0; index < plans.length; index++) ...[
-          if (index > 0) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+          if (index > 0)
+            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           _DcaPlanCard(plan: plans[index], onPause: onPause),
         ],
       ],
@@ -315,7 +316,7 @@ class _DcaPlanCard extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: AppSpacing.dcaMainPlanStatusBarHeight,
+            height: DcaSpacingTokens.dcaMainPlanStatusBarHeight,
             child: ColoredBox(
               color: plan.status == DcaPlanStatus.active
                   ? AppColors.buy

@@ -20,15 +20,16 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/arena_controller_providers.dart';
 import 'package:vit_trade_flutter/features/arena/presentation/controllers/arena_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/arena_spacing_tokens.dart';
 
 part '../widgets/arena_points_entry_detail_page_sections.dart';
 part '../widgets/arena_points_entry_detail_page_common.dart';
 
 const _arenaAccent = AppModuleAccents.arena;
-const _entryBodyLineRatio = AppSpacing.arenaPointsBodyLineHeight;
-const _entryNoticeLineRatio = AppSpacing.arenaPointsNoticeLineHeight;
+const _entryBodyLineRatio = ArenaSpacingTokens.arenaPointsBodyLineHeight;
+const _entryNoticeLineRatio = ArenaSpacingTokens.arenaPointsNoticeLineHeight;
 const _entrySectionMarkerExtent =
-    AppSpacing.arenaPointsEntrySectionMarkerHeight;
+    ArenaSpacingTokens.arenaPointsEntrySectionMarkerHeight;
 
 class ArenaPointsEntryDetailPage extends ConsumerStatefulWidget {
   const ArenaPointsEntryDetailPage({
@@ -92,10 +93,12 @@ class _ArenaPointsEntryDetailPageState
                   child: SingleChildScrollView(
                     key: ArenaPointsEntryDetailPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(footerPadding),
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
+                      footerPadding,
+                    ),
                     child: snapshot.entry == null
                         ? VitPageContent(
-         rhythm: VitPageRhythm.standard,
+                            rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.none,
                             children: [
                               VitEmptyState(

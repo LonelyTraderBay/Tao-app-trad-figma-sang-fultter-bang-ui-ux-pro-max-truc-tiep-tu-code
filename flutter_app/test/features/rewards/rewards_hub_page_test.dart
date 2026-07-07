@@ -77,30 +77,31 @@ void main() {
     expect(find.byKey(RewardsHubPage.claimAllKey), findsOneWidget);
   });
 
-  testWidgets('SC-319 claimed task card looks visually compact (no dead bottom gap)', (
-    tester,
-  ) async {
-    await pumpRewards(tester);
+  testWidgets(
+    'SC-319 claimed task card looks visually compact (no dead bottom gap)',
+    (tester) async {
+      await pumpRewards(tester);
 
-    final taskFinder = find.byKey(RewardsHubPage.taskKey('task-first'));
-    await tester.drag(
-      find.byKey(RewardsHubPage.contentKey),
-      const Offset(0, -900),
-    );
-    await tester.pumpAndSettle();
+      final taskFinder = find.byKey(RewardsHubPage.taskKey('task-first'));
+      await tester.drag(
+        find.byKey(RewardsHubPage.contentKey),
+        const Offset(0, -900),
+      );
+      await tester.pumpAndSettle();
 
-    const legacyMinHeight =
-        AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x5;
-    final taskHeight = tester.getSize(taskFinder).height;
+      const legacyMinHeight =
+          AppSpacing.buttonHero + AppSpacing.x7 + AppSpacing.x5;
+      final taskHeight = tester.getSize(taskFinder).height;
 
-    expect(
-      taskHeight,
-      lessThan(legacyMinHeight - 20),
-      reason: 'Claimed task card should not show a large empty bottom band',
-    );
-    expect(find.text('Giao dịch đầu tiên'), findsOneWidget);
-    expect(find.text('Đã nhận'), findsWidgets);
-  });
+      expect(
+        taskHeight,
+        lessThan(legacyMinHeight - 20),
+        reason: 'Claimed task card should not show a large empty bottom band',
+      );
+      expect(find.text('Giao dịch đầu tiên'), findsOneWidget);
+      expect(find.text('Đã nhận'), findsWidgets);
+    },
+  );
 
   testWidgets('SC-319 first viewport reaches reward claim action', (
     tester,

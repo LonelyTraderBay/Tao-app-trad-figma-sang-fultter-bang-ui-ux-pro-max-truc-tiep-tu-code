@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/launchpad/domain/entities/launchpad_entities.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 class LaunchpadRebalanceStrategySection extends StatelessWidget {
   const LaunchpadRebalanceStrategySection({
@@ -76,12 +77,12 @@ class _StrategyCard extends StatelessWidget {
       borderColor: active
           ? strategy.accent.resolve().withValues(alpha: .38)
           : AppColors.cardBorder,
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       onTap: onTap,
       child: Column(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.launchpadBox28,
+            dimension: LaunchpadSpacingTokens.launchpadBox28,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: strategy.accent.resolve().withValues(alpha: .14),
@@ -92,7 +93,7 @@ class _StrategyCard extends StatelessWidget {
               child: Icon(
                 Icons.shield_outlined,
                 color: strategy.accent.resolve(),
-                size: AppSpacing.launchpadIconLg,
+                size: LaunchpadSpacingTokens.launchpadIconLg,
               ),
             ),
           ),
@@ -114,7 +115,7 @@ class _StrategyCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.chartLabelXs.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.launchpadLineHeightMicro,
+              height: LaunchpadSpacingTokens.launchpadLineHeightMicro,
             ),
           ),
         ],

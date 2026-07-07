@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_ins
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_insurance_fund_status_card.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingInsuranceFundInfoBanner extends StatelessWidget {
   const StakingInsuranceFundInfoBanner({super.key, required this.snapshot});
@@ -23,7 +24,7 @@ class StakingInsuranceFundInfoBanner extends StatelessWidget {
       key: StakingInsuranceFundKeys.info,
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,7 +44,7 @@ class StakingInsuranceFundInfoBanner extends StatelessWidget {
                   snapshot.infoBody,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingProductBodyLineHeight,
+                    height: EarnSpacingTokens.stakingProductBodyLineHeight,
                   ),
                 ),
               ],
@@ -78,7 +79,7 @@ class StakingInsuranceFundTabs extends StatelessWidget {
                 key: StakingInsuranceFundKeys.tab(tab.name),
                 variant: VitCardVariant.ghost,
                 radius: VitCardRadius.standard,
-                padding: AppSpacing.earnTopPaddingX4,
+                padding: EarnSpacingTokens.earnTopPaddingX4,
                 onTap: () => onChanged(tab),
                 child: Column(
                   children: [
@@ -91,13 +92,16 @@ class StakingInsuranceFundTabs extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardSectionGap,
+                    ),
                     AnimatedSize(
                       duration: const Duration(milliseconds: 160),
                       alignment: Alignment.center,
                       child: SizedBox(
                         width: active == tab ? AppSpacing.buttonHero : 0,
-                        height: AppSpacing.stakingProductTabIndicatorHeight,
+                        height:
+                            EarnSpacingTokens.stakingProductTabIndicatorHeight,
                         child: DecoratedBox(
                           decoration: ShapeDecoration(
                             color: active == tab

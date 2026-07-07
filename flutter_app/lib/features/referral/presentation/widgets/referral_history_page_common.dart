@@ -18,7 +18,7 @@ class _FriendCard extends StatelessWidget {
     return VitCard(
       key: ReferralHistoryPage.friendKey(friend.id),
       onTap: onOpen,
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         children: [
           Row(
@@ -131,7 +131,7 @@ class _FriendCard extends StatelessWidget {
               key: ReferralHistoryPage.remindKey(friend.id),
               onPressed: onRemind,
               variant: VitCtaButtonVariant.secondary,
-              height: AppSpacing.referralHistoryFilterHeight,
+              height: ReferralSpacingTokens.referralHistoryFilterHeight,
               leading: Icon(
                 reminded ? Icons.check_rounded : Icons.send_rounded,
               ),
@@ -152,8 +152,8 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.referralHistoryAvatarBox,
-      height: AppSpacing.referralHistoryFilterHeight,
+      width: ReferralSpacingTokens.referralHistoryAvatarBox,
+      height: ReferralSpacingTokens.referralHistoryFilterHeight,
       child: DecoratedBox(
         decoration: const ShapeDecoration(
           color: AppColors.surface2,
@@ -194,7 +194,7 @@ class _FriendMetric extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.mdRadius),
       ),
       child: Padding(
-        padding: AppSpacing.referralInnerPadding,
+        padding: ReferralSpacingTokens.referralInnerPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -211,7 +211,7 @@ class _FriendMetric extends StatelessWidget {
                   Icon(
                     icon,
                     color: color,
-                    size: AppSpacing.referralHistoryIconSm,
+                    size: ReferralSpacingTokens.referralHistoryIconSm,
                   ),
                   const SizedBox(width: AppSpacing.x1),
                 ],

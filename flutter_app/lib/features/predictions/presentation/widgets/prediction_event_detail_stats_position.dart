@@ -35,10 +35,11 @@ class _StatsGrid extends StatelessWidget {
     ];
 
     return GridView.count(
-      crossAxisCount: AppSpacing.predictionDetailStatsColumns,
-      crossAxisSpacing: AppSpacing.predictionDetailStatsGap,
-      mainAxisSpacing: AppSpacing.predictionDetailStatsGap,
-      childAspectRatio: AppSpacing.predictionDetailStatsAspectRatio,
+      crossAxisCount: PredictionsSpacingTokens.predictionDetailStatsColumns,
+      crossAxisSpacing: PredictionsSpacingTokens.predictionDetailStatsGap,
+      mainAxisSpacing: PredictionsSpacingTokens.predictionDetailStatsGap,
+      childAspectRatio:
+          PredictionsSpacingTokens.predictionDetailStatsAspectRatio,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: [
@@ -49,19 +50,21 @@ class _StatsGrid extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width: AppSpacing.predictionDetailStatIconBox,
-                  height: AppSpacing.predictionDetailStatIconBox,
+                  width: PredictionsSpacingTokens.predictionDetailStatIconBox,
+                  height: PredictionsSpacingTokens.predictionDetailStatIconBox,
                   child: Material(
                     color: stat.color.withValues(alpha: .12),
                     borderRadius: AppRadii.smRadius,
                     child: Icon(
                       stat.icon,
                       color: stat.color,
-                      size: AppSpacing.predictionDetailStatIcon,
+                      size: PredictionsSpacingTokens.predictionDetailStatIcon,
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.predictionDetailStatGap),
+                const SizedBox(
+                  width: PredictionsSpacingTokens.predictionDetailStatGap,
+                ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,9 +132,11 @@ class _PositionBanner extends StatelessWidget {
               const Icon(
                 Icons.bolt_rounded,
                 color: AppColors.warn,
-                size: AppSpacing.predictionDetailPositionIcon,
+                size: PredictionsSpacingTokens.predictionDetailPositionIcon,
               ),
-              const SizedBox(width: AppSpacing.predictionDetailPositionIconGap),
+              const SizedBox(
+                width: PredictionsSpacingTokens.predictionDetailPositionIconGap,
+              ),
               Text(
                 'Your Position',
                 style: AppTextStyles.caption.copyWith(
@@ -154,7 +159,8 @@ class _PositionBanner extends StatelessWidget {
                     : AppColors.sell10,
               ),
               const SizedBox(
-                width: AppSpacing.predictionDetailPositionBadgeGap,
+                width:
+                    PredictionsSpacingTokens.predictionDetailPositionBadgeGap,
               ),
               Expanded(
                 child: Text(

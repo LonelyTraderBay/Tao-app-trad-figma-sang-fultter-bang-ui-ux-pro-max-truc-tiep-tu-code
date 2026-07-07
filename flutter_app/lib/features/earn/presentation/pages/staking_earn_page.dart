@@ -9,6 +9,7 @@ import 'package:vit_trade_flutter/app/theme/app_density.dart';
 import 'package:vit_trade_flutter/app/theme/app_module_accents.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/device_metrics.dart';
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
@@ -85,7 +86,8 @@ class _StakingEarnPageState extends ConsumerState<StakingEarnPage> {
             child: VitInsetScrollView(
               physics: const ClampingScrollPhysics(),
               bottomInset: bottomInset,
-              child: VitPageContent(rhythm: VitPageRhythm.standard, 
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.compact,
                 gap: VitContentGap.defaultGap,
                 density: VitDensity.compact,

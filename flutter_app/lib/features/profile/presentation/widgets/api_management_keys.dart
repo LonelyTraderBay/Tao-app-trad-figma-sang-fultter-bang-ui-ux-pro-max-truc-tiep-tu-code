@@ -60,9 +60,7 @@ class _ApiKeyCard extends StatelessWidget {
                     icon: showSecret
                         ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
-                    tooltip: showSecret
-                        ? '\u1EA8n secret'
-                        : 'Hi\u1EC7n secret',
+                    tooltip: showSecret ? '\u1EA8n secret' : 'Hi\u1EC7n secret',
                     onTap: onReveal,
                   ),
                   if (showSecret) ...[
@@ -71,8 +69,7 @@ class _ApiKeyCard extends StatelessWidget {
                       icon: copiedId == '${apiKey.id}_secret'
                           ? Icons.check_circle_outline_rounded
                           : Icons.copy_rounded,
-                      onTap: () =>
-                          onCopy('${apiKey.id}_secret', apiKey.secret),
+                      onTap: () => onCopy('${apiKey.id}_secret', apiKey.secret),
                     ),
                   ],
                 ],
@@ -110,8 +107,8 @@ class _ApiKeyHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: AppSpacing.profileApiIconBox,
-          height: AppSpacing.profileApiIconBox,
+          width: ProfileSpacingTokens.profileApiIconBox,
+          height: ProfileSpacingTokens.profileApiIconBox,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: active
@@ -129,7 +126,7 @@ class _ApiKeyHeader extends StatelessWidget {
             child: Icon(
               Icons.key_rounded,
               color: active ? _apiPrimary : _apiRed,
-              size: AppSpacing.profileApiIcon,
+              size: ProfileSpacingTokens.profileApiIcon,
             ),
           ),
         ),

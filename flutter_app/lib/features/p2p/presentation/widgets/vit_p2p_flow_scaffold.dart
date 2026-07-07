@@ -17,8 +17,7 @@ import 'package:vit_trade_flutter/shared/widgets/vit_inset_scroll_view.dart';
 double p2pFlowScrollBottomInset(
   BuildContext context, {
   ShellRenderMode? shellRenderMode,
-  double visualNavClearance =
-      DeviceMetrics.safeBottom + DeviceMetrics.tabBar,
+  double visualNavClearance = DeviceMetrics.safeBottom + DeviceMetrics.tabBar,
   double nativeNavClearanceOffset = AppSpacing.x4,
   double visualClearance = AppSpacing.x3,
   double nativeClearance = AppSpacing.x2,
@@ -74,17 +73,17 @@ class VitP2PFlowScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final resolvedInset = bottomInset ??
+    final resolvedInset =
+        bottomInset ??
         p2pFlowScrollBottomInset(context, shellRenderMode: shellRenderMode);
     final scrollBody = VitInsetScrollView(
       key: contentKey,
       bottomInset: resolvedInset,
       physics: onRefresh != null
-          ? const AlwaysScrollableScrollPhysics(
-              parent: ClampingScrollPhysics(),
-            )
+          ? const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics())
           : null,
-      child: scrollChild ??
+      child:
+          scrollChild ??
           VitPageContent(
             rhythm: rhythm,
             padding: VitContentPadding.compact,

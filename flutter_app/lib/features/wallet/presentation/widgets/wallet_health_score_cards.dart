@@ -20,40 +20,39 @@ class _OverviewTab extends StatelessWidget {
   }
 
   List<Widget> get sectionChildren => [
-        _RadarCard(metrics: snapshot.metrics),
-        VitPageSection(
-          label: 'Chi ti\u1EBFt \u0111i\u1EC3m',
-          accentColor: _healthPrimary,
-          innerGap: AppSpacing.pageRhythmStandardInnerGap,
-          children: [
-            for (final metric in snapshot.metrics)
-              _MetricCard(metric: metric),
-          ],
-        ),
-        _TrendCard(history: snapshot.history),
-        VitPageSection(
-          label: '\u0110\u1EC1 xu\u1EA5t th\u00EAm',
-          accentColor: _healthPrimary,
-          innerGap: AppSpacing.pageRhythmStandardInnerGap,
-          children: [
-            if (snapshot.priorityRecommendations
-                .where((rec) => rec.id != primaryRecommendationId)
-                .isEmpty)
-              const VitEmptyState(
-                title: 'No extra recommendations',
-                message: 'The highest-priority advisory action is shown above.',
-              )
-            else
-              for (final rec in snapshot.priorityRecommendations.where(
-                (rec) => rec.id != primaryRecommendationId,
-              ))
-                _RecommendationCard(
-                  recommendation: rec,
-                  onTap: () => onRecommendationTap(rec),
-                ),
-          ],
-        ),
-      ];
+    _RadarCard(metrics: snapshot.metrics),
+    VitPageSection(
+      label: 'Chi ti\u1EBFt \u0111i\u1EC3m',
+      accentColor: _healthPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
+      children: [
+        for (final metric in snapshot.metrics) _MetricCard(metric: metric),
+      ],
+    ),
+    _TrendCard(history: snapshot.history),
+    VitPageSection(
+      label: '\u0110\u1EC1 xu\u1EA5t th\u00EAm',
+      accentColor: _healthPrimary,
+      innerGap: AppSpacing.pageRhythmStandardInnerGap,
+      children: [
+        if (snapshot.priorityRecommendations
+            .where((rec) => rec.id != primaryRecommendationId)
+            .isEmpty)
+          const VitEmptyState(
+            title: 'No extra recommendations',
+            message: 'The highest-priority advisory action is shown above.',
+          )
+        else
+          for (final rec in snapshot.priorityRecommendations.where(
+            (rec) => rec.id != primaryRecommendationId,
+          ))
+            _RecommendationCard(
+              recommendation: rec,
+              onTap: () => onRecommendationTap(rec),
+            ),
+      ],
+    ),
+  ];
 }
 
 class _OverallScoreCard extends StatelessWidget {
@@ -449,7 +448,7 @@ class _ScoreSummaryCard extends StatelessWidget {
             child: Icon(
               icon,
               color: iconColor,
-              size: AppSpacing.walletHealthSummaryIconGlyph,
+              size: WalletSpacingTokens.walletHealthSummaryIconGlyph,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
@@ -512,7 +511,7 @@ class _ChecklistCard extends StatelessWidget {
                   ? Icons.check_circle_outline_rounded
                   : Icons.warning_amber_rounded,
               color: color,
-              size: AppSpacing.walletHealthChecklistIconGlyph,
+              size: WalletSpacingTokens.walletHealthChecklistIconGlyph,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
@@ -556,7 +555,7 @@ class _ActionRequiredCard extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: _healthRed,
-            size: AppSpacing.walletHealthActionIcon,
+            size: WalletSpacingTokens.walletHealthActionIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -617,17 +616,17 @@ class _AssetDistributionCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Wrap(
-            spacing: AppSpacing.walletHealthLegendSpacing,
-            runSpacing: AppSpacing.walletHealthLegendRunSpacing,
+            spacing: WalletSpacingTokens.walletHealthLegendSpacing,
+            runSpacing: WalletSpacingTokens.walletHealthLegendRunSpacing,
             children: [
               for (final slice in slices)
                 SizedBox(
-                  width: AppSpacing.walletHealthLegendWidth,
+                  width: WalletSpacingTokens.walletHealthLegendWidth,
                   child: Row(
                     children: [
                       // card-tile: allow-start — fixed surface, not horizontal strip tile
                       VitCard(
-                        width: AppSpacing.walletHealthLegendSwatch,
+                        width: WalletSpacingTokens.walletHealthLegendSwatch,
                         height: _healthLegendSwatchHeight,
                         radius: VitCardRadius.standard,
                         borderColor: Color(slice.colorHex),
@@ -673,7 +672,7 @@ class _ConcentrationRiskCard extends StatelessWidget {
               const Icon(
                 Icons.warning_amber_rounded,
                 color: _healthAmber,
-                size: AppSpacing.walletHealthActionIcon,
+                size: WalletSpacingTokens.walletHealthActionIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -767,7 +766,7 @@ class _TipCard extends StatelessWidget {
           const Icon(
             Icons.bolt_rounded,
             color: _healthAmber,
-            size: AppSpacing.walletHealthActionIcon,
+            size: WalletSpacingTokens.walletHealthActionIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -802,7 +801,7 @@ class _InfoCard extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _healthPrimary,
-            size: AppSpacing.walletHealthActionIcon,
+            size: WalletSpacingTokens.walletHealthActionIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

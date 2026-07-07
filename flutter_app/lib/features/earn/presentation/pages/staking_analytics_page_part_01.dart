@@ -214,7 +214,11 @@ class _SummaryMetric extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, color: color, size: AppSpacing.earnAnalyticsSummaryIcon),
+            Icon(
+              icon,
+              color: color,
+              size: EarnSpacingTokens.earnAnalyticsSummaryIcon,
+            ),
             const SizedBox(width: AppSpacing.x1),
             Expanded(
               child: Text(
@@ -274,7 +278,7 @@ class _CalculatorCard extends StatelessWidget {
               const Icon(
                 Icons.calculate_outlined,
                 color: AppColors.primary,
-                size: AppSpacing.earnAnalyticsInlineIcon,
+                size: EarnSpacingTokens.earnAnalyticsInlineIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -392,9 +396,7 @@ class _AnalyticsTabs extends StatelessWidget {
       variant: VitTabBarVariant.segment,
       activeKey: activeTab,
       onChanged: onChanged,
-      tabs: [
-        for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label),
-      ],
+      tabs: [for (final tab in tabs) VitTabItem(key: tab.id, label: tab.label)],
     );
   }
 }
@@ -455,7 +457,9 @@ class _EarningsChartCard extends StatelessWidget {
                           size: Size.infinite,
                         ),
                       ),
-                      const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                      const SizedBox(
+                        height: AppSpacing.pageRhythmCompactInnerGap,
+                      ),
                       _DateLabels(dates: points.map((p) => p.date).toList()),
                     ],
                   ),

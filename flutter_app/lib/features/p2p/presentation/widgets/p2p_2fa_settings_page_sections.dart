@@ -14,7 +14,7 @@ class _TwoFactorStatusCard extends StatelessWidget {
     return VitCard(
       key: P2P2FASettingsPage.statusKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pTwoFactorCardPadding,
+      padding: P2PSpacingTokens.p2pTwoFactorCardPadding,
       borderColor: AppColors.buy,
       background: ColoredBox(color: AppColors.buy.withValues(alpha: .9)),
       child: Row(
@@ -123,7 +123,7 @@ class _MethodRow extends StatelessWidget {
 
     return Padding(
       key: P2P2FASettingsPage.methodKey(method.id),
-      padding: AppSpacing.p2pTwoFactorCardPadding,
+      padding: P2PSpacingTokens.p2pTwoFactorCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -189,7 +189,7 @@ class _MethodRow extends StatelessWidget {
             VitCard(
               radius: VitCardRadius.standard,
               variant: VitCardVariant.inner,
-              padding: AppSpacing.p2pSecurityDetailsActionPadding,
+              padding: P2PSpacingTokens.p2pSecurityDetailsActionPadding,
               onTap: onSetPrimary,
               child: Center(
                 child: Text(
@@ -270,7 +270,7 @@ class _ThresholdRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       key: P2P2FASettingsPage.thresholdKey(threshold.id),
-      padding: AppSpacing.p2pTwoFactorCardPadding,
+      padding: P2PSpacingTokens.p2pTwoFactorCardPadding,
       child: Row(
         children: [
           _IconBadge(
@@ -310,7 +310,7 @@ class _ThresholdRow extends StatelessWidget {
             VitCard(
               radius: VitCardRadius.standard,
               variant: VitCardVariant.inner,
-              padding: AppSpacing.p2pSecurityDetailsEditPadding,
+              padding: P2PSpacingTokens.p2pSecurityDetailsEditPadding,
               child: Text(
                 'Sửa',
                 style: AppTextStyles.caption.copyWith(

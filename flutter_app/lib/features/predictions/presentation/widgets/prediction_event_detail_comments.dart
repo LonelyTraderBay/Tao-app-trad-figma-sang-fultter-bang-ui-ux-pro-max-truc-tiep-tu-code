@@ -15,16 +15,19 @@ class _CommentsContent extends StatelessWidget {
             borderRadius: AppRadii.mdRadius,
           ),
           child: Padding(
-            padding: AppSpacing.predictionDetailCommentWarningPadding,
+            padding:
+                PredictionsSpacingTokens.predictionDetailCommentWarningPadding,
             child: Row(
               children: [
                 const Icon(
                   Icons.warning_amber_rounded,
                   color: AppColors.warn,
-                  size: AppSpacing.predictionDetailCommentWarningIcon,
+                  size: PredictionsSpacingTokens
+                      .predictionDetailCommentWarningIcon,
                 ),
                 const SizedBox(
-                  width: AppSpacing.predictionDetailCommentWarningGap,
+                  width: PredictionsSpacingTokens
+                      .predictionDetailCommentWarningGap,
                 ),
                 Expanded(
                   child: Text(
@@ -59,7 +62,8 @@ class _CommentsContent extends StatelessWidget {
               borderRadius: AppRadii.mdRadius,
             ),
             child: Padding(
-              padding: AppSpacing.predictionDetailCommentInputPadding,
+              padding:
+                  PredictionsSpacingTokens.predictionDetailCommentInputPadding,
               child: Row(
                 children: [
                   Expanded(
@@ -104,12 +108,13 @@ class _CommentRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = side == 'Yes' ? AppColors.buy : AppColors.sell;
     return Padding(
-      padding: AppSpacing.predictionDetailCommentRowPadding,
+      padding: PredictionsSpacingTokens.predictionDetailCommentRowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: AppSpacing.predictionDetailCommentAvatarRadius,
+            radius:
+                PredictionsSpacingTokens.predictionDetailCommentAvatarRadius,
             backgroundColor: AppColors.surface2,
             child: Text(
               name[0],
@@ -119,13 +124,16 @@ class _CommentRow extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.predictionDetailCommentAvatarGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionDetailCommentAvatarGap,
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Wrap(
-                  spacing: AppSpacing.predictionDetailCommentHeaderGap,
+                  spacing:
+                      PredictionsSpacingTokens.predictionDetailCommentHeaderGap,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
@@ -159,10 +167,12 @@ class _CommentRow extends StatelessWidget {
                     const Icon(
                       Icons.thumb_up_alt_outlined,
                       color: AppColors.text3,
-                      size: AppSpacing.predictionDetailCommentLikeIcon,
+                      size: PredictionsSpacingTokens
+                          .predictionDetailCommentLikeIcon,
                     ),
                     const SizedBox(
-                      width: AppSpacing.predictionDetailCommentLikeGap,
+                      width: PredictionsSpacingTokens
+                          .predictionDetailCommentLikeGap,
                     ),
                     Text(
                       '$likes',
@@ -171,7 +181,8 @@ class _CommentRow extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      width: AppSpacing.predictionDetailCommentReportGap,
+                      width: PredictionsSpacingTokens
+                          .predictionDetailCommentReportGap,
                     ),
                     Text(
                       'Báo cáo',

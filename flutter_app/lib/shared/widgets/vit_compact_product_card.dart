@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_accent_pill.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 class VitCompactProductCard extends StatelessWidget {
   const VitCompactProductCard({
@@ -29,7 +30,7 @@ class VitCompactProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       onTap: onTap,
-      height: AppSpacing.homeRecentProductHeight,
+      height: HomeSpacingTokens.homeRecentProductHeight,
       contentAlign: VitCardContentAlign.center,
       padding: AppSpacing.cardTilePadding,
       child: Column(
@@ -39,8 +40,8 @@ class VitCompactProductCard extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: AppSpacing.homeRecentProductIcon,
-                height: AppSpacing.homeRecentProductIcon,
+                width: HomeSpacingTokens.homeRecentProductIcon,
+                height: HomeSpacingTokens.homeRecentProductIcon,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: accentColor.withValues(alpha: .14),
@@ -52,7 +53,7 @@ class VitCompactProductCard extends StatelessWidget {
                     child: Icon(
                       icon,
                       color: accentColor,
-                      size: AppSpacing.homeRecentProductIconText,
+                      size: HomeSpacingTokens.homeRecentProductIconText,
                     ),
                   ),
                 ),

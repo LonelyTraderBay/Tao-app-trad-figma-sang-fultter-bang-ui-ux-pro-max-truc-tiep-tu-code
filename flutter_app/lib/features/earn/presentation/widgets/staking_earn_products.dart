@@ -11,7 +11,8 @@ class _ProductList extends StatelessWidget {
       children: [
         for (final product in products) ...[
           _ProductCard(product: product),
-          if (product != products.last) const SizedBox(height: AppSpacing.rowGap),
+          if (product != products.last)
+            const SizedBox(height: AppSpacing.rowGap),
         ],
       ],
     );
@@ -30,7 +31,7 @@ class _ProductCard extends StatelessWidget {
     return VitCard(
       key: StakingEarnPage.productKey(product.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

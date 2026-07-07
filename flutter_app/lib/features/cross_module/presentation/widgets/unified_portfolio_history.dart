@@ -8,6 +8,7 @@ import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/uni
 import 'package:vit_trade_flutter/features/cross_module/presentation/widgets/unified_portfolio_painters.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/cross_module_spacing_tokens.dart';
 
 class UnifiedPortfolioHistory extends StatelessWidget {
   const UnifiedPortfolioHistory({super.key, required this.snapshot});
@@ -22,7 +23,7 @@ class UnifiedPortfolioHistory extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.crossModuleCardPadding,
+          padding: CrossModuleSpacingTokens.crossModuleCardPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -70,7 +71,7 @@ class _GrowthRow extends StatelessWidget {
         ? 0.0
         : (module.value - oldValue) / oldValue * 100;
     return VitCard(
-      padding: AppSpacing.crossModuleCardPadding,
+      padding: CrossModuleSpacingTokens.crossModuleCardPadding,
       child: Row(
         children: [
           Expanded(

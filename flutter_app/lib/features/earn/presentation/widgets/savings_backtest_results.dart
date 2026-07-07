@@ -11,6 +11,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custod
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_common.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_backtest_formatters.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class AllocationCard extends StatelessWidget {
   const AllocationCard({
@@ -29,19 +30,19 @@ class AllocationCard extends StatelessWidget {
     return VitCard(
       key: SavingsBacktestPage.allocationKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         children: [
           Row(
             children: [
               CustomPaint(
                 size: const Size.square(
-                  AppSpacing.savingsBacktestAllocationRing,
+                  EarnSpacingTokens.savingsBacktestAllocationRing,
                 ),
                 painter: AllocationRingPainter(slots: preset.slots),
                 child: SizedBox(
-                  width: AppSpacing.savingsBacktestAllocationRing,
-                  height: AppSpacing.savingsBacktestAllocationRing,
+                  width: EarnSpacingTokens.savingsBacktestAllocationRing,
+                  height: EarnSpacingTokens.savingsBacktestAllocationRing,
                   child: Center(
                     child: Text(
                       '${preset.slots.length}',
@@ -103,7 +104,7 @@ class _AllocationRow extends StatelessWidget {
     final color = slotColor(slot.colorKey);
     return Padding(
       key: SavingsBacktestPage.slotKey(slot.id),
-      padding: AppSpacing.earnBottomPaddingX1,
+      padding: EarnSpacingTokens.earnBottomPaddingX1,
       child: Row(
         children: [
           DecoratedBox(
@@ -112,8 +113,8 @@ class _AllocationRow extends StatelessWidget {
               shape: const CircleBorder(),
             ),
             child: const SizedBox(
-              width: AppSpacing.savingsBacktestLegendDot,
-              height: AppSpacing.savingsBacktestLegendDot,
+              width: EarnSpacingTokens.savingsBacktestLegendDot,
+              height: EarnSpacingTokens.savingsBacktestLegendDot,
             ),
           ),
           const SizedBox(width: AppSpacing.x2),
@@ -168,7 +169,7 @@ class ResultsTab extends StatelessWidget {
         VitCard(
           radius: VitCardRadius.large,
           borderColor: AppColors.buy20,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -290,7 +291,7 @@ class ResultsTab extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         EarnWarningBanner(
           text: snapshot.disclaimer,
-          lineHeight: AppSpacing.savingsBacktestWarningLineHeight,
+          lineHeight: EarnSpacingTokens.savingsBacktestWarningLineHeight,
         ),
       ],
     );
@@ -307,7 +308,7 @@ class _GrowthChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnPaddingX4,
+      padding: EarnSpacingTokens.earnPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -327,7 +328,7 @@ class _GrowthChart extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
           SizedBox(
-            height: AppSpacing.savingsBacktestGrowthChartHeight,
+            height: EarnSpacingTokens.savingsBacktestGrowthChartHeight,
             child: CustomPaint(
               painter: _GrowthPainter(
                 points: points,
@@ -360,7 +361,7 @@ class _ResultTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -398,7 +399,7 @@ class _SummaryTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.earnPaddingX3,
+      padding: EarnSpacingTokens.earnPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

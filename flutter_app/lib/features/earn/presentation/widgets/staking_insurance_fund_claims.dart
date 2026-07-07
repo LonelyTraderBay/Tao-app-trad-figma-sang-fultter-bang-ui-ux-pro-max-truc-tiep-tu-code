@@ -7,6 +7,7 @@ import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.da
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_insurance_fund_common.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingInsuranceFundClaimsTab extends StatelessWidget {
   const StakingInsuranceFundClaimsTab({super.key, required this.snapshot});
@@ -30,7 +31,7 @@ class StakingInsuranceFundClaimsTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,7 +46,8 @@ class StakingInsuranceFundClaimsTab extends StatelessWidget {
                   'Claim Processing: All claims are reviewed within 24 hours. Approved claims are paid out within 7 business days. Average approval rate: 94%.',
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingProductCompactBodyLineHeight,
+                    height:
+                        EarnSpacingTokens.stakingProductCompactBodyLineHeight,
                   ),
                 ),
               ),
@@ -67,7 +69,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
     return VitCard(
       key: StakingInsuranceFundKeys.claim(claim.id),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         children: [
           Row(
@@ -98,7 +100,7 @@ class StakingInsuranceFundClaimCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             radius: VitCardRadius.standard,
-            padding: AppSpacing.earnCardPaddingX3,
+            padding: EarnSpacingTokens.earnCardPaddingX3,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

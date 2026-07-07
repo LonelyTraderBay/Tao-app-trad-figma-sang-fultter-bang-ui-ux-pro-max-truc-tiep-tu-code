@@ -36,10 +36,10 @@ class _BotsHero extends StatelessWidget {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 1,
             height: AppSpacing.x6,
-            color: AppColors.border,
+            child: ColoredBox(color: AppColors.border),
           ),
           Expanded(
             child: Padding(
@@ -83,7 +83,7 @@ class _BotsTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.tradeBotTabsHeight,
+      height: TradeSpacingTokens.tradeBotTabsHeight,
       child: VitSegmentedTabBar(
         activeKey: active.name,
         onChanged: (key) => onChanged(
@@ -133,7 +133,8 @@ class _MyBotsTab extends StatelessWidget {
       children: [
         for (final bot in bots) ...[
           _BotCard(bot: bot, onToggle: onToggle, onDelete: onDelete),
-          if (bot != bots.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+          if (bot != bots.last)
+            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         ],
       ],
     );

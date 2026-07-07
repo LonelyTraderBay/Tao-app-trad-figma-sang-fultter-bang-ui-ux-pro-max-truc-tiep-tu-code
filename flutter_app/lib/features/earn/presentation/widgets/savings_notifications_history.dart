@@ -18,7 +18,7 @@ class _NotificationsTabs extends StatelessWidget {
     return ColoredBox(
       color: AppColors.surface,
       child: Padding(
-        padding: AppSpacing.earnSurfaceTabsPadding,
+        padding: EarnSpacingTokens.earnSurfaceTabsPadding,
         child: VitTabBar(
           variant: VitTabBarVariant.underline,
           activeKey: active,
@@ -120,7 +120,7 @@ class _HistoryActionBar extends StatelessWidget {
             variant: VitCtaButtonVariant.secondary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.earnPillPadding,
+            padding: EarnSpacingTokens.earnPillPadding,
             leading: const Icon(Icons.check_circle_outline_rounded),
             child: const Text('Đọc tất cả'),
           ),
@@ -150,7 +150,7 @@ class _NotificationCard extends StatelessWidget {
       radius: VitCardRadius.large,
       onTap: onTap,
       clip: true,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       background: DecoratedBox(
         decoration: ShapeDecoration(
           color: fill,
@@ -186,7 +186,7 @@ class _NotificationCard extends StatelessWidget {
                           fontWeight: notification.read
                               ? AppTextStyles.medium
                               : AppTextStyles.bold,
-                          height: AppSpacing
+                          height: EarnSpacingTokens
                               .savingsNotificationHistoryTitleLineHeight,
                         ),
                       ),
@@ -204,7 +204,8 @@ class _NotificationCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.savingsNotificationHistoryBodyLineHeight,
+                    height: EarnSpacingTokens
+                        .savingsNotificationHistoryBodyLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),

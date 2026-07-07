@@ -151,7 +151,7 @@ class _TierTable extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.profileVipTableTitlePadding,
+            padding: ProfileSpacingTokens.profileVipTableTitlePadding,
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -186,7 +186,7 @@ class _TableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.profileVipTableHeaderPadding,
+      padding: ProfileSpacingTokens.profileVipTableHeaderPadding,
       child: Row(
         children: [
           _TableCell(
@@ -223,7 +223,7 @@ class _TierRow extends StatelessWidget {
       key: VIPPage.tierRowKey(tier.level),
       color: active ? AppColors.primary08 : AppColors.transparent,
       child: Padding(
-        padding: AppSpacing.profileVipTableRowPadding,
+        padding: ProfileSpacingTokens.profileVipTableRowPadding,
         child: Row(
           children: [
             _TableCell(
@@ -231,7 +231,9 @@ class _TierRow extends StatelessWidget {
               child: Row(
                 children: [
                   _TierIcon(tier: tier),
-                  const SizedBox(width: AppSpacing.profileVipTierNameGap),
+                  const SizedBox(
+                    width: ProfileSpacingTokens.profileVipTierNameGap,
+                  ),
                   Flexible(
                     child: Text(
                       tier.name,
@@ -246,10 +248,12 @@ class _TierRow extends StatelessWidget {
                     ),
                   ),
                   if (active) ...[
-                    const SizedBox(width: AppSpacing.profileVipActiveDotGap),
                     const SizedBox(
-                      width: AppSpacing.profileVipActiveDot,
-                      height: AppSpacing.profileVipActiveDot,
+                      width: ProfileSpacingTokens.profileVipActiveDotGap,
+                    ),
+                    const SizedBox(
+                      width: ProfileSpacingTokens.profileVipActiveDot,
+                      height: ProfileSpacingTokens.profileVipActiveDot,
                       child: Material(color: _vipAccent, shape: CircleBorder()),
                     ),
                   ],
@@ -316,9 +320,11 @@ class _FeeSavingsCard extends StatelessWidget {
               const Icon(
                 Icons.bolt_rounded,
                 color: _vipSuccess,
-                size: AppSpacing.profileVipSavingsIcon,
+                size: ProfileSpacingTokens.profileVipSavingsIcon,
               ),
-              const SizedBox(width: AppSpacing.profileVipSavingsIconGap),
+              const SizedBox(
+                width: ProfileSpacingTokens.profileVipSavingsIconGap,
+              ),
               Text(
                 'Ti\u1EBFt ki\u1EC7m ph\u00ED c\u1EE7a b\u1EA1n',
                 style: AppTextStyles.body.copyWith(
@@ -338,7 +344,7 @@ class _FeeSavingsCard extends StatelessWidget {
                   sub: 'vs. Standard rate',
                 ),
               ),
-              SizedBox(width: AppSpacing.profileVipSavingsBoxGap),
+              SizedBox(width: ProfileSpacingTokens.profileVipSavingsBoxGap),
               Expanded(
                 child: _SavingBox(
                   label: 'T\u1ED5ng t\u00EDch l\u0169y',

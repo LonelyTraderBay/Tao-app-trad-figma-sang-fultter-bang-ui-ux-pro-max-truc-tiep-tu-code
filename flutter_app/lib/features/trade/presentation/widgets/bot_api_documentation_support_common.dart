@@ -30,7 +30,8 @@ class _RateLimitsCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (item != items.last) const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+            if (item != items.last)
+              const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           ],
         ],
       ),
@@ -48,7 +49,8 @@ class _AuthCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       density: VitDensity.compact,
-      child: VitPageContent(rhythm: VitPageRhythm.standard, 
+      child: VitPageContent(
+        rhythm: VitPageRhythm.standard,
         padding: VitContentPadding.none,
         fullBleed: true,
         density: VitDensity.compact,
@@ -112,8 +114,8 @@ class _CodeBlock extends StatelessWidget {
       variant: dark ? VitCardVariant.standard : VitCardVariant.inner,
       width: double.infinity,
       padding: compact
-          ? AppSpacing.tradeBotCodeBlockCompactPadding
-          : AppSpacing.tradeBotCodeBlockPadding,
+          ? TradeSpacingTokens.tradeBotCodeBlockCompactPadding
+          : TradeSpacingTokens.tradeBotCodeBlockPadding,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Text(

@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 const double _p2pPaymentCoolingVisualNavClearance =
     DeviceMetrics.safeBottom + DeviceMetrics.tabBar;
@@ -69,7 +70,7 @@ class P2PPaymentMethodCoolingPeriodPage extends ConsumerWidget {
                   child: SingleChildScrollView(
                     key: P2PPaymentMethodCoolingPeriodPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pPaymentCoolingScrollPadding(
+                    padding: P2PSpacingTokens.p2pPaymentCoolingScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
@@ -120,7 +121,7 @@ class _CoolingHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCardPadding,
       borderColor: AppColors.warningBorder,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -137,7 +138,7 @@ class _CoolingHero extends StatelessWidget {
                   child: Icon(
                     Icons.schedule_rounded,
                     color: AppColors.warn,
-                    size: AppSpacing.p2pPaymentHeroIcon,
+                    size: P2PSpacingTokens.p2pPaymentHeroIcon,
                   ),
                 ),
               ),
@@ -171,7 +172,7 @@ class _CoolingHero extends StatelessWidget {
               borderRadius: AppRadii.smRadius,
             ),
             child: Padding(
-              padding: AppSpacing.p2pPaymentCoolingHeroCountdownPadding,
+              padding: P2PSpacingTokens.p2pPaymentCoolingHeroCountdownPadding,
               child: Column(
                 children: [
                   Text(
@@ -205,7 +206,7 @@ class _TimelineCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -262,7 +263,7 @@ class _ReasonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -327,7 +328,7 @@ class _WaitingNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

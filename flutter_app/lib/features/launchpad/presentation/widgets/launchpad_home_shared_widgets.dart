@@ -19,7 +19,7 @@ class _MiniPill extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadInlinePillPadding,
+        padding: LaunchpadSpacingTokens.launchpadInlinePillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(

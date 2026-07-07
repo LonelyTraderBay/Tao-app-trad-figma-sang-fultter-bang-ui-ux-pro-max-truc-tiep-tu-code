@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_page_scaffold.dart
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_top_chrome.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/profile_spacing_tokens.dart';
 
 part '../widgets/profile_home_hero.dart';
 part '../widgets/profile_home_vip_prediction.dart';
@@ -76,7 +77,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       ),
       body: SingleChildScrollView(
         key: ProfilePage.contentKey,
-        padding: AppSpacing.profileScrollPadding(bottomInset),
+        padding: ProfileSpacingTokens.profileScrollPadding(bottomInset),
         physics: const ClampingScrollPhysics(),
         child: VitPageContent(
           rhythm: VitPageRhythm.compact,

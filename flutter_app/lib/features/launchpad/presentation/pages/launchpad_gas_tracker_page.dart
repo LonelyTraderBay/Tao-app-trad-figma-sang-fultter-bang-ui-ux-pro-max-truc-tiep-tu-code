@@ -19,6 +19,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/launchpad_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part 'launchpad_gas_tracker_page_part_01.dart';
 part 'launchpad_gas_tracker_page_part_02.dart';
@@ -115,7 +116,7 @@ class _LaunchpadGasTrackerPageState
               child: Column(
                 children: [
                   Padding(
-                    padding: AppSpacing.launchpadHeaderStatsPadding,
+                    padding: LaunchpadSpacingTokens.launchpadHeaderStatsPadding,
                     child: _FeaturedGasCard(price: selectedGas),
                   ),
                   ColoredBox(
@@ -126,7 +127,8 @@ class _LaunchpadGasTrackerPageState
                       children: [
                         const Divider(height: AppSpacing.hairlineStroke),
                         Padding(
-                          padding: AppSpacing.launchpadHorizontalContentPadding,
+                          padding: LaunchpadSpacingTokens
+                              .launchpadHorizontalContentPadding,
                           child: _GasTabs(
                             activeTab: _activeTab,
                             onChanged: (tab) =>
@@ -146,7 +148,7 @@ class _LaunchpadGasTrackerPageState
                         key: LaunchpadGasTrackerPage.contentKey,
                         physics: const ClampingScrollPhysics(),
                         child: VitPageContent(
-       rhythm: VitPageRhythm.standard,
+                          rhythm: VitPageRhythm.standard,
                           padding: VitContentPadding.compact,
                           gap: VitContentGap.tight,
                           children: [

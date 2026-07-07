@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
-import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/markets/presentation/widgets/market_heatmap_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/markets_spacing_tokens.dart';
 
 class MarketHeatmapSummaryStrip extends StatelessWidget {
   const MarketHeatmapSummaryStrip({
@@ -31,7 +31,7 @@ class MarketHeatmapSummaryStrip extends StatelessWidget {
             value: marketHeatmapFormatCompact(totalMarketCap),
           ),
         ),
-        const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
+        const SizedBox(width: MarketsSpacingTokens.marketHeatmapSummaryGap),
         Expanded(
           child: _SummaryCard(
             label: 'TB thay đổi $metric',
@@ -39,7 +39,7 @@ class MarketHeatmapSummaryStrip extends StatelessWidget {
             valueColor: averageChange >= 0 ? AppColors.buy : AppColors.sell,
           ),
         ),
-        const SizedBox(width: AppSpacing.marketHeatmapSummaryGap),
+        const SizedBox(width: MarketsSpacingTokens.marketHeatmapSummaryGap),
         Expanded(
           child: _SummaryCard(
             label: 'Số coin',
@@ -68,8 +68,8 @@ class _SummaryCard extends StatelessWidget {
     // card-tile: allow-start — fixed surface, not horizontal strip tile
     return VitCard(
       radius: VitCardRadius.standard,
-      padding: AppSpacing.marketHeatmapSummaryPadding,
-      height: AppSpacing.marketHeatmapSummaryHeight,
+      padding: MarketsSpacingTokens.marketHeatmapSummaryPadding,
+      height: MarketsSpacingTokens.marketHeatmapSummaryHeight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -80,10 +80,12 @@ class _SummaryCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text3,
-              height: AppSpacing.marketLineHeightShort,
+              height: MarketsSpacingTokens.marketLineHeightShort,
             ),
           ),
-          const SizedBox(height: AppSpacing.marketAnalyticsCompactGap),
+          const SizedBox(
+            height: MarketsSpacingTokens.marketAnalyticsCompactGap,
+          ),
           Text(
             value,
             maxLines: 1,
@@ -92,7 +94,7 @@ class _SummaryCard extends StatelessWidget {
               color: valueColor,
               fontWeight: AppTextStyles.bold,
               fontFeatures: AppTextStyles.tabularFigures,
-              height: AppSpacing.marketLineHeightTight,
+              height: MarketsSpacingTokens.marketLineHeightTight,
             ),
           ),
         ],
@@ -127,9 +129,9 @@ class MarketHeatmapControls extends StatelessWidget {
           color: AppColors.surface2,
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.lgRadius),
           child: SizedBox(
-            height: AppSpacing.marketHeatmapControlsHeight,
+            height: MarketsSpacingTokens.marketHeatmapControlsHeight,
             child: Padding(
-              padding: AppSpacing.marketHeatmapControlsPadding,
+              padding: MarketsSpacingTokens.marketHeatmapControlsPadding,
               child: Row(
                 children: [
                   for (final metric in metrics)
@@ -141,24 +143,25 @@ class MarketHeatmapControls extends StatelessWidget {
                       active: metric == activeMetric,
                       onTap: () => onMetricSelected(metric),
                       color: marketHeatmapPrimary,
-                      height: AppSpacing.marketHeatmapFilterHeight,
-                      padding: AppSpacing.marketHeatmapFilterPadding,
+                      height: MarketsSpacingTokens.marketHeatmapFilterHeight,
+                      padding: MarketsSpacingTokens.marketHeatmapFilterPadding,
                     ),
                 ],
               ),
             ),
           ),
         ),
-        const SizedBox(width: AppSpacing.marketAnalyticsBreadthGap),
+        const SizedBox(width: MarketsSpacingTokens.marketAnalyticsBreadthGap),
         Expanded(
           child: SizedBox(
-            height: AppSpacing.marketHeatmapControlsHeight,
+            height: MarketsSpacingTokens.marketHeatmapControlsHeight,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               clipBehavior: Clip.none,
               itemCount: categories.length,
-              separatorBuilder: (_, _) =>
-                  const SizedBox(width: AppSpacing.marketAnalyticsCompactGap),
+              separatorBuilder: (_, _) => const SizedBox(
+                width: MarketsSpacingTokens.marketAnalyticsCompactGap,
+              ),
               itemBuilder: (context, index) {
                 final category = categories[index];
                 return VitFilterChip(
@@ -167,8 +170,8 @@ class MarketHeatmapControls extends StatelessWidget {
                   active: category == activeCategory,
                   onTap: () => onCategorySelected(category),
                   color: marketHeatmapPrimary,
-                  height: AppSpacing.marketHeatmapFilterHeight,
-                  padding: AppSpacing.marketHeatmapFilterPadding,
+                  height: MarketsSpacingTokens.marketHeatmapFilterHeight,
+                  padding: MarketsSpacingTokens.marketHeatmapFilterPadding,
                 );
               },
             ),

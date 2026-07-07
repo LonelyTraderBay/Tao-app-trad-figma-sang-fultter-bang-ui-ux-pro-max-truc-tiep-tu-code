@@ -15,7 +15,7 @@ class _MilestoneDot extends StatelessWidget {
         shape: CircleBorder(
           side: BorderSide(
             color: unlocked ? color : AppColors.borderSolid,
-            width: AppSpacing.savingsGoalMilestoneBorderWidth,
+            width: EarnSpacingTokens.savingsGoalMilestoneBorderWidth,
           ),
         ),
       ),
@@ -33,7 +33,7 @@ class _MilestoneDot extends StatelessWidget {
                   '${milestone.percentage}',
                   style: AppTextStyles.microTiny.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.savingsGoalMilestoneLineHeight,
+                    height: EarnSpacingTokens.savingsGoalMilestoneLineHeight,
                   ),
                 ),
               ),
@@ -53,7 +53,7 @@ class _TipCard extends StatelessWidget {
     return VitCard(
       key: SavingsGoalPage.tipKey(tip.title),
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Row(
         children: [
           _GoalIcon(iconKey: tip.iconKey, color: color),
@@ -72,9 +72,7 @@ class _TipCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.x1),
                 Text(
                   tip.description,
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.text3,
-                  ),
+                  style: AppTextStyles.caption.copyWith(color: AppColors.text3),
                 ),
               ],
             ),
@@ -142,7 +140,7 @@ class _CreateGoalSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -194,7 +192,7 @@ class _TemplateTile extends StatelessWidget {
       key: SavingsGoalPage.templateKey(template.id),
       variant: VitCardVariant.inner,
       borderColor: selected ? color : null,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         children: [
@@ -277,8 +275,8 @@ class _GoalDetailSheet extends StatelessWidget {
             _ProgressRing(
               progress: progress,
               color: accent,
-              size: AppSpacing.savingsGoalDetailProgressRing,
-              strokeWidth: AppSpacing.savingsGoalDetailProgressStroke,
+              size: EarnSpacingTokens.savingsGoalDetailProgressRing,
+              strokeWidth: EarnSpacingTokens.savingsGoalDetailProgressStroke,
               centerLabel: '${(progress * 100).round()}%',
             ),
             const SizedBox(width: AppSpacing.x4),
@@ -313,7 +311,7 @@ class _GoalDetailSheet extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
         VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.earnCardPaddingX4,
+          padding: EarnSpacingTokens.earnCardPaddingX4,
           child: Column(
             children: [
               _SheetMetric(
@@ -373,7 +371,7 @@ class _MilestoneRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX3,
+      padding: EarnSpacingTokens.earnVerticalPaddingX3,
       child: Row(
         children: [
           _MilestoneDot(milestone: milestone, color: color),
@@ -419,7 +417,7 @@ class _ContributionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final automatic = contribution.source == 'Tự động';
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX2,
+      padding: EarnSpacingTokens.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -472,7 +470,7 @@ class _SheetFrame extends StatelessWidget {
           top: false,
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
-            padding: AppSpacing.earnSheetContentPadding,
+            padding: EarnSpacingTokens.earnSheetContentPadding,
             child: child,
           ),
         ),

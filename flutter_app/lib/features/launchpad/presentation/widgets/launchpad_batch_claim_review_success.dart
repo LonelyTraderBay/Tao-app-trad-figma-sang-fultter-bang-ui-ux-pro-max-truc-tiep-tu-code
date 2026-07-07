@@ -20,7 +20,7 @@ class _ReviewStep extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.launchpadPaddingX5,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX5,
           child: Column(
             children: [
               const Icon(
@@ -103,7 +103,7 @@ class _ReviewTotalRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.launchpadVerticalPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(
@@ -144,13 +144,13 @@ class _SuccessStep extends StatelessWidget {
       children: [
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.launchpadPaddingX5,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX5,
           child: Column(
             children: [
               const Icon(
                 Icons.check_circle_outline_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.launchpadBox48,
+                size: LaunchpadSpacingTokens.launchpadBox48,
               ),
               const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
               Text(

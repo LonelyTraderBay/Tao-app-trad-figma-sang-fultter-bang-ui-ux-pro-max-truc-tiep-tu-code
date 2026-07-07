@@ -63,7 +63,7 @@ class _TradingLevelLink extends StatelessWidget {
     return VitCard(
       key: P2PAchievementsPage.tradingLevelKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pTrustProgressCardPadding,
+      padding: P2PSpacingTokens.p2pTrustProgressCardPadding,
       onTap: () {
         HapticFeedback.selectionClick();
         context.go(snapshot.tradingLevelRoute);

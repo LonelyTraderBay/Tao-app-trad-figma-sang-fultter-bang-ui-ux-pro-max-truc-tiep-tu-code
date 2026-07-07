@@ -18,7 +18,7 @@ class _RiskScoreCard extends StatelessWidget {
     return VitCard(
       key: StakingRiskScoreCalculatorPage.scoreKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         children: [
           Text(
@@ -35,7 +35,7 @@ class _RiskScoreCard extends StatelessWidget {
                 shape: CircleBorder(
                   side: BorderSide(
                     color: color,
-                    width: AppSpacing.stakingRiskScoreBorderWidth,
+                    width: EarnSpacingTokens.stakingRiskScoreBorderWidth,
                   ),
                 ),
               ),
@@ -70,14 +70,14 @@ class _RiskScoreCard extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: AppSpacing.earnWidePillPadding,
+              padding: EarnSpacingTokens.earnWidePillPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     Icons.warning_amber_rounded,
                     color: color,
-                    size: AppSpacing.stakingRiskScorePillIcon,
+                    size: EarnSpacingTokens.stakingRiskScorePillIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Text(
@@ -138,7 +138,7 @@ class _RecommendationCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: color.withValues(alpha: 0.28),
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -160,7 +160,7 @@ class _RecommendationCard extends StatelessWidget {
                   recommendation.body,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.stakingEarnHeroTabLabelLineHeight,
+                    height: EarnSpacingTokens.stakingEarnHeroTabLabelLineHeight,
                   ),
                 ),
               ],

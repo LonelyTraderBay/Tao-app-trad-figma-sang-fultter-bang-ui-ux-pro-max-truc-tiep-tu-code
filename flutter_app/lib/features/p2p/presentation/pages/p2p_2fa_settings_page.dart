@@ -12,6 +12,7 @@ import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow
 import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_2fa_settings_page_sections.dart';
 part '../widgets/p2p_2fa_settings_page_common.dart';
@@ -79,14 +80,11 @@ class _P2P2FASettingsPageState extends ConsumerState<P2P2FASettingsPage> {
           onToggle: _toggleMethod,
           onSetPrimary: _setPrimaryMethod,
         ),
-        _ThresholdSection(
-          thresholds: _thresholds,
-          onToggle: _toggleThreshold,
-        ),
+        _ThresholdSection(thresholds: _thresholds, onToggle: _toggleThreshold),
         _SecurityRecommendation(text: snapshot.recommendation),
         const VitCard(
           variant: VitCardVariant.inner,
-          padding: AppSpacing.p2pTwoFactorInnerPadding,
+          padding: P2PSpacingTokens.p2pTwoFactorInnerPadding,
           child: VitHighRiskStatePanel(
             state: VitHighRiskUiState.riskReview,
             title: 'Rà soát thay đổi 2FA P2P',

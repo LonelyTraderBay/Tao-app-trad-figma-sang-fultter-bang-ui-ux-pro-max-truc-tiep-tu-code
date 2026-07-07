@@ -35,7 +35,8 @@ class _SavingsPortfolioPageState extends ConsumerState<SavingsPortfolioPage> {
             child: VitInsetScrollView(
               physics: const ClampingScrollPhysics(),
               bottomInset: scrollEndPadding,
-              child: VitPageContent(rhythm: VitPageRhythm.standard, 
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [

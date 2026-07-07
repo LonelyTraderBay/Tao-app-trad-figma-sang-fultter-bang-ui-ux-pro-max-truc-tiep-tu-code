@@ -20,7 +20,8 @@ class _ResultView extends StatelessWidget {
     final result = _resultForPercent(percent);
     final color = _colorForResult(result.outcome);
 
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       density: VitDensity.compact,
       children: [

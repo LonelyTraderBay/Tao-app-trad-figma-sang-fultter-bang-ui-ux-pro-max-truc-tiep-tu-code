@@ -78,7 +78,7 @@ class _ModuleBadge extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.discoveryBadgePadding,
+        padding: LaunchpadSpacingTokens.discoveryBadgePadding,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -112,7 +112,7 @@ class _StatusMini extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.discoveryMiniBadgePadding,
+        padding: LaunchpadSpacingTokens.discoveryMiniBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -138,7 +138,7 @@ class _CountPill extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.discoveryMiniBadgePadding,
+        padding: LaunchpadSpacingTokens.discoveryMiniBadgePadding,
         child: Text(
           '$count',
           style: AppTextStyles.micro.copyWith(
@@ -184,8 +184,8 @@ class _CreatorAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.discoveryCreatorAvatarBox,
-      height: AppSpacing.discoveryCreatorAvatarBox,
+      width: LaunchpadSpacingTokens.discoveryCreatorAvatarBox,
+      height: LaunchpadSpacingTokens.discoveryCreatorAvatarBox,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: AppModuleAccents.arena.withValues(alpha: .16),

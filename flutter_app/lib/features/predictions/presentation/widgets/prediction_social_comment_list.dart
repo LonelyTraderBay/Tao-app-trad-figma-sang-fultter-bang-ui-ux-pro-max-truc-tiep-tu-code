@@ -30,7 +30,9 @@ class _CommentCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (reply)
-          const SizedBox(width: AppSpacing.predictionSocialReplyIndent),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionSocialReplyIndent,
+          ),
         Expanded(
           child: VitCard(
             borderColor: comment.isPinned
@@ -45,13 +47,15 @@ class _CommentCard extends StatelessWidget {
                   children: [
                     _TierAvatar(tier: comment.userTier),
                     const SizedBox(
-                      width: AppSpacing.predictionSocialCommentHeaderGap,
+                      width: PredictionsSpacingTokens
+                          .predictionSocialCommentHeaderGap,
                     ),
                     Expanded(child: _CommentUser(comment: comment)),
                     const Icon(
                       Icons.more_horiz_rounded,
                       color: AppColors.text3,
-                      size: AppSpacing.predictionSocialCommentMoreIcon,
+                      size: PredictionsSpacingTokens
+                          .predictionSocialCommentMoreIcon,
                     ),
                   ],
                 ),
@@ -87,8 +91,8 @@ class _CommentUser extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
-          spacing: AppSpacing.predictionSocialUserBadgeGap,
-          runSpacing: AppSpacing.predictionSocialUserBadgeRunGap,
+          spacing: PredictionsSpacingTokens.predictionSocialUserBadgeGap,
+          runSpacing: PredictionsSpacingTokens.predictionSocialUserBadgeRunGap,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Text(
@@ -111,9 +115,11 @@ class _CommentUser extends StatelessWidget {
             const Icon(
               Icons.access_time_rounded,
               color: AppColors.text3,
-              size: AppSpacing.predictionSocialTimeIcon,
+              size: PredictionsSpacingTokens.predictionSocialTimeIcon,
             ),
-            const SizedBox(width: AppSpacing.predictionSocialTimeIconGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionSocialTimeIconGap,
+            ),
             Flexible(
               child: Text(
                 comment.createdAtLabel,
@@ -121,7 +127,9 @@ class _CommentUser extends StatelessWidget {
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
               ),
             ),
-            const SizedBox(width: AppSpacing.predictionSocialStanceBadgeGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionSocialStanceBadgeGap,
+            ),
             _SmallBadge(
               label: _stanceLabel(comment.stance).toUpperCase(),
               color: _stanceColor(comment.stance),
@@ -148,20 +156,26 @@ class _CommentActions extends StatelessWidget {
           label: '${comment.upvotes}',
           color: AppColors.buy,
         ),
-        const SizedBox(width: AppSpacing.predictionSocialActionGap),
+        const SizedBox(
+          width: PredictionsSpacingTokens.predictionSocialActionGap,
+        ),
         _ActionPill(
           icon: Icons.thumb_down_alt_outlined,
           label: '${comment.downvotes}',
           color: AppColors.sell,
         ),
         if (!reply) ...[
-          const SizedBox(width: AppSpacing.predictionSocialActionGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionSocialActionGap,
+          ),
           const _ActionPill(
             icon: Icons.mode_comment_outlined,
             label: 'Tra loi',
           ),
         ],
-        const SizedBox(width: AppSpacing.predictionSocialActionReportGap),
+        const SizedBox(
+          width: PredictionsSpacingTokens.predictionSocialActionReportGap,
+        ),
         const _ActionPill(
           icon: Icons.flag_outlined,
           label: 'Bao cao',
@@ -183,11 +197,11 @@ class _TierAvatar extends StatelessWidget {
       color: _tierColor(tier),
       shape: const CircleBorder(),
       child: const SizedBox.square(
-        dimension: AppSpacing.predictionSocialAvatar,
+        dimension: PredictionsSpacingTokens.predictionSocialAvatar,
         child: Icon(
           Icons.person_outline_rounded,
           color: AppColors.onAccent,
-          size: AppSpacing.predictionSocialAvatarIcon,
+          size: PredictionsSpacingTokens.predictionSocialAvatarIcon,
         ),
       ),
     );
@@ -206,7 +220,7 @@ class _SmallBadge extends StatelessWidget {
       color: color.withValues(alpha: .16),
       borderRadius: AppRadii.xsRadius,
       child: Padding(
-        padding: AppSpacing.predictionSocialSmallBadgePadding,
+        padding: PredictionsSpacingTokens.predictionSocialSmallBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.numericMicro.copyWith(
@@ -238,15 +252,17 @@ class _ActionPill extends StatelessWidget {
       color: flat ? AppColors.transparent : AppColors.bg,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.predictionSocialActionPillPadding,
+        padding: PredictionsSpacingTokens.predictionSocialActionPillPadding,
         child: Row(
           children: [
             Icon(
               icon,
               color: color,
-              size: AppSpacing.predictionSocialActionIcon,
+              size: PredictionsSpacingTokens.predictionSocialActionIcon,
             ),
-            const SizedBox(width: AppSpacing.predictionSocialActionIconGap),
+            const SizedBox(
+              width: PredictionsSpacingTokens.predictionSocialActionIconGap,
+            ),
             Text(
               label,
               style: AppTextStyles.micro.copyWith(
@@ -275,9 +291,11 @@ class _CommentDisclaimer extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _predictionPrimary,
-            size: AppSpacing.predictionSocialDisclosureIcon,
+            size: PredictionsSpacingTokens.predictionSocialDisclosureIcon,
           ),
-          const SizedBox(width: AppSpacing.predictionSocialDisclosureGap),
+          const SizedBox(
+            width: PredictionsSpacingTokens.predictionSocialDisclosureGap,
+          ),
           Expanded(
             child: Text(
               'Y kien nguoi dung chi mang tinh tham khao. Khong phai loi khuyen dau tu. Tu chiu trach nhiem quyet dinh.',

@@ -9,7 +9,7 @@ class _PriceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ad = snapshot.ad;
     return VitCard(
-      padding: AppSpacing.p2pAdDetailCompactCardPadding,
+      padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,
       child: Column(
         children: [
           Row(
@@ -114,7 +114,7 @@ class _AmountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ad = snapshot.ad;
     return VitCard(
-      padding: AppSpacing.p2pAdDetailCompactCardPadding,
+      padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -161,7 +161,7 @@ class _AmountCard extends StatelessWidget {
             onTap: (value) => onPercent(value.round()),
             accentColor: AppModuleAccents.p2p,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pAdDetailPercentPadding,
+            padding: P2PSpacingTokens.p2pAdDetailPercentPadding,
             gap: AppSpacing.x3,
             items: [
               for (final percent in const [25, 50, 75, 100])
@@ -201,7 +201,7 @@ class _InputShell extends StatelessWidget {
           side: const BorderSide(color: AppColors.accent20),
         ),
         child: Padding(
-          padding: AppSpacing.p2pAdDetailInputPadding,
+          padding: P2PSpacingTokens.p2pAdDetailInputPadding,
           child: Row(
             children: [
               Expanded(
@@ -244,7 +244,7 @@ class _RequirementCard extends StatelessWidget {
         side: const BorderSide(color: AppColors.accent20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pAdDetailCompactCardPadding,
+        padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -295,7 +295,7 @@ class _TermsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pAdDetailCardPadding,
+      padding: P2PSpacingTokens.p2pAdDetailCardPadding,
       child: Row(
         children: [
           Expanded(
@@ -333,7 +333,7 @@ class _EscrowCard extends StatelessWidget {
         side: const BorderSide(color: AppColors.buy20),
       ),
       child: Padding(
-        padding: AppSpacing.p2pAdDetailCompactCardPadding,
+        padding: P2PSpacingTokens.p2pAdDetailCompactCardPadding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

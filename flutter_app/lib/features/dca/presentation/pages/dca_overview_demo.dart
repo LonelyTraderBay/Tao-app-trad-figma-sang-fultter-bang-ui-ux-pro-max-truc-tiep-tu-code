@@ -16,6 +16,8 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/dca_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/dca_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 part '../widgets/dca_overview_demo_shell.dart';
 part '../widgets/dca_overview_demo_metrics.dart';
@@ -90,7 +92,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
                   physics: const ClampingScrollPhysics(),
                   padding: EdgeInsets.only(bottom: scrollEndClearance),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     gap: VitContentGap.tight,
                     children: [
                       _DcaStateBar(
@@ -177,7 +179,7 @@ class _DCAOverviewDemoState extends ConsumerState<DCAOverviewDemo> {
           alignment: Alignment.center,
           child: ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: AppSpacing.dcaOverviewPreviewMaxWidth,
+              maxWidth: DcaSpacingTokens.dcaOverviewPreviewMaxWidth,
             ),
             child: DecoratedBox(
               decoration: BoxDecoration(

@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/trade_controller_providers.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/widgets/trade_module_layout.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 part '../widgets/bot_equity_curve_summary_tabs.dart';
 part '../widgets/bot_equity_curve_charts_cards.dart';
@@ -61,8 +62,7 @@ class _BotEquityCurvePageState extends ConsumerState<BotEquityCurvePage> {
       children: [
         VitBotSubpageHero(
           primaryLabel: 'Lợi nhuận bot',
-          primaryValue:
-              '+${snapshot.summary.botReturnPct.toStringAsFixed(1)}%',
+          primaryValue: '+${snapshot.summary.botReturnPct.toStringAsFixed(1)}%',
           primaryColor: _equityGreen,
           secondaryLabel: 'Alpha',
           secondaryValue: '+${snapshot.summary.alphaPct.toStringAsFixed(1)}%',

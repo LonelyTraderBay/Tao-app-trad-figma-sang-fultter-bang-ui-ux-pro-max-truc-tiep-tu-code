@@ -7,6 +7,8 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/trade/presentation/controllers/trade_controller.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/trade_spacing_tokens.dart';
 
 /// Visual skin for copy-trading provider lists (SC-063 classic vs SC-064 v2).
 enum CopyTradingListSkin { classic, v2 }
@@ -76,9 +78,9 @@ class CopyTradingRiskWarningCard extends StatelessWidget {
     return VitCard(
       density: VitDensity.compact,
       padding: AppSpacing.zeroInsets.copyWith(
-        left: AppSpacing.tradePageContentGap,
+        left: TradeSpacingTokens.tradePageContentGap,
         top: AppSpacing.x2,
-        right: AppSpacing.tradePageContentGap,
+        right: TradeSpacingTokens.tradePageContentGap,
         bottom: AppSpacing.x2,
       ),
       variant: VitCardVariant.inner,
@@ -133,7 +135,7 @@ class CopyTradingSortChips extends StatelessWidget {
       ],
       selectedValue: selected,
       onTap: onChanged,
-      height: AppSpacing.copyTradingV2SortChipHeight,
+      height: TradeSpacingTokens.copyTradingV2SortChipHeight,
     );
   }
 }
@@ -165,7 +167,7 @@ class CopyTradingTraderList extends StatelessWidget {
               skin: skin,
             ),
             if (i < traders.length - 1)
-              const SizedBox(height: AppSpacing.tradePageContentGap),
+              const SizedBox(height: TradeSpacingTokens.tradePageContentGap),
           ],
         ],
       );
@@ -215,7 +217,7 @@ class _CopyTraderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tier = _tierFor(trader.copiers, skin);
-    final cardSpace = AppSpacing.tradePageContentGap;
+    final cardSpace = TradeSpacingTokens.tradePageContentGap;
     final innerSpace = AppSpacing.x2;
     final risk = skin == CopyTradingListSkin.classic
         ? _riskFor(trader.riskLevel)
@@ -335,7 +337,7 @@ class _CopyTraderHeader extends StatelessWidget {
         ? AppColors.caution
         : AppColors.warn;
     final followSize = skin == CopyTradingListSkin.classic
-        ? AppSpacing.tradeBotSmallIcon
+        ? TradeSpacingTokens.tradeBotSmallIcon
         : AppSpacing.iconSm;
 
     return Column(
@@ -407,22 +409,22 @@ class _CopyAvatarBadge extends StatelessWidget {
       return VitAssetAvatar(
         label: trader.avatar,
         accentColor: AppColors.primary,
-        size: AppSpacing.tradeToolIconTileMd,
+        size: TradeSpacingTokens.tradeToolIconTileMd,
         radius: AppRadii.xlRadius,
         border: true,
       );
     }
 
     return SizedBox(
-      width: AppSpacing.copyTradingV2TraderAvatarStackWidth,
-      height: AppSpacing.copyTradingV2TraderAvatarStackHeight,
+      width: TradeSpacingTokens.copyTradingV2TraderAvatarStackWidth,
+      height: TradeSpacingTokens.copyTradingV2TraderAvatarStackHeight,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
-            width: AppSpacing.copyTradingV2TraderAvatarSize,
-            height: AppSpacing.copyTradingV2TraderAvatarSize,
+            width: TradeSpacingTokens.copyTradingV2TraderAvatarSize,
+            height: TradeSpacingTokens.copyTradingV2TraderAvatarSize,
             alignment: Alignment.center,
             radius: VitCardRadius.large,
             variant: VitCardVariant.ghost,
@@ -444,15 +446,15 @@ class _CopyAvatarBadge extends StatelessWidget {
             bottom: AppSpacing.hairlineStroke,
             // card-tile: allow-start — fixed surface, not horizontal strip tile
             child: VitCard(
-              width: AppSpacing.copyTradingV2TraderTierBadgeSize,
-              height: AppSpacing.copyTradingV2TraderTierBadgeSize,
+              width: TradeSpacingTokens.copyTradingV2TraderTierBadgeSize,
+              height: TradeSpacingTokens.copyTradingV2TraderTierBadgeSize,
               alignment: Alignment.center,
               radius: VitCardRadius.large,
               borderColor: tier.color,
               child: Icon(
                 tier.icon,
                 color: tier.color,
-                size: AppSpacing.copyTradingV2TraderTierBadgeIcon,
+                size: TradeSpacingTokens.copyTradingV2TraderTierBadgeIcon,
               ),
             ),
           ),
@@ -472,7 +474,7 @@ class _CopyRoiBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     final maxWidth = skin == CopyTradingListSkin.classic
         ? 116.0
-        : AppSpacing.copyTradingV2RoiMaxWidth;
+        : TradeSpacingTokens.copyTradingV2RoiMaxWidth;
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: maxWidth),
@@ -605,7 +607,7 @@ class _CopyDetailsButton extends StatelessWidget {
         key: keys.detailKey(traderId),
         onPressed: onOpen,
         variant: VitCtaButtonVariant.secondary,
-        height: AppSpacing.homeHeroActionHeight,
+        height: HomeSpacingTokens.homeHeroActionHeight,
         trailing: const Icon(Icons.chevron_right_rounded),
         child: const Text('Xem chi tiết'),
       );
@@ -615,7 +617,7 @@ class _CopyDetailsButton extends StatelessWidget {
     return VitCard(
       key: keys.detailKey(traderId),
       onTap: onOpen,
-      height: AppSpacing.copyTradingV2DetailsButtonHeight,
+      height: TradeSpacingTokens.copyTradingV2DetailsButtonHeight,
       alignment: Alignment.center,
       variant: VitCardVariant.inner,
       child: Row(
@@ -632,7 +634,7 @@ class _CopyDetailsButton extends StatelessWidget {
           const Icon(
             Icons.chevron_right_rounded,
             color: AppColors.text1,
-            size: AppSpacing.tradeTpslIcon,
+            size: TradeSpacingTokens.tradeTpslIcon,
           ),
         ],
       ),

@@ -9,7 +9,7 @@ class _TermsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       key: ReferralRulesPage.termsKey,
-      padding: AppSpacing.referralCardPadding,
+      padding: ReferralSpacingTokens.referralCardPadding,
       child: Column(
         children: [
           for (var i = 0; i < snapshot.terms.length; i++) ...[
@@ -32,7 +32,7 @@ class _TermsList extends StatelessWidget {
                         style: AppTextStyles.micro.copyWith(
                           color: AppColors.text3,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.referralLineHeightTight,
+                          height: ReferralSpacingTokens.referralLineHeightTight,
                         ),
                       ),
                     ),
@@ -115,7 +115,7 @@ class _FaqCard extends StatelessWidget {
               key: ReferralRulesPage.faqToggleKey(index),
               onTap: onTap,
               child: Padding(
-                padding: AppSpacing.referralCardPadding,
+                padding: ReferralSpacingTokens.referralCardPadding,
                 child: Row(
                   children: [
                     const Icon(
@@ -148,7 +148,7 @@ class _FaqCard extends StatelessWidget {
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
-              padding: AppSpacing.referralFaqAnswerPadding,
+              padding: ReferralSpacingTokens.referralFaqAnswerPadding,
               child: Text(
                 faq.answer,
                 style: AppTextStyles.caption.copyWith(color: AppColors.text2),

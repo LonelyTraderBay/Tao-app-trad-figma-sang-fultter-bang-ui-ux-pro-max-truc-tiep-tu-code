@@ -9,7 +9,7 @@ class _ConfirmRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.p2pPaymentAddFormPreviewGap,
+      padding: P2PSpacingTokens.p2pPaymentAddFormPreviewGap,
       child: Row(
         children: [
           Expanded(

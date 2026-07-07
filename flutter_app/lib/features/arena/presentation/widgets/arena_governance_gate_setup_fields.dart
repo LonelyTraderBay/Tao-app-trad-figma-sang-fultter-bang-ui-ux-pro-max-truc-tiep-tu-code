@@ -81,8 +81,8 @@ class _ChallengeTypeGrid extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: types.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: AppSpacing.arenaGovernanceGridColumns,
-          childAspectRatio: AppSpacing.arenaGovernanceDomainGridAspect,
+          crossAxisCount: ArenaSpacingTokens.arenaGovernanceGridColumns,
+          childAspectRatio: ArenaSpacingTokens.arenaGovernanceDomainGridAspect,
           crossAxisSpacing: AppSpacing.x2,
           mainAxisSpacing: AppSpacing.x2,
         ),
@@ -137,7 +137,7 @@ class _WinConditionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.arenaGovernanceCardPadding,
+      padding: ArenaSpacingTokens.arenaGovernanceCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -146,7 +146,7 @@ class _WinConditionCard extends StatelessWidget {
               const Icon(
                 Icons.adjust_rounded,
                 color: AppColors.accent,
-                size: AppSpacing.arenaGovernanceIcon,
+                size: ArenaSpacingTokens.arenaGovernanceIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -163,12 +163,12 @@ class _WinConditionCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
           GridView.count(
-            crossAxisCount: AppSpacing.arenaGovernanceGridColumns,
+            crossAxisCount: ArenaSpacingTokens.arenaGovernanceGridColumns,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisSpacing: AppSpacing.x2,
             mainAxisSpacing: AppSpacing.x2,
-            childAspectRatio: AppSpacing.arenaGovernanceWinGridAspect,
+            childAspectRatio: ArenaSpacingTokens.arenaGovernanceWinGridAspect,
             children: [
               _BuilderField(
                 label: 'A. Chủ thể',

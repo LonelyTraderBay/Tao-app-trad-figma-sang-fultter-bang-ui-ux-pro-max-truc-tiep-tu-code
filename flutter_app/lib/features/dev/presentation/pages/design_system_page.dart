@@ -22,6 +22,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_auto_hide_header_scaffold.da
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 enum _DevUiMode { live, loading, empty, error, offline }
 
@@ -106,7 +107,7 @@ class _DesignSystemPageState extends ConsumerState<DesignSystemPage> {
                 child: SingleChildScrollView(
                   key: DesignSystemPage.contentKey,
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.devScrollPadding(bottomInset),
+                  padding: AdminSpacingTokens.devScrollPadding(bottomInset),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.flush,
                     gap: VitContentGap.loose,

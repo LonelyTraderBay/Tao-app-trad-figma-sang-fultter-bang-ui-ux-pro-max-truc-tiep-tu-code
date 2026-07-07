@@ -18,7 +18,9 @@ class _ChartArea extends StatelessWidget {
         .toList(growable: false);
 
     return SizedBox(
-      height: AppSpacing.tradeBotCompactChartHeight + AppSpacing.tradeBotRowGap,
+      height:
+          TradeSpacingTokens.tradeBotCompactChartHeight +
+          TradeSpacingTokens.tradeBotRowGap,
       child: ColoredBox(
         color: _chartBlack,
         child: Stack(
@@ -33,13 +35,13 @@ class _ChartArea extends StatelessWidget {
               ),
             ),
             Positioned(
-              left: AppSpacing.tradeBotSmallGap,
-              top: AppSpacing.tradeBotDisclosureGap,
+              left: TradeSpacingTokens.tradeBotSmallGap,
+              top: TradeSpacingTokens.tradeBotDisclosureGap,
               child: Row(
                 children: [
                   for (final indicator in legend) ...[
                     _LegendChip(indicator: indicator),
-                    const SizedBox(width: AppSpacing.tradeBotTinyGap),
+                    const SizedBox(width: TradeSpacingTokens.tradeBotTinyGap),
                   ],
                 ],
               ),
@@ -74,34 +76,34 @@ class _ActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: AppSpacing.x7 + AppSpacing.tradeBotDisclosureGap,
+      height: AppSpacing.x7 + TradeSpacingTokens.tradeBotDisclosureGap,
       child: Column(
         children: [
           const Divider(
-            height: AppSpacing.tradeBotHairline,
+            height: TradeSpacingTokens.tradeBotHairline,
             thickness: AppSpacing.dividerHairline,
             color: AppColors.divider,
           ),
           Expanded(
             child: Padding(
-              padding: AppSpacing.tradeReceiptSupportPadding,
+              padding: TradeSpacingTokens.tradeReceiptSupportPadding,
               child: Row(
                 children: [
                   Expanded(
                     child: VitCtaButton(
                       key: AdvancedChartPage.buyKey,
-                      height: AppSpacing.tradeBotControlCompact,
+                      height: TradeSpacingTokens.tradeBotControlCompact,
                       variant: VitCtaButtonVariant.success,
                       onPressed: () =>
                           context.go(AppRoutePaths.tradePair(pairId)),
                       child: const Text('MUA'),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                  const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
                   Expanded(
                     child: VitCtaButton(
                       key: AdvancedChartPage.sellKey,
-                      height: AppSpacing.tradeBotControlCompact,
+                      height: TradeSpacingTokens.tradeBotControlCompact,
                       variant: VitCtaButtonVariant.danger,
                       onPressed: () => context.go(
                         '${AppRoutePaths.tradePair(pairId)}?side=sell',
@@ -109,7 +111,7 @@ class _ActionBar extends StatelessWidget {
                       child: const Text('BÁN'),
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.tradeBotSmallGap),
+                  const SizedBox(width: TradeSpacingTokens.tradeBotSmallGap),
                   VitIconButton(
                     key: AdvancedChartPage.alertKey,
                     icon: Icons.error_outline_rounded,
@@ -153,7 +155,7 @@ class _IndicatorSheet extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: ConstrainedBox(
               constraints: const BoxConstraints(
-                maxWidth: AppSpacing.launchpadSheetMaxWidth,
+                maxWidth: LaunchpadSpacingTokens.launchpadSheetMaxWidth,
               ),
               child: VitSheetSurface(
                 color: AppColors.surface,
@@ -163,7 +165,9 @@ class _IndicatorSheet extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const VitSheetHandle(),
-                      const SizedBox(height: AppSpacing.tradeBotPanelGap),
+                      const SizedBox(
+                        height: TradeSpacingTokens.tradeBotPanelGap,
+                      ),
                       Row(
                         children: [
                           Expanded(
@@ -184,14 +188,18 @@ class _IndicatorSheet extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                      const SizedBox(
+                        height: TradeSpacingTokens.tradeBotSmallGap,
+                      ),
                       for (final indicator in indicators) ...[
                         _IndicatorOption(
                           key: AdvancedChartPage.indicatorKey(indicator.id),
                           indicator: indicator,
                           onTap: () => onToggle(indicator.id),
                         ),
-                        const SizedBox(height: AppSpacing.tradeBotSmallGap),
+                        const SizedBox(
+                          height: TradeSpacingTokens.tradeBotSmallGap,
+                        ),
                       ],
                       const SizedBox(
                         height:
@@ -227,7 +235,7 @@ class _IndicatorOption extends StatelessWidget {
 
     return VitCard(
       height: AppSpacing.inputHeight,
-      padding: AppSpacing.tradeReceiptSupportPadding,
+      padding: TradeSpacingTokens.tradeReceiptSupportPadding,
       variant: VitCardVariant.inner,
       borderColor: indicator.enabled
           ? color.withValues(alpha: .34)
@@ -241,8 +249,8 @@ class _IndicatorOption extends StatelessWidget {
         children: [
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
-            width: AppSpacing.tradeReceiptStatusIcon,
-            height: AppSpacing.tradeReceiptStatusIcon,
+            width: TradeSpacingTokens.tradeReceiptStatusIcon,
+            height: TradeSpacingTokens.tradeReceiptStatusIcon,
             padding: AppSpacing.zeroInsets,
             variant: VitCardVariant.ghost,
             radius: VitCardRadius.standard,
@@ -250,7 +258,7 @@ class _IndicatorOption extends StatelessWidget {
             background: ColoredBox(color: color),
             child: const SizedBox.shrink(),
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardIconGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotCardIconGap),
           Expanded(
             child: Text(
               indicator.label,
@@ -264,8 +272,8 @@ class _IndicatorOption extends StatelessWidget {
           ),
           // card-tile: allow-start — fixed surface, not horizontal strip tile
           VitCard(
-            width: AppSpacing.tradeBotCheckbox,
-            height: AppSpacing.tradeBotCheckbox,
+            width: TradeSpacingTokens.tradeBotCheckbox,
+            height: TradeSpacingTokens.tradeBotCheckbox,
             alignment: Alignment.center,
             padding: AppSpacing.zeroInsets,
             variant: VitCardVariant.ghost,
@@ -279,7 +287,7 @@ class _IndicatorOption extends StatelessWidget {
                 ? const Icon(
                     Icons.check_rounded,
                     color: AppColors.onAccent,
-                    size: AppSpacing.tradeBotSmallIcon,
+                    size: TradeSpacingTokens.tradeBotSmallIcon,
                   )
                 : const SizedBox.shrink(),
           ),

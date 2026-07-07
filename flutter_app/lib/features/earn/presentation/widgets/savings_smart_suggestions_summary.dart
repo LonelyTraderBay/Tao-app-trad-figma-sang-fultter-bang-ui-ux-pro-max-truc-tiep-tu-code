@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_smart_suggestions_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class SavingsSmartSummary extends StatelessWidget {
   const SavingsSmartSummary({super.key, required this.snapshot});
@@ -18,7 +19,7 @@ class SavingsSmartSummary extends StatelessWidget {
       key: SavingsSmartSuggestionsKeys.summary,
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: EarnSpacingTokens.earnCardPaddingX5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -131,7 +132,7 @@ class SavingsSmartSummaryMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCardStat(
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -246,7 +247,7 @@ class SavingsSmartFilterChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: tone,
-      padding: AppSpacing.earnWidePillPadding,
+      padding: EarnSpacingTokens.earnWidePillPadding,
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/dev/domain/entities/dev_tools_entities.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/admin_spacing_tokens.dart';
 
 class DesignSystemHero extends StatelessWidget {
   const DesignSystemHero({super.key, required this.snapshot});
@@ -16,7 +17,7 @@ class DesignSystemHero extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
-      padding: AppSpacing.devCardPaddingLarge,
+      padding: AdminSpacingTokens.devCardPaddingLarge,
       child: Stack(
         children: [
           Positioned(

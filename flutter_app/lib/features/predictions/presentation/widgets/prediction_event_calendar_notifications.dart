@@ -59,7 +59,8 @@ class _WatchingSection extends StatelessWidget {
                     const Icon(
                       Icons.star_rounded,
                       color: AppColors.warn,
-                      size: AppSpacing.predictionCalendarWatchingIcon,
+                      size: PredictionsSpacingTokens
+                          .predictionCalendarWatchingIcon,
                     ),
                     const SizedBox(width: AppSpacing.x2),
                     Expanded(
@@ -117,7 +118,8 @@ class _WatchingSection extends StatelessWidget {
                         const Icon(
                           Icons.notifications_none_rounded,
                           color: AppColors.text1,
-                          size: AppSpacing.predictionCalendarEditIcon,
+                          size: PredictionsSpacingTokens
+                              .predictionCalendarEditIcon,
                         ),
                         const SizedBox(width: AppSpacing.x1),
                         Text(
@@ -152,7 +154,7 @@ class _NotificationInfo extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: _predictionPrimary,
-            size: AppSpacing.predictionCalendarInfoIcon,
+            size: PredictionsSpacingTokens.predictionCalendarInfoIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(

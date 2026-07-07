@@ -69,7 +69,7 @@ class _LevelFilterBar extends StatelessWidget {
                   semanticCountSuffix: 'events',
                   active: activeValue == value,
                   color: level?.color ?? AppModuleAccents.launchpad,
-                  padding: AppSpacing.launchpadPillPadding,
+                  padding: LaunchpadSpacingTokens.launchpadPillPadding,
                   onTap: () => onChanged(value),
                 );
               },
@@ -155,7 +155,7 @@ class _SourceFilterCard extends StatelessWidget {
     return VitCard(
       key: LaunchpadEventLogPage.sourcesKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.launchpadPaddingX3,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -174,7 +174,7 @@ class _SourceFilterCard extends StatelessWidget {
                   label: source == 'all' ? 'Tat ca' : source,
                   active: activeValue == source,
                   color: AppModuleAccents.launchpad,
-                  padding: AppSpacing.launchpadPillPadding,
+                  padding: LaunchpadSpacingTokens.launchpadPillPadding,
                   onTap: () => onChanged(source),
                 ),
             ],

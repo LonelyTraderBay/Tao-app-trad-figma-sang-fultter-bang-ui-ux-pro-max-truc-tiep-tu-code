@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/predictions_controller_providers.dart';
 import 'package:vit_trade_flutter/features/predictions/presentation/controllers/predictions_controller.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/predictions_spacing_tokens.dart';
 
 part '../widgets/predictions_rewards_hero_filters.dart';
 part '../widgets/predictions_rewards_table.dart';
@@ -104,9 +105,10 @@ class _PredictionsRewardsPageState
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     key: PredictionsRewardsPage.contentKey,
-                    padding: AppSpacing.predictionRewardsScrollPadding(
-                      scrollEndPadding,
-                    ),
+                    padding:
+                        PredictionsSpacingTokens.predictionRewardsScrollPadding(
+                          scrollEndPadding,
+                        ),
                     child: VitPageContent(
                       rhythm: VitPageRhythm.compact,
                       density: VitDensity.compact,
@@ -155,7 +157,7 @@ class _PredictionsRewardsPageState
       ),
       builder: (context) {
         return Padding(
-          padding: AppSpacing.predictionRewardsSheetPadding,
+          padding: PredictionsSpacingTokens.predictionRewardsSheetPadding,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -60,7 +60,7 @@ class _PerformanceSummary extends StatelessWidget {
                     const Icon(
                       Icons.info_outline_rounded,
                       color: _performanceGreen,
-                      size: AppSpacing.walletTokenApprovalActionIcon,
+                      size: WalletSpacingTokens.walletTokenApprovalActionIcon,
                     ),
                     const SizedBox(width: AppSpacing.x3),
                     Expanded(
@@ -121,7 +121,7 @@ class _ReturnCard extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.ghost,
       height: _performanceReturnCardHeight,
-      padding: AppSpacing.copyPerformanceReturnCardPadding,
+      padding: TradeSpacingTokens.copyPerformanceReturnCardPadding,
       borderColor: border,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

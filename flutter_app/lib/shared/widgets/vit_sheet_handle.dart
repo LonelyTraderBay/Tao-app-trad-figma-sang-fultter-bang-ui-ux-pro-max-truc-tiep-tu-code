@@ -4,12 +4,13 @@ import 'package:vit_trade_flutter/app/theme/app_colors.dart';
 import 'package:vit_trade_flutter/app/theme/app_radii.dart';
 import 'package:vit_trade_flutter/app/theme/app_spacing.dart';
 import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/home_spacing_tokens.dart';
 
 class VitSheetHandle extends StatelessWidget {
   const VitSheetHandle({
     super.key,
-    this.width = AppSpacing.homeMoreProductsSheetHandleWidth,
-    this.height = AppSpacing.homeMoreProductsSheetHandleHeight,
+    this.width = HomeSpacingTokens.homeMoreProductsSheetHandleWidth,
+    this.height = HomeSpacingTokens.homeMoreProductsSheetHandleHeight,
     this.color = AppColors.borderSolid,
   });
 
@@ -58,7 +59,7 @@ class VitSheetPanel extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: maxHeight),
         child: Padding(
-          padding: AppSpacing.homeMoreProductsSheetPadding,
+          padding: HomeSpacingTokens.homeMoreProductsSheetPadding,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -85,7 +86,7 @@ class VitSheetSurface extends StatelessWidget {
   const VitSheetSurface({
     super.key,
     required this.child,
-    this.padding = AppSpacing.homeMoreProductsSheetPadding,
+    this.padding = HomeSpacingTokens.homeMoreProductsSheetPadding,
     this.color = AppColors.bg,
     this.borderRadius = AppRadii.sheetTopLargeRadius,
   });

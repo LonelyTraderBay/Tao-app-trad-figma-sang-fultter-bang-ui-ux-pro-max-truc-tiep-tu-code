@@ -18,6 +18,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_header.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/launchpad_spacing_tokens.dart';
 
 part '../widgets/launchpad_receipt_states_success.dart';
 part '../widgets/launchpad_receipt_details_next_steps.dart';
@@ -74,7 +75,8 @@ class LaunchpadReceiptPage extends ConsumerWidget {
               key: contentKey,
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsetsDirectional.only(bottom: scrollEndPadding),
-              child: VitPageContent(rhythm: VitPageRhythm.standard, 
+              child: VitPageContent(
+                rhythm: VitPageRhythm.standard,
                 padding: VitContentPadding.compact,
                 density: VitDensity.compact,
                 children: [

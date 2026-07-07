@@ -24,14 +24,14 @@ class _FaqCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.tradeBotCardPadding,
+            padding: TradeSpacingTokens.tradeBotCardPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.help_outline_rounded,
                   color: _faqPrimary,
-                  size: AppSpacing.tradeBotQuestionIcon,
+                  size: TradeSpacingTokens.tradeBotQuestionIcon,
                 ),
                 const SizedBox(width: AppSpacing.x3),
                 Expanded(
@@ -58,7 +58,7 @@ class _FaqCard extends StatelessWidget {
           if (expanded)
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                AppSpacing.tradeBotQuestionIconBox + AppSpacing.x3,
+                TradeSpacingTokens.tradeBotQuestionIconBox + AppSpacing.x3,
                 0,
                 AppSpacing.x3,
                 AppSpacing.x3,
@@ -69,7 +69,7 @@ class _FaqCard extends StatelessWidget {
                   borderRadius: AppRadii.smRadius,
                 ),
                 child: Padding(
-                  padding: AppSpacing.tradeBotInnerPanelPadding,
+                  padding: TradeSpacingTokens.tradeBotInnerPanelPadding,
                   child: Text(
                     item.answer,
                     style: AppTextStyles.caption.copyWith(
@@ -91,7 +91,7 @@ class _HelpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.tradeBotCompactCardPadding,
+      padding: TradeSpacingTokens.tradeBotCompactCardPadding,
       borderColor: _faqPrimary.withValues(alpha: .25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -144,7 +144,7 @@ class _HelpButton extends StatelessWidget {
       height: AppSpacing.buttonCompact,
       variant: variant,
       onPressed: () {},
-      padding: AppSpacing.tradeBotChipPadding,
+      padding: TradeSpacingTokens.tradeBotChipPadding,
       child: Text(label),
     );
   }

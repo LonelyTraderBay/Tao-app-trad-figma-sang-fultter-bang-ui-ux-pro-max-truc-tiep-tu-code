@@ -33,7 +33,7 @@ class _PositionsList extends StatelessWidget {
         const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
         VitCard(
           radius: VitCardRadius.large,
-          padding: AppSpacing.earnCardPaddingX4X3,
+          padding: EarnSpacingTokens.earnCardPaddingX4X3,
           borderColor: AppModuleAccents.earn.withValues(alpha: 0.2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +84,7 @@ class _PositionCard extends StatelessWidget {
 
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4X3,
+      padding: EarnSpacingTokens.earnCardPaddingX4X3,
       borderColor: accent.withValues(alpha: 0.28),
       child: Column(
         children: [
@@ -102,7 +102,8 @@ class _PositionCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.baseMedium.copyWith(
                         fontWeight: AppTextStyles.bold,
-                        height: AppSpacing.stakingEarnPositionTitleLineHeight,
+                        height: EarnSpacingTokens
+                            .stakingEarnPositionTitleLineHeight,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.x1),
@@ -121,7 +122,7 @@ class _PositionCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.caption.copyWith(
                               color: AppColors.text2,
-                              height: AppSpacing
+                              height: EarnSpacingTokens
                                   .stakingEarnPositionCaptionLineHeight,
                             ),
                           ),
@@ -146,7 +147,8 @@ class _PositionCard extends StatelessWidget {
                     'APY uoc tinh',
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text3,
-                      height: AppSpacing.stakingEarnPositionCaptionLineHeight,
+                      height: EarnSpacingTokens
+                          .stakingEarnPositionCaptionLineHeight,
                     ),
                   ),
                 ],
@@ -220,7 +222,7 @@ class _PositionMetric extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3X2,
+        padding: EarnSpacingTokens.earnCardPaddingX3X2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -231,7 +233,8 @@ class _PositionMetric extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.stakingEarnPositionMetricLabelLineHeight,
+                height:
+                    EarnSpacingTokens.stakingEarnPositionMetricLabelLineHeight,
               ),
             ),
             Text(
@@ -241,7 +244,8 @@ class _PositionMetric extends StatelessWidget {
               style: AppTextStyles.body.copyWith(
                 color: valueColor,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.stakingEarnPositionMetricValueLineHeight,
+                height:
+                    EarnSpacingTokens.stakingEarnPositionMetricValueLineHeight,
               ),
             ),
           ],
@@ -264,7 +268,7 @@ class _IncomeEstimate extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.smRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnCardPaddingX3X2,
+        padding: EarnSpacingTokens.earnCardPaddingX3X2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -274,7 +278,8 @@ class _IncomeEstimate extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.caption.copyWith(
                 color: AppColors.text3,
-                height: AppSpacing.stakingEarnPositionMetricLabelLineHeight,
+                height:
+                    EarnSpacingTokens.stakingEarnPositionMetricLabelLineHeight,
               ),
             ),
             const SizedBox(height: AppSpacing.x1),
@@ -285,7 +290,8 @@ class _IncomeEstimate extends StatelessWidget {
               style: AppTextStyles.body.copyWith(
                 color: AppModuleAccents.earn,
                 fontWeight: AppTextStyles.bold,
-                height: AppSpacing.stakingEarnPositionMetricValueLineHeight,
+                height:
+                    EarnSpacingTokens.stakingEarnPositionMetricValueLineHeight,
               ),
             ),
           ],
@@ -320,7 +326,7 @@ class _AssetBadge extends StatelessWidget {
             style: AppTextStyles.caption.copyWith(
               color: color,
               fontWeight: AppTextStyles.bold,
-              height: AppSpacing.stakingEarnPositionAssetBadgeLineHeight,
+              height: EarnSpacingTokens.stakingEarnPositionAssetBadgeLineHeight,
             ),
           ),
         ),
@@ -348,7 +354,7 @@ class _StatusBadge extends StatelessWidget {
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.xsRadius),
       ),
       child: Padding(
-        padding: AppSpacing.earnSmallPillPadding,
+        padding: EarnSpacingTokens.earnSmallPillPadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -371,7 +377,8 @@ class _ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppRadii.xlRadius,
-      child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+      child: SizedBox(
+        height: AppSpacing.pageRhythmCompactInnerGap,
         child: Stack(
           fit: StackFit.expand,
           children: [

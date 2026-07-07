@@ -10,6 +10,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_card.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_icon_button.dart';
 import 'package:vit_trade_flutter/shared/widgets/vit_status_pill.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/wallet_spacing_tokens.dart';
 
 part 'wallet_token_approval_cards.dart';
 part 'wallet_token_approval_badges.dart';
@@ -33,7 +34,7 @@ class WalletTokenActiveApprovalsTab extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         WalletTokenCriticalAlert(count: snapshot.criticalCount),
-        const SizedBox(height: AppSpacing.walletTokenAlertGap),
+        const SizedBox(height: WalletSpacingTokens.walletTokenAlertGap),
         VitPageSection(
           label: 'Active Approvals',
           headerIcon: Icons.shield_outlined,
@@ -46,11 +47,11 @@ class WalletTokenActiveApprovalsTab extends StatelessWidget {
                 onRevoke: onRevoke,
               ),
               if (i != approvals.length - 1)
-                const SizedBox(height: AppSpacing.walletTokenCardGap),
+                const SizedBox(height: WalletSpacingTokens.walletTokenCardGap),
             ],
-            const SizedBox(height: AppSpacing.walletTokenAlertGap),
+            const SizedBox(height: WalletSpacingTokens.walletTokenAlertGap),
             WalletTokenApprovalRevokeAllButton(onTap: onRevokeAll),
-            const SizedBox(height: AppSpacing.walletTokenNoticeGap),
+            const SizedBox(height: WalletSpacingTokens.walletTokenNoticeGap),
             const WalletTokenApprovalInfoNotice(),
           ],
         ),
@@ -76,18 +77,18 @@ class WalletTokenSecurityOverview extends StatelessWidget {
             children: [
               // card-tile: allow-start — fixed surface, not horizontal strip tile
               VitCard(
-                width: AppSpacing.walletTokenHeroIcon,
-                height: AppSpacing.walletTokenHeroIcon,
+                width: WalletSpacingTokens.walletTokenHeroIcon,
+                height: WalletSpacingTokens.walletTokenHeroIcon,
                 variant: VitCardVariant.inner,
                 borderColor: walletTokenApprovalPurple.withValues(alpha: .20),
                 alignment: Alignment.center,
                 child: const Icon(
                   Icons.shield_outlined,
                   color: walletTokenApprovalPurple,
-                  size: AppSpacing.walletTokenHeroIconGlyph,
+                  size: WalletSpacingTokens.walletTokenHeroIconGlyph,
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletTokenHeroGap),
+              const SizedBox(width: WalletSpacingTokens.walletTokenHeroGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +101,9 @@ class WalletTokenSecurityOverview extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.walletTokenTitleGap),
+                    const SizedBox(
+                      height: WalletSpacingTokens.walletTokenTitleGap,
+                    ),
                     Text(
                       '${snapshot.approvals.length} active approvals',
                       maxLines: 1,
@@ -114,7 +117,7 @@ class WalletTokenSecurityOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletTokenMetricTopGap),
+          const SizedBox(height: WalletSpacingTokens.walletTokenMetricTopGap),
           Row(
             children: [
               WalletTokenOverviewMetric(
@@ -129,7 +132,7 @@ class WalletTokenSecurityOverview extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletTokenMetricTopGap),
+          const SizedBox(height: WalletSpacingTokens.walletTokenMetricTopGap),
           Row(
             children: [
               WalletTokenOverviewMetric(
@@ -172,7 +175,7 @@ class WalletTokenOverviewMetric extends StatelessWidget {
             label,
             style: AppTextStyles.badge.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.walletTokenMetricValueGap),
+          const SizedBox(height: WalletSpacingTokens.walletTokenMetricValueGap),
           Text(
             value,
             style: AppTextStyles.amountSm.copyWith(
@@ -203,7 +206,7 @@ class WalletTokenCriticalAlert extends StatelessWidget {
           const Icon(
             Icons.warning_amber_rounded,
             color: walletTokenApprovalRed,
-            size: AppSpacing.walletTokenAlertIcon,
+            size: WalletSpacingTokens.walletTokenAlertIcon,
           ),
           const SizedBox(width: AppSpacing.rowGap),
           Expanded(

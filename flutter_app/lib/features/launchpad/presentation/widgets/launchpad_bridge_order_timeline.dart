@@ -10,7 +10,7 @@ class _BridgeTimeline extends StatelessWidget {
     return VitCard(
       key: LaunchpadBridgeOrderPage.timelineKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.launchpadPaddingX4,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -42,7 +42,7 @@ class _BridgeTimeline extends StatelessWidget {
                 top: AppSpacing.x3,
                 bottom: AppSpacing.x3,
                 child: const SizedBox(
-                  width: AppSpacing.launchpadDividerWidth,
+                  width: LaunchpadSpacingTokens.launchpadDividerWidth,
                   child: ColoredBox(color: AppColors.borderSolid),
                 ),
               ),
@@ -80,14 +80,14 @@ class _BridgeTimelineStep extends StatelessWidget {
 
     return Padding(
       key: LaunchpadBridgeOrderPage.stepKey(step.id),
-      padding: AppSpacing.launchpadBottomPaddingX2,
+      padding: LaunchpadSpacingTokens.launchpadBottomPaddingX2,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: AppSpacing.launchpadBox31,
+            width: LaunchpadSpacingTokens.launchpadBox31,
             child: Padding(
-              padding: AppSpacing.launchpadTopPaddingX3,
+              padding: LaunchpadSpacingTokens.launchpadTopPaddingX3,
               child: Icon(
                 isDone
                     ? Icons.check_circle_outline_rounded
@@ -118,7 +118,7 @@ class _BridgeTimelineStep extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: AppSpacing.launchpadPaddingX3,
+                  padding: LaunchpadSpacingTokens.launchpadPaddingX3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -173,12 +173,12 @@ class _LiveBadge extends StatelessWidget {
         shape: const StadiumBorder(),
       ),
       child: Padding(
-        padding: AppSpacing.launchpadLiveBadgePadding,
+        padding: LaunchpadSpacingTokens.launchpadLiveBadgePadding,
         child: Row(
           children: [
             const SizedBox(
-              width: AppSpacing.launchpadDotSm,
-              height: AppSpacing.launchpadDotSm,
+              width: LaunchpadSpacingTokens.launchpadDotSm,
+              height: LaunchpadSpacingTokens.launchpadDotSm,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: AppColors.primary,

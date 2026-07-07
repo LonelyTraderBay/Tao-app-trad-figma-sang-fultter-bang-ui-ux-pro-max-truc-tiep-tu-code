@@ -93,7 +93,7 @@ class _AddMethodButton extends StatelessWidget {
       selected: true,
       onTap: onTap,
       fullWidth: true,
-      padding: AppSpacing.p2pPaymentMethodsListButtonPadding,
+      padding: P2PSpacingTokens.p2pPaymentMethodsListButtonPadding,
       accentColor: color,
       leading: Row(
         mainAxisSize: MainAxisSize.min,
@@ -160,9 +160,9 @@ class _PaymentMethodCard extends StatelessWidget {
       radius: VitCardRadius.standard,
       borderColor: method.isDefault ? AppColors.warningBorder : null,
       constraints: const BoxConstraints(
-        minHeight: AppSpacing.p2pPaymentMethodsListCardMinExtent,
+        minHeight: P2PSpacingTokens.p2pPaymentMethodsListCardMinExtent,
       ),
-      padding: AppSpacing.p2pPaymentMethodsListCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentMethodsListCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -190,7 +190,7 @@ class _PaymentMethodCard extends StatelessWidget {
                           const Icon(
                             Icons.shield_outlined,
                             color: AppColors.buy,
-                            size: AppSpacing.p2pPaymentVerifiedIcon,
+                            size: P2PSpacingTokens.p2pPaymentVerifiedIcon,
                           ),
                         if (method.isDefault)
                           const VitStatusPill(
@@ -200,7 +200,9 @@ class _PaymentMethodCard extends StatelessWidget {
                           ),
                       ],
                     ),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       method.accountNumber,
                       style: AppTextStyles.caption.copyWith(
@@ -324,7 +326,7 @@ class _SecurityNotice extends StatelessWidget {
     return VitCard(
       radius: VitCardRadius.standard,
       borderColor: AppColors.warningBorder,
-      padding: AppSpacing.p2pPaymentMethodsListCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentMethodsListCardPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -20,13 +20,15 @@ class _StickyActions extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.tradeBotFooterPadding.copyWith(bottom: bottomPadding),
+      padding: TradeSpacingTokens.tradeBotFooterPadding.copyWith(
+        bottom: bottomPadding,
+      ),
       child: Row(
         children: [
           Expanded(
             child: VitCtaButton(
               key: BotEmergencyStopPage.cancelKey,
-              height: AppSpacing.tradeBotFooterButtonHeight,
+              height: TradeSpacingTokens.tradeBotFooterButtonHeight,
               variant: VitCtaButtonVariant.secondary,
               onPressed: onCancel,
               child: Text(
@@ -37,11 +39,11 @@ class _StickyActions extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: AppSpacing.tradeBotCardGap),
+          const SizedBox(width: TradeSpacingTokens.tradeBotCardGap),
           Expanded(
             child: VitCtaButton(
               key: BotEmergencyStopPage.submitKey,
-              height: AppSpacing.tradeBotFooterButtonHeight,
+              height: TradeSpacingTokens.tradeBotFooterButtonHeight,
               variant: VitCtaButtonVariant.destructive,
               loading: stopping,
               onPressed: canSubmit ? onSubmit : null,
@@ -94,7 +96,7 @@ class _CheckboxMark extends StatelessWidget {
           ? Icons.check_box_rounded
           : Icons.check_box_outline_blank_rounded,
       color: selected ? color : _stopOptionBorder,
-      size: AppSpacing.tradeBotCheckbox,
+      size: TradeSpacingTokens.tradeBotCheckbox,
     );
   }
 }

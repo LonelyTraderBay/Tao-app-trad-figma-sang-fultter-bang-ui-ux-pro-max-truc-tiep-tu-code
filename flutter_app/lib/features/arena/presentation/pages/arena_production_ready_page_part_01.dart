@@ -41,11 +41,11 @@ class _ArenaProductionReadyPageState
                   child: SingleChildScrollView(
                     key: ArenaProductionReadyPage.contentKey,
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.arenaBottomScrollPadding(
+                    padding: ArenaSpacingTokens.arenaBottomScrollPadding(
                       scrollEndPadding,
                     ),
                     child: VitPageContent(
-   rhythm: VitPageRhythm.standard,
+                      rhythm: VitPageRhythm.standard,
                       padding: VitContentPadding.compact,
                       density: VitDensity.compact,
                       children: [
@@ -118,7 +118,8 @@ class _ProductionHero extends StatelessWidget {
                         style: AppTextStyles.body.copyWith(
                           color: AppColors.text1,
                           fontWeight: AppTextStyles.bold,
-                          height: AppSpacing.arenaProductionTitleLineHeight,
+                          height:
+                              ArenaSpacingTokens.arenaProductionTitleLineHeight,
                         ),
                       ),
                     ),
@@ -134,7 +135,7 @@ class _ProductionHero extends StatelessWidget {
                   'QA/Dev handoff pack',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text3,
-                    height: AppSpacing.arenaProductionMetricLineHeight,
+                    height: ArenaSpacingTokens.arenaProductionMetricLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -142,7 +143,7 @@ class _ProductionHero extends StatelessWidget {
                   'QA/Dev handoff — kiểm tra release Open Arena. Chỉ điểm Arena, không phải claim production end-user.',
                   style: AppTextStyles.micro.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.arenaProductionBodyLineHeight,
+                    height: ArenaSpacingTokens.arenaProductionBodyLineHeight,
                   ),
                 ),
               ],
@@ -290,7 +291,7 @@ class _ScreensSection extends StatelessWidget {
           '7 core screens đã được consolidate thành bản vFinal. Mỗi screen đã audit: trust-first, accessibility, states đầy đủ.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaProductionHeroLineHeight,
+            height: ArenaSpacingTokens.arenaProductionHeroLineHeight,
           ),
         ),
         for (final screen in screens)
@@ -305,7 +306,7 @@ class _ScreensSection extends StatelessWidget {
                   Icon(
                     Icons.check_circle_outline,
                     color: AppModuleAccents.arena,
-                    size: AppSpacing.arenaProductionHandoffIcon,
+                    size: ArenaSpacingTokens.arenaProductionHandoffIcon,
                   ),
                   const SizedBox(width: AppSpacing.x2),
                   Expanded(
@@ -326,10 +327,7 @@ class _ScreensSection extends StatelessWidget {
                     label: 'Total screens',
                     value: '${screens.length}',
                   ),
-                  _SummaryMetric(
-                    label: 'Implemented',
-                    value: '$liveCount',
-                  ),
+                  _SummaryMetric(label: 'Implemented', value: '$liveCount'),
                   _SummaryMetric(
                     label: 'States covered',
                     value: '${ArenaProductionScreenState.values.length}',
@@ -369,7 +367,7 @@ class _ProductionScreenCard extends StatelessWidget {
                   style: AppTextStyles.body.copyWith(
                     color: AppColors.text1,
                     fontWeight: AppTextStyles.bold,
-                    height: AppSpacing.arenaProductionTitleLineHeight,
+                    height: ArenaSpacingTokens.arenaProductionTitleLineHeight,
                   ),
                 ),
               ),
@@ -400,7 +398,7 @@ class _ProductionScreenCard extends StatelessWidget {
             screen.notes,
             style: AppTextStyles.micro.copyWith(
               color: AppColors.text2,
-              height: AppSpacing.arenaProductionBodyLineHeight,
+              height: ArenaSpacingTokens.arenaProductionBodyLineHeight,
             ),
           ),
           const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
@@ -457,7 +455,7 @@ class _StatesSection extends StatelessWidget {
           'Lưới states cho từng core screen. Chỉ hiển thị states thực sự áp dụng.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaProductionHeroLineHeight,
+            height: ArenaSpacingTokens.arenaProductionHeroLineHeight,
           ),
         ),
         VitCard(
@@ -521,7 +519,7 @@ class _FlowsSection extends StatelessWidget {
           'Các flow chính có prototype link thật. Tap step để navigate bằng route canonical.',
           style: AppTextStyles.micro.copyWith(
             color: AppColors.text2,
-            height: AppSpacing.arenaProductionHeroLineHeight,
+            height: ArenaSpacingTokens.arenaProductionHeroLineHeight,
           ),
         ),
         for (final flow in flows) _FlowCard(flow: flow, onRoute: onRoute),

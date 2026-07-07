@@ -16,7 +16,7 @@ class _StakingEntry extends StatelessWidget {
       child: Row(
         children: [
           SizedBox.square(
-            dimension: AppSpacing.launchpadBox48,
+            dimension: LaunchpadSpacingTokens.launchpadBox48,
             child: DecoratedBox(
               decoration: const ShapeDecoration(
                 color: AppColors.buy10,
@@ -73,12 +73,12 @@ class _ToolSection extends StatelessWidget {
       density: VitDensity.compact,
       children: [
         GridView.count(
-          crossAxisCount: AppSpacing.launchpadGridColumns,
+          crossAxisCount: LaunchpadSpacingTokens.launchpadGridColumns,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           mainAxisSpacing: AppSpacing.x3,
           crossAxisSpacing: AppSpacing.x3,
-          childAspectRatio: AppSpacing.launchpadGridAspectTile,
+          childAspectRatio: LaunchpadSpacingTokens.launchpadGridAspectTile,
           padding: AppSpacing.zeroInsets,
           children: [
             for (final tool in tools)

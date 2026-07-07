@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingTermsPage extends ConsumerStatefulWidget {
   const StakingTermsPage({super.key, this.shellRenderMode});
@@ -69,7 +70,9 @@ class _StakingTermsPageState extends ConsumerState<StakingTermsPage> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
@@ -147,7 +150,7 @@ class _TermsHero extends StatelessWidget {
     return VitCard(
       key: StakingTermsPage.heroKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -155,15 +158,15 @@ class _TermsHero extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: AppSpacing.earnTermsHeroIconBox,
-                height: AppSpacing.earnTermsHeroIconBox,
+                width: EarnSpacingTokens.earnTermsHeroIconBox,
+                height: EarnSpacingTokens.earnTermsHeroIconBox,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: AppModuleAccents.earn.withValues(alpha: 0.12),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         color: AppModuleAccents.earn.withValues(alpha: 0.3),
-                        width: AppSpacing.earnTermsHeroBorderWidth,
+                        width: EarnSpacingTokens.earnTermsHeroBorderWidth,
                       ),
                       borderRadius: AppRadii.lgRadius,
                     ),
@@ -171,7 +174,7 @@ class _TermsHero extends StatelessWidget {
                   child: Icon(
                     Icons.description_outlined,
                     color: AppModuleAccents.earn,
-                    size: AppSpacing.earnTermsHeroIcon,
+                    size: EarnSpacingTokens.earnTermsHeroIcon,
                   ),
                 ),
               ),
@@ -217,7 +220,7 @@ class _TermsHero extends StatelessWidget {
                 child: VitCtaButton(
                   key: StakingTermsPage.printKey,
                   variant: VitCtaButtonVariant.secondary,
-                  height: AppSpacing.earnTermsActionHeight,
+                  height: EarnSpacingTokens.earnTermsActionHeight,
                   onPressed: onPrint,
                   leading: const Icon(Icons.print_outlined),
                   child: const Text('In trang'),
@@ -227,7 +230,7 @@ class _TermsHero extends StatelessWidget {
               Expanded(
                 child: VitCtaButton(
                   key: StakingTermsPage.downloadKey,
-                  height: AppSpacing.earnTermsActionHeight,
+                  height: EarnSpacingTokens.earnTermsActionHeight,
                   onPressed: onDownload,
                   leading: const Icon(Icons.download_rounded),
                   child: const Text('Tải PDF'),
@@ -256,7 +259,7 @@ class _MetaChip extends StatelessWidget {
           Icon(
             icon,
             color: AppColors.text3,
-            size: AppSpacing.earnTermsMetaIcon,
+            size: EarnSpacingTokens.earnTermsMetaIcon,
           ),
           const SizedBox(width: AppSpacing.x1),
         ],
@@ -276,7 +279,7 @@ class _WarningCallout extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX3,
+      padding: EarnSpacingTokens.earnCardPaddingX3,
       borderColor: AppColors.warn15,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,7 +287,7 @@ class _WarningCallout extends StatelessWidget {
           const Icon(
             Icons.info_outline_rounded,
             color: AppColors.warn,
-            size: AppSpacing.earnTermsNoticeIcon,
+            size: EarnSpacingTokens.earnTermsNoticeIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -334,7 +337,7 @@ class _TermsSectionCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.earnCardPaddingX4,
+            padding: EarnSpacingTokens.earnCardPaddingX4,
             child: Row(
               children: [
                 Expanded(
@@ -352,7 +355,7 @@ class _TermsSectionCard extends StatelessWidget {
                   child: const Icon(
                     Icons.keyboard_arrow_down_rounded,
                     color: AppColors.text3,
-                    size: AppSpacing.earnTermsSectionChevron,
+                    size: EarnSpacingTokens.earnTermsSectionChevron,
                   ),
                 ),
               ],
@@ -390,7 +393,7 @@ class _SectionContent extends StatelessWidget {
             height: AppSpacing.dividerHairline,
           ),
           Padding(
-            padding: AppSpacing.earnDisclosureDetailsPadding,
+            padding: EarnSpacingTokens.earnDisclosureDetailsPadding,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -399,11 +402,13 @@ class _SectionContent extends StatelessWidget {
                     paragraph,
                     style: AppTextStyles.caption.copyWith(
                       color: AppColors.text2,
-                      height: AppSpacing.earnTermsParagraphLineHeight,
+                      height: EarnSpacingTokens.earnTermsParagraphLineHeight,
                     ),
                   ),
                   if (paragraph != section.content.last)
-                    const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmStandardInnerGap,
+                    ),
                 ],
               ],
             ),
@@ -429,15 +434,15 @@ class _AcceptanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             key: StakingTermsPage.acceptanceKey,
-            width: AppSpacing.earnTermsAcceptanceBox,
-            height: AppSpacing.earnTermsAcceptanceBox,
+            width: EarnSpacingTokens.earnTermsAcceptanceBox,
+            height: EarnSpacingTokens.earnTermsAcceptanceBox,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: accepted ? AppModuleAccents.earn : AppColors.transparent,
@@ -454,7 +459,7 @@ class _AcceptanceCard extends StatelessWidget {
                   ? const Icon(
                       Icons.check_rounded,
                       color: AppColors.onAccent,
-                      size: AppSpacing.earnTermsAcceptanceIcon,
+                      size: EarnSpacingTokens.earnTermsAcceptanceIcon,
                     )
                   : null,
             ),
@@ -493,7 +498,7 @@ class _FooterCard extends StatelessWidget {
       key: StakingTermsPage.footerKey,
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: Text(
         text,
         textAlign: TextAlign.center,

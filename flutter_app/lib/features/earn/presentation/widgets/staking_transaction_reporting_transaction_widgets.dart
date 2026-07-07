@@ -208,7 +208,9 @@ class _ExportTab extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Important Tax Notice', style: AppTextStyles.caption),
-                    const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                    const SizedBox(
+                      height: AppSpacing.pageRhythmCompactInnerGap,
+                    ),
                     Text(
                       snapshot.taxNotice,
                       style: AppTextStyles.micro.copyWith(

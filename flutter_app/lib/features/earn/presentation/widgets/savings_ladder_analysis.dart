@@ -14,6 +14,7 @@ import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_lad
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/savings_ladder_liquidity.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 const _disclaimerLineHeight = 1.22;
 
@@ -48,7 +49,8 @@ class AnalysisTab extends StatelessWidget {
     final avgLockDays =
         rungs.fold<int>(0, (total, rung) => total + rung.lockDays) ~/
         rungs.length;
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       key: SavingsLadderPage.analysisKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -120,8 +122,8 @@ class _MetricGrid extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: AppSpacing.savingsLadderMetricGridColumns,
-      childAspectRatio: AppSpacing.savingsLadderGridAspect,
+      crossAxisCount: EarnSpacingTokens.savingsLadderMetricGridColumns,
+      childAspectRatio: EarnSpacingTokens.savingsLadderGridAspect,
       crossAxisSpacing: AppSpacing.x3,
       mainAxisSpacing: AppSpacing.x3,
       children: [
@@ -231,7 +233,8 @@ class _DurationBreakdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = savingsLadderTotalAllocated(rungs);
-    return VitPageContent(rhythm: VitPageRhythm.standard, 
+    return VitPageContent(
+      rhythm: VitPageRhythm.standard,
       padding: VitContentPadding.none,
       fullBleed: true,
       gap: VitContentGap.tight,
@@ -327,7 +330,7 @@ class _BreakdownRow extends StatelessWidget {
         Row(
           children: [
             SizedBox.square(
-              dimension: AppSpacing.savingsLadderBreakdownDot,
+              dimension: EarnSpacingTokens.savingsLadderBreakdownDot,
               child: Material(color: color, shape: const CircleBorder()),
             ),
             const SizedBox(width: AppSpacing.x2),

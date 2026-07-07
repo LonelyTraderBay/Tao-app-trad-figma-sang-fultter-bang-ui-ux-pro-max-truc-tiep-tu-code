@@ -65,7 +65,7 @@ class _DriftBanner extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Padding(padding: AppSpacing.dcaTopPaddingX1),
+                const Padding(padding: DcaSpacingTokens.dcaTopPaddingX1),
                 Text(
                   'Drift ${snapshot.driftPercent.toStringAsFixed(1)}% > ngưỡng ${snapshot.driftThresholdPercent.toStringAsFixed(0)}%; kiểm tra trước khi áp dụng.',
                   maxLines: 2,

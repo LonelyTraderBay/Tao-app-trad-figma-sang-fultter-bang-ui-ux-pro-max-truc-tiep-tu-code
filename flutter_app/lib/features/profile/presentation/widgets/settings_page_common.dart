@@ -36,7 +36,9 @@ class _AppInfoCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: AppSpacing.settingsAppInfoValueGap),
+                const SizedBox(
+                  width: ProfileSpacingTokens.settingsAppInfoValueGap,
+                ),
                 Text(
                   row.value,
                   style: AppTextStyles.caption.copyWith(
@@ -46,7 +48,8 @@ class _AppInfoCard extends StatelessWidget {
                 ),
               ],
             ),
-            if (row != rows.last) const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+            if (row != rows.last)
+              const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           ],
         ],
       ),

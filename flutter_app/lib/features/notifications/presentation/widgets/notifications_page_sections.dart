@@ -17,7 +17,7 @@ class _NotificationFilterBand extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
       child: Padding(
-        padding: AppSpacing.notificationsToolbarPadding,
+        padding: NotificationsSpacingTokens.notificationsToolbarPadding,
         child: VitSegmentedChoice<_NotificationFilter>(
           selected: filter,
           onChanged: onChanged,
@@ -57,7 +57,7 @@ class _UnreadSummaryBar extends StatelessWidget {
       radius: VitCardRadius.standard,
       variant: VitCardVariant.ghost,
       borderColor: AppModuleAccents.notifications.withValues(alpha: .32),
-      padding: AppSpacing.notificationsToolbarPadding,
+      padding: NotificationsSpacingTokens.notificationsToolbarPadding,
       child: Row(
         children: [
           Icon(
@@ -69,9 +69,7 @@ class _UnreadSummaryBar extends StatelessWidget {
           Expanded(
             child: Text(
               '$unreadCount chưa đọc',
-              style: AppTextStyles.baseMedium.copyWith(
-                color: AppColors.text1,
-              ),
+              style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
             ),
           ),
           if (onMarkAllRead != null)
@@ -162,7 +160,7 @@ class _NotificationRow extends StatelessWidget {
       radius: VitCardRadius.standard,
       variant: highlighted ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: showDivider ? AppColors.divider : AppColors.transparent,
-      padding: AppSpacing.notificationsRowPadding,
+      padding: NotificationsSpacingTokens.notificationsRowPadding,
       onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,9 +186,11 @@ class _NotificationRow extends StatelessWidget {
                     ),
                     if (!notification.isRead)
                       const Padding(
-                        padding: AppSpacing.notificationsUnreadDotMargin,
+                        padding: NotificationsSpacingTokens
+                            .notificationsUnreadDotMargin,
                         child: SizedBox.square(
-                          dimension: AppSpacing.notificationsUnreadDotSize,
+                          dimension: NotificationsSpacingTokens
+                              .notificationsUnreadDotSize,
                           child: Material(
                             color: AppModuleAccents.notifications,
                             shape: CircleBorder(),
@@ -206,7 +206,8 @@ class _NotificationRow extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.text2,
-                    height: AppSpacing.notificationsMessageLineHeight,
+                    height: NotificationsSpacingTokens
+                        .notificationsMessageLineHeight,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
@@ -245,16 +246,16 @@ class _TypeIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.notificationsTypeIconMargin,
+      padding: NotificationsSpacingTokens.notificationsTypeIconMargin,
       child: SizedBox.square(
-        dimension: AppSpacing.notificationsTypeIconBox,
+        dimension: NotificationsSpacingTokens.notificationsTypeIconBox,
         child: Material(
           color: style.color.withValues(alpha: .16),
           borderRadius: AppRadii.smRadius,
           child: Icon(
             style.icon,
             color: style.color,
-            size: AppSpacing.notificationsTypeIcon,
+            size: NotificationsSpacingTokens.notificationsTypeIcon,
           ),
         ),
       ),
@@ -289,13 +290,13 @@ class _ListFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.notificationsFooterPadding,
+      padding: NotificationsSpacingTokens.notificationsFooterPadding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
-            width: AppSpacing.notificationsFooterDividerWidth,
-            height: AppSpacing.notificationsFooterDividerHeight,
+            width: NotificationsSpacingTokens.notificationsFooterDividerWidth,
+            height: NotificationsSpacingTokens.notificationsFooterDividerHeight,
             child: ColoredBox(color: AppColors.borderSolid),
           ),
           const SizedBox(width: AppSpacing.x3),
@@ -305,8 +306,8 @@ class _ListFooter extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.x3),
           const SizedBox(
-            width: AppSpacing.notificationsFooterDividerWidth,
-            height: AppSpacing.notificationsFooterDividerHeight,
+            width: NotificationsSpacingTokens.notificationsFooterDividerWidth,
+            height: NotificationsSpacingTokens.notificationsFooterDividerHeight,
             child: ColoredBox(color: AppColors.borderSolid),
           ),
         ],

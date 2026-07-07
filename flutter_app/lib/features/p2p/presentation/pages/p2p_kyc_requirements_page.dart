@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_kyc_requirements_page_sections.dart';
 part '../widgets/p2p_kyc_requirements_page_common.dart';
@@ -27,8 +28,8 @@ const double _p2pKycIconBoxExtent = AppSpacing.inputHeight - AppSpacing.x2;
 const double _p2pKycRequirementIconBoxExtent = AppSpacing.x6;
 const double _p2pKycReadableLineHeight = 1.35;
 const double _p2pKycTitleLineHeight = 1.0;
-const double _p2pKycSmallIconExtent = AppSpacing.p2pHomeSmallIcon;
-const double _p2pKycChecklistIconExtent = AppSpacing.p2pHomeVerifiedIcon;
+const double _p2pKycSmallIconExtent = P2PSpacingTokens.p2pHomeSmallIcon;
+const double _p2pKycChecklistIconExtent = P2PSpacingTokens.p2pHomeVerifiedIcon;
 const double _p2pKycDividerExtent = AppSpacing.dividerHairline;
 const double _p2pKycCtaHeight = AppSpacing.ctaHeight - AppSpacing.x1;
 
@@ -77,16 +78,20 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                   ).copyWith(scrollbars: false),
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    padding: AppSpacing.p2pKycRequirementsScrollPadding(
+                    padding: P2PSpacingTokens.p2pKycRequirementsScrollPadding(
                       scrollEndPadding,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         _KycHero(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _KycNotice(snapshot: snapshot),
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         for (final tier in snapshot.tiers) ...[
                           _KycTierCard(
                             tier: tier,
@@ -100,12 +105,16 @@ class P2PKycRequirementsPage extends ConsumerWidget {
                                 : null,
                           ),
                           if (tier != snapshot.tiers.last)
-                            const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmStandardInnerGap,
+                            ),
                         ],
-                        const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                        const SizedBox(
+                          height: AppSpacing.pageRhythmStandardInnerGap,
+                        ),
                         _KycSupportCard(snapshot: snapshot),
                         VitPageContent(
-       rhythm: VitPageRhythm.form,
+                          rhythm: VitPageRhythm.form,
                           padding: VitContentPadding.compact,
                           density: VitDensity.compact,
                           children: const [

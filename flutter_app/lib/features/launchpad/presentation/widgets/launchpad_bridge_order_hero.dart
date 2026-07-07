@@ -13,12 +13,12 @@ class _BridgeStatusHero extends StatelessWidget {
       variant: VitCardVariant.hero,
       radius: VitCardRadius.large,
       borderColor: AppModuleAccents.launchpad.withValues(alpha: .24),
-      padding: AppSpacing.launchpadPaddingX5,
+      padding: LaunchpadSpacingTokens.launchpadPaddingX5,
       child: Column(
         children: [
           SizedBox(
-            width: AppSpacing.launchpadBox64,
-            height: AppSpacing.launchpadBox64,
+            width: LaunchpadSpacingTokens.launchpadBox64,
+            height: LaunchpadSpacingTokens.launchpadBox64,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: color.withValues(alpha: .14),
@@ -27,7 +27,7 @@ class _BridgeStatusHero extends StatelessWidget {
               child: Icon(
                 _statusIcon(order.status),
                 color: color,
-                size: AppSpacing.launchpadBox30,
+                size: LaunchpadSpacingTokens.launchpadBox30,
               ),
             ),
           ),
@@ -76,7 +76,7 @@ class _BridgeStatusHero extends StatelessWidget {
               shape: const StadiumBorder(),
             ),
             child: Padding(
-              padding: AppSpacing.launchpadPillPadding,
+              padding: LaunchpadSpacingTokens.launchpadPillPadding,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

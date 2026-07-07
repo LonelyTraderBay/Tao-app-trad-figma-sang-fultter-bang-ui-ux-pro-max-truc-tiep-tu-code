@@ -30,7 +30,7 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/markets/predictions'),
         ),
-        const SizedBox(height: AppSpacing.homeSectionInnerGap),
+        const SizedBox(height: HomeSpacingTokens.homeSectionInnerGap),
         VitDiscoveryActionCard(
           title: 'Open Arena',
           badgeLabel: 'Arena Points only',
@@ -48,16 +48,13 @@ class _HomeDiscoverySection extends StatelessWidget {
           ),
           onTap: () => onNavigate('/arena'),
         ),
-        const SizedBox(height: AppSpacing.homeSectionInnerGap),
-        Semantics(
-          label:
+        const SizedBox(height: HomeSpacingTokens.homeSectionInnerGap),
+        const VitRiskDisclaimerNote(
+          message:
+              'Predictions sử dụng vị thế thực. Arena sử dụng Points (không phải tiền thật).',
+          semanticsLabel:
               'Lưu ý rủi ro: Predictions sử dụng vị thế thực. Arena sử dụng '
               'Points (không phải tiền thật).',
-          child: Text(
-            'Predictions sử dụng vị thế thực. Arena sử dụng Points (không phải tiền thật).',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.micro.copyWith(color: AppColors.text3),
-          ),
         ),
       ],
     );
@@ -111,7 +108,7 @@ class _MarketSection extends StatelessWidget {
             VitTabItem(key: 'new', label: 'Mới', icon: Icons.fiber_new_rounded),
           ],
         ),
-        const SizedBox(height: AppSpacing.homeSectionInnerGap),
+        const SizedBox(height: HomeSpacingTokens.homeSectionInnerGap),
         VitCard(
           clip: true,
           child: Column(

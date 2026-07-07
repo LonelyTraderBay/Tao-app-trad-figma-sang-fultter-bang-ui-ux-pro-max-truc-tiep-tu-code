@@ -9,7 +9,7 @@ class _CompareRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX2,
+      padding: EarnSpacingTokens.earnVerticalPaddingX2,
       child: Row(
         children: [
           SizedBox(
@@ -47,7 +47,7 @@ class _SettingsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX2,
+      padding: EarnSpacingTokens.earnVerticalPaddingX2,
       child: Row(
         children: [
           Icon(
@@ -83,7 +83,7 @@ class _PreviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.earnVerticalPaddingX2,
+      padding: EarnSpacingTokens.earnVerticalPaddingX2,
       child: Row(
         children: [
           Expanded(

@@ -14,8 +14,9 @@ import 'package:vit_trade_flutter/shared/layout/shell_render_mode.dart';
 import 'package:vit_trade_flutter/features/p2p/presentation/widgets/vit_p2p_flow_scaffold.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
-const double _p2pOwnershipSectionGap = AppSpacing.p2pPaymentCardGap;
+const double _p2pOwnershipSectionGap = P2PSpacingTokens.p2pPaymentCardGap;
 const double _p2pOwnershipHeroIconBox = AppSpacing.searchBarCompactHeight;
 const double _p2pOwnershipDocumentIconBox = AppSpacing.buttonCompact;
 
@@ -67,9 +68,7 @@ class _P2PPaymentMethodOwnershipPageState
         const _OwnershipHero(),
         Text(
           'Tài liệu cần thiết',
-          style: AppTextStyles.baseMedium.copyWith(
-            color: AppColors.text1,
-          ),
+          style: AppTextStyles.baseMedium.copyWith(color: AppColors.text1),
         ),
         for (final document in snapshot.documents)
           _OwnershipDocumentCard(
@@ -133,7 +132,7 @@ class _P2PPaymentMethodOwnershipPageState
             variant: VitCtaButtonVariant.secondary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pPaymentDialogActionPadding,
+            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
             child: const Text('Hủy'),
           ),
           VitCtaButton(
@@ -142,7 +141,7 @@ class _P2PPaymentMethodOwnershipPageState
             variant: VitCtaButtonVariant.primary,
             fullWidth: false,
             height: AppSpacing.buttonCompact,
-            padding: AppSpacing.p2pPaymentDialogActionPadding,
+            padding: P2PSpacingTokens.p2pPaymentDialogActionPadding,
             child: const Text('Xác nhận'),
           ),
         ],
@@ -163,7 +162,7 @@ class _OwnershipHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitCard(
-      padding: AppSpacing.p2pPaymentOwnershipCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentOwnershipCardPadding,
       borderColor: AppColors.primary20,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +176,7 @@ class _OwnershipHero extends StatelessWidget {
               child: Icon(
                 Icons.credit_card_rounded,
                 color: AppColors.text1,
-                size: AppSpacing.p2pPaymentHeroIcon,
+                size: P2PSpacingTokens.p2pPaymentHeroIcon,
               ),
             ),
           ),
@@ -224,7 +223,7 @@ class _OwnershipDocumentCard extends StatelessWidget {
     return VitCard(
       key: P2PPaymentMethodOwnershipPage.documentKey(document.id),
       radius: VitCardRadius.standard,
-      padding: AppSpacing.p2pPaymentOwnershipCardPadding,
+      padding: P2PSpacingTokens.p2pPaymentOwnershipCardPadding,
       child: Row(
         children: [
           _DocumentIcon(uploaded: uploaded),
@@ -325,7 +324,7 @@ class _UploadButton extends StatelessWidget {
       label: 'Tải lên',
       selected: false,
       onTap: onTap,
-      padding: AppSpacing.p2pPaymentOwnershipOptionPadding,
+      padding: P2PSpacingTokens.p2pPaymentOwnershipOptionPadding,
       accentColor: AppModuleAccents.p2p,
       semanticLabel: 'Upload ownership document',
     );

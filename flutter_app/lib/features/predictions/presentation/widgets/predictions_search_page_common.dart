@@ -19,7 +19,7 @@ class _CategoryChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: _predictionPrimary,
-      padding: AppSpacing.predictionHomeCategoryPadding,
+      padding: PredictionsSpacingTokens.predictionHomeCategoryPadding,
     );
   }
 }
@@ -124,7 +124,8 @@ class _BinaryOutcomeBar extends StatelessWidget {
         const SizedBox(height: AppSpacing.x1),
         ClipRRect(
           borderRadius: AppRadii.xsRadius,
-          child: SizedBox(height: AppSpacing.pageRhythmCompactInnerGap,
+          child: SizedBox(
+            height: AppSpacing.pageRhythmCompactInnerGap,
             child: Row(
               children: [
                 Expanded(
@@ -190,7 +191,7 @@ class _SmallBadge extends StatelessWidget {
       color: background,
       shape: RoundedRectangleBorder(borderRadius: AppRadii.badgeRadius),
       child: Padding(
-        padding: AppSpacing.predictionHomeBadgePadding,
+        padding: PredictionsSpacingTokens.predictionHomeBadgePadding,
         child: Text(
           label,
           style: AppTextStyles.micro.copyWith(
@@ -224,7 +225,7 @@ class _SearchEmptyState extends StatelessWidget {
           Icon(
             Icons.search_off_outlined,
             color: AppColors.text3.withValues(alpha: .40),
-            size: AppSpacing.predictionHomeEmptyIcon,
+            size: PredictionsSpacingTokens.predictionHomeEmptyIcon,
           ),
           const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
           Text(

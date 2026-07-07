@@ -32,7 +32,7 @@ class _CorrelationContent extends StatelessWidget {
               height: _dcaPortfolioBodyLineHeight,
             ),
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX5),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX5),
           Row(
             children: [
               const SizedBox(width: AppSpacing.x7),
@@ -49,7 +49,7 @@ class _CorrelationContent extends StatelessWidget {
                 ),
             ],
           ),
-          const Padding(padding: AppSpacing.dcaTopPaddingX2),
+          const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
           for (var row = 0; row < assets.length; row++) ...[
             Row(
               children: [
@@ -70,7 +70,7 @@ class _CorrelationContent extends StatelessWidget {
               ],
             ),
             if (row != assets.length - 1)
-              const Padding(padding: AppSpacing.dcaTopPaddingX2),
+              const Padding(padding: DcaSpacingTokens.dcaTopPaddingX2),
           ],
         ],
       ),
@@ -104,7 +104,7 @@ class _BacktestContent extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX4),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX4),
         Row(
           children: const [
             Expanded(
@@ -132,7 +132,7 @@ class _BacktestContent extends StatelessWidget {
             ),
           ],
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX4),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX4),
         const _DisclaimerCard(
           text:
               'Kết quả dựa trên dữ liệu lịch sử, không đảm bảo hiệu suất tương lai.',
@@ -201,7 +201,7 @@ class _RiskContent extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(padding: AppSpacing.dcaTopPaddingX4),
+        const Padding(padding: DcaSpacingTokens.dcaTopPaddingX4),
         const _DisclaimerCard(
           text:
               'Các chỉ số dựa trên dữ liệu lịch sử. Hãy đa dạng hóa và chỉ đầu tư số tiền bạn chấp nhận mất.',

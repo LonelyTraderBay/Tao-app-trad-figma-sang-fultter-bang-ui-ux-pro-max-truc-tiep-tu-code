@@ -13,7 +13,7 @@ class _ConceptRow extends StatelessWidget {
         Icon(
           _iconFor(concept.iconName),
           color: _copyPrimary,
-          size: AppSpacing.walletAddressSectionIcon,
+          size: WalletSpacingTokens.walletAddressSectionIcon,
         ),
         const SizedBox(width: AppSpacing.x3),
         Expanded(
@@ -27,7 +27,9 @@ class _ConceptRow extends StatelessWidget {
                   fontWeight: AppTextStyles.bold,
                 ),
               ),
-              const SizedBox(height: AppSpacing.walletAddressCompactGap),
+              const SizedBox(
+                height: WalletSpacingTokens.walletAddressCompactGap,
+              ),
               Text(
                 concept.description,
                 style: AppTextStyles.micro.copyWith(color: AppColors.text3),
@@ -78,7 +80,7 @@ class _SupplementalTabContent extends StatelessWidget {
               fontWeight: AppTextStyles.bold,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAddressActionGap),
+          const SizedBox(height: WalletSpacingTokens.walletAddressActionGap),
           Text(
             description,
             style: AppTextStyles.caption.copyWith(color: AppColors.text2),
@@ -123,7 +125,7 @@ class _SmallGuideLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, color: color, size: AppSpacing.statusPillIconSizeSm),
-        const SizedBox(width: AppSpacing.walletAddressCompactGap),
+        const SizedBox(width: WalletSpacingTokens.walletAddressCompactGap),
         Expanded(
           child: Text(
             text,

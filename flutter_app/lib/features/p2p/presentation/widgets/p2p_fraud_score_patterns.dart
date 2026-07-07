@@ -18,7 +18,7 @@ class _SafetyScoreCard extends StatelessWidget {
     return VitCard(
       key: P2PFraudPreventionPage.scoreKey,
       radius: VitCardRadius.large,
-      padding: AppSpacing.p2pFraudCardPadding,
+      padding: P2PSpacingTokens.p2pFraudCardPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -27,7 +27,7 @@ class _SafetyScoreCard extends StatelessWidget {
               Icon(
                 Icons.verified_user_outlined,
                 color: color,
-                size: AppSpacing.p2pFraudHeaderIcon,
+                size: P2PSpacingTokens.p2pFraudHeaderIcon,
               ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
@@ -52,7 +52,7 @@ class _SafetyScoreCard extends StatelessWidget {
             borderRadius: AppRadii.xlRadius,
             child: LinearProgressIndicator(
               value: score / 100,
-              minHeight: AppSpacing.p2pFraudProgressHeight,
+              minHeight: P2PSpacingTokens.p2pFraudProgressHeight,
               color: color,
               backgroundColor: AppColors.surface3,
             ),
@@ -68,7 +68,7 @@ class _SafetyScoreCard extends StatelessWidget {
               color: AppColors.warn10,
               borderRadius: AppRadii.lgRadius,
               child: Padding(
-                padding: AppSpacing.p2pFraudInnerPadding,
+                padding: P2PSpacingTokens.p2pFraudInnerPadding,
                 child: Row(
                   children: [
                     const Icon(
@@ -171,7 +171,7 @@ class _PatternCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: AppSpacing.p2pFraudPatternPadding,
+            padding: P2PSpacingTokens.p2pFraudPatternPadding,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -252,7 +252,7 @@ class _ExpandedPattern extends StatelessWidget {
           child: ColoredBox(color: AppColors.divider),
         ),
         Padding(
-          padding: AppSpacing.p2pFraudPatternPadding,
+          padding: P2PSpacingTokens.p2pFraudPatternPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -318,7 +318,7 @@ class _DetailList extends StatelessWidget {
             children: [
               if (numbered)
                 SizedBox.square(
-                  dimension: AppSpacing.p2pFraudChecklistBox,
+                  dimension: P2PSpacingTokens.p2pFraudChecklistBox,
                   child: Material(
                     color: AppColors.surface2,
                     shape: const CircleBorder(),
@@ -334,7 +334,11 @@ class _DetailList extends StatelessWidget {
                   ),
                 )
               else
-                Icon(icon, color: color, size: AppSpacing.p2pFraudDetailIcon),
+                Icon(
+                  icon,
+                  color: color,
+                  size: P2PSpacingTokens.p2pFraudDetailIcon,
+                ),
               const SizedBox(width: AppSpacing.x2),
               Expanded(
                 child: Text(

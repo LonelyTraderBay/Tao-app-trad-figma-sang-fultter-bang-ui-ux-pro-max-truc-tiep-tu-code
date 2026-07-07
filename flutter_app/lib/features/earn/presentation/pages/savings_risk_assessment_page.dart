@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/earn_controller_providers.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/earn_custody_risk_banner.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 part '../widgets/savings_risk_assessment_questions.dart';
 part '../widgets/savings_risk_assessment_result.dart';
@@ -87,7 +88,7 @@ class _SavingsRiskAssessmentPageState
                     bottom: scrollTailReserve,
                   ),
                   child: VitPageContent(
- rhythm: VitPageRhythm.standard,
+                    rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
                     gap: VitContentGap.tight,
                     children: [

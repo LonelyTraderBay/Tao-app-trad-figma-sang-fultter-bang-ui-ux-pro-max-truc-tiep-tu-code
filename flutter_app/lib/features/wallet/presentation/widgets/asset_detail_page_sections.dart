@@ -20,7 +20,7 @@ class _AssetHero extends StatelessWidget {
           Row(
             children: [
               _AssetLogo(snapshot: snapshot),
-              const SizedBox(width: AppSpacing.walletAssetPillGap),
+              const SizedBox(width: WalletSpacingTokens.walletAssetPillGap),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,9 @@ class _AssetHero extends StatelessWidget {
                         fontWeight: AppTextStyles.bold,
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.walletAssetSmallGap),
+                    const SizedBox(
+                      height: WalletSpacingTokens.walletAssetSmallGap,
+                    ),
                     Text(
                       snapshot.symbol,
                       style: AppTextStyles.caption.copyWith(
@@ -45,7 +47,7 @@ class _AssetHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+          const SizedBox(height: WalletSpacingTokens.walletAssetHeroTopGap),
           Text(
             _formatUsd(snapshot.usdValue),
             style: AppTextStyles.amountMd.copyWith(
@@ -53,7 +55,7 @@ class _AssetHero extends StatelessWidget {
               fontFeatures: AppTextStyles.tabularFigures,
             ),
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroValueGap),
+          const SizedBox(height: WalletSpacingTokens.walletAssetHeroValueGap),
           Row(
             children: [
               Flexible(
@@ -64,7 +66,7 @@ class _AssetHero extends StatelessWidget {
                   style: AppTextStyles.caption.copyWith(color: AppColors.text2),
                 ),
               ),
-              const SizedBox(width: AppSpacing.walletAssetPillGap),
+              const SizedBox(width: WalletSpacingTokens.walletAssetPillGap),
               VitMetricDeltaPill(
                 label: _formatPct(snapshot.change24h),
                 tone: positive
@@ -73,10 +75,10 @@ class _AssetHero extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.walletAssetHeroTopGap),
+          const SizedBox(height: WalletSpacingTokens.walletAssetHeroTopGap),
           Wrap(
-            spacing: AppSpacing.walletAssetSmallGap,
-            runSpacing: AppSpacing.walletAssetSmallGap,
+            spacing: WalletSpacingTokens.walletAssetSmallGap,
+            runSpacing: WalletSpacingTokens.walletAssetSmallGap,
             children: [
               _AssetStatTile(
                 label: 'Khả dụng',
@@ -117,7 +119,7 @@ class _AssetLogo extends StatelessWidget {
     return VitAssetAvatar(
       label: snapshot.symbol,
       accentColor: color,
-      size: AppSpacing.walletAssetLogoSize,
+      size: WalletSpacingTokens.walletAssetLogoSize,
       radius: AppRadii.pillRadius,
       border: true,
     );
@@ -141,9 +143,9 @@ class _AssetStatTile extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       radius: VitCardRadius.standard,
-      width: AppSpacing.walletHistoryAmountColumnWidth,
-      height: AppSpacing.walletAssetStatHeight,
-      padding: AppSpacing.walletAssetStatPillPadding,
+      width: WalletSpacingTokens.walletHistoryAmountColumnWidth,
+      height: WalletSpacingTokens.walletAssetStatHeight,
+      padding: WalletSpacingTokens.walletAssetStatPillPadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -154,7 +156,7 @@ class _AssetStatTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.micro.copyWith(color: AppColors.text3),
           ),
-          const SizedBox(height: AppSpacing.walletAssetSmallGap),
+          const SizedBox(height: WalletSpacingTokens.walletAssetSmallGap),
           FittedBox(
             alignment: Alignment.centerLeft,
             fit: BoxFit.scaleDown,
@@ -278,7 +280,7 @@ class _PriceChartCard extends StatelessWidget {
           density: VitDensity.compact,
           borderColor: AppColors.overlayStroke,
           child: SizedBox(
-            height: AppSpacing.walletAssetChartHeight - AppSpacing.x6,
+            height: WalletSpacingTokens.walletAssetChartHeight - AppSpacing.x6,
             child: VitSparkline(
               values: [for (final point in snapshot.chart) point.price],
               color: color,

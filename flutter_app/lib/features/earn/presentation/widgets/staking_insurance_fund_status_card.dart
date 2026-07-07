@@ -6,6 +6,7 @@ import 'package:vit_trade_flutter/app/theme/app_text_styles.dart';
 import 'package:vit_trade_flutter/features/earn/domain/entities/earn_entities.dart';
 import 'package:vit_trade_flutter/features/earn/presentation/widgets/staking_insurance_fund_common.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/earn_spacing_tokens.dart';
 
 class StakingInsuranceFundStatusCard extends StatelessWidget {
   const StakingInsuranceFundStatusCard({super.key, required this.snapshot});
@@ -18,7 +19,7 @@ class StakingInsuranceFundStatusCard extends StatelessWidget {
     return VitCard(
       key: StakingInsuranceFundKeys.fundStatus,
       radius: VitCardRadius.large,
-      padding: AppSpacing.earnCardPaddingX5,
+      padding: EarnSpacingTokens.earnCardPaddingX5,
       child: Column(
         children: [
           Row(
@@ -185,7 +186,7 @@ class StakingInsuranceFundInlineStatCard extends StatelessWidget {
       variant: VitCardVariant.inner,
       radius: VitCardRadius.large,
       borderColor: color.withValues(alpha: 0.16),
-      padding: AppSpacing.earnCardPaddingX4,
+      padding: EarnSpacingTokens.earnCardPaddingX4,
       child: StakingInsuranceFundMetricBlock(
         label: label,
         value: value,

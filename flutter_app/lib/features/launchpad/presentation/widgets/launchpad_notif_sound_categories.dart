@@ -97,7 +97,7 @@ class _CategoryCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: AppSpacing.launchpadPaddingX4,
+            padding: LaunchpadSpacingTokens.launchpadPaddingX4,
             child: Row(
               children: [
                 _IconBubble(
@@ -194,7 +194,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
           color: AppColors.divider,
         ),
         Padding(
-          padding: AppSpacing.launchpadPaddingX4,
+          padding: LaunchpadSpacingTokens.launchpadPaddingX4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -249,7 +249,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                   overlayColor: category.accent.resolve().withValues(
                     alpha: .12,
                   ),
-                  trackHeight: AppSpacing.launchpadGapXxs,
+                  trackHeight: LaunchpadSpacingTokens.launchpadGapXxs,
                 ),
                 child: Slider(
                   value: state.volume,
@@ -265,7 +265,7 @@ class _ExpandedCategorySettings extends StatelessWidget {
                 variant: VitCardVariant.inner,
                 radius: VitCardRadius.standard,
                 height: AppSpacing.buttonCompact,
-                padding: AppSpacing.launchpadPaddingX4,
+                padding: LaunchpadSpacingTokens.launchpadPaddingX4,
                 child: Row(
                   children: [
                     Icon(
@@ -292,10 +292,14 @@ class _ExpandedCategorySettings extends StatelessWidget {
                         Builder(
                           builder: (context) {
                             final barHeight =
-                                AppSpacing.launchpadSoundBarBaseHeight +
-                                i * AppSpacing.launchpadSoundBarHeightStep;
+                                LaunchpadSpacingTokens
+                                    .launchpadSoundBarBaseHeight +
+                                i *
+                                    LaunchpadSpacingTokens
+                                        .launchpadSoundBarHeightStep;
                             return SizedBox(
-                              width: AppSpacing.launchpadVerticalMarkerWidth,
+                              width: LaunchpadSpacingTokens
+                                  .launchpadVerticalMarkerWidth,
                               height: barHeight,
                               child: DecoratedBox(
                                 decoration: ShapeDecoration(
@@ -344,7 +348,7 @@ class _SoundTypeChip extends StatelessWidget {
       selected: active,
       onTap: onTap,
       accentColor: accent,
-      padding: AppSpacing.launchpadPillPadding,
+      padding: LaunchpadSpacingTokens.launchpadPillPadding,
     );
   }
 }

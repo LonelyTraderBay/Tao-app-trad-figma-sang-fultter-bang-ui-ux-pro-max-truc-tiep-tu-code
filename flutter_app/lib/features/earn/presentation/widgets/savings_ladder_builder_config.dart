@@ -29,7 +29,7 @@ class AmountSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       key: SavingsLadderPage.amountKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -108,7 +108,7 @@ class TemplateList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VitPageContent(
- rhythm: VitPageRhythm.standard,
+      rhythm: VitPageRhythm.standard,
       key: SavingsLadderPage.templatesKey,
       padding: VitContentPadding.none,
       fullBleed: true,
@@ -159,7 +159,7 @@ class _TemplateCard extends StatelessWidget {
           const SizedBox(width: AppSpacing.x3),
           Expanded(
             child: VitPageContent(
-       rhythm: VitPageRhythm.standard,
+              rhythm: VitPageRhythm.standard,
               padding: VitContentPadding.none,
               fullBleed: true,
               gap: VitContentGap.tight,

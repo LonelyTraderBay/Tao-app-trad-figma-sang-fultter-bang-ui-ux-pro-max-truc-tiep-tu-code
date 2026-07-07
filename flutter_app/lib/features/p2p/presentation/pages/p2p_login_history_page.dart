@@ -17,6 +17,7 @@ import 'package:vit_trade_flutter/shared/layout/vit_page_content.dart';
 import 'package:vit_trade_flutter/shared/layout/vit_page_layout.dart';
 import 'package:vit_trade_flutter/shared/widgets/widgets.dart';
 import 'package:vit_trade_flutter/app/providers/p2p_controller_providers.dart';
+import 'package:vit_trade_flutter/app/theme/spacing/p2p_spacing_tokens.dart';
 
 part '../widgets/p2p_login_history_summary_filters.dart';
 part '../widgets/p2p_login_history_events.dart';
@@ -114,14 +115,17 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: ClampingScrollPhysics(),
                       ),
-                      padding: AppSpacing.p2pLoginHistoryPageScrollPadding(
-                        scrollEndPadding,
-                      ),
+                      padding:
+                          P2PSpacingTokens.p2pLoginHistoryPageScrollPadding(
+                            scrollEndPadding,
+                          ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           _LoginStats(snapshot: snapshot),
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmCompactInnerGap,
+                          ),
                           VitSegmentedChoice<String>(
                             key: P2PLoginHistoryPage.filtersKey,
                             selected: _filter,
@@ -148,17 +152,23 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                               VitSegmentedChoiceOption(
                                 value: 'suspicious',
                                 label: 'Đáng ngờ',
-                                key: P2PLoginHistoryPage.filterKey('suspicious'),
+                                key: P2PLoginHistoryPage.filterKey(
+                                  'suspicious',
+                                ),
                                 accentColor: AppModuleAccents.p2p,
                               ),
                             ],
                           ),
                           if (snapshot.riskEventCount > 0 &&
                               _filter != 'success') ...[
-                            const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                            const SizedBox(
+                              height: AppSpacing.pageRhythmCompactInnerGap,
+                            ),
                             _RiskWarning(snapshot: snapshot),
                           ],
-                          const SizedBox(height: AppSpacing.pageRhythmCompactInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmCompactInnerGap,
+                          ),
                           if (filteredEvents.isEmpty)
                             _EmptyState(snapshot: snapshot)
                           else
@@ -167,10 +177,12 @@ class _P2PLoginHistoryPageState extends ConsumerState<P2PLoginHistoryPage> {
                               expandedEventId: _expandedEventId,
                               onToggle: _toggleExpanded,
                             ),
-                          const SizedBox(height: AppSpacing.pageRhythmStandardInnerGap),
+                          const SizedBox(
+                            height: AppSpacing.pageRhythmStandardInnerGap,
+                          ),
                           _SecurityInfo(snapshot: snapshot),
                           VitPageContent(
-         rhythm: VitPageRhythm.standard,
+                            rhythm: VitPageRhythm.standard,
                             padding: VitContentPadding.compact,
                             children: const [
                               VitHighRiskStatePanel(

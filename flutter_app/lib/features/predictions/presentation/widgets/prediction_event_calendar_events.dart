@@ -78,14 +78,14 @@ class _CalendarEventCard extends StatelessWidget {
                 const Icon(
                   Icons.star_rounded,
                   color: AppColors.warn,
-                  size: AppSpacing.predictionCalendarWatchIcon,
+                  size: PredictionsSpacingTokens.predictionCalendarWatchIcon,
                 ),
                 const SizedBox(width: AppSpacing.x1),
               ] else if (urgent) ...[
                 const Icon(
                   Icons.warning_amber_rounded,
                   color: AppColors.warn,
-                  size: AppSpacing.predictionCalendarUrgentIcon,
+                  size: PredictionsSpacingTokens.predictionCalendarUrgentIcon,
                 ),
                 const SizedBox(width: AppSpacing.x1),
               ],
@@ -149,7 +149,7 @@ class _CalendarEventCard extends StatelessWidget {
               const Icon(
                 Icons.access_time_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.predictionCalendarTimeIcon,
+                size: PredictionsSpacingTokens.predictionCalendarTimeIcon,
               ),
               const SizedBox(width: AppSpacing.x1),
               Text(
@@ -179,7 +179,7 @@ class _CalendarEventCard extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.text3,
-                size: AppSpacing.predictionCalendarChevron,
+                size: PredictionsSpacingTokens.predictionCalendarChevron,
               ),
             ],
           ),

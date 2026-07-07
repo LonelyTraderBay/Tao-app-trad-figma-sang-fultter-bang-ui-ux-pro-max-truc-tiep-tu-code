@@ -38,7 +38,9 @@ class _StakingProofOfReservesPageState
               Expanded(
                 child: SingleChildScrollView(
                   physics: const ClampingScrollPhysics(),
-                  padding: AppSpacing.earnBottomInsetPadding(bottomInset),
+                  padding: EarnSpacingTokens.earnBottomInsetPadding(
+                    bottomInset,
+                  ),
                   child: VitPageContent(
                     rhythm: VitPageRhythm.standard,
                     padding: VitContentPadding.compact,
@@ -112,7 +114,7 @@ class _ReserveTabs extends StatelessWidget {
     return VitCard(
       key: StakingProofOfReservesPage.tabsKey,
       variant: VitCardVariant.inner,
-      padding: AppSpacing.earnPaddingX2,
+      padding: EarnSpacingTokens.earnPaddingX2,
       child: VitTabBar(
         variant: VitTabBarVariant.underline,
         activeKey: active.name,
@@ -215,7 +217,7 @@ class _OverviewTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnPaddingX3,
+              padding: EarnSpacingTokens.earnPaddingX3,
               child: Column(
                 children: [
                   SizedBox(
@@ -314,7 +316,7 @@ class _VerifyTab extends StatelessWidget {
           children: [
             VitCard(
               radius: VitCardRadius.large,
-              padding: AppSpacing.earnPaddingX4,
+              padding: EarnSpacingTokens.earnPaddingX4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -342,7 +344,9 @@ class _VerifyTab extends StatelessWidget {
                               'Merkle Tree Verification',
                               style: AppTextStyles.baseMedium,
                             ),
-                            const Padding(padding: AppSpacing.earnTopPaddingX2),
+                            const Padding(
+                              padding: EarnSpacingTokens.earnTopPaddingX2,
+                            ),
                             Text(
                               'Prove your staked balance is included in our Proof of Reserves using cryptographic Merkle tree proofs.',
                               style: AppTextStyles.caption.copyWith(
@@ -354,7 +358,9 @@ class _VerifyTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: AppSpacing.pageRhythmStandardSectionGap),
+                  const SizedBox(
+                    height: AppSpacing.pageRhythmStandardSectionGap,
+                  ),
                   VitCtaButton(
                     onPressed: onVerify,
                     leading: const Icon(Icons.verified_user_outlined),
@@ -376,7 +382,7 @@ class _VerifyTab extends StatelessWidget {
         VitCard(
           variant: VitCardVariant.inner,
           borderColor: AppColors.primary20,
-          padding: AppSpacing.earnPaddingX4,
+          padding: EarnSpacingTokens.earnPaddingX4,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -428,7 +434,7 @@ class _ReserveProgress extends StatelessWidget {
                   shape: CircleBorder(
                     side: BorderSide(
                       color: AppColors.buy,
-                      width: AppSpacing.stakingProofProgressBorderWidth,
+                      width: EarnSpacingTokens.stakingProofProgressBorderWidth,
                     ),
                   ),
                   child: Icon(

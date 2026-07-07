@@ -9,7 +9,7 @@ class _DemoFlowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return VitCard(
       borderColor: AppColors.buy20,
-      padding: AppSpacing.arenaPaddingX4,
+      padding: ArenaSpacingTokens.arenaPaddingX4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -49,14 +49,14 @@ class _DemoFlowCard extends StatelessWidget {
           VitCard(
             variant: VitCardVariant.inner,
             borderColor: AppColors.buy20,
-            padding: AppSpacing.arenaPaddingX3,
+            padding: ArenaSpacingTokens.arenaPaddingX3,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(
                   Icons.visibility_outlined,
                   color: AppColors.buy,
-                  size: AppSpacing.arenaPresetSmallIcon,
+                  size: ArenaSpacingTokens.arenaPresetSmallIcon,
                 ),
                 const SizedBox(width: AppSpacing.x2),
                 Expanded(
@@ -92,18 +92,18 @@ class _DemoStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaBottomPaddingX2,
+      padding: ArenaSpacingTokens.arenaBottomPaddingX2,
       child: Material(
         color: AppColors.surface2,
         borderRadius: AppRadii.smRadius,
         child: Padding(
-          padding: AppSpacing.arenaPaddingX3,
+          padding: ArenaSpacingTokens.arenaPaddingX3,
           child: Row(
             children: [
               _StepDot(step: step, color: AppColors.buy),
               const SizedBox(width: AppSpacing.x3),
               SizedBox(
-                width: AppSpacing.arenaPresetProcessLabelWidth,
+                width: ArenaSpacingTokens.arenaPresetProcessLabelWidth,
                 child: Text(
                   label,
                   style: AppTextStyles.micro.copyWith(
@@ -126,7 +126,7 @@ class _DemoStep extends StatelessWidget {
               const Icon(
                 Icons.check_rounded,
                 color: AppColors.buy,
-                size: AppSpacing.arenaPresetSmallIcon,
+                size: ArenaSpacingTokens.arenaPresetSmallIcon,
               ),
             ],
           ),
@@ -147,7 +147,7 @@ class _DemoSuggestions extends StatelessWidget {
       color: AppColors.surface2,
       borderRadius: AppRadii.smRadius,
       child: Padding(
-        padding: AppSpacing.arenaPaddingX3,
+        padding: ArenaSpacingTokens.arenaPaddingX3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -194,18 +194,18 @@ class _DemoSummaryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaBottomPaddingX2,
+      padding: ArenaSpacingTokens.arenaBottomPaddingX2,
       child: VitCard(
         variant: VitCardVariant.inner,
         borderColor: selected ? AppColors.buy20 : null,
-        padding: AppSpacing.arenaPaddingX3,
+        padding: ArenaSpacingTokens.arenaPaddingX3,
         onTap: onTap,
         child: Row(
           children: [
             Icon(
               _domainIcon(flow.domainId),
               color: selected ? AppColors.buy : AppColors.text3,
-              size: AppSpacing.arenaPresetInlineIcon,
+              size: ArenaSpacingTokens.arenaPresetInlineIcon,
             ),
             const SizedBox(width: AppSpacing.x2),
             Expanded(
@@ -222,7 +222,7 @@ class _DemoSummaryRow extends StatelessWidget {
             const Icon(
               Icons.chevron_right_rounded,
               color: AppColors.text3,
-              size: AppSpacing.arenaPresetInlineIcon,
+              size: ArenaSpacingTokens.arenaPresetInlineIcon,
             ),
           ],
         ),
@@ -248,11 +248,11 @@ class _TitleChip extends StatelessWidget {
       variant: selected ? VitCardVariant.inner : VitCardVariant.ghost,
       borderColor: selected ? AppColors.sell20 : AppColors.borderSolid,
       radius: VitCardRadius.standard,
-      padding: AppSpacing.arenaPresetChipPadding,
+      padding: ArenaSpacingTokens.arenaPresetChipPadding,
       onTap: onTap,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          maxWidth: AppSpacing.arenaPresetTitleMaxWidth,
+          maxWidth: ArenaSpacingTokens.arenaPresetTitleMaxWidth,
         ),
         child: Text(
           title,
@@ -277,12 +277,12 @@ class _ProcessRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppSpacing.arenaBottomPaddingX2,
+      padding: ArenaSpacingTokens.arenaBottomPaddingX2,
       child: Material(
         color: AppColors.surface2,
         borderRadius: AppRadii.smRadius,
         child: Padding(
-          padding: AppSpacing.arenaPaddingX3,
+          padding: ArenaSpacingTokens.arenaPaddingX3,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -313,14 +313,14 @@ class _PresetEngineNote extends StatelessWidget {
     return VitCard(
       variant: VitCardVariant.inner,
       borderColor: AppColors.buy20,
-      padding: AppSpacing.arenaPaddingX3,
+      padding: ArenaSpacingTokens.arenaPaddingX3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.shield_outlined,
             color: AppColors.buy,
-            size: AppSpacing.arenaPresetInlineIcon,
+            size: ArenaSpacingTokens.arenaPresetInlineIcon,
           ),
           const SizedBox(width: AppSpacing.x2),
           Expanded(
@@ -349,7 +349,11 @@ class _MiniHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: _arenaAccent, size: AppSpacing.arenaPresetHeaderIcon),
+        Icon(
+          icon,
+          color: _arenaAccent,
+          size: ArenaSpacingTokens.arenaPresetHeaderIcon,
+        ),
         const SizedBox(width: AppSpacing.x2),
         Expanded(
           child: Text(
@@ -378,8 +382,8 @@ class _StepDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: AppSpacing.arenaPresetStepDot,
-      height: AppSpacing.arenaPresetStepDot,
+      width: ArenaSpacingTokens.arenaPresetStepDot,
+      height: ArenaSpacingTokens.arenaPresetStepDot,
       child: Material(
         color: color,
         shape: const CircleBorder(),
